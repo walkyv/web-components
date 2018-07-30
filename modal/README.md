@@ -3,12 +3,15 @@
 
 A shareable, accessible, modal, powered by web components.
 
+<br><br>
+
 ## Install
 Before you install, make sure you have all the appropriate polyfills from the main README.md in place.
 
     cd my-app
     npm install --save @pearson-ux/modal
-    
+ 
+<br><br>
 
 ## Usage
 
@@ -53,6 +56,8 @@ To use the modal on your page, use the `<pearson-modal> </pearson-modal>` tag.  
 
 To set the title and toggle action buttons, see the API below.
 
+<br><br>
+
 ## API 
 
 | Attribute |  Description|
@@ -84,6 +89,8 @@ To set the title and toggle action buttons, see the API below.
 		<input type="text" />
 		<button class="pe-btn pe-btn__primary--btn_large">Click Me</button>
     </pearson-modal>
+
+<br><br>
 
 ## Events
 |Event| Description |
