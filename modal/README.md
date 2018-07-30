@@ -39,7 +39,7 @@ Import the web component onto the page, inbetween the `<head>` tags
 <br>
 
 **To Use**
-Add the `<pearson-modal> </pearson-modal>` tag to the page.  You can add any content you like between the tags as normal HTML5 markup, and it will show up in the body of the modal.
+Add the `<pearson-modal> </pearson-modal>` tag to the page, passing in the id of the button you want to trigger the modal, in an attribute called buttonReferenceId.  You can add any content you like between the tags as normal HTML5 markup, and it will show up in the body of the modal.
 
 <br>
 
