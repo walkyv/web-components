@@ -34,4 +34,27 @@ The import path will be in the **node_modules** folder, which is usually held ou
 |successButtonText | The text you want to pass into the success button (if showFooter is set to true)|
 |cancelButtonText | The text you want to pass into the cancel button
 
+**Example Code:** 
+
+    <!-- for accessibility, the must be adjacent to an element with an id of main -->
+    <main id="main">
+    	<section class="container">
+    		<button id="trigger-modal">Open Modal</button>
+    	</section>
+    </main>
+
+    <!-- place modal before the end of the body and pass in the reference ID of the button that triggers the modal -->
+    <pearson-modal
+    	buttonReferenceId="trigger-modal"
+    	modalTitleText="Basic Title"
+    	successButtonText="Success"
+    	cancelButtonText="Cancel"
+    	showFooter="true"
+    >
+		<p>Pass in elements as children to the modal</p>
+		<input type="text" />
+		<button class="pe-btn pe-btn__primary--btn_large">Click Me</button>
+    </pearson-modal>
+
+
 
