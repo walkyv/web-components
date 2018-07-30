@@ -8,16 +8,12 @@ A shareable, accessible, modal, powered by web components.
 ## Demo
 https://pearson-ux.github.io/web-components/modal/example.html
 
-<br>
-
 ## Install
 Before you install, make sure you have all the appropriate polyfills from the main README.md in place.
 https://github.com/pearson-ux/web-components/blob/master/README.md
 
     cd my-app
     npm install --save @pearson-ux/modal
- 
-<br>
 
 ## Usage
 
@@ -72,8 +68,6 @@ Add the `<pearson-modal> </pearson-modal>` tag to the page, passing in the id of
 
 To set the title and toggle action buttons, see the API below.
 
-<br>
-
 ## API 
 
 | Attribute |  Description|
@@ -107,8 +101,6 @@ To set the title and toggle action buttons, see the API below.
 		<input type="text" />
 		<button">Click Me</button>
     </pearson-modal>
-
-<br>
 
 ## Events
 We provide 3 different JavaScript events
