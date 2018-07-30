@@ -16,3 +16,6 @@ You will need to add the following 3 polyfills, in order for your project to be 
            <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
            <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
        </head>
+       
+**Additionally** 
+If you prefer not to use a CDN, you can download these polyfills locally with NPM
