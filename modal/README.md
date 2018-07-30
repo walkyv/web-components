@@ -28,10 +28,8 @@ Import the web component onto the page, inbetween the `<head>` tags
 > application to a **./public** or **./dist** folder you will want to
 > write a script to copy this dependency to a desired location.
 
-
 **To Use**
 To use the modal on your page, use the `<pearson-modal> </pearson-modal>` tag.  You can add any content you like between the tags as normal HTML5 markup, and it will show up in the body of the modal.
-
 
 **Important Note:**  
 
@@ -77,7 +75,7 @@ To set the title and toggle action buttons, see the API below.
     <!-- place modal before the end of the body and pass in the reference ID of the button that triggers the modal -->
     <pearson-modal
     	buttonReferenceId="trigger-modal"
-    	modalTitleText="Modal Title"
+    	modalTitleText="Basic Title"
     	successButtonText="Success"
     	cancelButtonText="Cancel"
     	showFooter="true"
