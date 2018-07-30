@@ -3,7 +3,7 @@
 
 A shareable, accessible, modal, powered by web components.
 
-<br><br>
+<br>
 
 ## Install
 Before you install, make sure you have all the appropriate polyfills from the main README.md in place.
