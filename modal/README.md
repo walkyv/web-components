@@ -117,9 +117,9 @@ We provide 3 different JavaScript events
 
 |Event| Description |
 |--|--|
-| Success | This event will fire off after the success button in the modal has been pressed |
-| Cancel |  This event will fire off after the cancel button in the modal has been pressed|
-| Close |  This event will fire off after the modal has closed without action|
+| success | This event will fire off after the success button in the modal has been pressed |
+| cancel |  This event will fire off after the cancel button in the modal has been pressed|
+| close |  This event will fire off after the modal has closed without action|
 
 <br>
 
