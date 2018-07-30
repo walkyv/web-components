@@ -1,0 +1,15 @@
+language: node_js
+script: 'true'
+node_js:
+- '9'
+before_install:
+- rvm install 2.3.1
+- gem install sass
+- npm install -g gulp-cli
+install:
+- npm install
+- gulp styles
+- gulp babel
+branches:
+  only:
+  - master
