@@ -85,5 +85,29 @@ To set the title and toggle action buttons, see the API below.
 		<button class="pe-btn pe-btn__primary--btn_large">Click Me</button>
     </pearson-modal>
 
+## Events
+|Event| Description |
+|--|--|
+| Success | This event will fire off after the success button in the modal has been pressed |
+| Cancel |  This event will fire off after the cancel button in the modal has been pressed|
+| Close |  This event will fire off after the modal has closed without action|
+
+**Example Code:**
+
+    <!-- you can query a web component like any other element in JavaScript -->
+    const modal = document.querySelector('pearson-modal');
+
+    modal.addEventListener('success', () => {  
+    // do something
+    });
+    
+    modal.addEventListener('cancel', () => {  
+    // do something
+    });
+    
+    modal.addEventListener('close', () => {  
+    // do something
+    });
+
 
 
