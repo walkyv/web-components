@@ -62,7 +62,7 @@ Add the `<pearson-modal> </pearson-modal>` tag to the page.  You can add any con
 	    	</section>
 	    </main>
 	    
-	    <pearson-modal>
+	    <pearson-modal buttonReferenceId="trigger-modal">
 	    	<p> Hello World </p>
 	    </pearson-modal>
     </body>
