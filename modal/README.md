@@ -114,6 +114,7 @@ To set the title and toggle action buttons, see the API below.
 
 ## Events
 We provide 3 different JavaScript events
+
 |Event| Description |
 |--|--|
 | Success | This event will fire off after the success button in the modal has been pressed |
