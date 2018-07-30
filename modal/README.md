@@ -22,7 +22,36 @@ Import the web component onto the page, inbetween the `<head>` tags
 	</head>
 
 **Important Note:**
-The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source.  If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
+
+> The import path will be in the **node_modules** folder, which is
+> usually held outside the applicaiton source.  If you publish your
+> application to a **./public** or **./dist** folder you will want to
+> write a script to copy this dependency to a desired location.
+
+**To Use**
+To use the modal on your page, use the `<pearson-modal> </pearson-modal>` tag.  You can add any content you like between the tags as normal HTML5 markup, and it will show up in the body of the modal.
+
+**Important Note:**  
+
+> To maintain accessibility you will need to keep the modal tag adjacent
+> to your main content.  The main content must be wrapped in an element
+> with an ID of main.
+> 
+
+**Example Code:** 
+
+    <!-- for accessibility, the must be adjacent to an element with an id of main -->
+    <main id="main">
+    	<section class="container">
+    		<button id="trigger-modal">Open Modal</button>
+    	</section>
+    </main>
+    
+    <pearson-modal>
+    	<p> Hello World </p>
+    </pearson-modal>
+
+To set the title and toggle action buttons, see the API below.
 
 ## API 
 
@@ -46,7 +75,7 @@ The import path will be in the **node_modules** folder, which is usually held ou
     <!-- place modal before the end of the body and pass in the reference ID of the button that triggers the modal -->
     <pearson-modal
     	buttonReferenceId="trigger-modal"
-    	modalTitleText="Basic Title"
+    	modalTitleText="Modal Title"
     	successButtonText="Success"
     	cancelButtonText="Cancel"
     	showFooter="true"
