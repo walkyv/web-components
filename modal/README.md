@@ -25,6 +25,7 @@ Import the web component onto the page, inbetween the `<head>` tags
 	</head>
 
 <br>
+
 **Important Note:**
 
 > The import path will be in the **node_modules** folder, which is
@@ -41,7 +42,9 @@ To use the modal on your page, use the `<pearson-modal> </pearson-modal>` tag.  
 > to your main content.  The main content must be wrapped in an element
 > with an ID of main.
 > 
+
 <br>
+
 **Example Code:** 
 
     <!-- for accessibility, the must be adjacent to an element with an id of main -->
@@ -68,7 +71,9 @@ To set the title and toggle action buttons, see the API below.
 | showFooter | Set to "True" to show the footer with success and cancel buttons, else set to "False"|
 |successButtonText | The text you want to pass into the success button (if showFooter is set to true)|
 |cancelButtonText | The text you want to pass into the cancel button
+
 <br>
+
 **Example Code:** 
 
     <!-- for accessibility, the must be adjacent to an element with an id of main -->
@@ -99,7 +104,9 @@ To set the title and toggle action buttons, see the API below.
 | Success | This event will fire off after the success button in the modal has been pressed |
 | Cancel |  This event will fire off after the cancel button in the modal has been pressed|
 | Close |  This event will fire off after the modal has closed without action|
+
 <br>
+
 **Example Code:**
 
     <!-- you can query a web component like any other element in JavaScript -->
