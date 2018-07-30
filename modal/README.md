@@ -107,7 +107,7 @@ To set the title and toggle action buttons, see the API below.
     >
 		<p>Pass in elements as children to the modal</p>
 		<input type="text" />
-		<button class="pe-btn pe-btn__primary--btn_large">Click Me</button>
+		<button">Click Me</button>
     </pearson-modal>
 
 <br>
