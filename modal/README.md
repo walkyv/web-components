@@ -1,3 +1,4 @@
+
 [![Build Status](https://travis-ci.com/pearson-ux/web-components.svg?token=yRiZW31ciCX2AwmRD34E&branch=master)](https://travis-ci.com/pearson-ux/web-components)
 
 # A11y Modal Web Component
@@ -8,6 +9,7 @@ A shareable, accessible, modal, powered by web components.
 
 ## Install
 Before you install, make sure you have all the appropriate polyfills from the main README.md in place.
+https://github.com/pearson-ux/web-components/blob/master/README.md
 
     cd my-app
     npm install --save @pearson-ux/modal
@@ -37,7 +39,7 @@ Import the web component onto the page, inbetween the `<head>` tags
 <br>
 
 **To Use**
-To use the modal on your page, use the `<pearson-modal> </pearson-modal>` tag.  You can add any content you like between the tags as normal HTML5 markup, and it will show up in the body of the modal.
+Add the `<pearson-modal> </pearson-modal>` tag to the page.  You can add any content you like between the tags as normal HTML5 markup, and it will show up in the body of the modal.
 
 <br>
 
@@ -52,16 +54,18 @@ To use the modal on your page, use the `<pearson-modal> </pearson-modal>` tag.  
 
 **Example Code:** 
 
-    <!-- for accessibility, the must be adjacent to an element with an id of main -->
-    <main id="main">
-    	<section class="container">
-    		<button id="trigger-modal">Open Modal</button>
-    	</section>
-    </main>
-    
-    <pearson-modal>
-    	<p> Hello World </p>
-    </pearson-modal>
+    <body>
+	    <!-- for accessibility, the must be adjacent to an element with an id of main -->
+	    <main id="main">
+	    	<section class="container">
+	    		<button id="trigger-modal">Open Modal</button>
+	    	</section>
+	    </main>
+	    
+	    <pearson-modal>
+	    	<p> Hello World </p>
+	    </pearson-modal>
+    </body>
 
 To set the title and toggle action buttons, see the API below.
 
@@ -72,7 +76,7 @@ To set the title and toggle action buttons, see the API below.
 | Attribute |  Description|
 |--|--|
 |buttonReferenceId  | This is the button id of the trigger that launches the modal. |
-|modalTitleText  | The title text you want to pass into the modal to dispaly. |
+|modalTitleText  | The title text you want to pass into the modal to display. |
 | showFooter | Set to "True" to show the footer with success and cancel buttons, else set to "False"|
 |successButtonText | The text you want to pass into the success button (if showFooter is set to true)|
 |cancelButtonText | The text you want to pass into the cancel button
@@ -104,6 +108,7 @@ To set the title and toggle action buttons, see the API below.
 <br>
 
 ## Events
+We provide 3 different JavaScript events
 |Event| Description |
 |--|--|
 | Success | This event will fire off after the success button in the modal has been pressed |
