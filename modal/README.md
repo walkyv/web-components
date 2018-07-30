@@ -5,7 +5,9 @@
 
 A shareable, accessible, modal, powered by web components.
 
-## demo
+<br>
+
+## Demo
 https://pearson-ux.github.io/web-components/modal/example.html
 
 <br>
