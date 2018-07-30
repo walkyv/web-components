@@ -11,7 +11,7 @@ Before you install, make sure you have all the appropriate polyfills from the ma
     cd my-app
     npm install --save @pearson-ux/modal
  
-<br><br>
+<br>
 
 ## Usage
 
@@ -64,7 +64,7 @@ To use the modal on your page, use the `<pearson-modal> </pearson-modal>` tag.  
 
 To set the title and toggle action buttons, see the API below.
 
-<br><br>
+<br>
 
 ## API 
 
@@ -100,7 +100,7 @@ To set the title and toggle action buttons, see the API below.
 		<button class="pe-btn pe-btn__primary--btn_large">Click Me</button>
     </pearson-modal>
 
-<br><br>
+<br>
 
 ## Events
 |Event| Description |
