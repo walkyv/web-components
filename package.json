@@ -1,0 +1,20 @@
+{
+  "name": "web-components",
+  "version": "1.0.0",
+  "description": "a library of pearson web components",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "modal": "cd modal && npm install && gulp styles && gulp babel"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pearson-ux/web-components.git"
+  },
+  "author": "David O'Dey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pearson-ux/web-components/issues"
+  },
+  "homepage": "https://github.com/pearson-ux/web-components#readme"
+}
