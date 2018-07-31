@@ -1,4 +1,5 @@
 
+
 [![Build Status](https://travis-ci.com/pearson-ux/web-components.svg?token=yRiZW31ciCX2AwmRD34E&branch=master)](https://travis-ci.com/pearson-ux/web-components)
 
 # web-components
@@ -25,10 +26,10 @@ If you prefer not to use a CDN, you can download these polyfills locally with NP
 
 > **Important note:**  Anyone can contribute.  All code must be subject to a througough accessibility review.  All code must be submitted through a pull request.  All code must go through proper code review before it can be merged into master.  If you have any questions about the process, please email david.odey@pearson.com 
 
-To get started assign yourself an open issue in GitHub.  
+**To get started assign yourself an open issue in GitHub.**  
 https://github.com/pearson-ux/web-components/issues
 
-To view the project roadmap:
+**To view the project roadmap:**
 https://github.com/pearson-ux/web-components/projects
 
 <br>
