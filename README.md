@@ -25,7 +25,7 @@ If you prefer not to use a CDN, you can download these polyfills locally with NP
 
 > **Important note:**  Anyone can contribute.  All code must be subject to a througough accessibility review.  All code must be submitted through a pull request.  All code must go through proper code review before it can be merged into master.  If you have any questions about the process, please email david.odey@pearson.com 
 
-To get started pull an open issue in github.  
+To get started assign yourself an open issue in github.  
 
 If you are starting a new web component:
 - Clone or fork this repo.
