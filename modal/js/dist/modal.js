@@ -52,8 +52,17 @@ var Modal = function (_HTMLElement) {
         var _cancelButton = shadow.querySelector('#cancelButton'),
             saveButton = shadow.querySelector('#successButton');
 
-        _cancelButton.innerHTML = cancelBtnText;
-        saveButton.innerHTML = successBtnText;
+        if (cancelBtnText !== null) {
+          _cancelButton.innerHTML = cancelBtnText;
+        } else {
+          _cancelButton.innerHTML = "Cancel";
+        }
+
+        if (successBtnText !== null) {
+          saveButton.innerHTML = successBtnText;
+        } else {
+          saveButton.innerHTML = "Save";
+        }
       }
 
       var overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
@@ -63,7 +72,11 @@ var Modal = function (_HTMLElement) {
       overlayEntryPoint.parentNode.insertBefore(overlayButtonClone, overlayEntryPoint.nextElementSibling);
       overlayEntryPoint.remove();
 
-      title.innerHTML = titleText;
+      if (titleText !== null) {
+        title.innerHTML = titleText;
+      } else {
+        title.innerHTML = "Modal Title";
+      }
 
       // functionality
       var modal = shadow.querySelector('.modal'),

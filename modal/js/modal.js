@@ -37,8 +37,17 @@ class Modal extends HTMLElement {
       const cancelButton = shadow.querySelector('#cancelButton'),
         saveButton = shadow.querySelector('#successButton');
 
-      cancelButton.innerHTML = cancelBtnText;
-      saveButton.innerHTML = successBtnText;
+      if (cancelBtnText !== null) {
+        cancelButton.innerHTML = cancelBtnText;
+      } else {
+        cancelButton.innerHTML = "Cancel"
+      }
+
+      if (successBtnText !== null) {
+        saveButton.innerHTML = successBtnText;
+      } else {
+        saveButton.innerHTML = "Save"
+      }
     }
 
     const overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
@@ -48,7 +57,11 @@ class Modal extends HTMLElement {
     overlayEntryPoint.parentNode.insertBefore(overlayButtonClone, overlayEntryPoint.nextElementSibling)
     overlayEntryPoint.remove();
 
-    title.innerHTML = titleText;
+    if (titleText !== null) {
+      title.innerHTML = titleText;
+    } else {
+      title.innerHTML = "Modal Title"
+    }
 
     // functionality
     let modal = shadow.querySelector('.modal'),
