@@ -1,5 +1,6 @@
 
 
+
 [![Build Status](https://travis-ci.com/pearson-ux/web-components.svg?token=yRiZW31ciCX2AwmRD34E&branch=master)](https://travis-ci.com/pearson-ux/web-components)
 
 # web-components
@@ -39,7 +40,7 @@ https://github.com/pearson-ux/web-components/projects
 - Create a new branch for the component.
 - Create a new folder for the component you are building.
 - Download the web component markup kit as a zip file and place contents in the folder you created to start building out your HTML, CSS and JS.
- - **Web component markup kit - https://github.com/pearson-ux/web-component-markup-kit/tree/master**
+ - **Web component markup kit - https://github.com/pearson-ux/web-component-markup-kit**
  - Build out the accessible component using the markup kit.  Do not include any superfluous code, not relating to the component.
  - Push the branch and submit a pull request for review.
  - When approved we will use this code to build out the web component. 
@@ -55,11 +56,12 @@ https://github.com/pearson-ux/web-components/projects
  - Checkout the branch containing the markup of the code you want to convert.
  - Download the web component spec kit and place contents in the existing folder.
  - Use the web component spec kit as a boilerplate to break up the existing markup into a custom element using html templates and shadow dom.
+  - **Web component spec kit - https://github.com/pearson-ux/web-component-spec-kit**
  - Push the branch and submit a pull request for review.
  - When approved we will publish the component to NPM for consumers.
 
 > **Important Note:** Libraries or frameworks are not allowed.  All components must be built using the web component specification outlined by the W3C and not include
 > any superfluous code not pertaining to the component.  For more information on web components please visit: https://www.webcomponents.org/introduction
 
-To view an existing component and review its structure you can visit: https://github.com/pearson-ux/web-components/tree/master/modal
+To view an existing modal component and review its structure you can visit: https://github.com/pearson-ux/web-components/tree/master/modal
  
