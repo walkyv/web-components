@@ -25,9 +25,15 @@ If you prefer not to use a CDN, you can download these polyfills locally with NP
 
 > **Important note:**  Anyone can contribute.  All code must be subject to a througough accessibility review.  All code must be submitted through a pull request.  All code must go through proper code review before it can be merged into master.  If you have any questions about the process, please email david.odey@pearson.com 
 
-To get started assign yourself an open issue in github.  
+To get started assign yourself an open issue in GitHub.  
+https://github.com/pearson-ux/web-components/issues
 
-If you are starting a new web component:
+To view the project roadmap:
+https://github.com/pearson-ux/web-components/projects
+
+<br>
+
+**Starting a new web component:**
 - Clone or fork this repo.
 - Create a new branch for the component.
 - Create a new folder for the component you are building.
@@ -40,3 +46,19 @@ If you are starting a new web component:
 > **Important note:** Do not clone the markup kit, instead please download it and place the contents in your folder.  This will prevent
 > git from adding the code as a submodule.  We are not supporting git
 > submodules at this time.
+
+<br>
+
+**Converting existing markup to a web component:**
+
+ - Checkout the branch containing the markup of the code you want to convert.
+ - Download the web component spec kit and place contents in the existing folder.
+ - Use the web component spec kit as a boilerplate to break up the existing markup into a custom element using html templates and shadow dom.
+ - Push the branch and submit a pull request for review.
+ - When approved we will publish the component to NPM for consumers.
+
+> **Important Note:** Libraries or frameworks are not allowed.  All components must be built using the web component specification outlined by the W3C and not include
+> any superfluous code not pertaining to the component.  For more information on web components please visit: https://www.webcomponents.org/introduction
+
+To view an existing component and review its structure you can visit: https://github.com/pearson-ux/web-components/tree/master/modal
+ 
