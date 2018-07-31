@@ -6,7 +6,7 @@ A library of pearson web components
 ## Dependencies
 You will need to add the following 3 polyfills, in order for your project to be cross-browser compatible.  These polyfills will need to go between the  `<head>  </head>` tags on the HTML page you want to load the web component on. 
 
- - **Web component Loader - https://cdnjs.com/libraries/webcomponentsjs**
+ - **Web Component Loader - https://cdnjs.com/libraries/webcomponentsjs**
  - **ES5 Adapter - https://cdnjs.com/libraries/webcomponentsjs**
  - **Polyfill-io - https://polyfill.io/v2/docs/examples**
 
@@ -19,3 +19,9 @@ You will need to add the following 3 polyfills, in order for your project to be 
        
 **Additionally** 
 If you prefer not to use a CDN, you can download these polyfills locally with NPM
+
+## Contributing
+To get started pull an open issue in github.  
+
+If you need to build out front end markup please use the following:
+ - **Web component markup kit - https://github.com/pearson-ux/web-component-markup-kit/tree/master**
