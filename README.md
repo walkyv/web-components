@@ -23,5 +23,9 @@ If you prefer not to use a CDN, you can download these polyfills locally with NP
 ## Contributing
 To get started pull an open issue in github.  
 
-If you need to build out front end markup please use the following:
+If you are starting a new web component:
+- Clone or fork this repo.
+- Create a new folder for the component you are building.
+- Use the web component markup kit to build out your HTML, CSS and JS.
  - **Web component markup kit - https://github.com/pearson-ux/web-component-markup-kit/tree/master**
+
