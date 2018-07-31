@@ -38,13 +38,13 @@ https://github.com/pearson-ux/web-components/projects
 - Clone or fork this repo.
 - Create a new branch for the component.
 - Create a new folder for the component you are building.
-- Download the web component markup kit and place contents in the folder you created to start building out your HTML, CSS and JS.
+- Download the web component markup kit as a zip file and place contents in the folder you created to start building out your HTML, CSS and JS.
  - **Web component markup kit - https://github.com/pearson-ux/web-component-markup-kit/tree/master**
  - Build out the accessible component using the markup kit.  Do not include any superfluous code, not relating to the component.
  - Push the branch and submit a pull request for review.
  - When approved we will use this code to build out the web component. 
 
-> **Important note:** Do not clone the markup kit, instead please download it and place the contents in your folder.  This will prevent
+> **Important note:** Do not clone the markup kit, instead please download it as a zip file and place the contents in your folder.  This will prevent
 > git from adding the code as a submodule.  We are not supporting git
 > submodules at this time.
 
