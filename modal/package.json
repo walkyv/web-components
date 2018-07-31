@@ -2,7 +2,7 @@
   "name": "@pearson-ux/modal",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Modal web component",
   "main": "index.html",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pearson-ux/modal-wc.git"
+    "url": "git+https://github.com/pearson-ux/web-components.git"
   },
   "keywords": [
     "pearson-components",
@@ -18,9 +18,9 @@
     "web components"
   ],
   "bugs": {
-    "url": "https://github.com/pearson-ux/modal-wc/issues"
+    "url": "https://github.com/pearson-ux/web-components/issues"
   },
-  "homepage": "https://github.com/pearson-ux/modal-wc#readme",
+  "homepage": "https://github.com/pearson-ux/web-components/blob/master/modal/README.md",
   "dependencies": {
     "@pearson-components/elements-sdk": "git+https://github.com/Pearson-Higher-Ed/elements-sdk.git#unstable-2.0-GLP"
   },
