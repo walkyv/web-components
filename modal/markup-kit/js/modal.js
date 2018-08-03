@@ -98,7 +98,7 @@
   });
 
   document.addEventListener('keyup', event => {
-    if (event.keyCode == '27') {
+    if (event.keyCode === '27') {
       if (main.getAttribute('aria-hidden') === 'true') {
         closeModal();
       }
