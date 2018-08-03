@@ -16,7 +16,6 @@
     viewPortHeight = window.innerHeight;
 
   function closeModal() {
-    console.log(isScroll);
     modalButton.removeAttribute('disabled');
     main.setAttribute('aria-hidden', 'false');
     overlay.classList.add('hidden');
@@ -29,7 +28,6 @@
     if (overlay.tagName === 'BUTTON') {
       overlay.setAttribute('disabled', 'true');
     } else if (isScroll === 'true') {
-      console.log(modal);
       modal = document.querySelector('.modal-container');
       modal.classList.add('hidden');
     }
