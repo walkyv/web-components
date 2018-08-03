@@ -28,12 +28,12 @@
 
     if (overlay.tagName === 'BUTTON') {
       overlay.setAttribute('disabled', 'true');
-    } else if (isScroll === 'true'){
+    } else if (isScroll === 'true') {
       console.log(modal);
       modal = document.querySelector('.modal-container');
       modal.classList.add('hidden');
     } else {
-      return
+      return;
     }
   }
 
@@ -45,7 +45,7 @@
     if (buttonDisabled === null) {
       thisButton.setAttribute('disabled', true);
       main.setAttribute('aria-hidden', 'true');
-      overlay.removeAttribute('disabled')
+      overlay.removeAttribute('disabled');
     }
 
     overlay.classList.remove('hidden');
@@ -57,20 +57,18 @@
       modal.classList.remove('hidden');
       setTimeout(() => {
         modal.scrollIntoView();
-      }, 1)
-
+      }, 1);
     } else if (isSticky === 'true') {
       modal.style.height = viewPortHeight - 100 + 'px';
       body.classList.add('hide-overflow');
       modalBody.classList.add('modal-scroll');
       modal.classList.add('sticky');
       setTimeout(event => {
-        modal.style.transform = "translate(-50%, -50%)";
+        modal.style.transform = 'translate(-50%, -50%)';
         modalBody.scrollTop = 0;
-      }, 100)
-
+      }, 100);
     } else {
-      return
+      return;
     }
 
     if (firstButton !== undefined) {
@@ -80,7 +78,7 @@
     if (overlay.tagName === 'BUTTON') {
       title.focus();
     } else {
-      return null
+      return null;
     }
   });
 
@@ -90,7 +88,7 @@
     });
     overlay.addEventListener('blur', () => {
       title.focus();
-    })
+    });
   }
 
   if (lastButton !== undefined) {
@@ -114,5 +112,4 @@
       }
     }
   });
-
 })();
