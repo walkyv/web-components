@@ -1,4 +1,5 @@
-.drawer-container {
+
+.panel {
   display:flex;
   flex-direction: column;
   width:320px;
@@ -8,12 +9,8 @@
   position:fixed;
   top:0;
 
-  &.closed {
-    right:-320px;
-  };
-
-  &.open {
-    right:0;
+  &[data-panel] {
+    right:-320px
   }
 }
 
@@ -33,6 +30,18 @@
     background:none;
     height:44px;
     width:44px;
+
+    &.back {
+      display:flex;
+      align-items: center;
+      width:auto;
+      svg {
+        margin-right:.5em;
+      }
+      h3 {
+        margin:0;
+      }
+    }
   }
 }
 
@@ -48,4 +57,24 @@
   height:100%;
   overflow-y:scroll;
   -webkit-overflow-scrolling: touch;
+
+  ul {
+    margin:0;
+    padding:0;
+  }
+  li {
+    list-style-type: none;
+    margin-bottom:25px;
+
+    button {
+      cursor:pointer;
+      text-align: left;
+      background:none;
+      border:0;
+      p:first-child {
+
+      }
+    }
+  }
+
 }

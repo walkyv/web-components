@@ -1,52 +1,92 @@
 'use strict';
 
 (function () {
-  // do something
-  var drawer = document.getElementById('drawer'),
-      button = document.getElementById('openDrawer'),
-      mainContent = document.getElementById('main'),
-      closeButton = document.querySelector('.close');
+  var trigger = document.getElementById('openDrawer'),
+      drawer = document.getElementById('drawer'),
+      panels = drawer.querySelectorAll('.panel'),
+      panelOne = document.querySelector('[data-panel="1"]'),
+      questions = panelOne.querySelectorAll('input, button, select, a');
 
-  function closeDrawer() {
-    drawer.classList.remove('slideInRight');
-    drawer.classList.add('slideOutRight');
-    drawer.setAttribute('aria-hidden', true);
-    mainContent.setAttribute('aria-hidden', closed);
-
-    setTimeout(function (event) {
-      drawer.classList.remove('open');
-      drawer.classList.remove('slideOutRight');
-      drawer.classList.add('closed');
-      button.removeAttribute('disabled');
-      button.focus();
-    }, 1100);
+  function currentPanel() {
+    return drawer.getAttribute('data-current-panel');
   }
 
-  button.addEventListener('click', function (event) {
-    drawer.classList.remove('closed');
-    drawer.classList.add('open');
-    drawer.classList.remove('slideOutRight');
-    drawer.classList.add('slideInRight');
-    drawer.setAttribute('aria-hidden', false);
-    mainContent.setAttribute('aria-hidden', true);
-    button.setAttribute('disabled', true);
-    closeButton.setAttribute('disabled', true);
-    closeButton.focus();
-    setTimeout(function (event) {
-      closeButton.removeAttribute('disabled');
-      closeButton.focus();
-    }, 1100);
-  });
-
-  closeButton.addEventListener('click', function (event) {
-    closeDrawer();
-  });
-
-  document.addEventListener('keyup', function (event) {
-    if (event.code === 'Escape') {
-      if (closeButton.hasAttribute('disabled') === false) {
-        closeDrawer();
+  function returnPanel() {
+    var panelToShow = currentPanel();
+    var show = '';
+    panels.forEach(function (panel) {
+      var dataPanel = panel.getAttribute('data-panel');
+      if (panelToShow === dataPanel) {
+        show = panel;
       }
-    }
+    });
+    return show;
+  }
+
+  function clickHandlers(element) {
+    var buttons = element.querySelectorAll('button');
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function (event) {
+        if (event.currentTarget.classList.contains('back')) {
+          closePanel(returnPanel());
+          showPanel(panelOne);
+          drawer.setAttribute('data-current-panel', '1');
+        } else {
+          closePanel(panelOne);
+          closePanel(returnPanel());
+        }
+      });
+    });
+  }
+
+  function showPanel(panel) {
+    panel.style.right = '0';
+    panel.style.display = 'flex';
+    focusTrap(panel);
+  }
+
+  function closePanel(panel) {
+    panel.style.right = '-320px';
+    panel.style.display = 'none';
+    trigger.focus();
+  }
+
+  function expandPanel(panel) {
+    panel.style.right = '320px';
+    panel.style.display = 'flex';
+  }
+
+  function focusTrap(panel) {
+    var focusItems = panel.querySelectorAll('button, a, input, select');
+    focusItems[0].focus();
+    focusItems[focusItems.length - 1].addEventListener('blur', function (event) {
+      event.preventDefault();
+      if (event.sourceCapabilities) {
+        focusItems[0].focus();
+        console.log(event);
+      } else if (!event.relatedTarget) {
+        console.log('no target', focusItems[0]);
+        focusItems[0].focus();
+      }
+      event.stopImmediatePropagation();
+    });
+  }
+
+  questions.forEach(function (question) {
+    question.addEventListener('click', function (event) {
+      if (!question.classList.contains('close')) {
+        var showPanelNumber = event.currentTarget.getAttribute('data-show-panel');
+        expandPanel(returnPanel());
+        drawer.setAttribute('data-current-panel', showPanelNumber);
+        showPanel(returnPanel());
+        clickHandlers(returnPanel());
+      } else {
+        closePanel(returnPanel());
+      }
+    });
+  });
+
+  trigger.addEventListener('click', function (event) {
+    showPanel(returnPanel());
   });
 })();

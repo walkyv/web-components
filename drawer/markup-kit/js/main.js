@@ -1,52 +1,97 @@
 'use strict';
 (function() {
-  // do something
-  const drawer = document.getElementById('drawer'),
-    button = document.getElementById('openDrawer'),
-    mainContent = document.getElementById('main'),
-    closeButton = document.querySelector('.close');
+  const trigger = document.getElementById('openDrawer'),
+    drawer = document.getElementById('drawer'),
+    panels = drawer.querySelectorAll('.panel'),
+    panelOne = document.querySelector('[data-panel="1"]'),
+    questions = panelOne.querySelectorAll('input, button, select, a');
 
-  function closeDrawer() {
-    drawer.classList.remove('slideInRight');
-    drawer.classList.add('slideOutRight');
-    drawer.setAttribute('aria-hidden', true);
-    mainContent.setAttribute('aria-hidden', closed);
+  function currentPanel () {
+    return drawer.getAttribute('data-current-panel');
+  }
 
-    setTimeout(event => {
-      drawer.classList.remove('open');
-      drawer.classList.remove('slideOutRight');
-      drawer.classList.add('closed');
-      button.removeAttribute('disabled');
-      button.focus();
-    },1100)
+  function returnPanel () {
+    let panelToShow = currentPanel();
+    let show = '';
+    panels.forEach(panel => {
+      const dataPanel = panel.getAttribute('data-panel');
+      if (panelToShow === dataPanel) {
+        show = panel
+      }
+    });
+    return show;
+  }
+
+  function clickHandlers (element) {
+    const buttons = element.querySelectorAll('button');
+    buttons.forEach(button => {
+      button.addEventListener('click', event => {
+        if (event.currentTarget.classList.contains('back')) {
+          closePanel(returnPanel());
+          showPanel(panelOne)
+          drawer.setAttribute('data-current-panel', '1');
+        } else {
+          closePanel(panelOne);
+          closePanel(returnPanel());
+
+        }
+      })
+    })
+  }
+
+  function showPanel (panel) {
+    panel.style.right = '0';
+    panel.style.display = 'flex';
+    focusTrap(panel);
+  }
+
+  function closePanel (panel) {
+    panel.style.right = '-320px';
+    panel.style.display = 'none';
+    trigger.focus();
+  }
+
+  function expandPanel (panel) {
+    panel.style.right = '320px';
+    panel.style.display = 'flex'
+  }
+
+  function focusTrap (panel) {
+    const focusItems = panel.querySelectorAll('button, a, input, select');
+    focusItems[0].focus();
+    focusItems[focusItems.length-1].addEventListener('blur', event => {
+      event.preventDefault();
+      if (event.sourceCapabilities) {
+        focusItems[0].focus();
+        console.log(event);
+      } else if (!event.relatedTarget){
+        console.log('no target', focusItems[0])
+        focusItems[0].focus();
+      }
+      event.stopImmediatePropagation();
+    });
+
 
   }
 
-  button.addEventListener('click', event => {
-    drawer.classList.remove('closed');
-    drawer.classList.add('open');
-    drawer.classList.remove('slideOutRight');
-    drawer.classList.add('slideInRight');
-    drawer.setAttribute('aria-hidden', false);
-    mainContent.setAttribute('aria-hidden', true);
-    button.setAttribute('disabled', true);
-    closeButton.setAttribute('disabled', true);
-    closeButton.focus();
-    setTimeout( event => {
-      closeButton.removeAttribute('disabled');
-      closeButton.focus();
-    },1100)
-  });
-
-  closeButton.addEventListener('click', event => {
-    closeDrawer();
-  });
-
-  document.addEventListener('keyup', event=> {
-    if (event.code === 'Escape') {
-      if (closeButton.hasAttribute('disabled') === false) {
-        closeDrawer();
+  questions.forEach(question => {
+    question.addEventListener('click', event => {
+      if (!question.classList.contains('close')) {
+        const showPanelNumber = event.currentTarget.getAttribute('data-show-panel');
+        expandPanel(returnPanel());
+        drawer.setAttribute('data-current-panel', showPanelNumber);
+        showPanel(returnPanel());
+        clickHandlers(returnPanel())
+      } else {
+        closePanel(returnPanel())
       }
-    }
+
+    })
+  });
+
+  trigger.addEventListener('click', event => {
+    showPanel(returnPanel())
   })
+
+
 })();
