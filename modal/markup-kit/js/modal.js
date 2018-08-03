@@ -32,8 +32,6 @@
       console.log(modal);
       modal = document.querySelector('.modal-container');
       modal.classList.add('hidden');
-    } else {
-      return;
     }
   }
 
@@ -67,8 +65,6 @@
         modal.style.transform = 'translate(-50%, -50%)';
         modalBody.scrollTop = 0;
       }, 100);
-    } else {
-      return;
     }
 
     if (firstButton !== undefined) {
@@ -77,8 +73,6 @@
 
     if (overlay.tagName === 'BUTTON') {
       title.focus();
-    } else {
-      return null;
     }
   });
 
