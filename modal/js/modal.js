@@ -130,7 +130,6 @@ class Modal extends HTMLElement {
     // for modals that are not programatically created
     // when the modal trigger is clicked show modal
     modalButton.addEventListener('click', event => {
-      modalButtons;
       setModalPosition();
 
       let modal = shadow.querySelector('#modal');
@@ -147,9 +146,10 @@ class Modal extends HTMLElement {
       overlay.classList.remove('fadeOut');
       overlay.classList.add('fadeIn');
 
+      modal.classList.remove('hidden');
+
       setTimeout(event => {
         modal.classList.remove('slideOutDown');
-        modal.classList.remove('hidden');
         modal.classList.add('slideInDown');
         if (firstButton !== undefined) {
           firstButton.focus();
