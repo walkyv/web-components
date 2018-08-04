@@ -55,13 +55,13 @@ var Modal = function (_HTMLElement) {
         if (cancelBtnText !== null) {
           _cancelButton.innerHTML = cancelBtnText;
         } else {
-          _cancelButton.innerHTML = "Cancel";
+          _cancelButton.innerHTML = 'Cancel';
         }
 
         if (successBtnText !== null) {
           saveButton.innerHTML = successBtnText;
         } else {
-          saveButton.innerHTML = "Save";
+          saveButton.innerHTML = 'Save';
         }
       }
 
@@ -75,7 +75,7 @@ var Modal = function (_HTMLElement) {
       if (titleText !== null) {
         title.innerHTML = titleText;
       } else {
-        title.innerHTML = "Modal Title";
+        title.innerHTML = 'Modal Title';
       }
 
       // functionality
@@ -205,7 +205,7 @@ var Modal = function (_HTMLElement) {
 
       // add keyboard accessibility
       shadow.addEventListener('keyup', function (event) {
-        if (event.keyCode == '27') {
+        if (event.keyCode === '27') {
           if (main.getAttribute('aria-hidden') === 'true') {
             closeModal();
             setTimeout(function (event) {

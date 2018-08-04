@@ -9,7 +9,6 @@ class Modal extends HTMLElement {
     const shadow = this.attachShadow({
         mode: 'open'
       }),
-
       currentDoc = document.querySelector('link[href$="index.html"]').import;
     let template = currentDoc.querySelector('#template');
     const clone = document.importNode(template.content, true);
@@ -24,7 +23,6 @@ class Modal extends HTMLElement {
       showFooter = this.getAttribute('showFooter'),
       showClose = this.getAttribute('showClose');
 
-
     // create elements
     // create the footer is attribute is set to true
     if (showFooter === 'true') {
@@ -32,7 +30,10 @@ class Modal extends HTMLElement {
         actionsClone = document.importNode(actionsTemplate.content, true),
         actionsEntryPoint = shadow.querySelector('.modal-body');
 
-      actionsEntryPoint.parentNode.insertBefore(actionsClone, actionsEntryPoint.nextSibling);
+      actionsEntryPoint.parentNode.insertBefore(
+        actionsClone,
+        actionsEntryPoint.nextSibling
+      );
 
       const cancelButton = shadow.querySelector('#cancelButton'),
         saveButton = shadow.querySelector('#successButton');
@@ -40,27 +41,33 @@ class Modal extends HTMLElement {
       if (cancelBtnText !== null) {
         cancelButton.innerHTML = cancelBtnText;
       } else {
-        cancelButton.innerHTML = "Cancel"
+        cancelButton.innerHTML = 'Cancel';
       }
 
       if (successBtnText !== null) {
         saveButton.innerHTML = successBtnText;
       } else {
-        saveButton.innerHTML = "Save"
+        saveButton.innerHTML = 'Save';
       }
     }
 
     const overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
-      overlayButtonClone = document.importNode(overlayButtonTemplate.content, true),
+      overlayButtonClone = document.importNode(
+        overlayButtonTemplate.content,
+        true
+      ),
       overlayEntryPoint = shadow.querySelector('#modalPlaceholder');
 
-    overlayEntryPoint.parentNode.insertBefore(overlayButtonClone, overlayEntryPoint.nextElementSibling)
+    overlayEntryPoint.parentNode.insertBefore(
+      overlayButtonClone,
+      overlayEntryPoint.nextElementSibling
+    );
     overlayEntryPoint.remove();
 
     if (titleText !== null) {
       title.innerHTML = titleText;
     } else {
-      title.innerHTML = "Modal Title"
+      title.innerHTML = 'Modal Title';
     }
 
     // functionality
@@ -78,24 +85,23 @@ class Modal extends HTMLElement {
       cancelButton = shadow.querySelector('.modal-cancel'),
       successButton = shadow.querySelector('.modal-success'),
       closeButtons = shadow.querySelectorAll('.modal-close');
-      if (modalButtons[0]) {
-        firstButton = modalButtons[0]
-      } else {
-        firstButton = buttons[0];
-      }
+    if (modalButtons[0]) {
+      firstButton = modalButtons[0];
+    } else {
+      firstButton = buttons[0];
+    }
 
-
-    function setModalPosition () {
+    function setModalPosition() {
       setTimeout(() => {
         const modalPosition = modal.getBoundingClientRect();
         window.scrollTo(0, 0);
-        (modalPosition.top)
+        modalPosition.top;
         if (modalPosition.top <= 0) {
           modal.style.top = '50px';
           modal.style.transform = 'translate(-50%)';
           modal.style.marginBottom = '50px';
         }
-      },100);
+      }, 100);
     }
 
     function closeModal() {
@@ -111,22 +117,20 @@ class Modal extends HTMLElement {
 
       setTimeout(event => {
         overlay.classList.add('hidden');
-        overlay.classList.remove('fadeOut')
-      },900);
+        overlay.classList.remove('fadeOut');
+      }, 900);
 
       setTimeout(event => {
         modal.classList.add('hidden');
-        modal.classList.remove('slideOutDown')
+        modal.classList.remove('slideOutDown');
         modalButton.focus();
-      },400);
-
-
+      }, 400);
     }
 
     // for modals that are not programatically created
     // when the modal trigger is clicked show modal
     modalButton.addEventListener('click', event => {
-      (modalButtons);
+      modalButtons;
       setModalPosition();
 
       let modal = shadow.querySelector('#modal');
@@ -136,54 +140,58 @@ class Modal extends HTMLElement {
       if (buttonDisabled === null) {
         thisButton.setAttribute('disabled', true);
         main.setAttribute('aria-hidden', 'true');
-        overlay.removeAttribute('disabled')
+        overlay.removeAttribute('disabled');
       }
 
       overlay.classList.remove('hidden');
       overlay.classList.remove('fadeOut');
       overlay.classList.add('fadeIn');
 
-      setTimeout(event=> {
+      setTimeout(event => {
         modal.classList.remove('slideOutDown');
         modal.classList.remove('hidden');
         modal.classList.add('slideInDown');
         if (firstButton !== undefined) {
           firstButton.focus();
         }
-      },250)
-
+      }, 250);
     });
-
 
     // add event listener to the close button
     if (closeButtons !== null) {
       closeButtons.forEach(button => {
-        (button);
+        button;
         button.addEventListener('click', event => {
           closeModal();
-          setTimeout( event => {
-            this.dispatchEvent(new Event('close', {bubbles: true, composed: true}));
-          },500)
-        })
+          setTimeout(event => {
+            this.dispatchEvent(
+              new Event('close', { bubbles: true, composed: true })
+            );
+          }, 500);
+        });
       });
     }
 
     if (successButton !== null) {
       successButton.addEventListener('click', event => {
         closeModal();
-        setTimeout( event => {
-          this.dispatchEvent(new Event('success', {bubbles: true, composed: true}));
-        },500)
-      })
+        setTimeout(event => {
+          this.dispatchEvent(
+            new Event('success', { bubbles: true, composed: true })
+          );
+        }, 500);
+      });
     }
 
     if (cancelButton !== null) {
       cancelButton.addEventListener('click', event => {
         closeModal();
-        setTimeout( event => {
-          this.dispatchEvent(new Event('cancel', {bubbles: true, composed: true}));
-        },500)
-      })
+        setTimeout(event => {
+          this.dispatchEvent(
+            new Event('cancel', { bubbles: true, composed: true })
+          );
+        }, 500);
+      });
     }
 
     // focus trap
@@ -195,19 +203,20 @@ class Modal extends HTMLElement {
 
     // add keyboard accessibility
     shadow.addEventListener('keyup', event => {
-      if (event.keyCode == '27') {
+      if (event.keyCode === '27') {
         if (main.getAttribute('aria-hidden') === 'true') {
           closeModal();
-          setTimeout( event => {
-            this.dispatchEvent(new Event('close', {bubbles: true, composed: true}));
-          },500)
+          setTimeout(event => {
+            this.dispatchEvent(
+              new Event('close', { bubbles: true, composed: true })
+            );
+          }, 500);
         }
       }
     });
 
     // sets the positioning for modals that are programmatically created and have scrolling content
-    setModalPosition()
-
+    setModalPosition();
   }
 }
 customElements.define('pearson-modal', Modal);
