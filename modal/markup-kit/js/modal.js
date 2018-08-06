@@ -1,5 +1,19 @@
 'use strict';
 (function() {
+  const FOCUSABLE_ELEMENTS = `
+    a[href]:not([tabindex^="-"]):not([inert]),
+    area[href]:not([tabindex^="-"]):not([inert]),
+    input:not([disabled]):not([inert]),
+    select:not([disabled]):not([inert]),
+    textarea:not([disabled]):not([inert]),
+    button:not([disabled]):not([inert]),
+    iframe:not([tabindex^="-"]):not([inert]),
+    audio:not([tabindex^="-"]):not([inert]),
+    video:not([tabindex^="-"]):not([inert]),
+    [contenteditable]:not([tabindex^="-"]):not([inert]),
+    [tabindex]:not([tabindex^="-"]):not([inert])`,
+    TAB_KEY = 9,
+    ESCAPE_KEY = 27;
   let modal = document.getElementById('modal');
   const modalButton = document.getElementById('trigger-modal'),
     body = document.getElementsByTagName('body')[0],
@@ -14,6 +28,21 @@
     isScroll = modal.getAttribute('data-scroll'),
     isSticky = modal.getAttribute('data-sticky'),
     viewPortHeight = window.innerHeight;
+
+  function bindKeyPress(e) {
+    if (main.getAttribute('aria-hidden') === 'true') {
+      if (e.which === ESCAPE_KEY) {
+        closeModal();
+      }
+      if (e.which === TAB_KEY) {
+        trapTabKey(modal, e);
+      }
+    }
+  }
+
+  function trapTabKey(node, e) {
+    console.log('trapping tab key');
+  }
 
   function closeModal() {
     modalButton.removeAttribute('disabled');
@@ -97,11 +126,5 @@
     closeModal();
   });
 
-  document.addEventListener('keyup', event => {
-    if (event.keyCode === '27') {
-      if (main.getAttribute('aria-hidden') === 'true') {
-        closeModal();
-      }
-    }
-  });
+  document.addEventListener('keydown', bindKeyPress);
 })();
