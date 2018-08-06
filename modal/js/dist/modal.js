@@ -126,13 +126,16 @@ var Modal = function (_HTMLElement) {
         setTimeout(function (event) {
           overlay.classList.add('hidden');
           overlay.classList.remove('fadeOut');
-        }, 900);
+        }, 800);
 
         setTimeout(function (event) {
           modal.classList.add('hidden');
           modal.classList.remove('slideOutDown');
-          modalButton.focus();
         }, 400);
+
+        setTimeout(function (event) {
+          modalButton.focus();
+        }, 801);
       }
 
       // for modals that are not programatically created
@@ -155,10 +158,10 @@ var Modal = function (_HTMLElement) {
         overlay.classList.add('fadeIn');
 
         modal.classList.remove('hidden');
-
+        modal.classList.remove('slideOutDown');
+        modal.classList.add('slideInDown');
         setTimeout(function (event) {
-          modal.classList.remove('slideOutDown');
-          modal.classList.add('slideInDown');
+
           if (firstButton !== undefined) {
             firstButton.focus();
           }

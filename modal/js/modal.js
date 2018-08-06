@@ -118,13 +118,16 @@ class Modal extends HTMLElement {
       setTimeout(event => {
         overlay.classList.add('hidden');
         overlay.classList.remove('fadeOut');
-      }, 900);
+      }, 800);
 
       setTimeout(event => {
         modal.classList.add('hidden');
         modal.classList.remove('slideOutDown');
-        modalButton.focus();
       }, 400);
+
+      setTimeout(event => {
+        modalButton.focus();
+      },801)
     }
 
     // for modals that are not programatically created
@@ -147,10 +150,10 @@ class Modal extends HTMLElement {
       overlay.classList.add('fadeIn');
 
       modal.classList.remove('hidden');
-
+      modal.classList.remove('slideOutDown');
+      modal.classList.add('slideInDown');
       setTimeout(event => {
-        modal.classList.remove('slideOutDown');
-        modal.classList.add('slideInDown');
+
         if (firstButton !== undefined) {
           firstButton.focus();
         }
