@@ -14,10 +14,12 @@
 		<button id="trigger-modal" class="pe-btn pe-btn--btn_large">Trigger Modal Without Close Button</button>
 	</main>
 	<button class="hidden" id="modalOverlay" aria-label="Close Modal Dialog Title dialog" disabled="true">&nbsp;</button>
-	<div class="modal hidden" id="modal" role="dialog" aria-labelledby="dialog-heading" aria-describedby="dialog-description">
-		<h2 tabindex="-1" id="dialog-heading" class="pe-title">Modal Dialog Title</h2>
-		<div class="modal-body" id="dialog-description">
-			<p>Pass in JSX elements as children to the modal, You must pass in the text object with valid strings</p>
+	<div id="modalContainer">
+		<div class="modal hidden" id="modal" role="dialog" aria-labelledby="dialog-heading" aria-describedby="dialog-description">
+			<h2 tabindex="-1" id="dialog-heading" class="pe-title">Modal Dialog Title</h2>
+			<div class="modal-body" id="dialog-description">
+				<p>Pass in JSX elements as children to the modal, You must pass in the text object with valid strings</p>
+			</div>
 		</div>
 	</div>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
