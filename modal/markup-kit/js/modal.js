@@ -41,7 +41,31 @@
   }
 
   function trapTabKey(node, e) {
-    console.log('trapping tab key');
+    const focusableChildren = getFocusableChildren(node),
+      focusedItemIdx = focusableChildren.indexOf(document.activeElement),
+      lastFocusableIdx = focusableChildren.length - 1;
+
+    if (e.shiftKey && focusedItemIdx === 0) {
+      focusableChildren[lastFocusableIdx].focus();
+      e.preventDefault();
+    }
+
+    if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
+      focusableChildren[0].focus();
+      e.preventDefault();
+    }
+  }
+
+  function getFocusableChildren(node) {
+    const filter = Array.prototype.filter,
+      focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+    return filter.call(focusableChildren, function(child) {
+      return !!(
+        child.offsetWidth ||
+        child.offsetHeight ||
+        child.getClientRects().length
+      );
+    });
   }
 
   function closeModal() {
@@ -113,10 +137,6 @@
   }
 
   if (lastButton !== undefined) {
-    lastButton.addEventListener('blur', () => {
-      firstButton.focus();
-    });
-
     lastButton.addEventListener('click', () => {
       closeModal();
     });
