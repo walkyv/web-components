@@ -14,12 +14,14 @@
     [tabindex]:not([tabindex^="-"]):not([inert])`,
     TAB_KEY = 9,
     ESCAPE_KEY = 27;
-  let modal = document.getElementById('modal');
-  const modalButton = document.getElementById('trigger-modal'),
-    body = document.getElementsByTagName('body')[0],
-    overlay = document.getElementById('modalOverlay'),
+  const body = document.body,
+    main = body.querySelector('#main'),
+    modalButton = main.querySelector('#trigger-modal');
+
+  const container = body.querySelector('#modalContainer'),
+    overlay = container.querySelector('#modalOverlay'),
+    modal = container.querySelector('#modal'),
     modalBody = modal.querySelector('.modal-body'),
-    main = document.getElementById('main'),
     buttons = modal.querySelectorAll('button'),
     title = modal.querySelector('#dialog-heading'),
     totalButtons = buttons.length - 1,
@@ -100,8 +102,7 @@
     if (overlay.tagName === 'BUTTON') {
       overlay.setAttribute('disabled', 'true');
     } else if (isScroll === 'true') {
-      modal = document.querySelector('.modal-container');
-      modal.classList.add('hidden');
+      container.classList.add('hidden');
     }
   }
 
