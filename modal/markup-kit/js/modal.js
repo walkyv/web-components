@@ -68,6 +68,25 @@
     });
   }
 
+  function maintainFocus(e) {
+    if (
+      main.getAttribute('aria-hidden') === 'true' &&
+      !modal.contains(e.target)
+    ) {
+      setFocusToFirstChild(modal);
+    }
+  }
+
+  function setFocusToFirstChild(node) {
+    const focusableChildren = getFocusableChildren(node),
+      focusableChild =
+        node.querySelector('[autofocus]') || focusableChildren[0];
+
+    if (focusableChild) {
+      focusableChild.focus();
+    }
+  }
+
   function closeModal() {
     modalButton.removeAttribute('disabled');
     main.setAttribute('aria-hidden', 'false');
@@ -147,4 +166,5 @@
   });
 
   document.addEventListener('keydown', bindKeyPress);
+  document.body.addEventListener('focus', maintainFocus, true);
 })();
