@@ -13,8 +13,8 @@
 		<h1>Modal Without Footer</h1>
 		<button id="trigger-modal" class="pe-btn pe-btn--btn_large">Trigger Modal Without Close Button</button>
 	</main>
-	<button class="hidden" id="modalOverlay" aria-label="Close Modal Dialog Title dialog" disabled="true">&nbsp;</button>
 	<div id="modalContainer">
+		<button class="hidden" id="modalOverlay" aria-label="Close Modal Dialog Title dialog" disabled="true" tabindex="-1">&nbsp;</button>
 		<div class="modal hidden" id="modal" role="dialog" aria-labelledby="dialog-heading" aria-describedby="dialog-description">
 			<h2 tabindex="-1" id="dialog-heading" class="pe-title">Modal Dialog Title</h2>
 			<div class="modal-body" id="dialog-description">
