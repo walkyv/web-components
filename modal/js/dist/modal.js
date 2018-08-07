@@ -55,13 +55,13 @@ var Modal = function (_HTMLElement) {
         if (cancelBtnText !== null) {
           _cancelButton.innerHTML = cancelBtnText;
         } else {
-          _cancelButton.innerHTML = "Cancel";
+          _cancelButton.innerHTML = 'Cancel';
         }
 
         if (successBtnText !== null) {
           saveButton.innerHTML = successBtnText;
         } else {
-          saveButton.innerHTML = "Save";
+          saveButton.innerHTML = 'Save';
         }
       }
 
@@ -75,7 +75,7 @@ var Modal = function (_HTMLElement) {
       if (titleText !== null) {
         title.innerHTML = titleText;
       } else {
-        title.innerHTML = "Modal Title";
+        title.innerHTML = 'Modal Title';
       }
 
       // functionality
@@ -126,19 +126,21 @@ var Modal = function (_HTMLElement) {
         setTimeout(function (event) {
           overlay.classList.add('hidden');
           overlay.classList.remove('fadeOut');
-        }, 900);
+        }, 800);
 
         setTimeout(function (event) {
           modal.classList.add('hidden');
           modal.classList.remove('slideOutDown');
-          modalButton.focus();
         }, 400);
+
+        setTimeout(function (event) {
+          modalButton.focus();
+        }, 801);
       }
 
       // for modals that are not programatically created
       // when the modal trigger is clicked show modal
       modalButton.addEventListener('click', function (event) {
-        modalButtons;
         setModalPosition();
 
         var modal = shadow.querySelector('#modal');
@@ -155,10 +157,11 @@ var Modal = function (_HTMLElement) {
         overlay.classList.remove('fadeOut');
         overlay.classList.add('fadeIn');
 
+        modal.classList.remove('hidden');
+        modal.classList.remove('slideOutDown');
+        modal.classList.add('slideInDown');
         setTimeout(function (event) {
-          modal.classList.remove('slideOutDown');
-          modal.classList.remove('hidden');
-          modal.classList.add('slideInDown');
+
           if (firstButton !== undefined) {
             firstButton.focus();
           }
@@ -205,7 +208,7 @@ var Modal = function (_HTMLElement) {
 
       // add keyboard accessibility
       shadow.addEventListener('keyup', function (event) {
-        if (event.keyCode == '27') {
+        if (event.keyCode === '27') {
           if (main.getAttribute('aria-hidden') === 'true') {
             closeModal();
             setTimeout(function (event) {
