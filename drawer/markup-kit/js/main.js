@@ -1,10 +1,12 @@
 'use strict';
+
 (function() {
   const trigger = document.getElementById('openDrawer'),
     drawer = document.getElementById('drawer'),
     panels = drawer.querySelectorAll('.panel'),
     panelOne = document.querySelector('[data-panel="1"]'),
-    questions = panelOne.querySelectorAll('input, button, select, a');
+    questions = panelOne.querySelectorAll('input, button, select, a'),
+    mainContent = document.getElementById('main');
 
   function currentPanel () {
     return drawer.getAttribute('data-current-panel');
@@ -13,7 +15,7 @@
   function returnPanel () {
     let panelToShow = currentPanel();
     let show = '';
-    panels.forEach(panel => {
+    Array.prototype.forEach.call(panels, panel => {
       const dataPanel = panel.getAttribute('data-panel');
       if (panelToShow === dataPanel) {
         show = panel
@@ -24,7 +26,7 @@
 
   function clickHandlers (element) {
     const buttons = element.querySelectorAll('button');
-    buttons.forEach(button => {
+    Array.prototype.forEach.call(buttons, button => {
       button.addEventListener('click', event => {
         if (event.currentTarget.classList.contains('back')) {
           closePanel(returnPanel());
@@ -43,29 +45,30 @@
     panel.style.right = '0';
     panel.style.display = 'flex';
     focusTrap(panel);
+    mainContent.setAttribute('aria-hidden', 'true')
   }
 
   function closePanel (panel) {
     panel.style.right = '-320px';
     panel.style.display = 'none';
     trigger.focus();
+    mainContent.setAttribute('aria-hidden', 'false')
   }
 
   function expandPanel (panel) {
     panel.style.right = '320px';
-    panel.style.display = 'flex'
+    panel.style.display = 'none'
   }
 
   function focusTrap (panel) {
     const focusItems = panel.querySelectorAll('button, a, input, select');
     focusItems[0].focus();
+    console.log(focusItems)
     focusItems[focusItems.length-1].addEventListener('blur', event => {
-      event.preventDefault();
+    console.log(event)
       if (event.sourceCapabilities) {
         focusItems[0].focus();
-        console.log(event);
-      } else if (!event.relatedTarget){
-        console.log('no target', focusItems[0])
+      } else {
         focusItems[0].focus();
       }
       event.stopImmediatePropagation();
@@ -74,7 +77,7 @@
 
   }
 
-  questions.forEach(question => {
+  Array.prototype.forEach.call(questions, question => {
     question.addEventListener('click', event => {
       if (!question.classList.contains('close')) {
         const showPanelNumber = event.currentTarget.getAttribute('data-show-panel');
@@ -95,3 +98,4 @@
 
 
 })();
+
