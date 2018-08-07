@@ -14,22 +14,22 @@
     [tabindex]:not([tabindex^="-"]):not([inert])`,
     TAB_KEY = 9,
     ESCAPE_KEY = 27;
+
   const body = document.body,
-    main = body.querySelector('#main'),
+    container = body.querySelector('#modalContainer');
+
+  const main = body.querySelector('#main'),
     modalButton = main.querySelector('#trigger-modal');
 
-  const container = body.querySelector('#modalContainer'),
-    overlay = container.querySelector('#modalOverlay'),
+  const overlay = container.querySelector('#modalOverlay'),
     modal = container.querySelector('#modal'),
     modalBody = modal.querySelector('.modal-body'),
-    buttons = modal.querySelectorAll('button'),
     title = modal.querySelector('#dialog-heading'),
-    totalButtons = buttons.length - 1,
-    firstButton = buttons[0],
-    lastButton = buttons[totalButtons],
+    lastButton = modal.querySelector('#lastButton'),
     isScroll = modal.getAttribute('data-scroll'),
-    isSticky = modal.getAttribute('data-sticky'),
-    viewPortHeight = window.innerHeight;
+    isSticky = modal.getAttribute('data-sticky');
+
+  const viewPortHeight = window.innerHeight;
 
   function bindKeyPress(e) {
     if (main.getAttribute('aria-hidden') === 'true') {
@@ -46,6 +46,11 @@
     const focusableChildren = getFocusableChildren(node),
       focusedItemIdx = focusableChildren.indexOf(document.activeElement),
       lastFocusableIdx = focusableChildren.length - 1;
+
+    if (e.target.getAttribute('tabindex') === '-1') {
+      e.preventDefault();
+      return false;
+    }
 
     if (e.shiftKey && focusedItemIdx === 0) {
       focusableChildren[lastFocusableIdx].focus();
@@ -138,25 +143,14 @@
       }, 100);
     }
 
-    if (firstButton !== undefined) {
-      firstButton.focus();
-    }
-
     if (overlay.tagName === 'BUTTON') {
       title.focus();
+    } else {
+      setFocusToFirstChild(container);
     }
   });
 
-  if (overlay.tagName === 'BUTTON') {
-    title.addEventListener('blur', () => {
-      overlay.focus();
-    });
-    overlay.addEventListener('blur', () => {
-      title.focus();
-    });
-  }
-
-  if (lastButton !== undefined) {
+  if (lastButton) {
     lastButton.addEventListener('click', () => {
       closeModal();
     });
