@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width" />
 	<link rel="stylesheet" href="css/style.css" media="all" />
+	<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 </head>
 <body class="">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="pe-icons-sprite" style="display:none">
@@ -15,28 +16,31 @@
 		<path d="M13.749,17.6606035 C14.112,17.2486035 14.076,16.6116035 13.662,16.2436035 L5.509,8.9996035 L13.662,1.7566035 C14.077,1.3896035 14.113,0.752603504 13.749,0.339603504 C13.383,-0.0763964961 12.751,-0.115396496 12.338,0.252603504 L3.338,8.2476035 C3.123,8.4376035 3,8.7126035 3,8.9996035 C3,9.2876035 3.123,9.5616035 3.338,9.7526035 L12.338,17.7476035 C12.751,18.1156035 13.383,18.0766035 13.749,17.6606035"/>
 	</symbol>
 </svg>
+<!-- main content goes here -->
 <main id="main" aria-hidden="false">
 	<button id="openDrawer">Open Drawer</button>
 </main>
-<div id="drawer" class="drawer-container closed animated" aria-hidden="true">
-	<div id="firstElement" tabindex="0"></div>
-	<div class="drawer-header">
-		<h3 class="pe-title">Drawer Title</h3>
-		<button type="button" class="pe-icon--btn close" aria-label="close drawer">
-			<svg focusable="false" class="pe-icon--remove-sm-24" aria-hidden="false" role="img" >
-				<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>
-			</svg>
-		</button>
+<!-- drawer component loads after the main content to support aria-hidden -->
+<div id="drawer" class="drawer-container" aria-hidden="true" data-current-panel="1">
+	<div tabindex="0"></div>
+	<!-- first panel -->
+	<div class="panel closed animated" data-panel="1" aria-hidden="true">
+		<div class="drawer-header" tabindex="0">
+			<h3 class="pe-title">Help Topics</h3>
+			<button type="button" class="pe-icon--btn close" aria-label="close drawer">
+				<svg focusable="false" class="pe-icon--remove-sm-24" role="img" >
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>
+				</svg>
+			</button>
+		</div>
+		<div class="divider"></div>
+		<div class="drawer-content">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce imperdiet dui vitae fringilla tristique. Donec faucibus fringilla scelerisque. Sed maximus non nisl sit amet dapibus. Nullam enim lorem, pretium sollicitudin nisi vitae, pulvinar sodales sapien. Suspendisse dapibus ante id quam luctus hendrerit. Cras tempor sodales tempus. Pellentesque ligula augue, ornare efficitur ullamcorper non, fringilla at mauris. Sed sit amet mauris nec nisl tempus fringilla. Curabitur nec dui sit amet ipsum fermentum pellentesque sit amet eu metus. Aenean vel pharetra magna. Nunc convallis vestibulum eros sed tempus. Praesent nisi erat, sollicitudin nec est non, faucibus ullamcorper purus. Mauris eros lectus, rutrum nec orci et, gravida ullamcorper dui. Vestibulum eget ex feugiat, auctor neque sed, dictum urna. Ut a ipsum tristique, sagittis neque ac, dignissim lorem. Nulla congue tellus in tincidunt poop.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce imperdiet dui vitae fringilla tristique. Donec faucibus fringilla scelerisque. Sed maximus non nisl sit amet dapibus. Nullam enim lorem, pretium sollicitudin nisi vitae, pulvinar sodales sapien. Suspendisse dapibus ante id quam luctus hendrerit. Cras tempor sodales tempus. Pellentesque ligula augue, ornare efficitur ullamcorper non, fringilla at mauris. Sed sit amet mauris nec nisl tempus fringilla. Curabitur nec dui sit amet ipsum fermentum pellentesque sit amet eu metus. Aenean vel pharetra magna. Nunc convallis vestibulum eros sed tempus. Praesent nisi erat, sollicitudin nec est non, faucibus ullamcorper purus. Mauris eros lectus, rutrum nec orci et, gravida ullamcorper dui. Vestibulum eget ex feugiat, auctor neque sed, dictum urna. Ut a ipsum tristique, sagittis neque ac, dignissim lorem. Nulla congue tellus in tincidunt poop.</p>
+		</div>
 	</div>
-	<div class="divider"></div>
-	<div class="drawer-content">
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce imperdiet dui vitae fringilla tristique. Donec faucibus fringilla scelerisque. Sed maximus non nisl sit amet dapibus. Nullam enim lorem, pretium sollicitudin nisi vitae, pulvinar sodales sapien. Suspendisse dapibus ante id quam luctus hendrerit. Cras tempor sodales tempus. Pellentesque ligula augue, ornare efficitur ullamcorper non, fringilla at mauris. Sed sit amet mauris nec nisl tempus fringilla. Curabitur nec dui sit amet ipsum fermentum pellentesque sit amet eu metus. Aenean vel pharetra magna. Nunc convallis vestibulum eros sed tempus. Praesent nisi erat, sollicitudin nec est non, faucibus ullamcorper purus. Mauris eros lectus, rutrum nec orci et, gravida ullamcorper dui. Vestibulum eget ex feugiat, auctor neque sed, dictum urna. Ut a ipsum tristique, sagittis neque ac, dignissim lorem. Nulla congue tellus in tincidunt poop.</p>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce imperdiet dui vitae fringilla tristique. Donec faucibus fringilla scelerisque. Sed maximus non nisl sit amet dapibus. Nullam enim lorem, pretium sollicitudin nisi vitae, pulvinar sodales sapien. Suspendisse dapibus ante id quam luctus hendrerit. Cras tempor sodales tempus. Pellentesque ligula augue, ornare efficitur ullamcorper non, fringilla at mauris. Sed sit amet mauris nec nisl tempus fringilla. Curabitur nec dui sit amet ipsum fermentum pellentesque sit amet eu metus. Aenean vel pharetra magna. Nunc convallis vestibulum eros sed tempus. Praesent nisi erat, sollicitudin nec est non, faucibus ullamcorper purus. Mauris eros lectus, rutrum nec orci et, gravida ullamcorper dui. Vestibulum eget ex feugiat, auctor neque sed, dictum urna. Ut a ipsum tristique, sagittis neque ac, dignissim lorem. Nulla congue tellus in tincidunt poop.</p>
-	</div>
-	<div id="lastElement" tabindex="0"></div>
+	<div tabindex="0"></div>
 </div>
-
 <script src="js/dist/main.js"></script>
 </body>
 </html>
-
