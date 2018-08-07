@@ -1,19 +1,98 @@
 'use strict';
 (function() {
-  let modal = document.getElementById('modal');
-  const modalButton = document.getElementById('trigger-modal'),
-    body = document.getElementsByTagName('body')[0],
-    overlay = document.getElementById('modalOverlay'),
+  const FOCUSABLE_ELEMENTS = `
+    a[href]:not([tabindex^="-"]):not([inert]),
+    area[href]:not([tabindex^="-"]):not([inert]),
+    input:not([disabled]):not([inert]),
+    select:not([disabled]):not([inert]),
+    textarea:not([disabled]):not([inert]),
+    button:not([disabled]):not([inert]),
+    iframe:not([tabindex^="-"]):not([inert]),
+    audio:not([tabindex^="-"]):not([inert]),
+    video:not([tabindex^="-"]):not([inert]),
+    [contenteditable]:not([tabindex^="-"]):not([inert]),
+    [tabindex]:not([tabindex^="-"]):not([inert])`,
+    TAB_KEY = 9,
+    ESCAPE_KEY = 27;
+
+  const body = document.body,
+    container = body.querySelector('#modalContainer');
+
+  const main = body.querySelector('#main'),
+    modalButton = main.querySelector('#trigger-modal');
+
+  const overlay = container.querySelector('#modalOverlay'),
+    modal = container.querySelector('#modal'),
     modalBody = modal.querySelector('.modal-body'),
-    main = document.getElementById('main'),
-    buttons = modal.querySelectorAll('button'),
     title = modal.querySelector('#dialog-heading'),
-    totalButtons = buttons.length - 1,
-    firstButton = buttons[0],
-    lastButton = buttons[totalButtons],
+    lastButton = modal.querySelector('#lastButton'),
     isScroll = modal.getAttribute('data-scroll'),
-    isSticky = modal.getAttribute('data-sticky'),
-    viewPortHeight = window.innerHeight;
+    isSticky = modal.getAttribute('data-sticky');
+
+  const viewPortHeight = window.innerHeight;
+
+  function bindKeyPress(e) {
+    if (main.getAttribute('aria-hidden') === 'true') {
+      if (e.which === ESCAPE_KEY) {
+        closeModal();
+      }
+      if (e.which === TAB_KEY) {
+        trapTabKey(modal, e);
+      }
+    }
+  }
+
+  function trapTabKey(node, e) {
+    const focusableChildren = getFocusableChildren(node),
+      focusedItemIdx = focusableChildren.indexOf(document.activeElement),
+      lastFocusableIdx = focusableChildren.length - 1;
+
+    if (e.target.getAttribute('tabindex') === '-1') {
+      e.preventDefault();
+      return false;
+    }
+
+    if (e.shiftKey && focusedItemIdx === 0) {
+      focusableChildren[lastFocusableIdx].focus();
+      e.preventDefault();
+    }
+
+    if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
+      focusableChildren[0].focus();
+      e.preventDefault();
+    }
+  }
+
+  function getFocusableChildren(node) {
+    const filter = Array.prototype.filter,
+      focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+    return filter.call(focusableChildren, function(child) {
+      return !!(
+        child.offsetWidth ||
+        child.offsetHeight ||
+        child.getClientRects().length
+      );
+    });
+  }
+
+  function maintainFocus(e) {
+    if (
+      main.getAttribute('aria-hidden') === 'true' &&
+      !modal.contains(e.target)
+    ) {
+      setFocusToFirstChild(modal);
+    }
+  }
+
+  function setFocusToFirstChild(node) {
+    const focusableChildren = getFocusableChildren(node),
+      focusableChild =
+        node.querySelector('[autofocus]') || focusableChildren[0];
+
+    if (focusableChild) {
+      focusableChild.focus();
+    }
+  }
 
   function closeModal() {
     modalButton.removeAttribute('disabled');
@@ -28,8 +107,7 @@
     if (overlay.tagName === 'BUTTON') {
       overlay.setAttribute('disabled', 'true');
     } else if (isScroll === 'true') {
-      modal = document.querySelector('.modal-container');
-      modal.classList.add('hidden');
+      container.classList.add('hidden');
     }
   }
 
@@ -65,29 +143,14 @@
       }, 100);
     }
 
-    if (firstButton !== undefined) {
-      firstButton.focus();
-    }
-
     if (overlay.tagName === 'BUTTON') {
       title.focus();
+    } else {
+      setFocusToFirstChild(container);
     }
   });
 
-  if (overlay.tagName === 'BUTTON') {
-    title.addEventListener('blur', () => {
-      overlay.focus();
-    });
-    overlay.addEventListener('blur', () => {
-      title.focus();
-    });
-  }
-
-  if (lastButton !== undefined) {
-    lastButton.addEventListener('blur', () => {
-      firstButton.focus();
-    });
-
+  if (lastButton) {
     lastButton.addEventListener('click', () => {
       closeModal();
     });
@@ -97,11 +160,6 @@
     closeModal();
   });
 
-  document.addEventListener('keyup', event => {
-    if (event.keyCode === '27') {
-      if (main.getAttribute('aria-hidden') === 'true') {
-        closeModal();
-      }
-    }
-  });
+  document.addEventListener('keydown', bindKeyPress);
+  document.body.addEventListener('focus', maintainFocus, true);
 })();
