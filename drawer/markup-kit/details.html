@@ -16,13 +16,14 @@
 		<path d="M13.749,17.6606035 C14.112,17.2486035 14.076,16.6116035 13.662,16.2436035 L5.509,8.9996035 L13.662,1.7566035 C14.077,1.3896035 14.113,0.752603504 13.749,0.339603504 C13.383,-0.0763964961 12.751,-0.115396496 12.338,0.252603504 L3.338,8.2476035 C3.123,8.4376035 3,8.7126035 3,8.9996035 C3,9.2876035 3.123,9.5616035 3.338,9.7526035 L12.338,17.7476035 C12.751,18.1156035 13.383,18.0766035 13.749,17.6606035"/>
 	</symbol>
 </svg>
-
+<!-- main content goes here -->
 <main id="main" aria-hidden="false">
 	<button id="openDrawer">Open Drawer</button>
 </main>
-
+<!-- drawer component loads after the main content to support aria-hidden -->
 <div id="drawer" class="drawer-container" aria-hidden="true" data-current-panel="1">
 	<div tabindex="0"></div>
+	<!-- first panel -->
 	<div class="panel closed animated" data-panel="1" aria-hidden="true">
 		<div class="drawer-header" tabindex="0">
 			<h3 class="pe-title">Help Topics</h3>
@@ -33,7 +34,7 @@
 			</button>
 		</div>
 		<div class="divider"></div>
-		<div class="drawer-content" tabindex="-1">
+		<div class="drawer-content">
 			<ul>
 				<li>
 					<button class="pe-link--btn" data-show-panel="2">
@@ -62,6 +63,7 @@
 			</ul>
 		</div>
 	</div>
+	<!-- second panel -->
 	<div class="panel closed animated" data-panel="2" aria-hidden="true">
 		<div class="drawer-header">
 			<button type="button" class="pe-icon--btn back" aria-label="back to questions">
@@ -70,7 +72,6 @@
 				</svg>
 				<h3 class="pe-title">Back</h3>
 			</button>
-
 			<button type="button" class="pe-icon--btn close" aria-label="close drawer">
 				<svg focusable="false" class="pe-icon--remove-sm-24" role="img" >
 					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>
@@ -78,8 +79,10 @@
 			</button>
 		</div>
 		<div class="divider"></div>
-		<div class="drawer-content" tabindex="-1">
-			<h2 class="pe-title">Having trouble signing in or account locked?</h2> <div><p>You have a Pearson username and password if you've ever used a Pearson product (for example, Revel, MyLab Math, or Mastering Biology).</p>
+		<div class="drawer-content">
+			<h2 class="pe-title">Having trouble signing in or account locked?</h2>
+			<div>
+				<p>You have a Pearson username and password if you've ever used a Pearson product (for example, Revel, MyLab Math, or Mastering Biology).</p>
 				<p><strong>Note:</strong> If you have an account but are asked to register, select <strong>register</strong> and follow the instructions. </p>
 				<p>Check out these tips for resolving common sign in issues:</p>
 				<p><strong>Username:</strong> This may be your email address and differ from your school or institution username.</p>
@@ -87,18 +90,19 @@
 				<p><strong>Get username and reset password:</strong> Select <strong>Forgot username or password</strong>. You'll receive an email with your username and a link to reset your password for  each Pearson account associated with your email address. Reset the password only for the account you want to use.</p>
 				<p><strong>Incorrect username or password or account locked:</strong> Try again or select <strong>Forgot username or password</strong> to reset your password. </p>
 				<p><strong>Browser cookies and cached files:</strong>&nbsp;<a href="https://support.pearson.com/getsupport/s/article/Browser-Settings" target="_blank">Enable cookies and, if necessary, delete cached browser files.</a></p>
-				<p>If you still can't sign in, contact <a href="https://support.pearson.com/getsupport/s/" target="_blank">Pearson Support</a>.</p></div>
+				<p>If you still can't sign in, contact <a href="https://support.pearson.com/getsupport/s/" target="_blank">Pearson Support</a>.</p>
+			</div>
 		</div>
 	</div>
+	<!-- third panel -->
 	<div class="panel closed animated" data-panel="3" aria-hidden="true">
-		<div class="drawer-header" tabindex="-1">
+		<div class="drawer-header">
 			<button type="button" class="pe-icon--btn back" aria-label="back to questions">
 				<svg focusable="false" class="pe-icon--chevron-back-18" role="img" >
 					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-back-18"></use>
 				</svg>
 				<h3 class="pe-title">Back</h3>
 			</button>
-
 			<button type="button" class="pe-icon--btn close" aria-label="close drawer">
 				<svg focusable="false" class="pe-icon--remove-sm-24" role="img" >
 					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>
@@ -106,17 +110,21 @@
 			</button>
 		</div>
 		<div class="divider"></div>
-		<div class="drawer-content" tabindex="-1">
-			<h2 class="pe-title">How do I enable cookies?</h2> <div><p>Cookies are files from websites that store your browsing information, including preferences and profile. To sign in or link accounts, you need to <a href="https://support.pearson.com/getsupport/s/article/Browser-Settings" target="_blank">enable third-party cookies</a>.</p>
+		<div class="drawer-content">
+			<h2 class="pe-title">How do I enable cookies?</h2>
+			<div>
+				<p>Cookies are files from websites that store your browsing information, including preferences and profile. To sign in or link accounts, you need to <a href="https://support.pearson.com/getsupport/s/article/Browser-Settings" target="_blank">enable third-party cookies</a>.</p>
 				<ul>
 					<li><strong>Chrome and Firefox:</strong> Enable all cookies or add an exception for <strong>pi.pearsoned.com</strong>.</li>
 					<li><strong>Internet Explorer:</strong> Enable all cookies or add exceptions for <strong>pi.pearsoned.com</strong> and <strong>pearson.com</strong>.</li>
 					<li><strong>Safari and Edge:</strong> Enable all cookies.</li>
 				</ul>
 				<p>If you still have trouble, try <a href="https://support.pearson.com/getsupport/s/article/Browser-Settings" target="_blank">deleting browser cached files</a>.</p>
-				<p>Check Help for your browser if it isn’t covered in these instructions.</p></div>
+				<p>Check Help for your browser if it isn’t covered in these instructions.</p>
+			</div>
 		</div>
 	</div>
+	<!-- fourth panel -->
 	<div class="panel closed animated" data-panel="4" aria-hidden="true">
 		<div class="drawer-header">
 			<button type="button" class="pe-icon--btn back" aria-label="back to questions">
@@ -125,7 +133,6 @@
 				</svg>
 				<h3 class="pe-title">Back</h3>
 			</button>
-
 			<button type="button" class="pe-icon--btn close" aria-label="close drawer">
 				<svg focusable="false" class="pe-icon--remove-sm-24" role="img" >
 					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>
@@ -133,12 +140,16 @@
 			</button>
 		</div>
 		<div class="divider"></div>
-		<div class="drawer-content" tabindex="-1">
-			<h2 class="pe-title">What if I&nbsp;get a date or clock error?</h2> <div><p>If the date or clock for your computer or other device is set incorrectly for your time zone, an error appears and you can't continue.</p>
-			<p>For example, the default time zone for computers with the Windows operating system is Pacific Time. If you manually change the clock or switch the time zone without immediately making sure the clock—automatically or manually—matches the time zone, the error appears.</p>
-			<p><strong>Resolution:</strong>&nbsp;Switch to the correct time zone, if applicable. Make sure the date and time are correct for your time zone. If your clock is set manually—not from a network or Internet server, make sure it comes close to the time according to the World Clock. (You can search for the World Clock on the Internet.)</p></div>
+		<div class="drawer-content">
+			<h2 class="pe-title">What if I&nbsp;get a date or clock error?</h2>
+			<div>
+				<p>If the date or clock for your computer or other device is set incorrectly for your time zone, an error appears and you can't continue.</p>
+				<p>For example, the default time zone for computers with the Windows operating system is Pacific Time. If you manually change the clock or switch the time zone without immediately making sure the clock—automatically or manually—matches the time zone, the error appears.</p>
+				<p><strong>Resolution:</strong>&nbsp;Switch to the correct time zone, if applicable. Make sure the date and time are correct for your time zone. If your clock is set manually—not from a network or Internet server, make sure it comes close to the time according to the World Clock. (You can search for the World Clock on the Internet.)</p>
+			</div>
 		</div>
 	</div>
+	<!-- fifth panel -->
 	<div class="panel closed animated" data-panel="5" aria-hidden="true">
 		<div class="drawer-header">
 			<button type="button" class="pe-icon--btn back" aria-label="back to questions">
@@ -147,7 +158,6 @@
 				</svg>
 				<h3 class="pe-title">Back</h3>
 			</button>
-
 			<button type="button" class="pe-icon--btn close" aria-label="close drawer">
 				<svg focusable="false" class="pe-icon--remove-sm-24" role="img" >
 					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>
@@ -155,14 +165,15 @@
 			</button>
 		</div>
 		<div class="divider"></div>
-		<div class="drawer-content" tabindex="-1">
-			<h2 class="pe-title">Having trouble or need support?</h2> <div><p> Check out <a href="https://support.pearson.com/getsupport/s/" target="_new">Pearson Support</a> for popular topics or contact information. </p></div>
+		<div class="drawer-content">
+			<h2 class="pe-title">Having trouble or need support?</h2>
+			<div>
+				<p> Check out <a href="https://support.pearson.com/getsupport/s/" target="_new">Pearson Support</a> for popular topics or contact information. </p>
+			</div>
 		</div>
 	</div>
 	<div tabindex="0"></div>
 </div>
-
 <script src="js/dist/main.js"></script>
 </body>
 </html>
-
