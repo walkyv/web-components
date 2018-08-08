@@ -1,7 +1,5 @@
-@import '../node_modules/@pearson-components/elements-sdk/src/styles/elements.scss';
-
-.toggle {
-  * {
+.pe-toggle {
+  & * {
     box-sizing: border-box;
   }
   button {
@@ -13,8 +11,8 @@
     }
   }
 
-  button.pe-toggle {
-    background: $neutral-three;
+  & button {
+    background: #6a7070;
     position: relative;
     vertical-align: middle;
     border-radius: 100px;
@@ -29,7 +27,7 @@
     border: 1px solid $neutral;
 
     &[aria-checked='true'] {
-      background: $primary;
+      background: #047a9c;
 
       &::before {
         left: 31px;
@@ -47,7 +45,7 @@
       width: 23px;
       height: 23px;
       transition: left 0.3s;
-      border: 1px solid $neutral-three;
+      border: 1px solid #6a7070;
     }
 
     span {
@@ -75,7 +73,7 @@
       color: #fff;
     }
 
-    + label.pe-toggle {
+    + label {
       vertical-align: middle;
     }
   }
