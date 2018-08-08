@@ -1,4 +1,18 @@
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../fonts/opensans-regular.woff2') format('woff2'),
+    url('../fonts/opensans-regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .pe-toggle {
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  line-height: 1.57143rem;
+  margin-bottom: 0.85714rem;
+  margin-top: 0;
+
   & * {
     box-sizing: border-box;
   }
@@ -41,7 +55,7 @@
 
     span {
       position: absolute;
-      top: 6px;
+      top: 5px;
       font-size: 0.8em;
       pointer-events: none;
     }
