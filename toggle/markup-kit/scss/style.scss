@@ -2,15 +2,6 @@
   & * {
     box-sizing: border-box;
   }
-  button {
-    &:focus {
-      + label {
-        outline: 1px dotted #212121;
-        outline: 5px auto -webkit-focus-ring-color;
-      }
-    }
-  }
-
   & button {
     background: #6a7070;
     position: relative;
@@ -77,19 +68,6 @@
       font-size: 1rem;
       line-height: 1.28571rem;
       vertical-align: middle;
-    }
-  }
-
-  .feedback {
-    display: flex;
-    align-items: center;
-
-    .form-control {
-      padding-left: 25px;
-
-      @media (max-width: 600px) {
-        padding-left: 0;
-      }
     }
   }
 }
