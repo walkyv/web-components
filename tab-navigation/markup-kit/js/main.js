@@ -36,13 +36,14 @@ function getPosition (el) {
 
        // find the current item clicked and set aria selected FALSE
        currentTab.setAttribute('aria-selected', false);
+       currentTab.parentNode.classList.remove('active');
 
        // find set the new item to aria selected TRUE
        tabList.setAttribute('data-tab-selected', index);
        _this.setAttribute('aria-selected', true);
+       _this.parentNode.classList.add('active');
 
        // activate slider
-       console.log(left);
        buildSlider(width, left);
      })
  });
