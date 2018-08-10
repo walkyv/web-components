@@ -23,21 +23,6 @@ $primary-two: $pe-color-ink-blue;
     }
   }
 
-  li.tab-title {
-    &.active {
-      .tab-name {
-        border-bottom: 3px solid transparent;
-        color: $neutral-two;
-      }
-    }
-
-    &:hover:not(.active), &:hover:not(li) {
-      .tab-name {
-        border-bottom: 3px solid $neutral;
-        color: $neutral-two;
-      }
-    }
-  }
 
   .tab-name {
     padding: .5em 0;
@@ -64,20 +49,7 @@ $primary-two: $pe-color-ink-blue;
       color: $neutral-four;
     }
 
-    li.tab-title {
-      &.active {
-        .tab-name {
-          color: white;
-        }
-      }
 
-      &:hover:not(.active) {
-        .tab-name {
-          border-bottom: 3px solid $neutral-four;
-          color: white;
-        }
-      }
-    }
 
     div {
       button {
@@ -92,5 +64,6 @@ $primary-two: $pe-color-ink-blue;
     padding:0;
     margin: .5em 1em;
     bottom:0;
+    transition: all .5s ease-in-out;
   }
 }

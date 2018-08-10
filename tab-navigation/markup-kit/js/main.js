@@ -12,9 +12,10 @@
    return document.querySelector('[data-tab="'+itemNumberSelected+'"]');
  }
 
-function buildSlider (width) {
+function buildSlider (width, position) {
    const sliderElement = document.querySelector('.tab-slider');
-   sliderElement.style.width = width + 'px'
+   sliderElement.style.width = width + 'px';
+   sliderElement.style.left = position + 'px';
 }
 
 function getPosition (el) {
@@ -22,27 +23,33 @@ function getPosition (el) {
 }
 
  Array.prototype.forEach.call(tabs, (tab,index) => {
+
    // set all the tabs with a unique data tab number
    tab.setAttribute('data-tab', index);
 
      // add event handlers to the tabs
      tab.addEventListener('click', event => {
-       const currentTab = returnCurrentTabItemDomNode();
+       const currentTab = returnCurrentTabItemDomNode(),
+         _this = event.currentTarget,
+         left = getPosition(_this).left - 14,
+         width = getPosition(_this).width;
 
        // find the current item clicked and set aria selected FALSE
        currentTab.setAttribute('aria-selected', false);
 
        // find set the new item to aria selected TRUE
        tabList.setAttribute('data-tab-selected', index);
-       event.currentTarget.setAttribute('aria-selected', true);
+       _this.setAttribute('aria-selected', true);
 
        // activate slider
+       console.log(left);
+       buildSlider(width, left);
      })
  });
 
 
   // set slider to first activated item
   const firstItemWidth = getPosition(returnCurrentTabItemDomNode()).width;
-  buildSlider(firstItemWidth);
+  buildSlider(firstItemWidth, 0);
 
 })();
