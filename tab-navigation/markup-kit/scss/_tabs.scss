@@ -1,0 +1,96 @@
+$secondary-four: $pe-color-digital-marine-turquoise;
+$neutral: $pe-color-concrete;
+$neutral-two: $pe-color-charcoal;
+$neutral-three: $pe-color-medium-gray;
+$neutral-four: $pe-color-alto;
+$primary-two: $pe-color-ink-blue;
+
+.tabbed-navigation {
+  position:relative;
+
+  .tab-name {
+    background:none;
+    border:0;
+  }
+
+  ul.tabs {
+    padding: 0;
+    margin: 0;
+
+    > li {
+      list-style-type: none;
+      display: inline-block;
+    }
+  }
+
+  li.tab-title {
+    &.active {
+      .tab-name {
+        border-bottom: 3px solid transparent;
+        color: $neutral-two;
+      }
+    }
+
+    &:hover:not(.active), &:hover:not(li) {
+      .tab-name {
+        border-bottom: 3px solid $neutral;
+        color: $neutral-two;
+      }
+    }
+  }
+
+  .tab-name {
+    padding: .5em 0;
+    margin: .5em 1em;
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+    color:$neutral-three;
+  }
+
+  div {
+    padding: .5em 0;
+    margin: .5em 1em;
+
+    button {
+      color: $neutral-three;
+    }
+  }
+
+  &.dark {
+    background-color: $primary-two;
+
+   .tab-name {
+      color: $neutral-four;
+    }
+
+    li.tab-title {
+      &.active {
+        .tab-name {
+          color: white;
+        }
+      }
+
+      &:hover:not(.active) {
+        .tab-name {
+          border-bottom: 3px solid $neutral-four;
+          color: white;
+        }
+      }
+    }
+
+    div {
+      button {
+        color: $neutral-four;
+      }
+    }
+  }
+  .tab-slider {
+    height:3px;
+    background-color: $secondary-four;
+    position:absolute;
+    padding:0;
+    margin: .5em 1em;
+    bottom:0;
+  }
+}
