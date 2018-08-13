@@ -143,7 +143,7 @@ class Modal extends HTMLElement {
 
       setTimeout(event => {
         modalButton.focus();
-      },801)
+      }, 801);
     }
 
     // for modals that are not programatically created
@@ -169,7 +169,6 @@ class Modal extends HTMLElement {
       modal.classList.remove('slideOutDown');
       modal.classList.add('slideInDown');
       setTimeout(event => {
-
         if (firstButton !== undefined) {
           firstButton.focus();
         }
@@ -236,6 +235,37 @@ class Modal extends HTMLElement {
 
     // sets the positioning for modals that are programmatically created and have scrolling content
     setModalPosition();
+  }
+
+  getFocusableChildren(node) {
+    const filter = Array.prototype.filter,
+      focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+    return filter.call(focusableChildren, function(child) {
+      return !!(
+        child.offsetWidth ||
+        child.offsetHeight ||
+        child.getClientRects().length
+      );
+    });
+  }
+
+  setFocusToFirstChild(node) {
+    const focusableChildren = getFocusableChildren(node),
+      focusableChild =
+        node.querySelector('[autofocus]') || focusableChildren[0];
+
+    if (focusableChild) {
+      focusableChild.focus();
+    }
+  }
+
+  maintainFocus(e) {
+    if (
+      main.getAttribute('aria-hidden') === 'true' &&
+      !modal.contains(e.target)
+    ) {
+      setFocusToFirstChild(modal);
+    }
   }
 }
 customElements.define('pearson-modal', Modal);
