@@ -267,5 +267,15 @@ class Modal extends HTMLElement {
       setFocusToFirstChild(modal);
     }
   }
+  bindKeyPress(e) {
+    if (main.getAttribute('aria-hidden') === 'true') {
+      if (e.which === ESCAPE_KEY) {
+        closeModal();
+      }
+      if (e.which === TAB_KEY) {
+        trapTabKey(modal, e);
+      }
+    }
+  }
 }
 customElements.define('pearson-modal', Modal);
