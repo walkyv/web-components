@@ -18,24 +18,27 @@ const FOCUSABLE_ELEMENTS = `
 class Modal extends HTMLElement {
   constructor() {
     super();
+
+    const shadowRoot = this.attachShadow({
+      mode: 'open'
+    });
   }
 
   connectedCallback() {
     // shadow dom
-    const shadow = this.attachShadow({
-        mode: 'open'
-      }),
-      currentDoc = document.querySelector('link[href$="index.html"]').import;
+
+    const currentDoc = document.querySelector('link[href$="index.html"]')
+      .import;
     let template = currentDoc.querySelector('#template');
     const clone = document.importNode(template.content, true);
 
-    shadow.appendChild(clone);
+    this.shadowRoot.appendChild(clone);
     // set attributes
     const titleText = this.getAttribute('modalTitleText'),
       successBtnText = this.getAttribute('successButtonText'),
       cancelBtnText = this.getAttribute('cancelButtonText'),
       referenceId = this.getAttribute('buttonReferenceId'),
-      title = shadow.querySelector('#dialog-heading'),
+      title = this.shadowRoot.querySelector('#dialog-heading'),
       showFooter = this.getAttribute('showFooter'),
       showClose = this.getAttribute('showClose');
 
@@ -44,15 +47,15 @@ class Modal extends HTMLElement {
     if (showFooter === 'true') {
       const actionsTemplate = currentDoc.querySelector('#actions'),
         actionsClone = document.importNode(actionsTemplate.content, true),
-        actionsEntryPoint = shadow.querySelector('.modal-body');
+        actionsEntryPoint = this.shadowRoot.querySelector('.modal-body');
 
       actionsEntryPoint.parentNode.insertBefore(
         actionsClone,
         actionsEntryPoint.nextSibling
       );
 
-      const cancelButton = shadow.querySelector('#cancelButton'),
-        saveButton = shadow.querySelector('#successButton');
+      const cancelButton = this.shadowRoot.querySelector('#cancelButton'),
+        saveButton = this.shadowRoot.querySelector('#successButton');
 
       if (cancelBtnText !== null) {
         cancelButton.innerHTML = cancelBtnText;
@@ -72,7 +75,7 @@ class Modal extends HTMLElement {
         overlayButtonTemplate.content,
         true
       ),
-      overlayEntryPoint = shadow.querySelector('#modalPlaceholder');
+      overlayEntryPoint = this.shadowRoot.querySelector('#modalPlaceholder');
 
     overlayEntryPoint.parentNode.insertBefore(
       overlayButtonClone,
@@ -87,20 +90,20 @@ class Modal extends HTMLElement {
     }
 
     // functionality
-    let modal = shadow.querySelector('.modal'),
+    let modal = this.shadowRoot.querySelector('.modal'),
       firstButton;
     const modalButton = document.querySelector('#' + referenceId),
       modalContent = document.querySelector('pearson-modal'),
       modalButtons = modalContent.querySelectorAll('button, input, select, a'),
       body = document.getElementsByTagName('body')[0],
-      overlay = shadow.querySelector('#modalOverlay'),
+      overlay = this.shadowRoot.querySelector('#modalOverlay'),
       main = document.getElementById('main'),
-      buttons = shadow.querySelectorAll('button'),
+      buttons = this.shadowRoot.querySelectorAll('button'),
       totalButtons = buttons.length - 1,
       lastButton = buttons[totalButtons],
-      cancelButton = shadow.querySelector('.modal-cancel'),
-      successButton = shadow.querySelector('.modal-success'),
-      closeButtons = shadow.querySelectorAll('.modal-close');
+      cancelButton = this.shadowRoot.querySelector('.modal-cancel'),
+      successButton = this.shadowRoot.querySelector('.modal-success'),
+      closeButtons = this.shadowRoot.querySelectorAll('.modal-close');
     if (modalButtons[0]) {
       firstButton = modalButtons[0];
     } else {
@@ -151,7 +154,7 @@ class Modal extends HTMLElement {
     modalButton.addEventListener('click', event => {
       setModalPosition();
 
-      let modal = shadow.querySelector('#modal');
+      let modal = this.shadowRoot.querySelector('#modal');
       const thisButton = event.currentTarget,
         buttonDisabled = thisButton.getAttribute('disabled');
 
@@ -220,7 +223,7 @@ class Modal extends HTMLElement {
     }
 
     // add keyboard accessibility
-    shadow.addEventListener('keyup', event => {
+    this.shadowRoot.addEventListener('keyup', event => {
       if (event.keyCode === '27') {
         if (main.getAttribute('aria-hidden') === 'true') {
           closeModal();

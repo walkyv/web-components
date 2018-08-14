@@ -8,13 +8,22 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert]),\n    [tabindex]:not([tabindex^="-"]):not([inert])',
+    TAB_KEY = 9,
+    ESCAPE_KEY = 27;
+
 var Modal = function (_HTMLElement) {
   _inherits(Modal, _HTMLElement);
 
   function Modal() {
     _classCallCheck(this, Modal);
 
-    return _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this));
+    var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this));
+
+    var shadowRoot = _this.attachShadow({
+      mode: 'open'
+    });
+    return _this;
   }
 
   _createClass(Modal, [{
@@ -23,20 +32,18 @@ var Modal = function (_HTMLElement) {
       var _this2 = this;
 
       // shadow dom
-      var shadow = this.attachShadow({
-        mode: 'open'
-      }),
-          currentDoc = document.querySelector('link[href$="index.html"]').import;
+
+      var currentDoc = document.querySelector('link[href$="index.html"]').import;
       var template = currentDoc.querySelector('#template');
       var clone = document.importNode(template.content, true);
 
-      shadow.appendChild(clone);
+      this.shadowRoot.appendChild(clone);
       // set attributes
       var titleText = this.getAttribute('modalTitleText'),
           successBtnText = this.getAttribute('successButtonText'),
           cancelBtnText = this.getAttribute('cancelButtonText'),
           referenceId = this.getAttribute('buttonReferenceId'),
-          title = shadow.querySelector('#dialog-heading'),
+          title = this.shadowRoot.querySelector('#dialog-heading'),
           showFooter = this.getAttribute('showFooter'),
           showClose = this.getAttribute('showClose');
 
@@ -45,12 +52,12 @@ var Modal = function (_HTMLElement) {
       if (showFooter === 'true') {
         var actionsTemplate = currentDoc.querySelector('#actions'),
             actionsClone = document.importNode(actionsTemplate.content, true),
-            actionsEntryPoint = shadow.querySelector('.modal-body');
+            actionsEntryPoint = this.shadowRoot.querySelector('.modal-body');
 
         actionsEntryPoint.parentNode.insertBefore(actionsClone, actionsEntryPoint.nextSibling);
 
-        var _cancelButton = shadow.querySelector('#cancelButton'),
-            saveButton = shadow.querySelector('#successButton');
+        var _cancelButton = this.shadowRoot.querySelector('#cancelButton'),
+            saveButton = this.shadowRoot.querySelector('#successButton');
 
         if (cancelBtnText !== null) {
           _cancelButton.innerHTML = cancelBtnText;
@@ -67,7 +74,7 @@ var Modal = function (_HTMLElement) {
 
       var overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
           overlayButtonClone = document.importNode(overlayButtonTemplate.content, true),
-          overlayEntryPoint = shadow.querySelector('#modalPlaceholder');
+          overlayEntryPoint = this.shadowRoot.querySelector('#modalPlaceholder');
 
       overlayEntryPoint.parentNode.insertBefore(overlayButtonClone, overlayEntryPoint.nextElementSibling);
       overlayEntryPoint.remove();
@@ -79,20 +86,20 @@ var Modal = function (_HTMLElement) {
       }
 
       // functionality
-      var modal = shadow.querySelector('.modal'),
+      var modal = this.shadowRoot.querySelector('.modal'),
           firstButton = void 0;
       var modalButton = document.querySelector('#' + referenceId),
           modalContent = document.querySelector('pearson-modal'),
           modalButtons = modalContent.querySelectorAll('button, input, select, a'),
           body = document.getElementsByTagName('body')[0],
-          overlay = shadow.querySelector('#modalOverlay'),
+          overlay = this.shadowRoot.querySelector('#modalOverlay'),
           main = document.getElementById('main'),
-          buttons = shadow.querySelectorAll('button'),
+          buttons = this.shadowRoot.querySelectorAll('button'),
           totalButtons = buttons.length - 1,
           lastButton = buttons[totalButtons],
-          cancelButton = shadow.querySelector('.modal-cancel'),
-          successButton = shadow.querySelector('.modal-success'),
-          closeButtons = shadow.querySelectorAll('.modal-close');
+          cancelButton = this.shadowRoot.querySelector('.modal-cancel'),
+          successButton = this.shadowRoot.querySelector('.modal-success'),
+          closeButtons = this.shadowRoot.querySelectorAll('.modal-close');
       if (modalButtons[0]) {
         firstButton = modalButtons[0];
       } else {
@@ -143,7 +150,7 @@ var Modal = function (_HTMLElement) {
       modalButton.addEventListener('click', function (event) {
         setModalPosition();
 
-        var modal = shadow.querySelector('#modal');
+        var modal = _this2.shadowRoot.querySelector('#modal');
         var thisButton = event.currentTarget,
             buttonDisabled = thisButton.getAttribute('disabled');
 
@@ -161,7 +168,6 @@ var Modal = function (_HTMLElement) {
         modal.classList.remove('slideOutDown');
         modal.classList.add('slideInDown');
         setTimeout(function (event) {
-
           if (firstButton !== undefined) {
             firstButton.focus();
           }
@@ -207,7 +213,7 @@ var Modal = function (_HTMLElement) {
       }
 
       // add keyboard accessibility
-      shadow.addEventListener('keyup', function (event) {
+      this.shadowRoot.addEventListener('keyup', function (event) {
         if (event.keyCode === '27') {
           if (main.getAttribute('aria-hidden') === 'true') {
             closeModal();
@@ -220,6 +226,44 @@ var Modal = function (_HTMLElement) {
 
       // sets the positioning for modals that are programmatically created and have scrolling content
       setModalPosition();
+    }
+  }, {
+    key: 'getFocusableChildren',
+    value: function getFocusableChildren(node) {
+      var filter = Array.prototype.filter,
+          focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+      return filter.call(focusableChildren, function (child) {
+        return !!(child.offsetWidth || child.offsetHeight || child.getClientRects().length);
+      });
+    }
+  }, {
+    key: 'setFocusToFirstChild',
+    value: function setFocusToFirstChild(node) {
+      var focusableChildren = getFocusableChildren(node),
+          focusableChild = node.querySelector('[autofocus]') || focusableChildren[0];
+
+      if (focusableChild) {
+        focusableChild.focus();
+      }
+    }
+  }, {
+    key: 'maintainFocus',
+    value: function maintainFocus(e) {
+      if (main.getAttribute('aria-hidden') === 'true' && !modal.contains(e.target)) {
+        setFocusToFirstChild(modal);
+      }
+    }
+  }, {
+    key: 'bindKeyPress',
+    value: function bindKeyPress(e) {
+      if (main.getAttribute('aria-hidden') === 'true') {
+        if (e.which === ESCAPE_KEY) {
+          closeModal();
+        }
+        if (e.which === TAB_KEY) {
+          trapTabKey(modal, e);
+        }
+      }
     }
   }]);
 
