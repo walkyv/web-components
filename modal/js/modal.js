@@ -23,12 +23,48 @@ function getDeepActiveElement() {
   return a;
 }
 
+function getFocusableChildren(node) {
+  const filter = Array.prototype.filter,
+    focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+  return filter.call(focusableChildren, function(child) {
+    return !!(
+      child.offsetWidth ||
+      child.offsetHeight ||
+      child.getClientRects().length
+    );
+  });
+}
+
+function setFocusToFirstChild(node) {
+  const focusableChildren = getFocusableChildren(node),
+    focusableChild = node.querySelector('[autofocus]') || focusableChildren[0];
+
+  if (focusableChild) {
+    focusableChild.focus();
+  }
+}
+
+function trapTabKey(node, e) {
+  const focusableChildren = getFocusableChildren(node),
+    focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
+    lastFocusableIdx = focusableChildren.length - 1;
+
+  if (e.shiftKey && focusedItemIdx === 0) {
+    focusableChildren[lastFocusableIdx].focus();
+    e.preventDefault();
+  }
+
+  if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
+    focusableChildren[0].focus();
+    e.preventDefault();
+  }
+}
+
 class Modal extends HTMLElement {
   constructor() {
     super();
 
     this.attachShadow({ mode: 'open' });
-    
   }
 
   connectedCallback() {
@@ -113,7 +149,6 @@ class Modal extends HTMLElement {
     this.modalBtn.addEventListener('click', event => {
       this.setPosition();
 
-      this.modal = this.shadowRoot.querySelector('#modal');
       const thisButton = event.currentTarget,
         buttonDisabled = thisButton.getAttribute('disabled');
 
@@ -132,14 +167,13 @@ class Modal extends HTMLElement {
       this.modal.classList.add('slideInDown');
 
       setTimeout(() => {
-        this.setFocusToFirstChild(this.modal);
+        setFocusToFirstChild(this.modal);
       }, 250);
     });
 
     // add event listener to the close button
     if (this.closeButtons !== null) {
       this.closeButtons.forEach(button => {
-        button;
         button.addEventListener('click', event => {
           this.closeModal();
           setTimeout(event => {
@@ -209,31 +243,9 @@ class Modal extends HTMLElement {
     }, 801);
   }
 
-  getFocusableChildren(node) {
-    const filter = Array.prototype.filter,
-      focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
-    return filter.call(focusableChildren, function(child) {
-      return !!(
-        child.offsetWidth ||
-        child.offsetHeight ||
-        child.getClientRects().length
-      );
-    });
-  }
-
-  setFocusToFirstChild(node) {
-    const focusableChildren = this.getFocusableChildren(node),
-      focusableChild =
-        node.querySelector('[autofocus]') || focusableChildren[0];
-
-    if (focusableChild) {
-      focusableChild.focus();
-    }
-  }
-
-  maintainFocus(e) {
+  maintainFocus() {
     if (!this.modal.contains(getDeepActiveElement())) {
-      this.setFocusToFirstChild(this.modal);
+      setFocusToFirstChild(this.modal);
     }
   }
   bindKeyPress(e) {
@@ -241,27 +253,7 @@ class Modal extends HTMLElement {
       this.closeModal();
     }
     if (e.which === TAB_KEY) {
-      this.trapTabKey(this.modal, e);
-    }
-  }
-  trapTabKey(node, e) {
-    const focusableChildren = this.getFocusableChildren(node),
-      focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
-      lastFocusableIdx = focusableChildren.length - 1;
-
-    if (e.target.getAttribute('tabindex') === '-1') {
-      e.preventDefault();
-      return false;
-    }
-
-    if (e.shiftKey && focusedItemIdx === 0) {
-      focusableChildren[lastFocusableIdx].focus();
-      e.preventDefault();
-    }
-
-    if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
-      focusableChildren[0].focus();
-      e.preventDefault();
+      trapTabKey(this.modal, e);
     }
   }
 
@@ -277,4 +269,5 @@ class Modal extends HTMLElement {
     }, 100);
   }
 }
+
 customElements.define('pearson-modal', Modal);

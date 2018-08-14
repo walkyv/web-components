@@ -20,6 +20,39 @@ function getDeepActiveElement() {
   return a;
 }
 
+function getFocusableChildren(node) {
+  var filter = Array.prototype.filter,
+      focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+  return filter.call(focusableChildren, function (child) {
+    return !!(child.offsetWidth || child.offsetHeight || child.getClientRects().length);
+  });
+}
+
+function setFocusToFirstChild(node) {
+  var focusableChildren = getFocusableChildren(node),
+      focusableChild = node.querySelector('[autofocus]') || focusableChildren[0];
+
+  if (focusableChild) {
+    focusableChild.focus();
+  }
+}
+
+function trapTabKey(node, e) {
+  var focusableChildren = getFocusableChildren(node),
+      focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
+      lastFocusableIdx = focusableChildren.length - 1;
+
+  if (e.shiftKey && focusedItemIdx === 0) {
+    focusableChildren[lastFocusableIdx].focus();
+    e.preventDefault();
+  }
+
+  if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
+    focusableChildren[0].focus();
+    e.preventDefault();
+  }
+}
+
 var Modal = function (_HTMLElement) {
   _inherits(Modal, _HTMLElement);
 
@@ -29,7 +62,6 @@ var Modal = function (_HTMLElement) {
     var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this));
 
     _this.attachShadow({ mode: 'open' });
-
     return _this;
   }
 
@@ -109,7 +141,6 @@ var Modal = function (_HTMLElement) {
       this.modalBtn.addEventListener('click', function (event) {
         _this2.setPosition();
 
-        _this2.modal = _this2.shadowRoot.querySelector('#modal');
         var thisButton = event.currentTarget,
             buttonDisabled = thisButton.getAttribute('disabled');
 
@@ -128,14 +159,13 @@ var Modal = function (_HTMLElement) {
         _this2.modal.classList.add('slideInDown');
 
         setTimeout(function () {
-          _this2.setFocusToFirstChild(_this2.modal);
+          setFocusToFirstChild(_this2.modal);
         }, 250);
       });
 
       // add event listener to the close button
       if (this.closeButtons !== null) {
         this.closeButtons.forEach(function (button) {
-          button;
           button.addEventListener('click', function (event) {
             _this2.closeModal();
             setTimeout(function (event) {
@@ -202,29 +232,10 @@ var Modal = function (_HTMLElement) {
       }, 801);
     }
   }, {
-    key: 'getFocusableChildren',
-    value: function getFocusableChildren(node) {
-      var filter = Array.prototype.filter,
-          focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
-      return filter.call(focusableChildren, function (child) {
-        return !!(child.offsetWidth || child.offsetHeight || child.getClientRects().length);
-      });
-    }
-  }, {
-    key: 'setFocusToFirstChild',
-    value: function setFocusToFirstChild(node) {
-      var focusableChildren = this.getFocusableChildren(node),
-          focusableChild = node.querySelector('[autofocus]') || focusableChildren[0];
-
-      if (focusableChild) {
-        focusableChild.focus();
-      }
-    }
-  }, {
     key: 'maintainFocus',
-    value: function maintainFocus(e) {
+    value: function maintainFocus() {
       if (!this.modal.contains(getDeepActiveElement())) {
-        this.setFocusToFirstChild(this.modal);
+        setFocusToFirstChild(this.modal);
       }
     }
   }, {
@@ -234,29 +245,7 @@ var Modal = function (_HTMLElement) {
         this.closeModal();
       }
       if (e.which === TAB_KEY) {
-        this.trapTabKey(this.modal, e);
-      }
-    }
-  }, {
-    key: 'trapTabKey',
-    value: function trapTabKey(node, e) {
-      var focusableChildren = this.getFocusableChildren(node),
-          focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
-          lastFocusableIdx = focusableChildren.length - 1;
-
-      if (e.target.getAttribute('tabindex') === '-1') {
-        e.preventDefault();
-        return false;
-      }
-
-      if (e.shiftKey && focusedItemIdx === 0) {
-        focusableChildren[lastFocusableIdx].focus();
-        e.preventDefault();
-      }
-
-      if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
-        focusableChildren[0].focus();
-        e.preventDefault();
+        trapTabKey(this.modal, e);
       }
     }
   }, {
