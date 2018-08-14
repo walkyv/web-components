@@ -97,7 +97,8 @@ button.close[aria-label="Close Dialog"] {
   align-items: center;
   padding:0;
   width:44px;
-  & svg {
+  img {
+    width:24px;
     height:24px;
     margin:0;
   }
