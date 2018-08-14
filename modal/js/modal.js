@@ -28,6 +28,7 @@ class Modal extends HTMLElement {
     super();
 
     this.attachShadow({ mode: 'open' });
+    
   }
 
   connectedCallback() {
@@ -107,22 +108,10 @@ class Modal extends HTMLElement {
     this.successButton = this.shadowRoot.querySelector('.modal-success');
     this.closeButtons = this.shadowRoot.querySelectorAll('.modal-close');
 
-    function setModalPosition() {
-      setTimeout(() => {
-        const modalPosition = this.modal.getBoundingClientRect();
-        window.scrollTo(0, 0);
-        if (modalPosition.top <= 0) {
-          this.modal.style.top = '50px';
-          this.modal.style.transform = 'translate(-50%)';
-          this.modal.style.marginBottom = '50px';
-        }
-      }, 100);
-    }
-
     // for modals that are not programatically created
     // when the modal trigger is clicked show modal
     this.modalBtn.addEventListener('click', event => {
-      // setModalPosition();
+      this.setPosition();
 
       this.modal = this.shadowRoot.querySelector('#modal');
       const thisButton = event.currentTarget,
@@ -185,7 +174,7 @@ class Modal extends HTMLElement {
     }
 
     // sets the positioning for modals that are programmatically created and have scrolling content
-    // setModalPosition();
+    this.setPosition();
 
     this.boundMaintainFocus = this.maintainFocus.bind(this);
     this.boundBindKeyPress = this.bindKeyPress.bind(this);
@@ -274,6 +263,18 @@ class Modal extends HTMLElement {
       focusableChildren[0].focus();
       e.preventDefault();
     }
+  }
+
+  setPosition() {
+    setTimeout(() => {
+      const modalPosition = this.modal.getBoundingClientRect();
+      window.scrollTo(0, 0);
+      if (modalPosition.top <= 0) {
+        this.modal.style.top = '50px';
+        this.modal.style.transform = 'translate(-50%)';
+        this.modal.style.marginBottom = '50px';
+      }
+    }, 100);
   }
 }
 customElements.define('pearson-modal', Modal);
