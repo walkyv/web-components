@@ -13,7 +13,7 @@
  }
 
 function buildSlider (width, position) {
-   const sliderElement = document.querySelector('.tab-slider');
+   const sliderElement = document.querySelector('#tabSlider');
    sliderElement.style.width = width + 'px';
    sliderElement.style.left = position + 'px';
 }
@@ -31,7 +31,7 @@ function getPosition (el) {
      tab.addEventListener('click', event => {
        const currentTab = returnCurrentTabItemDomNode(),
          _this = event.currentTarget,
-         left = getPosition(_this).left - 14,
+         left = getPosition(_this).left - 14, // 14 is the left margin
          width = getPosition(_this).width;
 
        // find the current item clicked and set aria selected FALSE

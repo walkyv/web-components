@@ -5,15 +5,24 @@ $neutral-three: $pe-color-medium-gray;
 $neutral-four: $pe-color-alto;
 $primary-two: $pe-color-ink-blue;
 
-.tabbed-navigation {
+.pe-tabbed-navigation {
   position:relative;
+  height:41px;
 
-  .tab-name {
+  &.light {
+    background:$pe-color-white-gray;
+    border-bottom:1px solid #e9e9e9;
+  }
+  &.dark {
+    background: #005a70;
+    border-bottom:1px solid #005a70;
+  }
+  .tab-action {
     background:none;
     border:0;
   }
 
-  ul.tabs {
+  ul.tab-list {
     padding: 0;
     margin: 0;
 
@@ -23,23 +32,23 @@ $primary-two: $pe-color-ink-blue;
     }
   }
 
-  li.tab-title {
+  li.tab-item {
     &.active {
-      .tab-name {
+      .tab-action {
         border-bottom: 3px solid transparent;
         color: $neutral-two;
       }
     }
 
     &:hover:not(.active), &:hover:not(li) {
-      .tab-name {
+      .tab-action {
         border-bottom: 3px solid $neutral;
         color: $neutral-two;
       }
     }
   }
 
-  .tab-name {
+  .tab-action {
     padding: .5em 0;
     margin: .5em 1em;
     text-decoration: none;
@@ -60,19 +69,19 @@ $primary-two: $pe-color-ink-blue;
   &.dark {
     background-color: $primary-two;
 
-   .tab-name {
+   .tab-action {
       color: $neutral-four;
     }
 
-    li.tab-title {
+    li.tab-item {
       &.active {
-        .tab-name {
+        .tab-action {
           color: white;
         }
       }
 
       &:hover:not(.active) {
-        .tab-name {
+        .tab-action {
           border-bottom: 3px solid $neutral-four;
           color: white;
         }
@@ -91,7 +100,7 @@ $primary-two: $pe-color-ink-blue;
     position:absolute;
     padding:0;
     margin: .5em 1em;
-    bottom:0;
+    bottom:-8px;
     transition: all .5s ease-in-out;
   }
 }
