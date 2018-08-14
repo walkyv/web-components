@@ -283,5 +283,25 @@ class Modal extends HTMLElement {
       }
     }
   }
+  trapTabKey(node, e) {
+    const focusableChildren = getFocusableChildren(node),
+      focusedItemIdx = focusableChildren.indexOf(document.activeElement),
+      lastFocusableIdx = focusableChildren.length - 1;
+
+    if (e.target.getAttribute('tabindex') === '-1') {
+      e.preventDefault();
+      return false;
+    }
+
+    if (e.shiftKey && focusedItemIdx === 0) {
+      focusableChildren[lastFocusableIdx].focus();
+      e.preventDefault();
+    }
+
+    if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
+      focusableChildren[0].focus();
+      e.preventDefault();
+    }
+  }
 }
 customElements.define('pearson-modal', Modal);
