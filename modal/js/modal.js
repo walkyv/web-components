@@ -169,6 +169,8 @@ class Modal extends HTMLElement {
       setTimeout(() => {
         setFocusToFirstChild(this.modal);
       }, 250);
+
+      document.addEventListener('keydown', this.boundBindKeyPress);document.body.addEventListener('focus', this.boundMaintainFocus, true);
     });
 
     // add event listener to the close button
@@ -212,10 +214,8 @@ class Modal extends HTMLElement {
 
     this.boundMaintainFocus = this.maintainFocus.bind(this);
     this.boundBindKeyPress = this.bindKeyPress.bind(this);
-
-    document.addEventListener('keydown', this.boundBindKeyPress);
-    document.body.addEventListener('focus', this.boundMaintainFocus, true);
   }
+
 
   closeModal() {
     this.modalBtn.removeAttribute('disabled');
@@ -241,6 +241,9 @@ class Modal extends HTMLElement {
     setTimeout(event => {
       this.modalBtn.focus();
     }, 801);
+
+    document.removeEventListener('keydown', this.boundBindKeyPress);
+    document.body.removeEventListener('focus', this.boundMaintainFocus);
   }
 
   maintainFocus() {

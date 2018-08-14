@@ -161,6 +161,8 @@ var Modal = function (_HTMLElement) {
         setTimeout(function () {
           setFocusToFirstChild(_this2.modal);
         }, 250);
+
+        document.addEventListener('keydown', _this2.boundBindKeyPress);document.body.addEventListener('focus', _this2.boundMaintainFocus, true);
       });
 
       // add event listener to the close button
@@ -198,9 +200,6 @@ var Modal = function (_HTMLElement) {
 
       this.boundMaintainFocus = this.maintainFocus.bind(this);
       this.boundBindKeyPress = this.bindKeyPress.bind(this);
-
-      document.addEventListener('keydown', this.boundBindKeyPress);
-      document.body.addEventListener('focus', this.boundMaintainFocus, true);
     }
   }, {
     key: 'closeModal',
@@ -230,6 +229,9 @@ var Modal = function (_HTMLElement) {
       setTimeout(function (event) {
         _this3.modalBtn.focus();
       }, 801);
+
+      document.removeEventListener('keydown', this.boundBindKeyPress);
+      document.body.removeEventListener('focus', this.boundMaintainFocus);
     }
   }, {
     key: 'maintainFocus',
