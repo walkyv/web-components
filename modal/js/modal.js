@@ -93,100 +93,74 @@ class Modal extends HTMLElement {
     }
 
     // functionality
-    let modal = this.shadowRoot.querySelector('.modal'),
-      firstButton;
-    const modalButton = document.querySelector('#' + referenceId),
-      modalContent = document.querySelector('pearson-modal'),
-      modalButtons = modalContent.querySelectorAll('button, input, select, a'),
-      body = document.getElementsByTagName('body')[0],
-      overlay = this.shadowRoot.querySelector('#modalOverlay'),
-      main = document.getElementById('main'),
-      buttons = this.shadowRoot.querySelectorAll('button'),
-      totalButtons = buttons.length - 1,
-      lastButton = buttons[totalButtons],
-      cancelButton = this.shadowRoot.querySelector('.modal-cancel'),
-      successButton = this.shadowRoot.querySelector('.modal-success'),
-      closeButtons = this.shadowRoot.querySelectorAll('.modal-close');
-    if (modalButtons[0]) {
-      firstButton = modalButtons[0];
+    this.modal = this.shadowRoot.querySelector('.modal');
+    this.modalBtn = document.querySelector('#' + referenceId);
+    this.modalContent = document.querySelector('pearson-modal');
+    this.modalButtons = this.modalContent.querySelectorAll(
+      'button, input, select, a'
+    );
+    this.body = document.getElementsByTagName('body')[0];
+    this.overlay = this.shadowRoot.querySelector('#modalOverlay');
+    this.main = document.getElementById('main');
+    this.buttons = this.shadowRoot.querySelectorAll('button');
+    this.totalButtons = this.buttons.length - 1;
+    this.lastButton = this.buttons[this.totalButtons];
+    this.cancelButton = this.shadowRoot.querySelector('.modal-cancel');
+    this.successButton = this.shadowRoot.querySelector('.modal-success');
+    this.closeButtons = this.shadowRoot.querySelectorAll('.modal-close');
+    if (this.modalButtons[0]) {
+      this.firstButton = this.modalButtons[0];
     } else {
-      firstButton = buttons[0];
+      this.firstButton = this.buttons[0];
     }
 
     function setModalPosition() {
       setTimeout(() => {
-        const modalPosition = modal.getBoundingClientRect();
+        const modalPosition = this.modal.getBoundingClientRect();
         window.scrollTo(0, 0);
-        modalPosition.top;
         if (modalPosition.top <= 0) {
-          modal.style.top = '50px';
-          modal.style.transform = 'translate(-50%)';
-          modal.style.marginBottom = '50px';
+          this.modal.style.top = '50px';
+          this.modal.style.transform = 'translate(-50%)';
+          this.modal.style.marginBottom = '50px';
         }
       }, 100);
     }
 
-    function closeModal() {
-      modalButton.removeAttribute('disabled');
-      main.setAttribute('aria-hidden', 'false');
-      body.classList.remove('hide-overflow');
-
-      overlay.classList.remove('fadeIn');
-      overlay.classList.add('fadeOut');
-
-      modal.classList.remove('slideInDown');
-      modal.classList.add('slideOutDown');
-
-      setTimeout(event => {
-        overlay.classList.add('hidden');
-        overlay.classList.remove('fadeOut');
-      }, 800);
-
-      setTimeout(event => {
-        modal.classList.add('hidden');
-        modal.classList.remove('slideOutDown');
-      }, 400);
-
-      setTimeout(event => {
-        modalButton.focus();
-      }, 801);
-    }
-
     // for modals that are not programatically created
     // when the modal trigger is clicked show modal
-    modalButton.addEventListener('click', event => {
-      setModalPosition();
+    this.modalBtn.addEventListener('click', event => {
+      // setModalPosition();
 
-      let modal = this.shadowRoot.querySelector('#modal');
+      this.modal = this.shadowRoot.querySelector('#modal');
       const thisButton = event.currentTarget,
         buttonDisabled = thisButton.getAttribute('disabled');
 
       if (buttonDisabled === null) {
         thisButton.setAttribute('disabled', true);
-        main.setAttribute('aria-hidden', 'true');
-        overlay.removeAttribute('disabled');
+        this.main.setAttribute('aria-hidden', 'true');
+        this.overlay.removeAttribute('disabled');
       }
 
-      overlay.classList.remove('hidden');
-      overlay.classList.remove('fadeOut');
-      overlay.classList.add('fadeIn');
+      this.overlay.classList.remove('hidden');
+      this.overlay.classList.remove('fadeOut');
+      this.overlay.classList.add('fadeIn');
 
-      modal.classList.remove('hidden');
-      modal.classList.remove('slideOutDown');
-      modal.classList.add('slideInDown');
+      this.modal.classList.remove('hidden');
+      this.modal.classList.remove('slideOutDown');
+      this.modal.classList.add('slideInDown');
       setTimeout(event => {
-        if (firstButton !== undefined) {
-          firstButton.focus();
+        if (this.firstButton !== undefined) {
+          this.firstButton.focus();
         }
       }, 250);
     });
 
     // add event listener to the close button
-    if (closeButtons !== null) {
-      closeButtons.forEach(button => {
+    if (this.closeButtons !== null) {
+      this.closeButtons.forEach(button => {
         button;
         button.addEventListener('click', event => {
-          closeModal();
+          this.closeModal();
           setTimeout(event => {
             this.dispatchEvent(
               new Event('close', { bubbles: true, composed: true })
@@ -196,9 +170,9 @@ class Modal extends HTMLElement {
       });
     }
 
-    if (successButton !== null) {
-      successButton.addEventListener('click', event => {
-        closeModal();
+    if (this.successButton !== null) {
+      this.successButton.addEventListener('click', event => {
+        this.closeModal();
         setTimeout(event => {
           this.dispatchEvent(
             new Event('success', { bubbles: true, composed: true })
@@ -207,9 +181,9 @@ class Modal extends HTMLElement {
       });
     }
 
-    if (cancelButton !== null) {
-      cancelButton.addEventListener('click', event => {
-        closeModal();
+    if (this.cancelButton !== null) {
+      this.cancelButton.addEventListener('click', event => {
+        this.closeModal();
         setTimeout(event => {
           this.dispatchEvent(
             new Event('cancel', { bubbles: true, composed: true })
@@ -219,17 +193,17 @@ class Modal extends HTMLElement {
     }
 
     // focus trap
-    if (lastButton !== undefined) {
-      lastButton.addEventListener('blur', () => {
-        firstButton.focus();
+    if (this.lastButton !== undefined) {
+      this.lastButton.addEventListener('blur', () => {
+        this.firstButton.focus();
       });
     }
 
     // add keyboard accessibility
     this.shadowRoot.addEventListener('keyup', event => {
       if (event.keyCode === '27') {
-        if (main.getAttribute('aria-hidden') === 'true') {
-          closeModal();
+        if (this.main.getAttribute('aria-hidden') === 'true') {
+          this.closeModal();
           setTimeout(event => {
             this.dispatchEvent(
               new Event('close', { bubbles: true, composed: true })
@@ -240,7 +214,33 @@ class Modal extends HTMLElement {
     });
 
     // sets the positioning for modals that are programmatically created and have scrolling content
-    setModalPosition();
+    // setModalPosition();
+  }
+
+  closeModal() {
+    this.modalBtn.removeAttribute('disabled');
+    this.main.setAttribute('aria-hidden', 'false');
+    this.body.classList.remove('hide-overflow');
+
+    this.overlay.classList.remove('fadeIn');
+    this.overlay.classList.add('fadeOut');
+
+    this.modal.classList.remove('slideInDown');
+    this.modal.classList.add('slideOutDown');
+
+    setTimeout(event => {
+      this.overlay.classList.add('hidden');
+      this.overlay.classList.remove('fadeOut');
+    }, 800);
+
+    setTimeout(event => {
+      this.modal.classList.add('hidden');
+      this.modal.classList.remove('slideOutDown');
+    }, 400);
+
+    setTimeout(event => {
+      this.modalBtn.focus();
+    }, 801);
   }
 
   getFocusableChildren(node) {
@@ -256,7 +256,7 @@ class Modal extends HTMLElement {
   }
 
   setFocusToFirstChild(node) {
-    const focusableChildren = getFocusableChildren(node),
+    const focusableChildren = this.getFocusableChildren(node),
       focusableChild =
         node.querySelector('[autofocus]') || focusableChildren[0];
 
@@ -267,24 +267,24 @@ class Modal extends HTMLElement {
 
   maintainFocus(e) {
     if (
-      main.getAttribute('aria-hidden') === 'true' &&
-      !modal.contains(e.target)
+      this.main.getAttribute('aria-hidden') === 'true' &&
+      !this.modal.contains(e.target)
     ) {
-      setFocusToFirstChild(modal);
+      this.setFocusToFirstChild(this.modal);
     }
   }
   bindKeyPress(e) {
-    if (main.getAttribute('aria-hidden') === 'true') {
+    if (this.main.getAttribute('aria-hidden') === 'true') {
       if (e.which === ESCAPE_KEY) {
-        closeModal();
+        this.closeModal();
       }
       if (e.which === TAB_KEY) {
-        trapTabKey(modal, e);
+        this.trapTabKey(this.modal, e);
       }
     }
   }
   trapTabKey(node, e) {
-    const focusableChildren = getFocusableChildren(node),
+    const focusableChildren = this.getFocusableChildren(node),
       focusedItemIdx = focusableChildren.indexOf(document.activeElement),
       lastFocusableIdx = focusableChildren.length - 1;
 
