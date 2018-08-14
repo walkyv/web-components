@@ -15,22 +15,22 @@ const FOCUSABLE_ELEMENTS = `
   TAB_KEY = 9,
   ESCAPE_KEY = 27;
 
+function getDeepActiveElement() {
+  let a = document.activeElement;
+  while (a && a.shadowRoot && a.shadowRoot.activeElement) {
+    a = a.shadowRoot.activeElement;
+  }
+  return a;
+}
+
 class Modal extends HTMLElement {
   constructor() {
     super();
 
     this.attachShadow({ mode: 'open' });
-
-    this.modal = null;
-
-    this.maintainFocus = null;
-    this.bindKeyPress = null;
   }
 
   connectedCallback() {
-    this.maintainFocus = this.maintainFocus.bind(this);
-    this.bindKeyPress = this.bindKeyPress.bind(this);
-
     // shadow dom
 
     const currentDoc = document.querySelector('link[href$="index.html"]')
@@ -141,10 +141,9 @@ class Modal extends HTMLElement {
       this.modal.classList.remove('hidden');
       this.modal.classList.remove('slideOutDown');
       this.modal.classList.add('slideInDown');
-      setTimeout(event => {
-        if (this.firstButton !== undefined) {
-          this.firstButton.focus();
-        }
+
+      setTimeout(() => {
+        this.setFocusToFirstChild(this.modal);
       }, 250);
     });
 
@@ -185,29 +184,14 @@ class Modal extends HTMLElement {
       });
     }
 
-    // focus trap
-    if (this.lastButton !== undefined) {
-      this.lastButton.addEventListener('blur', () => {
-        this.firstButton.focus();
-      });
-    }
-
-    // add keyboard accessibility
-    this.shadowRoot.addEventListener('keyup', event => {
-      if (event.keyCode === '27') {
-        if (this.main.getAttribute('aria-hidden') === 'true') {
-          this.closeModal();
-          setTimeout(event => {
-            this.dispatchEvent(
-              new Event('close', { bubbles: true, composed: true })
-            );
-          }, 500);
-        }
-      }
-    });
-
     // sets the positioning for modals that are programmatically created and have scrolling content
     // setModalPosition();
+
+    this.boundMaintainFocus = this.maintainFocus.bind(this);
+    this.boundBindKeyPress = this.bindKeyPress.bind(this);
+
+    document.addEventListener('keydown', this.boundBindKeyPress);
+    document.body.addEventListener('focus', this.boundMaintainFocus, true);
   }
 
   closeModal() {
@@ -259,26 +243,21 @@ class Modal extends HTMLElement {
   }
 
   maintainFocus(e) {
-    if (
-      this.main.getAttribute('aria-hidden') === 'true' &&
-      !this.modal.contains(e.target)
-    ) {
+    if (!this.modal.contains(getDeepActiveElement())) {
       this.setFocusToFirstChild(this.modal);
     }
   }
   bindKeyPress(e) {
-    if (this.main.getAttribute('aria-hidden') === 'true') {
-      if (e.which === ESCAPE_KEY) {
-        this.closeModal();
-      }
-      if (e.which === TAB_KEY) {
-        this.trapTabKey(this.modal, e);
-      }
+    if (e.which === ESCAPE_KEY) {
+      this.closeModal();
+    }
+    if (e.which === TAB_KEY) {
+      this.trapTabKey(this.modal, e);
     }
   }
   trapTabKey(node, e) {
     const focusableChildren = this.getFocusableChildren(node),
-      focusedItemIdx = focusableChildren.indexOf(document.activeElement),
+      focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
       lastFocusableIdx = focusableChildren.length - 1;
 
     if (e.target.getAttribute('tabindex') === '-1') {

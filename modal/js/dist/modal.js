@@ -12,6 +12,14 @@ var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    
     TAB_KEY = 9,
     ESCAPE_KEY = 27;
 
+function getDeepActiveElement() {
+  var a = document.activeElement;
+  while (a && a.shadowRoot && a.shadowRoot.activeElement) {
+    a = a.shadowRoot.activeElement;
+  }
+  return a;
+}
+
 var Modal = function (_HTMLElement) {
   _inherits(Modal, _HTMLElement);
 
@@ -21,11 +29,6 @@ var Modal = function (_HTMLElement) {
     var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this));
 
     _this.attachShadow({ mode: 'open' });
-
-    _this.modal = null;
-
-    _this.maintainFocus = null;
-    _this.bindKeyPress = null;
     return _this;
   }
 
@@ -33,9 +36,6 @@ var Modal = function (_HTMLElement) {
     key: 'connectedCallback',
     value: function connectedCallback() {
       var _this3 = this;
-
-      this.maintainFocus = this.maintainFocus.bind(this);
-      this.bindKeyPress = this.bindKeyPress.bind(this);
 
       // shadow dom
 
@@ -139,10 +139,9 @@ var Modal = function (_HTMLElement) {
         _this3.modal.classList.remove('hidden');
         _this3.modal.classList.remove('slideOutDown');
         _this3.modal.classList.add('slideInDown');
-        setTimeout(function (event) {
-          if (_this3.firstButton !== undefined) {
-            _this3.firstButton.focus();
-          }
+
+        setTimeout(function () {
+          _this3.setFocusToFirstChild(_this3.modal);
         }, 250);
       });
 
@@ -177,27 +176,14 @@ var Modal = function (_HTMLElement) {
         });
       }
 
-      // focus trap
-      if (this.lastButton !== undefined) {
-        this.lastButton.addEventListener('blur', function () {
-          _this3.firstButton.focus();
-        });
-      }
-
-      // add keyboard accessibility
-      this.shadowRoot.addEventListener('keyup', function (event) {
-        if (event.keyCode === '27') {
-          if (_this3.main.getAttribute('aria-hidden') === 'true') {
-            _this3.closeModal();
-            setTimeout(function (event) {
-              _this3.dispatchEvent(new Event('close', { bubbles: true, composed: true }));
-            }, 500);
-          }
-        }
-      });
-
       // sets the positioning for modals that are programmatically created and have scrolling content
       // setModalPosition();
+
+      this.boundMaintainFocus = this.maintainFocus.bind(this);
+      this.boundBindKeyPress = this.bindKeyPress.bind(this);
+
+      document.addEventListener('keydown', this.boundBindKeyPress);
+      document.body.addEventListener('focus', this.boundMaintainFocus, true);
     }
   }, {
     key: 'closeModal',
@@ -250,27 +236,26 @@ var Modal = function (_HTMLElement) {
   }, {
     key: 'maintainFocus',
     value: function maintainFocus(e) {
-      if (this.main.getAttribute('aria-hidden') === 'true' && !this.modal.contains(e.target)) {
+      console.log(this.modal.contains(getDeepActiveElement()));
+      if (!this.modal.contains(getDeepActiveElement())) {
         this.setFocusToFirstChild(this.modal);
       }
     }
   }, {
     key: 'bindKeyPress',
     value: function bindKeyPress(e) {
-      if (this.main.getAttribute('aria-hidden') === 'true') {
-        if (e.which === ESCAPE_KEY) {
-          this.closeModal();
-        }
-        if (e.which === TAB_KEY) {
-          this.trapTabKey(this.modal, e);
-        }
+      if (e.which === ESCAPE_KEY) {
+        this.closeModal();
+      }
+      if (e.which === TAB_KEY) {
+        this.trapTabKey(this.modal, e);
       }
     }
   }, {
     key: 'trapTabKey',
     value: function trapTabKey(node, e) {
       var focusableChildren = this.getFocusableChildren(node),
-          focusedItemIdx = focusableChildren.indexOf(document.activeElement),
+          focusedItemIdx = focusableChildren.indexOf(document.activeElement.shadowRoot.activeElement),
           lastFocusableIdx = focusableChildren.length - 1;
 
       if (e.target.getAttribute('tabindex') === '-1') {
