@@ -20,9 +20,12 @@ var Modal = function (_HTMLElement) {
 
     var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this));
 
-    var shadowRoot = _this.attachShadow({
-      mode: 'open'
-    });
+    _this.attachShadow({ mode: 'open' });
+
+    _this.modal = null;
+
+    _this.maintainFocus = null;
+    _this.bindKeyPress = null;
     return _this;
   }
 

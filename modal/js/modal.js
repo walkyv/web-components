@@ -19,9 +19,12 @@ class Modal extends HTMLElement {
   constructor() {
     super();
 
-    const shadowRoot = this.attachShadow({
-      mode: 'open'
-    });
+    this.attachShadow({ mode: 'open' });
+
+    this.modal = null;
+
+    this.maintainFocus = null;
+    this.bindKeyPress = null;
   }
 
   connectedCallback() {
