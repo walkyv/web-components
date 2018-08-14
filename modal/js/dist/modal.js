@@ -34,6 +34,9 @@ var Modal = function (_HTMLElement) {
     value: function connectedCallback() {
       var _this3 = this;
 
+      this.maintainFocus = this.maintainFocus.bind(this);
+      this.bindKeyPress = this.bindKeyPress.bind(this);
+
       // shadow dom
 
       var currentDoc = document.querySelector('link[href$="index.html"]').import;
@@ -92,21 +95,13 @@ var Modal = function (_HTMLElement) {
       this.modal = this.shadowRoot.querySelector('.modal');
       this.modalBtn = document.querySelector('#' + referenceId);
       this.modalContent = document.querySelector('pearson-modal');
-      this.modalButtons = this.modalContent.querySelectorAll('button, input, select, a');
+
       this.body = document.getElementsByTagName('body')[0];
       this.overlay = this.shadowRoot.querySelector('#modalOverlay');
       this.main = document.getElementById('main');
-      this.buttons = this.shadowRoot.querySelectorAll('button');
-      this.totalButtons = this.buttons.length - 1;
-      this.lastButton = this.buttons[this.totalButtons];
       this.cancelButton = this.shadowRoot.querySelector('.modal-cancel');
       this.successButton = this.shadowRoot.querySelector('.modal-success');
       this.closeButtons = this.shadowRoot.querySelectorAll('.modal-close');
-      if (this.modalButtons[0]) {
-        this.firstButton = this.modalButtons[0];
-      } else {
-        this.firstButton = this.buttons[0];
-      }
 
       function setModalPosition() {
         var _this2 = this;
