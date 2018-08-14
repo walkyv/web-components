@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html class="">
+<head>
+	<title>Web Component Markup Kit</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" href="css/style.css" media="all" />
+</head>
+<body class="">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="pe-icons-sprite" style="display:none">
+	<!-- place only the symbols belonging to that component here -->
+</svg>
+
+<main id="main">
+	<div class="pe-tabbed-navigation light">
+		<ul class="tab-list" role="tablist" data-tab-selected="0">
+			<li class="tab-item active" role="presentation">
+				<button id="tabOneBtn"
+						class="pe-label neutral-three tab-action"
+						role="tab"
+						tabindex="0"
+						aria-selected="true"
+						aria-controls="tabOne">
+					Tab One
+				</button>
+			</li>
+			<li class="tab-item" role="presentation">
+				<button id="tabTwoBtn"
+						class="pe-label neutral-three tab-action"
+						role="tab"
+						tabindex="0"
+						aria-selected="false"
+						aria-controls="tabTwo">
+					Tab Two
+				</button>
+			</li>
+			<li class="tab-item" role="presentation">
+				<button id="tabThreeBtn"
+						class="pe-label neutral-three tab-action"
+						role="tab"
+						tabindex="0"
+						aria-selected="false"
+						aria-controls="tabThree">
+					Tab Three
+				</button>
+			</li>
+		</ul>
+		<div id="tabSlider" class="tab-slider"></div>
+	</div>
+
+	<div class="pe-tab-panels">
+		<div id="tabOne"
+			 role="tabpanel"
+			 aria-labelledby="tabOneBtn"
+		>
+			<p>Tab One Content</p>
+		</div>
+
+		<div id="tabTwo"
+			 class="hidden"
+			 role="tabpanel"
+			 aria-labelledby="tabTwoBtn"
+		>
+			<p>Tab Two Content</p>
+		</div>
+
+		<div id="tabThree"
+			 class="hidden"
+			 role="tabpanel"
+			 aria-labelledby="tabThreeBtn"
+		>
+			<p>Tab Three Content</p>
+		</div>
+	</div>
+</main>
+
+<script src="js/dist/main.js"></script>
+</body>
+</html>
+

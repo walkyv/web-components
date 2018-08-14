@@ -23,6 +23,15 @@
     return el.getBoundingClientRect();
   }
 
+  function openPanel(width, left, tab, newTab) {
+    var tabToHide = document.getElementById(tab.getAttribute('aria-controls')),
+        tabToShow = document.getElementById(newTab.getAttribute('aria-controls'));
+
+    buildSlider(width, left);
+    tabToHide.classList.add('hidden');
+    tabToShow.classList.remove('hidden');
+  }
+
   Array.prototype.forEach.call(tabs, function (tab, index) {
 
     // set all the tabs with a unique data tab number
@@ -46,7 +55,8 @@
       _this.parentNode.classList.add('active');
 
       // activate slider
-      buildSlider(width, left);
+
+      openPanel(width, left, currentTab, _this);
     });
   });
 
