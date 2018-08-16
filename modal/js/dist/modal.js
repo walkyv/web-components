@@ -76,6 +76,10 @@ var Modal = function (_HTMLElement) {
       var template = currentDoc.querySelector('#template');
       var clone = document.importNode(template.content, true);
 
+      while (this.children.length > 0) {
+        clone.querySelector('.modal-body').appendChild(this.children[0]);
+      }
+
       this.shadowRoot.appendChild(clone);
       // set attributes
       var titleText = this.getAttribute('modalTitleText'),
@@ -162,7 +166,8 @@ var Modal = function (_HTMLElement) {
           _this2.boundMaintainFocus();
         }, 250);
 
-        document.addEventListener('keydown', _this2.boundBindKeyPress);document.body.addEventListener('focus', _this2.boundMaintainFocus, true);
+        document.addEventListener('keydown', _this2.boundBindKeyPress);
+        document.body.addEventListener('focus', _this2.boundMaintainFocus, true);
       });
 
       // add () listener to the close button

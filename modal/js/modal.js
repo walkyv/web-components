@@ -72,9 +72,13 @@ class Modal extends HTMLElement {
 
     const currentDoc = document.querySelector('link[href$="index.html"]')
       .import;
-    let template = currentDoc.querySelector('#template');
+    const template = currentDoc.querySelector('#template');
     const clone = document.importNode(template.content, true);
 
+    while (this.children.length > 0) {
+      clone.querySelector('.modal-body').appendChild(this.children[0]);
+    }
+    
     this.shadowRoot.appendChild(clone);
     // set attributes
     const titleText = this.getAttribute('modalTitleText'),
@@ -170,7 +174,8 @@ class Modal extends HTMLElement {
         this.boundMaintainFocus();
       }, 250);
 
-      document.addEventListener('keydown', this.boundBindKeyPress);document.body.addEventListener('focus', this.boundMaintainFocus, true);
+      document.addEventListener('keydown', this.boundBindKeyPress);
+      document.body.addEventListener('focus', this.boundMaintainFocus, true);
     });
 
     // add () listener to the close button
@@ -215,7 +220,6 @@ class Modal extends HTMLElement {
     this.boundMaintainFocus = this.maintainFocus.bind(this);
     this.boundBindKeyPress = this.bindKeyPress.bind(this);
   }
-
 
   closeModal() {
     this.modalBtn.removeAttribute('disabled');
