@@ -74,27 +74,31 @@ class Modal extends HTMLElement {
   }
 
   connectedCallback() {
-    // shadow dom
-
-    const currentDoc = document.querySelector('link[href$="index.html"]')
-      .import;
-    const template = currentDoc.querySelector('#template');
-    const clone = document.importNode(template.content, true);
-
-    // set attributes
+    // Get component attributes
     const titleText = this.getAttribute('modalTitleText'),
       successBtnText = this.getAttribute('successButtonText'),
       cancelBtnText = this.getAttribute('cancelButtonText'),
       referenceId = this.getAttribute('buttonReferenceId'),
       showFooter = this.getAttribute('showFooter');
 
-    // create elements
+    // Clone content for shadow DOM
+    const currentDoc = document.querySelector('link[href$="index.html"]')
+      .import;
+    const template = currentDoc.querySelector('#template');
+    const clone = document.importNode(template.content, true);
+
+    // Create elements
+
+    // Target the body of the modal
     const modalBody = clone.querySelector('.modal-body');
+
+    // Loop through the nodes passed in by consumer 
+    // and move them into Shadow DOM
     while (this.children.length > 0) {
       modalBody.appendChild(this.children[0]);
     }
 
-    // create the footer is attribute is set to true
+    // create the footer
     if (showFooter === 'true') {
       const actionsTemplate = currentDoc.querySelector('#actions'),
         actionsClone = document.importNode(actionsTemplate.content, true);
@@ -146,8 +150,7 @@ class Modal extends HTMLElement {
     this.eventBtns = clone.querySelectorAll('[data-event]');
     this.overlay = clone.querySelector('#modalOverlay');
 
-    // for modals that are not programatically created
-    // when the modal trigger is clicked show modal
+    // When the modal trigger is clicked, open modal
     this.openBtn.addEventListener('click', this.openModal);
 
     this.eventBtns.forEach(btn => {
@@ -157,12 +160,10 @@ class Modal extends HTMLElement {
       });
     });
 
-
     // sets the positioning for modals that are programmatically created and have scrolling content
     this.setPosition();
 
     this.shadowRoot.appendChild(clone);
-
   }
 
   openModal(e) {

@@ -76,26 +76,30 @@ var Modal = function (_HTMLElement) {
     value: function connectedCallback() {
       var _this2 = this;
 
-      // shadow dom
-
-      var currentDoc = document.querySelector('link[href$="index.html"]').import;
-      var template = currentDoc.querySelector('#template');
-      var clone = document.importNode(template.content, true);
-
-      // set attributes
+      // Get component attributes
       var titleText = this.getAttribute('modalTitleText'),
           successBtnText = this.getAttribute('successButtonText'),
           cancelBtnText = this.getAttribute('cancelButtonText'),
           referenceId = this.getAttribute('buttonReferenceId'),
           showFooter = this.getAttribute('showFooter');
 
-      // create elements
+      // Clone content for shadow DOM
+      var currentDoc = document.querySelector('link[href$="index.html"]').import;
+      var template = currentDoc.querySelector('#template');
+      var clone = document.importNode(template.content, true);
+
+      // Create elements
+
+      // Target the body of the modal
       var modalBody = clone.querySelector('.modal-body');
+
+      // Loop through the nodes passed in by consumer 
+      // and move them into Shadow DOM
       while (this.children.length > 0) {
         modalBody.appendChild(this.children[0]);
       }
 
-      // create the footer is attribute is set to true
+      // create the footer
       if (showFooter === 'true') {
         var actionsTemplate = currentDoc.querySelector('#actions'),
             actionsClone = document.importNode(actionsTemplate.content, true);
@@ -141,8 +145,7 @@ var Modal = function (_HTMLElement) {
       this.eventBtns = clone.querySelectorAll('[data-event]');
       this.overlay = clone.querySelector('#modalOverlay');
 
-      // for modals that are not programatically created
-      // when the modal trigger is clicked show modal
+      // When the modal trigger is clicked, open modal
       this.openBtn.addEventListener('click', this.openModal);
 
       this.eventBtns.forEach(function (btn) {
