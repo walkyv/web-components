@@ -146,7 +146,7 @@ class Modal extends HTMLElement {
 
     // for modals that are not programatically created
     // when the modal trigger is clicked show modal
-    this.modalBtn.addEventListener('click', () => {
+    this.modalBtn.addEventListener('click', event => {
       this.setPosition();
 
       const thisButton = event.currentTarget,

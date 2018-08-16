@@ -165,12 +165,12 @@ var Modal = function (_HTMLElement) {
         document.addEventListener('keydown', _this2.boundBindKeyPress);document.body.addEventListener('focus', _this2.boundMaintainFocus, true);
       });
 
-      // add event listener to the close button
+      // add () listener to the close button
       if (this.closeButtons !== null) {
         this.closeButtons.forEach(function (button) {
-          button.addEventListener('click', function (event) {
+          button.addEventListener('click', function () {
             _this2.closeModal();
-            setTimeout(function (event) {
+            setTimeout(function () {
               _this2.dispatchEvent(new Event('close', { bubbles: true, composed: true }));
             }, 500);
           });
@@ -178,18 +178,18 @@ var Modal = function (_HTMLElement) {
       }
 
       if (this.successButton !== null) {
-        this.successButton.addEventListener('click', function (event) {
+        this.successButton.addEventListener('click', function () {
           _this2.closeModal();
-          setTimeout(function (event) {
+          setTimeout(function () {
             _this2.dispatchEvent(new Event('success', { bubbles: true, composed: true }));
           }, 500);
         });
       }
 
       if (this.cancelButton !== null) {
-        this.cancelButton.addEventListener('click', function (event) {
+        this.cancelButton.addEventListener('click', function () {
           _this2.closeModal();
-          setTimeout(function (event) {
+          setTimeout(function () {
             _this2.dispatchEvent(new Event('cancel', { bubbles: true, composed: true }));
           }, 500);
         });
@@ -216,17 +216,17 @@ var Modal = function (_HTMLElement) {
       this.modal.classList.remove('slideInDown');
       this.modal.classList.add('slideOutDown');
 
-      setTimeout(function (event) {
+      setTimeout(function () {
         _this3.overlay.classList.add('hidden');
         _this3.overlay.classList.remove('fadeOut');
       }, 800);
 
-      setTimeout(function (event) {
+      setTimeout(function () {
         _this3.modal.classList.add('hidden');
         _this3.modal.classList.remove('slideOutDown');
       }, 400);
 
-      setTimeout(function (event) {
+      setTimeout(function () {
         _this3.modalBtn.focus();
       }, 801);
 
