@@ -63,6 +63,9 @@ var Modal = function (_HTMLElement) {
 
     _this.attachShadow({ mode: 'open' });
 
+    _this.openModal = _this.openModal.bind(_this);
+    _this.closeModal = _this.closeModal.bind(_this);
+
     _this.bindKeyPress = _this.bindKeyPress.bind(_this);
     _this.maintainFocus = _this.maintainFocus.bind(_this);
     return _this;
@@ -142,33 +145,7 @@ var Modal = function (_HTMLElement) {
 
       // for modals that are not programatically created
       // when the modal trigger is clicked show modal
-      this.modalBtn.addEventListener('click', function (event) {
-        _this2.setPosition();
-
-        var thisButton = event.currentTarget,
-            buttonDisabled = thisButton.getAttribute('disabled');
-
-        if (buttonDisabled === null) {
-          thisButton.setAttribute('disabled', true);
-          _this2.main.setAttribute('aria-hidden', 'true');
-          _this2.overlay.removeAttribute('disabled');
-        }
-
-        _this2.overlay.classList.remove('hidden');
-        _this2.overlay.classList.remove('fadeOut');
-        _this2.overlay.classList.add('fadeIn');
-
-        _this2.modal.classList.remove('hidden');
-        _this2.modal.classList.remove('slideOutDown');
-        _this2.modal.classList.add('slideInDown');
-
-        setTimeout(function () {
-          _this2.maintainFocus();
-        }, 250);
-
-        document.addEventListener('keydown', _this2.bindKeyPress);
-        document.body.addEventListener('focus', _this2.maintainFocus, true);
-      });
+      this.modalBtn.addEventListener('click', this.openModal);
 
       // add () listener to the close button
       if (this.closeButtons !== null) {
@@ -206,9 +183,38 @@ var Modal = function (_HTMLElement) {
       this.shadowRoot.appendChild(clone);
     }
   }, {
+    key: 'openModal',
+    value: function openModal(e) {
+      var _this3 = this;
+
+      var thisButton = e.currentTarget,
+          buttonDisabled = thisButton.getAttribute('disabled');
+
+      if (buttonDisabled === null) {
+        thisButton.setAttribute('disabled', true);
+        this.main.setAttribute('aria-hidden', 'true');
+        this.overlay.removeAttribute('disabled');
+      }
+
+      this.overlay.classList.remove('hidden');
+      this.overlay.classList.remove('fadeOut');
+      this.overlay.classList.add('fadeIn');
+
+      this.modal.classList.remove('hidden');
+      this.modal.classList.remove('slideOutDown');
+      this.modal.classList.add('slideInDown');
+
+      setTimeout(function () {
+        _this3.maintainFocus();
+      }, 250);
+
+      document.addEventListener('keydown', this.bindKeyPress);
+      document.body.addEventListener('focus', this.maintainFocus, true);
+    }
+  }, {
     key: 'closeModal',
     value: function closeModal() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.modalBtn.removeAttribute('disabled');
       this.main.setAttribute('aria-hidden', 'false');
@@ -221,17 +227,17 @@ var Modal = function (_HTMLElement) {
       this.modal.classList.add('slideOutDown');
 
       setTimeout(function () {
-        _this3.overlay.classList.add('hidden');
-        _this3.overlay.classList.remove('fadeOut');
+        _this4.overlay.classList.add('hidden');
+        _this4.overlay.classList.remove('fadeOut');
       }, 800);
 
       setTimeout(function () {
-        _this3.modal.classList.add('hidden');
-        _this3.modal.classList.remove('slideOutDown');
+        _this4.modal.classList.add('hidden');
+        _this4.modal.classList.remove('slideOutDown');
       }, 400);
 
       setTimeout(function () {
-        _this3.modalBtn.focus();
+        _this4.modalBtn.focus();
       }, 801);
 
       document.removeEventListener('keydown', this.bindKeyPress);
@@ -257,15 +263,15 @@ var Modal = function (_HTMLElement) {
   }, {
     key: 'setPosition',
     value: function setPosition() {
-      var _this4 = this;
+      var _this5 = this;
 
       setTimeout(function () {
-        var modalPosition = _this4.modal.getBoundingClientRect();
+        var modalPosition = _this5.modal.getBoundingClientRect();
         window.scrollTo(0, 0);
         if (modalPosition.top <= 0) {
-          _this4.modal.style.top = '50px';
-          _this4.modal.style.transform = 'translate(-50%)';
-          _this4.modal.style.marginBottom = '50px';
+          _this5.modal.style.top = '50px';
+          _this5.modal.style.transform = 'translate(-50%)';
+          _this5.modal.style.marginBottom = '50px';
         }
       }, 100);
     }

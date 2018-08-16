@@ -66,6 +66,9 @@ class Modal extends HTMLElement {
 
     this.attachShadow({ mode: 'open' });
 
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+
     this.bindKeyPress = this.bindKeyPress.bind(this);
     this.maintainFocus = this.maintainFocus.bind(this);
   }
@@ -91,16 +94,12 @@ class Modal extends HTMLElement {
       modalBody.appendChild(this.children[0]);
     }
 
-
     // create the footer is attribute is set to true
     if (showFooter === 'true') {
       const actionsTemplate = currentDoc.querySelector('#actions'),
         actionsClone = document.importNode(actionsTemplate.content, true);
 
-      modalBody.parentNode.insertBefore(
-        actionsClone,
-        modalBody.nextSibling
-      );
+      modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
 
       const cancelButton = clone.querySelector('#cancelButton'),
         saveButton = clone.querySelector('#successButton');
@@ -138,12 +137,11 @@ class Modal extends HTMLElement {
       title.innerHTML = 'Modal Title';
     }
 
-    
     // functionality
     this.body = document.getElementsByTagName('body')[0];
     this.main = document.getElementById('main');
     this.modalBtn = document.querySelector('#' + referenceId);
-    
+
     this.modal = clone.querySelector('.modal');
     this.overlay = clone.querySelector('#modalOverlay');
     this.cancelButton = clone.querySelector('.modal-cancel');
@@ -152,34 +150,8 @@ class Modal extends HTMLElement {
 
     // for modals that are not programatically created
     // when the modal trigger is clicked show modal
-    this.modalBtn.addEventListener('click', event => {
-      this.setPosition();
-
-      const thisButton = event.currentTarget,
-        buttonDisabled = thisButton.getAttribute('disabled');
-
-      if (buttonDisabled === null) {
-        thisButton.setAttribute('disabled', true);
-        this.main.setAttribute('aria-hidden', 'true');
-        this.overlay.removeAttribute('disabled');
-      }
-
-      this.overlay.classList.remove('hidden');
-      this.overlay.classList.remove('fadeOut');
-      this.overlay.classList.add('fadeIn');
-
-      this.modal.classList.remove('hidden');
-      this.modal.classList.remove('slideOutDown');
-      this.modal.classList.add('slideInDown');
-
-      setTimeout(() => {
-        this.maintainFocus();
-      }, 250);
-
-      document.addEventListener('keydown', this.bindKeyPress);
-      document.body.addEventListener('focus', this.maintainFocus, true);
-    });
-
+    this.modalBtn.addEventListener('click', this.openModal);
+    
     // add () listener to the close button
     if (this.closeButtons !== null) {
       this.closeButtons.forEach(button => {
@@ -216,11 +188,37 @@ class Modal extends HTMLElement {
       });
     }
 
-    
     // sets the positioning for modals that are programmatically created and have scrolling content
     this.setPosition();
-  
+
     this.shadowRoot.appendChild(clone);
+  }
+
+  openModal(e) {
+    const thisButton = e.currentTarget,
+      buttonDisabled = thisButton.getAttribute('disabled');
+
+    if (buttonDisabled === null) {
+      thisButton.setAttribute('disabled', true);
+      this.main.setAttribute('aria-hidden', 'true');
+      this.overlay.removeAttribute('disabled');
+    }
+
+    this.overlay.classList.remove('hidden');
+    this.overlay.classList.remove('fadeOut');
+    this.overlay.classList.add('fadeIn');
+
+    this.modal.classList.remove('hidden');
+    this.modal.classList.remove('slideOutDown');
+    this.modal.classList.add('slideInDown');
+
+    setTimeout(() => {
+      this.maintainFocus();
+    }, 250);
+
+    document.addEventListener('keydown', this.bindKeyPress);
+    document.body.addEventListener('focus', this.maintainFocus, true);
+
   }
 
   closeModal() {
