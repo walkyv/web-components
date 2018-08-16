@@ -52,12 +52,19 @@ function openPanel (width, left, tab, newTab) {
        _this.setAttribute('aria-selected', true);
        _this.parentNode.classList.add('active');
 
-       // activate slider
-
+       // open panel and activate slider
        openPanel(width, left, currentTab, _this)
      })
- });
 
+   tab.addEventListener('keyup', event => {
+    if (event.code === "ArrowRight") {
+      console.log('next tab')
+    } else if (event.code === "ArrowLeft") {
+      console.log('previous tab')
+    }
+   })
+
+ });
 
   // set slider to first activated item
   const firstItemWidth = getPosition(returnCurrentTabItemDomNode()).width;

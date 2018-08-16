@@ -54,9 +54,16 @@
       _this.setAttribute('aria-selected', true);
       _this.parentNode.classList.add('active');
 
-      // activate slider
-
+      // open panel and activate slider
       openPanel(width, left, currentTab, _this);
+    });
+
+    tab.addEventListener('keyup', function (event) {
+      if (event.code === "ArrowRight") {
+        console.log('next tab');
+      } else if (event.code === "ArrowLeft") {
+        console.log('previous tab');
+      }
     });
   });
 
