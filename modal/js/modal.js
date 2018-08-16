@@ -71,6 +71,8 @@ class Modal extends HTMLElement {
 
     this.bindKeyPress = this.bindKeyPress.bind(this);
     this.maintainFocus = this.maintainFocus.bind(this);
+
+    this.shadowRoot.addEventListener('success', e => console.log(e))
   }
 
   connectedCallback() {
@@ -140,43 +142,30 @@ class Modal extends HTMLElement {
     // functionality
     this.body = document.getElementsByTagName('body')[0];
     this.main = document.getElementById('main');
-    this.modalBtn = document.querySelector('#' + referenceId);
+    this.openBtn = document.querySelector('#' + referenceId);
 
     this.modal = clone.querySelector('.modal');
+    this.eventBtns = clone.querySelectorAll('[data-event]');
     this.overlay = clone.querySelector('#modalOverlay');
-    this.cancelButton = clone.querySelector('.modal-cancel');
-    this.successButton = clone.querySelector('.modal-success');
-    this.closeButtons = clone.querySelectorAll('.modal-close');
 
     // for modals that are not programatically created
     // when the modal trigger is clicked show modal
-    this.modalBtn.addEventListener('click', this.openModal);
-    
-    // add () listener to the close button
-    if (this.closeButtons !== null) {
-      this.closeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          this.closeModal('close');
-        });
-      });
-    }
+    this.openBtn.addEventListener('click', this.openModal);
 
-    if (this.successButton !== null) {
-      this.successButton.addEventListener('click', () => {
-        this.closeModal('success');
+    this.eventBtns.forEach(btn => {
+      
+      btn.addEventListener('click', e => {
+        const eventType = e.target.dataset.event;
+        this.closeModal(eventType);
       });
-    }
+    });
 
-    if (this.cancelButton !== null) {
-      this.cancelButton.addEventListener('click', () => {
-        this.closeModal('cancel');
-      });
-    }
 
     // sets the positioning for modals that are programmatically created and have scrolling content
     this.setPosition();
 
     this.shadowRoot.appendChild(clone);
+
   }
 
   openModal(e) {
@@ -203,11 +192,10 @@ class Modal extends HTMLElement {
 
     document.addEventListener('keydown', this.bindKeyPress);
     document.body.addEventListener('focus', this.maintainFocus, true);
-
   }
 
   closeModal(eventName) {
-    this.modalBtn.removeAttribute('disabled');
+    this.openBtn.removeAttribute('disabled');
     this.main.setAttribute('aria-hidden', 'false');
     this.body.classList.remove('hide-overflow');
 
@@ -234,7 +222,7 @@ class Modal extends HTMLElement {
     }, 800);
 
     setTimeout(() => {
-      this.modalBtn.focus();
+      this.openBtn.focus();
     }, 801);
 
     document.removeEventListener('keydown', this.bindKeyPress);
@@ -248,7 +236,7 @@ class Modal extends HTMLElement {
   }
   bindKeyPress(e) {
     if (e.which === ESCAPE_KEY) {
-      this.closeModal();
+      this.closeModal('cancel');
     }
     if (e.which === TAB_KEY) {
       trapTabKey(this.modal, e);

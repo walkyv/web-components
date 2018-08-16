@@ -68,6 +68,10 @@ var Modal = function (_HTMLElement) {
 
     _this.bindKeyPress = _this.bindKeyPress.bind(_this);
     _this.maintainFocus = _this.maintainFocus.bind(_this);
+
+    _this.shadowRoot.addEventListener('success', function (e) {
+      return console.log(e);
+    });
     return _this;
   }
 
@@ -135,38 +139,23 @@ var Modal = function (_HTMLElement) {
       // functionality
       this.body = document.getElementsByTagName('body')[0];
       this.main = document.getElementById('main');
-      this.modalBtn = document.querySelector('#' + referenceId);
+      this.openBtn = document.querySelector('#' + referenceId);
 
       this.modal = clone.querySelector('.modal');
+      this.eventBtns = clone.querySelectorAll('[data-event]');
       this.overlay = clone.querySelector('#modalOverlay');
-      this.cancelButton = clone.querySelector('.modal-cancel');
-      this.successButton = clone.querySelector('.modal-success');
-      this.closeButtons = clone.querySelectorAll('.modal-close');
 
       // for modals that are not programatically created
       // when the modal trigger is clicked show modal
-      this.modalBtn.addEventListener('click', this.openModal);
+      this.openBtn.addEventListener('click', this.openModal);
 
-      // add () listener to the close button
-      if (this.closeButtons !== null) {
-        this.closeButtons.forEach(function (button) {
-          button.addEventListener('click', function () {
-            _this2.closeModal('close');
-          });
-        });
-      }
+      this.eventBtns.forEach(function (btn) {
 
-      if (this.successButton !== null) {
-        this.successButton.addEventListener('click', function () {
-          _this2.closeModal('success');
+        btn.addEventListener('click', function (e) {
+          var eventType = e.target.dataset.event;
+          _this2.closeModal(eventType);
         });
-      }
-
-      if (this.cancelButton !== null) {
-        this.cancelButton.addEventListener('click', function () {
-          _this2.closeModal('cancel');
-        });
-      }
+      });
 
       // sets the positioning for modals that are programmatically created and have scrolling content
       this.setPosition();
@@ -207,7 +196,7 @@ var Modal = function (_HTMLElement) {
     value: function closeModal(eventName) {
       var _this4 = this;
 
-      this.modalBtn.removeAttribute('disabled');
+      this.openBtn.removeAttribute('disabled');
       this.main.setAttribute('aria-hidden', 'false');
       this.body.classList.remove('hide-overflow');
 
@@ -232,7 +221,7 @@ var Modal = function (_HTMLElement) {
       }, 800);
 
       setTimeout(function () {
-        _this4.modalBtn.focus();
+        _this4.openBtn.focus();
       }, 801);
 
       document.removeEventListener('keydown', this.bindKeyPress);
@@ -249,7 +238,7 @@ var Modal = function (_HTMLElement) {
     key: 'bindKeyPress',
     value: function bindKeyPress(e) {
       if (e.which === ESCAPE_KEY) {
-        this.closeModal();
+        this.closeModal('cancel');
       }
       if (e.which === TAB_KEY) {
         trapTabKey(this.modal, e);
