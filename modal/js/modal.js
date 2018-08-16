@@ -167,7 +167,7 @@ class Modal extends HTMLElement {
       this.modal.classList.add('slideInDown');
 
       setTimeout(() => {
-        setFocusToFirstChild(this.modal);
+        this.boundMaintainFocus();
       }, 250);
 
       document.addEventListener('keydown', this.boundBindKeyPress);document.body.addEventListener('focus', this.boundMaintainFocus, true);

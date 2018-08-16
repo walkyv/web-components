@@ -159,7 +159,7 @@ var Modal = function (_HTMLElement) {
         _this2.modal.classList.add('slideInDown');
 
         setTimeout(function () {
-          setFocusToFirstChild(_this2.modal);
+          _this2.boundMaintainFocus();
         }, 250);
 
         document.addEventListener('keydown', _this2.boundBindKeyPress);document.body.addEventListener('focus', _this2.boundMaintainFocus, true);
