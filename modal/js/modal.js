@@ -146,7 +146,7 @@ class Modal extends HTMLElement {
 
     // for modals that are not programatically created
     // when the modal trigger is clicked show modal
-    this.modalBtn.addEventListener('click', event => {
+    this.modalBtn.addEventListener('click', () => {
       this.setPosition();
 
       const thisButton = event.currentTarget,
@@ -173,12 +173,12 @@ class Modal extends HTMLElement {
       document.addEventListener('keydown', this.boundBindKeyPress);document.body.addEventListener('focus', this.boundMaintainFocus, true);
     });
 
-    // add event listener to the close button
+    // add () listener to the close button
     if (this.closeButtons !== null) {
       this.closeButtons.forEach(button => {
-        button.addEventListener('click', event => {
+        button.addEventListener('click', () => {
           this.closeModal();
-          setTimeout(event => {
+          setTimeout(() => {
             this.dispatchEvent(
               new Event('close', { bubbles: true, composed: true })
             );
@@ -188,9 +188,9 @@ class Modal extends HTMLElement {
     }
 
     if (this.successButton !== null) {
-      this.successButton.addEventListener('click', event => {
+      this.successButton.addEventListener('click', () => {
         this.closeModal();
-        setTimeout(event => {
+        setTimeout(() => {
           this.dispatchEvent(
             new Event('success', { bubbles: true, composed: true })
           );
@@ -199,9 +199,9 @@ class Modal extends HTMLElement {
     }
 
     if (this.cancelButton !== null) {
-      this.cancelButton.addEventListener('click', event => {
+      this.cancelButton.addEventListener('click', () => {
         this.closeModal();
-        setTimeout(event => {
+        setTimeout(() => {
           this.dispatchEvent(
             new Event('cancel', { bubbles: true, composed: true })
           );
@@ -228,17 +228,17 @@ class Modal extends HTMLElement {
     this.modal.classList.remove('slideInDown');
     this.modal.classList.add('slideOutDown');
 
-    setTimeout(event => {
+    setTimeout(() => {
       this.overlay.classList.add('hidden');
       this.overlay.classList.remove('fadeOut');
     }, 800);
 
-    setTimeout(event => {
+    setTimeout(() => {
       this.modal.classList.add('hidden');
       this.modal.classList.remove('slideOutDown');
     }, 400);
 
-    setTimeout(event => {
+    setTimeout(() => {
       this.modalBtn.focus();
     }, 801);
 
