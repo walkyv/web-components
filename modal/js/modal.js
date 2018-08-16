@@ -156,35 +156,20 @@ class Modal extends HTMLElement {
     if (this.closeButtons !== null) {
       this.closeButtons.forEach(button => {
         button.addEventListener('click', () => {
-          this.closeModal();
-          setTimeout(() => {
-            this.dispatchEvent(
-              new Event('close', { bubbles: true, composed: true })
-            );
-          }, 500);
+          this.closeModal('close');
         });
       });
     }
 
     if (this.successButton !== null) {
       this.successButton.addEventListener('click', () => {
-        this.closeModal();
-        setTimeout(() => {
-          this.dispatchEvent(
-            new Event('success', { bubbles: true, composed: true })
-          );
-        }, 500);
+        this.closeModal('success');
       });
     }
 
     if (this.cancelButton !== null) {
       this.cancelButton.addEventListener('click', () => {
-        this.closeModal();
-        setTimeout(() => {
-          this.dispatchEvent(
-            new Event('cancel', { bubbles: true, composed: true })
-          );
-        }, 500);
+        this.closeModal('cancel');
       });
     }
 
@@ -221,7 +206,7 @@ class Modal extends HTMLElement {
 
   }
 
-  closeModal() {
+  closeModal(eventName) {
     this.modalBtn.removeAttribute('disabled');
     this.main.setAttribute('aria-hidden', 'false');
     this.body.classList.remove('hide-overflow');
@@ -233,14 +218,20 @@ class Modal extends HTMLElement {
     this.modal.classList.add('slideOutDown');
 
     setTimeout(() => {
-      this.overlay.classList.add('hidden');
-      this.overlay.classList.remove('fadeOut');
-    }, 800);
-
-    setTimeout(() => {
       this.modal.classList.add('hidden');
       this.modal.classList.remove('slideOutDown');
     }, 400);
+
+    setTimeout(() => {
+      this.dispatchEvent(
+        new Event(eventName, { bubbles: true, composed: true })
+      );
+    }, 500);
+
+    setTimeout(() => {
+      this.overlay.classList.add('hidden');
+      this.overlay.classList.remove('fadeOut');
+    }, 800);
 
     setTimeout(() => {
       this.modalBtn.focus();

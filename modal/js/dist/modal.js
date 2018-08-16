@@ -151,29 +151,20 @@ var Modal = function (_HTMLElement) {
       if (this.closeButtons !== null) {
         this.closeButtons.forEach(function (button) {
           button.addEventListener('click', function () {
-            _this2.closeModal();
-            setTimeout(function () {
-              _this2.dispatchEvent(new Event('close', { bubbles: true, composed: true }));
-            }, 500);
+            _this2.closeModal('close');
           });
         });
       }
 
       if (this.successButton !== null) {
         this.successButton.addEventListener('click', function () {
-          _this2.closeModal();
-          setTimeout(function () {
-            _this2.dispatchEvent(new Event('success', { bubbles: true, composed: true }));
-          }, 500);
+          _this2.closeModal('success');
         });
       }
 
       if (this.cancelButton !== null) {
         this.cancelButton.addEventListener('click', function () {
-          _this2.closeModal();
-          setTimeout(function () {
-            _this2.dispatchEvent(new Event('cancel', { bubbles: true, composed: true }));
-          }, 500);
+          _this2.closeModal('cancel');
         });
       }
 
@@ -213,7 +204,7 @@ var Modal = function (_HTMLElement) {
     }
   }, {
     key: 'closeModal',
-    value: function closeModal() {
+    value: function closeModal(eventName) {
       var _this4 = this;
 
       this.modalBtn.removeAttribute('disabled');
@@ -227,14 +218,18 @@ var Modal = function (_HTMLElement) {
       this.modal.classList.add('slideOutDown');
 
       setTimeout(function () {
-        _this4.overlay.classList.add('hidden');
-        _this4.overlay.classList.remove('fadeOut');
-      }, 800);
-
-      setTimeout(function () {
         _this4.modal.classList.add('hidden');
         _this4.modal.classList.remove('slideOutDown');
       }, 400);
+
+      setTimeout(function () {
+        _this4.dispatchEvent(new Event(eventName, { bubbles: true, composed: true }));
+      }, 500);
+
+      setTimeout(function () {
+        _this4.overlay.classList.add('hidden');
+        _this4.overlay.classList.remove('fadeOut');
+      }, 800);
 
       setTimeout(function () {
         _this4.modalBtn.focus();
