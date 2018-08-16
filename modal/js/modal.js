@@ -65,6 +65,9 @@ class Modal extends HTMLElement {
     super();
 
     this.attachShadow({ mode: 'open' });
+
+    this.bindKeyPress = this.bindKeyPress.bind(this);
+    this.maintainFocus = this.maintainFocus.bind(this);
   }
 
   connectedCallback() {
@@ -170,11 +173,11 @@ class Modal extends HTMLElement {
       this.modal.classList.add('slideInDown');
 
       setTimeout(() => {
-        this.boundMaintainFocus();
+        this.maintainFocus();
       }, 250);
 
-      document.addEventListener('keydown', this.boundBindKeyPress);
-      document.body.addEventListener('focus', this.boundMaintainFocus, true);
+      document.addEventListener('keydown', this.bindKeyPress);
+      document.body.addEventListener('focus', this.maintainFocus, true);
     });
 
     // add () listener to the close button
@@ -216,9 +219,7 @@ class Modal extends HTMLElement {
     
     // sets the positioning for modals that are programmatically created and have scrolling content
     this.setPosition();
-    
-    this.boundMaintainFocus = this.maintainFocus.bind(this);
-    this.boundBindKeyPress = this.bindKeyPress.bind(this);
+  
     this.shadowRoot.appendChild(clone);
   }
 
@@ -247,8 +248,8 @@ class Modal extends HTMLElement {
       this.modalBtn.focus();
     }, 801);
 
-    document.removeEventListener('keydown', this.boundBindKeyPress);
-    document.body.removeEventListener('focus', this.boundMaintainFocus);
+    document.removeEventListener('keydown', this.bindKeyPress);
+    document.body.removeEventListener('focus', this.maintainFocus);
   }
 
   maintainFocus() {

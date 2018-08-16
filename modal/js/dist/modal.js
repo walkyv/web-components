@@ -62,6 +62,9 @@ var Modal = function (_HTMLElement) {
     var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this));
 
     _this.attachShadow({ mode: 'open' });
+
+    _this.bindKeyPress = _this.bindKeyPress.bind(_this);
+    _this.maintainFocus = _this.maintainFocus.bind(_this);
     return _this;
   }
 
@@ -160,11 +163,11 @@ var Modal = function (_HTMLElement) {
         _this2.modal.classList.add('slideInDown');
 
         setTimeout(function () {
-          _this2.boundMaintainFocus();
+          _this2.maintainFocus();
         }, 250);
 
-        document.addEventListener('keydown', _this2.boundBindKeyPress);
-        document.body.addEventListener('focus', _this2.boundMaintainFocus, true);
+        document.addEventListener('keydown', _this2.bindKeyPress);
+        document.body.addEventListener('focus', _this2.maintainFocus, true);
       });
 
       // add () listener to the close button
@@ -200,8 +203,6 @@ var Modal = function (_HTMLElement) {
       // sets the positioning for modals that are programmatically created and have scrolling content
       this.setPosition();
 
-      this.boundMaintainFocus = this.maintainFocus.bind(this);
-      this.boundBindKeyPress = this.bindKeyPress.bind(this);
       this.shadowRoot.appendChild(clone);
     }
   }, {
@@ -233,8 +234,8 @@ var Modal = function (_HTMLElement) {
         _this3.modalBtn.focus();
       }, 801);
 
-      document.removeEventListener('keydown', this.boundBindKeyPress);
-      document.body.removeEventListener('focus', this.boundMaintainFocus);
+      document.removeEventListener('keydown', this.bindKeyPress);
+      document.body.removeEventListener('focus', this.maintainFocus);
     }
   }, {
     key: 'maintainFocus',
