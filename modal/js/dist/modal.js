@@ -76,26 +76,25 @@ var Modal = function (_HTMLElement) {
       var template = currentDoc.querySelector('#template');
       var clone = document.importNode(template.content, true);
 
-      while (this.children.length > 0) {
-        clone.querySelector('.modal-body').appendChild(this.children[0]);
-      }
-
       // set attributes
       var titleText = this.getAttribute('modalTitleText'),
           successBtnText = this.getAttribute('successButtonText'),
           cancelBtnText = this.getAttribute('cancelButtonText'),
           referenceId = this.getAttribute('buttonReferenceId'),
-          showFooter = this.getAttribute('showFooter'),
-          showClose = this.getAttribute('showClose');
+          showFooter = this.getAttribute('showFooter');
 
       // create elements
+      var modalBody = clone.querySelector('.modal-body');
+      while (this.children.length > 0) {
+        modalBody.appendChild(this.children[0]);
+      }
+
       // create the footer is attribute is set to true
       if (showFooter === 'true') {
         var actionsTemplate = currentDoc.querySelector('#actions'),
-            actionsClone = document.importNode(actionsTemplate.content, true),
-            actionsEntryPoint = clone.querySelector('.modal-body');
+            actionsClone = document.importNode(actionsTemplate.content, true);
 
-        actionsEntryPoint.parentNode.insertBefore(actionsClone, actionsEntryPoint.nextSibling);
+        modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
 
         var cancelButton = clone.querySelector('#cancelButton'),
             saveButton = clone.querySelector('#successButton');
@@ -128,13 +127,12 @@ var Modal = function (_HTMLElement) {
       }
 
       // functionality
-      this.modal = clone.querySelector('.modal');
-      this.modalBtn = document.querySelector('#' + referenceId);
-      this.modalContent = document.querySelector('pearson-modal');
-
       this.body = document.getElementsByTagName('body')[0];
-      this.overlay = clone.querySelector('#modalOverlay');
       this.main = document.getElementById('main');
+      this.modalBtn = document.querySelector('#' + referenceId);
+
+      this.modal = clone.querySelector('.modal');
+      this.overlay = clone.querySelector('#modalOverlay');
       this.cancelButton = clone.querySelector('.modal-cancel');
       this.successButton = clone.querySelector('.modal-success');
       this.closeButtons = clone.querySelectorAll('.modal-close');

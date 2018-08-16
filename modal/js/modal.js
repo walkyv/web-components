@@ -75,29 +75,28 @@ class Modal extends HTMLElement {
     const template = currentDoc.querySelector('#template');
     const clone = document.importNode(template.content, true);
 
-    while (this.children.length > 0) {
-      clone.querySelector('.modal-body').appendChild(this.children[0]);
-    }
-    
-    
     // set attributes
     const titleText = this.getAttribute('modalTitleText'),
       successBtnText = this.getAttribute('successButtonText'),
       cancelBtnText = this.getAttribute('cancelButtonText'),
       referenceId = this.getAttribute('buttonReferenceId'),
-      showFooter = this.getAttribute('showFooter'),
-      showClose = this.getAttribute('showClose');
+      showFooter = this.getAttribute('showFooter');
 
     // create elements
+    const modalBody = clone.querySelector('.modal-body');
+    while (this.children.length > 0) {
+      modalBody.appendChild(this.children[0]);
+    }
+
+
     // create the footer is attribute is set to true
     if (showFooter === 'true') {
       const actionsTemplate = currentDoc.querySelector('#actions'),
-        actionsClone = document.importNode(actionsTemplate.content, true),
-        actionsEntryPoint = clone.querySelector('.modal-body');
+        actionsClone = document.importNode(actionsTemplate.content, true);
 
-      actionsEntryPoint.parentNode.insertBefore(
+      modalBody.parentNode.insertBefore(
         actionsClone,
-        actionsEntryPoint.nextSibling
+        modalBody.nextSibling
       );
 
       const cancelButton = clone.querySelector('#cancelButton'),
@@ -138,13 +137,12 @@ class Modal extends HTMLElement {
 
     
     // functionality
-    this.modal = clone.querySelector('.modal');
-    this.modalBtn = document.querySelector('#' + referenceId);
-    this.modalContent = document.querySelector('pearson-modal');
-
     this.body = document.getElementsByTagName('body')[0];
-    this.overlay = clone.querySelector('#modalOverlay');
     this.main = document.getElementById('main');
+    this.modalBtn = document.querySelector('#' + referenceId);
+    
+    this.modal = clone.querySelector('.modal');
+    this.overlay = clone.querySelector('#modalOverlay');
     this.cancelButton = clone.querySelector('.modal-cancel');
     this.successButton = clone.querySelector('.modal-success');
     this.closeButtons = clone.querySelectorAll('.modal-close');
@@ -218,7 +216,7 @@ class Modal extends HTMLElement {
     
     // sets the positioning for modals that are programmatically created and have scrolling content
     this.setPosition();
-  
+    
     this.boundMaintainFocus = this.maintainFocus.bind(this);
     this.boundBindKeyPress = this.bindKeyPress.bind(this);
     this.shadowRoot.appendChild(clone);
