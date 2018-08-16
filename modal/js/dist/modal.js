@@ -80,13 +80,11 @@ var Modal = function (_HTMLElement) {
         clone.querySelector('.modal-body').appendChild(this.children[0]);
       }
 
-      this.shadowRoot.appendChild(clone);
       // set attributes
       var titleText = this.getAttribute('modalTitleText'),
           successBtnText = this.getAttribute('successButtonText'),
           cancelBtnText = this.getAttribute('cancelButtonText'),
           referenceId = this.getAttribute('buttonReferenceId'),
-          title = this.shadowRoot.querySelector('#dialog-heading'),
           showFooter = this.getAttribute('showFooter'),
           showClose = this.getAttribute('showClose');
 
@@ -95,12 +93,12 @@ var Modal = function (_HTMLElement) {
       if (showFooter === 'true') {
         var actionsTemplate = currentDoc.querySelector('#actions'),
             actionsClone = document.importNode(actionsTemplate.content, true),
-            actionsEntryPoint = this.shadowRoot.querySelector('.modal-body');
+            actionsEntryPoint = clone.querySelector('.modal-body');
 
         actionsEntryPoint.parentNode.insertBefore(actionsClone, actionsEntryPoint.nextSibling);
 
-        var cancelButton = this.shadowRoot.querySelector('#cancelButton'),
-            saveButton = this.shadowRoot.querySelector('#successButton');
+        var cancelButton = clone.querySelector('#cancelButton'),
+            saveButton = clone.querySelector('#successButton');
 
         if (cancelBtnText !== null) {
           cancelButton.innerHTML = cancelBtnText;
@@ -117,11 +115,12 @@ var Modal = function (_HTMLElement) {
 
       var overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
           overlayButtonClone = document.importNode(overlayButtonTemplate.content, true),
-          overlayEntryPoint = this.shadowRoot.querySelector('#modalPlaceholder');
+          overlayEntryPoint = clone.querySelector('#modalPlaceholder');
 
       overlayEntryPoint.parentNode.insertBefore(overlayButtonClone, overlayEntryPoint.nextElementSibling);
       overlayEntryPoint.remove();
 
+      var title = clone.querySelector('#dialog-heading');
       if (titleText !== null) {
         title.innerHTML = titleText;
       } else {
@@ -129,16 +128,16 @@ var Modal = function (_HTMLElement) {
       }
 
       // functionality
-      this.modal = this.shadowRoot.querySelector('.modal');
+      this.modal = clone.querySelector('.modal');
       this.modalBtn = document.querySelector('#' + referenceId);
       this.modalContent = document.querySelector('pearson-modal');
 
       this.body = document.getElementsByTagName('body')[0];
-      this.overlay = this.shadowRoot.querySelector('#modalOverlay');
+      this.overlay = clone.querySelector('#modalOverlay');
       this.main = document.getElementById('main');
-      this.cancelButton = this.shadowRoot.querySelector('.modal-cancel');
-      this.successButton = this.shadowRoot.querySelector('.modal-success');
-      this.closeButtons = this.shadowRoot.querySelectorAll('.modal-close');
+      this.cancelButton = clone.querySelector('.modal-cancel');
+      this.successButton = clone.querySelector('.modal-success');
+      this.closeButtons = clone.querySelectorAll('.modal-close');
 
       // for modals that are not programatically created
       // when the modal trigger is clicked show modal
@@ -205,6 +204,7 @@ var Modal = function (_HTMLElement) {
 
       this.boundMaintainFocus = this.maintainFocus.bind(this);
       this.boundBindKeyPress = this.bindKeyPress.bind(this);
+      this.shadowRoot.appendChild(clone);
     }
   }, {
     key: 'closeModal',
