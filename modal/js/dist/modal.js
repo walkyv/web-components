@@ -68,10 +68,6 @@ var Modal = function (_HTMLElement) {
 
     _this.bindKeyPress = _this.bindKeyPress.bind(_this);
     _this.maintainFocus = _this.maintainFocus.bind(_this);
-
-    _this.shadowRoot.addEventListener('success', function (e) {
-      return console.log(e);
-    });
     return _this;
   }
 
@@ -137,8 +133,8 @@ var Modal = function (_HTMLElement) {
       }
 
       // functionality
-      this.body = document.getElementsByTagName('body')[0];
-      this.main = document.getElementById('main');
+      this.body = document.querySelector('body');
+      this.main = document.querySelector('main');
       this.openBtn = document.querySelector('#' + referenceId);
 
       this.modal = clone.querySelector('.modal');
@@ -150,7 +146,6 @@ var Modal = function (_HTMLElement) {
       this.openBtn.addEventListener('click', this.openModal);
 
       this.eventBtns.forEach(function (btn) {
-
         btn.addEventListener('click', function (e) {
           var eventType = e.target.dataset.event;
           _this2.closeModal(eventType);

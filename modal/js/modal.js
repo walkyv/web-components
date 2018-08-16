@@ -71,8 +71,6 @@ class Modal extends HTMLElement {
 
     this.bindKeyPress = this.bindKeyPress.bind(this);
     this.maintainFocus = this.maintainFocus.bind(this);
-
-    this.shadowRoot.addEventListener('success', e => console.log(e))
   }
 
   connectedCallback() {
@@ -140,8 +138,8 @@ class Modal extends HTMLElement {
     }
 
     // functionality
-    this.body = document.getElementsByTagName('body')[0];
-    this.main = document.getElementById('main');
+    this.body = document.querySelector('body');
+    this.main = document.querySelector('main');
     this.openBtn = document.querySelector('#' + referenceId);
 
     this.modal = clone.querySelector('.modal');
@@ -153,7 +151,6 @@ class Modal extends HTMLElement {
     this.openBtn.addEventListener('click', this.openModal);
 
     this.eventBtns.forEach(btn => {
-      
       btn.addEventListener('click', e => {
         const eventType = e.target.dataset.event;
         this.closeModal(eventType);
