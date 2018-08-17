@@ -1,5 +1,6 @@
 'use strict';
 (function() {
+
  const tabs = document.querySelectorAll('[role=tab]'),
    tabList = document.querySelector('[role=tablist]');
 
@@ -31,6 +32,51 @@ function openPanel (width, left, tab, newTab) {
    tabToShow.classList.remove('hidden');
 }
 
+function getFocusableElements() {
+ const tabbedList = document.querySelectorAll('.tab-action'),
+   filter = Array.prototype.filter;
+   return filter.call(tabbedList, listItem => {
+     return (
+       listItem
+     )
+   });
+}
+
+function arrowNavigation (event) {
+   const firstTab = getFocusableElements()[0],
+     lastTab = getFocusableElements()[getFocusableElements().length - 1];
+
+   if (event) {
+     const parentNode = event.target.parentNode;
+
+     if (event.key === "ArrowRight") {
+        if (event.target === lastTab) {
+          firstTab.focus();
+        } else {
+          parentNode.nextElementSibling.firstElementChild.focus();
+        }
+      }
+
+      if (event.key === "ArrowLeft") {
+        if (event.target === firstTab) {
+          lastTab.focus();
+        } else {
+          parentNode.previousElementSibling.firstElementChild.focus();
+        }
+      }
+
+      if (event.key === "Home") {
+       firstTab.focus();
+      }
+
+      if (event.key === "End") {
+       lastTab.focus();
+      }
+   }
+}
+
+arrowNavigation();
+
  Array.prototype.forEach.call(tabs, (tab,index) => {
 
    // set all the tabs with a unique data tab number
@@ -54,16 +100,9 @@ function openPanel (width, left, tab, newTab) {
 
        // open panel and activate slider
        openPanel(width, left, currentTab, _this)
-     })
+     });
 
-   tab.addEventListener('keyup', event => {
-    if (event.code === "ArrowRight") {
-      console.log('next tab')
-    } else if (event.code === "ArrowLeft") {
-      console.log('previous tab')
-    }
-   })
-
+   tab.addEventListener('keyup', event => {arrowNavigation(event)});
  });
 
   // set slider to first activated item

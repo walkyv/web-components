@@ -3,7 +3,8 @@ const gulp = require('gulp'),
   postcss = require('gulp-postcss'),
   autoprefixer = require('autoprefixer'),
   cssnano = require('cssnano'),
-  sourcemaps = require('gulp-sourcemaps');
+  sourcemaps = require('gulp-sourcemaps'),
+  exec = require('child_process').exec;
 
 gulp.task('styles', function () {
   return gulp.src('scss/style.scss')
@@ -22,8 +23,9 @@ gulp.task('styles', function () {
 
 
 const babel = require('gulp-babel');
+
 gulp.task('babel', () =>
-  gulp.src('js/main.js')
+  gulp.src('js/tab-navigation.js')
   .pipe(babel({
     presets: ['es2015']
   }))
@@ -34,4 +36,12 @@ gulp.task('babel', () =>
 gulp.task('watch', ()=> {
   gulp.watch('js/*.js', ['babel']);
   gulp.watch('scss/**/*.scss', ['styles']);
+});
+
+gulp.task('browser', function(cb) {
+  exec('browser-sync start --server --files "**/*"', function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
 });

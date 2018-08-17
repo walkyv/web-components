@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var tabs = document.querySelectorAll('[role=tab]'),
       tabList = document.querySelector('[role=tablist]');
 
@@ -32,6 +33,49 @@
     tabToShow.classList.remove('hidden');
   }
 
+  function getFocusableElements() {
+    var tabbedList = document.querySelectorAll('.tab-action'),
+        filter = Array.prototype.filter;
+    return filter.call(tabbedList, function (listItem) {
+      return listItem;
+    });
+  }
+
+  function arrowNavigation(event) {
+    var firstTab = getFocusableElements()[0],
+        lastTab = getFocusableElements()[getFocusableElements().length - 1];
+
+    if (event) {
+      var parentNode = event.target.parentNode;
+
+      if (event.key === "ArrowRight") {
+        if (event.target === lastTab) {
+          firstTab.focus();
+        } else {
+          parentNode.nextElementSibling.firstElementChild.focus();
+        }
+      }
+
+      if (event.key === "ArrowLeft") {
+        if (event.target === firstTab) {
+          lastTab.focus();
+        } else {
+          parentNode.previousElementSibling.firstElementChild.focus();
+        }
+      }
+
+      if (event.key === "Home") {
+        firstTab.focus();
+      }
+
+      if (event.key === "End") {
+        lastTab.focus();
+      }
+    }
+  }
+
+  arrowNavigation();
+
   Array.prototype.forEach.call(tabs, function (tab, index) {
 
     // set all the tabs with a unique data tab number
@@ -59,11 +103,7 @@
     });
 
     tab.addEventListener('keyup', function (event) {
-      if (event.code === "ArrowRight") {
-        console.log('next tab');
-      } else if (event.code === "ArrowLeft") {
-        console.log('previous tab');
-      }
+      arrowNavigation(event);
     });
   });
 
