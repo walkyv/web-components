@@ -8,13 +8,67 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert]),\n    [tabindex]:not([tabindex^="-"]):not([inert])',
+    TAB_KEY = 9,
+    ESCAPE_KEY = 27;
+
+function getDeepActiveElement() {
+  var a = document.activeElement;
+  while (a && a.shadowRoot && a.shadowRoot.activeElement) {
+    a = a.shadowRoot.activeElement;
+  }
+  return a;
+}
+
+function getFocusableChildren(node) {
+  var filter = Array.prototype.filter,
+      focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+  return filter.call(focusableChildren, function (child) {
+    return !!(child.offsetWidth || child.offsetHeight || child.getClientRects().length);
+  });
+}
+
+function setFocusToFirstChild(node) {
+  var focusableChildren = getFocusableChildren(node),
+      focusableChild = node.querySelector('[autofocus]') || focusableChildren[0];
+
+  if (focusableChild) {
+    focusableChild.focus();
+  }
+}
+
+function trapTabKey(node, e) {
+  var focusableChildren = getFocusableChildren(node),
+      focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
+      lastFocusableIdx = focusableChildren.length - 1;
+
+  if (e.shiftKey && focusedItemIdx === 0) {
+    focusableChildren[lastFocusableIdx].focus();
+    e.preventDefault();
+  }
+
+  if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
+    focusableChildren[0].focus();
+    e.preventDefault();
+  }
+}
+
 var Modal = function (_HTMLElement) {
   _inherits(Modal, _HTMLElement);
 
   function Modal() {
     _classCallCheck(this, Modal);
 
-    return _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this));
+    var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this));
+
+    _this.attachShadow({ mode: 'open' });
+
+    _this.openModal = _this.openModal.bind(_this);
+    _this.closeModal = _this.closeModal.bind(_this);
+
+    _this.bindKeyPress = _this.bindKeyPress.bind(_this);
+    _this.maintainFocus = _this.maintainFocus.bind(_this);
+    return _this;
   }
 
   _createClass(Modal, [{
@@ -22,40 +76,43 @@ var Modal = function (_HTMLElement) {
     value: function connectedCallback() {
       var _this2 = this;
 
-      // shadow dom
-      var shadow = this.attachShadow({
-        mode: 'open'
-      }),
-          currentDoc = document.querySelector('link[href$="index.html"]').import;
-      var template = currentDoc.querySelector('#template');
-      var clone = document.importNode(template.content, true);
-
-      shadow.appendChild(clone);
-      // set attributes
+      // Get component attributes
       var titleText = this.getAttribute('modalTitleText'),
           successBtnText = this.getAttribute('successButtonText'),
           cancelBtnText = this.getAttribute('cancelButtonText'),
           referenceId = this.getAttribute('buttonReferenceId'),
-          title = shadow.querySelector('#dialog-heading'),
-          showFooter = this.getAttribute('showFooter'),
-          showClose = this.getAttribute('showClose');
+          showFooter = this.getAttribute('showFooter');
 
-      // create elements
-      // create the footer is attribute is set to true
+      // Clone content for shadow DOM
+      var currentDoc = document.querySelector('link[href$="index.html"]').import;
+      var template = currentDoc.querySelector('#template');
+      var clone = document.importNode(template.content, true);
+
+      // Create elements
+
+      // Target the body of the modal
+      var modalBody = clone.querySelector('.modal-body');
+
+      // Loop through the nodes passed in by consumer 
+      // and move them into Shadow DOM
+      while (this.children.length > 0) {
+        modalBody.appendChild(this.children[0]);
+      }
+
+      // create the footer
       if (showFooter === 'true') {
         var actionsTemplate = currentDoc.querySelector('#actions'),
-            actionsClone = document.importNode(actionsTemplate.content, true),
-            actionsEntryPoint = shadow.querySelector('.modal-body');
+            actionsClone = document.importNode(actionsTemplate.content, true);
 
-        actionsEntryPoint.parentNode.insertBefore(actionsClone, actionsEntryPoint.nextSibling);
+        modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
 
-        var _cancelButton = shadow.querySelector('#cancelButton'),
-            saveButton = shadow.querySelector('#successButton');
+        var cancelButton = clone.querySelector('#cancelButton'),
+            saveButton = clone.querySelector('#successButton');
 
         if (cancelBtnText !== null) {
-          _cancelButton.innerHTML = cancelBtnText;
+          cancelButton.innerHTML = cancelBtnText;
         } else {
-          _cancelButton.innerHTML = 'Cancel';
+          cancelButton.innerHTML = 'Cancel';
         }
 
         if (successBtnText !== null) {
@@ -67,11 +124,12 @@ var Modal = function (_HTMLElement) {
 
       var overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
           overlayButtonClone = document.importNode(overlayButtonTemplate.content, true),
-          overlayEntryPoint = shadow.querySelector('#modalPlaceholder');
+          overlayEntryPoint = clone.querySelector('#modalPlaceholder');
 
       overlayEntryPoint.parentNode.insertBefore(overlayButtonClone, overlayEntryPoint.nextElementSibling);
       overlayEntryPoint.remove();
 
+      var title = clone.querySelector('#dialog-heading');
       if (titleText !== null) {
         title.innerHTML = titleText;
       } else {
@@ -79,147 +137,125 @@ var Modal = function (_HTMLElement) {
       }
 
       // functionality
-      var modal = shadow.querySelector('.modal'),
-          firstButton = void 0;
-      var modalButton = document.querySelector('#' + referenceId),
-          modalContent = document.querySelector('pearson-modal'),
-          modalButtons = modalContent.querySelectorAll('button, input, select, a'),
-          body = document.getElementsByTagName('body')[0],
-          overlay = shadow.querySelector('#modalOverlay'),
-          main = document.getElementById('main'),
-          buttons = shadow.querySelectorAll('button'),
-          totalButtons = buttons.length - 1,
-          lastButton = buttons[totalButtons],
-          cancelButton = shadow.querySelector('.modal-cancel'),
-          successButton = shadow.querySelector('.modal-success'),
-          closeButtons = shadow.querySelectorAll('.modal-close');
-      if (modalButtons[0]) {
-        firstButton = modalButtons[0];
-      } else {
-        firstButton = buttons[0];
-      }
+      this.body = document.querySelector('body');
+      this.main = document.querySelector('main');
+      this.openBtn = document.querySelector('#' + referenceId);
 
-      function setModalPosition() {
-        setTimeout(function () {
-          var modalPosition = modal.getBoundingClientRect();
-          window.scrollTo(0, 0);
-          modalPosition.top;
-          if (modalPosition.top <= 0) {
-            modal.style.top = '50px';
-            modal.style.transform = 'translate(-50%)';
-            modal.style.marginBottom = '50px';
-          }
-        }, 100);
-      }
+      this.modal = clone.querySelector('.modal');
+      this.eventBtns = clone.querySelectorAll('[data-event]');
+      this.overlay = clone.querySelector('#modalOverlay');
 
-      function closeModal() {
-        modalButton.removeAttribute('disabled');
-        main.setAttribute('aria-hidden', 'false');
-        body.classList.remove('hide-overflow');
+      // When the modal trigger is clicked, open modal
+      this.openBtn.addEventListener('click', this.openModal);
 
-        overlay.classList.remove('fadeIn');
-        overlay.classList.add('fadeOut');
-
-        modal.classList.remove('slideInDown');
-        modal.classList.add('slideOutDown');
-
-        setTimeout(function (event) {
-          overlay.classList.add('hidden');
-          overlay.classList.remove('fadeOut');
-        }, 800);
-
-        setTimeout(function (event) {
-          modal.classList.add('hidden');
-          modal.classList.remove('slideOutDown');
-        }, 400);
-
-        setTimeout(function (event) {
-          modalButton.focus();
-        }, 801);
-      }
-
-      // for modals that are not programatically created
-      // when the modal trigger is clicked show modal
-      modalButton.addEventListener('click', function (event) {
-        setModalPosition();
-
-        var modal = shadow.querySelector('#modal');
-        var thisButton = event.currentTarget,
-            buttonDisabled = thisButton.getAttribute('disabled');
-
-        if (buttonDisabled === null) {
-          thisButton.setAttribute('disabled', true);
-          main.setAttribute('aria-hidden', 'true');
-          overlay.removeAttribute('disabled');
-        }
-
-        overlay.classList.remove('hidden');
-        overlay.classList.remove('fadeOut');
-        overlay.classList.add('fadeIn');
-
-        modal.classList.remove('hidden');
-        modal.classList.remove('slideOutDown');
-        modal.classList.add('slideInDown');
-        setTimeout(function (event) {
-
-          if (firstButton !== undefined) {
-            firstButton.focus();
-          }
-        }, 250);
-      });
-
-      // add event listener to the close button
-      if (closeButtons !== null) {
-        closeButtons.forEach(function (button) {
-          button;
-          button.addEventListener('click', function (event) {
-            closeModal();
-            setTimeout(function (event) {
-              _this2.dispatchEvent(new Event('close', { bubbles: true, composed: true }));
-            }, 500);
-          });
+      this.eventBtns.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          var eventType = e.target.dataset.event;
+          _this2.closeModal(eventType);
         });
-      }
-
-      if (successButton !== null) {
-        successButton.addEventListener('click', function (event) {
-          closeModal();
-          setTimeout(function (event) {
-            _this2.dispatchEvent(new Event('success', { bubbles: true, composed: true }));
-          }, 500);
-        });
-      }
-
-      if (cancelButton !== null) {
-        cancelButton.addEventListener('click', function (event) {
-          closeModal();
-          setTimeout(function (event) {
-            _this2.dispatchEvent(new Event('cancel', { bubbles: true, composed: true }));
-          }, 500);
-        });
-      }
-
-      // focus trap
-      if (lastButton !== undefined) {
-        lastButton.addEventListener('blur', function () {
-          firstButton.focus();
-        });
-      }
-
-      // add keyboard accessibility
-      shadow.addEventListener('keyup', function (event) {
-        if (event.keyCode === '27') {
-          if (main.getAttribute('aria-hidden') === 'true') {
-            closeModal();
-            setTimeout(function (event) {
-              _this2.dispatchEvent(new Event('close', { bubbles: true, composed: true }));
-            }, 500);
-          }
-        }
       });
 
       // sets the positioning for modals that are programmatically created and have scrolling content
-      setModalPosition();
+      this.setPosition();
+
+      this.shadowRoot.appendChild(clone);
+    }
+  }, {
+    key: 'openModal',
+    value: function openModal(e) {
+      var _this3 = this;
+
+      var thisButton = e.currentTarget,
+          buttonDisabled = thisButton.getAttribute('disabled');
+
+      if (buttonDisabled === null) {
+        thisButton.setAttribute('disabled', true);
+        this.main.setAttribute('aria-hidden', 'true');
+        this.overlay.removeAttribute('disabled');
+      }
+
+      this.overlay.classList.remove('hidden');
+      this.overlay.classList.remove('fadeOut');
+      this.overlay.classList.add('fadeIn');
+
+      this.modal.classList.remove('hidden');
+      this.modal.classList.remove('slideOutDown');
+      this.modal.classList.add('slideInDown');
+
+      setTimeout(function () {
+        _this3.maintainFocus();
+      }, 250);
+
+      document.addEventListener('keydown', this.bindKeyPress);
+      document.body.addEventListener('focus', this.maintainFocus, true);
+    }
+  }, {
+    key: 'closeModal',
+    value: function closeModal(eventName) {
+      var _this4 = this;
+
+      this.openBtn.removeAttribute('disabled');
+      this.main.setAttribute('aria-hidden', 'false');
+      this.body.classList.remove('hide-overflow');
+
+      this.overlay.classList.remove('fadeIn');
+      this.overlay.classList.add('fadeOut');
+
+      this.modal.classList.remove('slideInDown');
+      this.modal.classList.add('slideOutDown');
+
+      setTimeout(function () {
+        _this4.modal.classList.add('hidden');
+        _this4.modal.classList.remove('slideOutDown');
+      }, 400);
+
+      setTimeout(function () {
+        _this4.dispatchEvent(new Event(eventName, { bubbles: true, composed: true }));
+      }, 500);
+
+      setTimeout(function () {
+        _this4.overlay.classList.add('hidden');
+        _this4.overlay.classList.remove('fadeOut');
+      }, 800);
+
+      setTimeout(function () {
+        _this4.openBtn.focus();
+      }, 801);
+
+      document.removeEventListener('keydown', this.bindKeyPress);
+      document.body.removeEventListener('focus', this.maintainFocus);
+    }
+  }, {
+    key: 'maintainFocus',
+    value: function maintainFocus() {
+      if (!this.modal.contains(getDeepActiveElement())) {
+        setFocusToFirstChild(this.modal);
+      }
+    }
+  }, {
+    key: 'bindKeyPress',
+    value: function bindKeyPress(e) {
+      if (e.which === ESCAPE_KEY) {
+        this.closeModal('cancel');
+      }
+      if (e.which === TAB_KEY) {
+        trapTabKey(this.modal, e);
+      }
+    }
+  }, {
+    key: 'setPosition',
+    value: function setPosition() {
+      var _this5 = this;
+
+      setTimeout(function () {
+        var modalPosition = _this5.modal.getBoundingClientRect();
+        window.scrollTo(0, 0);
+        if (modalPosition.top <= 0) {
+          _this5.modal.style.top = '50px';
+          _this5.modal.style.transform = 'translate(-50%)';
+          _this5.modal.style.marginBottom = '50px';
+        }
+      }, 100);
     }
   }]);
 
