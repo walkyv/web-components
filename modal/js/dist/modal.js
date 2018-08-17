@@ -81,7 +81,7 @@ var Modal = function (_HTMLElement) {
           successBtnText = this.getAttribute('successButtonText'),
           cancelBtnText = this.getAttribute('cancelButtonText'),
           referenceId = this.getAttribute('buttonReferenceId'),
-          showFooter = this.getAttribute('showFooter');
+          showFooter = this.hasAttribute('showFooter');
 
       // Clone content for shadow DOM
       var currentDoc = document.querySelector('link[href$="index.html"]').import;
@@ -100,7 +100,7 @@ var Modal = function (_HTMLElement) {
       }
 
       // create the footer
-      if (showFooter === 'true') {
+      if (showFooter) {
         var actionsTemplate = currentDoc.querySelector('#actions'),
             actionsClone = document.importNode(actionsTemplate.content, true);
 

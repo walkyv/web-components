@@ -79,7 +79,7 @@ class Modal extends HTMLElement {
       successBtnText = this.getAttribute('successButtonText'),
       cancelBtnText = this.getAttribute('cancelButtonText'),
       referenceId = this.getAttribute('buttonReferenceId'),
-      showFooter = this.getAttribute('showFooter');
+      showFooter = this.hasAttribute('showFooter');
 
     // Clone content for shadow DOM
     const currentDoc = document.querySelector('link[href$="index.html"]')
@@ -99,7 +99,7 @@ class Modal extends HTMLElement {
     }
 
     // create the footer
-    if (showFooter === 'true') {
+    if (showFooter) {
       const actionsTemplate = currentDoc.querySelector('#actions'),
         actionsClone = document.importNode(actionsTemplate.content, true);
 
