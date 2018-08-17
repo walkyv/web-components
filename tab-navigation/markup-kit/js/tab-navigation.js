@@ -33,7 +33,7 @@ function openPanel (width, left, tab, newTab) {
 }
 
 function getFocusableElements() {
- const tabbedList = document.querySelectorAll('.tab-action'),
+ const tabbedList = document.querySelectorAll('[role="tab"]'),
    filter = Array.prototype.filter;
    return filter.call(tabbedList, listItem => {
      return (

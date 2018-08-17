@@ -34,7 +34,7 @@
   }
 
   function getFocusableElements() {
-    var tabbedList = document.querySelectorAll('.tab-action'),
+    var tabbedList = document.querySelectorAll('[role="tab"]'),
         filter = Array.prototype.filter;
     return filter.call(tabbedList, function (listItem) {
       return listItem;
