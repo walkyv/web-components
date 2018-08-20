@@ -164,6 +164,9 @@ class Modal extends HTMLElement {
     this.setPosition();
 
     this.shadowRoot.appendChild(clone);
+
+    document.addEventListener('keydown', this.bindKeyPress);
+    document.body.addEventListener('focus', this.maintainFocus, true);
   }
 
   openModal(e) {
@@ -183,13 +186,11 @@ class Modal extends HTMLElement {
     this.modal.classList.remove('hidden');
     this.modal.classList.remove('slideOutDown');
     this.modal.classList.add('slideInDown');
+    this.open = true;
 
     setTimeout(() => {
       this.maintainFocus();
     }, 250);
-
-    document.addEventListener('keydown', this.bindKeyPress);
-    document.body.addEventListener('focus', this.maintainFocus, true);
   }
 
   closeModal(eventName) {
@@ -223,20 +224,19 @@ class Modal extends HTMLElement {
       this.openBtn.focus();
     }, 801);
 
-    document.removeEventListener('keydown', this.bindKeyPress);
-    document.body.removeEventListener('focus', this.maintainFocus);
+    this.open = false;
   }
 
   maintainFocus() {
-    if (!this.modal.contains(getDeepActiveElement())) {
+    if (this.open && !this.modal.contains(getDeepActiveElement())) {
       setFocusToFirstChild(this.modal);
     }
   }
   bindKeyPress(e) {
-    if (e.which === ESCAPE_KEY) {
+    if (this.open && e.which === ESCAPE_KEY) {
       this.closeModal('cancel');
     }
-    if (e.which === TAB_KEY) {
+    if (this.open && e.which === TAB_KEY) {
       trapTabKey(this.modal, e);
     }
   }
@@ -251,6 +251,11 @@ class Modal extends HTMLElement {
         this.modal.style.marginBottom = '50px';
       }
     }, 100);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('keydown', this.bindKeyPress);
+    document.body.removeEventListener('focus', this.maintainFocus);
   }
 }
 
