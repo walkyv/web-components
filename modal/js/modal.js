@@ -210,7 +210,6 @@ class Modal extends HTMLElement {
     }, 400);
 
     setTimeout(() => {
-      console.log('eventName', eventName)
       this.dispatchEvent(
         new Event(eventName, { bubbles: true, composed: true })
       );
