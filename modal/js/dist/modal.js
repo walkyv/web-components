@@ -77,10 +77,10 @@ var Modal = function (_HTMLElement) {
       var _this2 = this;
 
       // Get component attributes
-      var titleText = this.getAttribute('modalTitleText'),
-          successBtnText = this.getAttribute('successButtonText'),
-          cancelBtnText = this.getAttribute('cancelButtonText'),
-          referenceId = this.getAttribute('buttonReferenceId'),
+      var titleText = this.getAttribute('titleText'),
+          successBtnText = this.getAttribute('successBtnText'),
+          cancelBtnText = this.getAttribute('cancelBtnText'),
+          triggerId = this.getAttribute('triggerId'),
           showFooter = this.hasAttribute('showFooter');
 
       // Clone content for shadow DOM
@@ -139,14 +139,14 @@ var Modal = function (_HTMLElement) {
       // functionality
       this.body = document.querySelector('body');
       this.main = document.querySelector('main');
-      this.openBtn = document.querySelector('#' + referenceId);
+      this.triggerBtn = document.querySelector('#' + triggerId);
 
       this.modal = clone.querySelector('.modal');
       this.eventBtns = clone.querySelectorAll('[data-event]');
       this.overlay = clone.querySelector('#modalOverlay');
 
       // When the modal trigger is clicked, open modal
-      this.openBtn.addEventListener('click', this.openModal);
+      this.triggerBtn.addEventListener('click', this.openModal);
 
       this.eventBtns.forEach(function (btn) {
         btn.addEventListener('click', function (e) {
@@ -195,7 +195,7 @@ var Modal = function (_HTMLElement) {
     value: function closeModal(eventName) {
       var _this4 = this;
 
-      this.openBtn.removeAttribute('disabled');
+      this.triggerBtn.removeAttribute('disabled');
       this.main.setAttribute('aria-hidden', 'false');
       this.body.classList.remove('hide-overflow');
 
@@ -211,6 +211,7 @@ var Modal = function (_HTMLElement) {
       }, 400);
 
       setTimeout(function () {
+        console.log('eventName', eventName);
         _this4.dispatchEvent(new Event(eventName, { bubbles: true, composed: true }));
       }, 500);
 
@@ -220,7 +221,7 @@ var Modal = function (_HTMLElement) {
       }, 800);
 
       setTimeout(function () {
-        _this4.openBtn.focus();
+        _this4.triggerBtn.focus();
       }, 801);
 
       this.open = false;
