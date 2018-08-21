@@ -75,11 +75,11 @@ class Modal extends HTMLElement {
 
   connectedCallback() {
     // Get component attributes
-    const titleText = this.getAttribute('modalTitleText'),
-      successBtnText = this.getAttribute('successButtonText'),
-      cancelBtnText = this.getAttribute('cancelButtonText'),
-      referenceId = this.getAttribute('buttonReferenceId'),
-      showFooter = this.getAttribute('showFooter');
+    const titleText = this.getAttribute('titleText'),
+      successBtnText = this.getAttribute('successBtnText'),
+      cancelBtnText = this.getAttribute('cancelBtnText'),
+      triggerId = this.getAttribute('triggerId'),
+      showFooter = this.hasAttribute('showFooter');
 
     // Clone content for shadow DOM
     const currentDoc = document.querySelector('link[href$="index.html"]')
@@ -99,7 +99,7 @@ class Modal extends HTMLElement {
     }
 
     // create the footer
-    if (showFooter === 'true') {
+    if (showFooter) {
       const actionsTemplate = currentDoc.querySelector('#actions'),
         actionsClone = document.importNode(actionsTemplate.content, true);
 
@@ -144,14 +144,14 @@ class Modal extends HTMLElement {
     // functionality
     this.body = document.querySelector('body');
     this.main = document.querySelector('main');
-    this.openBtn = document.querySelector('#' + referenceId);
+    this.triggerBtn = document.querySelector('#' + triggerId);
 
     this.modal = clone.querySelector('.modal');
     this.eventBtns = clone.querySelectorAll('[data-event]');
     this.overlay = clone.querySelector('#modalOverlay');
 
     // When the modal trigger is clicked, open modal
-    this.openBtn.addEventListener('click', this.openModal);
+    this.triggerBtn.addEventListener('click', this.openModal);
 
     this.eventBtns.forEach(btn => {
       btn.addEventListener('click', e => {
@@ -164,6 +164,9 @@ class Modal extends HTMLElement {
     this.setPosition();
 
     this.shadowRoot.appendChild(clone);
+
+    document.addEventListener('keydown', this.bindKeyPress);
+    document.body.addEventListener('focus', this.maintainFocus, true);
   }
 
   openModal(e) {
@@ -183,17 +186,15 @@ class Modal extends HTMLElement {
     this.modal.classList.remove('hidden');
     this.modal.classList.remove('slideOutDown');
     this.modal.classList.add('slideInDown');
+    this.open = true;
 
     setTimeout(() => {
       this.maintainFocus();
     }, 250);
-
-    document.addEventListener('keydown', this.bindKeyPress);
-    document.body.addEventListener('focus', this.maintainFocus, true);
   }
 
   closeModal(eventName) {
-    this.openBtn.removeAttribute('disabled');
+    this.triggerBtn.removeAttribute('disabled');
     this.main.setAttribute('aria-hidden', 'false');
     this.body.classList.remove('hide-overflow');
 
@@ -220,23 +221,22 @@ class Modal extends HTMLElement {
     }, 800);
 
     setTimeout(() => {
-      this.openBtn.focus();
+      this.triggerBtn.focus();
     }, 801);
 
-    document.removeEventListener('keydown', this.bindKeyPress);
-    document.body.removeEventListener('focus', this.maintainFocus);
+    this.open = false;
   }
 
   maintainFocus() {
-    if (!this.modal.contains(getDeepActiveElement())) {
+    if (this.open && !this.modal.contains(getDeepActiveElement())) {
       setFocusToFirstChild(this.modal);
     }
   }
   bindKeyPress(e) {
-    if (e.which === ESCAPE_KEY) {
+    if (this.open && e.which === ESCAPE_KEY) {
       this.closeModal('cancel');
     }
-    if (e.which === TAB_KEY) {
+    if (this.open && e.which === TAB_KEY) {
       trapTabKey(this.modal, e);
     }
   }
@@ -251,6 +251,11 @@ class Modal extends HTMLElement {
         this.modal.style.marginBottom = '50px';
       }
     }, 100);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('keydown', this.bindKeyPress);
+    document.body.removeEventListener('focus', this.maintainFocus);
   }
 }
 
