@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp serve"
   },
   "dependencies": {
     "@pearson-components/elements-sdk": "git+https://github.com/Pearson-Higher-Ed/elements-sdk.git#unstable-2.0-GLP"
@@ -13,6 +14,7 @@
     "autoprefixer": "^9.0.0",
     "babel-cli": "6.0.0",
     "babel-preset-es2015": "^6.24.1",
+    "browser-sync": "^2.24.6",
     "cssnano": "^4.0.3",
     "gulp": "^3.9.1",
     "gulp-babel": "7.0.0",

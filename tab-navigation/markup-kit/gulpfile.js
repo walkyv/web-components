@@ -4,7 +4,18 @@ const gulp = require('gulp'),
   autoprefixer = require('autoprefixer'),
   cssnano = require('cssnano'),
   sourcemaps = require('gulp-sourcemaps'),
-  exec = require('child_process').exec;
+  browserSync = require('browser-sync').create();
+
+gulp.task('serve', event => {
+  browserSync.init({
+    server: "./"
+  });
+
+  gulp.watch('js/*.js', ['babel']);
+  gulp.watch('scss/**/*.scss', ['styles']);
+  gulp.watch("./*.html").on('change', browserSync.reload);
+});
+
 
 gulp.task('styles', function () {
   return gulp.src('scss/style.scss')
@@ -19,29 +30,22 @@ gulp.task('styles', function () {
   ]))
   .pipe(sourcemaps.write())
   .pipe(gulp.dest('./css'))
+  .pipe(browserSync.stream());
 });
 
 
 const babel = require('gulp-babel');
-
 gulp.task('babel', () =>
   gulp.src('js/tab-navigation.js')
   .pipe(babel({
     presets: ['es2015']
   }))
   .pipe(gulp.dest('js/dist'))
+  .pipe(browserSync.stream())
 );
 
 
 gulp.task('watch', ()=> {
   gulp.watch('js/*.js', ['babel']);
   gulp.watch('scss/**/*.scss', ['styles']);
-});
-
-gulp.task('browser', function(cb) {
-  exec('browser-sync start --server --files "**/*"', function (err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
 });
