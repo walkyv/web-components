@@ -71,11 +71,14 @@
       if (event.key === "End") {
         lastTab.focus();
       }
+
+      if (event.key === "Tab") {
+        if (event.target.hasAttribute('data-tab')) {}
+      }
     }
   }
 
   arrowNavigation();
-
   Array.prototype.forEach.call(tabs, function (tab, index) {
 
     // set all the tabs with a unique data tab number
@@ -92,10 +95,11 @@
       // find the current item clicked and set aria selected FALSE
       currentTab.setAttribute('aria-selected', false);
       currentTab.parentNode.classList.remove('active');
-
+      currentTab.setAttribute('tabindex', '-1');
       // find set the new item to aria selected TRUE
       tabList.setAttribute('data-tab-selected', index);
       _this.setAttribute('aria-selected', true);
+      _this.setAttribute('tabindex', '0');
       _this.parentNode.classList.add('active');
 
       // open panel and activate slider
