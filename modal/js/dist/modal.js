@@ -91,9 +91,9 @@ var Modal = function (_HTMLElement) {
       // Create elements
 
       // Target the body of the modal
-      var modalBody = clone.querySelector('.modal-body');
+      var modalBody = clone.querySelector('#dialogDescription');
 
-      // Loop through the nodes passed in by consumer 
+      // Loop through the nodes passed in by consumer
       // and move them into Shadow DOM
       while (this.children.length > 0) {
         modalBody.appendChild(this.children[0]);
@@ -129,7 +129,7 @@ var Modal = function (_HTMLElement) {
       overlayEntryPoint.parentNode.insertBefore(overlayButtonClone, overlayEntryPoint.nextElementSibling);
       overlayEntryPoint.remove();
 
-      var title = clone.querySelector('#dialog-heading');
+      var title = clone.querySelector('#dialogHeading');
       if (titleText !== null) {
         title.innerHTML = titleText;
       } else {
@@ -141,7 +141,7 @@ var Modal = function (_HTMLElement) {
       this.main = document.querySelector('main');
       this.triggerBtn = document.querySelector('#' + triggerId);
 
-      this.modal = clone.querySelector('.modal');
+      this.modal = clone.querySelector('#modal');
       this.eventBtns = clone.querySelectorAll('[data-event]');
       this.overlay = clone.querySelector('#modalOverlay');
 
@@ -211,7 +211,6 @@ var Modal = function (_HTMLElement) {
       }, 400);
 
       setTimeout(function () {
-        console.log('eventName', eventName);
         _this4.dispatchEvent(new Event(eventName, { bubbles: true, composed: true }));
       }, 500);
 

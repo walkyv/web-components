@@ -90,9 +90,9 @@ class Modal extends HTMLElement {
     // Create elements
 
     // Target the body of the modal
-    const modalBody = clone.querySelector('.modal-body');
+    const modalBody = clone.querySelector('#dialogDescription');
 
-    // Loop through the nodes passed in by consumer 
+    // Loop through the nodes passed in by consumer
     // and move them into Shadow DOM
     while (this.children.length > 0) {
       modalBody.appendChild(this.children[0]);
@@ -134,7 +134,7 @@ class Modal extends HTMLElement {
     );
     overlayEntryPoint.remove();
 
-    const title = clone.querySelector('#dialog-heading');
+    const title = clone.querySelector('#dialogHeading');
     if (titleText !== null) {
       title.innerHTML = titleText;
     } else {
@@ -146,7 +146,7 @@ class Modal extends HTMLElement {
     this.main = document.querySelector('main');
     this.triggerBtn = document.querySelector('#' + triggerId);
 
-    this.modal = clone.querySelector('.modal');
+    this.modal = clone.querySelector('#modal');
     this.eventBtns = clone.querySelectorAll('[data-event]');
     this.overlay = clone.querySelector('#modalOverlay');
 
