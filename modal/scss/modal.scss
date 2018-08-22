@@ -80,7 +80,7 @@ button.close[aria-label="Close Dialog"] {
   background-color: #fff;
   border-radius: 2px;
 }
-@media (max-width: 767px) {
+@media (min-width: 481px) and (max-width: 767px) {
   /* line 86, ./scss/style.scss */
   .pe-modal-container {
     width: 440px;
@@ -140,7 +140,7 @@ h2 {
   padding-right: 40px;
   padding-bottom: 40px;
 }
-@media (max-width: 767px) {
+@media (min-width: 481px) and (max-width: 767px) {
   /* line 121, ./scss/style.scss */
   .pe-modal-container .actions {
     -webkit-box-pack: justify;
@@ -170,7 +170,7 @@ h2 {
     margin: .5em 0;
   }
 }
-@media (max-width: 767px) {
+@media (min-width: 481px) and (max-width: 767px) {
   /* line 136, ./scss/style.scss */
   .pe-modal-container .actions button {
     width: 100%;
