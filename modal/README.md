@@ -37,19 +37,19 @@ Import the web component onto the page, inbetween the `<head>` tags
 > write a script to copy this dependency to a desired location.
 
 **To Use**
-Add the `<pearson-modal> </pearson-modal>` tag to the page, passing in the id of the button you want to trigger the modal, in an attribute called triggerId. You can add any content you like between the tags as normal HTML5 markup, and it will show up in the body of the modal.
+Add the `<pearson-modal> </pearson-modal>` tags to the page, passing in a `triggerId`, the unuque ID of the button you want to open the modal. You can add any content you like between the tags as normal HTML5 markup, and it will render in the body of the modal.
 
 **Important Note:**
 
-> To maintain accessibility you will need to keep the modal tag adjacent  
-> to your main content. The main content must be wrapped in an element  
-> with an ID of main.
+> To maintain accessibility, the `pearson-modal` tag must be a sibling of
+> your main content. The main content must be wrapped in an element  
+> with an ID of 'main'.
 
 **Example Code:**
 
 ```html
 <body>
-  <!-- for accessibility, the must be adjacent to an element with an id of main -->
+  <!-- The pearson-modal must be a sibling of an element with an id of `main` -->
   <main id="main">
     <section class="container">
       <button id="trigger-modal">Open Modal</button>
@@ -66,13 +66,13 @@ To set the title and toggle action buttons, see the API below.
 
 ## API
 
-| Attribute        | Type      | Default         | Description                                                                           |
-| ---------------- | --------- | --------------- | ------------------------------------------------------------------------------------- |
-| `triggerId`      | `String`  | Required        | This is the button id of the trigger that launches the modal.                         |
-| `titleText`      | `String`  | `'Modal Title'` | The title text you want to pass into the modal to display.                            |
-| `showFooter`     | `Boolean` | `false`         | Set to "True" to show the footer with success and cancel buttons, else set to "False" |
-| `successBtnText` | `String`  | `'Save'`        | The text you want to pass into the success button (if showFooter is set to true)      |
-| `cancelBtnText`  | `String`  | `'Cancel'`      | The text you want to pass into the cancel button                                      |
+| Attribute        | Type      | Default         | Description                                       |
+| ---------------- | --------- | --------------- | ------------------------------------------------- |
+| `triggerId`      | `String`  | Required        | The unique ID of the button that opens the modal. |
+| `titleText`      | `String`  | 'Modal Title'`  | The title of the modal.                           |
+| `showFooter`     | `Boolean` | `false`         | If set, shows the `Success` and `Cancel` buttons. |
+| `successBtnText` | `String`  | `'Save'`        | The text to display in the `Success` button.      |
+| `cancelBtnText`  | `String`  | `'Cancel'`      | The text to display in the `Cancel` button.       |
 
 **Example Code:**
 
@@ -92,7 +92,7 @@ To set the title and toggle action buttons, see the API below.
   cancelBtnText="Cancel"
   showFooter
 >
-  <p>Pass in elements as children to the modal</p>
+  <p>Pass in any valid HTML tags as children of the modal.</p>
   <input type="text" />
   <button">Click Me</button>
 </pearson-modal>
@@ -100,26 +100,30 @@ To set the title and toggle action buttons, see the API below.
 
 ## Events
 
-We provide 2 different JavaScript events
+The `pearson-modal` component emits two different events:
 
-| Event     | Description                                                      |
-| --------- | ---------------------------------------------------------------- |
-| `success` | Will fire after the success button in the modal has been pressed |
-| `cancel`  | Will fire after the cancel button in the modal has been pressed  |
+| Event     | Description                                                        |
+| --------- | ------------------------------------------------------------------ |
+| `success` | Will fire when the success button in the modal is pressed.         |
+| `cancel`  | Will fire when any button other than the success buton is pressed, or when the user closes the modal with the `escape` key. |
 
-<br>
+**Important Note:**
+
+> For the purposes of event emission, the modal treats 
+> *any button that is not the success button* as a 'cancel' button.
+> If you want your modal to emit a `success` event, you *must* show the footer.
 
 **Example Code:**
 
 ```js
-// you can query a web component like any other element in JavaScript
+// You can query a web component like any other element in JavaScript
 const modal = document.querySelector('pearson-modal');
 
 modal.addEventListener('success', () => {
-  // do something
+  // Do something
 });
 
 modal.addEventListener('cancel', () => {
-  // do something
+  // Do something
 });
 ```
