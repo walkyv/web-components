@@ -94,7 +94,7 @@ To set the title and toggle action buttons, see the API below.
 >
   <p>Pass in any valid HTML tags as children of the modal.</p>
   <input type="text" />
-  <button">Click Me</button>
+  <button>Click Me</button>
 </pearson-modal>
 ```
 
