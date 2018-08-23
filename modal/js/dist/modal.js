@@ -8,8 +8,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert]),\n    [tabindex]:not([tabindex^="-"]):not([inert])',
     TAB_KEY = 9,
     ESCAPE_KEY = 27;
@@ -39,8 +37,14 @@ function setFocusToFirstChild(node) {
   }
 }
 
-function trapTabKey(light, shadow, e) {
-  var focusableChildren = [].concat(_toConsumableArray(getFocusableChildren(light)), _toConsumableArray(getFocusableChildren(shadow))),
+function trapTabKey(e) {
+  for (var _len = arguments.length, nodes = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    nodes[_key - 1] = arguments[_key];
+  }
+
+  var focusableChildren = nodes.reduce(function (acc, n) {
+    return acc.concat(getFocusableChildren(n));
+  }, []),
       focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
       lastFocusableIdx = focusableChildren.length - 1;
 
@@ -235,7 +239,7 @@ var Modal = function (_HTMLElement) {
         this.closeModal('cancel');
       }
       if (this.open && e.which === TAB_KEY) {
-        trapTabKey(this, this.modal, e);
+        trapTabKey(e, this, this.modal);
       }
     }
   }, {

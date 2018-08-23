@@ -44,8 +44,8 @@ function setFocusToFirstChild(node) {
   }
 }
 
-function trapTabKey(light, shadow, e) {
-  const focusableChildren = [...getFocusableChildren(light), ...getFocusableChildren(shadow)],
+function trapTabKey(e, ...nodes) {
+  const focusableChildren = nodes.reduce((acc, n) => acc.concat(getFocusableChildren(n)), []),
     focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
     lastFocusableIdx = focusableChildren.length - 1;
 
@@ -231,7 +231,7 @@ class Modal extends HTMLElement {
       this.closeModal('cancel');
     }
     if (this.open && e.which === TAB_KEY) {
-      trapTabKey(this, this.modal, e);
+      trapTabKey(e, this, this.modal);
     }
   }
 
