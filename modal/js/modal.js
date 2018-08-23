@@ -44,8 +44,8 @@ function setFocusToFirstChild(node) {
   }
 }
 
-function trapTabKey(node, e) {
-  const focusableChildren = getFocusableChildren(node),
+function trapTabKey(light, shadow, e) {
+  const focusableChildren = [...getFocusableChildren(light), ...getFocusableChildren(shadow)],
     focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
     lastFocusableIdx = focusableChildren.length - 1;
 
@@ -91,12 +91,6 @@ class Modal extends HTMLElement {
 
     // Target the body of the modal
     const modalBody = clone.querySelector('#dialogDescription');
-
-    // Loop through the nodes passed in by consumer
-    // and move them into Shadow DOM
-    while (this.children.length > 0) {
-      modalBody.appendChild(this.children[0]);
-    }
 
     // create the footer
     if (showFooter) {
@@ -228,8 +222,8 @@ class Modal extends HTMLElement {
   }
 
   maintainFocus() {
-    if (this.open && !this.modal.contains(getDeepActiveElement())) {
-      setFocusToFirstChild(this.modal);
+    if (this.open && !(this.contains(getDeepActiveElement()) || this.modal.contains(getDeepActiveElement()))) {
+      setFocusToFirstChild(this);
     }
   }
   bindKeyPress(e) {
@@ -237,7 +231,7 @@ class Modal extends HTMLElement {
       this.closeModal('cancel');
     }
     if (this.open && e.which === TAB_KEY) {
-      trapTabKey(this.modal, e);
+      trapTabKey(this, this.modal, e);
     }
   }
 

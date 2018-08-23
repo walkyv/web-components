@@ -8,6 +8,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert]),\n    [tabindex]:not([tabindex^="-"]):not([inert])',
     TAB_KEY = 9,
     ESCAPE_KEY = 27;
@@ -37,8 +39,8 @@ function setFocusToFirstChild(node) {
   }
 }
 
-function trapTabKey(node, e) {
-  var focusableChildren = getFocusableChildren(node),
+function trapTabKey(light, shadow, e) {
+  var focusableChildren = [].concat(_toConsumableArray(getFocusableChildren(light)), _toConsumableArray(getFocusableChildren(shadow))),
       focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
       lastFocusableIdx = focusableChildren.length - 1;
 
@@ -92,12 +94,6 @@ var Modal = function (_HTMLElement) {
 
       // Target the body of the modal
       var modalBody = clone.querySelector('#dialogDescription');
-
-      // Loop through the nodes passed in by consumer
-      // and move them into Shadow DOM
-      while (this.children.length > 0) {
-        modalBody.appendChild(this.children[0]);
-      }
 
       // create the footer
       if (showFooter) {
@@ -228,8 +224,8 @@ var Modal = function (_HTMLElement) {
   }, {
     key: 'maintainFocus',
     value: function maintainFocus() {
-      if (this.open && !this.modal.contains(getDeepActiveElement())) {
-        setFocusToFirstChild(this.modal);
+      if (this.open && !(this.contains(getDeepActiveElement()) || this.modal.contains(getDeepActiveElement()))) {
+        setFocusToFirstChild(this);
       }
     }
   }, {
@@ -239,7 +235,7 @@ var Modal = function (_HTMLElement) {
         this.closeModal('cancel');
       }
       if (this.open && e.which === TAB_KEY) {
-        trapTabKey(this.modal, e);
+        trapTabKey(this, this.modal, e);
       }
     }
   }, {
