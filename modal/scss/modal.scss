@@ -74,7 +74,7 @@ button.close[aria-label="Close Dialog"] {
 
 /* line 86, ./scss/style.scss */
 .pe-modal-container {
-  width: 600px;
+  min-width: 600px;
   max-width: 100%;
   outline: none;
   background-color: #fff;
