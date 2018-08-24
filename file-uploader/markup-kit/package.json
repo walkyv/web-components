@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@pearson-components/elements-sdk": "git+https://github.com/Pearson-Higher-Ed/elements-sdk.git#unstable-2.0-GLP",
-    "@pearson-ux/modal": "^0.4.2"
+    "@pearson-ux/modal": "^0.4.3"
   },
   "devDependencies": {
     "autoprefixer": "^9.0.0",
