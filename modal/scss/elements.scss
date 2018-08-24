@@ -1,1 +1,7 @@
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/mixins";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/functions";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/variables";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/typography/variables";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/color/color";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/icons/icons";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/buttons/buttons";
