@@ -182,6 +182,10 @@ h2 {
   outline-offset: 2px;
 }
 
+.pe-btn--btn_large:focus:after, .pe-btn:focus:after {
+  left:-8px;
+  top:-8px;
+}
 
 .style-scope {
   text-align: left;
