@@ -37,8 +37,14 @@ function setFocusToFirstChild(node) {
   }
 }
 
-function trapTabKey(node, e) {
-  var focusableChildren = getFocusableChildren(node),
+function trapTabKey(e) {
+  for (var _len = arguments.length, nodes = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    nodes[_key - 1] = arguments[_key];
+  }
+
+  var focusableChildren = nodes.reduce(function (acc, n) {
+    return acc.concat(getFocusableChildren(n));
+  }, []),
       focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
       lastFocusableIdx = focusableChildren.length - 1;
 
@@ -92,12 +98,6 @@ var Modal = function (_HTMLElement) {
 
       // Target the body of the modal
       var modalBody = clone.querySelector('#dialogDescription');
-
-      // Loop through the nodes passed in by consumer
-      // and move them into Shadow DOM
-      while (this.children.length > 0) {
-        modalBody.appendChild(this.children[0]);
-      }
 
       // create the footer
       if (showFooter) {
@@ -228,8 +228,8 @@ var Modal = function (_HTMLElement) {
   }, {
     key: 'maintainFocus',
     value: function maintainFocus() {
-      if (this.open && !this.modal.contains(getDeepActiveElement())) {
-        setFocusToFirstChild(this.modal);
+      if (this.open && !(this.contains(getDeepActiveElement()) || this.modal.contains(getDeepActiveElement()))) {
+        setFocusToFirstChild(this);
       }
     }
   }, {
@@ -239,7 +239,7 @@ var Modal = function (_HTMLElement) {
         this.closeModal('cancel');
       }
       if (this.open && e.which === TAB_KEY) {
-        trapTabKey(this.modal, e);
+        trapTabKey(e, this, this.modal);
       }
     }
   }, {
