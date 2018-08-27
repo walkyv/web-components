@@ -18,6 +18,7 @@
 
 </head>
 <body class="">
+
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="pe-icons-sprite" style="display:none">
 	<!-- place only the symbols belonging to that component here -->
 </svg>
@@ -25,16 +26,17 @@
 <!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
 <main id="main">
 	<section class="container">
-		<button id="trigger-modal" class="pe-btn pe-btn--btn_large">Upload File</button>
+		<button id="trigger-modal" class="pe-btn pe-btn--btn_large">Attach files</button>
 	</section>
 </main>
 
 <!-- place modal before the end of the body and pass in the reference ID of the button that triggers the modal -->
-<pearson-modal triggerId="trigger-modal" titleText="File Upload">
+<pearson-modal triggerId="trigger-modal" titleText="Upload Files">
 	<div class="pe-file-upload">
 		<div class="drop-area">
-			<p class="pe-title">Drag files in here</p>
-			<p>Or</p>
+			<p class="pe-title">Drag files here</p>
+			<p>or</p>
+			<input id='fileid' type='file' hidden />
 			<button class="pe-btn__primary--btn_large">Browse Files</button>
 			<p class="info">Upload up to 20 files.  Max file size 2 MB</p>
 		</div>
