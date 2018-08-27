@@ -94,8 +94,6 @@ var Modal = function (_HTMLElement) {
 
       // Get component attributes
       var titleText = this.getAttribute('titleText'),
-          successBtnText = this.getAttribute('successBtnText'),
-          cancelBtnText = this.getAttribute('cancelBtnText'),
           triggerId = this.getAttribute('triggerId'),
           showFooter = this.hasAttribute('showFooter');
 
@@ -107,29 +105,10 @@ var Modal = function (_HTMLElement) {
       // Create elements
 
       // Target the body of the modal
-      var modalBody = clone.querySelector('#dialogDescription');
 
       // create the footer
       if (showFooter) {
-        var actionsTemplate = currentDoc.querySelector('#actions'),
-            actionsClone = document.importNode(actionsTemplate.content, true);
-
-        modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
-
-        var cancelButton = clone.querySelector('#cancelButton'),
-            saveButton = clone.querySelector('#successButton');
-
-        if (cancelBtnText !== null) {
-          cancelButton.innerHTML = cancelBtnText;
-        } else {
-          cancelButton.innerHTML = 'Cancel';
-        }
-
-        if (successBtnText !== null) {
-          saveButton.innerHTML = successBtnText;
-        } else {
-          saveButton.innerHTML = 'Save';
-        }
+        this.renderFooter(clone, currentDoc);
       }
 
       var overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
@@ -277,6 +256,32 @@ var Modal = function (_HTMLElement) {
           _this5.modal.style.marginBottom = '50px';
         }
       }, 100);
+    }
+  }, {
+    key: 'renderFooter',
+    value: function renderFooter(clone, currentDoc) {
+      var actionsTemplate = currentDoc.querySelector('#actions'),
+          actionsClone = document.importNode(actionsTemplate.content, true),
+          modalBody = clone.querySelector('#dialogDescription');
+      var successBtnText = this.getAttribute('successBtnText'),
+          cancelBtnText = this.getAttribute('cancelBtnText');
+
+      modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
+
+      var cancelButton = clone.querySelector('#cancelButton'),
+          saveButton = clone.querySelector('#successButton');
+
+      if (cancelBtnText !== null) {
+        cancelButton.innerHTML = cancelBtnText;
+      } else {
+        cancelButton.innerHTML = 'Cancel';
+      }
+
+      if (successBtnText !== null) {
+        saveButton.innerHTML = successBtnText;
+      } else {
+        saveButton.innerHTML = 'Save';
+      }
     }
   }, {
     key: 'disconnectedCallback',

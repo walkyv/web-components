@@ -98,7 +98,7 @@ class Modal extends HTMLElement {
     if (name === 'showFooter') {
       if (!this.modal) return;
       const actions = this.modal.querySelector('.actions');
-      
+
       actions.hidden = newValue === null;
     }
   }
@@ -106,8 +106,6 @@ class Modal extends HTMLElement {
   connectedCallback() {
     // Get component attributes
     const titleText = this.getAttribute('titleText'),
-      successBtnText = this.getAttribute('successBtnText'),
-      cancelBtnText = this.getAttribute('cancelBtnText'),
       triggerId = this.getAttribute('triggerId'),
       showFooter = this.hasAttribute('showFooter');
 
@@ -120,29 +118,10 @@ class Modal extends HTMLElement {
     // Create elements
 
     // Target the body of the modal
-    const modalBody = clone.querySelector('#dialogDescription');
 
     // create the footer
     if (showFooter) {
-      const actionsTemplate = currentDoc.querySelector('#actions'),
-        actionsClone = document.importNode(actionsTemplate.content, true);
-
-      modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
-
-      const cancelButton = clone.querySelector('#cancelButton'),
-        saveButton = clone.querySelector('#successButton');
-
-      if (cancelBtnText !== null) {
-        cancelButton.innerHTML = cancelBtnText;
-      } else {
-        cancelButton.innerHTML = 'Cancel';
-      }
-
-      if (successBtnText !== null) {
-        saveButton.innerHTML = successBtnText;
-      } else {
-        saveButton.innerHTML = 'Save';
-      }
+      this.renderFooter(clone, currentDoc);
     }
 
     const overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
@@ -290,6 +269,30 @@ class Modal extends HTMLElement {
         this.modal.style.marginBottom = '50px';
       }
     }, 100);
+  }
+  renderFooter(clone, currentDoc) {
+    const actionsTemplate = currentDoc.querySelector('#actions'),
+      actionsClone = document.importNode(actionsTemplate.content, true),
+      modalBody = clone.querySelector('#dialogDescription');
+    const successBtnText = this.getAttribute('successBtnText'),
+      cancelBtnText = this.getAttribute('cancelBtnText');
+
+    modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
+
+    const cancelButton = clone.querySelector('#cancelButton'),
+      saveButton = clone.querySelector('#successButton');
+
+    if (cancelBtnText !== null) {
+      cancelButton.innerHTML = cancelBtnText;
+    } else {
+      cancelButton.innerHTML = 'Cancel';
+    }
+
+    if (successBtnText !== null) {
+      saveButton.innerHTML = successBtnText;
+    } else {
+      saveButton.innerHTML = 'Save';
+    }
   }
 
   disconnectedCallback() {
