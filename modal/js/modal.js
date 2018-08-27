@@ -290,15 +290,12 @@ class Modal extends HTMLElement {
 
     if (cancelBtnText !== null) {
       cancelButton.innerHTML = cancelBtnText;
-    } else {
-      cancelButton.innerHTML = 'Cancel';
     }
 
     if (successBtnText !== null) {
       saveButton.innerHTML = successBtnText;
-    } else {
-      saveButton.innerHTML = 'Save';
     }
+
     modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
   }
 
