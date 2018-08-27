@@ -80,10 +80,11 @@ var Modal = function (_HTMLElement) {
   _createClass(Modal, [{
     key: 'attributeChangedCallback',
     value: function attributeChangedCallback(name, oldValue, newValue) {
-      switch (name) {
-        case 'showFooter':
-          console.log('showFooter changed!');
-          break;
+      if (name === 'showFooter') {
+        if (!this.modal) return;
+        var actions = this.modal.querySelector('.actions');
+
+        actions.hidden = newValue === null;
       }
     }
   }, {
@@ -282,6 +283,20 @@ var Modal = function (_HTMLElement) {
     value: function disconnectedCallback() {
       document.removeEventListener('keydown', this.bindKeyPress);
       document.body.removeEventListener('focus', this.maintainFocus);
+    }
+  }, {
+    key: 'showFooter',
+    get: function get() {
+      return this.hasAttribute('showFooter');
+    },
+    set: function set(value) {
+      var isFooterShown = Boolean(value);
+
+      if (isFooterShown) {
+        this.setAttribute('showFooter', '');
+      } else {
+        this.removeAttribute('showFooter');
+      }
     }
   }], [{
     key: 'observedAttributes',

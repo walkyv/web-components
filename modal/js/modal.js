@@ -79,12 +79,27 @@ class Modal extends HTMLElement {
   static get observedAttributes() {
     return ['showFooter'];
   }
- 
+
+  get showFooter() {
+    return this.hasAttribute('showFooter');
+  }
+
+  set showFooter(value) {
+    const isFooterShown = Boolean(value);
+
+    if (isFooterShown) {
+      this.setAttribute('showFooter', '');
+    } else {
+      this.removeAttribute('showFooter');
+    }
+  }
+
   attributeChangedCallback(name, oldValue, newValue) {
-    switch (name) {
-      case 'showFooter':
-        console.log('showFooter changed!');
-        break;
+    if (name === 'showFooter') {
+      if (!this.modal) return;
+      const actions = this.modal.querySelector('.actions');
+      
+      actions.hidden = newValue === null;
     }
   }
 
