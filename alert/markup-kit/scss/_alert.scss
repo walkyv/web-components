@@ -17,9 +17,10 @@ $success: #19A6A4;
     margin-bottom: 1em;
     max-width: 580px;
     transition: all 0.2s ease;
+  z-index: 10;
 
   &[data-alert-type="global"] {
-    position:absolute;
+    position:fixed;
     top:32px;
     margin: 0 32px;
     @media(max-width:768px) {
@@ -27,6 +28,14 @@ $success: #19A6A4;
       margin: 0 24px;
     }
   }
+
+    &[data-alert-type="content"] {
+      position:absolute;
+    }
+
+    &[data-alert-type="inline"] {
+      position:relative;
+    }
 
     @media (max-width: 480px) {
       max-width: 440px;

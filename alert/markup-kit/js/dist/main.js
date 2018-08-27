@@ -2,7 +2,6 @@
 
 (function () {
   // do something
-
   var closeButton = document.getElementById('closeAlert'),
       alert = document.getElementById('alert');
 

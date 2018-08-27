@@ -1,7 +1,6 @@
 'use strict';
 (function() {
   // do something
-
   const closeButton = document.getElementById('closeAlert'),
     alert = document.getElementById('alert');
 
@@ -9,5 +8,6 @@
       alert.classList.remove('slideInDown');
       alert.classList.add('slideOutDown');
   })
+
 
 })();
