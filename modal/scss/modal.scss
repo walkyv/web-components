@@ -1,6 +1,6 @@
 /* line 10, ./scss/style.scss */
-.hidden {
-  display: none;
+.hidden, [hidden] {
+  display: none !important;
 }
 
 /* line 13, ./scss/style.scss */
