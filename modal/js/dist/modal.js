@@ -78,6 +78,15 @@ var Modal = function (_HTMLElement) {
   }
 
   _createClass(Modal, [{
+    key: 'attributeChangedCallback',
+    value: function attributeChangedCallback(name, oldValue, newValue) {
+      switch (name) {
+        case 'showFooter':
+          console.log('showFooter changed!');
+          break;
+      }
+    }
+  }, {
     key: 'connectedCallback',
     value: function connectedCallback() {
       var _this2 = this;
@@ -273,6 +282,11 @@ var Modal = function (_HTMLElement) {
     value: function disconnectedCallback() {
       document.removeEventListener('keydown', this.bindKeyPress);
       document.body.removeEventListener('focus', this.maintainFocus);
+    }
+  }], [{
+    key: 'observedAttributes',
+    get: function get() {
+      return ['showFooter'];
     }
   }]);
 

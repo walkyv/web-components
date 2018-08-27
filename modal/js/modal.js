@@ -76,6 +76,18 @@ class Modal extends HTMLElement {
     this.maintainFocus = this.maintainFocus.bind(this);
   }
 
+  static get observedAttributes() {
+    return ['showFooter'];
+  }
+ 
+  attributeChangedCallback(name, oldValue, newValue) {
+    switch (name) {
+      case 'showFooter':
+        console.log('showFooter changed!');
+        break;
+    }
+  }
+
   connectedCallback() {
     // Get component attributes
     const titleText = this.getAttribute('titleText'),
