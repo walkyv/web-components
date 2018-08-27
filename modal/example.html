@@ -20,7 +20,7 @@
 	</head>
 	<body>
 	<!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
-		<main id="main">
+	<main id="main">
 			<section class="container">
 				<button id="trigger-modal" class="pe-btn pe-btn--btn_large">Open Modal</button>
 			</section>
@@ -35,7 +35,17 @@
 				showFooter
 		>
 			<p>Pass in elements as children to the modal</p>
-
+			<button class="pe-btn pe-btn--btn_large" data-action="toggle-footer">Toggle footer</button>
 		</pearson-modal>
+
+		<script>
+		const modal = document.querySelector('pearson-modal');
+		const footerToggle = document.querySelector('[data-action=toggle-footer]');
+
+		footerToggle.addEventListener('click', function (e) {
+			const footerShown = modal.showFooter;
+			modal.showFooter = !footerShown
+		})
+		</script>
 	</body>
 </html>
