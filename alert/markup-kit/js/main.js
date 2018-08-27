@@ -7,7 +7,10 @@
   closeButton.addEventListener('click', event => {
       alert.classList.remove('slideInDown');
       alert.classList.add('slideOutDown');
-  })
+  });
 
+  if (alert.attributes.important) {
+    closeButton.focus();
+  }
 
 })();
