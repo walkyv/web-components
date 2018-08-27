@@ -82,9 +82,13 @@ var Modal = function (_HTMLElement) {
     value: function attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'showFooter') {
         if (!this.modal) return;
-        var actions = this.modal.querySelector('.actions');
-
-        actions.hidden = newValue === null;
+        if (oldValue !== null && newValue === null) {
+          var actions = this.modal.querySelector('.actions');
+          actions.remove();
+        }
+        if (newValue !== null) {
+          this.renderFooter(this.modal);
+        }
       }
     }
   }, {
@@ -108,7 +112,7 @@ var Modal = function (_HTMLElement) {
 
       // create the footer
       if (showFooter) {
-        this.renderFooter(clone, currentDoc);
+        this.renderFooter(clone);
       }
 
       var overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
@@ -259,17 +263,18 @@ var Modal = function (_HTMLElement) {
     }
   }, {
     key: 'renderFooter',
-    value: function renderFooter(clone, currentDoc) {
-      var actionsTemplate = currentDoc.querySelector('#actions'),
-          actionsClone = document.importNode(actionsTemplate.content, true),
-          modalBody = clone.querySelector('#dialogDescription');
+    value: function renderFooter(parentNode) {
       var successBtnText = this.getAttribute('successBtnText'),
           cancelBtnText = this.getAttribute('cancelBtnText');
 
-      modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
+      var currentDoc = document.querySelector('link[href$="index.html"]').import;
 
-      var cancelButton = clone.querySelector('#cancelButton'),
-          saveButton = clone.querySelector('#successButton');
+      var actionsTemplate = currentDoc.querySelector('#actions'),
+          actionsClone = document.importNode(actionsTemplate.content, true),
+          cancelButton = actionsClone.querySelector('#cancelButton'),
+          saveButton = actionsClone.querySelector('#successButton');
+
+      var modalBody = parentNode.querySelector('#dialogDescription');
 
       if (cancelBtnText !== null) {
         cancelButton.innerHTML = cancelBtnText;
@@ -282,6 +287,7 @@ var Modal = function (_HTMLElement) {
       } else {
         saveButton.innerHTML = 'Save';
       }
+      modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
     }
   }, {
     key: 'disconnectedCallback',

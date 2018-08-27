@@ -97,9 +97,13 @@ class Modal extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     if (name === 'showFooter') {
       if (!this.modal) return;
-      const actions = this.modal.querySelector('.actions');
-
-      actions.hidden = newValue === null;
+      if (oldValue !== null && newValue === null) {
+        const actions = this.modal.querySelector('.actions');
+        actions.remove();
+      }
+      if (newValue !== null) {
+        this.renderFooter(this.modal);
+      }
     }
   }
 
@@ -121,7 +125,7 @@ class Modal extends HTMLElement {
 
     // create the footer
     if (showFooter) {
-      this.renderFooter(clone, currentDoc);
+      this.renderFooter(clone);
     }
 
     const overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
@@ -270,17 +274,19 @@ class Modal extends HTMLElement {
       }
     }, 100);
   }
-  renderFooter(clone, currentDoc) {
-    const actionsTemplate = currentDoc.querySelector('#actions'),
-      actionsClone = document.importNode(actionsTemplate.content, true),
-      modalBody = clone.querySelector('#dialogDescription');
+  renderFooter(parentNode) {
     const successBtnText = this.getAttribute('successBtnText'),
       cancelBtnText = this.getAttribute('cancelBtnText');
+      
+    const currentDoc = document.querySelector('link[href$="index.html"]')
+      .import;
 
-    modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
+    const actionsTemplate = currentDoc.querySelector('#actions'),
+      actionsClone = document.importNode(actionsTemplate.content, true),
+      cancelButton = actionsClone.querySelector('#cancelButton'),
+      saveButton = actionsClone.querySelector('#successButton');
 
-    const cancelButton = clone.querySelector('#cancelButton'),
-      saveButton = clone.querySelector('#successButton');
+    const modalBody = parentNode.querySelector('#dialogDescription');
 
     if (cancelBtnText !== null) {
       cancelButton.innerHTML = cancelBtnText;
@@ -293,6 +299,7 @@ class Modal extends HTMLElement {
     } else {
       saveButton.innerHTML = 'Save';
     }
+    modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
   }
 
   disconnectedCallback() {
