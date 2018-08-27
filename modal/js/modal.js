@@ -95,15 +95,17 @@ class Modal extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (name === 'showFooter') {
-      if (!this.modal) return;
-      if (oldValue !== null && newValue === null) {
-        const actions = this.modal.querySelector('.actions');
-        actions.remove();
-      }
-      if (newValue !== null) {
-        this.renderFooter(this.modal);
-      }
+    
+    // if `showFooter` is changing, but 
+    // this.modal has not been defined yet,
+    // bail out.
+    if (name === 'showFooter' && !this.modal) return;
+    if (!this.showFooter) {
+      const actions = this.modal.querySelector('.actions');
+      actions.remove();
+    }
+    if (this.showFooter) {
+      this.renderFooter(this.modal);
     }
   }
 
@@ -277,7 +279,7 @@ class Modal extends HTMLElement {
   renderFooter(parentNode) {
     const successBtnText = this.getAttribute('successBtnText'),
       cancelBtnText = this.getAttribute('cancelBtnText');
-      
+
     const currentDoc = document.querySelector('link[href$="index.html"]')
       .import;
 

@@ -80,15 +80,17 @@ var Modal = function (_HTMLElement) {
   _createClass(Modal, [{
     key: 'attributeChangedCallback',
     value: function attributeChangedCallback(name, oldValue, newValue) {
-      if (name === 'showFooter') {
-        if (!this.modal) return;
-        if (oldValue !== null && newValue === null) {
-          var actions = this.modal.querySelector('.actions');
-          actions.remove();
-        }
-        if (newValue !== null) {
-          this.renderFooter(this.modal);
-        }
+
+      // if `showFooter` is changing, but 
+      // this.modal has not been defined yet,
+      // bail out.
+      if (name === 'showFooter' && !this.modal) return;
+      if (!this.showFooter) {
+        var actions = this.modal.querySelector('.actions');
+        actions.remove();
+      }
+      if (this.showFooter) {
+        this.renderFooter(this.modal);
       }
     }
   }, {
