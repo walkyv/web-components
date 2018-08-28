@@ -45,7 +45,10 @@ function setFocusToFirstChild(node) {
 }
 
 function trapTabKey(e, ...nodes) {
-  const focusableChildren = nodes.reduce((acc, n) => acc.concat(getFocusableChildren(n)), []),
+  const focusableChildren = nodes.reduce(
+      (acc, n) => acc.concat(getFocusableChildren(n)),
+      []
+    ),
     focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
     lastFocusableIdx = focusableChildren.length - 1;
 
@@ -224,12 +227,21 @@ class Modal extends HTMLElement {
   maintainFocus() {
     // if the modal is not open, stop the function
     if (!this.open) return;
+
+    /**
+     * The DOM we want to trap focus in. If the consumer passed in
+     * focusable children, it's the Light DOM; else, it's the Shadow DOM.
+     */
+    const targetDOM =
+      getFocusableChildren(this).length > 0 ? this : this.modal;
     
-    // If the consumer passed in focusable children, parentNode is the light DOM
-    // if not, it's the shadow DOM
-    const parentNode = getFocusableChildren(this).length > 0 ? this : this.modal;
-    if (!(parentNode.contains(getDeepActiveElement()))) {
-      setFocusToFirstChild(parentNode);
+    // if neither the Light DOM nor the Shadow DOM within the modal contain
+    // the active element, set focus back into the targetDOM.
+    if (
+      !this.contains(getDeepActiveElement()) &&
+      !this.modal.contains(getDeepActiveElement())
+    ) {
+      setFocusToFirstChild(targetDOM);
     }
   }
   bindKeyPress(e) {

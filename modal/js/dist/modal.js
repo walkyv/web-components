@@ -231,11 +231,16 @@ var Modal = function (_HTMLElement) {
       // if the modal is not open, stop the function
       if (!this.open) return;
 
-      // If the consumer passed in focusable children, parentNode is the light DOM
-      // if not, it's the shadow DOM
-      var parentNode = getFocusableChildren(this).length > 0 ? this : this.modal;
-      if (!parentNode.contains(getDeepActiveElement())) {
-        setFocusToFirstChild(parentNode);
+      /**
+       * The DOM we want to trap focus in. If the consumer passed in
+       * focusable children, it's the Light DOM; else, it's the Shadow DOM.
+       */
+      var targetDOM = getFocusableChildren(this).length > 0 ? this : this.modal;
+
+      // if neither the Light DOM nor the Shadow DOM within the modal contain
+      // the active element, set focus back into the targetDOM.
+      if (!this.contains(getDeepActiveElement()) && !this.modal.contains(getDeepActiveElement())) {
+        setFocusToFirstChild(targetDOM);
       }
     }
   }, {
