@@ -70,7 +70,7 @@ To set the title and toggle action buttons, see the API below.
 | ---------------- | --------- | --------------- | ------------------------------------------------- |
 | `triggerId`      | `String`  | Required        | The unique ID of the button that opens the modal. |
 | `titleText`      | `String`  | 'Modal Title'`  | The title of the modal.                           |
-| `footer`     | `Boolean` | `false`         | If set, shows the `Success` and `Cancel` buttons. |
+| `footer`         | `Boolean` | `false`         | If set, shows the `Success` and `Cancel` buttons. |
 | `successBtnText` | `String`  | `'Save'`        | The text to display in the `Success` button.      |
 | `cancelBtnText`  | `String`  | `'Cancel'`      | The text to display in the `Cancel` button.       |
 
