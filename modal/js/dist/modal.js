@@ -62,6 +62,13 @@ function trapTabKey(e) {
 var Modal = function (_HTMLElement) {
   _inherits(Modal, _HTMLElement);
 
+  _createClass(Modal, null, [{
+    key: 'observedAttributes',
+    get: function get() {
+      return ['footer'];
+    }
+  }]);
+
   function Modal() {
     _classCallCheck(this, Modal);
 
@@ -81,16 +88,16 @@ var Modal = function (_HTMLElement) {
     key: 'attributeChangedCallback',
     value: function attributeChangedCallback(name, oldValue, newValue) {
 
-      // if `showFooter` is changing, but 
+      // if `footer` is changing, but 
       // this.modal has not been defined yet,
       // bail out.
-      if (name === 'showFooter' && !this.modal) return;
-      if (!this.showFooter) {
+      if (name === 'footer' && !this.modal) return;
+      if (!this.footer) {
         var actions = this.modal.querySelector('.actions');
         actions.remove();
       }
-      if (this.showFooter) {
-        this.renderFooter(this.modal);
+      if (this.footer) {
+        this.renderfooter(this.modal);
       }
     }
   }, {
@@ -101,7 +108,7 @@ var Modal = function (_HTMLElement) {
       // Get component attributes
       var titleText = this.getAttribute('titleText'),
           triggerId = this.getAttribute('triggerId'),
-          showFooter = this.hasAttribute('showFooter');
+          footer = this.hasAttribute('footer');
 
       // Clone content for shadow DOM
       var currentDoc = document.querySelector('link[href$="index.html"]').import;
@@ -113,8 +120,8 @@ var Modal = function (_HTMLElement) {
       // Target the body of the modal
 
       // create the footer
-      if (showFooter) {
-        this.renderFooter(clone);
+      if (footer) {
+        this.renderfooter(clone);
       }
 
       var overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
@@ -157,6 +164,12 @@ var Modal = function (_HTMLElement) {
 
       document.addEventListener('keydown', this.bindKeyPress);
       document.body.addEventListener('focus', this.maintainFocus, true);
+    }
+  }, {
+    key: 'disconnectedCallback',
+    value: function disconnectedCallback() {
+      document.removeEventListener('keydown', this.bindKeyPress);
+      document.body.removeEventListener('focus', this.maintainFocus);
     }
   }, {
     key: 'openModal',
@@ -264,8 +277,8 @@ var Modal = function (_HTMLElement) {
       }, 100);
     }
   }, {
-    key: 'renderFooter',
-    value: function renderFooter(parentNode) {
+    key: 'renderfooter',
+    value: function renderfooter(parentNode) {
       var successBtnText = this.getAttribute('successBtnText'),
           cancelBtnText = this.getAttribute('cancelBtnText');
 
@@ -289,29 +302,18 @@ var Modal = function (_HTMLElement) {
       modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
     }
   }, {
-    key: 'disconnectedCallback',
-    value: function disconnectedCallback() {
-      document.removeEventListener('keydown', this.bindKeyPress);
-      document.body.removeEventListener('focus', this.maintainFocus);
-    }
-  }, {
-    key: 'showFooter',
+    key: 'footer',
     get: function get() {
-      return this.hasAttribute('showFooter');
+      return this.hasAttribute('footer');
     },
     set: function set(value) {
-      var isFooterShown = Boolean(value);
+      var isfooterShown = Boolean(value);
 
-      if (isFooterShown) {
-        this.setAttribute('showFooter', '');
+      if (isfooterShown) {
+        this.setAttribute('footer', '');
       } else {
-        this.removeAttribute('showFooter');
+        this.removeAttribute('footer');
       }
-    }
-  }], [{
-    key: 'observedAttributes',
-    get: function get() {
-      return ['showFooter'];
     }
   }]);
 

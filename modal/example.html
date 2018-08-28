@@ -32,7 +32,7 @@
 				titleText="Basic Title"
 				successBtnText="Success"
 				cancelBtnText="Cancel"
-				showFooter
+				footer
 		>
 			<p>Pass in elements as children to the modal</p>
 			<button class="pe-btn pe-btn--btn_large" data-action="toggle-footer">Toggle footer</button>
@@ -43,8 +43,8 @@
 		const footerToggle = document.querySelector('[data-action=toggle-footer]');
 
 		footerToggle.addEventListener('click', function (e) {
-			const footerShown = modal.showFooter;
-			modal.showFooter = !footerShown
+			const footerShown = modal.footer;
+			modal.footer = !footerShown
 		})
 		</script>
 	</body>
