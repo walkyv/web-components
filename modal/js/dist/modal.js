@@ -228,8 +228,14 @@ var Modal = function (_HTMLElement) {
   }, {
     key: 'maintainFocus',
     value: function maintainFocus() {
-      if (this.open && !(this.contains(getDeepActiveElement()) || this.modal.contains(getDeepActiveElement()))) {
-        setFocusToFirstChild(this);
+      // if the modal is not open, stop the function
+      if (!this.open) return;
+
+      // If the consumer passed in focusable children, parentNode is the light DOM
+      // if not, it's the shadow DOM
+      var parentNode = getFocusableChildren(this).length > 0 ? this : this.modal;
+      if (!parentNode.contains(getDeepActiveElement())) {
+        setFocusToFirstChild(parentNode);
       }
     }
   }, {
