@@ -35,17 +35,6 @@
 				footer
 		>
 			<p>Pass in elements as children to the modal</p>
-			<button class="pe-btn pe-btn--btn_large" data-action="toggle-footer">Toggle footer</button>
 		</pearson-modal>
-
-		<script>
-		const modal = document.querySelector('pearson-modal');
-		const footerToggle = document.querySelector('[data-action=toggle-footer]');
-
-		footerToggle.addEventListener('click', function (e) {
-			const footerShown = modal.footer;
-			modal.footer = !footerShown
-		})
-		</script>
 	</body>
 </html>
