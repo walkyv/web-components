@@ -13,6 +13,12 @@
     alertBody.hidden = false;
     alert.classList.add('slideInDown');
     alert.classList.remove('slideOutDown');
+
+    if (alert.hasAttribute('data-important')) {
+      setTimeout(function () {
+        alertClose.focus();
+      }, 250);
+    }
   });
 
   alertClose.addEventListener('click', function () {
@@ -23,8 +29,4 @@
     }, 100);
     alertTrigger.focus();
   });
-
-  if (alert.attributes.important) {
-    alertClose.focus();
-  }
 })(window, document);

@@ -6,10 +6,16 @@
     alertBody = alert.querySelector('[data-alert-body'),
     alertClose = alert.querySelector('[data-action="close-alert"]');
 
-  alertTrigger.addEventListener('click', function () {
+  alertTrigger.addEventListener('click', function() {
     alertBody.hidden = false;
     alert.classList.add('slideInDown');
     alert.classList.remove('slideOutDown');
+
+    if (alert.hasAttribute('data-important')) {
+      setTimeout(() => {
+        alertClose.focus();
+      }, 250);
+    }
   });
 
   alertClose.addEventListener('click', () => {
@@ -20,9 +26,4 @@
     }, 100);
     alertTrigger.focus();
   });
-
-  if (alert.attributes.important) {
-    alertClose.focus();
-  }
-
 })(window, document);
