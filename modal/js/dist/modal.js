@@ -62,6 +62,13 @@ function trapTabKey(e) {
 var Modal = function (_HTMLElement) {
   _inherits(Modal, _HTMLElement);
 
+  _createClass(Modal, null, [{
+    key: 'observedAttributes',
+    get: function get() {
+      return ['footer'];
+    }
+  }]);
+
   function Modal() {
     _classCallCheck(this, Modal);
 
@@ -78,16 +85,30 @@ var Modal = function (_HTMLElement) {
   }
 
   _createClass(Modal, [{
+    key: 'attributeChangedCallback',
+    value: function attributeChangedCallback(name, oldValue, newValue) {
+
+      // if `footer` is changing, but 
+      // this.modal has not been defined yet,
+      // bail out.
+      if (name === 'footer' && !this.modal) return;
+      if (!this.footer) {
+        var actions = this.modal.querySelector('.actions');
+        actions.remove();
+      }
+      if (this.footer) {
+        this.renderfooter(this.modal);
+      }
+    }
+  }, {
     key: 'connectedCallback',
     value: function connectedCallback() {
       var _this2 = this;
 
       // Get component attributes
       var titleText = this.getAttribute('titleText'),
-          successBtnText = this.getAttribute('successBtnText'),
-          cancelBtnText = this.getAttribute('cancelBtnText'),
           triggerId = this.getAttribute('triggerId'),
-          showFooter = this.hasAttribute('showFooter');
+          footer = this.hasAttribute('footer');
 
       // Clone content for shadow DOM
       var currentDoc = document.querySelector('link[href$="index.html"]').import;
@@ -97,29 +118,10 @@ var Modal = function (_HTMLElement) {
       // Create elements
 
       // Target the body of the modal
-      var modalBody = clone.querySelector('#dialogDescription');
 
       // create the footer
-      if (showFooter) {
-        var actionsTemplate = currentDoc.querySelector('#actions'),
-            actionsClone = document.importNode(actionsTemplate.content, true);
-
-        modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
-
-        var cancelButton = clone.querySelector('#cancelButton'),
-            saveButton = clone.querySelector('#successButton');
-
-        if (cancelBtnText !== null) {
-          cancelButton.innerHTML = cancelBtnText;
-        } else {
-          cancelButton.innerHTML = 'Cancel';
-        }
-
-        if (successBtnText !== null) {
-          saveButton.innerHTML = successBtnText;
-        } else {
-          saveButton.innerHTML = 'Save';
-        }
+      if (footer) {
+        this.renderfooter(clone);
       }
 
       var overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
@@ -162,6 +164,12 @@ var Modal = function (_HTMLElement) {
 
       document.addEventListener('keydown', this.bindKeyPress);
       document.body.addEventListener('focus', this.maintainFocus, true);
+    }
+  }, {
+    key: 'disconnectedCallback',
+    value: function disconnectedCallback() {
+      document.removeEventListener('keydown', this.bindKeyPress);
+      document.body.removeEventListener('focus', this.maintainFocus);
     }
   }, {
     key: 'openModal',
@@ -269,10 +277,43 @@ var Modal = function (_HTMLElement) {
       }, 100);
     }
   }, {
-    key: 'disconnectedCallback',
-    value: function disconnectedCallback() {
-      document.removeEventListener('keydown', this.bindKeyPress);
-      document.body.removeEventListener('focus', this.maintainFocus);
+    key: 'renderfooter',
+    value: function renderfooter(parentNode) {
+      var successBtnText = this.getAttribute('successBtnText'),
+          cancelBtnText = this.getAttribute('cancelBtnText');
+
+      var currentDoc = document.querySelector('link[href$="index.html"]').import;
+
+      var actionsTemplate = currentDoc.querySelector('#actions'),
+          actionsClone = document.importNode(actionsTemplate.content, true),
+          cancelButton = actionsClone.querySelector('#cancelButton'),
+          saveButton = actionsClone.querySelector('#successButton');
+
+      var modalBody = parentNode.querySelector('#dialogDescription');
+
+      if (cancelBtnText !== null) {
+        cancelButton.innerHTML = cancelBtnText;
+      }
+
+      if (successBtnText !== null) {
+        saveButton.innerHTML = successBtnText;
+      }
+
+      modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
+    }
+  }, {
+    key: 'footer',
+    get: function get() {
+      return this.hasAttribute('footer');
+    },
+    set: function set(value) {
+      var isfooterShown = Boolean(value);
+
+      if (isfooterShown) {
+        this.setAttribute('footer', '');
+      } else {
+        this.removeAttribute('footer');
+      }
     }
   }]);
 
