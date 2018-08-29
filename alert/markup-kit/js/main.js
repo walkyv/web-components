@@ -6,8 +6,12 @@
     alertBody = alert.querySelector('[data-alert-body'),
     alertClose = alert.querySelector('[data-action="close-alert"]');
 
+  let focusBeforeOpen;
+
   alertTrigger.addEventListener('click', function() {
+    focusBeforeOpen = doc.activeElement;
     alertBody.hidden = false;
+
     alert.classList.add('slideInDown');
     alert.classList.remove('slideOutDown');
 
@@ -24,6 +28,6 @@
     setTimeout(() => {
       alertBody.hidden = true;
     }, 100);
-    alertTrigger.focus();
+    focusBeforeOpen.focus();
   });
 })(window, document);
