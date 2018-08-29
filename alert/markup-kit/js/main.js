@@ -1,10 +1,10 @@
 (function(w, doc) {
   'use strict';
   // do something
-  const closeButton = document.getElementById('closeAlert'),
-    alert = document.getElementById('alert');
+  const closeButton = doc.getElementById('closeAlert'),
+    alert = doc.getElementById('alert');
 
-  closeButton.addEventListener('click', event => {
+  closeButton.addEventListener('click', () => {
     alert.classList.remove('slideInDown');
     alert.classList.add('slideOutDown');
   });
