@@ -81,8 +81,8 @@ class Modal extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    
-    // if `footer` is changing, but 
+
+    // if `footer` is changing, but
     // this.modal has not been defined yet,
     // bail out.
     if (name === 'footer' && !this.modal) return;
@@ -185,6 +185,9 @@ class Modal extends HTMLElement {
   }
 
   openModal(e) {
+    // unhide it on open, to prevent FOUC
+    this.style.display = "block"
+
     const thisButton = e.currentTarget,
       buttonDisabled = thisButton.getAttribute('disabled');
 
@@ -252,7 +255,7 @@ class Modal extends HTMLElement {
      */
     const targetDOM =
       getFocusableChildren(this).length > 0 ? this : this.modal;
-    
+
     // if neither the Light DOM nor the Shadow DOM within the modal contain
     // the active element, set focus back into the targetDOM.
     if (
@@ -284,7 +287,9 @@ class Modal extends HTMLElement {
   }
   renderfooter(parentNode) {
     const successBtnText = this.getAttribute('successBtnText'),
-      cancelBtnText = this.getAttribute('cancelBtnText');
+          cancelBtnText = this.getAttribute('cancelBtnText'),
+          hideCancel = this.getAttribute('hideCancel'),
+          hideSuccess = this.getAttribute('hideSuccess');
 
     const currentDoc = document.querySelector('link[href$="index.html"]')
       .import;
@@ -302,6 +307,14 @@ class Modal extends HTMLElement {
 
     if (successBtnText !== null) {
       saveButton.innerHTML = successBtnText;
+    }
+
+    if (hideCancel !== null) {
+      cancelButton.remove();
+    }
+
+    if (hideSuccess !== null) {
+      saveButton.remove();
     }
 
     modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);

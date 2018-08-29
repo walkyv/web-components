@@ -56,7 +56,8 @@ Add the `<pearson-modal> </pearson-modal>` tags to the page, passing in a `trigg
     </section>
   </main>
 
-  <pearson-modal triggerId="trigger-modal">
+  <!-- The display:none is to prevent a FOUC in Firefox -->
+  <pearson-modal triggerId="trigger-modal" style="display:none;">
     <p> Hello World </p>
   </pearson-modal>
 </body>
@@ -73,6 +74,8 @@ To set the title and toggle action buttons, see the API below.
 | `footer`         | `Boolean` | `false`         | If set, shows the `Success` and `Cancel` buttons. |
 | `successBtnText` | `String`  | `'Save'`        | The text to display in the `Success` button.      |
 | `cancelBtnText`  | `String`  | `'Cancel'`      | The text to display in the `Cancel` button.       |
+| `hideCancel`     | `Boolean` | `false`         | Hides the Cancel button completely                |
+| `hideSuccess`    | `Boolean` | `false`         | Hides the Success/CTA button completely           |
 
 **Example Code:**
 
@@ -109,7 +112,7 @@ The `pearson-modal` component emits two different events:
 
 **Important Note:**
 
-> For the purposes of event emission, the modal treats 
+> For the purposes of event emission, the modal treats
 > *any button that is not the success button* as a 'cancel' button.
 > If you want your modal to emit a `success` event, you *must* show the footer.
 

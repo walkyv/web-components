@@ -88,7 +88,7 @@ var Modal = function (_HTMLElement) {
     key: 'attributeChangedCallback',
     value: function attributeChangedCallback(name, oldValue, newValue) {
 
-      // if `footer` is changing, but 
+      // if `footer` is changing, but
       // this.modal has not been defined yet,
       // bail out.
       if (name === 'footer' && !this.modal) return;
@@ -175,6 +175,9 @@ var Modal = function (_HTMLElement) {
     key: 'openModal',
     value: function openModal(e) {
       var _this3 = this;
+
+      // unhide it on open, to prevent FOUC
+      this.style.display = "block";
 
       var thisButton = e.currentTarget,
           buttonDisabled = thisButton.getAttribute('disabled');
@@ -280,7 +283,9 @@ var Modal = function (_HTMLElement) {
     key: 'renderfooter',
     value: function renderfooter(parentNode) {
       var successBtnText = this.getAttribute('successBtnText'),
-          cancelBtnText = this.getAttribute('cancelBtnText');
+          cancelBtnText = this.getAttribute('cancelBtnText'),
+          hideCancel = this.getAttribute('hideCancel'),
+          hideSuccess = this.getAttribute('hideSuccess');
 
       var currentDoc = document.querySelector('link[href$="index.html"]').import;
 
@@ -297,6 +302,14 @@ var Modal = function (_HTMLElement) {
 
       if (successBtnText !== null) {
         saveButton.innerHTML = successBtnText;
+      }
+
+      if (hideCancel !== null) {
+        cancelButton.remove();
+      }
+
+      if (hideSuccess !== null) {
+        saveButton.remove();
       }
 
       modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
