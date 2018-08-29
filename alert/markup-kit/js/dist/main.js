@@ -6,7 +6,7 @@
 
   var alertTrigger = doc.querySelector('[data-action="trigger-alert"]'),
       alert = doc.querySelector('[data-alert]'),
-      alertBody = alert.querySelector('[data-alert-body'),
+      alertBody = alert.querySelector('[data-alert-body]'),
       alertClose = alert.querySelector('[data-action="close-alert"]');
 
   var focusBeforeOpen = void 0;
