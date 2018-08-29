@@ -11,7 +11,7 @@
 
   var focusBeforeOpen = void 0;
 
-  alertTrigger.addEventListener('click', function () {
+  function triggerAlert() {
     focusBeforeOpen = doc.activeElement;
     alertBody.hidden = false;
 
@@ -23,14 +23,17 @@
         alertClose.focus();
       }, 250);
     }
-  });
+  }
 
-  alertClose.addEventListener('click', function () {
+  function closeAlert() {
     alert.classList.remove('slideInDown');
     alert.classList.add('slideOutDown');
     setTimeout(function () {
       alertBody.hidden = true;
     }, 100);
     focusBeforeOpen.focus();
-  });
+  }
+
+  alertTrigger.addEventListener('click', triggerAlert);
+  alertClose.addEventListener('click', closeAlert);
 })(window, document);
