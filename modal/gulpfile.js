@@ -35,3 +35,5 @@ gulp.task('watch', ()=> {
   gulp.watch('js/*.js', ['babel']);
   gulp.watch('scss/**/*.scss', ['styles']);
 });
+
+gulp.task('build', ['babel', 'styles']);
