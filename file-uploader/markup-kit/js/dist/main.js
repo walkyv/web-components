@@ -1,15 +1,17 @@
 'use strict';
 
 (function () {
-  window.addEventListener('load', function (event) {
-    var file = '../markup-kit/css/style.css';
-    var link = document.createElement("link");
-    link.href = file.substr(0, file.lastIndexOf(".")) + ".css";
-    link.rel = "stylesheet";
-    link.media = "screen,print";
+  var attachBtn = document.getElementById('attachFiles'),
+      modal = document.querySelector('upload-modal'),
+      uploadInfo = document.getElementById('info');
 
-    var modal = document.querySelector('pearson-modal');
-    modal.insertBefore(link, modal.querySelector('#modalOverlay'));
+  console.log(uploadInfo);
+  attachBtn.addEventListener('click', function (event) {
+    if (modal.footer !== true) {
+      modal.footer = true;
+      uploadInfo.style.display = 'block';
+    } else {
+      return false;
+    }
   });
-  // do something
 })();

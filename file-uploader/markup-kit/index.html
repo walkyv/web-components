@@ -14,13 +14,16 @@
 	<link rel="stylesheet" href="css/style.css" media="all" />
 
 	<!-- import web components -->
-	<link rel="import" href="node_modules/@pearson-ux/modal/index.html" />
+	<link rel="import" href="../components/modal/index.html" />
 
 </head>
 <body class="">
 
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="pe-icons-sprite" style="display:none">
 	<!-- place only the symbols belonging to that component here -->
+	<symbol id="delete-18" viewBox="0 0 18 18">
+		<path fill-rule="evenodd" d="M12,14.5 C12,14.776 11.776,15 11.5,15 C11.224,15 11,14.776 11,14.5 L11,5.5 C11,5.224 11.224,5 11.5,5 C11.776,5 12,5.224 12,5.5 L12,14.5 Z M9,14.5 C9,14.776 8.776,15 8.5,15 C8.224,15 8,14.776 8,14.5 L8,5.5 C8,5.224 8.224,5 8.5,5 C8.776,5 9,5.224 9,5.5 L9,14.5 Z M6,2 L11,2 L11,1 L6,1 L6,2 Z M6,14.5 C6,14.776 5.776,15 5.5,15 C5.224,15 5,14.776 5,14.5 L5,5.5 C5,5.224 5.224,5 5.5,5 C5.776,5 6,5.224 6,5.5 L6,14.5 Z M16.5,2 L12,2 L12,0.5 C12,0.224 11.776,0 11.5,0 L5.5,0 C5.224,0 5,0.224 5,0.5 L5,2 L0.5,2 C0.224,2 0,2.224 0,2.5 C0,2.776 0.224,3 0.5,3 L2,3 L2,17.5 C2,17.776 2.224,18 2.5,18 L14.5,18 C14.776,18 15,17.776 15,17.5 L15,3 L16.5,3 C16.776,3 17,2.776 17,2.5 C17,2.224 16.776,2 16.5,2 L16.5,2 Z"/>
+	</symbol>
 </svg>
 
 <!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
@@ -31,17 +34,62 @@
 </main>
 
 <!-- place modal before the end of the body and pass in the reference ID of the button that triggers the modal -->
-<pearson-modal triggerId="trigger-modal" titleText="Upload Files">
-	<div class="pe-file-upload">
-		<div class="drop-area">
-			<p class="pe-title">Drag files here</p>
-			<p>or</p>
-			<input id='fileid' type='file' hidden />
-			<button class="pe-btn__primary--btn_large">Browse Files</button>
-			<p class="info">Upload up to 20 files.  Max file size 2 MB</p>
+<upload-modal triggerId="trigger-modal" titleText="Upload Files">
+	<div class="pe-file-upload-container">
+		<div class="file-upload">
+			<div class="drop-area">
+				<p class="pe-title">Drag files in here</p>
+				<p class="text">or</p>
+				<button id="attachFiles" class="pe-btn__primary--btn_large" data-action="toggle-footer">Browse Files</button>
+				<p class="info">Upload up to 20 files.</p>
+				<p class="info">Max file size 2 MB</p>
+			</div>
+		</div>
+		<div id="info" class="file-upload-info">
+			<h6 class="upload-title">Uploading  (2 done, 5 in progress)</h6>
+			<div class="pe-progress-container">
+				<div class="progress">
+					<div class="group">
+						<div class="indicator">
+							<img src="./icons/indicator.png" alt="progress" />
+						</div>
+						<div class="text">
+							<strong>Filename.format</strong>
+							<p class="info">1.34MB</p>
+						</div>
+					</div>
+					<div class="actions">
+						<button class="pe-icon--btn">
+							<svg focusable="false" class="pe-icon--delete-18" aria-label="delete file" role="img" >
+								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="progress">
+				<div class="group">
+					<div class="indicator">
+						<img src="./icons/indicator.png" alt="progress" />
+					</div>
+					<div class="text">
+						<strong>Filename.format</strong>
+						<p class="info">1.34MB</p>
+					</div>
+				</div>
+				<div class="actions">
+					<button class="pe-icon--btn">
+						<svg focusable="false" class="pe-icon--delete-18" aria-label="delete file" role="img" >
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
 		</div>
 	</div>
-</pearson-modal>
+
+</upload-modal>
 
 <script src="js/dist/main.js"></script>
 </body>

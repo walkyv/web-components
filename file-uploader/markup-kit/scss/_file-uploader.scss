@@ -9,35 +9,87 @@
       }
     }
 
-  .pe-file-upload {
-      height:362px;
+  .pe-file-upload-container {
+    display:flex;
+
+    .file-upload {
+      height: 362px;
       border-radius: 6px;
       border: dashed 1px #6a7070;
       display: flex;
       justify-content: center;
-    align-items: center;
-    background-image: url('../icons/upload-icon.png');
-    background-repeat: no-repeat;
-    background-position: center 50px;
-    background-size:100px;
+      align-items: center;
+      background-image: url('../icons/upload-icon.png');
+      background-repeat: no-repeat;
+      background-position: center 30px;
+      background-size: 100px;
 
-    .drop-area {
+      .drop-area {
+        display: flex;
+        flex-direction: column;
+        justify-self: center;
+        text-align: center;
+        align-self: flex-end;
+        width: 390px;
+        button {
+          width: 154px;
+          align-self: center;
+          margin-bottom: 35px;
+        }
+        .info {
+          color: #6a7070;
+          font-size: 12px;
+          margin: 0;
+          &:last-child {
+            margin-bottom: 24px;
+          }
+        }
+        .text {
+          margin-bottom: 16px;
+        }
+      }
+    }
+    .file-upload-info {
+      display:none;
+      padding:0 0 0 3em;
+      width:415px;
+    }
+    .progress {
       display:flex;
-      flex-direction: column;
-      justify-self: center;
-      text-align: center;
-      align-self: flex-end;
-      button {
-        width:154px;
-        align-self: center;
-        margin-bottom:1em;
+      justify-content: space-between;
+      border-bottom: solid 1px #f5f5f5;
+      padding-bottom:1em;
+      margin-bottom:1em;
+      .group {
+        display:flex;
+        align-items: center;
       }
-      p {
-        margin-bottom:24px;
+    }
+    .indicator {
+      margin-right:1em;
+      img {
+        width:39px;
       }
+    }
+    .text {
       .info {
-        color:#6a7070;
+        color: #6a7070;
+        font-size: 12px;
+        margin:0;
       }
+    }
+    .actions {
+      display:flex;
+      align-items: center;
+      button {
+        cursor: pointer;
+      }
+    }
+    .upload-title {
+      font-weight:normal;
+    }
+    .pe-progress-container {
+      margin-top:1em;
     }
   }
 
