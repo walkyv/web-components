@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html class="">
+
+<head>
+	<title>Toggle switch</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" href="css/style.css" media="all" />
+</head>
+
+<body class="">
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="pe-icons-sprite" style="display:none">
+		<!-- place only the symbols belonging to that component here -->
+	</svg>
+
+	<main id="main" aria-hidden="false">
+		<h1>Toggle switch</h1>
+		<h2>Unchecked by default</h2>
+		<div class="pe-toggle">
+			<button role="switch" name="toggle-0" value="false" id="toggle-0" aria-invalid="false" aria-labelledby="toggle-0-label" aria-checked="false">
+				<span>On</span>
+				<span>Off</span>
+			</button>
+			<label for="toggle-0" id="toggle-0-label">Email notifications</label>
+		</div>
+		<h2>Checked by default</h2>
+		<div class="pe-toggle">
+			<button role="switch" name="toggle-1" value="true" id="toggle-1" aria-invalid="false" aria-labelledby="toggle-1-label" aria-checked="true">
+				<span>On</span>
+				<span>Off</span>
+			</button>
+			<label for="toggle-1" id="toggle-1-label">Text notifications</label>
+		</div>
+	</main>
+
+	<script src="js/dist/main.js"></script>
+</body>
+
+</html>
