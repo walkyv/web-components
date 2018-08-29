@@ -16,24 +16,27 @@
 			/>
 		</symbol>
 	</svg>
-	<div id="alert" class="pe-alert-box info animated slideInDown" role="alert" data-alert-type="inline">
-		<div class="close-title">
-			<button id="closeAlert" class="pe-icon--btn" aria-label="Close information alert">
-				<svg focusable="false" class="pe-icon--remove-sm-24">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>
-				</svg>
-			</button>
-		</div>
-		<div class="alert-content-container">
-			<div class="alert-content">
-				<h2 class="pe-label alert-title"><strong>Lorem ipsom dolor sit amet.</strong></h2>
-				<p class="pe-paragraph alert-text">Ronsectetuer adipiscing elit. Aene eoo rjgieo roi an commodo ligula eget dolor enean
-					massa.
-				</p>
+	<div data-alert data-alert-type="inline" role="status" aria-live="polite">
+		<div class="pe-alert-box info animated" data-alert-body hidden>
+			<div class="close-title">
+				<button class="pe-icon--btn" aria-label="Close information alert" data-action="close-alert">
+					<svg focusable="false" class="pe-icon--remove-sm-24">
+						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>
+					</svg>
+				</button>
+			</div>
+			<div class="alert-content-container">
+				<div class="alert-content">
+					<h2 class="pe-label alert-title">
+						<strong>Lorem ipsom dolor sit amet.</strong>
+					</h2>
+					<p class="pe-paragraph alert-text">Ronsectetuer adipiscing elit. Aene eoo rjgieo roi an commodo ligula eget dolor enean massa.
+					</p>
+				</div>
 			</div>
 		</div>
 	</div>
-	<button type="button" data-trigger="pe-alert" style="margin-top: 10rem;">Trigger confirmation alert</button>
+	<button type="button" data-action="trigger-alert" style="margin-top: 10rem;">Trigger confirmation alert</button>
 	<script src="js/dist/main.js"></script>
 </body>
 
