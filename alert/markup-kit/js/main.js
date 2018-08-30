@@ -3,14 +3,15 @@
   // do something
   const alertTrigger = doc.querySelector('[data-action="trigger-alert"]'),
     alert = doc.querySelector('[data-alert]'),
-    alertBody = alert.querySelector('[data-alert-body]'),
+    alertContent = alert.querySelector('[data-alert-content]'),
     alertClose = alert.querySelector('[data-action="close-alert"]');
 
   let focusBeforeOpen;
 
   function triggerAlert() {
     focusBeforeOpen = doc.activeElement;
-    alertBody.hidden = false;
+    alert.hidden = false;
+    alertContent.hidden = false;
 
     alert.classList.add('slideInDown');
     alert.classList.remove('slideOutDown');
@@ -26,7 +27,8 @@
     alert.classList.remove('slideInDown');
     alert.classList.add('slideOutDown');
     setTimeout(() => {
-      alertBody.hidden = true;
+      alert.hidden = true;
+      alertContent.hidden = true;
     }, 100);
     focusBeforeOpen.focus();
   }
