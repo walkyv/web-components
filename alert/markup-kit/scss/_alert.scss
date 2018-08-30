@@ -13,8 +13,15 @@ $success: #19a6a4;
   flex-direction: #{$flex-direction};
 }
 
-.pe-alert {
-  position: absolute;
+.pe-alert[data-alert-type='global'] {
+  position: fixed;
+  top: 32px;
+  left: 0;
+  margin: 0 32px;
+  @media (max-width: 768px) {
+    top: 36px;
+    margin: 0 24px;
+  }
 }
 
 .pe-alert-box {
