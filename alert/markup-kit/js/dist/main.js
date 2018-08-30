@@ -5,7 +5,6 @@
 
   var alertTrigger = doc.querySelector('[data-action="trigger-alert"]'),
       alert = doc.querySelector('[data-alert]'),
-      alertContent = alert.querySelector('[data-alert-content]'),
       alertClose = alert.querySelector('[data-action="close-alert"]');
 
   var alertType = alert.dataset.alertType;
@@ -26,8 +25,11 @@
 
   function triggerAlert() {
     focusBeforeOpen = doc.activeElement;
-    alert.hidden = false;
-    alertContent.hidden = false;
+
+    if (alertType === 'inline') {
+      alert.classList.add('fadeIn');
+      alert.classList.remove('fadeOut');
+    }
 
     if (alertType === 'global') {
       alert.classList.add('slideInDown');
@@ -42,14 +44,14 @@
   }
 
   function closeAlert() {
+    if (alertType === 'inline') {
+      alert.classList.add('fadeOut');
+      alert.classList.remove('fadeIn');
+    }
     if (alertType === 'global') {
       alert.classList.remove('slideInDown');
       alert.classList.add('slideOutDown');
     }
-    setTimeout(function () {
-      alert.hidden = true;
-      alertContent.hidden = true;
-    }, 100);
     focusBeforeOpen.focus();
   }
 
