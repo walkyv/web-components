@@ -1,21 +1,28 @@
 @keyframes slideInDown {
   from {
     transform: translate3d(0, -150%, 0);
-    visibility: visible;
+    opacity: 0;
+    visibility: hidden;
   }
 
   to {
     transform: translate3d(0, 0, 0);
+    opacity: 1;
+    visibility: visible;
   }
 }
 
 @keyframes slideOutDown {
   from {
     transform: translate3d(0, 0, 0);
+    opacity: 1;
+    visibility: visible;
   }
 
   to {
     transform: translate3d(0, 100%, 0);
+    opacity: 0;
+    visibility: hidden;
   }
 }
 
@@ -53,19 +60,22 @@
   animation-name: slideInDown;
   transition-timing-function: ease-in-out;
   animation-duration: 0.3s;
+  opacity: 1;
+  visibility: visible;
 }
 
 .slideOutDown {
   animation-name: slideOutDown;
   transition-timing-function: ease-in;
   animation-duration: 0.2s;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .fadeIn,
 .fadeOut {
   transition-timing-function: ease;
   animation-duration: 0.3s;
-  animation-fill-mode: forwards;
 }
 
 .fadeIn {
