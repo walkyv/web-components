@@ -4,62 +4,127 @@
     modal = document.querySelector('upload-modal'),
     uploadInfo = document.getElementById('info'),
     realUploadInput = document.querySelector('input[type="file"]'),
+    target = document.querySelector('.pe-progress-container'),
+    uploadTitle = document.querySelector('.upload-title'),
     fileArr = [];
+
+  function renderProgressItems (data, target) {
+    if (modal.footer !== true) {
+      modal.footer = true;
+      uploadInfo.style.display = 'block';
+    }
+
+    const div = document.createElement('DIV'),
+      html = [
+        '<div class="group">',
+          '<div class="indicator">',
+            '<img src="./icons/indicator.png" alt="progress" />',
+          '</div>',
+          '<div class="text">',
+            '<strong>',
+              data.name,
+            '</strong>',
+            '<p class="info">0 MB / ',
+              data.size,
+              ' MB',
+            '</p>',
+          '</div>',
+        '</div>',
+        '<div class="upload-actions">',
+          '<button class="pe-icon--btn">',
+            '<svg focusable="false" class="pe-icon--remove-sm-24" aria-label="remove file" role="img" >',
+              '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>',
+            '</svg>',
+          '</button>',
+        '</div>'
+      ].join('');
+
+    div.classList.add('progress');
+    target.appendChild(div);
+    div.innerHTML = html;
+    fileArr.push(data);
+    uploadTitle.innerHTML = "Uploading  (0 done, " + fileArr.length + " in progress)"
+  }
+
+  // highlight function to outline drop area when a file is over area
+  function highlight(e) {
+    preventDefaults(e)
+    dropArea.classList.add('highlight')
+  }
+
+  // removes highlight from drop area when file has left area
+  function unhighlight(e) {
+    preventDefaults(e)
+    dropArea.classList.remove('highlight')
+  }
+
+  // prevents the file from opening in the browser
+  function preventDefaults (e) {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+  // adds functionality when item is dropped over target
+  function handleDrop(e) {
+    unhighlight(e);
+    let dt = e.dataTransfer;
+    let files = dt.files;
+    handleFiles(files)
+  }
+
+  // takes the files, loops over them, and uploads them
+  function handleFiles(files) {
+    ([...files]).forEach(uploadFile)
+  }
+
+  // processes and uploads files
+  function uploadFile(file) {
+    renderProgressItems(file, target);
+    const url = 'YOUR URL HERE';
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    xhr.open('POST', url, true);
+
+    xhr.addEventListener('readystatechange', function(e) {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        // Done. Inform the user
+      }
+      else if (xhr.readyState == 4 && xhr.status != 200) {
+        // Error. Inform the user
+      }
+    });
+
+    formData.append('file', file);
+    xhr.send(formData);
+  }
 
   attachBtn.addEventListener('click', event => {
     realUploadInput.click();
   });
 
   realUploadInput.addEventListener('change', event=> {
-    // display wide view and action buttons
-    if (modal.footer !== true) {
-      modal.footer = true;
-      uploadInfo.style.display = 'block';
-    }
+    handleFiles(event.srcElement.files)
+  });
 
-    // create a map to loop over all the files
-    const map = new Map(Object.entries(event.srcElement.files));
+  // setup drag and drop area
+  let dropArea = document.getElementById('drop');
 
-    // render progress
-    const target = document.querySelector('.pe-progress-container'),
-      uploadTitle = document.querySelector('.upload-title');
+  dropArea.addEventListener('dragenter', event => {
+   highlight(event)
+  });
 
-    // loop over map and render individual progress
-    map.forEach((file, index) => {
-      const div = document.createElement('DIV'),
-        html = [
-          '<div class="group">',
-            '<div class="indicator">',
-              '<img src="./icons/indicator.png" alt="progress" />',
-            '</div>',
-            '<div class="text">',
-              '<strong>',
-                file.name,
-              '</strong>',
-              '<p class="info">0 MB / ',
-                file.size,
-                ' MB',
-              '</p>',
-            '</div>',
-          '</div>',
-          '<div class="upload-actions">',
-            '<button class="pe-icon--btn">',
-              '<svg focusable="false" class="pe-icon--remove-sm-24" aria-label="remove file" role="img" >',
-                '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>',
-              '</svg>',
-            '</button>',
-          '</div>'
-        ].join('');
+  dropArea.addEventListener('dragover', event => {
+    highlight(event)
+  });
 
-      div.classList.add('progress');
-      target.appendChild(div);
-      div.innerHTML = html;
-      fileArr.push(file);
-    });
+  dropArea.addEventListener('dragleave', event => {
+    unhighlight(event)
+  });
 
-    // update the title to show total progress
-    uploadTitle.innerHTML = "Uploading  (0 done, " + fileArr.length + " in progress)"
-  })
+  dropArea.addEventListener('drop', event => {
+    handleDrop(event);
+  });
+
 
 })();
 
