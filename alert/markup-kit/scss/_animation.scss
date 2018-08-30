@@ -48,28 +48,32 @@
   }
 }
 
-.slideInDown {
-  animation: 0.3s ease-in-out 0s slideInDown;
+.slideInDown,
+.fadeIn {
   opacity: 1;
   visibility: visible;
+}
+
+.slideOutDown,
+.fadeOut {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.slideInDown {
+  animation: 0.3s ease-in-out 0s slideInDown;
 }
 
 .slideOutDown {
   animation: 0.2s ease-in 0s slideOutDown;
-  opacity: 0;
-  visibility: hidden;
 }
 
 .fadeIn {
   animation: 0.3s linear 0s fadeIn;
-  opacity: 1;
-  visibility: visible;
 }
 
 .fadeOut {
   animation: 0.2s linear 0s fadeOut;
-  opacity: 0;
-  visibility: hidden;
 }
 
 @media (prefers-reduced-motion) {
