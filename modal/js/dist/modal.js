@@ -289,7 +289,8 @@ var Modal = function (_HTMLElement) {
 
       var currentDoc = document.querySelector('link[href$="index.html"]').import;
 
-      var actionsTemplate = currentDoc.querySelector('#actions'),
+      var selector = hideCancel !== null ? '#actions-noCancel' : hideSuccess !== null ? '#actions-noSuccess' : '#actions',
+          actionsTemplate = currentDoc.querySelector(selector),
           actionsClone = document.importNode(actionsTemplate.content, true),
           cancelButton = actionsClone.querySelector('#cancelButton'),
           saveButton = actionsClone.querySelector('#successButton');
@@ -302,14 +303,6 @@ var Modal = function (_HTMLElement) {
 
       if (successBtnText !== null) {
         saveButton.innerHTML = successBtnText;
-      }
-
-      if (hideCancel !== null) {
-        cancelButton.remove();
-      }
-
-      if (hideSuccess !== null) {
-        saveButton.remove();
       }
 
       modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);

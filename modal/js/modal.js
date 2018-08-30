@@ -294,10 +294,11 @@ class Modal extends HTMLElement {
     const currentDoc = document.querySelector('link[href$="index.html"]')
       .import;
 
-    const actionsTemplate = currentDoc.querySelector('#actions'),
-      actionsClone = document.importNode(actionsTemplate.content, true),
-      cancelButton = actionsClone.querySelector('#cancelButton'),
-      saveButton = actionsClone.querySelector('#successButton');
+    const selector = hideCancel !== null ? '#actions-noCancel' : hideSuccess !== null ? '#actions-noSuccess' : '#actions',
+          actionsTemplate = currentDoc.querySelector(selector),
+          actionsClone = document.importNode(actionsTemplate.content, true),
+          cancelButton = actionsClone.querySelector('#cancelButton'),
+          saveButton = actionsClone.querySelector('#successButton');
 
     const modalBody = parentNode.querySelector('#dialogDescription');
 
@@ -307,14 +308,6 @@ class Modal extends HTMLElement {
 
     if (successBtnText !== null) {
       saveButton.innerHTML = successBtnText;
-    }
-
-    if (hideCancel !== null) {
-      cancelButton.remove();
-    }
-
-    if (hideSuccess !== null) {
-      saveButton.remove();
     }
 
     modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);

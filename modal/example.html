@@ -25,7 +25,10 @@
 				<button id="trigger-modal" class="pe-btn pe-btn--btn_large">Open Modal</button>
 			</section>
 			<section class="container">
-				<button id="trigger-modal-two" class="pe-btn pe-btn--btn_large">Open Modal Two</button>
+				<button id="trigger-modal-two" class="pe-btn pe-btn--btn_large">Open no cancel modal</button>
+			</section>
+			<section class="container">
+				<button id="trigger-modal-three" class="pe-btn pe-btn--btn_large">Open no success modal</button>
 			</section>
 		</main>
 
@@ -46,6 +49,16 @@
 				titleText="Basic Title"
 				successBtnText="Yep, love it."
 				hideCancel
+				footer
+				style="display:none"
+		>
+			<p>I like New York in June. How about you?</p>
+		</pearson-modal>
+		<pearson-modal
+				triggerId="trigger-modal-three"
+				titleText="Basic Title"
+				cancelBtnText="Leave me alone."
+				hideSuccess
 				footer
 				style="display:none"
 		>
