@@ -1,12 +1,30 @@
 (function(w, doc) {
   'use strict';
-  // do something
+
+  function wrap(el, wrapper) {
+    el.parentNode.insertBefore(wrapper, el);
+    wrapper.appendChild(el);
+  }
+
+  // function createPortal(anchorNode, newNode) {
+  //   let anchorParent = anchorNode.parent;
+  //   const relativeContainer = doc.createElement('div');
+  //   relativeContainer.style.position('relative');
+  // }
   const alertTrigger = doc.querySelector('[data-action="trigger-alert"]'),
     alert = doc.querySelector('[data-alert]'),
     alertContent = alert.querySelector('[data-alert-content]'),
     alertClose = alert.querySelector('[data-action="close-alert"]');
 
   let focusBeforeOpen;
+
+  if (alert.dataset.alertType === 'inline') {
+    const wrapper = doc.createElement('div');
+    wrapper.style.position = 'relative';
+
+    wrap(alertTrigger, wrapper);
+    wrap(alert, wrapper);
+  }
 
   function triggerAlert() {
     focusBeforeOpen = doc.activeElement;
