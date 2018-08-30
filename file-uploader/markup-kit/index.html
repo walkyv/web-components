@@ -42,74 +42,22 @@
 </main>
 
 <!-- place modal before the end of the body and pass in the reference ID of the button that triggers the modal -->
-<upload-modal triggerId="trigger-modal" titleText="Upload Files">
+<upload-modal triggerId="trigger-modal" titleText="Upload Files" successBtnText="Upload">
 	<div class="pe-file-upload-container">
 		<div class="file-upload">
 			<div class="drop-area">
 				<p class="pe-title">Drag files in here</p>
 				<p class="text">or</p>
+				<input type="file" name="fileUpload" multiple>
 				<button id="attachFiles" class="pe-btn__primary--btn_large" data-action="toggle-footer">Browse Files</button>
 				<p class="info">Upload up to 20 files.</p>
 				<p class="info">Max file size 2 MB</p>
 			</div>
 		</div>
 		<div id="info" class="file-upload-info">
-			<h6 class="upload-title">Uploading  (2 done, 5 in progress)</h6>
+			<h6 class="upload-title"></h6>
 			<div class="pe-progress-container">
-				<div class="progress">
-					<div class="group">
-						<div class="indicator">
-							<img src="./icons/indicator.png" alt="progress" />
-						</div>
-						<div class="text">
-							<strong>Design principle.pdf</strong>
-							<p class="info">1.34MB</p>
-						</div>
-					</div>
-					<div class="upload-actions">
-						<button class="pe-icon--btn">
-							<svg focusable="false" class="pe-icon--delete-18" aria-label="delete file" role="img" >
-								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>
-							</svg>
-						</button>
-					</div>
-				</div>
-			</div>
-			<div class="progress">
-				<div class="group">
-					<div class="indicator">
-						<img src="./icons/indicator.png" alt="progress" />
-					</div>
-					<div class="text">
-						<strong>Twitter banner.jpg</strong>
-						<p class="info">8.4 MB / 10 MB</p>
-					</div>
-				</div>
-				<div class="upload-actions">
-					<button class="pe-icon--btn">
-						<svg focusable="false" class="pe-icon--remove-sm-24" aria-label="remove file" role="img" >
-							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>
-						</svg>
-					</button>
-				</div>
-			</div>
-			<div class="progress">
-				<div class="group">
-					<div class="indicator">
-						<img src="./icons/indicator.png" alt="progress" />
-					</div>
-					<div class="text">
-						<strong>Thumbnail.png</strong>
-						<p class="info">2 MB / 3 MB</p>
-					</div>
-				</div>
-				<div class="upload-actions">
-					<button class="pe-icon--btn">
-						<svg focusable="false" class="pe-icon--pause-18" aria-label="remove file" role="img" >
-							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#pause-18"></use>
-						</svg>
-					</button>
-				</div>
+
 			</div>
 		</div>
 	</div>
@@ -118,4 +66,23 @@
 <script src="js/dist/main.js"></script>
 </body>
 </html>
+
+<!--<div class="progress">-->
+	<!--<div class="group">-->
+		<!--<div class="indicator">-->
+			<!--<img src="./icons/indicator.png" alt="progress" />-->
+			<!--</div>-->
+		<!--<div class="text">-->
+			<!--<strong>Twitter banner.jpg</strong>-->
+			<!--<p class="info">8.4 MB / 10 MB</p>-->
+		<!--</div>-->
+	<!--</div>-->
+	<!--<div class="upload-actions">-->
+		<!--<button class="pe-icon&#45;&#45;btn">-->
+			<!--<svg focusable="false" class="pe-icon&#45;&#45;remove-sm-24" aria-label="remove file" role="img" >-->
+				<!--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>-->
+			<!--</svg>-->
+		<!--</button>-->
+	<!--</div>-->
+<!--</div>-->
 

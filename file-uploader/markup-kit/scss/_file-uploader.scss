@@ -81,11 +81,13 @@
         margin:0;
       }
     }
-    .actions {
+    .upload-actions {
       display:flex;
       align-items: center;
       button {
         cursor: pointer;
+        width: 40px;
+        height: 40px;
       }
     }
     .upload-title {
@@ -93,6 +95,9 @@
     }
     .pe-progress-container {
       margin-top:1em;
+    }
+    input[type=file] {
+      opacity: 0;
     }
   }
 
