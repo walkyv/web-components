@@ -26,7 +26,7 @@
   }
 }
 
-@keyframes fadein {
+@keyframes fadeIn {
   from {
     opacity: 0;
     visibility: hidden;
@@ -37,7 +37,7 @@
   }
 }
 
-@keyframes fadeout {
+@keyframes fadeOut {
   from {
     opacity: 1;
     visibility: visible;
@@ -45,47 +45,41 @@
   to {
     opacity: 0;
     visibility: hidden;
-  }
-}
-
-.animated {
-  animation-duration: 1s;
-  @media (prefers-reduced-motion) {
-    animation: unset !important;
-    transition: none !important;
   }
 }
 
 .slideInDown {
-  animation-name: slideInDown;
-  transition-timing-function: ease-in-out;
-  animation-duration: 0.3s;
+  animation: 0.3s ease-in-out 0s slideInDown;
   opacity: 1;
   visibility: visible;
 }
 
 .slideOutDown {
-  animation-name: slideOutDown;
-  transition-timing-function: ease-in;
-  animation-duration: 0.2s;
+  animation: 0.2s ease-in 0s slideOutDown;
   opacity: 0;
   visibility: hidden;
 }
 
-.fadeIn,
-.fadeOut {
-  transition-timing-function: ease;
-  animation-duration: 0.3s;
-}
-
 .fadeIn {
-  animation-name: fadein;
+  animation: 0.3s linear 0s fadeIn;
   opacity: 1;
   visibility: visible;
 }
 
 .fadeOut {
-  animation-name: fadeout;
+  animation: 0.2s linear 0s fadeOut;
   opacity: 0;
   visibility: hidden;
+}
+
+@media (prefers-reduced-motion) {
+  .animated {
+    animation: unset !important;
+    transition: none !important;
+  }
+}
+
+html[data-prefers-reduced-motion] .animated {
+  animation: unset !important;
+  transition: none !important;
 }
