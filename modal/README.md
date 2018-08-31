@@ -112,9 +112,7 @@ The `pearson-modal` component emits two different events:
 
 **Important Note:**
 
-> For the purposes of event emission, the modal treats
-> *any button that is not the success button* as a 'cancel' button.
-> If you want your modal to emit a `success` event, you *must* show the footer.
+> For the purposes of event emission, the modal treats *any button that is not the success button* as a 'cancel' button. If you want your modal to emit a `success` event, you *must* show the footer and the success button. If the success button is independently hidden through the `hideSuccess` configuration, or if the footer is hidden by setting  `footer` to `false`, it will prevent the emission of the `success` event completely.
 
 **Example Code:**
 
