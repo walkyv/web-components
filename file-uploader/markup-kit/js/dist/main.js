@@ -3,6 +3,7 @@
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 (function () {
+
   var attachBtn = document.getElementById('attachFiles'),
       modal = document.querySelector('upload-modal'),
       uploadInfo = document.getElementById('info'),
@@ -18,7 +19,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     }
 
     var div = document.createElement('DIV'),
-        html = ['<div class="group">', '<div class="indicator">', '<img src="./icons/indicator.png" alt="progress" />', '</div>', '<div class="text">', '<strong>', data.name, '</strong>', '<p class="info">0 MB / ', data.size, ' MB', '</p>', '</div>', '</div>', '<div class="upload-actions">', '<button class="pe-icon--btn">', '<svg focusable="false" class="pe-icon--remove-sm-24" aria-label="remove file" role="img" >', '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>', '</svg>', '</button>', '</div>'].join('');
+        html = ['<div class="group">', '<div class="indicator">', '<img src="./icons/indicator.png" alt="progress" />', '</div>', '<div class="text">', '<strong>', data.name, '</strong>', '<p class="info">0 MB / ', data.size, ' MB', '</p>', '</div>', '</div>', '<div class="upload-actions">', '<button class="pe-icon--btn">', '<svg focusable="false" class="pe-icon--delete-18" aria-label="remove file" role="img" >', '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>', '</svg>', '</button>', '</div>'].join('');
 
     div.classList.add('progress');
     target.appendChild(div);
@@ -61,14 +62,26 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   // processes and uploads files
   function uploadFile(file) {
     renderProgressItems(file, target);
-    var url = 'YOUR URL HERE';
+    var url = 'http://localhost:8989/upload';
     var xhr = new XMLHttpRequest();
     var formData = new FormData();
     xhr.open('POST', url, true);
 
+    xhr.onprogress = function (e) {
+      console.log(e);
+      if (e.lengthComputable) {
+        console.log(e.loaded + " / " + e.total);
+      }
+    };
+
+    xhr.onloadstart = function (e) {
+      console.log("start");
+    };
+
     xhr.addEventListener('readystatechange', function (e) {
       if (xhr.readyState == 4 && xhr.status == 200) {
         // Done. Inform the user
+
       } else if (xhr.readyState == 4 && xhr.status != 200) {
         // Error. Inform the user
       }

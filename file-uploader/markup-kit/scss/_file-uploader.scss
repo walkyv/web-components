@@ -59,6 +59,9 @@
       width:373px;
       border-left: 1px solid #c7c7c7;
       padding:40px 1.5em 0 2.5em;
+      .text {
+        max-width:260px;
+      }
     }
     .progress {
       display:flex;
@@ -78,10 +81,13 @@
       }
     }
     .text {
+
       .info {
         color: #6a7070;
         font-size: 12px;
         margin:0;
+
+
       }
     }
     .upload-actions {

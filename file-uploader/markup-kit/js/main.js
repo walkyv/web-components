@@ -1,5 +1,6 @@
 'use strict';
 (function() {
+
   const attachBtn = document.getElementById('attachFiles'),
     modal = document.querySelector('upload-modal'),
     uploadInfo = document.getElementById('info'),
@@ -32,8 +33,8 @@
         '</div>',
         '<div class="upload-actions">',
           '<button class="pe-icon--btn">',
-            '<svg focusable="false" class="pe-icon--remove-sm-24" aria-label="remove file" role="img" >',
-              '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>',
+            '<svg focusable="false" class="pe-icon--delete-18" aria-label="remove file" role="img" >',
+              '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>',
             '</svg>',
           '</button>',
         '</div>'
@@ -80,14 +81,26 @@
   // processes and uploads files
   function uploadFile(file) {
     renderProgressItems(file, target);
-    const url = 'YOUR URL HERE';
+    const url = 'http://localhost:8989/upload';
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
     xhr.open('POST', url, true);
 
+    xhr.onprogress = function (e) {
+      console.log(e);
+      if (e.lengthComputable) {
+        console.log(e.loaded+  " / " + e.total)
+      }
+    };
+
+    xhr.onloadstart = function (e) {
+      console.log("start")
+    }
+
     xhr.addEventListener('readystatechange', function(e) {
       if (xhr.readyState == 4 && xhr.status == 200) {
         // Done. Inform the user
+
       }
       else if (xhr.readyState == 4 && xhr.status != 200) {
         // Error. Inform the user
@@ -96,7 +109,9 @@
 
     formData.append('file', file);
     xhr.send(formData);
+
   }
+
 
   attachBtn.addEventListener('click', event => {
     realUploadInput.click();
