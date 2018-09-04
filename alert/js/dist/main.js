@@ -17,27 +17,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     function Example() {
       _classCallCheck(this, Example);
 
-      return _possibleConstructorReturn(this, (Example.__proto__ || Object.getPrototypeOf(Example)).call(this));
+      var _this = _possibleConstructorReturn(this, (Example.__proto__ || Object.getPrototypeOf(Example)).call(this));
+
+      _this.attachShadow({
+        mode: 'open'
+      });
+      return _this;
     }
 
     _createClass(Example, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
         // shadow dom
-        var shadow = this.attachShadow({
-          mode: 'open'
-        }),
-            currentDoc = document.querySelector('link[href$="index.html"]').import;
+        var currentDoc = document.querySelector('link[href$="index.html"]').import;
         var template = currentDoc.querySelector('#template');
         var clone = document.importNode(template.content, true);
 
-        shadow.appendChild(clone);
-        // set attributes
-
-        var titleText = this.getAttribute('title'),
-            titleContainer = shadow.getElementById('titleText');
-
-        titleContainer.innerHTML = titleText;
+        this.shadowRoot.appendChild(clone);
       }
     }]);
 
