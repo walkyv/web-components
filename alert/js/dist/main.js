@@ -8,37 +8,41 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Example = function (_HTMLElement) {
-  _inherits(Example, _HTMLElement);
+(function (w, doc) {
+  'use strict';
 
-  function Example() {
-    _classCallCheck(this, Example);
+  var Example = function (_HTMLElement) {
+    _inherits(Example, _HTMLElement);
 
-    return _possibleConstructorReturn(this, (Example.__proto__ || Object.getPrototypeOf(Example)).call(this));
-  }
+    function Example() {
+      _classCallCheck(this, Example);
 
-  _createClass(Example, [{
-    key: 'connectedCallback',
-    value: function connectedCallback() {
-      // shadow dom
-      var shadow = this.attachShadow({
-        mode: 'open'
-      }),
-          currentDoc = document.querySelector('link[href$="index.html"]').import;
-      var template = currentDoc.querySelector('#template');
-      var clone = document.importNode(template.content, true);
-
-      shadow.appendChild(clone);
-      // set attributes
-
-      var titleText = this.getAttribute('title'),
-          titleContainer = shadow.getElementById('titleText');
-
-      titleContainer.innerHTML = titleText;
+      return _possibleConstructorReturn(this, (Example.__proto__ || Object.getPrototypeOf(Example)).call(this));
     }
-  }]);
 
-  return Example;
-}(HTMLElement);
+    _createClass(Example, [{
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        // shadow dom
+        var shadow = this.attachShadow({
+          mode: 'open'
+        }),
+            currentDoc = document.querySelector('link[href$="index.html"]').import;
+        var template = currentDoc.querySelector('#template');
+        var clone = document.importNode(template.content, true);
 
-customElements.define('example-component', Example);
+        shadow.appendChild(clone);
+        // set attributes
+
+        var titleText = this.getAttribute('title'),
+            titleContainer = shadow.getElementById('titleText');
+
+        titleContainer.innerHTML = titleText;
+      }
+    }]);
+
+    return Example;
+  }(HTMLElement);
+
+  customElements.define('example-component', Example);
+})(window, document);
