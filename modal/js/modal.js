@@ -81,8 +81,8 @@ class Modal extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    
-    // if `footer` is changing, but 
+
+    // if `footer` is changing, but
     // this.modal has not been defined yet,
     // bail out.
     if (name === 'footer' && !this.modal) return;
@@ -97,8 +97,8 @@ class Modal extends HTMLElement {
 
   connectedCallback() {
     // Get component attributes
-    const titleText = this.getAttribute('titleText'),
-      triggerId = this.getAttribute('triggerId'),
+    const titleText = this.getAttribute('titletext'),
+      triggerId = this.getAttribute('triggerid'),
       footer = this.hasAttribute('footer');
 
     // Clone content for shadow DOM
@@ -185,6 +185,9 @@ class Modal extends HTMLElement {
   }
 
   openModal(e) {
+    // unhide it on open, to prevent FOUC
+    this.style.display = "block"
+
     const thisButton = e.currentTarget,
       buttonDisabled = thisButton.getAttribute('disabled');
 
@@ -252,7 +255,7 @@ class Modal extends HTMLElement {
      */
     const targetDOM =
       getFocusableChildren(this).length > 0 ? this : this.modal;
-    
+
     // if neither the Light DOM nor the Shadow DOM within the modal contain
     // the active element, set focus back into the targetDOM.
     if (
@@ -283,16 +286,19 @@ class Modal extends HTMLElement {
     }, 100);
   }
   renderfooter(parentNode) {
-    const successBtnText = this.getAttribute('successBtnText'),
-      cancelBtnText = this.getAttribute('cancelBtnText');
+    const successBtnText = this.getAttribute('successbtntext'),
+          cancelBtnText = this.getAttribute('cancelbtntext'),
+          hideCancel = this.getAttribute('hidecancel'),
+          hideSuccess = this.getAttribute('hidesuccess');
 
     const currentDoc = document.querySelector('link[href$="index.html"]')
       .import;
 
-    const actionsTemplate = currentDoc.querySelector('#actions'),
-      actionsClone = document.importNode(actionsTemplate.content, true),
-      cancelButton = actionsClone.querySelector('#cancelButton'),
-      saveButton = actionsClone.querySelector('#successButton');
+    const selector = hideCancel !== null ? '#actions-noCancel' : hideSuccess !== null ? '#actions-noSuccess' : '#actions',
+          actionsTemplate = currentDoc.querySelector(selector),
+          actionsClone = document.importNode(actionsTemplate.content, true),
+          cancelButton = actionsClone.querySelector('#cancelButton'),
+          saveButton = actionsClone.querySelector('#successButton');
 
     const modalBody = parentNode.querySelector('#dialogDescription');
 
