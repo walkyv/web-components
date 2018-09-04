@@ -97,8 +97,8 @@ class Modal extends HTMLElement {
 
   connectedCallback() {
     // Get component attributes
-    const titleText = this.getAttribute('titleText'),
-      triggerId = this.getAttribute('triggerId'),
+    const titleText = this.getAttribute('titletext'),
+      triggerId = this.getAttribute('triggerid'),
       footer = this.hasAttribute('footer');
 
     // Clone content for shadow DOM
@@ -286,10 +286,10 @@ class Modal extends HTMLElement {
     }, 100);
   }
   renderfooter(parentNode) {
-    const successBtnText = this.getAttribute('successBtnText'),
-          cancelBtnText = this.getAttribute('cancelBtnText'),
-          hideCancel = this.getAttribute('hideCancel'),
-          hideSuccess = this.getAttribute('hideSuccess');
+    const successBtnText = this.getAttribute('successbtntext'),
+          cancelBtnText = this.getAttribute('cancelbtntext'),
+          hideCancel = this.getAttribute('hidecancel'),
+          hideSuccess = this.getAttribute('hidesuccess');
 
     const currentDoc = document.querySelector('link[href$="index.html"]')
       .import;

@@ -106,8 +106,8 @@ var Modal = function (_HTMLElement) {
       var _this2 = this;
 
       // Get component attributes
-      var titleText = this.getAttribute('titleText'),
-          triggerId = this.getAttribute('triggerId'),
+      var titleText = this.getAttribute('titletext'),
+          triggerId = this.getAttribute('triggerid'),
           footer = this.hasAttribute('footer');
 
       // Clone content for shadow DOM
@@ -282,10 +282,10 @@ var Modal = function (_HTMLElement) {
   }, {
     key: 'renderfooter',
     value: function renderfooter(parentNode) {
-      var successBtnText = this.getAttribute('successBtnText'),
-          cancelBtnText = this.getAttribute('cancelBtnText'),
-          hideCancel = this.getAttribute('hideCancel'),
-          hideSuccess = this.getAttribute('hideSuccess');
+      var successBtnText = this.getAttribute('successbtntext'),
+          cancelBtnText = this.getAttribute('cancelbtntext'),
+          hideCancel = this.getAttribute('hidecancel'),
+          hideSuccess = this.getAttribute('hidesuccess');
 
       var currentDoc = document.querySelector('link[href$="index.html"]').import;
 
