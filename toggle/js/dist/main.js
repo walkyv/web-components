@@ -14,40 +14,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   // Any helper functions that do not need to be part of the class
   // can be declared here
 
-  var Example = function (_HTMLElement) {
-    _inherits(Example, _HTMLElement);
+  var Toggle = function (_HTMLElement) {
+    _inherits(Toggle, _HTMLElement);
 
-    function Example() {
-      _classCallCheck(this, Example);
+    function Toggle() {
+      _classCallCheck(this, Toggle);
 
-      var _this = _possibleConstructorReturn(this, (Example.__proto__ || Object.getPrototypeOf(Example)).call(this));
+      var _this = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this));
 
       _this.attachShadow({ mode: 'open' });
       return _this;
     }
 
-    _createClass(Example, [{
+    _createClass(Toggle, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
         var currentDoc = doc.querySelector('link[href$="index.html"]'),
             template = currentDoc.querySelector('#template'),
             clone = doc.importNode(template.content, true);
 
-        // Get attributes set on component
-        var titleText = this.getAttribute('title');
-
-        // find relevant DOM nodes
-        var titleContainer = clone.getElementById('titleText');
-
-        titleContainer.innerHTML = titleText;
-
         // Attach clone after all DOM updates are done
         this.shadowRoot.appendChild(clone);
       }
     }]);
 
-    return Example;
+    return Toggle;
   }(HTMLElement);
 
-  customElements.define('example-component', Example);
+  customElements.define('pearson-toggle', Toggle);
 })(window, document);
