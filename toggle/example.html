@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="" lang="EN">
+	<head>
+		<title>Pearson Web Component</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width" />
+
+		<!-- loads web component polyfills -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
+		<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+		<!-- load pearson and global styles -->
+
+
+		<!-- import web components -->
+		<link rel="import" href="index.html" />
+
+
+	</head>
+	<body>
+	<!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
+		<main id="main">
+			<section class="container">
+				<example-component
+					title="Hello Im an Attribute"
+				>
+					<p>Hello, im an HTML elmement passed into the component</p>
+				</example-component>
+			</section>
+		</main>
+
+	</body>
+</html>
