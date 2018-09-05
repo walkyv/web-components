@@ -17,6 +17,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var Toggle = function (_HTMLElement) {
     _inherits(Toggle, _HTMLElement);
 
+    _createClass(Toggle, null, [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['checked'];
+      }
+    }]);
+
     function Toggle() {
       _classCallCheck(this, Toggle);
 
@@ -35,6 +42,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         // Attach clone after all DOM updates are done
         this.shadowRoot.appendChild(clone);
+      }
+    }, {
+      key: 'checked',
+      get: function get() {
+        return this.shadowRoot.querySelector('button').hasAttribute('checked');
+      },
+      set: function set(value) {
+        if (value === true) {
+          this.shadowRoot.querySelector('button').setAttribute('aria-checked', true);
+        }
       }
     }]);
 
