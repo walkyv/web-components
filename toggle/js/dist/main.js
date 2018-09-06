@@ -64,7 +64,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'connectedCallback',
       value: function connectedCallback() {
         this.button.addEventListener('click', this.handleClick);
+
         this._updateLabel();
+
+        this._upgradeProperty('checked');
+        this._upgradeProperty('labelhidden');
       }
     }, {
       key: '_updateLabel',
@@ -77,6 +81,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.button.setAttribute('aria-labelledby', this.label.id);
         this.label.setAttribute('for', this.button.id);
+      }
+    }, {
+      key: '_upgradeProperty',
+      value: function _upgradeProperty(prop) {
+        if (this.hasOwnProperty(prop)) {
+          var value = this[prop];
+          delete this[prop];
+          this[prop] = value;
+        }
       }
     }, {
       key: 'checked',

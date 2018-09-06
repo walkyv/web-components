@@ -54,7 +54,11 @@
 
     connectedCallback() {
       this.button.addEventListener('click', this.handleClick);
+
       this._updateLabel();
+      
+      this._upgradeProperty('checked');
+      this._upgradeProperty('labelhidden');
     }
     _updateLabel() {
       if (!this.id) {
@@ -65,6 +69,14 @@
 
       this.button.setAttribute('aria-labelledby', this.label.id);
       this.label.setAttribute('for', this.button.id);
+    }
+
+    _upgradeProperty(prop) {
+      if (this.hasOwnProperty(prop)) {
+        let value = this[prop];
+        delete this[prop];
+        this[prop] = value;
+      }
     }
   }
 
