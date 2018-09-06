@@ -44,29 +44,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }
 
     _createClass(Toggle, [{
-      key: 'attributeChangedCallback',
-      value: function attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'checked') {
-          var isChecked = newValue !== null;
-          this.button.setAttribute('aria-checked', isChecked);
-        }
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        this._upgradeProperty('checked');
+        this._upgradeProperty('labelhidden');
+
+        this._setControlReference();
+        this._renderLabel();
+
+        this.button.addEventListener('click', this._handleClick);
       }
     }, {
       key: '_handleClick',
       value: function _handleClick() {
         this.checked = !this.checked;
-      }
-    }, {
-      key: 'connectedCallback',
-      value: function connectedCallback() {
-        this.button.addEventListener('click', this._handleClick);
-
-        this._setControlReference();
-
-        this._renderLabel();
-
-        this._upgradeProperty('checked');
-        this._upgradeProperty('labelhidden');
       }
     }, {
       key: '_setControlReference',
@@ -98,6 +89,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           var value = this[prop];
           delete this[prop];
           this[prop] = value;
+        }
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'checked') {
+          var isChecked = newValue !== null;
+          this.button.setAttribute('aria-checked', isChecked);
         }
       }
     }, {

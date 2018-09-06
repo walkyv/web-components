@@ -25,39 +25,21 @@
       this._handleClick = this._handleClick.bind(this);
     }
 
-    get checked() {
-      return this.hasAttribute('checked');
-    }
+    connectedCallback() {
+      this._upgradeProperty('checked');
+      this._upgradeProperty('labelhidden');
+      
+      this._setControlReference();
+      this._renderLabel();
 
-    set checked(value) {
-      if (value) {
-        this.setAttribute('checked', '');
-      } else {
-        this.removeAttribute('checked');
-      }
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-      if (name === 'checked') {
-        const isChecked = newValue !== null;
-        this.button.setAttribute('aria-checked', isChecked);
-      }
+      this.button.addEventListener('click', this._handleClick);
+      
     }
 
     _handleClick() {
       this.checked = !this.checked;
     }
 
-    connectedCallback() {
-      this.button.addEventListener('click', this._handleClick);
-
-      this._setControlReference();
-
-      this._renderLabel();
-      
-      this._upgradeProperty('checked');
-      this._upgradeProperty('labelhidden');
-    }
     _setControlReference() {
       if (!this.id) {
         this.id = `pe-toggle-${peToggleCounter++}`;
@@ -84,6 +66,25 @@
         let value = this[prop];
         delete this[prop];
         this[prop] = value;
+      }
+    }
+
+    get checked() {
+      return this.hasAttribute('checked');
+    }
+
+    set checked(value) {
+      if (value) {
+        this.setAttribute('checked', '');
+      } else {
+        this.removeAttribute('checked');
+      }
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      if (name === 'checked') {
+        const isChecked = newValue !== null;
+        this.button.setAttribute('aria-checked', isChecked);
       }
     }
   }
