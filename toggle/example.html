@@ -21,14 +21,19 @@
 	<body>
 	<!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
 		<main id="main">
-			<section class="container">
-				<pearson-toggle
-					id="pe-toggle"
-					labelText="Email notifications"
-					labelHidden
-				>
-				</pearson-toggle>
-			</section>
+			<h2>Toggle with label</h2>
+			<pearson-toggle
+				id="pe-toggle"
+				labelText="Email notifications"
+			>
+			</pearson-toggle>
+			<h2>Toggle with label, checked by default</h2>
+			<pearson-toggle
+				id="checked-toggle"
+				labelText="Text notifications"
+				checked
+			>
+			</pearson-toggle>
 		</main>
 
 	</body>
