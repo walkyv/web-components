@@ -47,6 +47,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'connectedCallback',
       value: function connectedCallback() {
         this._upgradeProperty('checked');
+        this._upgradeProperty('value');
         this._upgradeProperty('labelhidden');
 
         this._setControlReference();
@@ -69,6 +70,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.label.id = this.id + '_label';
 
         this.button.setAttribute('aria-labelledby', this.label.id);
+
+        if (this.hasAttribute('value')) {
+          this.button.value = this.getAttribute('value');
+        }
+        if (this.hasAttribute('name')) {
+          this.button.name = this.getAttribute('name');
+        }
+
         this.label.setAttribute('for', this.button.id);
       }
     }, {
@@ -120,11 +129,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'value',
       get: function get() {
         return this.button.value;
-      },
-      set: function set(value) {
-        if (value) {
-          this.button.value = value;
-        }
+      }
+    }, {
+      key: 'name',
+      get: function get() {
+        return this.button.name;
       }
     }]);
 

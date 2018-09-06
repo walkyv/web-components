@@ -53,6 +53,9 @@
       if (this.hasAttribute('value')) {
         this.button.value = this.getAttribute('value');
       }
+      if (this.hasAttribute('name')) {
+        this.button.name = this.getAttribute('name');
+      }
       
       this.label.setAttribute('for', this.button.id);
     }
@@ -89,6 +92,10 @@
 
     get value() {
       return this.button.value;
+    }
+
+    get name() {
+      return this.button.name;
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
