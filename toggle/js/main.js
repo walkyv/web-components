@@ -87,6 +87,10 @@
         this.button.setAttribute('aria-checked', isChecked);
       }
     }
+
+    disconnectedCallback() {
+      this.button.removeEventListener('click');
+    }
   }
 
   customElements.define('pearson-toggle', Toggle);

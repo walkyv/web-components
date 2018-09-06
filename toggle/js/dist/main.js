@@ -100,6 +100,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
       }
     }, {
+      key: 'disconnectedCallback',
+      value: function disconnectedCallback() {
+        this.button.removeEventListener('click');
+      }
+    }, {
       key: 'checked',
       get: function get() {
         return this.hasAttribute('checked');
