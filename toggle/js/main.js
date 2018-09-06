@@ -43,10 +43,8 @@
         const isChecked = newValue !== null;
         this.button.setAttribute('aria-checked', isChecked);
       }
-      if (name === 'labelhidden' && newValue !== null) {
-        this.label.classList.add('visuallyhidden');
-      } else {
-        this.label.classList.remove('visuallyhidden');
+      if (name === 'labelhidden') {
+        this.label.classList.toggle('visuallyhidden');
       }
     }
 
