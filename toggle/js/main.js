@@ -15,7 +15,7 @@
     }
 
     connectedCallback() {
-      const currentDoc = doc.querySelector('link[href$="index.html"]'),
+      const currentDoc = doc.querySelector('link[href$="index.html"]').import,
         template = currentDoc.querySelector('#template'),
         clone = doc.importNode(template.content, true);
 

@@ -36,7 +36,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Toggle, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var currentDoc = doc.querySelector('link[href$="index.html"]'),
+        var currentDoc = doc.querySelector('link[href$="index.html"]').import,
             template = currentDoc.querySelector('#template'),
             clone = doc.importNode(template.content, true);
 
