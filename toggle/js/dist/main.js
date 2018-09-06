@@ -30,15 +30,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       var _this = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this));
 
       _this.attachShadow({ mode: 'open' });
+      _this.handleClick = _this.handleClick.bind(_this);
       return _this;
     }
 
     _createClass(Toggle, [{
+      key: 'handleClick',
+      value: function handleClick() {
+        this.checked = !this.checked;
+      }
+    }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
         var currentDoc = doc.querySelector('link[href$="index.html"]').import,
             template = currentDoc.querySelector('#template'),
             clone = doc.importNode(template.content, true);
+
+        clone.querySelector('button').addEventListener('click', this.handleClick);
 
         // Attach clone after all DOM updates are done
         this.shadowRoot.appendChild(clone);
@@ -46,12 +54,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'checked',
       get: function get() {
-        return this.shadowRoot.querySelector('button').hasAttribute('checked');
+        return this.shadowRoot.querySelector('button').getAttribute('aria-checked') === 'true';
       },
       set: function set(value) {
-        if (value === true) {
-          this.shadowRoot.querySelector('button').setAttribute('aria-checked', true);
-        }
+        this.shadowRoot.querySelector('button').setAttribute('aria-checked', value);
       }
     }]);
 
