@@ -11,8 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
-  // Any helper functions that do not need to be part of the class
-  // can be declared here
+  var peToggleCounter = 0;
 
   var Toggle = function (_HTMLElement) {
     _inherits(Toggle, _HTMLElement);
@@ -36,10 +35,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           clone = doc.importNode(template.content, true);
 
       _this.button = clone.querySelector('button');
+      _this.label = clone.querySelector('label');
 
       _this.shadowRoot.appendChild(clone);
 
       _this.handleClick = _this.handleClick.bind(_this);
+      _this._updateLabel = _this._updateLabel.bind(_this);
       return _this;
     }
 
@@ -59,6 +60,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'connectedCallback',
       value: function connectedCallback() {
         this.button.addEventListener('click', this.handleClick);
+        this._updateLabel();
+      }
+    }, {
+      key: '_updateLabel',
+      value: function _updateLabel() {
+        if (!this.id) {
+          this.id = 'pe-toggle-' + peToggleCounter++;
+        }
+        this.button.id = this.id + '_button';
+        this.label.id = this.id + '_label';
+
+        this.button.setAttribute('aria-labelledby', this.label.id);
+        this.label.setAttribute('for', this.button.id);
       }
     }, {
       key: 'checked',

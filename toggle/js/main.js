@@ -1,8 +1,7 @@
 (function(w, doc) {
   'use strict';
 
-  // Any helper functions that do not need to be part of the class
-  // can be declared here
+  let peToggleCounter = 0;
 
   class Toggle extends HTMLElement {
     static get observedAttributes() {
@@ -19,13 +18,15 @@
         clone = doc.importNode(template.content, true);
 
       this.button = clone.querySelector('button');
-      
+      this.label = clone.querySelector('label');
+
       this.shadowRoot.appendChild(clone);
-      
+
       this.handleClick = this.handleClick.bind(this);
+      this._updateLabel = this._updateLabel.bind(this);
     }
 
-    get checked(){
+    get checked() {
       return this.hasAttribute('checked');
     }
 
@@ -39,16 +40,27 @@
 
     attributeChangedCallback(name, oldValue, newValue) {
       const isChecked = newValue !== null;
-      
+
       this.button.setAttribute('aria-checked', isChecked);
     }
 
-    handleClick(){
+    handleClick() {
       this.checked = !this.checked;
     }
 
     connectedCallback() {
       this.button.addEventListener('click', this.handleClick);
+      this._updateLabel();
+    }
+    _updateLabel() {
+      if (!this.id) {
+        this.id = `pe-toggle-${peToggleCounter++}`;
+      }
+      this.button.id = this.id + '_button';
+      this.label.id = this.id + '_label';
+
+      this.button.setAttribute('aria-labelledby', this.label.id);
+      this.label.setAttribute('for', this.button.id);
     }
   }
 
