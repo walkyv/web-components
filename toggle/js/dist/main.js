@@ -50,7 +50,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this._upgradeProperty('value');
         this._upgradeProperty('labelhidden');
 
-        this._setControlReference();
+        this._mapPropsToFormControls();
         this._renderLabel();
 
         this.button.addEventListener('click', this._handleClick);
@@ -61,8 +61,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.checked = !this.checked;
       }
     }, {
-      key: '_setControlReference',
-      value: function _setControlReference() {
+      key: '_mapPropsToFormControls',
+      value: function _mapPropsToFormControls() {
         if (!this.id) {
           this.id = 'pe-toggle-' + peToggleCounter++;
         }
