@@ -56,9 +56,14 @@
       this.button.addEventListener('click', this.handleClick);
 
       this._updateLabel();
+
+      if (this.hasAttribute('labelText')) {
+        this.label.textContent = this.getAttribute('labelText');
+      }
       
       this._upgradeProperty('checked');
       this._upgradeProperty('labelhidden');
+
     }
     _updateLabel() {
       if (!this.id) {

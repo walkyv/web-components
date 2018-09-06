@@ -67,6 +67,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this._updateLabel();
 
+        if (this.hasAttribute('labelText')) {
+          this.label.textContent = this.getAttribute('labelText');
+        }
+
         this._upgradeProperty('checked');
         this._upgradeProperty('labelhidden');
       }
