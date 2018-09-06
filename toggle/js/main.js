@@ -5,7 +5,7 @@
 
   class Toggle extends HTMLElement {
     static get observedAttributes() {
-      return ['checked', 'labelhidden'];
+      return ['checked'];
     }
 
     constructor() {
@@ -22,8 +22,7 @@
 
       this.shadowRoot.appendChild(clone);
 
-      this.handleClick = this.handleClick.bind(this);
-      this._updateLabel = this._updateLabel.bind(this);
+      this._handleClick = this._handleClick.bind(this);
     }
 
     get checked() {
@@ -43,29 +42,23 @@
         const isChecked = newValue !== null;
         this.button.setAttribute('aria-checked', isChecked);
       }
-      if (name === 'labelhidden') {
-        this.label.classList.toggle('visuallyhidden');
-      }
     }
 
-    handleClick() {
+    _handleClick() {
       this.checked = !this.checked;
     }
 
     connectedCallback() {
-      this.button.addEventListener('click', this.handleClick);
+      this.button.addEventListener('click', this._handleClick);
 
-      this._updateLabel();
+      this._setControlReference();
 
-      if (this.hasAttribute('labelText')) {
-        this.label.textContent = this.getAttribute('labelText');
-      }
+      this._renderLabel();
       
       this._upgradeProperty('checked');
       this._upgradeProperty('labelhidden');
-
     }
-    _updateLabel() {
+    _setControlReference() {
       if (!this.id) {
         this.id = `pe-toggle-${peToggleCounter++}`;
       }
@@ -74,6 +67,16 @@
 
       this.button.setAttribute('aria-labelledby', this.label.id);
       this.label.setAttribute('for', this.button.id);
+    }
+
+    _renderLabel(){
+      if (this.hasAttribute('labelhidden')) {
+        this.label.classList.toggle('visuallyhidden');
+      }
+
+      if (this.hasAttribute('labelText')) {
+        this.label.textContent = this.getAttribute('labelText');
+      }
     }
 
     _upgradeProperty(prop) {

@@ -19,7 +19,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Toggle, null, [{
       key: 'observedAttributes',
       get: function get() {
-        return ['checked', 'labelhidden'];
+        return ['checked'];
       }
     }]);
 
@@ -39,8 +39,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.shadowRoot.appendChild(clone);
 
-      _this.handleClick = _this.handleClick.bind(_this);
-      _this._updateLabel = _this._updateLabel.bind(_this);
+      _this._handleClick = _this._handleClick.bind(_this);
       return _this;
     }
 
@@ -51,32 +50,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           var isChecked = newValue !== null;
           this.button.setAttribute('aria-checked', isChecked);
         }
-        if (name === 'labelhidden') {
-          this.label.classList.toggle('visuallyhidden');
-        }
       }
     }, {
-      key: 'handleClick',
-      value: function handleClick() {
+      key: '_handleClick',
+      value: function _handleClick() {
         this.checked = !this.checked;
       }
     }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
-        this.button.addEventListener('click', this.handleClick);
+        this.button.addEventListener('click', this._handleClick);
 
-        this._updateLabel();
+        this._setControlReference();
 
-        if (this.hasAttribute('labelText')) {
-          this.label.textContent = this.getAttribute('labelText');
-        }
+        this._renderLabel();
 
         this._upgradeProperty('checked');
         this._upgradeProperty('labelhidden');
       }
     }, {
-      key: '_updateLabel',
-      value: function _updateLabel() {
+      key: '_setControlReference',
+      value: function _setControlReference() {
         if (!this.id) {
           this.id = 'pe-toggle-' + peToggleCounter++;
         }
@@ -85,6 +79,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.button.setAttribute('aria-labelledby', this.label.id);
         this.label.setAttribute('for', this.button.id);
+      }
+    }, {
+      key: '_renderLabel',
+      value: function _renderLabel() {
+        if (this.hasAttribute('labelhidden')) {
+          this.label.classList.toggle('visuallyhidden');
+        }
+
+        if (this.hasAttribute('labelText')) {
+          this.label.textContent = this.getAttribute('labelText');
+        }
       }
     }, {
       key: '_upgradeProperty',
