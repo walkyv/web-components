@@ -46,7 +46,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             template = currentDoc.querySelector('#template'),
             clone = doc.importNode(template.content, true);
 
-        clone.querySelector('button').addEventListener('click', this.handleClick);
+        this.button = clone.querySelector('button');
+
+        this.button.addEventListener('click', this.handleClick);
 
         // Attach clone after all DOM updates are done
         this.shadowRoot.appendChild(clone);
@@ -54,10 +56,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'checked',
       get: function get() {
-        return this.shadowRoot.querySelector('button').getAttribute('aria-checked') === 'true';
+        return this.hasAttribute('checked');
       },
       set: function set(value) {
-        this.shadowRoot.querySelector('button').setAttribute('aria-checked', value);
+        if (value) {
+          this.setAttribute('checked', '');
+        } else {
+          this.removeAttribute('checked');
+        }
       }
     }]);
 
