@@ -13,6 +13,15 @@
       super();
 
       this.attachShadow({ mode: 'open' });
+
+      const currentDoc = doc.querySelector('link[href$="index.html"]').import,
+        template = currentDoc.querySelector('#template'),
+        clone = doc.importNode(template.content, true);
+
+      this.button = clone.querySelector('button');
+      
+      this.shadowRoot.appendChild(clone);
+      
       this.handleClick = this.handleClick.bind(this);
     }
 
@@ -39,16 +48,7 @@
     }
 
     connectedCallback() {
-      const currentDoc = doc.querySelector('link[href$="index.html"]').import,
-        template = currentDoc.querySelector('#template'),
-        clone = doc.importNode(template.content, true);
-
-      this.button = clone.querySelector('button');
-
       this.button.addEventListener('click', this.handleClick);
-
-      // Attach clone after all DOM updates are done
-      this.shadowRoot.appendChild(clone);
     }
   }
 

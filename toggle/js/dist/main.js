@@ -30,6 +30,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       var _this = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this));
 
       _this.attachShadow({ mode: 'open' });
+
+      var currentDoc = doc.querySelector('link[href$="index.html"]').import,
+          template = currentDoc.querySelector('#template'),
+          clone = doc.importNode(template.content, true);
+
+      _this.button = clone.querySelector('button');
+
+      _this.shadowRoot.appendChild(clone);
+
       _this.handleClick = _this.handleClick.bind(_this);
       return _this;
     }
@@ -49,16 +58,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var currentDoc = doc.querySelector('link[href$="index.html"]').import,
-            template = currentDoc.querySelector('#template'),
-            clone = doc.importNode(template.content, true);
-
-        this.button = clone.querySelector('button');
-
         this.button.addEventListener('click', this.handleClick);
-
-        // Attach clone after all DOM updates are done
-        this.shadowRoot.appendChild(clone);
       }
     }, {
       key: 'checked',
