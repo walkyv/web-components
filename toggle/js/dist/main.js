@@ -35,6 +35,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }
 
     _createClass(Toggle, [{
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        var isChecked = newValue !== null;
+
+        this.button.setAttribute('aria-checked', isChecked);
+      }
+    }, {
       key: 'handleClick',
       value: function handleClick() {
         this.checked = !this.checked;

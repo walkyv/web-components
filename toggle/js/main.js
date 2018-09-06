@@ -28,6 +28,12 @@
       }
     }
 
+    attributeChangedCallback(name, oldValue, newValue) {
+      const isChecked = newValue !== null;
+      
+      this.button.setAttribute('aria-checked', isChecked);
+    }
+
     handleClick(){
       this.checked = !this.checked;
     }
