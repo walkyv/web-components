@@ -34,7 +34,16 @@
 				checked
 			>
 			</pearson-toggle>
+			<div id="toggleMsg" style="margin-top: 20px; font-size: 20px;">Click on a toggle to test it</div>
 		</main>
-
+		<script>
+			const toggles = document.querySelectorAll('pearson-toggle')
+			
+			toggles.forEach(function (toggle) {
+				toggle.addEventListener('click',function (e) {
+					document.querySelector('#toggleMsg').innerHTML = `You switched <code>${e.target.id}</code> ${toggle.checked ? 'on' : 'off'}`;
+				});
+			});
+		</script>
 	</body>
 </html>
