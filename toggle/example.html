@@ -10,21 +10,16 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
 		<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
-		<!-- load pearson and global styles -->
-
-
-		<!-- import web components -->
 		<link rel="import" href="index.html" />
-
-
 	</head>
 	<body>
-	<!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
+
 		<main id="main">
 			<h2>Toggle with label</h2>
 			<pearson-toggle
 				id="pe-toggle"
 				labelText="Email notifications"
+				name="emailNotifs"
 			>
 			</pearson-toggle>
 			<h2>Toggle with label, checked by default</h2>
@@ -35,14 +30,23 @@
 				checked
 			>
 			</pearson-toggle>
-			<div id="toggleMsg" style="margin-top: 20px; font-size: 20px;">Click on a toggle to test it</div>
+			<h2>Toggle with visuallyhidden label</h2>
+			<pearson-toggle
+				id="checked-toggle"
+				labelText="Text notifications"
+				name="hidenLabel"
+				labelHidden
+			>
+			</pearson-toggle>
+			<div id="toggleMsg" style="margin-top: 30px; font-size: 20px;">Click on a toggle to test it</div>
 		</main>
 		<script>
-			const toggles = document.querySelectorAll('pearson-toggle')
+			const toggles = document.querySelectorAll('pearson-toggle');
+			const msg = document.querySelector('#toggleMsg');
 			
 			toggles.forEach(function (toggle) {
 				toggle.addEventListener('click',function (e) {
-					document.querySelector('#toggleMsg').innerHTML = `You switched <code>${e.target.id}</code> ${toggle.checked ? 'on' : 'off'}`;
+					msg.innerHTML = `You switched <code>${e.target.name}</code> <b>${toggle.checked ? 'on' : 'off'}</b>`;
 				});
 			})
 		</script>
