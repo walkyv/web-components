@@ -27,6 +27,7 @@
 
     connectedCallback() {
       this._upgradeProperty('checked');
+      this._upgradeProperty('value');
       this._upgradeProperty('labelhidden');
       
       this._setControlReference();
@@ -48,6 +49,11 @@
       this.label.id = this.id + '_label';
 
       this.button.setAttribute('aria-labelledby', this.label.id);
+
+      if (this.hasAttribute('value')) {
+        this.button.value = this.getAttribute('value');
+      }
+      
       this.label.setAttribute('for', this.button.id);
     }
 
@@ -79,6 +85,10 @@
       } else {
         this.removeAttribute('checked');
       }
+    }
+
+    get value() {
+      return this.button.value;
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

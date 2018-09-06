@@ -116,6 +116,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.removeAttribute('checked');
         }
       }
+    }, {
+      key: 'value',
+      get: function get() {
+        return this.button.value;
+      },
+      set: function set(value) {
+        if (value) {
+          this.button.value = value;
+        }
+      }
     }]);
 
     return Toggle;
