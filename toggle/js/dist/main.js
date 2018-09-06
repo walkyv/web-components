@@ -19,7 +19,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Toggle, null, [{
       key: 'observedAttributes',
       get: function get() {
-        return ['checked'];
+        return ['checked', 'labelhidden'];
       }
     }]);
 
@@ -47,9 +47,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Toggle, [{
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
-        var isChecked = newValue !== null;
-
-        this.button.setAttribute('aria-checked', isChecked);
+        if (name === 'checked') {
+          var isChecked = newValue !== null;
+          this.button.setAttribute('aria-checked', isChecked);
+        }
+        if (name === 'labelhidden' && newValue !== null) {
+          this.label.classList.add('visuallyhidden');
+        } else {
+          this.label.classList.remove('visuallyhidden');
+        }
       }
     }, {
       key: 'handleClick',

@@ -5,7 +5,7 @@
 
   class Toggle extends HTMLElement {
     static get observedAttributes() {
-      return ['checked'];
+      return ['checked', 'labelhidden'];
     }
 
     constructor() {
@@ -39,9 +39,15 @@
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      const isChecked = newValue !== null;
-
-      this.button.setAttribute('aria-checked', isChecked);
+      if (name === 'checked') {
+        const isChecked = newValue !== null;
+        this.button.setAttribute('aria-checked', isChecked);
+      }
+      if (name === 'labelhidden' && newValue !== null) {
+        this.label.classList.add('visuallyhidden');
+      } else {
+        this.label.classList.remove('visuallyhidden');
+      }
     }
 
     handleClick() {
