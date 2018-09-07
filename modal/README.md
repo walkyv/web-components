@@ -56,7 +56,8 @@ Add the `<pearson-modal> </pearson-modal>` tags to the page, passing in a `trigg
     </section>
   </main>
 
-  <pearson-modal triggerId="trigger-modal">
+  <!-- The display:none is to prevent a FOUC in Firefox -->
+  <pearson-modal triggerId="trigger-modal" style="display:none;">
     <p> Hello World </p>
   </pearson-modal>
 </body>
@@ -68,11 +69,13 @@ To set the title and toggle action buttons, see the API below.
 
 | Attribute        | Type      | Default         | Description                                       |
 | ---------------- | --------- | --------------- | ------------------------------------------------- |
-| `triggerId`      | `String`  | Required        | The unique ID of the button that opens the modal. |
-| `titleText`      | `String`  | 'Modal Title'`  | The title of the modal.                           |
+| `triggerid`      | `String`  | Required        | The unique ID of the button that opens the modal. |
+| `titletext`      | `String`  | 'Modal Title'`  | The title of the modal.                           |
 | `footer`         | `Boolean` | `false`         | If set, shows the `Success` and `Cancel` buttons. |
-| `successBtnText` | `String`  | `'Save'`        | The text to display in the `Success` button.      |
-| `cancelBtnText`  | `String`  | `'Cancel'`      | The text to display in the `Cancel` button.       |
+| `successbtntext` | `String`  | `'Save'`        | The text to display in the `Success` button.      |
+| `cancelbtntext`  | `String`  | `'Cancel'`      | The text to display in the `Cancel` button.       |
+| `hidecancel`     | `Boolean` | `false`         | Hides the Cancel button completely                |
+| `hidesuccess`    | `Boolean` | `false`         | Hides the Success/CTA button completely           |
 
 **Example Code:**
 
@@ -109,9 +112,7 @@ The `pearson-modal` component emits two different events:
 
 **Important Note:**
 
-> For the purposes of event emission, the modal treats 
-> *any button that is not the success button* as a 'cancel' button.
-> If you want your modal to emit a `success` event, you *must* show the footer.
+> For the purposes of event emission, the modal treats *any button that is not the success button* as a 'cancel' button. If you want your modal to emit a `success` event, you *must* show the footer and the success button. If the success button is independently hidden through the `hideSuccess` configuration, or if the footer is hidden by setting  `footer` to `false`, it will prevent the emission of the `success` event completely.
 
 **Example Code:**
 

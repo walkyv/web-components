@@ -24,17 +24,45 @@
 			<section class="container">
 				<button id="trigger-modal" class="pe-btn pe-btn--btn_large">Open Modal</button>
 			</section>
+			<section class="container">
+				<button id="trigger-modal-two" class="pe-btn pe-btn--btn_large">Open no cancel modal</button>
+			</section>
+			<section class="container">
+				<button id="trigger-modal-three" class="pe-btn pe-btn--btn_large">Open no success modal</button>
+			</section>
 		</main>
 
 		<!-- place modal before the end of the body and pass in the reference ID of the button that triggers the modal -->
+		<!-- add in style="display:none" to prevent FOUC -->
 		<pearson-modal
-				triggerId="trigger-modal"
-				titleText="Basic Title"
-				successBtnText="Success"
-				cancelBtnText="Cancel"
+				triggerid="trigger-modal"
+				titletext="Basic Title"
+				successbtntext="Success"
+				cancelbtntext="Cancel"
 				footer
+				style="display:none"
 		>
 			<p>Pass in elements as children to the modal</p>
+		</pearson-modal>
+		<pearson-modal
+				triggerid="trigger-modal-two"
+				titletext="Basic Title"
+				successbtntext="Yep, love it."
+				hidecancel
+				footer
+				style="display:none"
+		>
+			<p>I like New York in June. How about you?</p>
+		</pearson-modal>
+		<pearson-modal
+				triggerid="trigger-modal-three"
+				titletext="Basic Title"
+				cancelbtntext="Leave me alone."
+				hidesuccess
+				footer
+				style="display:none"
+		>
+			<p>I like New York in June. How about you?</p>
 		</pearson-modal>
 	</body>
 </html>

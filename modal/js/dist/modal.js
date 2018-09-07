@@ -88,7 +88,7 @@ var Modal = function (_HTMLElement) {
     key: 'attributeChangedCallback',
     value: function attributeChangedCallback(name, oldValue, newValue) {
 
-      // if `footer` is changing, but 
+      // if `footer` is changing, but
       // this.modal has not been defined yet,
       // bail out.
       if (name === 'footer' && !this.modal) return;
@@ -106,8 +106,8 @@ var Modal = function (_HTMLElement) {
       var _this2 = this;
 
       // Get component attributes
-      var titleText = this.getAttribute('titleText'),
-          triggerId = this.getAttribute('triggerId'),
+      var titleText = this.getAttribute('titletext'),
+          triggerId = this.getAttribute('triggerid'),
           footer = this.hasAttribute('footer');
 
       // Clone content for shadow DOM
@@ -175,6 +175,9 @@ var Modal = function (_HTMLElement) {
     key: 'openModal',
     value: function openModal(e) {
       var _this3 = this;
+
+      // unhide it on open, to prevent FOUC
+      this.style.display = "block";
 
       var thisButton = e.currentTarget,
           buttonDisabled = thisButton.getAttribute('disabled');
@@ -279,12 +282,15 @@ var Modal = function (_HTMLElement) {
   }, {
     key: 'renderfooter',
     value: function renderfooter(parentNode) {
-      var successBtnText = this.getAttribute('successBtnText'),
-          cancelBtnText = this.getAttribute('cancelBtnText');
+      var successBtnText = this.getAttribute('successbtntext'),
+          cancelBtnText = this.getAttribute('cancelbtntext'),
+          hideCancel = this.getAttribute('hidecancel'),
+          hideSuccess = this.getAttribute('hidesuccess');
 
       var currentDoc = document.querySelector('link[href$="index.html"]').import;
 
-      var actionsTemplate = currentDoc.querySelector('#actions'),
+      var selector = hideCancel !== null ? '#actions-noCancel' : hideSuccess !== null ? '#actions-noSuccess' : '#actions',
+          actionsTemplate = currentDoc.querySelector(selector),
           actionsClone = document.importNode(actionsTemplate.content, true),
           cancelButton = actionsClone.querySelector('#cancelButton'),
           saveButton = actionsClone.querySelector('#successButton');

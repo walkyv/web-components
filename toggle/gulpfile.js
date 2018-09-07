@@ -23,7 +23,7 @@ gulp.task('styles', function () {
 
 const babel = require('gulp-babel');
 gulp.task('babel', () =>
-  gulp.src('js/modal.js')
+  gulp.src('js/main.js')
   .pipe(babel({
     presets: ['es2015']
   }))
@@ -35,5 +35,3 @@ gulp.task('watch', ()=> {
   gulp.watch('js/*.js', ['babel']);
   gulp.watch('scss/**/*.scss', ['styles']);
 });
-
-gulp.task('build', ['babel', 'styles']);
