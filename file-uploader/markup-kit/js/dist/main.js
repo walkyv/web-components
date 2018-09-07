@@ -13,21 +13,22 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       fileArr = [];
 
   function buildMarkup(data) {
-    return '\n        <div class="group">\n          <div class="indicator">\n            <img src="./icons/indicator.png" alt="progress" />\n          </div>\n          <div class="text">\n            <strong>' + data.name + '</strong>\n            <p class="info">0 MB / ' + data.size + ' MB</p>\n          </div>\n        </div>\n        <div class="upload-actions">\n          <button class="pe-icon--btn" aria-label="remove ' + data.name + '">\n            <svg focusable="false" class="pe-icon--delete-18" role="img">\n              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>\n            </svg>\n          </button>\n        </div>\n    ';
+    return '\n        <div class="group">\n          <div class="indicator">\n            <img src="./icons/indicator.png" alt="progress" />\n          </div>\n          <div class="text">\n            <strong>' + data.name + '</strong>\n            <p class="info">0 MB / ' + data.size + ' MB</p>\n          </div>\n        </div>\n        <div class="upload-actions">\n          <button class="pe-icon--btn" aria-label="remove ' + data.name + ' from uploads">\n            <svg focusable="false" class="pe-icon--delete-18" role="img">\n              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>\n            </svg>\n          </button>\n        </div>\n    ';
   }
+
   function renderProgressItems(data, target) {
     if (modal.footer !== true) {
       modal.footer = true;
       uploadInfo.style.display = 'block';
     }
-
     var div = document.createElement('DIV');
-
     div.classList.add('progress');
     target.appendChild(div);
     div.innerHTML = buildMarkup(data);
     fileArr.push(data);
-    uploadTitle.innerHTML = "Uploading  (0 done, " + fileArr.length + " in progress)";
+    setTimeout(function () {
+      uploadTitle.innerHTML = "Uploading  (0 done, " + fileArr.length + " in progress)";
+    }, 500);
   }
 
   // highlight function to outline drop area when a file is over area

@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="upload-actions">
-          <button class="pe-icon--btn" aria-label="remove ${data.name}">
+          <button class="pe-icon--btn" aria-label="remove ${data.name} from uploads">
             <svg focusable="false" class="pe-icon--delete-18" role="img">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>
             </svg>
@@ -29,19 +29,21 @@
         </div>
     `
   }
+
   function renderProgressItems (data, target) {
     if (modal.footer !== true) {
       modal.footer = true;
       uploadInfo.style.display = 'block';
     }
-
     const div = document.createElement('DIV');
-
     div.classList.add('progress');
     target.appendChild(div);
     div.innerHTML = buildMarkup(data)
     fileArr.push(data);
-    uploadTitle.innerHTML = "Uploading  (0 done, " + fileArr.length + " in progress)"
+    setTimeout(()=> {
+      uploadTitle.innerHTML = "Uploading  (0 done, " + fileArr.length + " in progress)"
+    },500)
+
   }
 
   // highlight function to outline drop area when a file is over area
