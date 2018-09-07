@@ -1,5 +1,5 @@
-'use strict';
 (function() {
+  'use strict';
 
   const attachBtn = document.querySelector('#attachFiles'),
     modal = document.querySelector('upload-modal'),
