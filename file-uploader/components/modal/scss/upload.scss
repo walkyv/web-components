@@ -1,0 +1,19 @@
+.pe-modal-container {
+  width:auto !important;
+  .modal-title {
+    width:calc(100% - 80px);
+    padding: 20px 40px;
+    border-bottom:1px solid #c7c7c7;
+    margin-bottom: 0;
+  }
+  button.close[aria-label="Close Dialog"] {
+    top:16px;
+  }
+  .actions {
+    padding:30px 40px;
+    border-top: 1px solid #c7c7c7;
+  }
+  .modal-body {
+    margin-bottom:0;
+  }
+}

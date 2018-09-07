@@ -1,0 +1,112 @@
+
+  .pe-modal-container {
+    width:475px;
+      > .pe-title {
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
+        margin: 0;
+      }
+    }
+
+  .pe-file-upload-container {
+    display:flex;
+    .file-upload {
+      height: 362px;
+      border-radius: 6px;
+      border: dashed 2px #6a7070;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: url('../icons/upload-icon.png');
+      background-repeat: no-repeat;
+      background-position: center 30px;
+      background-size: 100px;
+      margin:40px 0;
+
+      &.highlight {
+        border:2px solid #0b73da;
+      }
+      .drop-area {
+        display: flex;
+        flex-direction: column;
+        justify-self: center;
+        text-align: center;
+        align-self: flex-end;
+        width: 390px;
+        button {
+          width: 154px;
+          align-self: center;
+          margin-bottom: 35px;
+        }
+        .info {
+          color: #6a7070;
+          font-size: 12px;
+          margin: 0;
+          &:last-child {
+            margin-bottom: 24px;
+          }
+        }
+        .text {
+          margin-bottom: 16px;
+        }
+      }
+    }
+    .file-upload-info {
+      display:none;
+      margin-left:2.5em;
+      padding-left:1.5em;
+      width:373px;
+      border-left: 1px solid #c7c7c7;
+      padding:40px 1.5em 0 2.5em;
+      .text {
+        max-width:260px;
+      }
+    }
+    .progress {
+      display:flex;
+      justify-content: space-between;
+      border-bottom: solid 1px #f5f5f5;
+      padding-bottom:1em;
+      margin-bottom:1em;
+      .group {
+        display:flex;
+        align-items: center;
+      }
+    }
+    .indicator {
+      margin-right:1em;
+      img {
+        width:39px;
+      }
+    }
+    .text {
+
+      .info {
+        color: #6a7070;
+        font-size: 12px;
+        margin:0;
+
+
+      }
+    }
+    .upload-actions {
+      display:flex;
+      align-items: center;
+      button {
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+      }
+    }
+    .upload-title {
+      font-weight:normal;
+    }
+    .pe-progress-container {
+      margin-top:1em;
+    }
+    input[type=file] {
+      display:none;
+    }
+  }
+
