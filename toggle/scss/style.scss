@@ -15,7 +15,9 @@
   margin-bottom: 0.85714rem;
   margin-top: 0;
 
-  & * {
+  & *,
+  & * ::before,
+  & * ::after {
     box-sizing: border-box;
   }
   & button {
@@ -57,7 +59,8 @@
 
     span {
       position: absolute;
-      top: 5px;
+      top: 50%;
+      transform: translateY(-50%);
       font-size: 0.8em;
       pointer-events: none;
     }
@@ -92,10 +95,13 @@
   }
 }
 
-.visuallyhidden { 
-  position: absolute; 
-  overflow: hidden; 
-  clip: rect(0 0 0 0); 
-  height: 1px; width: 1px; 
-  margin: -1px; padding: 0; border: 0; 
+.visuallyhidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
 }
