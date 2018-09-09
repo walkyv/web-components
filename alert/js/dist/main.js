@@ -11,7 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
-  var currentDoc = document.querySelector('link[href$="index.html"]').import;
+  var currentDoc = doc.querySelector('link[href$="index.html"]').import;
   var template = currentDoc.querySelector('#template');
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
@@ -26,7 +26,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.attachShadow({ mode: 'open' });
 
-      var clone = document.importNode(template.content.cloneNode(true), true);
+      var clone = doc.importNode(template.content.cloneNode(true), true);
 
       _this.closeBtn = clone.querySelector('button[data-action="close-alert"]');
 
@@ -40,6 +40,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'connectedCallback',
       value: function connectedCallback() {
         this.closeBtn.addEventListener('click', this.close);
+      }
+    }, {
+      key: 'disconnectedCallback',
+      value: function disconnectedCallback() {
+        this.closeBtn.removeEventListener('click', this.close);
       }
     }, {
       key: 'close',
