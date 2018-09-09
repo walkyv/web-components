@@ -25,6 +25,10 @@
       this.closeBtn.addEventListener('click', this.close);
     }
 
+    disconnectedCallback(){
+      this.closeBtn.removeEventListener('click', this.close);
+    }
+
     close() {
       this.remove();
     }

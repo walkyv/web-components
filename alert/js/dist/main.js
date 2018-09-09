@@ -42,6 +42,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.closeBtn.addEventListener('click', this.close);
       }
     }, {
+      key: 'disconnectedCallback',
+      value: function disconnectedCallback() {
+        this.closeBtn.removeEventListener('click', this.close);
+      }
+    }, {
       key: 'close',
       value: function close() {
         this.remove();
