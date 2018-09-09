@@ -14,15 +14,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var currentDoc = document.querySelector('link[href$="index.html"]').import;
   var template = currentDoc.querySelector('#template');
 
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'example-component');
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
 
-  var Example = function (_HTMLElement) {
-    _inherits(Example, _HTMLElement);
+  var Alert = function (_HTMLElement) {
+    _inherits(Alert, _HTMLElement);
 
-    function Example() {
-      _classCallCheck(this, Example);
+    function Alert() {
+      _classCallCheck(this, Alert);
 
-      var _this = _possibleConstructorReturn(this, (Example.__proto__ || Object.getPrototypeOf(Example)).call(this));
+      var _this = _possibleConstructorReturn(this, (Alert.__proto__ || Object.getPrototypeOf(Alert)).call(this));
 
       _this.attachShadow({ mode: 'open' });
 
@@ -36,7 +36,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       return _this;
     }
 
-    _createClass(Example, [{
+    _createClass(Alert, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
         this.closeBtn.addEventListener('click', this.close);
@@ -48,8 +48,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       }
     }]);
 
-    return Example;
+    return Alert;
   }(HTMLElement);
 
-  customElements.define('example-component', Example);
+  customElements.define('pearson-alert', Alert);
 })(window, document);

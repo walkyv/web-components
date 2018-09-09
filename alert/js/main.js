@@ -4,9 +4,9 @@
   const currentDoc = document.querySelector('link[href$="index.html"]').import;
   const template = currentDoc.querySelector('#template');
 
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'example-component');
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
 
-  class Example extends HTMLElement {
+  class Alert extends HTMLElement {
     constructor() {
       super();
 
@@ -31,5 +31,5 @@
   }
 
 
-  customElements.define('example-component', Example);
+  customElements.define('pearson-alert', Alert);
 })(window, document);
