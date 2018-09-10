@@ -35,6 +35,7 @@ button {
   font-size: 14px;
   text-transform: uppercase;
   transition: background 0.3s;
+  overflow: visible;
 
   &:focus {
     outline: 0;
