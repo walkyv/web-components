@@ -99,7 +99,8 @@ class Modal extends HTMLElement {
     // Get component attributes
     const titleText = this.getAttribute('titletext'),
       triggerId = this.getAttribute('triggerid'),
-      footer = this.hasAttribute('footer');
+      footer = this.hasAttribute('footer'),
+      elements = this.getAttribute('elements');
 
     // Clone content for shadow DOM
     const currentDoc = document.querySelector('link[href$="index.html"]')
@@ -108,14 +109,16 @@ class Modal extends HTMLElement {
     const clone = document.importNode(template.content, true);
 
     // Create elements
-
     // Target the body of the modal
-
     // create the footer
+
     if (footer) {
       this.renderfooter(clone);
     }
 
+   this.renderStyles(clone);
+
+    console.log(elements)
     const overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
       overlayButtonClone = document.importNode(
         overlayButtonTemplate.content,
@@ -312,6 +315,18 @@ class Modal extends HTMLElement {
 
     modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
   }
+
+  renderStyles(parentNode) {
+    const elementsVersion = this.hasAttribute('elements'),
+      currentDoc = document.querySelector('link[href$="index.html"]').import,
+      selector = elementsVersion ? '#old' : '#new',
+      styleTemplate = currentDoc.querySelector(selector),
+      styleClone = document.importNode(styleTemplate.content, true),
+      modalBody = parentNode.querySelector('.deep-encapsulation');
+
+    modalBody.parentNode.insertBefore(styleClone, modalBody.nextSibling);
+  }
+
 }
 
 
