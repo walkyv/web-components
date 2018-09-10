@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: normal;
   src: url('../node_modules/@pearson-components/elements-sdk/src/styles/assets/fonts/opensans-regular.woff2')
       format('woff2'),
     url('../node_modules/@pearson-components/elements-sdk/src/styles/assets/fonts/opensans-regular.woff')
       format('woff');
-  font-weight: normal;
-  font-style: normal;
 }
 
 :host {
@@ -22,21 +22,21 @@
   box-sizing: border-box;
 }
 button {
-  background: #6a7070;
   position: relative;
-  vertical-align: middle;
-  border-radius: 100px;
   display: inline-block;
+  cursor: pointer;
   width: 55px;
   height: 25px;
+  border: 1px solid #c7c7c7;
+  border-radius: 100px;
+  vertical-align: middle;
   color: #fff;
+  background: #6a7070;
   font-size: 14px;
   text-transform: uppercase;
   transition: background 0.3s;
-  cursor: pointer;
-  border: 1px solid #c7c7c7;
 
-  &:focus{
+  &:focus {
     outline: 0;
     &::after {
       position: absolute;
@@ -57,9 +57,9 @@ button {
 
   &[aria-checked='true'] {
     background: #047a9c;
-    &:focus{
+    &:focus {
       background-color: #005a70;
-    border: 1px solid #005a70;
+      border: 1px solid #005a70;
     }
 
     &::before {
@@ -124,4 +124,11 @@ button + label {
   margin: -1px;
   padding: 0;
   border: 0;
+}
+
+@media screen and (prefers-reduced-motion) {
+  button,
+  button::before {
+    transition: none !important;
+  }
 }
