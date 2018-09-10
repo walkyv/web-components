@@ -1,8 +1,13 @@
 (function(w, doc) {
   'use strict';
-
+  
+  const currentDoc = doc.querySelector('link[href$="index.html"]').import,
+    template = currentDoc.querySelector('#template');
+  
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-toggle');
+  
   let peToggleCounter = 0;
-
+  
   class Toggle extends HTMLElement {
     static get observedAttributes() {
       return ['checked'];
@@ -12,10 +17,8 @@
       super();
 
       this.attachShadow({ mode: 'open' });
-
-      const currentDoc = doc.querySelector('link[href$="index.html"]').import,
-        template = currentDoc.querySelector('#template'),
-        clone = doc.importNode(template.content, true);
+      
+      const clone = doc.importNode(template.content.cloneNode(true), true);
 
       this.button = clone.querySelector('button');
       this.label = clone.querySelector('label');
