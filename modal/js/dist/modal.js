@@ -108,7 +108,8 @@ var Modal = function (_HTMLElement) {
       // Get component attributes
       var titleText = this.getAttribute('titletext'),
           triggerId = this.getAttribute('triggerid'),
-          footer = this.hasAttribute('footer');
+          footer = this.hasAttribute('footer'),
+          elements = this.getAttribute('elements');
 
       // Clone content for shadow DOM
       var currentDoc = document.querySelector('link[href$="index.html"]').import;
@@ -116,14 +117,16 @@ var Modal = function (_HTMLElement) {
       var clone = document.importNode(template.content, true);
 
       // Create elements
-
       // Target the body of the modal
-
       // create the footer
+
       if (footer) {
         this.renderfooter(clone);
       }
 
+      this.renderStyles(clone);
+
+      console.log(elements);
       var overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
           overlayButtonClone = document.importNode(overlayButtonTemplate.content, true),
           overlayEntryPoint = clone.querySelector('#modalPlaceholder');
@@ -306,6 +309,18 @@ var Modal = function (_HTMLElement) {
       }
 
       modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
+    }
+  }, {
+    key: 'renderStyles',
+    value: function renderStyles(parentNode) {
+      var elementsVersion = this.hasAttribute('elements'),
+          currentDoc = document.querySelector('link[href$="index.html"]').import,
+          selector = elementsVersion ? '#old' : '#new',
+          styleTemplate = currentDoc.querySelector(selector),
+          styleClone = document.importNode(styleTemplate.content, true),
+          modalBody = parentNode.querySelector('.deep-encapsulation');
+
+      modalBody.parentNode.insertBefore(styleClone, modalBody.nextSibling);
     }
   }, {
     key: 'footer',
