@@ -31,9 +31,9 @@ Import the web component onto the page, inbetween the `<head>` tags
 
 **Important Note:**
 
-> The import path will be in the **node_modules** folder, which is  
-> usually held outside the applicaiton source. If you publish your  
-> application to a **./public** or **./dist** folder you will want to  
+> The import path will be in the **node_modules** folder, which is
+> usually held outside the applicaiton source. If you publish your
+> application to a **./public** or **./dist** folder you will want to
 > write a script to copy this dependency to a desired location.
 
 **To Use**
@@ -42,7 +42,7 @@ Add the `<pearson-modal> </pearson-modal>` tags to the page, passing in a `trigg
 **Important Note:**
 
 > To maintain accessibility, the `pearson-modal` tag must be a sibling of
-> your main content. The main content must be wrapped in an element  
+> your main content. The main content must be wrapped in an element
 > with an ID of 'main'.
 
 **Example Code:**
@@ -76,6 +76,7 @@ To set the title and toggle action buttons, see the API below.
 | `cancelbtntext`  | `String`  | `'Cancel'`      | The text to display in the `Cancel` button.       |
 | `hidecancel`     | `Boolean` | `false`         | Hides the Cancel button completely                |
 | `hidesuccess`    | `Boolean` | `false`         | Hides the Success/CTA button completely           |
+| `elements`       | `Boolean` | `false`         | Sets the styling to the old version of elements   |
 
 **Example Code:**
 

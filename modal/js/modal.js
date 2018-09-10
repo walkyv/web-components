@@ -317,14 +317,14 @@ class Modal extends HTMLElement {
   }
 
   renderStyles(parentNode) {
-    const elementsVersion = this.getAttribute('elements'),
+    const elementsVersion = this.hasAttribute('elements'),
       currentDoc = document.querySelector('link[href$="index.html"]').import,
-      selector = elementsVersion === 'new' ? '#new' : '#old',
+      selector = elementsVersion ? '#old' : '#new',
       styleTemplate = currentDoc.querySelector(selector),
       styleClone = document.importNode(styleTemplate.content, true),
       modalBody = parentNode.querySelector('.deep-encapsulation');
 
-    console.log(selector)
+    console.log(elementsVersion)
     modalBody.parentNode.insertBefore(styleClone, modalBody.nextSibling);
   }
 
