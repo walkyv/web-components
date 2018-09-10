@@ -317,8 +317,17 @@ class Modal extends HTMLElement {
   }
 
   renderStyles(parentNode) {
-    console.log(parentNode)
+    const elementsVersion = this.getAttribute('elements'),
+      currentDoc = document.querySelector('link[href$="index.html"]').import,
+      selector = elementsVersion === 'new' ? '#new' : '#old',
+      styleTemplate = currentDoc.querySelector(selector),
+      styleClone = document.importNode(styleTemplate.content, true),
+      modalBody = parentNode.querySelector('.deep-encapsulation');
+
+    console.log(selector)
+    modalBody.parentNode.insertBefore(styleClone, modalBody.nextSibling);
   }
+
 }
 
 customElements.define('pearson-modal', Modal);
