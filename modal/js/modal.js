@@ -314,4 +314,5 @@ class Modal extends HTMLElement {
   }
 }
 
+
 customElements.define('pearson-modal', Modal);
