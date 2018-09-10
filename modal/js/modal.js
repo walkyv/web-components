@@ -324,7 +324,6 @@ class Modal extends HTMLElement {
       styleClone = document.importNode(styleTemplate.content, true),
       modalBody = parentNode.querySelector('.deep-encapsulation');
 
-    console.log(elementsVersion)
     modalBody.parentNode.insertBefore(styleClone, modalBody.nextSibling);
   }
 

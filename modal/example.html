@@ -30,6 +30,9 @@
 			<section class="container">
 				<button id="trigger-modal-three" class="pe-btn pe-btn--btn_large">Open no success modal</button>
 			</section>
+		<section class="container">
+			<button id="trigger-modal-four" class="pe-btn pe-btn--btn_large">Open elements modal</button>
+		</section>
 		</main>
 
 		<!-- place modal before the end of the body and pass in the reference ID of the button that triggers the modal -->
@@ -41,7 +44,6 @@
 				cancelbtntext="Cancel"
 				footer
 				style="display:none"
-				elements
 		>
 			<p>Pass in elements as children to the modal</p>
 		</pearson-modal>
@@ -66,5 +68,15 @@
 		>
 			<p>I like New York in June. How about you?</p>
 		</pearson-modal>
+
+	<pearson-modal
+			triggerid="trigger-modal-four"
+			titletext="Basic Title"
+			footer
+			style="display:none"
+			elements
+	>
+		<p>I use an older version of elements</p>
+	</pearson-modal>
 	</body>
 </html>
