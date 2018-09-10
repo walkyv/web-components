@@ -46,7 +46,11 @@
 			
 			toggles.forEach(function (toggle) {
 				toggle.addEventListener('click',function (e) {
-					msg.innerHTML = `You switched <code>${e.target.name}</code> <b>${toggle.checked ? 'on' : 'off'}</b>`;
+					const btnName = e.target.name;
+					msg.innerHTML = (
+						'You switched <code>' + btnName + '</code> <b>' +
+						(toggle.checked ? 'on' : 'off') + '</b>'
+					);
 				});
 			})
 		</script>
