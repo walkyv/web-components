@@ -37,9 +37,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       var clone = doc.importNode(template.content.cloneNode(true), true);
 
-      _this.button = clone.querySelector('button');
-      _this.label = clone.querySelector('label');
-
       _this.shadowRoot.appendChild(clone);
 
       _this._handleClick = _this._handleClick.bind(_this);
@@ -53,46 +50,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this._upgradeProperty('value');
         this._upgradeProperty('labelhidden');
 
-        this._mapPropsToFormControls();
-        this._renderLabel();
-
-        this.button.addEventListener('click', this._handleClick);
+        this.addEventListener('click', this._handleClick);
       }
     }, {
       key: '_handleClick',
       value: function _handleClick() {
         this.checked = !this.checked;
-      }
-    }, {
-      key: '_mapPropsToFormControls',
-      value: function _mapPropsToFormControls() {
-        if (!this.id) {
-          this.id = 'pe-toggle-' + peToggleCounter++;
-        }
-        this.button.id = this.id + '_button';
-        this.label.id = this.id + '_label';
-
-        this.button.setAttribute('aria-labelledby', this.label.id);
-
-        if (this.hasAttribute('value')) {
-          this.button.value = this.getAttribute('value');
-        }
-        if (this.hasAttribute('name')) {
-          this.button.name = this.getAttribute('name');
-        }
-
-        this.label.setAttribute('for', this.button.id);
-      }
-    }, {
-      key: '_renderLabel',
-      value: function _renderLabel() {
-        if (this.hasAttribute('labelhidden')) {
-          this.label.classList.toggle('visuallyhidden');
-        }
-
-        if (this.hasAttribute('labelText')) {
-          this.label.textContent = this.getAttribute('labelText');
-        }
       }
     }, {
       key: '_upgradeProperty',
@@ -108,13 +71,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'checked') {
           var isChecked = newValue !== null;
-          this.button.setAttribute('aria-checked', isChecked);
+          this.setAttribute('aria-checked', isChecked);
         }
       }
     }, {
       key: 'disconnectedCallback',
       value: function disconnectedCallback() {
-        this.button.removeEventListener('click');
+        this.removeEventListener('click');
       }
     }, {
       key: 'checked',
@@ -131,12 +94,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'value',
       get: function get() {
-        return this.button.value;
-      }
-    }, {
-      key: 'name',
-      get: function get() {
-        return this.button.name;
+        return this.value;
       }
     }]);
 
