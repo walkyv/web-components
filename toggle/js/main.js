@@ -30,6 +30,13 @@
     }
 
     connectedCallback() {
+
+      if (!this.hasAttribute('role')) {
+        this.setAttribute('role', 'checkbox');
+      }
+      if (!this.hasAttribute('tabindex')) {
+        this.setAttribute('tabindex', 0);
+      }
       
       this._upgradeProperty('checked');
 
