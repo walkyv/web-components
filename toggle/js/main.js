@@ -31,7 +31,7 @@
 
     connectedCallback() {
       if (!this.hasAttribute('role')) {
-        this.setAttribute('role', 'checkbox');
+        this.setAttribute('role', 'switch');
       }
       if (!this.hasAttribute('tabindex')) {
         this.setAttribute('tabindex', 0);
