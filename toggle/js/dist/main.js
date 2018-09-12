@@ -115,11 +115,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.removeAttribute('checked');
         }
       }
-    }, {
-      key: 'value',
-      get: function get() {
-        return this.value;
-      }
     }]);
 
     return Toggle;

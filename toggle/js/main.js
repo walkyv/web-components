@@ -80,10 +80,6 @@
       }
     }
 
-    get value() {
-      return this.value;
-    }
-
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'checked') {
         const isChecked = newValue !== null;
