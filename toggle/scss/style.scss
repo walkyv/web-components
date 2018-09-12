@@ -35,11 +35,11 @@
   width: 55px
 }
 
-:host:focus {
+:host(:focus) {
   outline: 0
 }
 
-:host:focus::after {
+:host(:focus)::after {
   -webkit-transform: translate(-50%, -50%);
   border: 2px solid #0b73da;
   border-radius: 22px;
