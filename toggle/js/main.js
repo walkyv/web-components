@@ -30,23 +30,21 @@
     }
 
     connectedCallback() {
-
       if (!this.hasAttribute('role')) {
         this.setAttribute('role', 'checkbox');
       }
       if (!this.hasAttribute('tabindex')) {
         this.setAttribute('tabindex', 0);
       }
-      
+
       this._upgradeProperty('checked');
 
       this.addEventListener('click', this._handleClick);
       this.addEventListener('keyup', this._handleKeyUp);
     }
 
-
     _handleClick() {
-      this.checked = !this.checked;
+      this._toggleChecked();
     }
 
     _handleKeyUp(e) {
@@ -56,7 +54,7 @@
 
       if (e.keyCode === KEYCODE.SPACE || e.keyCode === KEYCODE.ENTER) {
         e.preventDefault();
-        console.log('Toggled with keyboard');
+        this._toggleChecked();
       }
     }
 
@@ -66,6 +64,19 @@
         delete this[prop];
         this[prop] = value;
       }
+    }
+
+    _toggleChecked() {
+      this.checked = !this.checked;
+
+      this.dispatchEvent(
+        new CustomEvent('change', {
+          detail: {
+            checked: this.checked
+          },
+          bubbles: true
+        })
+      );
     }
 
     get checked() {

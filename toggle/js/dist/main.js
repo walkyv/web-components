@@ -50,7 +50,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Toggle, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-
         if (!this.hasAttribute('role')) {
           this.setAttribute('role', 'checkbox');
         }
@@ -66,7 +65,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: '_handleClick',
       value: function _handleClick() {
-        this.checked = !this.checked;
+        this._toggleChecked();
       }
     }, {
       key: '_handleKeyUp',
@@ -77,7 +76,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         if (e.keyCode === KEYCODE.SPACE || e.keyCode === KEYCODE.ENTER) {
           e.preventDefault();
-          console.log('Toggled with keyboard');
+          this._toggleChecked();
         }
       }
     }, {
@@ -88,6 +87,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           delete this[prop];
           this[prop] = value;
         }
+      }
+    }, {
+      key: '_toggleChecked',
+      value: function _toggleChecked() {
+        this.checked = !this.checked;
+
+        this.dispatchEvent(new CustomEvent('change', {
+          detail: {
+            checked: this.checked
+          },
+          bubbles: true
+        }));
       }
     }, {
       key: 'attributeChangedCallback',
