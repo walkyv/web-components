@@ -1,13 +1,16 @@
 (function(w, doc) {
   'use strict';
-  
+
   const currentDoc = doc.querySelector('link[href$="index.html"]').import,
     template = currentDoc.querySelector('#template');
-  
+
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-toggle');
-  
-  let peToggleCounter = 0;
-  
+
+  const KEYCODE = {
+    ENTER: 13,
+    SPACE: 32
+  };
+
   class Toggle extends HTMLElement {
     static get observedAttributes() {
       return ['checked'];
@@ -17,25 +20,37 @@
       super();
 
       this.attachShadow({ mode: 'open' });
-      
+
       const clone = doc.importNode(template.content.cloneNode(true), true);
 
       this.shadowRoot.appendChild(clone);
 
       this._handleClick = this._handleClick.bind(this);
+      this._handleKeyUp = this._handleKeyUp.bind(this);
     }
 
     connectedCallback() {
+      
       this._upgradeProperty('checked');
-      this._upgradeProperty('value');
-      this._upgradeProperty('labelhidden');
 
       this.addEventListener('click', this._handleClick);
-      
+      this.addEventListener('keyup', this._handleKeyUp);
     }
+
 
     _handleClick() {
       this.checked = !this.checked;
+    }
+
+    _handleKeyUp(e) {
+      if (e.altKey) {
+        return;
+      }
+
+      if (e.keyCode === KEYCODE.SPACE || e.keyCode === KEYCODE.ENTER) {
+        e.preventDefault();
+        console.log('Toggled with keyboard');
+      }
     }
 
     _upgradeProperty(prop) {
@@ -71,6 +86,7 @@
 
     disconnectedCallback() {
       this.removeEventListener('click');
+      this.removeEventListener('keyup');
     }
   }
 

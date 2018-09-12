@@ -16,7 +16,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-toggle');
 
-  var peToggleCounter = 0;
+  var KEYCODE = {
+    ENTER: 13,
+    SPACE: 32
+  };
 
   var Toggle = function (_HTMLElement) {
     _inherits(Toggle, _HTMLElement);
@@ -40,22 +43,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.shadowRoot.appendChild(clone);
 
       _this._handleClick = _this._handleClick.bind(_this);
+      _this._handleKeyUp = _this._handleKeyUp.bind(_this);
       return _this;
     }
 
     _createClass(Toggle, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
+
         this._upgradeProperty('checked');
-        this._upgradeProperty('value');
-        this._upgradeProperty('labelhidden');
 
         this.addEventListener('click', this._handleClick);
+        this.addEventListener('keyup', this._handleKeyUp);
       }
     }, {
       key: '_handleClick',
       value: function _handleClick() {
         this.checked = !this.checked;
+      }
+    }, {
+      key: '_handleKeyUp',
+      value: function _handleKeyUp(e) {
+        if (e.altKey) {
+          return;
+        }
+
+        if (e.keyCode === KEYCODE.SPACE || e.keyCode === KEYCODE.ENTER) {
+          e.preventDefault();
+          console.log('Toggled with keyboard');
+        }
       }
     }, {
       key: '_upgradeProperty',
@@ -78,6 +94,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'disconnectedCallback',
       value: function disconnectedCallback() {
         this.removeEventListener('click');
+        this.removeEventListener('keyup');
       }
     }, {
       key: 'checked',
