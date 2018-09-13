@@ -1,135 +1,119 @@
 @font-face {
-  font-family: 'Open Sans';
+  font-family: Open Sans;
   font-style: normal;
-  font-weight: normal;
-  src: url('../node_modules/@pearson-components/elements-sdk/src/styles/assets/fonts/opensans-regular.woff2')
-      format('woff2'),
-    url('../node_modules/@pearson-components/elements-sdk/src/styles/assets/fonts/opensans-regular.woff')
-      format('woff');
-}
-
-:host {
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
-  font-size: 1rem;
-  line-height: 1.57143rem;
-  margin-bottom: 0.85714rem;
-  margin-top: 0;
+  font-weight: 400;
+  src: url(../node_modules/@pearson-components/elements-sdk/src/styles/assets/fonts/opensans-regular.woff2) format("woff2"), url(../node_modules/@pearson-components/elements-sdk/src/styles/assets/fonts/opensans-regular.woff) format("woff")
 }
 
 *,
-* ::before,
-* ::after {
-  box-sizing: border-box;
+* ::after,
+* ::before {
+  box-sizing: border-box
 }
-button {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  width: 55px;
-  height: 25px;
+
+:host {
+  background: #6a7070;
   border: 1px solid #c7c7c7;
   border-radius: 100px;
-  vertical-align: middle;
   color: #fff;
-  background: #6a7070;
-  font-size: 14px;
-  text-transform: uppercase;
-  transition: background 0.3s;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Open Sans, Arial, Helvetica, sans-serif;
+  font-size: 0.875rem;
+  height: 1.5rem;
+  line-height: 1.57143rem;
   overflow: visible;
-
-  &:focus {
-    outline: 0;
-    &::after {
-      position: absolute;
-      content: '';
-      height: calc(100% + 10px);
-      width: calc(100% + 10px);
-      border: 2px solid #0b73da;
-      border-radius: 22px;
-      left: 50%;
-      top: 50%;
-      z-index: 1;
-      transform: translate(-50%, -50%);
-    }
-  }
-  &::-moz-focus-inner {
-    border: 0;
-  }
-
-  &[aria-checked='true'] {
-    background: #047a9c;
-    &:focus {
-      background-color: #005a70;
-      border: 1px solid #005a70;
-    }
-
-    &::before {
-      left: 31px;
-    }
-  }
-
-  &::before {
-    content: '';
-    background: #fff;
-    display: block;
-    position: absolute;
-    left: -1px;
-    top: 50%;
-    border-radius: 100%;
-    width: 23px;
-    height: 23px;
-    transition: left 0.3s;
-    border: 1px solid #6a7070;
-    transform: translateY(-50%);
-  }
-
-  & > span {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.8em;
-    pointer-events: none;
-  }
-
-  & :first-child {
-    right: 27px;
-  }
-
-  & :last-child {
-    right: 5px;
-  }
-
-  &[aria-checked='false'] :first-child,
-  &[aria-checked='true'] :last-child {
-    display: none;
-  }
-
-  &[aria-checked='false'] :last-child,
-  &[aria-checked='true'] :first-child {
-    color: #fff;
-  }
-}
-
-button + label {
-  font-size: 1rem;
-  line-height: 1.28571rem;
+  position: relative;
+  text-transform: uppercase;
+  transition: background .3s;
   vertical-align: middle;
+  width: 3.4375rem
 }
 
-.visuallyhidden {
+:host(:focus) {
+  outline: 0
+}
+
+:host(:focus)::after {
+  border: 2px solid #0b73da;
+  border-radius: 22px;
+  content: "";
+  height: calc(100% + 10px);
+  left: 50%;
   position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% + 10px);
+  z-index: 1
 }
 
-@media screen and (prefers-reduced-motion) {
-  button,
-  button::before {
-    transition: none !important;
+:host::-moz-focus-inner {
+  border: 0
+}
+
+:host([on]) {
+  background: #047a9c
+}
+
+:host([disabled]) {
+  color: #F2F2F2;
+  cursor: not-allowed;
+}
+
+:host([on]:focus) {
+  background-color: #005a70;
+  border: 1px solid #005a70
+}
+
+:host([on])::before {
+  left: 31px
+}
+
+:host([disabled])::before {
+  background: #F2F2F2;
+}
+
+:host::before {
+  background: #fff;
+  border: 1px solid #6a7070;
+  border-radius: 100%;
+  content: "";
+  display: block;
+  height: 23px;
+  left: -1px;
+  transition: left .3s;
+  width: 23px
+}
+
+:host::before,
+:host>span {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%)
+}
+
+:host>span {
+  font-size: .8em;
+  pointer-events: none
+}
+
+:host>span:first-of-type {
+  right: 27px
+}
+
+:host>span:last-of-type {
+  right: 5px
+}
+
+:host(:not([on]))>span:first-of-type,
+:host([on])>span:last-of-type {
+  display: none
+}
+
+@media screen and (prefers-reduced-motion: reduced) {
+
+  :host,
+  :host::before {
+    transition: none !important
   }
 }

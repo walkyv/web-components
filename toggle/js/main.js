@@ -1,75 +1,84 @@
 (function(w, doc) {
   'use strict';
-  
+
   const currentDoc = doc.querySelector('link[href$="index.html"]').import,
     template = currentDoc.querySelector('#template');
-  
+
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-toggle');
-  
-  let peToggleCounter = 0;
-  
+
+  const KEYCODE = {
+    ENTER: 13,
+    SPACE: 32
+  };
+
   class Toggle extends HTMLElement {
     static get observedAttributes() {
-      return ['checked'];
+      return ['on', 'disabled'];
     }
 
     constructor() {
       super();
 
       this.attachShadow({ mode: 'open' });
-      
-      const clone = doc.importNode(template.content.cloneNode(true), true);
 
-      this.button = clone.querySelector('button');
-      this.label = clone.querySelector('label');
+      const clone = doc.importNode(template.content.cloneNode(true), true);
 
       this.shadowRoot.appendChild(clone);
 
-      this._handleClick = this._handleClick.bind(this);
+      this._onBtnClick = this._onBtnClick.bind(this);
+      this._onBtnKeyUp = this._onBtnKeyUp.bind(this);
+
+      this._onLabelClick = this._onLabelClick.bind(this);
     }
 
     connectedCallback() {
-      this._upgradeProperty('checked');
-      this._upgradeProperty('value');
-      this._upgradeProperty('labelhidden');
-      
-      this._mapPropsToFormControls();
-      this._renderLabel();
+      // Add attributes required for a11y
+      if (!this.hasAttribute('role')) {
+        this.setAttribute('role', 'switch');
+      }
+      if (!this.hasAttribute('tabindex')) {
+        this.setAttribute('tabindex', 0);
+      }
 
-      this.button.addEventListener('click', this._handleClick);
-      
+      // Lazily upgrade properties to make sure
+      // observed attributes are handled properly
+      this._upgradeProperty('on');
+      this._upgradeProperty('disabled');
+
+      // Bind listeners to the toggle
+      this.addEventListener('click', this._onBtnClick);
+      this.addEventListener('keyup', this._onBtnKeyUp);
+
+      // If the consumer did not set an `aria-label`,
+      // We need to find an external one
+      if (!this.hasAttribute('aria-label')) {
+        this.labelNode = this._findLabelNode();
+
+        // If the external label does not have an ID, we must
+        // ensure that it has one
+        if (!this.labelNode.id) this.labelNode.id = this.id + '_label';
+
+        // This toggle must be labelled by the external label node
+        this.setAttribute('aria-labelledby', this.labelNode.id);
+
+        // We listen for the external label to be clicked
+        this.labelNode.addEventListener('click', this._onLabelClick);
+      }
     }
 
-    _handleClick() {
-      this.checked = !this.checked;
+    _onBtnClick(e) {
+      e.stopPropagation();
+      this._toggleon();
     }
 
-    _mapPropsToFormControls() {
-      if (!this.id) {
-        this.id = `pe-toggle-${peToggleCounter++}`;
-      }
-      this.button.id = this.id + '_button';
-      this.label.id = this.id + '_label';
-
-      this.button.setAttribute('aria-labelledby', this.label.id);
-
-      if (this.hasAttribute('value')) {
-        this.button.value = this.getAttribute('value');
-      }
-      if (this.hasAttribute('name')) {
-        this.button.name = this.getAttribute('name');
-      }
-      
-      this.label.setAttribute('for', this.button.id);
-    }
-
-    _renderLabel(){
-      if (this.hasAttribute('labelhidden')) {
-        this.label.classList.toggle('visuallyhidden');
+    _onBtnKeyUp(e) {
+      if (e.altKey) {
+        return;
       }
 
-      if (this.hasAttribute('labelText')) {
-        this.label.textContent = this.getAttribute('labelText');
+      if (e.keyCode === KEYCODE.SPACE || e.keyCode === KEYCODE.ENTER) {
+        e.preventDefault();
+        this._toggleon();
       }
     }
 
@@ -81,35 +90,94 @@
       }
     }
 
-    get checked() {
-      return this.hasAttribute('checked');
+    _toggleon() {
+      this.on = !this.on;
+
+      // The toggle should emit a change event
+      // for the benefit of consumers
+      this.dispatchEvent(
+        new CustomEvent('change', {
+          detail: {
+            on: this.on
+          },
+          bubbles: true
+        })
+      );
     }
 
-    set checked(value) {
-      if (value) {
-        this.setAttribute('checked', '');
+    // Helper function for finding external label node
+    _findLabelNode() {
+      if (this.parentElement.tagName === 'LABEL') {
+        return this.parentElement;
+      }
+      const scope = this.getRootNode();
+      return scope.querySelector(`label[for="${this.id}"]`);
+    }
+
+    // When this label is clicked, we want to
+    // click on this toggle and focus on it
+    _onLabelClick() {
+      this.click();
+      this.focus();
+    }
+
+    get on() {
+      return this.hasAttribute('on');
+    }
+
+    set on(value) {
+      const ison = Boolean(value);
+      if (ison) {
+        this.setAttribute('on', '');
       } else {
-        this.removeAttribute('checked');
+        this.removeAttribute('on');
       }
     }
 
-    get value() {
-      return this.button.value;
+    get disabled() {
+      return this.hasAttribute('disabled');
+    }
+
+    set disabled(value) {
+      const isDisabled = Boolean(value);
+      if (isDisabled) {
+        this.setAttribute('disabled', '');
+      } else {
+        this.removeAttribute('disabled');
+      }
     }
 
     get name() {
-      return this.button.name;
+      return this.getAttribute('name');
+    }
+
+    get value() {
+      return this.getAttribute('value');
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      if (name === 'checked') {
-        const isChecked = newValue !== null;
-        this.button.setAttribute('aria-checked', isChecked);
+      const isTruthy = newValue !== null;
+      if (name === 'on') {
+        this.setAttribute('aria-on', isTruthy);
+      }
+      if (name === 'disabled') {
+        this.setAttribute('aria-disabled', isTruthy);
+        if (isTruthy) {
+          this.removeAttribute('tabindex');
+          this.blur();
+        } else {
+          this.setAttribute('tabindex', '0');
+        }
       }
     }
 
     disconnectedCallback() {
-      this.button.removeEventListener('click');
+      this.removeEventListener('click', this._onBtnClick);
+      this.removeEventListener('keyup', this._onBtnKeyUp);
+
+      if (this.labelNode) {
+        this.labelNode.removeEventListener('click', this._onLabelClick);
+      }
     }
   }
 
