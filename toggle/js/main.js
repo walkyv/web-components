@@ -25,8 +25,8 @@
 
       this.shadowRoot.appendChild(clone);
 
-      this._onBtnClick = this._onBtnClick.bind(this);
-      this._onBtnKeyUp = this._onBtnKeyUp.bind(this);
+      this._onToggleClick = this._onToggleClick.bind(this);
+      this._onToggleKeyUp = this._onToggleKeyUp.bind(this);
 
       this._onLabelClick = this._onLabelClick.bind(this);
     }
@@ -46,8 +46,8 @@
       this._upgradeProperty('disabled');
 
       // Bind listeners to the toggle
-      this.addEventListener('click', this._onBtnClick);
-      this.addEventListener('keyup', this._onBtnKeyUp);
+      this.addEventListener('click', this._onToggleClick);
+      this.addEventListener('keyup', this._onToggleKeyUp);
 
       // If the consumer did not set an `aria-label`,
       // We need to find an external one
@@ -66,19 +66,19 @@
       }
     }
 
-    _onBtnClick(e) {
+    _onToggleClick(e) {
       e.stopPropagation();
-      this._toggleon();
+      this._toggleOn();
     }
 
-    _onBtnKeyUp(e) {
+    _onToggleKeyUp(e) {
       if (e.altKey) {
         return;
       }
 
       if (e.keyCode === KEYCODE.SPACE || e.keyCode === KEYCODE.ENTER) {
         e.preventDefault();
-        this._toggleon();
+        this._toggleOn();
       }
     }
 
@@ -90,7 +90,7 @@
       }
     }
 
-    _toggleon() {
+    _toggleOn() {
       this.on = !this.on;
 
       // The toggle should emit a change event
@@ -116,7 +116,8 @@
 
     // When this label is clicked, we want to
     // click on this toggle and focus on it
-    _onLabelClick() {
+    _onLabelClick(e) {
+      e.preventDefault();
       this.click();
       this.focus();
     }
@@ -172,8 +173,8 @@
     }
 
     disconnectedCallback() {
-      this.removeEventListener('click', this._onBtnClick);
-      this.removeEventListener('keyup', this._onBtnKeyUp);
+      this.removeEventListener('click', this._onToggleClick);
+      this.removeEventListener('keyup', this._onToggleKeyUp);
 
       if (this.labelNode) {
         this.labelNode.removeEventListener('click', this._onLabelClick);
