@@ -66,7 +66,8 @@
       }
     }
 
-    _onBtnClick() {
+    _onBtnClick(e) {
+      e.stopPropagation();
       this._toggleChecked();
     }
 

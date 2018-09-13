@@ -87,7 +87,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       }
     }, {
       key: '_onBtnClick',
-      value: function _onBtnClick() {
+      value: function _onBtnClick(e) {
+        e.stopPropagation();
         this._toggleChecked();
       }
     }, {
