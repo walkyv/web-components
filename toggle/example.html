@@ -68,7 +68,7 @@
 					const accessibleName = getAccessibleName(e.target);
 					msg.innerHTML = (
 						'You switched <code>' + accessibleName + '</code> <b>' +
-						(toggle.checked ? 'on' : 'off') + '</b>'
+						(toggle.on ? 'on' : 'off') + '</b>'
 					);
 				});
 			})
