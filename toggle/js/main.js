@@ -52,7 +52,7 @@
       // If the consumer did not set an `aria-label`,
       // We need to find an external one
       if (!this.hasAttribute('aria-label')) {
-        this.labelNode = this._findLabel();
+        this.labelNode = this._findLabelNode();
 
         // If the external label does not have an ID, we must
         // ensure that it has one
@@ -105,7 +105,7 @@
     }
 
     // Helper function for finding external label node
-    _findLabel() {
+    _findLabelNode() {
       const scope = this.getRootNode();
       return scope.querySelector(`label[for="${this.id}"]`);
     }

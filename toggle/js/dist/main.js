@@ -72,7 +72,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         // If the consumer did not set an `aria-label`,
         // We need to find an external one
         if (!this.hasAttribute('aria-label')) {
-          this.labelNode = this._findLabel();
+          this.labelNode = this._findLabelNode();
 
           // If the external label does not have an ID, we must
           // ensure that it has one
@@ -129,8 +129,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       // Helper function for finding external label node
 
     }, {
-      key: '_findLabel',
-      value: function _findLabel() {
+      key: '_findLabelNode',
+      value: function _findLabelNode() {
         var scope = this.getRootNode();
         return scope.querySelector('label[for="' + this.id + '"]');
       }
