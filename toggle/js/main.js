@@ -32,6 +32,7 @@
     }
 
     connectedCallback() {
+      // Add attributes required for a11y
       if (!this.hasAttribute('role')) {
         this.setAttribute('role', 'switch');
       }
@@ -39,21 +40,29 @@
         this.setAttribute('tabindex', 0);
       }
 
+      // Lazily upgrade properties to make sure
+      // observed attributes are handled properly
       this._upgradeProperty('checked');
-      
+
+      // Bind listeners to the toggle
       this.addEventListener('click', this._onBtnClick);
       this.addEventListener('keyup', this._onBtnKeyUp);
 
+      // If the consumer did not set an `aria-label`,
+      // We need to find an external one
       if (!this.hasAttribute('aria-label')) {
         this.labelNode = this._findLabel();
 
+        // If the external label does not have an ID, we must
+        // ensure that it has one
         if (!this.labelNode.id) this.labelNode.id = this.id + '_label';
-        
+
+        // This toggle must be labelled by the external label node
         this.setAttribute('aria-labelledby', this.labelNode.id);
-        
+
+        // We listen for the external label to be clicked
         this.labelNode.addEventListener('click', this._onLabelClick);
       }
-
     }
 
     _onBtnClick() {
@@ -82,6 +91,8 @@
     _toggleChecked() {
       this.checked = !this.checked;
 
+      // The toggle should emit a change event
+      // for the benefit of consumers
       this.dispatchEvent(
         new CustomEvent('change', {
           detail: {
@@ -92,11 +103,14 @@
       );
     }
 
+    // Helper function for finding external label node
     _findLabel() {
       const scope = this.getRootNode();
       return scope.querySelector(`label[for="${this.id}"]`);
     }
 
+    // When this label is clicked, we want to
+    // click on this toggle and focus on it
     _onLabelClick() {
       this.click();
       this.focus();
