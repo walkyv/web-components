@@ -27,7 +27,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Toggle, null, [{
       key: 'observedAttributes',
       get: function get() {
-        return ['checked', 'disabled'];
+        return ['on', 'disabled'];
       }
     }]);
 
@@ -62,7 +62,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         // Lazily upgrade properties to make sure
         // observed attributes are handled properly
-        this._upgradeProperty('checked');
+        this._upgradeProperty('on');
         this._upgradeProperty('disabled');
 
         // Bind listeners to the toggle
@@ -89,7 +89,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: '_onBtnClick',
       value: function _onBtnClick(e) {
         e.stopPropagation();
-        this._toggleChecked();
+        this._toggleon();
       }
     }, {
       key: '_onBtnKeyUp',
@@ -100,7 +100,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         if (e.keyCode === KEYCODE.SPACE || e.keyCode === KEYCODE.ENTER) {
           e.preventDefault();
-          this._toggleChecked();
+          this._toggleon();
         }
       }
     }, {
@@ -113,15 +113,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
       }
     }, {
-      key: '_toggleChecked',
-      value: function _toggleChecked() {
-        this.checked = !this.checked;
+      key: '_toggleon',
+      value: function _toggleon() {
+        this.on = !this.on;
 
         // The toggle should emit a change event
         // for the benefit of consumers
         this.dispatchEvent(new CustomEvent('change', {
           detail: {
-            checked: this.checked
+            on: this.on
           },
           bubbles: true
         }));
@@ -152,8 +152,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
         var isTruthy = newValue !== null;
-        if (name === 'checked') {
-          this.setAttribute('aria-checked', isTruthy);
+        if (name === 'on') {
+          this.setAttribute('aria-on', isTruthy);
         }
         if (name === 'disabled') {
           this.setAttribute('aria-disabled', isTruthy);
@@ -176,16 +176,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
       }
     }, {
-      key: 'checked',
+      key: 'on',
       get: function get() {
-        return this.hasAttribute('checked');
+        return this.hasAttribute('on');
       },
       set: function set(value) {
-        var isChecked = Boolean(value);
-        if (isChecked) {
-          this.setAttribute('checked', '');
+        var ison = Boolean(value);
+        if (ison) {
+          this.setAttribute('on', '');
         } else {
-          this.removeAttribute('checked');
+          this.removeAttribute('on');
         }
       }
     }, {

@@ -51,7 +51,7 @@
   border: 0
 }
 
-:host([checked]) {
+:host([on]) {
   background: #047a9c
 }
 
@@ -60,12 +60,12 @@
   cursor: not-allowed;
 }
 
-:host([checked]:focus) {
+:host([on]:focus) {
   background-color: #005a70;
   border: 1px solid #005a70
 }
 
-:host([checked])::before {
+:host([on])::before {
   left: 31px
 }
 
@@ -105,8 +105,8 @@
   right: 5px
 }
 
-:host(:not([checked]))>span:first-of-type,
-:host([checked])>span:last-of-type {
+:host(:not([on]))>span:first-of-type,
+:host([on])>span:last-of-type {
   display: none
 }
 

@@ -13,7 +13,7 @@
 
   class Toggle extends HTMLElement {
     static get observedAttributes() {
-      return ['checked', 'disabled'];
+      return ['on', 'disabled'];
     }
 
     constructor() {
@@ -42,7 +42,7 @@
 
       // Lazily upgrade properties to make sure
       // observed attributes are handled properly
-      this._upgradeProperty('checked');
+      this._upgradeProperty('on');
       this._upgradeProperty('disabled');
 
       // Bind listeners to the toggle
@@ -68,7 +68,7 @@
 
     _onBtnClick(e) {
       e.stopPropagation();
-      this._toggleChecked();
+      this._toggleon();
     }
 
     _onBtnKeyUp(e) {
@@ -78,7 +78,7 @@
 
       if (e.keyCode === KEYCODE.SPACE || e.keyCode === KEYCODE.ENTER) {
         e.preventDefault();
-        this._toggleChecked();
+        this._toggleon();
       }
     }
 
@@ -90,15 +90,15 @@
       }
     }
 
-    _toggleChecked() {
-      this.checked = !this.checked;
+    _toggleon() {
+      this.on = !this.on;
 
       // The toggle should emit a change event
       // for the benefit of consumers
       this.dispatchEvent(
         new CustomEvent('change', {
           detail: {
-            checked: this.checked
+            on: this.on
           },
           bubbles: true
         })
@@ -121,16 +121,16 @@
       this.focus();
     }
 
-    get checked() {
-      return this.hasAttribute('checked');
+    get on() {
+      return this.hasAttribute('on');
     }
 
-    set checked(value) {
-      const isChecked = Boolean(value);
-      if (isChecked) {
-        this.setAttribute('checked', '');
+    set on(value) {
+      const ison = Boolean(value);
+      if (ison) {
+        this.setAttribute('on', '');
       } else {
-        this.removeAttribute('checked');
+        this.removeAttribute('on');
       }
     }
 
@@ -157,8 +157,8 @@
 
     attributeChangedCallback(name, oldValue, newValue) {
       const isTruthy = newValue !== null;
-      if (name === 'checked') {
-        this.setAttribute('aria-checked', isTruthy);
+      if (name === 'on') {
+        this.setAttribute('aria-on', isTruthy);
       }
       if (name === 'disabled') {
         this.setAttribute('aria-disabled', isTruthy);
