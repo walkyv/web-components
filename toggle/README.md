@@ -5,6 +5,7 @@
 1. [Demo](#demo)
 2. [Install](#install)
 3. [Usage](#usage)
+   1. [Semantics](#usage-semantics)
 4. [API](#api)
    1. [Attributes](#api-attributes)
    2. [Properties](#api-properties)
@@ -47,12 +48,15 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
 
 **Important Note:**
 
-> The import path will be in the **node_modules** folder, which is
-> usually held outside the applicaiton source. If you publish your
-> application to a **./public** or **./dist** folder you will want to
-> write a script to copy this dependency to a desired location.
+> The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
 
 Add the `<pearson-toggle> </pearson-toggle>` tags to the page.
+
+<a name="usage-semantics"></a>
+
+### Semantics
+
+[Switches are for instantaneous actions](http://uxmovement.com/buttons/when-to-use-a-switch-or-checkbox/). As soon as `pearson-toggle` fires its `change` event, the change it controls should be carried out. If you want the changes to be batched for form submission or another later action, you should not use `pearson-toggle`. `pearson-toggle` _will not_ send its `name` and `value` as part of a form `submit` event, so you will need to handle changes immediately anyway.
 
 <a name="api"></a>
 
@@ -106,10 +110,6 @@ Like native checkboxes, `pearson-toggle` exposes its `name` and `value` attribut
 | `name`   | `String`  | The name of the toggle     |
 | `value`  | `String`  | The value of the toggle    |
 | `on`     | `Boolean` | The on state of the toggle |
-
-**Important Note:**
-
-> _Unlike_ native checkboxes, `pearson-toggle` _will not_ send its `name` and `value` as part of a form `submit` event. If you need the value of a `pearson-toggle` at the time of form submission, you will have to use JavaScript to access it.
 
 <a name="api-properties-example"></a>
 
