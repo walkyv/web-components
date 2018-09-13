@@ -63,13 +63,22 @@
   background: #047a9c
 }
 
-:host([checked]):focus {
+:host([disabled]) {
+  color: #F2F2F2;
+  cursor: not-allowed;
+}
+
+:host([checked]:focus) {
   background-color: #005a70;
   border: 1px solid #005a70
 }
 
 :host([checked])::before {
   left: 31px
+}
+
+:host([disabled])::before {
+  background: #F2F2F2;
 }
 
 :host::before {
@@ -86,7 +95,7 @@
 }
 
 :host::before,
-:host > span {
+:host>span {
   -webkit-transform: translateY(-50%);
   position: absolute;
   top: 50%;
@@ -98,25 +107,20 @@
   pointer-events: none
 }
 
-:host > span:first-of-type {
+:host>span:first-of-type {
   right: 27px
 }
 
-:host > span:last-of-type {
+:host>span:last-of-type {
   right: 7px
 }
 
-:host([checked]) > span:last-of-type,
-:host(:not([checked])) > span:first-of-type {
+:host(:not([checked]))>span:first-of-type,
+:host([checked])>span:last-of-type {
   display: none
 }
 
-:host([checked]) > span:first-of-type,
-:host > span:last-of-type {
-  color: #fff
-}
-
-@media screen and (prefers-reduced-motion) {
+@media screen and (prefers-reduced-motion: reduced) {
 
   :host,
   :host::before {
