@@ -120,8 +120,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'disconnectedCallback',
       value: function disconnectedCallback() {
-        this.removeEventListener('click');
-        this.removeEventListener('keyup');
+        this.removeEventListener('click', this._handleClick);
+        this.removeEventListener('keyup', this._handleKeyUp);
       }
     }, {
       key: 'checked',
