@@ -27,7 +27,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Toggle, null, [{
       key: 'observedAttributes',
       get: function get() {
-        return ['checked'];
+        return ['checked', 'disabled'];
       }
     }]);
 
@@ -103,9 +103,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
+        var isTruthy = newValue !== null;
         if (name === 'checked') {
-          var isChecked = newValue !== null;
-          this.setAttribute('aria-checked', isChecked);
+          this.setAttribute('aria-checked', isTruthy);
+        }
+        if (name === 'disabled') {
+          this.setAttribute('aria-disabled', isTruthy);
+          if (isTruthy) {
+            this.removeAttribute('tabindex');
+            this.blur();
+          } else {
+            this.setAttribute('tabindex', '0');
+          }
         }
       }
     }, {
@@ -120,11 +129,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return this.hasAttribute('checked');
       },
       set: function set(value) {
-        if (value) {
+        var isChecked = Boolean(value);
+        if (isChecked) {
           this.setAttribute('checked', '');
         } else {
           this.removeAttribute('checked');
         }
+      }
+    }, {
+      key: 'disabled',
+      get: function get() {
+        return this.hasAttribute('disabled');
+      },
+      set: function set(value) {
+        var isDisabled = Boolean(value);
+        if (isDisabled) {
+          this.setAttribute('disabled', '');
+        } else {
+          this.removeAttribute('disabled');
+        }
+      }
+    }, {
+      key: 'name',
+      get: function get() {
+        return this.getAttribute('name');
       }
     }]);
 

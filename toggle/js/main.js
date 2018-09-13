@@ -13,7 +13,7 @@
 
   class Toggle extends HTMLElement {
     static get observedAttributes() {
-      return ['checked'];
+      return ['checked', 'disabled'];
     }
 
     constructor() {
@@ -84,17 +84,44 @@
     }
 
     set checked(value) {
-      if (value) {
+      const isChecked = Boolean(value);
+      if (isChecked) {
         this.setAttribute('checked', '');
       } else {
         this.removeAttribute('checked');
       }
     }
 
+    get disabled() {
+      return this.hasAttribute('disabled');
+    }
+
+    set disabled(value) {
+      const isDisabled = Boolean(value);
+      if (isDisabled) {
+        this.setAttribute('disabled', '');
+      } else {
+        this.removeAttribute('disabled');
+      }
+    }
+
+    get name() {
+      return this.getAttribute('name');
+    }
+
     attributeChangedCallback(name, oldValue, newValue) {
+      const isTruthy = newValue !== null;
       if (name === 'checked') {
-        const isChecked = newValue !== null;
-        this.setAttribute('aria-checked', isChecked);
+        this.setAttribute('aria-checked', isTruthy);
+      }
+      if (name === 'disabled') {
+        this.setAttribute('aria-disabled', isTruthy);
+        if (isTruthy) {
+          this.removeAttribute('tabindex');
+          this.blur();
+        } else {
+          this.setAttribute('tabindex', '0');
+        }
       }
     }
 
