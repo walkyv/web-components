@@ -64,8 +64,8 @@ Add the `<pearson-toggle> </pearson-toggle>` tags to the page.
 
 ### Attributes
 
-| Attribute  | Type      | Default  | Description                                |
-| ---------- | --------- | -------- | ------------------------------------------ |
+| Attribute  | Type      | Default  | Description                               |
+| ---------- | --------- | -------- | ----------------------------------------- |
 | `id`       | `String`  | Required | The unique ID of the toggle               |
 | `on`       | `boolean` | `false`  | Determines whether the toggle is on       |
 | `disabled` | `boolean` | `false`  | Determines whether the toggle is disabled |
@@ -101,8 +101,8 @@ Add the `<pearson-toggle> </pearson-toggle>` tags to the page.
 
 Like native checkboxes, `pearson-toggle` exposes its `name`, `value`, and `on` attributes as _properties_, which can be easily accessed in JavaScript.
 
-| Property | Type      | Description                 |
-| -------- | --------- | --------------------------- |
+| Property | Type      | Description                |
+| -------- | --------- | -------------------------- |
 | `name`   | `String`  | The name of the toggle     |
 | `value`  | `String`  | The value of the toggle    |
 | `on`     | `Boolean` | The on state of the toggle |
@@ -142,8 +142,8 @@ console.log(emailToggle.name); // 'notifications'
 
 ### Emitted Events
 
-| Event    | Description                                                   |
-| -------- | ------------------------------------------------------------- |
+| Event    | Description                                                  |
+| -------- | ------------------------------------------------------------ |
 | `change` | Will fire when the toggle is triggered via mouse or keyboard |
 
 <a name="api-events-example"></a>
