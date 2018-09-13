@@ -144,7 +144,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     }, {
       key: '_onLabelClick',
-      value: function _onLabelClick() {
+      value: function _onLabelClick(e) {
+        e.preventDefault();
         this.click();
         this.focus();
       }

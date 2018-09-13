@@ -116,7 +116,8 @@
 
     // When this label is clicked, we want to
     // click on this toggle and focus on it
-    _onLabelClick() {
+    _onLabelClick(e) {
+      e.preventDefault();
       this.click();
       this.focus();
     }
