@@ -206,6 +206,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       get: function get() {
         return this.getAttribute('name');
       }
+    }, {
+      key: 'value',
+      get: function get() {
+        return this.getAttribute('value');
+      }
     }]);
 
     return Toggle;

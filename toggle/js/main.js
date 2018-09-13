@@ -151,6 +151,10 @@
       return this.getAttribute('name');
     }
 
+    get value() {
+      return this.getAttribute('value');
+    }
+
     attributeChangedCallback(name, oldValue, newValue) {
       const isTruthy = newValue !== null;
       if (name === 'checked') {
