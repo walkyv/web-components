@@ -105,11 +105,12 @@ Add the `<pearson-toggle> </pearson-toggle>` tags to the page.
 
 Like native checkboxes, `pearson-toggle` exposes its `name` and `value` attributes as _properties_. It also exposes an `on` property to represent its state as an on/off switch. All of these can be easily accessed in JavaScript.
 
-| Property | Type      | Description                |
-| -------- | --------- | -------------------------- |
-| `name`   | `String`  | The name of the toggle     |
-| `value`  | `String`  | The value of the toggle    |
-| `on`     | `Boolean` | The on state of the toggle |
+| Property   | Type      | Description                      |
+| ---------- | --------- | -------------------------------- |
+| `name`     | `String`  | The name of the toggle           |
+| `value`    | `String`  | The value of the toggle          |
+| `on`       | `Boolean` | The on state of the toggle       |
+| `disabled` | `Boolean` | The disabled state of the toggle |
 
 <a name="api-properties-example"></a>
 
@@ -133,8 +134,9 @@ JS:
 ```js
 const emailToggle = document.querySelector('#emailNotifications');
 
-console.log(emailToggle.value); // 'email'
 console.log(emailToggle.on); // true
+console.log(emailToggle.disabled); // false
+console.log(emailToggle.value); // 'email'
 console.log(emailToggle.name); // 'notifications'
 ```
 
