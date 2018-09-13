@@ -44,10 +44,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.label = _this._findLabel();
 
-      _this._handleClick = _this._handleClick.bind(_this);
-      _this._handleKeyUp = _this._handleKeyUp.bind(_this);
+      _this._onBtnClick = _this._onBtnClick.bind(_this);
+      _this._onBtnKeyUp = _this._onBtnKeyUp.bind(_this);
 
-      _this._handleLabelClick = _this._handleLabelClick.bind(_this);
+      _this._onLabelClick = _this._onLabelClick.bind(_this);
       return _this;
     }
 
@@ -63,23 +63,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this._upgradeProperty('checked');
 
-        this.addEventListener('click', this._handleClick);
-        this.addEventListener('keyup', this._handleKeyUp);
+        this.addEventListener('click', this._onBtnClick);
+        this.addEventListener('keyup', this._onBtnKeyUp);
 
         if (this.label && !this.label.id) this.label.id = this.id + '_label';
 
         this.setAttribute('aria-labelledby', this.label.id);
 
-        this.label.addEventListener('click', this._handleLabelClick);
+        this.label.addEventListener('click', this._onLabelClick);
       }
     }, {
-      key: '_handleClick',
-      value: function _handleClick() {
+      key: '_onBtnClick',
+      value: function _onBtnClick() {
         this._toggleChecked();
       }
     }, {
-      key: '_handleKeyUp',
-      value: function _handleKeyUp(e) {
+      key: '_onBtnKeyUp',
+      value: function _onBtnKeyUp(e) {
         if (e.altKey) {
           return;
         }
@@ -117,8 +117,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return scope.querySelector('label[for="' + this.id + '"]');
       }
     }, {
-      key: '_handleLabelClick',
-      value: function _handleLabelClick(e) {
+      key: '_onLabelClick',
+      value: function _onLabelClick() {
         this.click();
         this.focus();
       }
@@ -142,10 +142,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'disconnectedCallback',
       value: function disconnectedCallback() {
-        this.removeEventListener('click', this._handleClick);
-        this.removeEventListener('keyup', this._handleKeyUp);
+        this.removeEventListener('click', this._onBtnClick);
+        this.removeEventListener('keyup', this._onBtnKeyUp);
 
-        this.label.removeEventListener('click', this._handleLabelClick);
+        this.label.removeEventListener('click', this._onLabelClick);
       }
     }, {
       key: 'checked',
