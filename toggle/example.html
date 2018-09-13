@@ -58,13 +58,14 @@
 				if (node.hasAttribute('aria-label')) {
 					return node.getAttribute('aria-label');
 				} else {
-					const externalLabel = node.parentElement.querySelector(`label[for="${node.id}"]`);
+					const externalLabel = node.parentElement
+					  .querySelector('label[for="'+ node.id +'"]');
 					return externalLabel ? externalLabel.textContent : node.parentElement.textContent
 				}
 			}
 			
-			toggles.forEach(function (toggle) {
-				toggle.addEventListener('change',function (e) {
+			Array.prototype.forEach.call(toggles, function (toggle) {
+				toggle.addEventListener('change', function (e) {
 					const accessibleName = getAccessibleName(e.target);
 					msg.innerHTML = (
 						'You switched <code>' + accessibleName + '</code> <b>' +
