@@ -8,7 +8,6 @@
    1. [Semantics](#usage-semantics)
 4. [API](#api)
    1. [Attributes](#api-attributes)
-   2. [Properties](#api-properties)
    3. [Events](#api-events)
 
 A shareable, accessible toggle.
@@ -64,10 +63,11 @@ Add the `<pearson-toggle> </pearson-toggle>` tags to the page.
 
 `pearson-toggle`'s API is similar to that of an `input type="checkbox"`. You _must_ give it a unique ID, and you _must_ label it. That means either creating a `label` tag somewhere in the DOM and setting its `for` attribute to the ID of the toggle, wrapping the toggle in a label, or giving the toggle an `aria-label` attribute. When the toggle is triggered, it will emit a `change` event.
 
+All of the attributes in `pearson-toggle`'s API are reflected as _properties_. All of these can be accessed in JavaScript.
+
 <a name="api-attributes"></a>
 
 ### Attributes
-
 | Attribute  | Type      | Default  | Description                               |
 | ---------- | --------- | -------- | ----------------------------------------- |
 | `id`       | `String`  | Required | The unique ID of the toggle               |
@@ -77,42 +77,6 @@ Add the `<pearson-toggle> </pearson-toggle>` tags to the page.
 | `value`    | `String`  | unset    | The value of the toggle                   |
 
 <a name="api-attributes-example"></a>
-
-#### Example
-
-```html
-<pearson-toggle
-  id="textNotifications"
-  name="notifications"
-  value="text"
->
-</pearson-toggle>
-<label for="textNotifications">Text notifications</label>
-
-<pearson-toggle
-  id="emailNotifications"
-  name="notifications"
-  value="email"
-  on
->
-</pearson-toggle>
-<label for="emailNotifications">Email notifications</label>
-```
-
-<a name="api-properties"></a>
-
-### Properties
-
-Like native checkboxes, `pearson-toggle` exposes its `name` and `value` attributes as _properties_. It also exposes an `on` property to represent its state as an on/off switch. All of these can be easily accessed in JavaScript.
-
-| Property   | Type      | Description                      |
-| ---------- | --------- | -------------------------------- |
-| `name`     | `String`  | The name of the toggle           |
-| `value`    | `String`  | The value of the toggle          |
-| `on`       | `Boolean` | The on state of the toggle       |
-| `disabled` | `Boolean` | The disabled state of the toggle |
-
-<a name="api-properties-example"></a>
 
 #### Example
 
@@ -138,6 +102,9 @@ console.log(emailToggle.on); // true
 console.log(emailToggle.disabled); // false
 console.log(emailToggle.value); // 'email'
 console.log(emailToggle.name); // 'notifications'
+
+emailToggle.on = false;
+console.log(emailToggle.on); // false
 ```
 
 <a name="api-events"></a>
