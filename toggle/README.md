@@ -6,9 +6,9 @@
 2. [Install](#install)
 3. [Usage](#usage)
 4. [API](#api)
-    1. [Attributes](#api-attributes)
-    2. [Properties](#api-properties)
-    3. [Events](#api-events)
+   1. [Attributes](#api-attributes)
+   2. [Properties](#api-properties)
+   3. [Events](#api-events)
 
 A shareable, accessible toggle.
 
@@ -66,11 +66,11 @@ Add the `<pearson-toggle> </pearson-toggle>` tags to the page.
 
 | Attribute  | Type      | Default  | Description                                |
 | ---------- | --------- | -------- | ------------------------------------------ |
-| `id`       | `String`  | Required | The unique ID of the toggle.               |
-| `checked`  | `boolean` | `false`  | Determines whether the toggle is checked.  |
-| `disabled` | `boolean` | `false`  | Determines whether the toggle is disabled. |
-| `name`     | `String`  | unset    | The name of the toggle.                    |
-| `value`    | `String`  | unset    | The value of the toggle.                   |
+| `id`       | `String`  | Required | The unique ID of the toggle               |
+| `on`       | `boolean` | `false`  | Determines whether the toggle is on       |
+| `disabled` | `boolean` | `false`  | Determines whether the toggle is disabled |
+| `name`     | `String`  | unset    | The name of the toggle                    |
+| `value`    | `String`  | unset    | The value of the toggle                   |
 
 <a name="api-attributes-example"></a>
 
@@ -89,7 +89,7 @@ Add the `<pearson-toggle> </pearson-toggle>` tags to the page.
   id="emailNotifications"
   name="notifications"
   value="email"
-  checked
+  on
 >
 </pearson-toggle>
 <label for="emailNotifications">Email notifications</label>
@@ -99,13 +99,13 @@ Add the `<pearson-toggle> </pearson-toggle>` tags to the page.
 
 ### Properties
 
-Like native checkboxes, `pearson-toggle` exposes its `name`, `value`, and `checked` attributes as _properties_, which can be easily accessed in JavaScript.
+Like native checkboxes, `pearson-toggle` exposes its `name`, `value`, and `on` attributes as _properties_, which can be easily accessed in JavaScript.
 
-| Property  | Type      | Description                      |
-| --------- | --------- | -------------------------------- |
-| `name`    | `String`  | The name of the toggle.          |
-| `value`   | `String`  | The value of the toggle.         |
-| `checked` | `Boolean` | The checked state of the toggle. |
+| Property | Type      | Description                 |
+| -------- | --------- | --------------------------- |
+| `name`   | `String`  | The name of the toggle     |
+| `value`  | `String`  | The value of the toggle    |
+| `on`     | `Boolean` | The on state of the toggle |
 
 **Important Note:**
 
@@ -122,7 +122,7 @@ HTML:
   id="emailNotifications"
   name="notifications"
   value="email"
-  checked
+  on
 >
 </pearson-toggle>
 <label for="emailNotifications">Email notifications</label>
@@ -134,7 +134,7 @@ JS:
 const emailToggle = document.querySelector('#emailNotifications');
 
 console.log(emailToggle.value); // 'email'
-console.log(emailToggle.checked); // true
+console.log(emailToggle.on); // true
 console.log(emailToggle.name); // 'notifications'
 ```
 
@@ -144,7 +144,7 @@ console.log(emailToggle.name); // 'notifications'
 
 | Event    | Description                                                   |
 | -------- | ------------------------------------------------------------- |
-| `change` | Will fire when the toggle is triggered via mouse or keyboard. |
+| `change` | Will fire when the toggle is triggered via mouse or keyboard |
 
 <a name="api-events-example"></a>
 
@@ -157,7 +157,7 @@ HTML:
   id="emailNotifications"
   name="notifications"
   value="email"
-  checked
+  on
 >
 </pearson-toggle>
 <label for="emailNotifications">Email notifications</label>
@@ -175,7 +175,7 @@ toggles.forEach(toggle => {
 
     // True or false, depending on how many times
     // the toggle has been clicked
-    console.log(self.checked);
+    console.log(self.on);
   });
 });
 ```
