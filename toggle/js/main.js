@@ -106,6 +106,9 @@
 
     // Helper function for finding external label node
     _findLabelNode() {
+      if (this.parentElement.tagName === 'LABEL') {
+        return this.parentElement;
+      }
       const scope = this.getRootNode();
       return scope.querySelector(`label[for="${this.id}"]`);
     }

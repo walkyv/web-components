@@ -131,6 +131,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: '_findLabelNode',
       value: function _findLabelNode() {
+        if (this.parentElement.tagName === 'LABEL') {
+          return this.parentElement;
+        }
         var scope = this.getRootNode();
         return scope.querySelector('label[for="' + this.id + '"]');
       }
