@@ -6,9 +6,9 @@
 2. [Install](#install)
 3. [Usage](#usage)
 4. [API](#api)
-   i. [Attributes](#api-attributes)
-   ii. [Properties](#api-properties)
-   iii. [Events](#api-events)
+    i. [Attributes](#api-attributes)
+    ii. [Properties](#api-properties)
+    iii. [Events](#api-events)
 
 A shareable, accessible toggle.
 
