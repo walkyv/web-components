@@ -8,12 +8,10 @@
 *,
 * ::after,
 * ::before {
-  -webkit-box-sizing: border-box;
   box-sizing: border-box
 }
 
 :host {
-  -webkit-transition: background .3s;
   background: #6a7070;
   border: 1px solid #c7c7c7;
   border-radius: 100px;
@@ -21,18 +19,15 @@
   cursor: pointer;
   display: inline-block;
   font-family: Open Sans, Arial, Helvetica, sans-serif;
-  font-size: 1rem;
-  font-size: 14px;
-  height: 25px;
+  font-size: 0.875rem;
+  height: 1.5rem;
   line-height: 1.57143rem;
-  margin-bottom: .85714rem;
-  margin-top: 0;
   overflow: visible;
   position: relative;
   text-transform: uppercase;
   transition: background .3s;
   vertical-align: middle;
-  width: 55px
+  width: 3.4375rem
 }
 
 :host(:focus) {
@@ -40,17 +35,14 @@
 }
 
 :host(:focus)::after {
-  -webkit-transform: translate(-50%, -50%);
   border: 2px solid #0b73da;
   border-radius: 22px;
   content: "";
-  height: -webkit-calc(100% + 10px);
   height: calc(100% + 10px);
   left: 50%;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: -webkit-calc(100% + 10px);
   width: calc(100% + 10px);
   z-index: 1
 }
@@ -82,7 +74,6 @@
 }
 
 :host::before {
-  -webkit-transition: left .3s;
   background: #fff;
   border: 1px solid #6a7070;
   border-radius: 100%;
@@ -96,7 +87,6 @@
 
 :host::before,
 :host>span {
-  -webkit-transform: translateY(-50%);
   position: absolute;
   top: 50%;
   transform: translateY(-50%)
@@ -112,7 +102,7 @@
 }
 
 :host>span:last-of-type {
-  right: 7px
+  right: 5px
 }
 
 :host(:not([checked]))>span:first-of-type,
@@ -124,7 +114,6 @@
 
   :host,
   :host::before {
-    -webkit-transition: none !important;
     transition: none !important
   }
 }
