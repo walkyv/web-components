@@ -43,6 +43,7 @@
       // Lazily upgrade properties to make sure
       // observed attributes are handled properly
       this._upgradeProperty('checked');
+      this._upgradeProperty('disabled');
 
       // Bind listeners to the toggle
       this.addEventListener('click', this._onBtnClick);
