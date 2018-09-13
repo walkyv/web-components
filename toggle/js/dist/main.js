@@ -42,8 +42,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.shadowRoot.appendChild(clone);
 
-      _this._onBtnClick = _this._onBtnClick.bind(_this);
-      _this._onBtnKeyUp = _this._onBtnKeyUp.bind(_this);
+      _this._onToggleClick = _this._onToggleClick.bind(_this);
+      _this._onToggleKeyUp = _this._onToggleKeyUp.bind(_this);
 
       _this._onLabelClick = _this._onLabelClick.bind(_this);
       return _this;
@@ -66,8 +66,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this._upgradeProperty('disabled');
 
         // Bind listeners to the toggle
-        this.addEventListener('click', this._onBtnClick);
-        this.addEventListener('keyup', this._onBtnKeyUp);
+        this.addEventListener('click', this._onToggleClick);
+        this.addEventListener('keyup', this._onToggleKeyUp);
 
         // If the consumer did not set an `aria-label`,
         // We need to find an external one
@@ -86,21 +86,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
       }
     }, {
-      key: '_onBtnClick',
-      value: function _onBtnClick(e) {
+      key: '_onToggleClick',
+      value: function _onToggleClick(e) {
         e.stopPropagation();
-        this._toggleon();
+        this._toggleOn();
       }
     }, {
-      key: '_onBtnKeyUp',
-      value: function _onBtnKeyUp(e) {
+      key: '_onToggleKeyUp',
+      value: function _onToggleKeyUp(e) {
         if (e.altKey) {
           return;
         }
 
         if (e.keyCode === KEYCODE.SPACE || e.keyCode === KEYCODE.ENTER) {
           e.preventDefault();
-          this._toggleon();
+          this._toggleOn();
         }
       }
     }, {
@@ -113,8 +113,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
       }
     }, {
-      key: '_toggleon',
-      value: function _toggleon() {
+      key: '_toggleOn',
+      value: function _toggleOn() {
         this.on = !this.on;
 
         // The toggle should emit a change event
@@ -169,8 +169,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'disconnectedCallback',
       value: function disconnectedCallback() {
-        this.removeEventListener('click', this._onBtnClick);
-        this.removeEventListener('keyup', this._onBtnKeyUp);
+        this.removeEventListener('click', this._onToggleClick);
+        this.removeEventListener('keyup', this._onToggleKeyUp);
 
         if (this.labelNode) {
           this.labelNode.removeEventListener('click', this._onLabelClick);
