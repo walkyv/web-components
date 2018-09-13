@@ -99,7 +99,7 @@ Add the `<pearson-toggle> </pearson-toggle>` tags to the page.
 
 ### Properties
 
-Like native checkboxes, `pearson-toggle` exposes its `name`, `value`, and `on` attributes as _properties_, which can be easily accessed in JavaScript.
+Like native checkboxes, `pearson-toggle` exposes its `name` and `value` attributes as _properties_. It also exposes an `on` property to represent its state as an on/off switch. All of these can be easily accessed in JavaScript.
 
 | Property | Type      | Description                |
 | -------- | --------- | -------------------------- |
