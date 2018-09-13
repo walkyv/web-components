@@ -42,8 +42,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.shadowRoot.appendChild(clone);
 
-      _this.label = _this._findLabel();
-
       _this._onBtnClick = _this._onBtnClick.bind(_this);
       _this._onBtnKeyUp = _this._onBtnKeyUp.bind(_this);
 
@@ -66,11 +64,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.addEventListener('click', this._onBtnClick);
         this.addEventListener('keyup', this._onBtnKeyUp);
 
-        if (this.label && !this.label.id) this.label.id = this.id + '_label';
+        if (!this.hasAttribute('aria-label')) {
+          this.labelNode = this._findLabel();
 
-        this.setAttribute('aria-labelledby', this.label.id);
+          if (!this.labelNode.id) this.labelNode.id = this.id + '_label';
 
-        this.label.addEventListener('click', this._onLabelClick);
+          this.setAttribute('aria-labelledby', this.labelNode.id);
+
+          this.labelNode.addEventListener('click', this._onLabelClick);
+        }
       }
     }, {
       key: '_onBtnClick',
@@ -145,7 +147,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.removeEventListener('click', this._onBtnClick);
         this.removeEventListener('keyup', this._onBtnKeyUp);
 
-        this.label.removeEventListener('click', this._onLabelClick);
+        if (this.labelNode) {
+          this.labelNode.removeEventListener('click', this._onLabelClick);
+        }
       }
     }, {
       key: 'checked',

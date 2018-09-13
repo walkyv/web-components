@@ -25,8 +25,6 @@
 
       this.shadowRoot.appendChild(clone);
 
-      this.label = this._findLabel();
-
       this._onBtnClick = this._onBtnClick.bind(this);
       this._onBtnKeyUp = this._onBtnKeyUp.bind(this);
 
@@ -46,11 +44,16 @@
       this.addEventListener('click', this._onBtnClick);
       this.addEventListener('keyup', this._onBtnKeyUp);
 
-      if (this.label && !this.label.id) this.label.id = this.id + '_label';
+      if (!this.hasAttribute('aria-label')) {
+        this.labelNode = this._findLabel();
 
-      this.setAttribute('aria-labelledby', this.label.id);
-      
-      this.label.addEventListener('click', this._onLabelClick);
+        if (!this.labelNode.id) this.labelNode.id = this.id + '_label';
+        
+        this.setAttribute('aria-labelledby', this.labelNode.id);
+        
+        this.labelNode.addEventListener('click', this._onLabelClick);
+      }
+
     }
 
     _onBtnClick() {
@@ -149,7 +152,9 @@
       this.removeEventListener('click', this._onBtnClick);
       this.removeEventListener('keyup', this._onBtnKeyUp);
 
-      this.label.removeEventListener('click', this._onLabelClick);
+      if (this.labelNode) {
+        this.labelNode.removeEventListener('click', this._onLabelClick);
+      }
     }
   }
 
