@@ -42,8 +42,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.shadowRoot.appendChild(clone);
 
+      _this.label = _this._findLabel();
+
       _this._handleClick = _this._handleClick.bind(_this);
       _this._handleKeyUp = _this._handleKeyUp.bind(_this);
+
+      _this._handleLabelClick = _this._handleLabelClick.bind(_this);
       return _this;
     }
 
@@ -61,6 +65,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.addEventListener('click', this._handleClick);
         this.addEventListener('keyup', this._handleKeyUp);
+
+        if (this.label && !this.label.id) this.label.id = this.id + '_label';
+
+        this.setAttribute('aria-labelledby', this.label.id);
+
+        this.label.addEventListener('click', this._handleLabelClick);
       }
     }, {
       key: '_handleClick',
@@ -101,6 +111,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }));
       }
     }, {
+      key: '_findLabel',
+      value: function _findLabel() {
+        var scope = this.getRootNode();
+        return scope.querySelector('label[for="' + this.id + '"]');
+      }
+    }, {
+      key: '_handleLabelClick',
+      value: function _handleLabelClick(e) {
+        this.click();
+        this.focus();
+      }
+    }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
         var isTruthy = newValue !== null;
@@ -122,6 +144,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function disconnectedCallback() {
         this.removeEventListener('click', this._handleClick);
         this.removeEventListener('keyup', this._handleKeyUp);
+
+        this.label.removeEventListener('click', this._handleLabelClick);
       }
     }, {
       key: 'checked',

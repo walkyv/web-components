@@ -25,8 +25,12 @@
 
       this.shadowRoot.appendChild(clone);
 
+      this.label = this._findLabel();
+
       this._handleClick = this._handleClick.bind(this);
       this._handleKeyUp = this._handleKeyUp.bind(this);
+
+      this._handleLabelClick = this._handleLabelClick.bind(this);
     }
 
     connectedCallback() {
@@ -38,9 +42,16 @@
       }
 
       this._upgradeProperty('checked');
-
+      
       this.addEventListener('click', this._handleClick);
       this.addEventListener('keyup', this._handleKeyUp);
+
+      if (this.label && !this.label.id) this.label.id = this.id + '_label';
+
+
+      this.setAttribute('aria-labelledby', this.label.id);
+      
+      this.label.addEventListener('click', this._handleLabelClick);
     }
 
     _handleClick() {
@@ -77,6 +88,16 @@
           bubbles: true
         })
       );
+    }
+
+    _findLabel() {
+      const scope = this.getRootNode();
+      return scope.querySelector(`label[for="${this.id}"]`);
+    }
+
+    _handleLabelClick(e) {
+      this.click();
+      this.focus();
     }
 
     get checked() {
@@ -128,6 +149,8 @@
     disconnectedCallback() {
       this.removeEventListener('click', this._handleClick);
       this.removeEventListener('keyup', this._handleKeyUp);
+
+      this.label.removeEventListener('click', this._handleLabelClick);
     }
   }
 
