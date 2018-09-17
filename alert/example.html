@@ -19,16 +19,30 @@
 
 	</head>
 	<body>
-	<!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
-		<main id="main">
-			<section class="container">
-				<pearson-alert
-					title="Hello Im an Attribute"
-				>
-					<p>Hello, im an HTML elmement passed into the component</p>
-				</pearson-alert>
-			</section>
-		</main>
+		<button data-trigger="alert" type="error">
+			Trigger error alert
+		</button>
 
 	</body>
+	<script>
+		const forEach = Array.prototype.forEach;
+
+		const triggers = document
+			.querySelectorAll('button[data-trigger="alert"]');
+
+		function generateAlert(type, opts) {
+			const alert = document.createElement('pearson-alert');
+			alert.setAttribute('type', opts.type)
+			return alert;
+		}
+
+		function triggerAlert(e) {
+			const type = e.target.dataset.type;
+			document.body.appendChild(generateAlert({type: type}));
+		}
+
+		forEach.call(triggers, function (trigger) {
+			trigger.addEventListener('click', triggerAlert);
+		})
+	</script>
 </html>
