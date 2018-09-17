@@ -1,34 +1,57 @@
 <!DOCTYPE html>
 <html class="" lang="EN">
-	<head>
-		<title>Pearson Web Component</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width" />
 
-		<!-- loads web component polyfills -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
-		<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+<head>
+	<title>Pearson Web Component</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width" />
 
-		<!-- load pearson and global styles -->
+	<!-- loads web component polyfills -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
+	<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
-
-		<!-- import web components -->
-		<link rel="import" href="index.html" />
+	<!-- load pearson and global styles -->
 
 
-	</head>
-	<body>
-	<!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
-		<main id="main">
-			<section class="container">
-				<pearson-alert
-					title="Hello Im an Attribute"
-				>
-					<p>Hello, im an HTML elmement passed into the component</p>
-				</pearson-alert>
-			</section>
-		</main>
+	<!-- import web components -->
+	<link rel="import" href="index.html" />
 
-	</body>
+
+</head>
+
+<body>
+	<button data-trigger="alert" type="error">
+		Trigger error alert
+	</button>
+
+</body>
+<script>
+	(function (w, doc) {
+		const forEach = Array.prototype.forEach;
+
+		const triggers = doc
+			.querySelectorAll('button[data-trigger="alert"]');
+
+		function generateAlert(opts) {
+			const alert = doc.createElement('pearson-alert');
+			for (let attrName in opts) {
+				alert.setAttribute(attrName, opts[attrName])
+			}
+			return alert;
+		}
+
+		function triggerAlert(e) {
+			const type = e.target.dataset.type;
+			doc.body.appendChild(generateAlert({
+				type: type
+			}));
+		}
+
+		forEach.call(triggers, function (trigger) {
+			trigger.addEventListener('click', triggerAlert);
+		})
+	})(window, document);
+</script>
+
 </html>
