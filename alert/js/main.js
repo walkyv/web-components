@@ -48,6 +48,12 @@
 
       this.content.setAttribute('aria-hidden', 'false');
       this.closeBtn.addEventListener('click', this.close);
+      
+      if (this.severity === 'important') {
+        setTimeout(() => {
+          this.closeBtn.focus();
+        }, 10);
+      }
     }
 
     disconnectedCallback() {

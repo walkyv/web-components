@@ -42,6 +42,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Alert, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
+        var _this2 = this;
+
         if (this.isAnimated) {
           this.alert.classList.toggle('animated');
         }
@@ -65,6 +67,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.content.setAttribute('aria-hidden', 'false');
         this.closeBtn.addEventListener('click', this.close);
+
+        if (this.severity === 'important') {
+          setTimeout(function () {
+            _this2.closeBtn.focus();
+          }, 10);
+        }
       }
     }, {
       key: 'disconnectedCallback',
@@ -74,7 +82,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'close',
       value: function close() {
-        var _this2 = this;
+        var _this3 = this;
 
         if (this.type === 'global') {
           this.alert.classList.add('slideOutDown');
@@ -83,7 +91,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.alert.classList.add('fadeOut');
         }
         setTimeout(function () {
-          _this2.remove();
+          _this3.remove();
         }, 200);
       }
     }, {
