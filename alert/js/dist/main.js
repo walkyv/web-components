@@ -39,6 +39,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Alert, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
+        this.shadowRoot.querySelector('#content').setAttribute('aria-hidden', 'false');
+
         this.closeBtn.addEventListener('click', this.close);
       }
     }, {
@@ -49,6 +51,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'close',
       value: function close() {
+
         this.remove();
       }
     }]);

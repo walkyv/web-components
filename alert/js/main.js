@@ -22,6 +22,8 @@
     }
 
     connectedCallback(){
+      this.shadowRoot.querySelector('#content').setAttribute('aria-hidden', 'false');
+
       this.closeBtn.addEventListener('click', this.close);
     }
 
@@ -30,6 +32,7 @@
     }
 
     close() {
+      
       this.remove();
     }
   }
