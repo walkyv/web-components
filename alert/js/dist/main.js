@@ -19,6 +19,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var Alert = function (_HTMLElement) {
     _inherits(Alert, _HTMLElement);
 
+    _createClass(Alert, null, [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['severity', 'type'];
+      }
+    }]);
+
     function Alert() {
       _classCallCheck(this, Alert);
 
@@ -28,6 +35,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       var clone = doc.importNode(template.content.cloneNode(true), true);
 
+      _this.alert = clone.querySelector('#peAlert');
+      _this.contentContainer = clone.querySelector('#contentContainer');
+      _this.content = clone.querySelector('#content');
       _this.closeBtn = clone.querySelector('button[data-action="close-alert"]');
 
       _this.shadowRoot.appendChild(clone);
@@ -39,8 +49,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Alert, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        this.shadowRoot.querySelector('#content').setAttribute('aria-hidden', 'false');
-
+        this.content.setAttribute('aria-hidden', 'false');
         this.closeBtn.addEventListener('click', this.close);
       }
     }, {
@@ -51,8 +60,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'close',
       value: function close() {
-
         this.remove();
+      }
+    }, {
+      key: 'type',
+      get: function get() {
+        return this.getAttribute('data-type');
+      }
+    }, {
+      key: 'severity',
+      get: function get() {
+        return this.getAttribute('data-severity');
       }
     }]);
 

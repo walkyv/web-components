@@ -21,7 +21,7 @@
 </head>
 
 <body>
-	<button data-trigger="alert" type="error">
+	<button data-trigger="alert" data-severity="error" data-type="global">
 		Trigger error alert
 	</button>
 
@@ -29,7 +29,7 @@
 <script>
 	(function (w, doc) {
 		const forEach = Array.prototype.forEach;
-
+// class="pe-alert animated slideInDown" data-alert data-alert-type="global" role="dialog" aria-labelledby="alertTitle" aria-describedby="alertText"
 		const triggers = doc
 			.querySelectorAll('button[data-trigger="alert"]');
 
@@ -42,9 +42,11 @@
 		}
 
 		function triggerAlert(e) {
+			const severity = e.target.dataset.severity;
 			const type = e.target.dataset.type;
 			doc.body.appendChild(generateAlert({
-				type: type
+				severity,
+				type,
 			}));
 		}
 
