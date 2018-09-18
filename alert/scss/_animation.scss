@@ -60,19 +60,19 @@
   visibility: hidden;
 }
 
-.slideInDown {
+.animated.slideInDown {
   animation: 0.3s ease-in-out 0s slideInDown;
 }
 
-.slideOutDown {
+.animated.slideOutDown {
   animation: 0.2s ease-in 0s slideOutDown;
 }
 
-.fadeIn {
+.animated.fadeIn {
   animation: 0.3s linear 0s fadeIn;
 }
 
-.fadeOut {
+.animated.fadeOut {
   animation: 0.2s linear 0s fadeOut;
 }
 
