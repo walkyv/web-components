@@ -42,18 +42,28 @@
       if (this.type === 'global') {
         this.alert.classList.add('slideInDown');
       }
+      if (this.type === 'inline') {
+        this.alert.classList.add('fadeIn');
+      }
 
       this.content.setAttribute('aria-hidden', 'false');
       this.closeBtn.addEventListener('click', this.close);
     }
-
 
     disconnectedCallback() {
       this.closeBtn.removeEventListener('click', this.close);
     }
 
     close() {
-      this.remove();
+      if (this.type === 'global') {
+        this.alert.classList.add('slideOutDown');
+      }
+      if (this.type === 'inline') {
+        this.alert.classList.add('fadeOut');
+      }
+      setTimeout(() => {
+        this.remove();
+      }, 200);
     }
 
     get isAnimated() {

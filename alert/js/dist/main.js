@@ -59,6 +59,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (this.type === 'global') {
           this.alert.classList.add('slideInDown');
         }
+        if (this.type === 'inline') {
+          this.alert.classList.add('fadeIn');
+        }
 
         this.content.setAttribute('aria-hidden', 'false');
         this.closeBtn.addEventListener('click', this.close);
@@ -71,7 +74,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'close',
       value: function close() {
-        this.remove();
+        var _this2 = this;
+
+        if (this.type === 'global') {
+          this.alert.classList.add('slideOutDown');
+        }
+        if (this.type === 'inline') {
+          this.alert.classList.add('fadeOut');
+        }
+        setTimeout(function () {
+          _this2.remove();
+        }, 200);
       }
     }, {
       key: 'isAnimated',
