@@ -22,11 +22,11 @@ $success: #19a6a4;
     padding: 4px;
   }
 
-  &[data-alert-type='inline'] {
+  &.alert-inline {
     position: absolute;
   }
 
-  &[data-alert-type='global'] {
+  &.alert-global{
     position: fixed;
     top: 32px;
     left: 0;

@@ -54,7 +54,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.contentContainer.setAttribute('aria-live', 'polite');
         }
 
-        this.alert.setAttribute('data-alert-type', this.type);
+        this.alert.classList.add('alert-' + this.type);
 
         if (this.type === 'global') {
           this.alert.classList.add('slideInDown');
