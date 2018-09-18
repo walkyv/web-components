@@ -19,13 +19,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var Alert = function (_HTMLElement) {
     _inherits(Alert, _HTMLElement);
 
-    _createClass(Alert, null, [{
-      key: 'observedAttributes',
-      get: function get() {
-        return ['severity', 'type'];
-      }
-    }]);
-
     function Alert() {
       _classCallCheck(this, Alert);
 
@@ -49,6 +42,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Alert, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
+        if (this.isAnimated) {
+          this.alert.classList.toggle('animated');
+        }
+
+        if (this.severity === 'error') {
+          this.contentContainer.setAttribute('role', 'alert');
+          this.contentContainer.setAttribute('aria-live', 'assertive');
+        } else {
+          this.contentContainer.setAttribute('role', 'status');
+          this.contentContainer.setAttribute('aria-live', 'polite');
+        }
+
+        this.alert.setAttribute('data-alert-type', this.type);
+
+        if (this.type === 'global') {
+          this.alert.classList.add('slideInDown');
+        }
+
         this.content.setAttribute('aria-hidden', 'false');
         this.closeBtn.addEventListener('click', this.close);
       }
@@ -63,14 +74,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.remove();
       }
     }, {
+      key: 'isAnimated',
+      get: function get() {
+        return this.hasAttribute('animated');
+      }
+    }, {
       key: 'type',
       get: function get() {
-        return this.getAttribute('data-type');
+        return this.getAttribute('type');
       }
     }, {
       key: 'severity',
       get: function get() {
-        return this.getAttribute('data-severity');
+        return this.getAttribute('severity');
       }
     }]);
 

@@ -7,10 +7,6 @@
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
 
   class Alert extends HTMLElement {
-    static get observedAttributes() {
-      return ['severity', 'type'];
-    }
-
     constructor() {
       super();
 
@@ -29,9 +25,28 @@
     }
 
     connectedCallback() {
+      if (this.isAnimated) {
+        this.alert.classList.toggle('animated');
+      }
+      
+      if (this.severity === 'error') {
+        this.contentContainer.setAttribute('role', 'alert');
+        this.contentContainer.setAttribute('aria-live', 'assertive');
+      } else {
+        this.contentContainer.setAttribute('role', 'status');
+        this.contentContainer.setAttribute('aria-live', 'polite');
+      }
+
+      this.alert.setAttribute('data-alert-type', this.type);
+
+      if (this.type === 'global') {
+        this.alert.classList.add('slideInDown');
+      }
+
       this.content.setAttribute('aria-hidden', 'false');
       this.closeBtn.addEventListener('click', this.close);
     }
+
 
     disconnectedCallback() {
       this.closeBtn.removeEventListener('click', this.close);
@@ -41,12 +56,16 @@
       this.remove();
     }
 
+    get isAnimated() {
+      return this.hasAttribute('animated');
+    }
+
     get type() {
-      return this.getAttribute('data-type');
+      return this.getAttribute('type');
     }
 
     get severity() {
-      return this.getAttribute('data-severity');
+      return this.getAttribute('severity');
     }
   }
 
