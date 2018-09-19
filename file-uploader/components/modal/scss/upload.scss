@@ -17,3 +17,13 @@
     margin-bottom:0;
   }
 }
+
+@media(max-width:640px) {
+  .pe-modal-container {
+    min-width:auto;
+  }
+
+  button.close[aria-label="Close Dialog"] {
+    right:15px;
+  }
+}
