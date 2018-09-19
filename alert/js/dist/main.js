@@ -47,8 +47,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Alert, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var _this2 = this;
-
         if (this.isAnimated) {
           this.alert.classList.toggle('animated');
         }
@@ -78,9 +76,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.closeBtn.addEventListener('click', this.close);
 
         if (this.severity === 'important') {
-          setTimeout(function () {
-            _this2.closeBtn.focus();
-          }, 10);
+          this.alert.addEventListener('animationend', this._onAnimationEnd.bind(this));
         }
       }
     }, {
@@ -94,7 +90,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'close',
       value: function close() {
-        var _this3 = this;
+        var _this2 = this;
 
         if (this.type === 'global') {
           this.alert.classList.add('slideOutDown');
@@ -103,8 +99,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.alert.classList.add('fadeOut');
         }
         setTimeout(function () {
-          _this3.remove();
+          _this2.remove();
         }, 500);
+      }
+    }, {
+      key: '_onAnimationEnd',
+      value: function _onAnimationEnd(e) {
+        if (e.animationName === 'fadeOut' || e.animationName === 'slideOutDown') {
+          this.remove();
+        }
+        if (e.animationName === 'fadeIn' || e.animationName === 'slideInDown') {
+          this.closeBtn.focus();
+        }
       }
     }, {
       key: '_findReturnNode',

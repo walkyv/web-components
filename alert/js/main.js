@@ -28,7 +28,8 @@
 
       this.shadowRoot.appendChild(clone);
 
-      this.close = this.close.bind(this);
+      this._onClose = this._onClose.bind(this);
+      this._onAnimationEnd =  this._onAnimationEnd.bind(this);
     }
 
     connectedCallback() {
@@ -58,32 +59,37 @@
       }
 
       this.content.setAttribute('aria-hidden', 'false');
-      this.closeBtn.addEventListener('click', this.close);
+      this.closeBtn.addEventListener('click', this._onClose);
 
-      if (this.severity === 'important') {
-        setTimeout(() => {
-          this.closeBtn.focus();
-        }, 10);
-      }
+      this.alert.addEventListener('animationend', this._onAnimationEnd);
+      
     }
 
     disconnectedCallback() {
       const returnNode = this._findReturnNode();
 
-      this.closeBtn.removeEventListener('click', this.close);
+      this.closeBtn.removeEventListener('click', this._onClose);
       returnNode.focus();
     }
 
-    close() {
+    _onClose() {
       if (this.type === 'global') {
         this.alert.classList.add('slideOutDown');
       }
       if (this.type === 'inline') {
         this.alert.classList.add('fadeOut');
       }
-      setTimeout(() => {
+    }
+
+    _onAnimationEnd(e) {
+      if (e.animationName === 'fadeOut' || e.animationName === 'slideOutDown') {
         this.remove();
-      }, 500);
+      }
+      if (e.animationName === 'fadeIn' || e.animationName === 'slideInDown') {
+        if (this.severity === 'important') {
+          this.closeBtn.focus();
+        }
+      }
     }
 
     _findReturnNode() {
