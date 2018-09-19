@@ -9,7 +9,7 @@
     uploadTitle = document.querySelector('.upload-title'),
     fileArr = [];
 
-  function buildMarkup (data) {
+  function buildMarkup (data, res) {
     return `
         <div class="group">
           <div class="indicator">
@@ -17,7 +17,7 @@
           </div>
           <div class="text">
             <strong>${data.name}</strong>
-            <p class="info">0 MB / ${data.size} MB</p>
+            <p class="info">${res.loaded} MB / ${res.total} MB</p>
           </div>
         </div>
         <div class="upload-actions">
@@ -30,7 +30,7 @@
     `
   }
 
-  function renderProgressItems (data, target) {
+  function renderProgressItems (data, target, xhr) {
     if (modal.footer !== true) {
       modal.footer = true;
       uploadInfo.style.display = 'block';
@@ -38,12 +38,16 @@
     const div = document.createElement('DIV');
     div.classList.add('progress');
     target.appendChild(div);
-    div.innerHTML = buildMarkup(data)
+
     fileArr.push(data);
     setTimeout(()=> {
       uploadTitle.innerHTML = "Uploading  (0 done, " + fileArr.length + " in progress)"
     },500)
 
+    xhr(function(e) {
+      div.innerHTML = buildMarkup(data, e)
+      let percentLoaded = Math.round((e.loaded / e.total) * 100);
+    });
   }
 
   // highlight function to outline drop area when a file is over area
@@ -79,31 +83,20 @@
 
   // processes and uploads files
   function uploadFile(file) {
-    renderProgressItems(file, target);
-    const url = 'https://pearson-file-upload.s3.amazonaws.com/';
-    const xhr = new XMLHttpRequest();
-    const formData = new FormData();
+    const url = 'https://pearson-file-upload.s3.amazonaws.com/',
+          xhr = new XMLHttpRequest(),
+          formData = new FormData();
+
     xhr.open('POST', url, true);
+    renderProgressItems(file, target, uploadProgress);
 
-    xhr.onprogress = function (event) {
-      if (event.lengthComputable) {
-        console.log(event.loaded+  " / " + event.total)
-      }
-    };
-
-    xhr.onloadstart = function (event) {
-      console.log("start")
+    function uploadProgress (callback) {
+      xhr.upload.onprogress = function(event) {
+        if (event.lengthComputable) {
+          callback(event)
+        }
+      };
     }
-
-    xhr.addEventListener('readystatechange', function(event) {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        // Done. Inform the user
-
-      }
-      else if (xhr.readyState == 4 && xhr.status != 200) {
-        // Error. Inform the user
-      }
-    });
 
     formData.append('key', file.name);
     formData.append('file', file);
