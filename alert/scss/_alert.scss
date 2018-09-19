@@ -74,7 +74,7 @@ $success: #19a6a4;
     }
   }
 
-  .close-title button {
+  .close-title {
     float: right;
     color: $neutral-three;
     cursor: pointer;
@@ -101,4 +101,18 @@ $success: #19a6a4;
       display: inline;
     }
   }
+}
+
+img[class$="-18"],
+input[type="image"][class$="-18"],
+svg[class$="-18"] {
+  width: 18px;
+  height: 18px;
+}
+
+img[class$="-24"],
+input[type="image"][class$="-24"],
+svg[class$="-24"] {
+  width: 24px;
+  height: 24px;
 }
