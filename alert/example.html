@@ -21,8 +21,14 @@
 </head>
 
 <body>
-	<button data-trigger="alert" data-severity="error" data-type="global">
-		Trigger error alert
+	<button id="trigger-0" data-trigger="alert" data-severity="error" data-type="global">
+		Trigger global error alert
+	</button>
+	<button id="trigger-1" data-trigger="alert" data-severity="success" data-type="inline">
+		Trigger inline success alert
+	</button>
+	<button id="trigger-2" data-trigger="alert" data-severity="important" data-type="global">
+		Trigger global important alert
 	</button>
 
 </body>
@@ -41,13 +47,31 @@
 		}
 
 		function triggerAlert(e) {
+			const returnNode = `#${e.target.id}`;
 			const severity = e.target.dataset.severity;
 			const type = e.target.dataset.type;
-			doc.body.appendChild(generateAlert({
+
+			const alert = generateAlert({
+				returnNode,
 				severity,
 				type,
 				animated: true
-			}));
+			})
+
+			alert.innerHTML = (
+				`<h2 id="alertTitle" class="pe-label alert-title">
+					<strong>Heads up!</strong>
+				</h2>
+				<p id="alertText" class="pe-paragraph alert-text">
+					<a href="#">Something has happened!</a>
+				</p>`
+			);
+
+			if (type === 'inline') {
+				doc.body.insertBefore(alert, e.target.nextSibling)
+			} else {
+				doc.body.appendChild(alert)
+			}
 		}
 
 		forEach.call(triggers, function (trigger) {

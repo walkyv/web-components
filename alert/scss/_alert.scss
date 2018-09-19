@@ -16,6 +16,7 @@ $success: #19a6a4;
 .pe-alert {
   visibility: hidden;
   opacity: 0;
+  color: #252525;
 
   @media (max-width: 480px) {
     max-width: 440px;
@@ -36,15 +37,12 @@ $success: #19a6a4;
       margin: 0 24px;
     }
   }
+
   &.alert--error {
     .pe-alert-box {
       border-left-color: $error;
 
       a {
-        color: $error;
-      }
-
-      .alert-content-container {
         color: $error;
       }
     }
@@ -53,10 +51,6 @@ $success: #19a6a4;
   &.alert--success,
   &.alert--info {
     border-left-color: $success;
-
-    .alert-content-container {
-      color: $success;
-    }
   }
 }
 
@@ -70,6 +64,7 @@ $success: #19a6a4;
   transition: all 0.2s ease;
   z-index: 10;
   background: white;
+  border-left-color: $success;
 
   .close-title {
     float: right;
@@ -95,13 +90,22 @@ $success: #19a6a4;
   }
 }
 
-.pe-icon:not([src='']) {
+button.pe-icon {
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  position: relative;
+}
+
+img.pe-icon:not([src='']) {
   margin-right: 12px;
   min-width: 18px;
 }
 
-svg {
+svg[class^=pe-icon--] {
+  display: inline-block;
   fill: currentColor;
+  vertical-align: top;
 }
 
 svg[class$='-18'] {
