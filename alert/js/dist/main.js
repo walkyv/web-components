@@ -40,7 +40,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.shadowRoot.appendChild(clone);
 
-      _this.close = _this.close.bind(_this);
+      _this._onClose = _this._onClose.bind(_this);
+      _this._onAnimationEnd = _this._onAnimationEnd.bind(_this);
       return _this;
     }
 
@@ -73,34 +74,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         this.content.setAttribute('aria-hidden', 'false');
-        this.closeBtn.addEventListener('click', this.close);
+        this.closeBtn.addEventListener('click', this._onClose);
 
-        if (this.severity === 'important') {
-          this.alert.addEventListener('animationend', this._onAnimationEnd.bind(this));
-        }
+        this.alert.addEventListener('animationend', this._onAnimationEnd);
       }
     }, {
       key: 'disconnectedCallback',
       value: function disconnectedCallback() {
         var returnNode = this._findReturnNode();
 
-        this.closeBtn.removeEventListener('click', this.close);
+        this.alert.removeEventListener('animationend', this._onAnimationEnd);
+        this.closeBtn.removeEventListener('click', this._onClose);
+
         returnNode.focus();
       }
     }, {
-      key: 'close',
-      value: function close() {
-        var _this2 = this;
-
+      key: '_onClose',
+      value: function _onClose() {
         if (this.type === 'global') {
           this.alert.classList.add('slideOutDown');
         }
         if (this.type === 'inline') {
           this.alert.classList.add('fadeOut');
         }
-        setTimeout(function () {
-          _this2.remove();
-        }, 500);
       }
     }, {
       key: '_onAnimationEnd',
@@ -109,7 +105,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.remove();
         }
         if (e.animationName === 'fadeIn' || e.animationName === 'slideInDown') {
-          this.closeBtn.focus();
+          if (this.severity === 'important') {
+            this.closeBtn.focus();
+          }
         }
       }
     }, {
