@@ -29,7 +29,7 @@
       this.shadowRoot.appendChild(clone);
 
       this._onClose = this._onClose.bind(this);
-      this._onAnimationEnd =  this._onAnimationEnd.bind(this);
+      this._onAnimationEnd = this._onAnimationEnd.bind(this);
     }
 
     connectedCallback() {
@@ -62,13 +62,14 @@
       this.closeBtn.addEventListener('click', this._onClose);
 
       this.alert.addEventListener('animationend', this._onAnimationEnd);
-      
     }
 
     disconnectedCallback() {
       const returnNode = this._findReturnNode();
 
+      this.alert.removeEventListener('animationend', this._onAnimationEnd);
       this.closeBtn.removeEventListener('click', this._onClose);
+      
       returnNode.focus();
     }
 
