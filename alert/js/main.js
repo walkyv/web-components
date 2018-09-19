@@ -25,6 +25,7 @@
     }
 
     connectedCallback() {
+      
       if (this.isAnimated) {
         this.alert.classList.toggle('animated');
       }
@@ -57,7 +58,10 @@
     }
 
     disconnectedCallback() {
+      const returnNode = this._findReturnNode();
+
       this.closeBtn.removeEventListener('click', this.close);
+      returnNode.focus();
     }
 
     close() {
@@ -70,6 +74,10 @@
       setTimeout(() => {
         this.remove();
       }, 200);
+    }
+
+    _findReturnNode(){
+      return doc.querySelector(this.getAttribute('returnNode'));
     }
 
     get isAnimated() {

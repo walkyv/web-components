@@ -77,7 +77,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'disconnectedCallback',
       value: function disconnectedCallback() {
+        var returnNode = this._findReturnNode();
+
         this.closeBtn.removeEventListener('click', this.close);
+        returnNode.focus();
       }
     }, {
       key: 'close',
@@ -93,6 +96,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         setTimeout(function () {
           _this3.remove();
         }, 200);
+      }
+    }, {
+      key: '_findReturnNode',
+      value: function _findReturnNode() {
+        return doc.querySelector(this.getAttribute('returnNode'));
       }
     }, {
       key: 'isAnimated',
