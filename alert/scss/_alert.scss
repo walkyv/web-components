@@ -97,6 +97,22 @@ button.pe-icon {
   position: relative;
 }
 
+button.pe-icon:focus {
+  outline: 0;
+}
+
+button.pe-icon:focus::after {
+  border: 2px solid #0b73da;
+  border-radius: 4px;
+  content: "";
+  height: calc(100% + 8px);
+  left: -6px;
+  position: absolute;
+  top: -6px;
+  width: calc(100% + 8px);
+  z-index: 1;
+}
+
 img.pe-icon:not([src='']) {
   margin-right: 12px;
   width: 18px;
