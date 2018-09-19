@@ -103,6 +103,19 @@ $success: #19a6a4;
   }
 }
 
+svg {
+  fill: currentColor;
+}
+
+.pe-icon--warning-18 svg {
+  fill: $error;
+}
+
+.pe-icon--check-lg-18 svg {
+  fill: $success
+}
+
+button[class$="-18"],
 img[class$="-18"],
 input[type="image"][class$="-18"],
 svg[class$="-18"] {
@@ -110,6 +123,7 @@ svg[class$="-18"] {
   height: 18px;
 }
 
+button[class$="-24"],
 img[class$="-24"],
 input[type="image"][class$="-24"],
 svg[class$="-24"] {
