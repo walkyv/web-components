@@ -79,15 +79,16 @@
 
   // processes and uploads files
   function uploadFile(file) {
+    console.log(file)
     renderProgressItems(file, target);
-    const url = 'http://localhost:8989/upload';
+    const url = 'https://pearson-file-upload.s3.amazonaws.com/';
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
     xhr.open('POST', url, true);
 
     xhr.onprogress = function (event) {
       if (event.lengthComputable) {
-        console.log(e.loaded+  " / " + event.total)
+        console.log(event.loaded+  " / " + event.total)
       }
     };
 
@@ -98,6 +99,7 @@
     xhr.addEventListener('readystatechange', function(event) {
       if (xhr.readyState == 4 && xhr.status == 200) {
         // Done. Inform the user
+        console.log('DONE')
 
       }
       else if (xhr.readyState == 4 && xhr.status != 200) {
@@ -105,6 +107,7 @@
       }
     });
 
+    formData.append('key', file.name);
     formData.append('file', file);
     xhr.send(formData);
 

@@ -3,6 +3,7 @@
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 (function () {
+  'use strict';
 
   var attachBtn = document.querySelector('#attachFiles'),
       modal = document.querySelector('upload-modal'),
@@ -64,15 +65,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
   // processes and uploads files
   function uploadFile(file) {
+    console.log(file);
     renderProgressItems(file, target);
-    var url = 'http://localhost:8989/upload';
+    var url = 'https://pearson-file-upload.s3.amazonaws.com/';
     var xhr = new XMLHttpRequest();
     var formData = new FormData();
     xhr.open('POST', url, true);
 
     xhr.onprogress = function (event) {
       if (event.lengthComputable) {
-        console.log(e.loaded + " / " + event.total);
+        console.log(event.loaded + " / " + event.total);
       }
     };
 
@@ -83,12 +85,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     xhr.addEventListener('readystatechange', function (event) {
       if (xhr.readyState == 4 && xhr.status == 200) {
         // Done. Inform the user
-
+        console.log('DONE');
       } else if (xhr.readyState == 4 && xhr.status != 200) {
         // Error. Inform the user
       }
     });
 
+    formData.append('key', file.name);
     formData.append('file', file);
     xhr.send(formData);
   }
