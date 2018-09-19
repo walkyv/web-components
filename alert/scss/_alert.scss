@@ -99,21 +99,11 @@ button.pe-icon {
 
 img.pe-icon:not([src='']) {
   margin-right: 12px;
-  min-width: 18px;
-}
-
-svg[class^=pe-icon--] {
-  display: inline-block;
-  fill: currentColor;
-  vertical-align: top;
-}
-
-svg[class$='-18'] {
   width: 18px;
   height: 18px;
 }
 
-svg[class$='-24'] {
+svg {
   width: 24px;
   height: 24px;
 }

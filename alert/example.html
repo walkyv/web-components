@@ -31,53 +31,53 @@
 		Trigger global important alert
 	</button>
 
+	<script>
+			(function (w, doc) {
+				const forEach = Array.prototype.forEach;
+				const triggers = doc
+					.querySelectorAll('button[data-trigger="alert"]');
+		
+				function generateAlert(opts) {
+					const alert = doc.createElement('pearson-alert');
+					for (let attrName in opts) {
+						alert.setAttribute(attrName, opts[attrName])
+					}
+					return alert;
+				}
+		
+				function triggerAlert(e) {
+					const returnNode = '#' + e.target.id;
+					const severity = e.target.dataset.severity;
+					const type = e.target.dataset.type;
+		
+					const alert = generateAlert({
+						returnNode: returnNode,
+						severity: severity,
+						type: type,
+						animated: true
+					})
+		
+					alert.innerHTML = (
+						'   <h2 id="alertTitle" class="pe-label alert-title">  ' +
+						'     <strong>Heads up!</strong>  ' +
+						'   </h2>  ' +
+						'   <p id="alertText" class="pe-paragraph alert-text">  ' +
+						'     <a href="#">Something has happened!</a>  ' +
+						'  </p>  '
+					);
+		
+					if (type === 'inline') {
+						doc.body.insertBefore(alert, e.target.nextSibling)
+					} else {
+						doc.body.appendChild(alert)
+					}
+				}
+		
+				forEach.call(triggers, function (trigger) {
+					trigger.addEventListener('click', triggerAlert);
+				})
+			})(window, document);
+		</script>
+
 </body>
-<script>
-	(function (w, doc) {
-		const forEach = Array.prototype.forEach;
-		const triggers = doc
-			.querySelectorAll('button[data-trigger="alert"]');
-
-		function generateAlert(opts) {
-			const alert = doc.createElement('pearson-alert');
-			for (let attrName in opts) {
-				alert.setAttribute(attrName, opts[attrName])
-			}
-			return alert;
-		}
-
-		function triggerAlert(e) {
-			const returnNode = `#${e.target.id}`;
-			const severity = e.target.dataset.severity;
-			const type = e.target.dataset.type;
-
-			const alert = generateAlert({
-				returnNode,
-				severity,
-				type,
-				animated: true
-			})
-
-			alert.innerHTML = (
-				`<h2 id="alertTitle" class="pe-label alert-title">
-					<strong>Heads up!</strong>
-				</h2>
-				<p id="alertText" class="pe-paragraph alert-text">
-					<a href="#">Something has happened!</a>
-				</p>`
-			);
-
-			if (type === 'inline') {
-				doc.body.insertBefore(alert, e.target.nextSibling)
-			} else {
-				doc.body.appendChild(alert)
-			}
-		}
-
-		forEach.call(triggers, function (trigger) {
-			trigger.addEventListener('click', triggerAlert);
-		})
-	})(window, document);
-</script>
-
 </html>
