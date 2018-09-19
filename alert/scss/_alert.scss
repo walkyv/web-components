@@ -26,7 +26,7 @@ $success: #19a6a4;
     position: absolute;
   }
 
-  &.alert-global{
+  &.alert-global {
     position: fixed;
     top: 32px;
     left: 0;
@@ -34,6 +34,28 @@ $success: #19a6a4;
     @media (max-width: 768px) {
       top: 36px;
       margin: 0 24px;
+    }
+  }
+  &.alert--error {
+    .pe-alert-box {
+      border-left-color: $error;
+
+      a {
+        color: $error;
+      }
+
+      .alert-content-container {
+        color: $error;
+      }
+    }
+  }
+
+  &.alert--success,
+  &.alert--info {
+    border-left-color: $success;
+
+    .alert-content-container {
+      color: $success;
     }
   }
 }
@@ -49,31 +71,6 @@ $success: #19a6a4;
   z-index: 10;
   background: white;
 
-  &.error {
-    border-left-color: $error;
-
-    a {
-      color: $error;
-    }
-
-    .alert-content-container {
-      color: $error;
-
-      svg {
-        margin-top: 2px;
-      }
-    }
-  }
-
-  &.success,
-  &.info {
-    border-left-color: $success;
-
-    .alert-content-container {
-      color: $success;
-    }
-  }
-
   .close-title {
     float: right;
     color: $neutral-three;
@@ -85,11 +82,6 @@ $success: #19a6a4;
 
     align-items: flex-start;
     padding: 20px 4px 20px 20px;
-
-    svg {
-      margin-right: 12px;
-      min-width: 18px;
-    }
 
     .alert-title {
       margin-right: 4px;
@@ -103,30 +95,21 @@ $success: #19a6a4;
   }
 }
 
+.pe-icon:not([src='']) {
+  margin-right: 12px;
+  min-width: 18px;
+}
+
 svg {
   fill: currentColor;
 }
 
-.pe-icon--warning-18 svg {
-  fill: $error;
-}
-
-.pe-icon--check-lg-18 svg {
-  fill: $success
-}
-
-button[class$="-18"],
-img[class$="-18"],
-input[type="image"][class$="-18"],
-svg[class$="-18"] {
+svg[class$='-18'] {
   width: 18px;
   height: 18px;
 }
 
-button[class$="-24"],
-img[class$="-24"],
-input[type="image"][class$="-24"],
-svg[class$="-24"] {
+svg[class$='-24'] {
   width: 24px;
   height: 24px;
 }
