@@ -7,19 +7,27 @@
     realUploadInput = document.querySelector('input[type="file"]'),
     target = document.querySelector('.pe-progress-container'),
     uploadTitle = document.querySelector('.upload-title'),
-    removeButton = target.querySelectorAll('.upload-actions button');
+    circle = document.querySelector('.progress-ring__circle');
 
 
-
-  function buildMarkup (data, res) {
+  function buildMarkup (data, res, total) {
+    function formatBytes(bytes,decimals) {
+      if(bytes == 0) return '0 Bytes';
+      const k = 1024,
+        dm = decimals <= 0 ? 0 : decimals || 2,
+        sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+        i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
     return `
         <div class="group">
           <div class="indicator">
-            <img src="./icons/indicator.png" alt="progress" />
+       	       <progress-ring stroke="3" radius="25" progress=${total}></progress-ring>
+       	       <span>${total}%</span>
           </div>
           <div class="text">
             <strong>${data.name}</strong>
-            <p class="info">${res.loaded} MB / ${res.total} MB</p>
+            <p class="info">${formatBytes(res.loaded)} / ${formatBytes(res.total)}</p>
           </div>
         </div>
         <div class="upload-actions">
@@ -33,7 +41,6 @@
   }
 
   function renderProgressItems (data, target, xhr) {
-    const progressContainer = document.querySelector('.pe-progress-container');
     if (modal.footer !== true) {
       modal.footer = true;
       uploadInfo.style.display = 'block';
@@ -43,13 +50,12 @@
     target.appendChild(div);
 
     setTimeout(()=> {
-      uploadTitle.innerHTML = "Uploading  (0 done, 0 in progress)"
-      console.log(removeButton)
-    },500)
+      uploadTitle.innerHTML = "Uploading  (0 done, 0 in progress)";
+    },1000);
 
     xhr(function(e) {
-      div.innerHTML = buildMarkup(data, e)
       let percentLoaded = Math.round((e.loaded / e.total) * 100);
+      div.innerHTML = buildMarkup(data, e, percentLoaded)
     });
 
   }
@@ -106,13 +112,11 @@
     formData.append('key', file.name);
     formData.append('file', file);
     xhr.send(formData);
-
   }
 
   function removeFile (node) {
     console.log(node)
     node.remove();
-
   }
 
   target.addEventListener('click', event => {

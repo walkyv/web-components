@@ -61,6 +61,10 @@
       padding:40px 1.5em 0 2.5em;
       .text {
         max-width:260px;
+        word-break: break-word;
+        strong {
+          line-height:1.5;
+        }
       }
     }
     .progress {
@@ -76,9 +80,20 @@
     }
     .indicator {
       margin-right:1em;
+      position:relative;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      span {
+        position:absolute;
+        font-weight:bold;
+        color:#047a9c;
+        font-size:.7em;
+      }
       img {
         width:39px;
       }
+
     }
     .text {
 
@@ -107,6 +122,9 @@
     }
     input[type=file] {
       display:none;
+    }
+    progress-ring {
+      display:flex;
     }
   }
 

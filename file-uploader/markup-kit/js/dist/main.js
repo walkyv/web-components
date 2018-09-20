@@ -11,14 +11,21 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       realUploadInput = document.querySelector('input[type="file"]'),
       target = document.querySelector('.pe-progress-container'),
       uploadTitle = document.querySelector('.upload-title'),
-      removeButton = target.querySelectorAll('.upload-actions button');
+      circle = document.querySelector('.progress-ring__circle');
 
-  function buildMarkup(data, res) {
-    return '\n        <div class="group">\n          <div class="indicator">\n            <img src="./icons/indicator.png" alt="progress" />\n          </div>\n          <div class="text">\n            <strong>' + data.name + '</strong>\n            <p class="info">' + res.loaded + ' MB / ' + res.total + ' MB</p>\n          </div>\n        </div>\n        <div class="upload-actions">\n          <button class="pe-icon--btn" aria-label="remove ' + data.name + ' from uploads" onclick>\n            <svg focusable="false" class="pe-icon--delete-18" role="img">\n              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>\n            </svg>\n          </button>\n        </div>\n    ';
+  function buildMarkup(data, res, total) {
+    function formatBytes(bytes, decimals) {
+      if (bytes == 0) return '0 Bytes';
+      var k = 1024,
+          dm = decimals <= 0 ? 0 : decimals || 2,
+          sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+          i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+    return '\n        <div class="group">\n          <div class="indicator">\n       \t       <progress-ring stroke="3" radius="25" progress=' + total + '></progress-ring>\n       \t       <span>' + total + '%</span>\n          </div>\n          <div class="text">\n            <strong>' + data.name + '</strong>\n            <p class="info">' + formatBytes(res.loaded) + ' / ' + formatBytes(res.total) + '</p>\n          </div>\n        </div>\n        <div class="upload-actions">\n          <button class="pe-icon--btn" aria-label="remove ' + data.name + ' from uploads" onclick>\n            <svg focusable="false" class="pe-icon--delete-18" role="img">\n              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>\n            </svg>\n          </button>\n        </div>\n    ';
   }
 
   function renderProgressItems(data, target, xhr) {
-    var progressContainer = document.querySelector('.pe-progress-container');
     if (modal.footer !== true) {
       modal.footer = true;
       uploadInfo.style.display = 'block';
@@ -29,12 +36,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
     setTimeout(function () {
       uploadTitle.innerHTML = "Uploading  (0 done, 0 in progress)";
-      console.log(removeButton);
-    }, 500);
+    }, 1000);
 
     xhr(function (e) {
-      div.innerHTML = buildMarkup(data, e);
       var percentLoaded = Math.round(e.loaded / e.total * 100);
+      div.innerHTML = buildMarkup(data, e, percentLoaded);
     });
   }
 
