@@ -11,13 +11,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       realUploadInput = document.querySelector('input[type="file"]'),
       target = document.querySelector('.pe-progress-container'),
       uploadTitle = document.querySelector('.upload-title'),
-      fileArr = [];
+      removeButton = target.querySelectorAll('.upload-actions button');
 
   function buildMarkup(data, res) {
-    return '\n        <div class="group">\n          <div class="indicator">\n            <img src="./icons/indicator.png" alt="progress" />\n          </div>\n          <div class="text">\n            <strong>' + data.name + '</strong>\n            <p class="info">' + res.loaded + ' MB / ' + res.total + ' MB</p>\n          </div>\n        </div>\n        <div class="upload-actions">\n          <button class="pe-icon--btn" aria-label="remove ' + data.name + ' from uploads">\n            <svg focusable="false" class="pe-icon--delete-18" role="img">\n              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>\n            </svg>\n          </button>\n        </div>\n    ';
+    return '\n        <div class="group">\n          <div class="indicator">\n            <img src="./icons/indicator.png" alt="progress" />\n          </div>\n          <div class="text">\n            <strong>' + data.name + '</strong>\n            <p class="info">' + res.loaded + ' MB / ' + res.total + ' MB</p>\n          </div>\n        </div>\n        <div class="upload-actions">\n          <button class="pe-icon--btn" aria-label="remove ' + data.name + ' from uploads" onclick>\n            <svg focusable="false" class="pe-icon--delete-18" role="img">\n              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>\n            </svg>\n          </button>\n        </div>\n    ';
   }
 
   function renderProgressItems(data, target, xhr) {
+    var progressContainer = document.querySelector('.pe-progress-container');
     if (modal.footer !== true) {
       modal.footer = true;
       uploadInfo.style.display = 'block';
@@ -26,9 +27,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     div.classList.add('progress');
     target.appendChild(div);
 
-    fileArr.push(data);
     setTimeout(function () {
-      uploadTitle.innerHTML = "Uploading  (0 done, " + fileArr.length + " in progress)";
+      uploadTitle.innerHTML = "Uploading  (0 done, 0 in progress)";
+      console.log(removeButton);
     }, 500);
 
     xhr(function (e) {
@@ -74,9 +75,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         xhr = new XMLHttpRequest(),
         formData = new FormData();
 
-    xhr.open('POST', url, true);
-    renderProgressItems(file, target, uploadProgress);
-
     function uploadProgress(callback) {
       xhr.upload.onprogress = function (event) {
         if (event.lengthComputable) {
@@ -85,10 +83,29 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       };
     }
 
+    renderProgressItems(file, target, uploadProgress);
+
+    xhr.open('POST', url, true);
     formData.append('key', file.name);
     formData.append('file', file);
     xhr.send(formData);
   }
+
+  function removeFile(node) {
+    console.log(node);
+    node.remove();
+  }
+
+  target.addEventListener('click', function (event) {
+    preventDefaults(event);
+    if (event.target.className === 'pe-icon--btn') {
+      removeFile(event.target.parentNode.parentNode);
+      if (target.children.length === 0) {
+        uploadInfo.style.display = "none";
+        modal.footer = false;
+      }
+    }
+  });
 
   attachBtn.addEventListener('click', function (event) {
     realUploadInput.click();

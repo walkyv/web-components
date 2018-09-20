@@ -7,7 +7,9 @@
     realUploadInput = document.querySelector('input[type="file"]'),
     target = document.querySelector('.pe-progress-container'),
     uploadTitle = document.querySelector('.upload-title'),
-    fileArr = [];
+    removeButton = target.querySelectorAll('.upload-actions button');
+
+
 
   function buildMarkup (data, res) {
     return `
@@ -21,7 +23,7 @@
           </div>
         </div>
         <div class="upload-actions">
-          <button class="pe-icon--btn" aria-label="remove ${data.name} from uploads">
+          <button class="pe-icon--btn" aria-label="remove ${data.name} from uploads" onclick>
             <svg focusable="false" class="pe-icon--delete-18" role="img">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>
             </svg>
@@ -31,6 +33,7 @@
   }
 
   function renderProgressItems (data, target, xhr) {
+    const progressContainer = document.querySelector('.pe-progress-container');
     if (modal.footer !== true) {
       modal.footer = true;
       uploadInfo.style.display = 'block';
@@ -39,15 +42,16 @@
     div.classList.add('progress');
     target.appendChild(div);
 
-    fileArr.push(data);
     setTimeout(()=> {
-      uploadTitle.innerHTML = "Uploading  (0 done, " + fileArr.length + " in progress)"
+      uploadTitle.innerHTML = "Uploading  (0 done, 0 in progress)"
+      console.log(removeButton)
     },500)
 
     xhr(function(e) {
       div.innerHTML = buildMarkup(data, e)
       let percentLoaded = Math.round((e.loaded / e.total) * 100);
     });
+
   }
 
   // highlight function to outline drop area when a file is over area
@@ -79,6 +83,7 @@
   // takes the files, loops over them, and uploads them
   function handleFiles(files) {
     ([...files]).forEach(uploadFile);
+
   }
 
   // processes and uploads files
@@ -86,9 +91,6 @@
     const url = 'https://pearson-file-upload.s3.amazonaws.com/',
           xhr = new XMLHttpRequest(),
           formData = new FormData();
-
-    xhr.open('POST', url, true);
-    renderProgressItems(file, target, uploadProgress);
 
     function uploadProgress (callback) {
       xhr.upload.onprogress = function(event) {
@@ -98,12 +100,31 @@
       };
     }
 
+    renderProgressItems(file, target, uploadProgress);
+
+    xhr.open('POST', url, true);
     formData.append('key', file.name);
     formData.append('file', file);
     xhr.send(formData);
 
   }
 
+  function removeFile (node) {
+    console.log(node)
+    node.remove();
+
+  }
+
+  target.addEventListener('click', event => {
+    preventDefaults(event);
+    if (event.target.className === 'pe-icon--btn') {
+      removeFile(event.target.parentNode.parentNode)
+      if (target.children.length === 0) {
+        uploadInfo.style.display = "none"
+        modal.footer = false;
+      }
+    }
+  });
 
   attachBtn.addEventListener('click', event => {
     realUploadInput.click();
