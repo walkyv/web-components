@@ -1,8 +1,8 @@
 {
-  "name": "@pearson-ux/modal",
-  "author": "David O'Dey | david.odey@pearson.com",
+  "name": "@pearson-ux/alert",
+  "author": "EJ Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "Modal web component",
   "main": "index.html",
   "scripts": {
