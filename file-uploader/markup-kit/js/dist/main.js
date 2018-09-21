@@ -3,20 +3,50 @@
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 (function () {
+  'use strict';
 
   var attachBtn = document.querySelector('#attachFiles'),
       modal = document.querySelector('upload-modal'),
       uploadInfo = document.querySelector('#info'),
       realUploadInput = document.querySelector('input[type="file"]'),
-      target = document.querySelector('.pe-progress-container'),
-      uploadTitle = document.querySelector('.upload-title'),
-      fileArr = [];
+      target = document.querySelector('#progressContainer'),
+      uploadTitle = document.querySelector('#uploadTitle');
 
-  function buildMarkup(data) {
-    return '\n        <div class="group">\n          <div class="indicator">\n            <img src="./icons/indicator.png" alt="progress" />\n          </div>\n          <div class="text">\n            <strong>' + data.name + '</strong>\n            <p class="info">0 MB / ' + data.size + ' MB</p>\n          </div>\n        </div>\n        <div class="upload-actions">\n          <button class="pe-icon--btn" aria-label="remove ' + data.name + ' from uploads">\n            <svg focusable="false" class="pe-icon--delete-18" role="img">\n              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>\n            </svg>\n          </button>\n        </div>\n    ';
+  var status = {
+    'done': 0,
+    'progress': 0
+  };
+
+  function buildMarkup(file, progressEvent, total) {
+    if (total === 100) {
+      status.done = status.done + 1;
+      if (status.progress > 0) {
+        status.progress = status.progress - 1;
+      }
+    }
+
+    function formatBytes(bytes, decimals) {
+      if (bytes == 0) return '0 Bytes';
+      var k = 1024,
+          dm = decimals <= 0 ? 0 : decimals || 2,
+          sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+          i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    function toggleCheckmark(total) {
+      if (total !== 100) {
+        return '\n            <span>' + total + '%</span>\n        ';
+      } else {
+        return '\n            <span>\n                <svg focusable="false" class="pe-icon--check-sm-24" role="img">\n                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-sm-24"></use>\n                </svg>  \n            </span>\n        ';
+      }
+    }
+
+    uploadTitle.innerHTML = 'Uploading  (' + status.done + ' done, ' + status.progress + ' in progress)';
+    return '\n        <div class="group">\n          <div class="indicator">\n       \t       <progress-ring stroke="3" radius="25" progress=' + total + '></progress-ring>\n       \t        ' + toggleCheckmark(total) + '\n          </div>\n          <div class="text">\n            <strong>' + file.name + '</strong>\n            <p class="info">' + formatBytes(progressEvent.loaded) + ' / ' + formatBytes(progressEvent.total) + '</p>\n          </div>\n        </div>\n        <div class="upload-actions">\n          <button class="pe-icon--btn" aria-label="remove ' + file.name + ' from uploads" onclick>\n            <svg focusable="false" class="pe-icon--delete-18" role="img">\n              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>\n            </svg>\n          </button>\n        </div>\n    ';
   }
 
-  function renderProgressItems(data, target) {
+  function renderProgressItems(data, target, xhr) {
     if (modal.footer !== true) {
       modal.footer = true;
       uploadInfo.style.display = 'block';
@@ -24,11 +54,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     var div = document.createElement('DIV');
     div.classList.add('progress');
     target.appendChild(div);
-    div.innerHTML = buildMarkup(data);
-    fileArr.push(data);
-    setTimeout(function () {
-      uploadTitle.innerHTML = "Uploading  (0 done, " + fileArr.length + " in progress)";
-    }, 500);
+
+    xhr(function (event) {
+      var percentLoaded = Math.round(event.loaded / event.total * 100);
+      div.innerHTML = buildMarkup(data, event, percentLoaded);
+    });
   }
 
   // highlight function to outline drop area when a file is over area
@@ -64,34 +94,39 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
   // processes and uploads files
   function uploadFile(file) {
-    renderProgressItems(file, target);
-    var url = 'http://localhost:8989/upload';
-    var xhr = new XMLHttpRequest();
-    var formData = new FormData();
+    var url = 'https://pearson-file-upload.s3.amazonaws.com/',
+        xhr = new XMLHttpRequest(),
+        formData = new FormData();
+
+    function uploadProgress(callback) {
+      status.progress = status.progress + 1;
+      xhr.upload.onprogress = function (event) {
+        if (event.lengthComputable) {
+          callback(event);
+        }
+      };
+    }
+
+    renderProgressItems(file, target, uploadProgress);
     xhr.open('POST', url, true);
-
-    xhr.onprogress = function (event) {
-      if (event.lengthComputable) {
-        console.log(e.loaded + " / " + event.total);
-      }
-    };
-
-    xhr.onloadstart = function (event) {
-      console.log("start");
-    };
-
-    xhr.addEventListener('readystatechange', function (event) {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        // Done. Inform the user
-
-      } else if (xhr.readyState == 4 && xhr.status != 200) {
-        // Error. Inform the user
-      }
-    });
-
+    formData.append('key', file.name);
     formData.append('file', file);
     xhr.send(formData);
   }
+
+  // remove item
+  target.addEventListener('click', function (event) {
+    preventDefaults(event);
+    if (event.target.className === 'pe-icon--btn') {
+      status.done = status.done - 1;
+      uploadTitle.innerHTML = 'Uploading  (' + status.done + ' done, ' + status.progress + ' in progress)';
+      event.target.parentNode.parentNode.remove();
+      if (target.children.length === 0) {
+        uploadInfo.style.display = "none";
+        modal.footer = false;
+      }
+    }
+  });
 
   attachBtn.addEventListener('click', function (event) {
     realUploadInput.click();
