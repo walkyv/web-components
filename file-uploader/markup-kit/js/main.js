@@ -6,11 +6,19 @@
     uploadInfo = document.querySelector('#info'),
     realUploadInput = document.querySelector('input[type="file"]'),
     target = document.querySelector('.pe-progress-container'),
-    uploadTitle = document.querySelector('.upload-title'),
-    circle = document.querySelector('.progress-ring__circle');
+    uploadTitle = document.querySelector('.upload-title');
 
+  let status = {
+    'done': 0,
+    'progress': 0
+  };
 
-  function buildMarkup (data, res, total) {
+  function buildMarkup (file, progressEvent, total) {
+    if (total === 100) {
+      status.done = status.done + 1;
+      status.progress = status.progress - 1
+    }
+
     function formatBytes(bytes,decimals) {
       if(bytes == 0) return '0 Bytes';
       const k = 1024,
@@ -19,19 +27,37 @@
         i = Math.floor(Math.log(bytes) / Math.log(k));
       return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
+
+    function toggleCheckmark (total) {
+      if (total !== 100) {
+        return `
+            <span>${total}%</span>
+        `
+      } else {
+        return `
+            <span>
+                <svg focusable="false" class="pe-icon--check-sm-24" role="img">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-sm-24"></use>
+                </svg>  
+            </span>
+        `
+      }
+    }
+
+    uploadTitle.innerHTML = `Uploading  (${status.done} done, ${status.progress} in progress)`;
     return `
         <div class="group">
           <div class="indicator">
        	       <progress-ring stroke="3" radius="25" progress=${total}></progress-ring>
-       	       <span>${total}%</span>
+       	        ${toggleCheckmark(total)}
           </div>
           <div class="text">
-            <strong>${data.name}</strong>
-            <p class="info">${formatBytes(res.loaded)} / ${formatBytes(res.total)}</p>
+            <strong>${file.name}</strong>
+            <p class="info">${formatBytes(progressEvent.loaded)} / ${formatBytes(progressEvent.total)}</p>
           </div>
         </div>
         <div class="upload-actions">
-          <button class="pe-icon--btn" aria-label="remove ${data.name} from uploads" onclick>
+          <button class="pe-icon--btn" aria-label="remove ${file.name} from uploads" onclick>
             <svg focusable="false" class="pe-icon--delete-18" role="img">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>
             </svg>
@@ -49,20 +75,16 @@
     div.classList.add('progress');
     target.appendChild(div);
 
-    setTimeout(()=> {
-      uploadTitle.innerHTML = "Uploading  (0 done, 0 in progress)";
-    },1000);
-
-    xhr(function(e) {
-      let percentLoaded = Math.round((e.loaded / e.total) * 100);
-      div.innerHTML = buildMarkup(data, e, percentLoaded)
+    xhr(function(event) {
+      let percentLoaded = Math.round((event.loaded / event.total) * 100);
+      div.innerHTML = buildMarkup(data, event, percentLoaded)
     });
 
   }
 
   // highlight function to outline drop area when a file is over area
   function highlight(event) {
-    preventDefaults(event)
+    preventDefaults(event);
     dropArea.classList.add('highlight')
   }
 
@@ -89,7 +111,6 @@
   // takes the files, loops over them, and uploads them
   function handleFiles(files) {
     ([...files]).forEach(uploadFile);
-
   }
 
   // processes and uploads files
@@ -99,6 +120,7 @@
           formData = new FormData();
 
     function uploadProgress (callback) {
+      status.progress = status.progress + 1
       xhr.upload.onprogress = function(event) {
         if (event.lengthComputable) {
           callback(event)
@@ -107,24 +129,22 @@
     }
 
     renderProgressItems(file, target, uploadProgress);
-
     xhr.open('POST', url, true);
     formData.append('key', file.name);
     formData.append('file', file);
     xhr.send(formData);
+
   }
 
-  function removeFile (node) {
-    console.log(node)
-    node.remove();
-  }
-
+  // remove item
   target.addEventListener('click', event => {
     preventDefaults(event);
     if (event.target.className === 'pe-icon--btn') {
-      removeFile(event.target.parentNode.parentNode)
+      status.done = status.done - 1
+      uploadTitle.innerHTML = `Uploading  (${status.done} done, ${status.progress} in progress)`;
+      event.target.parentNode.parentNode.remove();
       if (target.children.length === 0) {
-        uploadInfo.style.display = "none"
+        uploadInfo.style.display = "none";
         modal.footer = false;
       }
     }
@@ -156,7 +176,6 @@
   dropArea.addEventListener('drop', event => {
     handleDrop(event);
   });
-
 
 })();
 

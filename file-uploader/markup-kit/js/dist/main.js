@@ -10,10 +10,19 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       uploadInfo = document.querySelector('#info'),
       realUploadInput = document.querySelector('input[type="file"]'),
       target = document.querySelector('.pe-progress-container'),
-      uploadTitle = document.querySelector('.upload-title'),
-      circle = document.querySelector('.progress-ring__circle');
+      uploadTitle = document.querySelector('.upload-title');
 
-  function buildMarkup(data, res, total) {
+  var status = {
+    'done': 0,
+    'progress': 0
+  };
+
+  function buildMarkup(file, progressEvent, total) {
+    if (total === 100) {
+      status.done = status.done + 1;
+      status.progress = status.progress - 1;
+    }
+
     function formatBytes(bytes, decimals) {
       if (bytes == 0) return '0 Bytes';
       var k = 1024,
@@ -22,7 +31,17 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           i = Math.floor(Math.log(bytes) / Math.log(k));
       return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
-    return '\n        <div class="group">\n          <div class="indicator">\n       \t       <progress-ring stroke="3" radius="25" progress=' + total + '></progress-ring>\n       \t       <span>' + total + '%</span>\n          </div>\n          <div class="text">\n            <strong>' + data.name + '</strong>\n            <p class="info">' + formatBytes(res.loaded) + ' / ' + formatBytes(res.total) + '</p>\n          </div>\n        </div>\n        <div class="upload-actions">\n          <button class="pe-icon--btn" aria-label="remove ' + data.name + ' from uploads" onclick>\n            <svg focusable="false" class="pe-icon--delete-18" role="img">\n              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>\n            </svg>\n          </button>\n        </div>\n    ';
+
+    function toggleCheckmark(total) {
+      if (total !== 100) {
+        return '\n            <span>' + total + '%</span>\n        ';
+      } else {
+        return '\n            <span>\n                <svg focusable="false" class="pe-icon--check-sm-24" role="img">\n                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-sm-24"></use>\n                </svg>  \n            </span>\n        ';
+      }
+    }
+
+    uploadTitle.innerHTML = 'Uploading  (' + status.done + ' done, ' + status.progress + ' in progress)';
+    return '\n        <div class="group">\n          <div class="indicator">\n       \t       <progress-ring stroke="3" radius="25" progress=' + total + '></progress-ring>\n       \t        ' + toggleCheckmark(total) + '\n          </div>\n          <div class="text">\n            <strong>' + file.name + '</strong>\n            <p class="info">' + formatBytes(progressEvent.loaded) + ' / ' + formatBytes(progressEvent.total) + '</p>\n          </div>\n        </div>\n        <div class="upload-actions">\n          <button class="pe-icon--btn" aria-label="remove ' + file.name + ' from uploads" onclick>\n            <svg focusable="false" class="pe-icon--delete-18" role="img">\n              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>\n            </svg>\n          </button>\n        </div>\n    ';
   }
 
   function renderProgressItems(data, target, xhr) {
@@ -34,13 +53,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     div.classList.add('progress');
     target.appendChild(div);
 
-    setTimeout(function () {
-      uploadTitle.innerHTML = "Uploading  (0 done, 0 in progress)";
-    }, 1000);
-
-    xhr(function (e) {
-      var percentLoaded = Math.round(e.loaded / e.total * 100);
-      div.innerHTML = buildMarkup(data, e, percentLoaded);
+    xhr(function (event) {
+      var percentLoaded = Math.round(event.loaded / event.total * 100);
+      div.innerHTML = buildMarkup(data, event, percentLoaded);
     });
   }
 
@@ -82,6 +97,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         formData = new FormData();
 
     function uploadProgress(callback) {
+      status.progress = status.progress + 1;
       xhr.upload.onprogress = function (event) {
         if (event.lengthComputable) {
           callback(event);
@@ -90,22 +106,19 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     }
 
     renderProgressItems(file, target, uploadProgress);
-
     xhr.open('POST', url, true);
     formData.append('key', file.name);
     formData.append('file', file);
     xhr.send(formData);
   }
 
-  function removeFile(node) {
-    console.log(node);
-    node.remove();
-  }
-
+  // remove item
   target.addEventListener('click', function (event) {
     preventDefaults(event);
     if (event.target.className === 'pe-icon--btn') {
-      removeFile(event.target.parentNode.parentNode);
+      status.done = status.done - 1;
+      uploadTitle.innerHTML = 'Uploading  (' + status.done + ' done, ' + status.progress + ' in progress)';
+      event.target.parentNode.parentNode.remove();
       if (target.children.length === 0) {
         uploadInfo.style.display = "none";
         modal.footer = false;

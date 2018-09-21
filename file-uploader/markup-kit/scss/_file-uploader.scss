@@ -55,10 +55,10 @@
     .file-upload-info {
       display:none;
       margin-left:2.5em;
-      padding-left:1.5em;
       width:373px;
       border-left: 1px solid #c7c7c7;
       padding:40px 1.5em 0 2.5em;
+      padding-right:0;
       .text {
         max-width:260px;
         word-break: break-word;
@@ -112,6 +112,9 @@
         cursor: pointer;
         width: 40px;
         height: 40px;
+        svg {
+          fill: #6a7070
+        }
       }
     }
     .upload-title {
