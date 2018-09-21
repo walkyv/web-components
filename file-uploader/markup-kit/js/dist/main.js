@@ -9,8 +9,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       modal = document.querySelector('upload-modal'),
       uploadInfo = document.querySelector('#info'),
       realUploadInput = document.querySelector('input[type="file"]'),
-      target = document.querySelector('.pe-progress-container'),
-      uploadTitle = document.querySelector('.upload-title');
+      target = document.querySelector('#progressContainer'),
+      uploadTitle = document.querySelector('#uploadTitle');
 
   var status = {
     'done': 0,

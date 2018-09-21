@@ -5,8 +5,8 @@
     modal = document.querySelector('upload-modal'),
     uploadInfo = document.querySelector('#info'),
     realUploadInput = document.querySelector('input[type="file"]'),
-    target = document.querySelector('.pe-progress-container'),
-    uploadTitle = document.querySelector('.upload-title');
+    target = document.querySelector('#progressContainer'),
+    uploadTitle = document.querySelector('#uploadTitle');
 
   let status = {
     'done': 0,

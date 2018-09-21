@@ -12,6 +12,8 @@ class ProgressRing extends HTMLElement {
       <svg
         height="${radius * 2}"
         width="${radius * 2}"
+        aria-hidden="true"
+        focusable="false"
        >
          <circle
            stroke="#047a9c"
