@@ -11,6 +11,9 @@
 
   .pe-file-upload-container {
     display:flex;
+    @media (max-width:768px) {
+      flex-direction: column;
+    }
     .file-upload {
       height: 362px;
       border-radius: 6px;
@@ -61,6 +64,12 @@
       padding-right:0;
       max-height: 410px;
       overflow: scroll;
+      @media(max-width:768px) {
+        border-left:0;
+        padding:0;
+        margin:0;
+        max-height: 100%;
+      }
       .text {
         max-width:260px;
         word-break: break-word;
