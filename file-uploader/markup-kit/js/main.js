@@ -16,7 +16,9 @@
   function buildMarkup (file, progressEvent, total) {
     if (total === 100) {
       status.done = status.done + 1;
-      status.progress = status.progress - 1
+      if (status.progress > 0){
+        status.progress = status.progress - 1
+      }
     }
 
     function formatBytes(bytes,decimals) {

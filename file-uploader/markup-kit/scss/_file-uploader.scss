@@ -59,6 +59,8 @@
       border-left: 1px solid #c7c7c7;
       padding:40px 1.5em 0 2.5em;
       padding-right:0;
+      max-height: 410px;
+      overflow: scroll;
       .text {
         max-width:260px;
         word-break: break-word;

@@ -20,7 +20,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   function buildMarkup(file, progressEvent, total) {
     if (total === 100) {
       status.done = status.done + 1;
-      status.progress = status.progress - 1;
+      if (status.progress > 0) {
+        status.progress = status.progress - 1;
+      }
     }
 
     function formatBytes(bytes, decimals) {
