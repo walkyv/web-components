@@ -17,7 +17,11 @@
 	<!-- import web components -->
 	<link rel="import" href="index.html" />
 
-
+<style>
+.output {
+	margin-top: 5rem;
+}
+</style>
 </head>
 
 <body>
@@ -30,12 +34,13 @@
 	<button id="trigger-2" data-trigger="alert" data-severity="important" data-type="global">
 		Trigger global important alert
 	</button>
-
+	<div id="output" class="output" aria-live="polite" aria-atomic="true"></div>
 	<script>
 			(function (w, doc) {
 				const forEach = Array.prototype.forEach;
 				const triggers = doc
 					.querySelectorAll('button[data-trigger="alert"]');
+				const statusRegion = doc.querySelector('#output');
 		
 				function generateAlert(opts) {
 					const alert = doc.createElement('pearson-alert');
@@ -65,6 +70,10 @@
 						'     <a href="#">Something has happened!</a>  ' +
 						'  </p>  '
 					);
+
+					alert.addEventListener('dismiss', function (e) {
+						renderMessage(e.target);
+					});
 		
 					if (type === 'inline') {
 						doc.body.insertBefore(alert, e.target.nextSibling)
@@ -72,10 +81,15 @@
 						doc.body.appendChild(alert)
 					}
 				}
+
+				function renderMessage(alertElem) {
+					statusRegion.innerHTML = 'Closed ' + alertElem.severity + ' alert';
+				}
 		
 				forEach.call(triggers, function (trigger) {
 					trigger.addEventListener('click', triggerAlert);
 				})
+				
 			})(window, document);
 		</script>
 
