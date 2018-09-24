@@ -67,6 +67,12 @@
     disconnectedCallback() {
       const returnNode = this._findReturnNode();
 
+      this.dispatchEvent(
+        new Event('dismiss', {
+          bubbles: true
+        })
+      );
+
       this.alert.removeEventListener('animationend', this._onAnimationEnd);
       this.closeBtn.removeEventListener('click', this._onClose);
       
