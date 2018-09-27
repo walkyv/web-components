@@ -71,10 +71,6 @@
 						'  </p>  '
 					);
 
-					alert.addEventListener('dismiss', function (e) {
-						renderMessage(e.target);
-					});
-		
 					if (type === 'inline') {
 						doc.body.insertBefore(alert, e.target.nextSibling)
 					} else {
@@ -89,6 +85,10 @@
 				forEach.call(triggers, function (trigger) {
 					trigger.addEventListener('click', triggerAlert);
 				})
+
+				w.addEventListener('dismiss', function (e) {
+					renderMessage(e.target);
+				});
 				
 			})(window, document);
 		</script>
