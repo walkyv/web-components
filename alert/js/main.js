@@ -67,12 +67,6 @@
     disconnectedCallback() {
       const returnNode = this._findReturnNode();
 
-      this.dispatchEvent(
-        new Event('dismiss', {
-          bubbles: true
-        })
-      );
-
       this.alert.removeEventListener('animationend', this._onAnimationEnd);
       this.closeBtn.removeEventListener('click', this._onClose);
       
@@ -86,6 +80,12 @@
       if (this.type === 'inline') {
         this.alert.classList.add('fadeOut');
       }
+      
+      this.dispatchEvent(
+        new Event('dismiss', {
+          bubbles: true
+        })
+      );
     }
 
     _onAnimationEnd(e) {

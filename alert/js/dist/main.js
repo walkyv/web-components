@@ -83,10 +83,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function disconnectedCallback() {
         var returnNode = this._findReturnNode();
 
-        this.dispatchEvent(new Event('dismiss', {
-          bubbles: true
-        }));
-
         this.alert.removeEventListener('animationend', this._onAnimationEnd);
         this.closeBtn.removeEventListener('click', this._onClose);
 
@@ -101,6 +97,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (this.type === 'inline') {
           this.alert.classList.add('fadeOut');
         }
+
+        this.dispatchEvent(new Event('dismiss', {
+          bubbles: true
+        }));
       }
     }, {
       key: '_onAnimationEnd',
