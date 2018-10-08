@@ -1,6 +1,11 @@
 (function(w, doc) {
   'use strict';
 
+  const currentDoc = doc.querySelector('link[href$="index.html"]').import;
+  const template = currentDoc.querySelector('#template');
+
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'upload-modal');
+
   const FOCUSABLE_ELEMENTS = `
     a[href]:not([tabindex^="-"]):not([inert]),
     area[href]:not([tabindex^="-"]):not([inert]),
@@ -75,6 +80,8 @@
 
       this.attachShadow({ mode: 'open' });
 
+      this.clone = doc.importNode(template.content.cloneNode(true), true);
+
       this.openModal = this.openModal.bind(this);
       this.closeModal = this.closeModal.bind(this);
 
@@ -100,24 +107,16 @@
     }
 
     connectedCallback() {
+      console.log(this.clone)
       // Get component attributes
       const titleText = this.getAttribute('titleText'),
         triggerId = this.getAttribute('triggerId'),
         footer = this.hasAttribute('footer');
 
-      // Clone content for shadow DOM
-      const currentDoc = doc.querySelector('link[href$="index.html"]')
-        .import;
-      const template = currentDoc.querySelector('#template');
-      const clone = doc.importNode(template.content, true);
-
       // Create elements
-
-      // Target the body of the modal
-
       // create the footer
       if (footer) {
-        this.renderfooter(clone);
+        this.renderfooter(this.clone);
       }
 
       const overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
@@ -125,7 +124,7 @@
           overlayButtonTemplate.content,
           true
         ),
-        overlayEntryPoint = clone.querySelector('#modalPlaceholder');
+        overlayEntryPoint = this.clone.querySelector('#modalPlaceholder');
 
       overlayEntryPoint.parentNode.insertBefore(
         overlayButtonClone,
@@ -133,7 +132,7 @@
       );
       overlayEntryPoint.remove();
 
-      const title = clone.querySelector('#dialogHeading');
+      const title = this.clone.querySelector('#dialogHeading');
       if (titleText !== null) {
         title.innerHTML = titleText;
       } else {
@@ -145,9 +144,9 @@
       this.main = doc.querySelector('main');
       this.triggerBtn = doc.querySelector('#' + triggerId);
 
-      this.modal = clone.querySelector('#modal');
-      this.eventBtns = clone.querySelectorAll('[data-event]');
-      this.overlay = clone.querySelector('#modalOverlay');
+      this.modal = this.clone.querySelector('#modal');
+      this.eventBtns = this.clone.querySelectorAll('[data-event]');
+      this.overlay = this.clone.querySelector('#modalOverlay');
 
       // When the modal trigger is clicked, open modal
       this.triggerBtn.addEventListener('click', this.openModal);
@@ -162,7 +161,7 @@
       // sets the positioning for modals that are programmatically created and have scrolling content
       this.setPosition();
 
-      this.shadowRoot.appendChild(clone);
+      this.shadowRoot.appendChild(this.clone);
 
       doc.addEventListener('keydown', this.bindKeyPress);
       doc.body.addEventListener('focus', this.maintainFocus, true);
