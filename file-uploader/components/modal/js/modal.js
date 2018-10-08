@@ -67,7 +67,7 @@
 
   class Modal extends HTMLElement {
     static get observedAttributes() {
-      return ['footer'];
+      return ['footer', 'minimized'];
     }
 
     constructor() {
@@ -83,16 +83,19 @@
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      // if `footer` is changing, but
-      // this.modal has not been defined yet,
+      // if `this.modal has not been defined yet,
       // bail out.
-      if (name === 'footer' && !this.modal) return;
-      if (!this.footer) {
-        const actions = this.modal.querySelector('.actions');
-        actions.remove();
+      if (!this.modal) return;
+      if (name === 'footer') {
+        if (!this.footer) {
+          const actions = this.modal.querySelector('.actions');
+          actions.remove();
+        } else {
+          this.renderfooter(this.modal);
+        }
       }
-      if (this.footer) {
-        this.renderfooter(this.modal);
+      if (name === 'minimized') {
+        console.log(newValue);
       }
     }
 
@@ -181,6 +184,20 @@
         this.setAttribute('footer', '');
       } else {
         this.removeAttribute('footer');
+      }
+    }
+
+    get minimized() {
+      return this.hasAttribute('minimized');
+    }
+
+    set minimized(value) {
+      const isMinimized = Boolean(value);
+
+      if (isMinimized) {
+        this.setAttribute('minimized', '');
+      } else {
+        this.removeAttribute('minimized');
       }
     }
 
