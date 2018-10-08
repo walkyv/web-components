@@ -80,6 +80,12 @@
       if (this.type === 'inline') {
         this.alert.classList.add('fadeOut');
       }
+      
+      this.dispatchEvent(
+        new Event('dismiss', {
+          bubbles: true
+        })
+      );
     }
 
     _onAnimationEnd(e) {

@@ -97,6 +97,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (this.type === 'inline') {
           this.alert.classList.add('fadeOut');
         }
+
+        this.dispatchEvent(new Event('dismiss', {
+          bubbles: true
+        }));
       }
     }, {
       key: '_onAnimationEnd',
