@@ -1,9 +1,9 @@
 {
-  "name": "@pearson-ux/modal",
-  "author": "David O'Dey | david.odey@pearson.com",
+  "name": "@pearson-ux/toggle",
+  "author": "EJ Mason | elias.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.2.0",
-  "description": "Modal web component",
+  "version": "0.2.1",
+  "description": "Toggle web component",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +14,7 @@
   },
   "keywords": [
     "pearson-components",
-    "modal",
+    "toggle",
     "web components"
   ],
   "bugs": {
