@@ -119,6 +119,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
+        this.renderFull();
+      }
+    }, {
+      key: 'disconnectedCallback',
+      value: function disconnectedCallback() {
+        doc.removeEventListener('keydown', this.bindKeyPress);
+        doc.body.removeEventListener('focus', this.maintainFocus);
+      }
+    }, {
+      key: 'renderFull',
+      value: function renderFull() {
         var _this2 = this;
 
         // Get component attributes
@@ -173,12 +184,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         doc.addEventListener('keydown', this.bindKeyPress);
         doc.body.addEventListener('focus', this.maintainFocus, true);
-      }
-    }, {
-      key: 'disconnectedCallback',
-      value: function disconnectedCallback() {
-        doc.removeEventListener('keydown', this.bindKeyPress);
-        doc.body.removeEventListener('focus', this.maintainFocus);
       }
     }, {
       key: 'openModal',

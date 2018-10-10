@@ -111,6 +111,43 @@
     }
 
     connectedCallback() {
+      this.renderFull();
+    }
+
+    disconnectedCallback() {
+      doc.removeEventListener('keydown', this.bindKeyPress);
+      doc.body.removeEventListener('focus', this.maintainFocus);
+    }
+
+    get footer() {
+      return this.hasAttribute('footer');
+    }
+
+    set footer(value) {
+      const isfooterShown = Boolean(value);
+
+      if (isfooterShown) {
+        this.setAttribute('footer', '');
+      } else {
+        this.removeAttribute('footer');
+      }
+    }
+
+    get minimized() {
+      return this.hasAttribute('minimized');
+    }
+
+    set minimized(value) {
+      const isMinimized = Boolean(value);
+
+      if (isMinimized) {
+        this.setAttribute('minimized', '');
+      } else {
+        this.removeAttribute('minimized');
+      }
+    }
+
+    renderFull(){
       // Get component attributes
       const titleText = this.getAttribute('titleText'),
         triggerId = this.getAttribute('triggerId'),
@@ -169,39 +206,6 @@
 
       doc.addEventListener('keydown', this.bindKeyPress);
       doc.body.addEventListener('focus', this.maintainFocus, true);
-    }
-
-    disconnectedCallback() {
-      doc.removeEventListener('keydown', this.bindKeyPress);
-      doc.body.removeEventListener('focus', this.maintainFocus);
-    }
-
-    get footer() {
-      return this.hasAttribute('footer');
-    }
-
-    set footer(value) {
-      const isfooterShown = Boolean(value);
-
-      if (isfooterShown) {
-        this.setAttribute('footer', '');
-      } else {
-        this.removeAttribute('footer');
-      }
-    }
-
-    get minimized() {
-      return this.hasAttribute('minimized');
-    }
-
-    set minimized(value) {
-      const isMinimized = Boolean(value);
-
-      if (isMinimized) {
-        this.setAttribute('minimized', '');
-      } else {
-        this.removeAttribute('minimized');
-      }
     }
 
     openModal(e) {
