@@ -103,7 +103,7 @@ class Modal extends HTMLElement {
       elements = this.getAttribute('elements');
 
     // Clone content for shadow DOM
-    const currentDoc = document.querySelector('link[href$="index.html"]')
+    const currentDoc = document.querySelector('link[href$="modal.html"]')
       .import;
     const template = currentDoc.querySelector('#template');
     const clone = document.importNode(template.content, true);
@@ -294,7 +294,7 @@ class Modal extends HTMLElement {
           hideCancel = this.getAttribute('hidecancel'),
           hideSuccess = this.getAttribute('hidesuccess');
 
-    const currentDoc = document.querySelector('link[href$="index.html"]')
+    const currentDoc = document.querySelector('link[href$="modal.html"]')
       .import;
 
     const selector = hideCancel !== null ? '#actions-noCancel' : hideSuccess !== null ? '#actions-noSuccess' : '#actions',
@@ -318,7 +318,7 @@ class Modal extends HTMLElement {
 
   renderStyles(parentNode) {
     const elementsVersion = this.hasAttribute('elements'),
-      currentDoc = document.querySelector('link[href$="index.html"]').import,
+      currentDoc = document.querySelector('link[href$="modal.html"]').import,
       selector = elementsVersion ? '#old' : '#new',
       styleTemplate = currentDoc.querySelector(selector),
       styleClone = document.importNode(styleTemplate.content, true),
