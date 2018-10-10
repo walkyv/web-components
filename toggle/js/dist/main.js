@@ -11,7 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
-  var currentDoc = doc.querySelector('link[href$="index.html"]').import,
+  var currentDoc = doc.querySelector('link[href$="toggle.html"]').import,
       template = currentDoc.querySelector('#template');
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-toggle');

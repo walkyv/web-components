@@ -1,7 +1,7 @@
 (function(w, doc) {
   'use strict';
 
-  const currentDoc = doc.querySelector('link[href$="index.html"]').import,
+  const currentDoc = doc.querySelector('link[href$="toggle.html"]').import,
     template = currentDoc.querySelector('#template');
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-toggle');
