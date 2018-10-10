@@ -12,9 +12,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   'use strict';
 
   var currentDoc = doc.querySelector('link[href$="index.html"]').import;
+  var styles = currentDoc.querySelector('#styles');
   var template = currentDoc.querySelector('#template');
+  var minimizedTemplate = currentDoc.querySelector('#minimized');
 
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'upload-modal');
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(styles, 'styles');
 
   var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert]),\n    [tabindex]:not([tabindex^="-"]):not([inert])',
       TAB_KEY = 9,
@@ -85,6 +87,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.attachShadow({ mode: 'open' });
 
       _this.clone = doc.importNode(template.content.cloneNode(true), true);
+      _this.minimizedClone = doc.importNode(minimizedTemplate.content.cloneNode(true), true);
+      _this.styles = doc.importNode(styles.content.cloneNode(true), true);
 
       _this.openModal = _this.openModal.bind(_this);
       _this.closeModal = _this.closeModal.bind(_this);
@@ -117,7 +121,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this2 = this;
 
-        console.log(this.clone);
         // Get component attributes
         var titleText = this.getAttribute('titleText'),
             triggerId = this.getAttribute('triggerId'),
@@ -165,6 +168,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         // sets the positioning for modals that are programmatically created and have scrolling content
         this.setPosition();
 
+        this.shadowRoot.appendChild(this.styles);
         this.shadowRoot.appendChild(this.clone);
 
         doc.addEventListener('keydown', this.bindKeyPress);

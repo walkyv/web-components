@@ -2,9 +2,11 @@
   'use strict';
 
   const currentDoc = doc.querySelector('link[href$="index.html"]').import;
+  const styles = currentDoc.querySelector('#styles');
   const template = currentDoc.querySelector('#template');
+  const minimizedTemplate = currentDoc.querySelector('#minimized');
 
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'upload-modal');
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(styles, 'styles');
 
   const FOCUSABLE_ELEMENTS = `
     a[href]:not([tabindex^="-"]):not([inert]),
@@ -81,6 +83,8 @@
       this.attachShadow({ mode: 'open' });
 
       this.clone = doc.importNode(template.content.cloneNode(true), true);
+      this.minimizedClone = doc.importNode(minimizedTemplate.content.cloneNode(true), true);
+      this.styles = doc.importNode(styles.content.cloneNode(true), true);
 
       this.openModal = this.openModal.bind(this);
       this.closeModal = this.closeModal.bind(this);
@@ -107,7 +111,6 @@
     }
 
     connectedCallback() {
-      console.log(this.clone)
       // Get component attributes
       const titleText = this.getAttribute('titleText'),
         triggerId = this.getAttribute('triggerId'),
@@ -161,6 +164,7 @@
       // sets the positioning for modals that are programmatically created and have scrolling content
       this.setPosition();
 
+      this.shadowRoot.appendChild(this.styles);
       this.shadowRoot.appendChild(this.clone);
 
       doc.addEventListener('keydown', this.bindKeyPress);
