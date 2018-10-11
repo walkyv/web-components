@@ -1,34 +1,103 @@
+# Pearson Alert Web Component
 
-# Web Component Spec Kit
-A simple web component example to help you convert your existing HTML into a web component.
+## Table of Contents
 
-## Get Started
-Download this kit as a zipfile and place in your web components folder, to use this as a starting point to convert your markup from the markup kit to a web component.  This kit has the following
+1. [Demo](#demo)
+2. [Install](#install)
+3. [Usage](#usage)
+4. [API](#api)
+   1. [Attributes](#api-attributes)
+   2. [Events](#api-events)
 
- - An example.html file that includes all the recommended polyfills and loads an existing web component
- - An index.html file that includes example markup for an HTML template.
- -  A main.js file that includes a basic scripting example for shadow dom.
- - Babel to compile your main.js file so its compatible with IE11
- -  SCSS compatibility
+A shareable, accessible toggle.
 
-Once your ready, install the dependancies:
+<a name="demo"></a>
 
-    npm install
+## Demo
 
-<br>
+https://pearson-ux.github.io/web-components/alert/example.html
 
-**Basic commands to get you started:** 
+<a name="install"></a>
 
-Compile scss
+## Installation
 
-    gulp styles
+Make sure you have all the appropriate polyfills from [the main README](https://github.com/pearson-ux/web-components/blob/master/README.md) in place. Then, run the following in your terminal:
 
-Run babel
+```bash
+# my-app is the directory containing your app
+cd my-app
+npm install --save @pearson-ux/alert
+```
 
-    gulp babel
+<a name="usage"></a>
 
-Watch for changes
+## Usage
 
-    gulp watch
+Import the web component onto the page, inbetween the `<head>` tags, like so:
 
+```html
+<head>
+  <!-- polyfills and other stuff... -->
 
+  <!-- import web components -->
+  <link rel="import" href="/path/to/alert/index.html" />
+</head>
+```
+
+**Important Note:**
+
+> The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
+
+Add the `<pearson-alert> </pearson-alert>` tags to the page.
+
+<a name="api"></a>
+
+## API
+
+<a name="api-attributes"></a>
+
+### Attributes
+
+| Attribute    | Type    | Default | Description                                                                                                      |
+| ------------ | ------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
+| `level`      | String  | unset   | The position of the alert. Permitted values: `'global'` or `'inline'`                                            |
+| `returnNode` | String  | unset   | Unique ID of the element that will receive focus after the alert is dismissed.                                   |
+| `type`       | String  | unset   | Denotes the type of the alert. Permitted values: `'success'`, '`'error'`, `'confirmation'`, or `'important'` |
+| `animated`   | Boolean | `false` | Denotes whether the alert will appear and disappear with animations.                                             |
+
+<a name="api-attributes-example"></a>
+
+#### Example
+
+HTML:
+
+```html
+```
+
+JS:
+
+```js
+```
+
+<a name="api-events"></a>
+
+### Emitted Events
+
+| Event     | Description                        |
+| --------- | ---------------------------------- |
+| `dismiss` | Will fire when the alert is closed |
+
+<a name="api-events-example"></a>
+
+#### Example
+
+HTML:
+
+```html
+
+```
+
+JS:
+
+```js
+```
