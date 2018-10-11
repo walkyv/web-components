@@ -62,7 +62,7 @@ Add the `<pearson-alert> </pearson-alert>` tags to the page.
 | ------------ | ------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
 | `level`      | String  | unset   | The position of the alert. Permitted values: `'global'` or `'inline'`                                            |
 | `returnNode` | String  | unset   | Unique ID of the element that will receive focus after the alert is dismissed.                                   |
-| `type`       | String  | unset   | Denotes the severity of the alert. Permitted values: `'success'`, '`'error'`, `'confirmation'`, or `'important'` |
+| `type`       | String  | unset   | Denotes the type of the alert. Permitted values: `'success'`, '`'error'`, `'confirmation'`, or `'important'` |
 | `animated`   | Boolean | `false` | Denotes whether the alert will appear and disappear with animations.                                             |
 
 <a name="api-attributes-example"></a>
