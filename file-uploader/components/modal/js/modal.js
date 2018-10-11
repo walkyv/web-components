@@ -111,6 +111,8 @@
     }
 
     connectedCallback() {
+      this.shadowRoot.appendChild(this.styles);
+
       if (this.minimized) {
         this.renderMinimized();
       } else {
@@ -205,7 +207,6 @@
       // sets the positioning for modals that are programmatically created and have scrolling content
       this.setPosition();
 
-      this.shadowRoot.appendChild(this.styles);
       this.shadowRoot.appendChild(this.clone);
 
       doc.addEventListener('keydown', this.bindKeyPress);
