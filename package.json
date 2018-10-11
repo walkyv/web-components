@@ -4,8 +4,10 @@
   "description": "a library of pearson web components",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "modal": "cd modal && npm install && gulp styles && gulp babel"
+    "test": "npm run modal && npm run toggle && npm run alert",
+    "modal": "cd modal && npm install && gulp styles && gulp babel",
+    "toggle": "cd toggle && npm install && gulp styles && gulp babel",
+    "alert": "cd alert && npm install && gulp styles && gulp babel"
   },
   "repository": {
     "type": "git",
