@@ -1,7 +1,7 @@
 (function(w, doc) {
   'use strict';
 
-  const currentDoc = doc.querySelector('link[href$="index.html"]').import;
+  const currentDoc = doc.querySelector('link[href$="template.html"]').import;
   const styles = currentDoc.querySelector('#styles');
   const template = currentDoc.querySelector('#template');
   const minimizedTemplate = currentDoc.querySelector('#minimized');
@@ -111,7 +111,11 @@
     }
 
     connectedCallback() {
-      this.renderFull();
+      if (this.minimized) {
+        this.renderMinimized();
+      } else {
+        this.renderFull();
+      }
     }
 
     disconnectedCallback() {
@@ -206,6 +210,10 @@
 
       doc.addEventListener('keydown', this.bindKeyPress);
       doc.body.addEventListener('focus', this.maintainFocus, true);
+    }
+
+    renderMinimized() {
+      this.shadowRoot.appendChild(this.minimizedClone);
     }
 
     openModal(e) {

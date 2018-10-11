@@ -11,7 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
-  var currentDoc = doc.querySelector('link[href$="index.html"]').import;
+  var currentDoc = doc.querySelector('link[href$="template.html"]').import;
   var styles = currentDoc.querySelector('#styles');
   var template = currentDoc.querySelector('#template');
   var minimizedTemplate = currentDoc.querySelector('#minimized');
@@ -119,7 +119,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
-        this.renderFull();
+        if (this.minimized) {
+          this.renderMinimized();
+        } else {
+          this.renderFull();
+        }
       }
     }, {
       key: 'disconnectedCallback',
@@ -184,6 +188,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         doc.addEventListener('keydown', this.bindKeyPress);
         doc.body.addEventListener('focus', this.maintainFocus, true);
+      }
+    }, {
+      key: 'renderMinimized',
+      value: function renderMinimized() {
+        this.shadowRoot.appendChild(this.minimizedClone);
       }
     }, {
       key: 'openModal',
