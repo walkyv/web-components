@@ -112,7 +112,7 @@ var Modal = function (_HTMLElement) {
           elements = this.getAttribute('elements');
 
       // Clone content for shadow DOM
-      var currentDoc = document.querySelector('link[href$="index.html"]').import;
+      var currentDoc = document.querySelector('link[href$="modal.html"]').import;
       var template = currentDoc.querySelector('#template');
       var clone = document.importNode(template.content, true);
 
@@ -290,7 +290,7 @@ var Modal = function (_HTMLElement) {
           hideCancel = this.getAttribute('hidecancel'),
           hideSuccess = this.getAttribute('hidesuccess');
 
-      var currentDoc = document.querySelector('link[href$="index.html"]').import;
+      var currentDoc = document.querySelector('link[href$="modal.html"]').import;
 
       var selector = hideCancel !== null ? '#actions-noCancel' : hideSuccess !== null ? '#actions-noSuccess' : '#actions',
           actionsTemplate = currentDoc.querySelector(selector),
@@ -314,7 +314,7 @@ var Modal = function (_HTMLElement) {
     key: 'renderStyles',
     value: function renderStyles(parentNode) {
       var elementsVersion = this.hasAttribute('elements'),
-          currentDoc = document.querySelector('link[href$="index.html"]').import,
+          currentDoc = document.querySelector('link[href$="modal.html"]').import,
           selector = elementsVersion ? '#old' : '#new',
           styleTemplate = currentDoc.querySelector(selector),
           styleClone = document.importNode(styleTemplate.content, true),

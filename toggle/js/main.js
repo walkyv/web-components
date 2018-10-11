@@ -1,7 +1,7 @@
 (function(w, doc) {
   'use strict';
 
-  const currentDoc = doc.querySelector('link[href$="index.html"]').import,
+  const currentDoc = doc.querySelector('link[href$="toggle.html"]').import,
     template = currentDoc.querySelector('#template');
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-toggle');
@@ -36,7 +36,7 @@
       if (!this.hasAttribute('role')) {
         this.setAttribute('role', 'switch');
       }
-      if (!this.hasAttribute('tabindex')) {
+      if (!this.hasAttribute('tabindex') && !this.disabled) {
         this.setAttribute('tabindex', 0);
       }
 
@@ -91,6 +91,8 @@
     }
 
     _toggleOn() {
+      if (this.disabled) return;
+
       this.on = !this.on;
 
       // The toggle should emit a change event
@@ -118,6 +120,9 @@
     // click on this toggle and focus on it
     _onLabelClick(e) {
       e.preventDefault();
+
+      if (this.disabled) return;
+
       this.click();
       this.focus();
     }

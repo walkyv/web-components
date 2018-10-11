@@ -11,7 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
-  var currentDoc = doc.querySelector('link[href$="index.html"]').import;
+  var currentDoc = doc.querySelector('link[href$="alert.html"]').import;
   var template = currentDoc.querySelector('#template');
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
@@ -97,6 +97,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (this.level === 'inline') {
           this.alert.classList.add('fadeOut');
         }
+
+        this.dispatchEvent(new Event('dismiss', {
+          bubbles: true
+        }));
       }
     }, {
       key: '_onAnimationEnd',
