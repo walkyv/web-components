@@ -58,7 +58,6 @@ Add the `<pearson-alert> </pearson-alert>` tags to the page.
 
 ### Attributes
 
-<<<<<<< HEAD
 Except for `animated`, all attributes in this API are required for the alert to function properly. An alert whose level is `global` will appear in the top-left of the current page; an alert whose level is `inline` will appear in flow. 
 
 | Attribute    | Type    | Default | Description                                                                                                  |
@@ -67,14 +66,6 @@ Except for `animated`, all attributes in this API are required for the alert to 
 | `returnNode` | String  | unset   | Unique ID of the element that will receive focus after the alert is dismissed.                               |
 | `type`       | String  | unset   | Denotes the type of the alert. Permitted values: `'success'`, '`'error'`, `'confirmation'`, or `'important'` |
 | `animated`   | Boolean | `false` | Denotes whether the alert will appear and disappear with animations.                                         |
-=======
-| Attribute    | Type    | Default | Description                                                                                                      |
-| ------------ | ------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
-| `level`      | String  | unset   | The position of the alert. Permitted values: `'global'` or `'inline'`                                            |
-| `returnNode` | String  | unset   | Unique ID of the element that will receive focus after the alert is dismissed.                                   |
-| `type`       | String  | unset   | Denotes the type of the alert. Permitted values: `'success'`, '`'error'`, `'confirmation'`, or `'important'` |
-| `animated`   | Boolean | `false` | Denotes whether the alert will appear and disappear with animations.                                             |
->>>>>>> 9efae0dd0ea96816fd1562cd8cf7a8d647ded449
 
 <a name="api-attributes-example"></a>
 
@@ -83,7 +74,6 @@ Except for `animated`, all attributes in this API are required for the alert to 
 HTML:
 
 ```html
-<<<<<<< HEAD
 <pearson-alert 
   level="global"
   returnNode="foo"
@@ -97,13 +87,6 @@ HTML:
     <a href="#">Something has happened!</a>
   </p>
 </pearson-alert>
-=======
-```
-
-JS:
-
-```js
->>>>>>> 9efae0dd0ea96816fd1562cd8cf7a8d647ded449
 ```
 
 <a name="api-events"></a>
