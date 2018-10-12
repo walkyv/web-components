@@ -2,7 +2,7 @@
   "name": "@pearson-ux/modal",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "description": "Modal web component",
   "main": "index.html",
   "scripts": {
@@ -18,7 +18,7 @@
     "web components"
   ],
   "bugs": {
-    "url": "https://github.com/pearson-ux/web-components/issues"
+    "url": "https://github. com/pearson-ux/web-components/issues"
   },
   "homepage": "https://github.com/pearson-ux/web-components/blob/master/modal/README.md",
   "dependencies": {
