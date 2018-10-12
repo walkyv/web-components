@@ -25,13 +25,13 @@
 </head>
 
 <body>
-	<button id="trigger-0" data-trigger="alert" data-severity="error" data-type="global">
+	<button id="trigger-0" data-trigger="alert" data-type="error" data-level="global">
 		Trigger global error alert
 	</button>
-	<button id="trigger-1" data-trigger="alert" data-severity="success" data-type="inline">
+	<button id="trigger-1" data-trigger="alert" data-type="success" data-level="inline">
 		Trigger inline success alert
 	</button>
-	<button id="trigger-2" data-trigger="alert" data-severity="important" data-type="global">
+	<button id="trigger-2" data-trigger="alert" data-type="important" data-level="global">
 		Trigger global important alert
 	</button>
 	<div id="output" class="output" aria-live="polite" aria-atomic="true"></div>
@@ -52,13 +52,13 @@
 
 				function triggerAlert(e) {
 					const returnNode = '#' + e.target.id;
-					const severity = e.target.dataset.severity;
 					const type = e.target.dataset.type;
+					const level = e.target.dataset.level;
 
 					const alert = generateAlert({
 						returnNode: returnNode,
-						severity: severity,
 						type: type,
+						level: level,
 						animated: true
 					})
 
@@ -71,7 +71,7 @@
 						'  </p>  '
 					);
 
-					if (type === 'inline') {
+					if (level === 'inline') {
 						doc.body.insertBefore(alert, e.target.nextSibling)
 					} else {
 						doc.body.appendChild(alert)
@@ -79,7 +79,7 @@
 				}
 
 				function renderMessage(alertElem) {
-					statusRegion.innerHTML = 'Closed ' + alertElem.severity + ' alert';
+					statusRegion.innerHTML = 'Closed ' + alertElem.type + ' alert';
 				}
 
 				forEach.call(triggers, function (trigger) {
