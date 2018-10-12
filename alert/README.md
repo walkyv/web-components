@@ -58,7 +58,7 @@ Add the `<pearson-alert> </pearson-alert>` tags to the page. `pearson-alert` ren
 
 ### Attributes
 
-Except for `animated`, all attributes in this API are required for the alert to function properly. An alert whose level is `global` will appear in the top-left of the current page; an alert whose level is `inline` will appear in flow. 
+Except for `animated`, all attributes in this API are required for the alert to function properly. An alert whose level is `global` will appear in the top-left of the current page; an alert whose level is `inline` will appear in flow.
 
 | Attribute    | Type    | Default | Description                                                                                                  |
 | ------------ | ------- | ------- | ------------------------------------------------------------------------------------------------------------ |
@@ -74,7 +74,7 @@ Except for `animated`, all attributes in this API are required for the alert to 
 Pass your own HTML into the `pearson-alert`. Remember your best practices! Write the most appropriate markup for the needs of your application, and for the context of your alert.
 
 ```html
-<pearson-alert 
+<pearson-alert
   level="global"
   returnNode="foo"
   type="error"
@@ -95,9 +95,9 @@ Pass your own HTML into the `pearson-alert`. Remember your best practices! Write
 
 `pearson-alert` only emits one event: `dismiss`. Once an alert is dismissed, it is removed from the DOM.
 
-| Event     | Description                        |
-| --------- | ---------------------------------- |
-| `dismiss` | Will fire when the alert is closed |
+| Event     | Description                                              |
+| --------- | -------------------------------------------------------- |
+| `dismiss` | Will fire when the user interacts with the close button. |
 
 <a name="api-events-example"></a>
 
@@ -106,10 +106,27 @@ Pass your own HTML into the `pearson-alert`. Remember your best practices! Write
 HTML:
 
 ```html
-
+<pearson-alert
+  level="global"
+  returnNode="foo"
+  type="error"
+  animated
+>
+  <h2 id="alertTitle" class="pe-label alert-title">
+    <strong>Heads up!</strong>
+  </h2>
+  <p id="alertText" class="pe-paragraph alert-text">
+    <a href="#">Something has happened!</a>
+  </p>
+</pearson-alert>
 ```
 
 JS:
 
+Because alerts are temporary, it usually makes the most sense for add a listener to the `window` object and capture `dismiss` events there.
+
 ```js
+window.addEventListener('dismiss', function(e) {
+  console.log(`You closed a(n) ${e.target.type} alert`);
+}, true);
 ```
