@@ -3,11 +3,6 @@
   "version": "1.0.1",
   "description": "a library of pearson web components",
   "main": "index.js",
-  "scripts": {
-    "modal": "cd modal && npm install && gulp styles && gulp babel",
-    "toggle": "cd toggle && npm install && gulp styles && gulp babel",
-    "alert": "cd alert && npm install && gulp styles && gulp babel"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pearson-ux/web-components.git"
