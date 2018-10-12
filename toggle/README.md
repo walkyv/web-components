@@ -16,7 +16,7 @@ A shareable, accessible toggle.
 
 ## Demo
 
-https://pearson-ux.github.io/web-components/toggle/example.html
+https://pearson-ux.github.io/web-components/toggle/
 
 <a name="install"></a>
 

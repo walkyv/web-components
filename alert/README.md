@@ -15,7 +15,7 @@ A shareable, accessible toggle.
 
 ## Demo
 
-https://pearson-ux.github.io/web-components/alert/example.html
+https://pearson-ux.github.io/web-components/alert/
 
 <a name="install"></a>
 
