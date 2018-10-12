@@ -58,12 +58,14 @@ Add the `<pearson-alert> </pearson-alert>` tags to the page.
 
 ### Attributes
 
-| Attribute    | Type    | Default | Description                                                                                                      |
-| ------------ | ------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
-| `level`      | String  | unset   | The position of the alert. Permitted values: `'global'` or `'inline'`                                            |
-| `returnNode` | String  | unset   | Unique ID of the element that will receive focus after the alert is dismissed.                                   |
+Except for `animated`, all attributes in this API are required for the alert to function properly. An alert whose level is `global` will appear in the top-left of the current page; an alert whose level is `inline` will appear in flow. 
+
+| Attribute    | Type    | Default | Description                                                                                                  |
+| ------------ | ------- | ------- | ------------------------------------------------------------------------------------------------------------ |
+| `level`      | String  | unset   | The position of the alert. Permitted values: `'global'` or `'inline'`                                        |
+| `returnNode` | String  | unset   | Unique ID of the element that will receive focus after the alert is dismissed.                               |
 | `type`       | String  | unset   | Denotes the type of the alert. Permitted values: `'success'`, '`'error'`, `'confirmation'`, or `'important'` |
-| `animated`   | Boolean | `false` | Denotes whether the alert will appear and disappear with animations.                                             |
+| `animated`   | Boolean | `false` | Denotes whether the alert will appear and disappear with animations.                                         |
 
 <a name="api-attributes-example"></a>
 
@@ -72,11 +74,19 @@ Add the `<pearson-alert> </pearson-alert>` tags to the page.
 HTML:
 
 ```html
-```
-
-JS:
-
-```js
+<pearson-alert 
+  level="global"
+  returnNode="foo"
+  type="error"
+  animated
+>
+  <h2 id="alertTitle" class="pe-label alert-title">
+    <strong>Heads up!</strong>
+  </h2>
+  <p id="alertText" class="pe-paragraph alert-text">
+    <a href="#">Something has happened!</a>
+  </p>
+</pearson-alert>
 ```
 
 <a name="api-events"></a>
