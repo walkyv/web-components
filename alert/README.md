@@ -48,7 +48,7 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
 
 > The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
 
-Add the `<pearson-alert> </pearson-alert>` tags to the page.
+Add the `<pearson-alert> </pearson-alert>` tags to the page. `pearson-alert` renders as soon as it is in the DOM, so only create an alert as you need it.
 
 <a name="api"></a>
 
@@ -71,7 +71,7 @@ Except for `animated`, all attributes in this API are required for the alert to 
 
 #### Example
 
-HTML:
+Pass your own HTML into the `pearson-alert`. Remember your best practices! Write the most appropriate markup for the needs of your application, and for the context of your alert.
 
 ```html
 <pearson-alert 
@@ -92,6 +92,8 @@ HTML:
 <a name="api-events"></a>
 
 ### Emitted Events
+
+`pearson-alert` only emits one event: `dismiss`. Once an alert is dismissed, it is removed from the DOM.
 
 | Event     | Description                        |
 | --------- | ---------------------------------- |
