@@ -7,7 +7,7 @@ before_install:
 - gem install sass
 - npm install -g gulp-cli
 install:
-- npm run modal
+- npm run test
 branches:
   only:
   - master

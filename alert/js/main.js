@@ -1,7 +1,7 @@
 (function(w, doc) {
   'use strict';
 
-  const currentDoc = doc.querySelector('link[href$="index.html"]').import;
+  const currentDoc = doc.querySelector('link[href$="alert.html"]').import;
   const template = currentDoc.querySelector('#template');
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
@@ -69,7 +69,7 @@
 
       this.alert.removeEventListener('animationend', this._onAnimationEnd);
       this.closeBtn.removeEventListener('click', this._onClose);
-      
+
       returnNode.focus();
     }
 
@@ -80,6 +80,12 @@
       if (this.level === 'inline') {
         this.alert.classList.add('fadeOut');
       }
+
+      this.dispatchEvent(
+        new Event('dismiss', {
+          bubbles: true
+        })
+      );
     }
 
     _onAnimationEnd(e) {
