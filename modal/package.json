@@ -2,7 +2,7 @@
   "name": "@pearson-ux/modal",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Modal web component",
   "main": "index.html",
   "scripts": {
