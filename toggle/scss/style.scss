@@ -97,18 +97,21 @@
   pointer-events: none
 }
 
-:host>span:first-of-type {
+
+:host .toggle-off {
   right: 27px
 }
 
-:host>span:last-of-type {
+:host .toggle-on {
   right: 5px
 }
 
-:host(:not([on]))>span:first-of-type,
-:host([on])>span:last-of-type {
+:host(:not([on]))>span.toggle-off,
+:host([on])>span.toggle-on{
   display: none
 }
+
+
 
 @media screen and (prefers-reduced-motion: reduced) {
 
