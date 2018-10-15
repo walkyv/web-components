@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.com/pearson-ux/web-components.svg?token=yRiZW31ciCX2AwmRD34E&branch=master)](https://travis-ci.com/pearson-ux/web-components)
-
 # A11y Modal Web Component
 
 A shareable, accessible, modal, powered by web components.
@@ -31,9 +29,9 @@ Import the web component onto the page, inbetween the `<head>` tags
 
 **Important Note:**
 
-> The import path will be in the **node_modules** folder, which is  
-> usually held outside the applicaiton source. If you publish your  
-> application to a **./public** or **./dist** folder you will want to  
+> The import path will be in the **node_modules** folder, which is
+> usually held outside the applicaiton source. If you publish your
+> application to a **./public** or **./dist** folder you will want to
 > write a script to copy this dependency to a desired location.
 
 **To Use**
@@ -42,7 +40,7 @@ Add the `<pearson-modal> </pearson-modal>` tags to the page, passing in a `trigg
 **Important Note:**
 
 > To maintain accessibility, the `pearson-modal` tag must be a sibling of
-> your main content. The main content must be wrapped in an element  
+> your main content. The main content must be wrapped in an element
 > with an ID of 'main'.
 
 **Example Code:**
@@ -109,7 +107,7 @@ The `pearson-modal` component emits two different events:
 
 **Important Note:**
 
-> For the purposes of event emission, the modal treats 
+> For the purposes of event emission, the modal treats
 > *any button that is not the success button* as a 'cancel' button.
 > If you want your modal to emit a `success` event, you *must* show the footer.
 
