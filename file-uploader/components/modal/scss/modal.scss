@@ -90,9 +90,9 @@
 .pe-modal-container__minimized {
   display:flex;
   align-items: center;
-  position: absolute;
+  position: fixed;
   bottom: 0;
-  left: 0;
+  right: 0;
   width: 507px;
   height: 60px;
   padding-left: 20px 17px 22px 27px;
