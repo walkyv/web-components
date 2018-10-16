@@ -83,7 +83,6 @@
       this.attachShadow({ mode: 'open' });
 
       this.clone = doc.importNode(template.content.cloneNode(true), true);
-      this.minimizedClone = doc.importNode(minimizedTemplate.content.cloneNode(true), true);
       this.styles = doc.importNode(styles.content.cloneNode(true), true);
 
       this.openModal = this.openModal.bind(this);
@@ -94,6 +93,10 @@
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
+      const minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized'),
+        modalOverlay = this.shadowRoot.querySelector('#modalOverlay');
+
+      this.minimizedClone = doc.importNode(minimizedTemplate.content.cloneNode(true), true);
       // if `this.modal has not been defined yet,
       // bail out.
       if (!this.modal) return;
@@ -105,14 +108,33 @@
           this.renderfooter(this.modal);
         }
       }
+
       if (name === 'minimized') {
-        console.log(newValue);
+        if(!this.minimized) {
+          this.modal.classList.remove('fadeOutFast');
+          modalOverlay.classList.remove('fadeOutFast');
+          minimizedContainer.remove();
+          this.modal.classList.add('fadeInFast');
+          this.modal.classList.remove('hidden');
+          modalOverlay.classList.remove('hidden');
+        } else {
+          this.renderMinimized();
+          this.modal.classList.remove('slideInDown');
+          this.modal.classList.add('fadeOutFast');
+          modalOverlay.classList.add('fadeOutFast');
+        }
+
+        modalOverlay.addEventListener('animationend', event => {
+          if (event.animationName === 'fadeOutFast') {
+            modalOverlay.classList.add('hidden');
+            this.modal.classList.add('hidden');
+          }
+        });
       }
     }
 
     connectedCallback() {
       this.shadowRoot.appendChild(this.styles);
-
       if (this.minimized) {
         this.renderMinimized();
       } else {
@@ -145,7 +167,6 @@
 
     set minimized(value) {
       const isMinimized = Boolean(value);
-
       if (isMinimized) {
         this.setAttribute('minimized', '');
       } else {
@@ -200,7 +221,12 @@
       this.eventBtns.forEach(btn => {
         btn.addEventListener('click', e => {
           const eventType = e.target.dataset.event;
-          this.closeModal(eventType);
+          if (btn.id === 'closeButton') {
+            this.closeModal(eventType);
+          } else if (btn.id === 'minimizeButton') {
+            this.minimized = true;
+          }
+
         });
       });
 
@@ -213,8 +239,18 @@
       doc.body.addEventListener('focus', this.maintainFocus, true);
     }
 
+
     renderMinimized() {
       this.shadowRoot.appendChild(this.minimizedClone);
+      console.log( this.shadowRoot.appendChild(this.minimizedClone));
+        this.shadowRoot.addEventListener('click', event => {
+          event.stopImmediatePropagation();
+          if (event.target.id === 'expandButton'){
+            this.minimized = false
+          } else {
+            return
+          }
+        });
     }
 
     openModal(e) {
@@ -315,12 +351,12 @@
         }
       }, 100);
     }
+
+
     renderfooter(parentNode) {
       const successBtnText = this.getAttribute('successBtnText'),
         cancelBtnText = this.getAttribute('cancelBtnText');
 
-      const currentDoc = doc.querySelector('link[href$="index.html"]')
-        .import;
 
       const actionsTemplate = currentDoc.querySelector('#actions'),
         actionsClone = doc.importNode(actionsTemplate.content, true),

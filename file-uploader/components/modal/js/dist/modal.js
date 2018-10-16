@@ -87,7 +87,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.attachShadow({ mode: 'open' });
 
       _this.clone = doc.importNode(template.content.cloneNode(true), true);
-      _this.minimizedClone = doc.importNode(minimizedTemplate.content.cloneNode(true), true);
       _this.styles = doc.importNode(styles.content.cloneNode(true), true);
 
       _this.openModal = _this.openModal.bind(_this);
@@ -101,6 +100,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Modal, [{
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
+        var _this2 = this;
+
+        var minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized'),
+            modalOverlay = this.shadowRoot.querySelector('#modalOverlay');
+
+        this.minimizedClone = doc.importNode(minimizedTemplate.content.cloneNode(true), true);
         // if `this.modal has not been defined yet,
         // bail out.
         if (!this.modal) return;
@@ -112,15 +117,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             this.renderfooter(this.modal);
           }
         }
+
         if (name === 'minimized') {
-          console.log(newValue);
+          if (!this.minimized) {
+            this.modal.classList.remove('fadeOutFast');
+            modalOverlay.classList.remove('fadeOutFast');
+            minimizedContainer.remove();
+            this.modal.classList.add('fadeInFast');
+            this.modal.classList.remove('hidden');
+            modalOverlay.classList.remove('hidden');
+          } else {
+            this.renderMinimized();
+            this.modal.classList.remove('slideInDown');
+            this.modal.classList.add('fadeOutFast');
+            modalOverlay.classList.add('fadeOutFast');
+          }
+
+          modalOverlay.addEventListener('animationend', function (event) {
+            if (event.animationName === 'fadeOutFast') {
+              modalOverlay.classList.add('hidden');
+              _this2.modal.classList.add('hidden');
+            }
+          });
         }
       }
     }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
         this.shadowRoot.appendChild(this.styles);
-
         if (this.minimized) {
           this.renderMinimized();
         } else {
@@ -136,7 +160,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'renderFull',
       value: function renderFull() {
-        var _this2 = this;
+        var _this3 = this;
 
         // Get component attributes
         var titleText = this.getAttribute('titleText'),
@@ -178,7 +202,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.eventBtns.forEach(function (btn) {
           btn.addEventListener('click', function (e) {
             var eventType = e.target.dataset.event;
-            _this2.closeModal(eventType);
+            if (btn.id === 'closeButton') {
+              _this3.closeModal(eventType);
+            } else if (btn.id === 'minimizeButton') {
+              _this3.minimized = true;
+            }
           });
         });
 
@@ -193,12 +221,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'renderMinimized',
       value: function renderMinimized() {
+        var _this4 = this;
+
         this.shadowRoot.appendChild(this.minimizedClone);
+        console.log(this.shadowRoot.appendChild(this.minimizedClone));
+        this.shadowRoot.addEventListener('click', function (event) {
+          event.stopImmediatePropagation();
+          if (event.target.id === 'expandButton') {
+            _this4.minimized = false;
+          } else {
+            return;
+          }
+        });
       }
     }, {
       key: 'openModal',
       value: function openModal(e) {
-        var _this3 = this;
+        var _this5 = this;
 
         var thisButton = e.currentTarget,
             buttonDisabled = thisButton.getAttribute('disabled');
@@ -219,13 +258,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.open = true;
 
         setTimeout(function () {
-          _this3.maintainFocus();
+          _this5.maintainFocus();
         }, 250);
       }
     }, {
       key: 'closeModal',
       value: function closeModal(eventName) {
-        var _this4 = this;
+        var _this6 = this;
 
         this.triggerBtn.removeAttribute('disabled');
         this.main.setAttribute('aria-hidden', 'false');
@@ -238,21 +277,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.modal.classList.add('slideOutDown');
 
         setTimeout(function () {
-          _this4.modal.classList.add('hidden');
-          _this4.modal.classList.remove('slideOutDown');
+          _this6.modal.classList.add('hidden');
+          _this6.modal.classList.remove('slideOutDown');
         }, 400);
 
         setTimeout(function () {
-          _this4.dispatchEvent(new Event(eventName, { bubbles: true, composed: true }));
+          _this6.dispatchEvent(new Event(eventName, { bubbles: true, composed: true }));
         }, 500);
 
         setTimeout(function () {
-          _this4.overlay.classList.add('hidden');
-          _this4.overlay.classList.remove('fadeOut');
+          _this6.overlay.classList.add('hidden');
+          _this6.overlay.classList.remove('fadeOut');
         }, 800);
 
         setTimeout(function () {
-          _this4.triggerBtn.focus();
+          _this6.triggerBtn.focus();
         }, 801);
 
         this.open = false;
@@ -288,15 +327,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'setPosition',
       value: function setPosition() {
-        var _this5 = this;
+        var _this7 = this;
 
         setTimeout(function () {
-          var modalPosition = _this5.modal.getBoundingClientRect();
+          var modalPosition = _this7.modal.getBoundingClientRect();
           w.scrollTo(0, 0);
           if (modalPosition.top <= 0) {
-            _this5.modal.style.top = '50px';
-            _this5.modal.style.transform = 'translate(-50%)';
-            _this5.modal.style.marginBottom = '50px';
+            _this7.modal.style.top = '50px';
+            _this7.modal.style.transform = 'translate(-50%)';
+            _this7.modal.style.marginBottom = '50px';
           }
         }, 100);
       }
@@ -305,8 +344,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function renderfooter(parentNode) {
         var successBtnText = this.getAttribute('successBtnText'),
             cancelBtnText = this.getAttribute('cancelBtnText');
-
-        var currentDoc = doc.querySelector('link[href$="index.html"]').import;
 
         var actionsTemplate = currentDoc.querySelector('#actions'),
             actionsClone = doc.importNode(actionsTemplate.content, true),
@@ -346,7 +383,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       },
       set: function set(value) {
         var isMinimized = Boolean(value);
-
         if (isMinimized) {
           this.setAttribute('minimized', '');
         } else {
