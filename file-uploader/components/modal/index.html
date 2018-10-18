@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html class="" lang="EN">
+	<head>
+		<title>Pearson Web Component</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width" />
+
+		<!-- loads web component polyfills -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
+		<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+		<!-- load pearson and global styles -->
+
+
+		<!-- import web components -->
+		<link rel="import" href="modal.html" />
+
+
+	</head>
+	<body>
+	<!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
+	<main id="main">
+			<section class="container">
+				<button id="trigger-modal" class="pe-btn pe-btn--btn_large">Open Modal</button>
+			</section>
+			<section class="container">
+				<button id="trigger-modal-two" class="pe-btn pe-btn--btn_large">Open no cancel modal</button>
+			</section>
+			<section class="container">
+				<button id="trigger-modal-three" class="pe-btn pe-btn--btn_large">Open no success modal</button>
+			</section>
+		<section class="container">
+			<button id="trigger-modal-four" class="pe-btn pe-btn--btn_large">Open elements modal</button>
+		</section>
+		</main>
+
+		<!-- place modal before the end of the body and pass in the reference ID of the button that triggers the modal -->
+		<!-- add in style="display:none" to prevent FOUC -->
+		<pearson-modal
+				triggerid="trigger-modal"
+				titletext="Basic Title"
+				successbtntext="Success"
+				cancelbtntext="Cancel"
+				footer
+				style="display:none"
+		>
+			<p>Pass in elements as children to the modal</p>
+		</pearson-modal>
+		<pearson-modal
+				triggerid="trigger-modal-two"
+				titletext="Basic Title"
+				successbtntext="Yep, love it."
+				hidecancel
+				footer
+				style="display:none"
+
+		>
+			<p>I like New York in June. How about you?</p>
+		</pearson-modal>
+		<pearson-modal
+				triggerid="trigger-modal-three"
+				titletext="Basic Title"
+				cancelbtntext="Leave me alone."
+				hidesuccess
+				footer
+				style="display:none"
+		>
+			<p>I like New York in June. How about you?</p>
+		</pearson-modal>
+
+	<pearson-modal
+			triggerid="trigger-modal-four"
+			titletext="Basic Title"
+			footer
+			style="display:none"
+			elements="v1"
+	>
+		<p>I use an older version of elements</p>
+	</pearson-modal>
+	</body>
+</html>
