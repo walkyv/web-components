@@ -90,11 +90,14 @@
 
       this.bindKeyPress = this.bindKeyPress.bind(this);
       this.maintainFocus = this.maintainFocus.bind(this);
+      this.minimizeDetail = {};
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
       const minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized'),
         modalOverlay = this.shadowRoot.querySelector('#modalOverlay');
+
+
 
       this.minimizedClone = doc.importNode(minimizedTemplate.content.cloneNode(true), true);
       // if `this.modal has not been defined yet,
@@ -110,6 +113,7 @@
       }
 
       if (name === 'minimized') {
+
         if(!this.minimized) {
           this.modal.classList.remove('fadeOutFast');
           modalOverlay.classList.remove('fadeOutFast');
@@ -118,11 +122,19 @@
           this.modal.classList.remove('hidden');
           modalOverlay.classList.remove('hidden');
         } else {
+
+          this.addEventListener('xhrLoading', event => {
+            this.minimizeDetail = event.detail;
+            this.updateProgress(this.minimizeDetail)
+          });
           this.renderMinimized();
           this.modal.classList.remove('slideInDown');
           this.modal.classList.add('fadeOutFast');
           modalOverlay.classList.add('fadeOutFast');
+        this.updateProgress(this.minimizeDetail)
         }
+
+
 
         modalOverlay.addEventListener('animationend', event => {
           if (event.animationName === 'fadeOutFast') {
@@ -134,12 +146,16 @@
     }
 
     connectedCallback() {
+      const minimizedHeader = this.querySelector('.pe-modal-container__minimized');
       this.shadowRoot.appendChild(this.styles);
       if (this.minimized) {
         this.renderMinimized();
       } else {
         this.renderFull();
       }
+      this.addEventListener('xhrLoading', event => {
+        this.minimizeDetail = event.detail;
+      });
     }
 
     disconnectedCallback() {
@@ -171,6 +187,17 @@
         this.setAttribute('minimized', '');
       } else {
         this.removeAttribute('minimized');
+      }
+    }
+
+    updateProgress (data) {
+      const minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized');
+      if (minimizedContainer !== null) {
+        const done = minimizedContainer.querySelector('#done'),
+          progress = minimizedContainer.querySelector('#progress');
+
+        done.innerHTML = data.done;
+        progress.innerHTML = data.progress
       }
     }
 
@@ -230,11 +257,10 @@
         });
       });
 
+
       // sets the positioning for modals that are programmatically created and have scrolling content
       this.setPosition();
-
       this.shadowRoot.appendChild(this.clone);
-
       doc.addEventListener('keydown', this.bindKeyPress);
       doc.body.addEventListener('focus', this.maintainFocus, true);
     }
@@ -242,7 +268,6 @@
 
     renderMinimized() {
       this.shadowRoot.appendChild(this.minimizedClone);
-      console.log( this.shadowRoot.appendChild(this.minimizedClone));
         this.shadowRoot.addEventListener('click', event => {
           event.stopImmediatePropagation();
           if (event.target.id === 'expandButton'){
@@ -375,6 +400,8 @@
 
       modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
     }
+
+
   }
 
   customElements.define('upload-modal', Modal);

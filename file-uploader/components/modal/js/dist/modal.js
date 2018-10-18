@@ -94,6 +94,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.bindKeyPress = _this.bindKeyPress.bind(_this);
       _this.maintainFocus = _this.maintainFocus.bind(_this);
+      _this.minimizeDetail = {};
       return _this;
     }
 
@@ -119,6 +120,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         if (name === 'minimized') {
+
           if (!this.minimized) {
             this.modal.classList.remove('fadeOutFast');
             modalOverlay.classList.remove('fadeOutFast');
@@ -127,10 +129,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             this.modal.classList.remove('hidden');
             modalOverlay.classList.remove('hidden');
           } else {
+
+            this.addEventListener('xhrLoading', function (event) {
+              _this2.minimizeDetail = event.detail;
+              _this2.updateProgress(_this2.minimizeDetail);
+            });
             this.renderMinimized();
             this.modal.classList.remove('slideInDown');
             this.modal.classList.add('fadeOutFast');
             modalOverlay.classList.add('fadeOutFast');
+            this.updateProgress(this.minimizeDetail);
           }
 
           modalOverlay.addEventListener('animationend', function (event) {
@@ -144,12 +152,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
+        var _this3 = this;
+
+        var minimizedHeader = this.querySelector('.pe-modal-container__minimized');
         this.shadowRoot.appendChild(this.styles);
         if (this.minimized) {
           this.renderMinimized();
         } else {
           this.renderFull();
         }
+        this.addEventListener('xhrLoading', function (event) {
+          _this3.minimizeDetail = event.detail;
+        });
       }
     }, {
       key: 'disconnectedCallback',
@@ -158,9 +172,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         doc.body.removeEventListener('focus', this.maintainFocus);
       }
     }, {
+      key: 'updateProgress',
+      value: function updateProgress(data) {
+        var minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized');
+        if (minimizedContainer !== null) {
+          var done = minimizedContainer.querySelector('#done'),
+              progress = minimizedContainer.querySelector('#progress');
+
+          done.innerHTML = data.done;
+          progress.innerHTML = data.progress;
+        }
+      }
+    }, {
       key: 'renderFull',
       value: function renderFull() {
-        var _this3 = this;
+        var _this4 = this;
 
         // Get component attributes
         var titleText = this.getAttribute('titleText'),
@@ -203,32 +229,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           btn.addEventListener('click', function (e) {
             var eventType = e.target.dataset.event;
             if (btn.id === 'closeButton') {
-              _this3.closeModal(eventType);
+              _this4.closeModal(eventType);
             } else if (btn.id === 'minimizeButton') {
-              _this3.minimized = true;
+              _this4.minimized = true;
             }
           });
         });
 
         // sets the positioning for modals that are programmatically created and have scrolling content
         this.setPosition();
-
         this.shadowRoot.appendChild(this.clone);
-
         doc.addEventListener('keydown', this.bindKeyPress);
         doc.body.addEventListener('focus', this.maintainFocus, true);
       }
     }, {
       key: 'renderMinimized',
       value: function renderMinimized() {
-        var _this4 = this;
+        var _this5 = this;
 
         this.shadowRoot.appendChild(this.minimizedClone);
-        console.log(this.shadowRoot.appendChild(this.minimizedClone));
         this.shadowRoot.addEventListener('click', function (event) {
           event.stopImmediatePropagation();
           if (event.target.id === 'expandButton') {
-            _this4.minimized = false;
+            _this5.minimized = false;
           } else {
             return;
           }
@@ -237,7 +260,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'openModal',
       value: function openModal(e) {
-        var _this5 = this;
+        var _this6 = this;
 
         var thisButton = e.currentTarget,
             buttonDisabled = thisButton.getAttribute('disabled');
@@ -258,13 +281,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.open = true;
 
         setTimeout(function () {
-          _this5.maintainFocus();
+          _this6.maintainFocus();
         }, 250);
       }
     }, {
       key: 'closeModal',
       value: function closeModal(eventName) {
-        var _this6 = this;
+        var _this7 = this;
 
         this.triggerBtn.removeAttribute('disabled');
         this.main.setAttribute('aria-hidden', 'false');
@@ -277,21 +300,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.modal.classList.add('slideOutDown');
 
         setTimeout(function () {
-          _this6.modal.classList.add('hidden');
-          _this6.modal.classList.remove('slideOutDown');
+          _this7.modal.classList.add('hidden');
+          _this7.modal.classList.remove('slideOutDown');
         }, 400);
 
         setTimeout(function () {
-          _this6.dispatchEvent(new Event(eventName, { bubbles: true, composed: true }));
+          _this7.dispatchEvent(new Event(eventName, { bubbles: true, composed: true }));
         }, 500);
 
         setTimeout(function () {
-          _this6.overlay.classList.add('hidden');
-          _this6.overlay.classList.remove('fadeOut');
+          _this7.overlay.classList.add('hidden');
+          _this7.overlay.classList.remove('fadeOut');
         }, 800);
 
         setTimeout(function () {
-          _this6.triggerBtn.focus();
+          _this7.triggerBtn.focus();
         }, 801);
 
         this.open = false;
@@ -327,15 +350,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'setPosition',
       value: function setPosition() {
-        var _this7 = this;
+        var _this8 = this;
 
         setTimeout(function () {
-          var modalPosition = _this7.modal.getBoundingClientRect();
+          var modalPosition = _this8.modal.getBoundingClientRect();
           w.scrollTo(0, 0);
           if (modalPosition.top <= 0) {
-            _this7.modal.style.top = '50px';
-            _this7.modal.style.transform = 'translate(-50%)';
-            _this7.modal.style.marginBottom = '50px';
+            _this8.modal.style.top = '50px';
+            _this8.modal.style.transform = 'translate(-50%)';
+            _this8.modal.style.marginBottom = '50px';
           }
         }, 100);
       }
