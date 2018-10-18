@@ -6,7 +6,7 @@
   const template = currentDoc.querySelector('#template');
   const minimizedTemplate = currentDoc.querySelector('#minimized');
 
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(styles, 'styles');
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(styles, 'upload-modal');
 
   const FOCUSABLE_ELEMENTS = `
     a[href]:not([tabindex^="-"]):not([inert]),
