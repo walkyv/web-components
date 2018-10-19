@@ -268,3 +268,7 @@ h2 {
 :host .modal-minimize img{
   height:18px !important;
 }
+
+.pe-icon--btn::-moz-focus-inner {
+  border: 0;
+}
