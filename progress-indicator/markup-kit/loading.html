@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="">
+
+<head>
+    <title>Loading/animated progress bar</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="css/style.css" media="all" />
+</head>
+
+<body class="">
+
+<div class="pe-progress-bar loading">
+    <p class="fullbar" id="label">0%</p>
+    <div role="progressbar" aria-valuenow="0" aria-valuemax="100" aria-valuemin="0" id="progress"></div>
+
+</div>
+<div style="margin-top:10px;">
+<button onclick="changeProgress(0)">0%</button>
+<button onclick="changeProgress(25)">25%</button>
+<button onclick="changeProgress(50)">50%</button>
+<button onclick="changeProgress(100)">100%</button>
+</div>
+<script>
+    function changeProgress(percent){
+        var progress=document.getElementById("progress");
+        var label = document.getElementById("label")
+        progress.style.width = percent+"%";
+        progress.setAttribute('aria-valuenow',percent);
+        label.innerHTML = percent+"%";
+    }
+</script>
+</body>
+
+</html>
