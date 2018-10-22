@@ -259,13 +259,9 @@ h2 {
   text-align: left;
 }
 
-:host(:not([footer])){
-  #minimizeButton {
-    display:none
-  }
-}
 
-:host .modal-minimize img{
+
+.modal-minimize img{
   height:18px !important;
 }
 

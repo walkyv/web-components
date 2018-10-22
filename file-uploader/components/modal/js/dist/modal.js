@@ -11,7 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
-  var currentDoc = doc.querySelector('link[href$="template.html"]').import;
+  var currentDoc = doc.querySelector('link[href$="modal.html"]').import;
   var styles = currentDoc.querySelector('#styles');
   var template = currentDoc.querySelector('#template');
   var minimizedTemplate = currentDoc.querySelector('#minimized');

@@ -1,4 +1,13 @@
-@import "./elements";
-@import "./animation";
-@import "./modal";
-@import "./upload";
+.deep-encapsulation {
+  @import "./elements";
+  @import "./animation";
+  @import "./modal";
+  @import "./upload";
+}
+
+:host(:not([footer])){
+  #minimizeButton {
+    display:none
+  }
+}
+

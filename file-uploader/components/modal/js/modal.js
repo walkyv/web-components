@@ -1,7 +1,7 @@
 (function(w, doc) {
   'use strict';
 
-  const currentDoc = doc.querySelector('link[href$="template.html"]').import;
+  const currentDoc = doc.querySelector('link[href$="modal.html"]').import;
   const styles = currentDoc.querySelector('#styles');
   const template = currentDoc.querySelector('#template');
   const minimizedTemplate = currentDoc.querySelector('#minimized');
