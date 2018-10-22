@@ -18,6 +18,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   };
 
   function buildMarkup(file, progressEvent, total) {
+
     if (total === 100) {
       status.done = status.done + 1;
       if (status.progress > 0) {
@@ -42,11 +43,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       }
     }
 
+    modal.dispatchEvent(new CustomEvent('xhrLoading', { detail: { done: status.done, progress: status.progress } }));
+
     uploadTitle.innerHTML = 'Uploading  (' + status.done + ' done, ' + status.progress + ' in progress)';
     return '\n        <div class="group">\n          <div class="indicator">\n       \t       <progress-ring stroke="3" radius="25" progress=' + total + '></progress-ring>\n       \t        ' + toggleCheckmark(total) + '\n          </div>\n          <div class="text">\n            <strong>' + file.name + '</strong>\n            <p class="info">' + formatBytes(progressEvent.loaded) + ' / ' + formatBytes(progressEvent.total) + '</p>\n          </div>\n        </div>\n        <div class="upload-actions">\n          <button class="pe-icon--btn" aria-label="remove ' + file.name + ' from uploads" onclick>\n            <svg focusable="false" class="pe-icon--delete-18" role="img">\n              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete-18"></use>\n            </svg>\n          </button>\n        </div>\n    ';
   }
 
   function renderProgressItems(data, target, xhr) {
+
     if (modal.footer !== true) {
       modal.footer = true;
       uploadInfo.style.display = 'block';
@@ -94,6 +98,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
   // processes and uploads files
   function uploadFile(file) {
+
     var url = 'https://pearson-file-upload.s3.amazonaws.com/',
         xhr = new XMLHttpRequest(),
         formData = new FormData();
