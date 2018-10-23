@@ -249,17 +249,9 @@ h2 {
   border: 0;
 }
 
-.pe-btn--btn_large:focus:after,
-.pe-btn:focus:after {
-  left: -8px;
-  top: -8px;
-}
-
 .style-scope {
   text-align: left;
 }
-
-
 
 .modal-minimize img{
   height:18px !important;
@@ -268,3 +260,10 @@ h2 {
 .pe-icon--btn::-moz-focus-inner {
   border: 0;
 }
+
+.pe-icon--btn:focus:after {
+  top:-4px !important;
+  left:-4px !important;
+}
+
+

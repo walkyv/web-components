@@ -123,7 +123,6 @@
 
   // processes and uploads files
   function uploadFile(file) {
-
     const url = 'https://pearson-file-upload.s3.amazonaws.com/',
           xhr = new XMLHttpRequest(),
           formData = new FormData();
@@ -164,6 +163,7 @@
 
   realUploadInput.addEventListener('change', event=> {
     handleFiles(event.srcElement.files)
+    attachBtn.focus();
   });
 
   // setup drag and drop area

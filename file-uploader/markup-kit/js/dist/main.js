@@ -98,7 +98,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
   // processes and uploads files
   function uploadFile(file) {
-
     var url = 'https://pearson-file-upload.s3.amazonaws.com/',
         xhr = new XMLHttpRequest(),
         formData = new FormData();
@@ -139,6 +138,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
   realUploadInput.addEventListener('change', function (event) {
     handleFiles(event.srcElement.files);
+    attachBtn.focus();
   });
 
   // setup drag and drop area
