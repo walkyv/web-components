@@ -135,7 +135,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               modalOverlay.classList.remove('fadeOutFast');
               this.modal.classList.add('fadeInFast');
             }
-            minimizeButton.focus();
+
+            setTimeout(function () {
+              minimizeButton.focus();
+            }, 250);
           } else {
             this.addEventListener('xhrLoading', function (event) {
               _this2.minimizeDetail = event.detail;
@@ -264,7 +267,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         expandButton.addEventListener('click', function (event) {
           _this5.minimized = false;
         });
-        expandButton.focus();
+        setTimeout(function () {
+          expandButton.focus();
+        }, 500);
       }
     }, {
       key: 'openModal',

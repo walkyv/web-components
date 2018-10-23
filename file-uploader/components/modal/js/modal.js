@@ -126,7 +126,11 @@
             modalOverlay.classList.remove('fadeOutFast');
             this.modal.classList.add('fadeInFast');
           }
-          minimizeButton.focus();
+
+          setTimeout(() => {
+            minimizeButton.focus();
+          }, 250);
+
         } else {
           this.addEventListener('xhrLoading', event => {
             this.minimizeDetail = event.detail;
@@ -280,7 +284,9 @@
       expandButton.addEventListener('click', event => {
         this.minimized = false
       });
-      expandButton.focus();
+      setTimeout(() => {
+        expandButton.focus();
+      }, 500);
     }
 
     openModal(e) {
