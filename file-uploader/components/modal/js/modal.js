@@ -5,6 +5,7 @@
   const styles = currentDoc.querySelector('#styles');
   const template = currentDoc.querySelector('#template');
   const minimizedTemplate = currentDoc.querySelector('#minimized');
+  const isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(styles, 'upload-modal');
 
@@ -95,9 +96,8 @@
 
     attributeChangedCallback(name, oldValue, newValue) {
       const minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized'),
-        modalOverlay = this.shadowRoot.querySelector('#modalOverlay');
-
-
+        modalOverlay = this.shadowRoot.querySelector('#modalOverlay'),
+        minimizeButton = this.shadowRoot.querySelector('#minimizeButton');
 
       this.minimizedClone = doc.importNode(minimizedTemplate.content.cloneNode(true), true);
       // if `this.modal has not been defined yet,
@@ -113,40 +113,48 @@
       }
 
       if (name === 'minimized') {
-
         if(!this.minimized) {
-          this.modal.classList.remove('fadeOutFast');
-          modalOverlay.classList.remove('fadeOutFast');
-          minimizedContainer.remove();
-          this.modal.classList.add('fadeInFast');
-          this.modal.classList.remove('hidden');
-          modalOverlay.classList.remove('hidden');
+          if (isIE11) {
+            minimizedContainer.remove();
+            this.modal.classList.remove('hidden');
+            modalOverlay.classList.remove('hidden');
+          }  else {
+            minimizedContainer.remove();
+            this.modal.classList.remove('hidden');
+            modalOverlay.classList.remove('hidden');
+            this.modal.classList.remove('fadeOutFast');
+            modalOverlay.classList.remove('fadeOutFast');
+            this.modal.classList.add('fadeInFast');
+          }
+          minimizeButton.focus();
         } else {
-
           this.addEventListener('xhrLoading', event => {
             this.minimizeDetail = event.detail;
             this.updateProgress(this.minimizeDetail)
           });
           this.renderMinimized();
-          this.modal.classList.remove('slideInDown');
-          this.modal.classList.add('fadeOutFast');
-          modalOverlay.classList.add('fadeOutFast');
+          if (isIE11) {
+            modalOverlay.classList.add('hidden');
+            this.modal.classList.add('hidden');
+          } else {
+            this.modal.classList.remove('slideInDown');
+            this.modal.classList.add('fadeOutFast');
+            modalOverlay.classList.add('fadeOutFast');
+          }
         this.updateProgress(this.minimizeDetail)
         }
-
-
 
         modalOverlay.addEventListener('animationend', event => {
           if (event.animationName === 'fadeOutFast') {
             modalOverlay.classList.add('hidden');
             this.modal.classList.add('hidden');
           }
+          event.stopImmediatePropagation();
         });
       }
     }
 
     connectedCallback() {
-      const minimizedHeader = this.querySelector('.pe-modal-container__minimized');
       this.shadowRoot.appendChild(this.styles);
       if (this.minimized) {
         this.renderMinimized();
@@ -268,20 +276,17 @@
 
     renderMinimized() {
       this.shadowRoot.appendChild(this.minimizedClone);
-        this.shadowRoot.addEventListener('click', event => {
-          event.stopImmediatePropagation();
-          if (event.target.id === 'expandButton'){
-            this.minimized = false
-          } else {
-            return
-          }
-        });
+      const expandButton = this.shadowRoot.querySelector('#expandButton');
+      expandButton.addEventListener('click', event => {
+        this.minimized = false
+      });
+      expandButton.focus();
     }
 
     openModal(e) {
       const thisButton = e.currentTarget,
         buttonDisabled = thisButton.getAttribute('disabled');
-
+      this.style.display = "block";
       if (buttonDisabled === null) {
         thisButton.setAttribute('disabled', true);
         this.main.setAttribute('aria-hidden', 'true');

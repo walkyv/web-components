@@ -15,6 +15,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var styles = currentDoc.querySelector('#styles');
   var template = currentDoc.querySelector('#template');
   var minimizedTemplate = currentDoc.querySelector('#minimized');
+  var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(styles, 'upload-modal');
 
@@ -104,7 +105,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var _this2 = this;
 
         var minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized'),
-            modalOverlay = this.shadowRoot.querySelector('#modalOverlay');
+            modalOverlay = this.shadowRoot.querySelector('#modalOverlay'),
+            minimizeButton = this.shadowRoot.querySelector('#minimizeButton');
 
         this.minimizedClone = doc.importNode(minimizedTemplate.content.cloneNode(true), true);
         // if `this.modal has not been defined yet,
@@ -120,24 +122,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         if (name === 'minimized') {
-
           if (!this.minimized) {
-            this.modal.classList.remove('fadeOutFast');
-            modalOverlay.classList.remove('fadeOutFast');
-            minimizedContainer.remove();
-            this.modal.classList.add('fadeInFast');
-            this.modal.classList.remove('hidden');
-            modalOverlay.classList.remove('hidden');
+            if (isIE11) {
+              minimizedContainer.remove();
+              this.modal.classList.remove('hidden');
+              modalOverlay.classList.remove('hidden');
+            } else {
+              minimizedContainer.remove();
+              this.modal.classList.remove('hidden');
+              modalOverlay.classList.remove('hidden');
+              this.modal.classList.remove('fadeOutFast');
+              modalOverlay.classList.remove('fadeOutFast');
+              this.modal.classList.add('fadeInFast');
+            }
+            minimizeButton.focus();
           } else {
-
             this.addEventListener('xhrLoading', function (event) {
               _this2.minimizeDetail = event.detail;
               _this2.updateProgress(_this2.minimizeDetail);
             });
             this.renderMinimized();
-            this.modal.classList.remove('slideInDown');
-            this.modal.classList.add('fadeOutFast');
-            modalOverlay.classList.add('fadeOutFast');
+            if (isIE11) {
+              modalOverlay.classList.add('hidden');
+              this.modal.classList.add('hidden');
+            } else {
+              this.modal.classList.remove('slideInDown');
+              this.modal.classList.add('fadeOutFast');
+              modalOverlay.classList.add('fadeOutFast');
+            }
             this.updateProgress(this.minimizeDetail);
           }
 
@@ -146,6 +158,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               modalOverlay.classList.add('hidden');
               _this2.modal.classList.add('hidden');
             }
+            event.stopImmediatePropagation();
           });
         }
       }
@@ -154,7 +167,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this3 = this;
 
-        var minimizedHeader = this.querySelector('.pe-modal-container__minimized');
         this.shadowRoot.appendChild(this.styles);
         if (this.minimized) {
           this.renderMinimized();
@@ -248,14 +260,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var _this5 = this;
 
         this.shadowRoot.appendChild(this.minimizedClone);
-        this.shadowRoot.addEventListener('click', function (event) {
-          event.stopImmediatePropagation();
-          if (event.target.id === 'expandButton') {
-            _this5.minimized = false;
-          } else {
-            return;
-          }
+        var expandButton = this.shadowRoot.querySelector('#expandButton');
+        expandButton.addEventListener('click', function (event) {
+          _this5.minimized = false;
         });
+        expandButton.focus();
       }
     }, {
       key: 'openModal',
@@ -264,7 +273,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         var thisButton = e.currentTarget,
             buttonDisabled = thisButton.getAttribute('disabled');
-
+        this.style.display = "block";
         if (buttonDisabled === null) {
           thisButton.setAttribute('disabled', true);
           this.main.setAttribute('aria-hidden', 'true');
