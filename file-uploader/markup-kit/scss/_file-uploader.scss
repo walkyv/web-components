@@ -100,6 +100,10 @@
         font-weight:bold;
         color:#047a9c;
         font-size:.7em;
+
+        @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+          position:relative;
+        }
       }
       img {
         width:39px;
@@ -119,6 +123,7 @@
     .upload-actions {
       display:flex;
       align-items: center;
+      margin-right:2px;
       button {
         cursor: pointer;
         width: 40px;
@@ -139,6 +144,17 @@
     }
     progress-ring {
       display:flex;
+      @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        display:none;
+      }
+    }
+  }
+
+  body, html {
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+      &:focus {
+        outline:none;
+      }
     }
   }
 

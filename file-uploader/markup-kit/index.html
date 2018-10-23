@@ -7,7 +7,6 @@
 
 	<!-- loads web component polyfills -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script>
-	<script src="https://unpkg.com/@webcomponents/custom-elements"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
 	<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
@@ -47,7 +46,7 @@
 </main>
 
 <!-- place modal before the end of the body and pass in the reference ID of the button that triggers the modal -->
-<upload-modal triggerId="trigger-modal" titleText="Upload Files" successBtnText="Done">
+<upload-modal triggerId="trigger-modal" titleText="Upload Files" successBtnText="Done" style="display:none">
 	<div class="pe-file-upload-container">
 		<div id="drop" class="file-upload">
 			<div class="drop-area">
