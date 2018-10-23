@@ -105,7 +105,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var _this2 = this;
 
         var minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized'),
-            modalOverlay = this.shadowRoot.querySelector('#modalOverlay');
+            modalOverlay = this.shadowRoot.querySelector('#modalOverlay'),
+            minimizeButton = this.shadowRoot.querySelector('#minimizeButton');
 
         this.minimizedClone = doc.importNode(minimizedTemplate.content.cloneNode(true), true);
         // if `this.modal has not been defined yet,
@@ -121,7 +122,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         if (name === 'minimized') {
-
           if (!this.minimized) {
             if (isIE11) {
               minimizedContainer.remove();
@@ -135,6 +135,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               modalOverlay.classList.remove('fadeOutFast');
               this.modal.classList.add('fadeInFast');
             }
+            minimizeButton.focus();
           } else {
             this.addEventListener('xhrLoading', function (event) {
               _this2.minimizeDetail = event.detail;
@@ -157,6 +158,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               modalOverlay.classList.add('hidden');
               _this2.modal.classList.add('hidden');
             }
+            event.stopImmediatePropagation();
           });
         }
       }
@@ -165,7 +167,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this3 = this;
 
-        var minimizedHeader = this.querySelector('.pe-modal-container__minimized');
         this.shadowRoot.appendChild(this.styles);
         if (this.minimized) {
           this.renderMinimized();
@@ -263,6 +264,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         expandButton.addEventListener('click', function (event) {
           _this5.minimized = false;
         });
+        expandButton.focus();
       }
     }, {
       key: 'openModal',

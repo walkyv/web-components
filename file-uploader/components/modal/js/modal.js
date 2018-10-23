@@ -96,9 +96,8 @@
 
     attributeChangedCallback(name, oldValue, newValue) {
       const minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized'),
-        modalOverlay = this.shadowRoot.querySelector('#modalOverlay');
-
-
+        modalOverlay = this.shadowRoot.querySelector('#modalOverlay'),
+        minimizeButton = this.shadowRoot.querySelector('#minimizeButton');
 
       this.minimizedClone = doc.importNode(minimizedTemplate.content.cloneNode(true), true);
       // if `this.modal has not been defined yet,
@@ -114,7 +113,6 @@
       }
 
       if (name === 'minimized') {
-
         if(!this.minimized) {
           if (isIE11) {
             minimizedContainer.remove();
@@ -128,7 +126,7 @@
             modalOverlay.classList.remove('fadeOutFast');
             this.modal.classList.add('fadeInFast');
           }
-
+          minimizeButton.focus();
         } else {
           this.addEventListener('xhrLoading', event => {
             this.minimizeDetail = event.detail;
@@ -146,19 +144,17 @@
         this.updateProgress(this.minimizeDetail)
         }
 
-
-
         modalOverlay.addEventListener('animationend', event => {
           if (event.animationName === 'fadeOutFast') {
             modalOverlay.classList.add('hidden');
             this.modal.classList.add('hidden');
           }
+          event.stopImmediatePropagation();
         });
       }
     }
 
     connectedCallback() {
-      const minimizedHeader = this.querySelector('.pe-modal-container__minimized');
       this.shadowRoot.appendChild(this.styles);
       if (this.minimized) {
         this.renderMinimized();
@@ -283,7 +279,8 @@
       const expandButton = this.shadowRoot.querySelector('#expandButton');
       expandButton.addEventListener('click', event => {
         this.minimized = false
-      })
+      });
+      expandButton.focus();
     }
 
     openModal(e) {
