@@ -4,17 +4,12 @@
     const progressBars = document.querySelectorAll(".pe-progress-bar.standard");
 
     progressBars.forEach(bar => {
-        var endPercent = 20;
 
-        const label = bar.querySelector(".fullbar"),
-            loadingBar = bar.querySelector("[role=progressbar]");
+        const loadingBar = bar.querySelector("[role=progressbar]"),
+              endPercent = loadingBar.getAttribute("aria-valuenow");
 
-        label.innerHTML = endPercent + "%";
-
-        loadingBar.setAttribute('aria-valuenow',endPercent)
         setTimeout( function(){
             loadingBar.setAttribute("style", "width: " + endPercent + "%;")
-
         })
 
     })

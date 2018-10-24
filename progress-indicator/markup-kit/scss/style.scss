@@ -46,7 +46,7 @@
     left:0;
     bottom:0;
     background-color: $pe-color-digital-marine-turquoise;
-    transition:  3s;
+    transition: 3s;
     animation: shift 0.5s linear infinite;
   }
 
@@ -61,5 +61,11 @@
 @keyframes shift {
   to {
     background-position: 9px 9px;
+  }
+}
+@media screen and (prefers-reduced-motion: reduce) {
+  .pe-progress-bar div[role=progressbar] {
+    animation: unset !important;
+    transition: unset !important;
   }
 }
