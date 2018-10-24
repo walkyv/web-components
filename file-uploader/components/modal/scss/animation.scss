@@ -67,15 +67,12 @@
 @keyframes zoomOutRight {
   40% {
     opacity: 1;
-    -webkit-transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);
     transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);
   }
 
   to {
     opacity: 0;
-    -webkit-transform: scale(0.1) translate3d(2000px, 0, 0);
     transform: scale(0.1) translate3d(2000px, 0, 0);
-    -webkit-transform-origin: right center;
     transform-origin: right center;
   }
 }
@@ -83,25 +80,32 @@
 @keyframes zoomInLeft {
   from {
     opacity: 0;
-    -webkit-transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);
     transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);
-    -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
     animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
   }
 
   60% {
     opacity: 1;
-    -webkit-transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);
     transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);
-    -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
   }
 }
 
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+
+
 .animated {
-  -webkit-animation-duration: 1s;
   animation-duration: 1s;
-  -webkit-animation-fill-mode: backwards;
   animation-fill-mode: backwards;
   @media screen and (prefers-reduced-motion: reduce) {
     animation: unset !important;
@@ -132,7 +136,6 @@
 }
 
 .slideInDown {
-  -webkit-animation-name: slideInDown;
   animation-name: slideInDown;
   animation-duration: .7s;
   transition-timing-function: ease-in;
@@ -157,11 +160,14 @@
 }
 
 .zoomInLeft {
-  -webkit-animation-name: zoomInLeft;
   animation-name: zoomInLeft;
 }
 
 .zoomOutRight {
-  -webkit-animation-name: zoomOutRight;
   animation-name: zoomOutRight;
+}
+
+.slideInUp {
+  animation-name: slideInUp;
+  animation-duration: .5s;
 }
