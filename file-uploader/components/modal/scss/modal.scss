@@ -96,9 +96,10 @@
   width: 507px;
   height: 60px;
   padding-left: 20px 17px 22px 27px;
-  border-radius: 3px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   border: solid 1px #c7c7c7;
+  border-bottom: 0;
+  border-radius: 0;
   background-color: #ffffff;
 }
 
@@ -249,17 +250,9 @@ h2 {
   border: 0;
 }
 
-.pe-btn--btn_large:focus:after,
-.pe-btn:focus:after {
-  left: -8px;
-  top: -8px;
-}
-
 .style-scope {
   text-align: left;
 }
-
-
 
 .modal-minimize img{
   height:18px !important;
@@ -268,3 +261,10 @@ h2 {
 .pe-icon--btn::-moz-focus-inner {
   border: 0;
 }
+
+.pe-icon--btn:focus:after {
+  top:-4px !important;
+  left:-4px !important;
+}
+
+

@@ -7,7 +7,7 @@
 
 :host(:not([footer])){
   #minimizeButton {
-    display:none
+    display:none !important;
   }
 }
 
