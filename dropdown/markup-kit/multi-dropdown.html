@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html class="">
+<head>
+	<title>Web Component Markup Kit</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" href="css/style.css" media="all" />
+</head>
+<body class="">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="pe-icons-sprite" style="display:none">
+	<!-- place only the symbols belonging to that component here -->
+	<symbol id="dropdown-open-sm-18" viewBox="0 0 18 18">
+		<path d="M12.7059871,7.29177258 C12.3143055,6.90291009 11.6828189,6.90390717 11.2931357,7.29376675 L9,9.59004962 L6.70686427,7.29376675 C6.31718108,6.90291009 5.68569446,6.901913 5.29401289,7.29177258 C4.90333051,7.68063507 4.90133213,8.31079173 5.29201452,8.70164839 L8.29257512,11.7068575 C8.48042241,11.8943092 8.73421608,12 9,12 C9.26578392,12 9.52057678,11.8943092 9.70742488,11.7068575 L12.7079855,8.70164839 C13.0986679,8.31079173 13.0966695,7.68063507 12.7059871,7.29177258"/>
+	</symbol>
+	<symbol id="check-sm-18" viewBox="0 0 18 18">
+		<path d="M7.35823097,13.99969 C7.08123097,13.99969 6.81423097,13.88469 6.62523097,13.67969 L4.26623097,11.13469 C3.89123097,10.72869 3.91523097,10.09669 4.32023097,9.72169 C4.72423097,9.34469 5.35623097,9.36869 5.73323097,9.77469 L7.25323097,11.41469 L12.182231,4.42369 C12.501231,3.97269 13.125231,3.86469 13.576231,4.18269 C14.027231,4.50069 14.135231,5.12469 13.817231,5.57569 L8.17523097,13.57569 C8.00223097,13.82269 7.72523097,13.97769 7.42423097,13.99769 C7.40223097,13.99869 7.38023097,13.99969 7.35823097,13.99969"/>
+	</symbol>
+</svg>
+
+<main id="main" aria-hidden="false">
+	<div class="dropdown">
+		<button id="dropdownTrigger" aria-haspopup="true" aria-expanded="false" class="pe-btn pe-btn--btn_large">dropdown
+			<svg focusable="false" class="pe-icon--dropdown-open-sm-18" aria-hidden="" >
+				<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#dropdown-open-sm-18"></use>
+			</svg>
+		</button>
+		<div class="dropdown-menu">
+			<ul role="menu" class="menu pe-label hidden">
+				<li role="menuitemcheckbox" aria-checked="false">
+					<button class="pe-link--btn" role="menuitem">
+						<svg focusable="false" class="pe-icon--check-sm-18" aria-hidden="" >
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-sm-18"></use>
+						</svg>
+						<span class="option-text">Option One</span>
+					</button>
+				</li>
+				<li role="menuitemcheckbox" aria-checked="false">
+					<button class="pe-link--btn" role="menuitem">
+						<svg focusable="false" class="pe-icon--check-sm-18" aria-hidden="" >
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-sm-18"></use>
+						</svg>
+						<span class="option-text">Option Two</span>
+					</button>
+				</li>
+				<li class="seperator" role="menuitemcheckbox" aria-checked="false">
+					<button class="pe-link--btn" role="menuitem">
+						<svg focusable="false" class="pe-icon--check-sm-18" aria-hidden="" >
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-sm-18"></use>
+						</svg>
+						<span class="option-text">Option Three</span>
+					</button>
+				</li>
+				<li role="menuitemcheckbox" aria-checked="false">
+					<button class="pe-link--btn" role="menuitem">
+						<svg focusable="false" class="pe-icon--check-sm-18" aria-hidden="" >
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-sm-18"></use>
+						</svg>
+						<span class="option-text">Option Four</span>
+					</button>
+				</li>
+				<li class="seperator" role="menuitemcheckbox" aria-checked="false">
+					<button class="pe-link--btn" role="menuitem">
+						<svg focusable="false" class="pe-icon--check-sm-18" aria-hidden="" >
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-sm-18"></use>
+						</svg>
+						<span class="option-text">Option Five</span>
+					</button>
+				</li>
+				<li role="menuitemcheckbox" aria-checked="false">
+					<button class="pe-link--btn" role="menuitem">
+						<svg focusable="false" class="pe-icon--check-sm-18" aria-hidden="" >
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-sm-18"></use>
+						</svg>
+						<span class="option-text">Option Six</span>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+</main>
+
+<script src="js/dist/main.js"></script>
+</body>
+</html>
+
