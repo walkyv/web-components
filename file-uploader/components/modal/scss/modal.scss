@@ -1,5 +1,9 @@
 /* line 10, ./scss/style.scss */
-.hidden, [hidden] {
+* {
+  box-sizing: border-box;
+}
+.hidden,
+[hidden] {
   display: none !important;
 }
 
@@ -27,12 +31,12 @@
   left: 0;
   margin: 0;
   padding: 0;
-  transition: all .5s ease-in;
-  opacity:.6;
+  transition: all 0.5s ease-in;
+  opacity: 0.6;
 }
 
 /* line 53, ./scss/style.scss */
-[role=dialog] {
+[role='dialog'] {
   border: thin #000 solid;
   background-color: #fff;
   z-index: 3;
@@ -52,23 +56,24 @@
   width: 100%;
 }
 
-/* line 71, ./scss/style.scss */
-button.close[aria-label="Close Dialog"] {
-  position: absolute;
-  background: none;
-  border: 0;
-  top:10px;
-  right: 5px;
-  cursor: pointer;
+.header-actions {
   display:flex;
-  justify-content: center;
-  align-items: center;
-  padding:0;
-  width:44px;
-  img {
-    width:24px;
-    height:24px;
-    margin:0;
+  position: absolute;
+  padding: 20px;
+  top: 0;
+  right: 0;
+  button {
+    top: 0 !important;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    width: 44px;
+    img {
+      width: 24px;
+      height: 24px;
+      margin: 0;
+    }
   }
 }
 
@@ -79,7 +84,64 @@ button.close[aria-label="Close Dialog"] {
   outline: none;
   background-color: #fff;
   border-radius: 2px;
-  width:auto;
+  width: auto;
+}
+
+.pe-modal-container__minimized {
+  display:flex;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 507px;
+  height: 60px;
+  padding-left: 20px 17px 22px 27px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  border: solid 1px #c7c7c7;
+  border-bottom: 0;
+  border-radius: 0;
+  background-color: #ffffff;
+}
+
+.header-actions__minimized {
+  display: flex;
+  position: absolute;
+  right: 5px;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0 !important;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    width: 44px;
+    height:24px;
+    vertical-align: middle;
+    img {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+    }
+  }
+}
+
+
+.upload-summary {
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #252525;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  padding-left:20px;
 }
 @media (min-width: 481px) and (max-width: 767px) {
   /* line 86, ./scss/style.scss */
@@ -88,17 +150,17 @@ button.close[aria-label="Close Dialog"] {
   }
 }
 p {
-  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   font-size: 1rem;
   line-height: 1.57143rem;
-  margin-bottom: .85714rem;
+  margin-bottom: 0.85714rem;
   margin-top: 0;
   color: #252525;
 }
 /* line 97, ./scss/style.scss */
 h2 {
-  font-family: "Open Sans", Arial, Helvetica, sans-serif;
-  font-weight:normal;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-weight: normal;
   display: inline-block;
   margin: 0;
   margin-bottom: 20px;
@@ -109,7 +171,7 @@ h2 {
 }
 /* line 106, ./scss/style.scss */
 .pe-modal-container h2:focus {
-  outline: 1px solid #DA0474;
+  outline: 1px solid #da0474;
   outline-offset: 2px;
 }
 @media (min-width: 1px) and (max-width: 480px) {
@@ -168,7 +230,7 @@ h2 {
 @media (min-width: 1px) and (max-width: 480px) {
   /* line 137, ./scss/style.scss */
   .pe-modal-container .actions button:first-child {
-    margin: .5em 0;
+    margin: 0.5em 0;
   }
 }
 @media (min-width: 481px) and (max-width: 767px) {
@@ -179,19 +241,30 @@ h2 {
 }
 /* line 148, ./scss/style.scss */
 .pe-modal-container .actions button#modalOverlay:focus {
-  outline: 1px solid #DA0474;
+  outline: 1px solid #da0474;
   outline-offset: 2px;
 }
 
-.pe-btn--btn_large::-moz-focus-inner, .pe-btn::-moz-focus-inner {
+.pe-btn--btn_large::-moz-focus-inner,
+.pe-btn::-moz-focus-inner {
   border: 0;
-}
-
-.pe-btn--btn_large:focus:after, .pe-btn:focus:after {
-  left:-8px;
-  top:-8px;
 }
 
 .style-scope {
   text-align: left;
 }
+
+.modal-minimize img{
+  height:18px !important;
+}
+
+.pe-icon--btn::-moz-focus-inner {
+  border: 0;
+}
+
+.pe-icon--btn:focus:after {
+  top:-4px !important;
+  left:-4px !important;
+}
+
+
