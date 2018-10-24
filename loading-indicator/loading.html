@@ -7,48 +7,37 @@
 	<link rel="stylesheet" href="css/style.css" media="all" />
 </head>
 <body class="">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="pe-icons-sprite" style="display:none">
-	<!-- place only the symbols belonging to that component here -->
-</svg>
-<main id="main" style="padding:1em">
-	<button id="load-page">Load Content</button> 
-	<br><br>
-	<div role="alert" aria-live="assertive" class="loading-indicator-liveregion" id="liveregion"></div>
-	<div id="loaded-content"></div>
-</main>
-<script type="text/template" id="loading-template" hidden>
-	<div class="loading-indicator-wrapper" id="spinner-icon" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuetext="Loading Indicator" aria-label="Loading"><div class="loading-indicator"><div class="pe-loadingSpinner"><div class="pe-loadingSpinner-container pe-loadingSpinner-container1"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="pe-loadingSpinner-container pe-loadingSpinner-container2"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div></div><span class="loading-text" id="loading-text">Loading...</span></div></div></div>
-</script>
-<script>
-window.addEventListener('load', function () {
-	var button = document.getElementById('load-page');
-	button.addEventListener('click', showSpinner);
-});
-function showSpinner (event) {
-	document.querySelector('#loaded-content').innerHTML = "";
-	var liveregion = document.getElementById('liveregion');
-	var template = document.getElementById('loading-template').innerHTML;
-	liveregion.innerHTML = template;
-	setTimeout(function(){ 
-		document.getElementById('spinner-icon').setAttribute('aria-label', 'Loaded!')
-		document.getElementById('loading-text').innerHTML = "Loaded!";
-	}, 2000);
-	setTimeout(function(){ 
-		var request = new XMLHttpRequest();
-		request.open('GET', 'loaded-content.html', true);
-		request.onload = function() {
-			if (request.status >= 200 && request.status < 400) {
-				var resp = request.responseText;
-				document.querySelector('#loaded-content').innerHTML = resp;
-				document.querySelector('#loaded-content title').remove();
-			}
-		};
-		request.send();
-		liveregion.innerHTML = "";
-	}, 2500);
-}  
-</script>
-<script src="js/dist/main.js"></script>
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="pe-icons-sprite" style="display:none">
+		<!-- place only the symbols belonging to that component here -->
+	</svg>
+	<main id="main">
+		<button id="load-page">Load Content</button>
+		<br><br>
+		<div role="alert" aria-live="assertive" class="loading-indicator-liveregion" id="liveregion"></div>
+		<div id="loaded-content"></div>
+	</main>
+	<script type="text/template" id="loading-template" hidden>
+		<div class="loading-indicator-wrapper" id="spinner-icon" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuetext="Loading Indicator" aria-label="Loading">
+			<div class="loading-indicator">
+				<div class="pe-loadingSpinner">
+					<div class="pe-loadingSpinner-container pe-loadingSpinner-container1">
+						<div class="circle1"></div>
+						<div class="circle2"></div>
+						<div class="circle3"></div>
+						<div class="circle4"></div>
+					</div>
+					<div class="pe-loadingSpinner-container pe-loadingSpinner-container2">
+						<div class="circle1"></div>
+						<div class="circle2"></div>
+						<div class="circle3"></div>
+						<div class="circle4"></div>
+					</div>
+				</div>
+				<span class="loading-text" id="loading-text">Loading...</span>
+			</div>
+		</div>
+	</script>
+	<script src="js/dist/main.js"></script>
 </body>
 </html>
 
