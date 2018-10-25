@@ -3,6 +3,15 @@
     position: relative;
     z-index: 9;
   }
+.text-icon {
+  display: flex;
+  align-items: center;
+  padding: .5em;
+  cursor: pointer;
+  svg {
+    margin-left:.5em;
+  }
+}
 
   .dropdown-menu {
     position: absolute;

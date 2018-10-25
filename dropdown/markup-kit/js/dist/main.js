@@ -63,10 +63,23 @@
   focusableElements.forEach(function (button, index) {
     button.setAttribute('data-index', index);
     button.addEventListener('click', function (event) {
-      if (button.parentNode.getAttribute('aria-checked') === 'false') {
+      var isChecked = button.parentNode.getAttribute('aria-checked'),
+          multiSelect = dropdownMenu.hasAttribute('multiselect');
+
+      if (multiSelect === false) {
+        console.log('false');
+        focusableElements.forEach(function (element) {
+          element.parentNode.setAttribute('aria-checked', 'false');
+        });
         button.parentNode.setAttribute('aria-checked', 'true');
+        closeDropdown();
       } else {
-        button.parentNode.setAttribute('aria-checked', 'false');
+        console.log('true');
+        if (isChecked === 'false') {
+          button.parentNode.setAttribute('aria-checked', 'true');
+        } else {
+          button.parentNode.setAttribute('aria-checked', 'false');
+        }
       }
     });
 
