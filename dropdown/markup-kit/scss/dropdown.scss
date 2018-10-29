@@ -85,6 +85,18 @@
   }
   li {
 
+    button[aria-checked="false"] {
+      svg {
+        display: none;
+      }
+    }
+
+    button[aria-checked="true"] {
+      svg {
+        display: inline-block;
+      }
+    }
+
     &.seperator {
       padding-bottom: 6px;
       margin-bottom:6px;
@@ -117,19 +129,6 @@
         }
       }
     }
-
-    &[aria-selected="false"] {
-      svg {
-        display: none;
-      }
-    }
-
-    &[aria-selected="true"] {
-      svg {
-        display: inline-block;
-      }
-    }
-
     &.divider {
       border-bottom: 1px solid $pe-color-concrete;
       padding-bottom: 8px;

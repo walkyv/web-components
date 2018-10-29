@@ -9,7 +9,7 @@
         mobileClose = document.querySelector('#mobileClose');
 
   function 	getFocusableElements() {
-    const tabbedList = document.querySelectorAll('[role="menuitem"]'),
+    const tabbedList = document.querySelectorAll('[role="menuitemcheckbox"]'),
       filter = Array.prototype.filter;
     return filter.call(tabbedList, listItem => {
       return listItem;
