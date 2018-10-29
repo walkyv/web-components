@@ -18,6 +18,7 @@
   }
 
   function closeDropdown() {
+
     dropdownMenu.style.display = 'none';
     dropdownTrigger.focus();
     dropdownTrigger.setAttribute('aria-expanded', 'false');
@@ -25,8 +26,8 @@
 
   dropdownTrigger.addEventListener('click', function (event) {
     if (dropdownMenu.style.display === 'none') {
-      dropdownMenu.classList.remove('fadeOutUp');
-      dropdownMenu.classList.add('slideInUp');
+      dropdownMenu.classList.remove('animateOut');
+      dropdownMenu.classList.add('animateIn');
       dropdownMenu.style.display = 'flex';
       firstFocusableElement.focus();
       dropdownTrigger.setAttribute('aria-expanded', 'true');
@@ -36,13 +37,13 @@
   });
 
   mobileClose.addEventListener('click', function (event) {
-    dropdownMenu.classList.remove('slideInUp');
-    dropdownMenu.classList.add('fadeOutUp');
+    dropdownMenu.classList.remove('animateIn');
+    dropdownMenu.classList.add('animateOut');
     dropdownTrigger.setAttribute('aria-expanded', 'false');
   });
 
   dropdownMenu.addEventListener('animationend', function (event) {
-    if (event.animationName === 'fadeOutUp') {
+    if (event.animationName === 'fadeOutUp' || event.animationName === 'fadeOut') {
       closeDropdown();
     }
   });
@@ -56,7 +57,8 @@
         }
         target = target.parentNode;
       } while (target);
-      closeDropdown();
+      dropdownMenu.classList.remove('animateIn');
+      dropdownMenu.classList.add('animateOut');
     }
   });
 
