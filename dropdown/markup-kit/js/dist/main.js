@@ -72,17 +72,19 @@
           multiSelect = dropdownMenu.hasAttribute('multiselect');
 
       if (multiSelect === false) {
-        console.log('false');
         event.target.setAttribute('aria-checked', 'false');
         button.setAttribute('aria-checked', 'true');
         closeDropdown();
       } else {
-        console.log('true');
         if (isChecked === 'false') {
           button.setAttribute('aria-checked', 'true');
         } else {
           button.setAttribute('aria-checked', 'false');
         }
+      }
+
+      if (document.activeElement !== event.target) {
+        event.target.focus();
       }
     });
 
