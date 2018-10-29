@@ -1,6 +1,6 @@
-'use strict';
 
 (function() {
+  'use strict';
   const trigger = document.getElementById('openDrawer'),
     drawer = document.getElementById('drawer'),
     panels = drawer.querySelectorAll('.panel'),
