@@ -2,25 +2,20 @@
   'use strict';
   // do something
   const dropdownTrigger = document.querySelector('#dropdownTrigger'),
-        dropdownMenu = document.querySelector('.dropdown-menu'),
-        focusableElements = getFocusableElements(),
-        firstFocusableElement = focusableElements[0],
-        lastFocusableElement = focusableElements[focusableElements.length - 1],
-        mobileClose = document.querySelector('#mobileClose');
+    dropdownMenu = document.querySelector('.dropdown-menu'),
+    focusableElements = getFocusableElements(),
+    firstFocusableElement = focusableElements[0],
+    lastFocusableElement = focusableElements[focusableElements.length - 1],
+    mobileClose = document.querySelector('#mobileClose');
 
-  function 	getFocusableElements() {
-    const tabbedList = document.querySelectorAll('[role="menuitemcheckbox"]'),
-      filter = Array.prototype.filter;
-    return filter.call(tabbedList, listItem => {
-      return listItem;
-    });
+  function getFocusableElements() {
+    return  document.querySelectorAll('[role^="menuitem"]');
   }
 
-  function closeDropdown () {
-
+  function closeDropdown() {
     dropdownMenu.style.display = 'none';
     dropdownTrigger.focus();
-    dropdownTrigger.setAttribute('aria-expanded', 'false')
+    dropdownTrigger.setAttribute('aria-expanded', 'false');
   }
 
   dropdownTrigger.addEventListener('click', event => {
@@ -29,21 +24,23 @@
       dropdownMenu.classList.add('animateIn');
       dropdownMenu.style.display = 'flex';
       firstFocusableElement.focus();
-      dropdownTrigger.setAttribute('aria-expanded', 'true')
+      dropdownTrigger.setAttribute('aria-expanded', 'true');
     } else {
       closeDropdown();
     }
   });
 
-
   mobileClose.addEventListener('click', event => {
     dropdownMenu.classList.remove('animateIn');
     dropdownMenu.classList.add('animateOut');
-    dropdownTrigger.setAttribute('aria-expanded', 'false')
+    dropdownTrigger.setAttribute('aria-expanded', 'false');
   });
 
   dropdownMenu.addEventListener('animationend', event => {
-    if ((event.animationName === 'fadeOutUp') || (event.animationName === 'fadeOut')) {
+    if (
+      event.animationName === 'fadeOutUp' ||
+      event.animationName === 'fadeOut'
+    ) {
       closeDropdown();
     }
   });
@@ -62,25 +59,25 @@
     }
   });
 
-  focusableElements.forEach( (button, index) => {
+  focusableElements.forEach((button, index) => {
     button.setAttribute('data-index', index);
     button.addEventListener('click', event => {
       const isChecked = button.getAttribute('aria-checked'),
         multiSelect = dropdownMenu.hasAttribute('multiselect');
 
       if (multiSelect === false) {
-        console.log('false')
+        console.log('false');
         focusableElements.forEach(element => {
-          element.setAttribute('aria-checked', 'false')
+          element.setAttribute('aria-checked', 'false');
         });
         button.setAttribute('aria-checked', 'true');
         closeDropdown();
       } else {
-        console.log('true')
+        console.log('true');
         if (isChecked === 'false') {
           button.setAttribute('aria-checked', 'true');
         } else {
-          button.setAttribute('aria-checked', 'false')
+          button.setAttribute('aria-checked', 'false');
         }
       }
     });
@@ -105,7 +102,7 @@
         if (document.activeElement === lastFocusableElement) {
           firstFocusableElement.focus();
         } else {
-          focusableElements[nextButton].focus()
+          focusableElements[nextButton].focus();
         }
       }
 
@@ -116,7 +113,6 @@
       if (event.key === 'End') {
         lastFocusableElement.focus();
       }
-
     });
-  })
+  });
 })();

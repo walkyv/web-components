@@ -12,15 +12,10 @@
       mobileClose = document.querySelector('#mobileClose');
 
   function getFocusableElements() {
-    var tabbedList = document.querySelectorAll('[role="menuitemcheckbox"]'),
-        filter = Array.prototype.filter;
-    return filter.call(tabbedList, function (listItem) {
-      return listItem;
-    });
+    return document.querySelectorAll('[role^="menuitem"]');
   }
 
   function closeDropdown() {
-
     dropdownMenu.style.display = 'none';
     dropdownTrigger.focus();
     dropdownTrigger.setAttribute('aria-expanded', 'false');
