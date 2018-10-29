@@ -73,9 +73,7 @@
 
       if (multiSelect === false) {
         console.log('false');
-        focusableElements.forEach(element => {
-          element.setAttribute('aria-checked', 'false');
-        });
+        event.target.setAttribute('aria-checked', 'false')
         button.setAttribute('aria-checked', 'true');
         closeDropdown();
       } else {
