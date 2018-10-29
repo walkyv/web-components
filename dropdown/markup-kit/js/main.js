@@ -91,6 +91,7 @@
       }
 
       if (event.key === 'ArrowUp') {
+        event.preventDefault();
         if (document.activeElement === firstFocusableElement) {
           lastFocusableElement.focus();
         } else {
@@ -99,6 +100,7 @@
       }
 
       if (event.key === 'ArrowDown') {
+        event.preventDefault();
         if (document.activeElement === lastFocusableElement) {
           firstFocusableElement.focus();
         } else {
