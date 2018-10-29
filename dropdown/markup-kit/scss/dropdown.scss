@@ -52,6 +52,10 @@
         border:0;
         height:100vh;
       }
+      .pe-link--btn > * {
+        pointer-events: none;
+      }
+
       .pe-link--btn:focus:after {
         border: 2px solid #0b73da;
         content: "";
