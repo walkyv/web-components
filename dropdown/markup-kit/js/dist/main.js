@@ -82,7 +82,7 @@
       }
     });
 
-    button.addEventListener('keyup', function (event) {
+    button.addEventListener('keydown', function (event) {
       var nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
           prevButton = parseInt(event.target.getAttribute('data-index')) - 1;
 
