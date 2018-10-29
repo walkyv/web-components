@@ -1,5 +1,5 @@
-'use strict';
 (function() {
+  'use strict';
   // do something
   const dropdownTrigger = document.querySelector('#dropdownTrigger'),
         dropdownMenu = document.querySelector('.dropdown-menu'),

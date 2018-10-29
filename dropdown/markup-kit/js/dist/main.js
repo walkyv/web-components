@@ -1,7 +1,9 @@
 'use strict';
 
 (function () {
+  'use strict';
   // do something
+
   var dropdownTrigger = document.querySelector('#dropdownTrigger'),
       dropdownMenu = document.querySelector('.dropdown-menu'),
       focusableElements = getFocusableElements(),
