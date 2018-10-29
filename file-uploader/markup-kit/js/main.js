@@ -89,16 +89,16 @@
   // }
 
   // highlight function to outline drop area when a file is over area
-  function highlight(event) {
-    preventDefaults(event);
-    dropArea.classList.add('highlight')
-  }
+  // function highlight(event) {
+  //   preventDefaults(event);
+  //   dropArea.classList.add('highlight')
+  // }
 
   // removes highlight from drop area when file has left area
-  function unhighlight(event) {
-    preventDefaults(event);
-    dropArea.classList.remove('highlight');
-  }
+  // function unhighlight(event) {
+  //   preventDefaults(event);
+  //   dropArea.classList.remove('highlight');
+  // }
 
   // prevents the file from opening in the browser
   // function preventDefaults (event) {
@@ -107,12 +107,12 @@
   // }
 
   // adds functionality when item is dropped over target
-  function handleDrop(event) {
-    unhighlight(event);
-    let dt = event.dataTransfer;
-    let files = dt.files;
-    handleFiles(files);
-  }
+  // function handleDrop(event) {
+  //   unhighlight(event);
+  //   let dt = event.dataTransfer;
+  //   let files = dt.files;
+  //   handleFiles(files);
+  // }
 
   // takes the files, loops over them, and uploads them
   // function handleFiles(files) {

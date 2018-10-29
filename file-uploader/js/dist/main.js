@@ -23,10 +23,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     event.stopPropagation();
   }
 
-  /** Any helper functions that do not need to be part of the class
-   * can be declared here, before the class is defined.
-   */
-
   var FileUpload = function (_HTMLElement) {
     _inherits(FileUpload, _HTMLElement);
 
@@ -39,11 +35,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       var clone = doc.importNode(template.content.cloneNode(true), true);
 
-      /** If we need references to the children of the component,
-       * we can create them here. If they are created elsewhere,
-       * they will not be available our lifecycle methods.
-       */
-
       _this.uploadInfo = clone.querySelector('#info');
       _this.realUploadInput = clone.querySelector('input[type="file"]');
       _this.attachBtn = clone.querySelector('#attachFiles');
@@ -51,12 +42,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.dropArea = clone.querySelector('#drop');
       _this.modal = doc.querySelector('upload-modal');
 
-      /** After all this, we can append our clone to the shadowRoot */
       _this.shadowRoot.appendChild(clone);
-
-      /** We should also bind any event listeners to `this` so their
-       * references do not get lost.
-       */
 
       _this.handleFiles = _this.handleFiles.bind(_this);
       _this.uploadFile = _this.uploadFile.bind(_this);
@@ -72,44 +58,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this2 = this;
 
-        /** Any changes to what the component renders should be done here. */
-
-        // Get the attributes set by the consumer
-        // const titleText = this.getAttribute('title');
-        // const buttonText = this.getAttribute('buttonText');
-        //
-        // this.heading.textContent = titleText;
-        // this.button.textContent = buttonText;
-
-        /** Event listeners should also be bound here. */
-        // this.button.addEventListener('click', this.handleClick);
-
-
         this.realUploadInput.addEventListener('change', function (event) {
           _this2.handleFiles(event.srcElement.files);
           console.log(_this2.attachBtn);
-          _this2.attachBtn.focus();
+          _this2.attachBtn.focus({ preventScroll: true });
         });
 
         this.attachBtn.addEventListener('click', function (event) {
           _this2.realUploadInput.click();
         });
 
-        this.dropArea.addEventListener('dragenter', function (event) {
-          _this2.highlight(event);
-        });
-
-        this.dropArea.addEventListener('dragover', function (event) {
-          _this2.highlight(event);
-        });
-
-        this.dropArea.addEventListener('dragleave', function (event) {
-          _this2.unhighlight(event);
-        });
-
-        this.dropArea.addEventListener('drop', function (event) {
-          _this2.handleDrop(event);
-        });
+        this.dropArea.addEventListener('dragenter', this.highlight);
+        this.dropArea.addEventListener('dragover', this.highlight);
+        this.dropArea.addEventListener('dragleave', this.unhighlight);
+        this.dropArea.addEventListener('drop', this.handleDrop);
       }
     }, {
       key: 'handleFiles',
@@ -124,7 +86,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             formData = new FormData();
 
         function uploadProgress(callback) {
-          status.progress = status.progress + 1;
           xhr.upload.onprogress = function (event) {
             if (event.lengthComputable) {
               callback(event);
@@ -160,9 +121,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         preventDefaults(event);
         this.dropArea.classList.add('highlight');
       }
-
-      // removes highlight from drop area when file has left area
-
     }, {
       key: 'unhighlight',
       value: function unhighlight(event) {
