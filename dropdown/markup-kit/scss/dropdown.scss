@@ -118,13 +118,13 @@
       }
     }
 
-    &[aria-checked="false"] {
+    &[aria-selected="false"] {
       svg {
         display: none;
       }
     }
 
-    &[aria-checked="true"] {
+    &[aria-selected="true"] {
       svg {
         display: inline-block;
       }
