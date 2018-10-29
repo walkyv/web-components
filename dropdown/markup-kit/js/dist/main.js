@@ -83,6 +83,7 @@
         }
       }
 
+      // Necessary for browsers that do not focus on buttons when clicked
       if (document.activeElement !== event.target) {
         event.target.focus();
       }
