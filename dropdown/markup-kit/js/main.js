@@ -59,6 +59,12 @@
     }
   }, true);
 
+  document.addEventListener('keydown', event => {
+    if (dropdownMenu.style.display === 'flex' && event.key === 'Escape') {
+      closeDropdown();
+    }
+  }, true);
+
   focusableElements.forEach((button, index) => {
     button.setAttribute('data-index', index);
     button.addEventListener('click', event => {
@@ -85,10 +91,6 @@
     button.addEventListener('keydown', event => {
       const nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
         prevButton = parseInt(event.target.getAttribute('data-index')) - 1;
-
-      if (event.key === 'Escape') {
-        closeDropdown();
-      }
 
       if (event.key === 'ArrowUp') {
         event.preventDefault();
