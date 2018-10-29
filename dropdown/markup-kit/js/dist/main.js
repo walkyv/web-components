@@ -57,7 +57,7 @@
       dropdownMenu.classList.remove('animateIn');
       dropdownMenu.classList.add('animateOut');
     }
-  });
+  }, true);
 
   focusableElements.forEach(function (button, index) {
     button.setAttribute('data-index', index);
