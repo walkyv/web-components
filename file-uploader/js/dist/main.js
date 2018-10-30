@@ -19,6 +19,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       check = currentDoc.querySelector('#check'),
       modal = doc.querySelector('upload-modal');
 
+  var status = {
+    'done': 0,
+    'progress': 0
+  };
+
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-uploader');
 
   function preventDefaults(event) {
@@ -92,6 +97,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             formData = new FormData();
 
         function uploadProgress(callback) {
+          status.progress++;
           xhr.upload.onprogress = function (event) {
             if (event.lengthComputable) {
               callback(event);
@@ -118,12 +124,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             indicator = infoClone.querySelector('.indicator'),
             buildRing = document.createElement('progress-ring');
 
-        progressTarget.appendChild(infoClone);
-
         function buildMarkup(file, progressEvent, total) {
-          buildRing.setAttribute('stroke', 3);
-          buildRing.setAttribute('radius', 25);
-
+          console.log(file, progressEvent);
+          if (progressEvent.loaded === progressEvent.total) {
+            status.done++;
+            if (status.progress > 0) {
+              status.progress--;
+            }
+          }
+          console.log(status);
           function formatBytes(bytes, decimals) {
             if (bytes == 0) return bytes.innerHTML = '0 Bytes';
             var k = 1024,
@@ -132,13 +141,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 i = Math.floor(Math.log(bytes) / Math.log(k));
             return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
           }
-
+          progressTarget.appendChild(infoClone);
+          buildRing.setAttribute('stroke', 3);
+          buildRing.setAttribute('radius', 25);
           filename.innerHTML = file.name;
           bytesLoaded.innerHTML = formatBytes(progressEvent.loaded);
           bytesTotal.innerHTML = formatBytes(progressEvent.total);
-
           indicator.appendChild(buildRing);
-
           modal.dispatchEvent(new CustomEvent('xhrLoading', {
             detail: {
               done: status.done,

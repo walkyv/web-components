@@ -8,18 +8,15 @@
     target = document.querySelector('#progressContainer'),
     uploadTitle = document.querySelector('#uploadTitle');
 
-  // let status = {
-  //   'done': 0,
-  //   'progress': 0
-  // };
+
 
   function buildMarkup (file, progressEvent, total) {
-    // if (total === 100) {
-    //   status.done = status.done + 1;
-    //   if (status.progress > 0){
-    //     status.progress = status.progress - 1
-    //   }
-    // }
+    if (total === 100) {
+      status.done = status.done + 1;
+      if (status.progress > 0){
+        status.progress = status.progress - 1
+      }
+    }
 
     function formatBytes(bytes,decimals) {
       if (bytes == 0) return '0 Bytes';
