@@ -2,11 +2,14 @@
   'use strict';
 
   const currentDoc = doc.querySelector('link[href$="file-upload.html"]').import,
-    template = currentDoc.querySelector('#template');
+    template = currentDoc.querySelector('#template'),
+    info = currentDoc.querySelector('#progressInfo'),
+    check = currentDoc.querySelector('#check'),
+    modal = doc.querySelector('upload-modal');
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-uploader');
 
-  function preventDefaults (event) {
+  function preventDefaults(event) {
     event.preventDefault();
     event.stopPropagation();
   }
@@ -14,7 +17,9 @@
   class FileUpload extends HTMLElement {
     constructor() {
       super();
-      this.attachShadow({ mode: 'open' });
+      this.attachShadow({
+        mode: 'open'
+      });
 
       const clone = doc.importNode(template.content.cloneNode(true), true);
 
@@ -24,7 +29,6 @@
       this.target = clone.querySelector('#progressContainer');
       this.dropArea = clone.querySelector('#drop');
       this.modal = doc.querySelector('upload-modal');
-
       this.shadowRoot.appendChild(clone);
 
       this.handleFiles = this.handleFiles.bind(this);
@@ -33,13 +37,15 @@
       this.highlight = this.highlight.bind(this);
       this.unhighlight = this.unhighlight.bind(this);
       this.handleDrop = this.handleDrop.bind(this);
+
     }
 
     connectedCallback() {
       this.realUploadInput.addEventListener('change', event => {
         this.handleFiles(event.srcElement.files);
-        console.log(this.attachBtn);
-        this.attachBtn.focus({preventScroll: true});
+        this.attachBtn.focus({
+          preventScroll: true
+        });
       });
 
       this.attachBtn.addEventListener('click', event => {
@@ -47,10 +53,9 @@
       });
 
       this.dropArea.addEventListener('dragenter', this.highlight);
-      this.dropArea.addEventListener('dragover',  this.highlight);
-      this.dropArea.addEventListener('dragleave',  this.unhighlight);
-      this.dropArea.addEventListener('drop',  this.handleDrop);
-
+      this.dropArea.addEventListener('dragover', this.highlight);
+      this.dropArea.addEventListener('dragleave', this.unhighlight);
+      this.dropArea.addEventListener('drop', this.handleDrop);
     }
 
     handleFiles(files) {
@@ -62,7 +67,7 @@
         xhr = new XMLHttpRequest(),
         formData = new FormData();
 
-      function uploadProgress (callback) {
+      function uploadProgress(callback) {
         xhr.upload.onprogress = function(event) {
           if (event.lengthComputable) {
             callback(event)
@@ -77,18 +82,68 @@
       xhr.send(formData);
     }
 
-    renderProgressItems (data, target, xhr) {
-      if (this.modal.footer !== true) {
-        this.modal.footer = true;
+    renderProgressItems(data, target, xhr) {
+      const infoClone = doc.importNode(info.content.cloneNode(true), true),
+        checkClone = doc.importNode(check.content.cloneNode(true), true),
+        progressTarget = this.shadowRoot.querySelector('#progressContainer'),
+        filename = infoClone.querySelector('.filename'),
+        bytesLoaded = infoClone.querySelector('.bytes-loaded'),
+        bytesTotal = infoClone.querySelector('.bytes-total'),
+        textTotal = infoClone.querySelector('.total'),
+        indicator = infoClone.querySelector('.indicator'),
+        buildRing = document.createElement('progress-ring');
+
+      progressTarget.appendChild(infoClone);
+
+      function buildMarkup(file, progressEvent, total) {
+        buildRing.setAttribute('stroke', 3);
+        buildRing.setAttribute('radius', 25);
+
+        function formatBytes(bytes, decimals) {
+          if (bytes == 0) return bytes.innerHTML = '0 Bytes';
+          const k = 1024,
+            dm = decimals <= 0 ? 0 : decimals || 2,
+            sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            i = Math.floor(Math.log(bytes) / Math.log(k));
+          return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+
+        filename.innerHTML = file.name;
+        bytesLoaded.innerHTML = formatBytes(progressEvent.loaded);
+        bytesTotal.innerHTML = formatBytes(progressEvent.total);
+
+        indicator.appendChild(buildRing);
+
+        modal.dispatchEvent(
+          new CustomEvent('xhrLoading', {
+            detail: {
+              done: status.done,
+              progress: status.progress
+            }
+          })
+        );
+      }
+
+      if (modal.footer !== true) {
+        modal.footer = true;
         this.uploadInfo.style.display = 'block';
       }
-      const div = document.createElement('DIV');
-      div.classList.add('progress');
-      target.appendChild(div);
+
+      function toggleCheckmark(total) {
+        if (total !== 100) {
+          return textTotal.innerHTML = total
+        } else {
+          return textTotal.innerHTML = checkClone.querySelector('span').innerHTML
+        }
+      }
 
       xhr(function(event) {
         let percentLoaded = Math.round((event.loaded / event.total) * 100);
-        div.innerHTML = buildMarkup(data, event, percentLoaded)
+        toggleCheckmark(percentLoaded)
+        if (buildRing !== null) {
+          buildRing.setAttribute('progress', percentLoaded);
+        }
+        buildMarkup(data, event, percentLoaded)
       });
     }
 
@@ -108,8 +163,6 @@
       let files = dt.files;
       this.handleFiles(files);
     }
-
-
   }
   customElements.define('pearson-uploader', FileUpload);
 })(window, document);

@@ -18,11 +18,11 @@ var ProgressRing = function (_HTMLElement) {
 
     var stroke = _this.getAttribute("stroke");
     var radius = _this.getAttribute("radius");
-    var normalizedRadius = radius - stroke * 2;
+    var normalizedRadius = 25 - 3 * 2;
     _this._circumference = normalizedRadius * 2 * Math.PI;
 
     _this._root = _this.attachShadow({ mode: "open" });
-    _this._root.innerHTML = "\n       \n      <svg\n        height=\"" + radius * 2 + "\"\n        width=\"" + radius * 2 + "\"\n        aria-hidden=\"true\"\n        focusable=\"false\"\n       >\n         <circle\n           stroke=\"#047a9c\"\n           stroke-dasharray=\"" + _this._circumference + " " + _this._circumference + "\"\n           style=\"stroke-dashoffset:" + _this._circumference + "\"\n           stroke-width=\"" + stroke + "\"\n           fill=\"transparent\"\n           r=\"" + normalizedRadius + "\"\n           cx=\"" + radius + "\"\n           cy=\"" + radius + "\"\n        />\n      </svg>\n\n      <style>\n        circle {\n          transition: stroke-dashoffset 0.35s;\n          transform: rotate(-90deg);\n          transform-origin: 50% 50%;\n        }\n      </style>\n    ";
+    _this._root.innerHTML = "\n      <svg\n        height=\"50\"\n        width=\"50\"\n        aria-hidden=\"true\"\n        focusable=\"false\"\n       >\n         <circle\n           stroke=\"#047a9c\"\n           stroke-dasharray=\"" + _this._circumference + " " + _this._circumference + "\"\n           style=\"stroke-dashoffset:" + _this._circumference + "\"\n           stroke-width=\"3\"\n           fill=\"transparent\"\n           r=\"" + normalizedRadius + "\"\n           cx=\"25\"\n           cy=\"25\"\n        />\n      </svg>\n\n      <style>\n        circle {\n          transition: stroke-dashoffset 0.35s;\n          transform: rotate(-90deg);\n          transform-origin: 50% 50%;\n        }\n      </style>\n    ";
     return _this;
   }
 
@@ -86,7 +86,7 @@ var ProgressRing = function (_HTMLElement) {
   }], [{
     key: "observedAttributes",
     get: function get() {
-      return ["progress"];
+      return ["progress", "radius", "stroke"];
     }
   }]);
 

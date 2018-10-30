@@ -1,17 +1,17 @@
+
 class ProgressRing extends HTMLElement {
   constructor() {
     super();
     const stroke = this.getAttribute("stroke");
     const radius = this.getAttribute("radius");
-    const normalizedRadius = radius - stroke * 2;
+    const normalizedRadius = 25 - 3 * 2;
     this._circumference = normalizedRadius * 2 * Math.PI;
 
     this._root = this.attachShadow({ mode: "open" });
     this._root.innerHTML = `
-       
       <svg
-        height="${radius * 2}"
-        width="${radius * 2}"
+        height="50"
+        width="50"
         aria-hidden="true"
         focusable="false"
        >
@@ -19,11 +19,11 @@ class ProgressRing extends HTMLElement {
            stroke="#047a9c"
            stroke-dasharray="${this._circumference} ${this._circumference}"
            style="stroke-dashoffset:${this._circumference}"
-           stroke-width="${stroke}"
+           stroke-width="3"
            fill="transparent"
            r="${normalizedRadius}"
-           cx="${radius}"
-           cy="${radius}"
+           cx="25"
+           cy="25"
         />
       </svg>
 
@@ -38,7 +38,7 @@ class ProgressRing extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["progress"];
+    return ["progress", "radius", "stroke"];
   }
 
   get progress() {

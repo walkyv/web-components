@@ -31,9 +31,10 @@
         border:2px solid #0b73da;
       }
       .drop-area {
+        height:100%;
         display: flex;
         flex-direction: column;
-        justify-self: center;
+        justify-content: center;
         text-align: center;
         align-self: flex-end;
         width: 390px;
@@ -46,9 +47,6 @@
           color: #6a7070;
           font-size: 12px;
           margin: 0;
-          &:last-child {
-            margin-bottom: 24px;
-          }
         }
         .text {
           margin-bottom: 16px;
@@ -95,6 +93,8 @@
       display:flex;
       justify-content: center;
       align-items: center;
+      height:50px;
+      width:50px;
       span {
         position:absolute;
         font-weight:bold;
@@ -106,7 +106,7 @@
         }
       }
       img {
-        width:39px;
+        width:18px;
       }
 
     }
@@ -170,5 +170,7 @@
   }
 
   :host {
-    font-family: "Open Sans"
+    font-family: "Open Sans" ,"Calibri","Tahoma","sans-serif";
+    font-size:.875em;
+    color: $pe-color-charcoal;
   }
