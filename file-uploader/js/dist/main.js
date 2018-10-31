@@ -122,6 +122,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             bytesTotal = infoClone.querySelector('.bytes-total'),
             textTotal = infoClone.querySelector('.total'),
             indicator = infoClone.querySelector('.indicator'),
+            uploadTitle = this.shadowRoot.querySelector('#uploadTitle'),
             buildRing = document.createElement('progress-ring');
 
         function buildMarkup(file, progressEvent, total) {
@@ -132,7 +133,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               status.progress--;
             }
           }
-          console.log(status);
+
           function formatBytes(bytes, decimals) {
             if (bytes == 0) return bytes.innerHTML = '0 Bytes';
             var k = 1024,
@@ -148,6 +149,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           bytesLoaded.innerHTML = formatBytes(progressEvent.loaded);
           bytesTotal.innerHTML = formatBytes(progressEvent.total);
           indicator.appendChild(buildRing);
+          uploadTitle.innerHTML = 'Uploading (' + status.done + ' done,' + status.progress + '     progress)';
           modal.dispatchEvent(new CustomEvent('xhrLoading', {
             detail: {
               done: status.done,
