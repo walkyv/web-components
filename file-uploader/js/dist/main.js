@@ -10,9 +10,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var dotevn = require('dotenv').config();
+
 (function (w, doc) {
   'use strict';
 
+  console.log(process.env);
   var currentDoc = doc.querySelector('link[href$="file-upload.html"]').import,
       template = currentDoc.querySelector('#template'),
       info = currentDoc.querySelector('#progressInfo'),
@@ -51,7 +54,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.target = clone.querySelector('#progressContainer');
       _this.dropArea = clone.querySelector('#drop');
       _this.modal = doc.querySelector('upload-modal');
-      _this.shadowRoot.appendChild(clone);
 
       _this.handleFiles = _this.handleFiles.bind(_this);
       _this.uploadFile = _this.uploadFile.bind(_this);
@@ -60,6 +62,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.unhighlight = _this.unhighlight.bind(_this);
       _this.handleDrop = _this.handleDrop.bind(_this);
 
+      _this.shadowRoot.appendChild(clone);
       return _this;
     }
 
@@ -75,7 +78,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           });
         });
 
-        this.attachBtn.addEventListener('click', function (event) {
+        this.attachBtn.addEventListener('click', function () {
           _this2.realUploadInput.click();
         });
 
@@ -122,19 +125,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             bytesTotal = infoClone.querySelector('.bytes-total'),
             textTotal = infoClone.querySelector('.total'),
             indicator = infoClone.querySelector('.indicator'),
+            uploadTitle = this.shadowRoot.querySelector('#uploadTitle'),
             buildRing = document.createElement('progress-ring');
 
-        function buildMarkup(file, progressEvent, total) {
-          console.log(file, progressEvent);
+        function buildMarkup(file, progressEvent) {
           if (progressEvent.loaded === progressEvent.total) {
             status.done++;
             if (status.progress > 0) {
               status.progress--;
             }
           }
-          console.log(status);
+
           function formatBytes(bytes, decimals) {
-            if (bytes == 0) return bytes.innerHTML = '0 Bytes';
+            if (bytes === 0) return bytes.innerHTML = '0 Bytes';
             var k = 1024,
                 dm = decimals <= 0 ? 0 : decimals || 2,
                 sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
@@ -148,6 +151,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           bytesLoaded.innerHTML = formatBytes(progressEvent.loaded);
           bytesTotal.innerHTML = formatBytes(progressEvent.total);
           indicator.appendChild(buildRing);
+          uploadTitle.innerHTML = 'Uploading (' + status.done + ' done,' + status.progress + '     progress)';
           modal.dispatchEvent(new CustomEvent('xhrLoading', {
             detail: {
               done: status.done,

@@ -1,6 +1,7 @@
+
+
 (function(w, doc) {
   'use strict';
-
   const currentDoc = doc.querySelector('link[href$="file-upload.html"]').import,
     template = currentDoc.querySelector('#template'),
     info = currentDoc.querySelector('#progressInfo'),
@@ -34,7 +35,6 @@
       this.target = clone.querySelector('#progressContainer');
       this.dropArea = clone.querySelector('#drop');
       this.modal = doc.querySelector('upload-modal');
-      this.shadowRoot.appendChild(clone);
 
       this.handleFiles = this.handleFiles.bind(this);
       this.uploadFile = this.uploadFile.bind(this);
@@ -43,10 +43,10 @@
       this.unhighlight = this.unhighlight.bind(this);
       this.handleDrop = this.handleDrop.bind(this);
 
+      this.shadowRoot.appendChild(clone);
     }
 
     connectedCallback() {
-
       this.realUploadInput.addEventListener('change', event => {
         this.handleFiles(event.srcElement.files);
         this.attachBtn.focus({
@@ -54,7 +54,7 @@
         });
       });
 
-      this.attachBtn.addEventListener('click', event => {
+      this.attachBtn.addEventListener('click', () => {
         this.realUploadInput.click();
       });
 
@@ -74,7 +74,7 @@
         formData = new FormData();
 
       function uploadProgress(callback) {
-        status.progress++
+        status.progress++;
         xhr.upload.onprogress = function(event) {
           if (event.lengthComputable) {
             callback(event)
@@ -98,19 +98,19 @@
         bytesTotal = infoClone.querySelector('.bytes-total'),
         textTotal = infoClone.querySelector('.total'),
         indicator = infoClone.querySelector('.indicator'),
+        uploadTitle = this.shadowRoot.querySelector('#uploadTitle'),
         buildRing = document.createElement('progress-ring');
 
-      function buildMarkup(file, progressEvent, total) {
-        console.log(file,progressEvent)
+      function buildMarkup(file, progressEvent) {
         if (progressEvent.loaded === progressEvent.total) {
           status.done++;
           if (status.progress > 0){
             status.progress--
           }
         }
-        console.log(status);
+
         function formatBytes(bytes, decimals) {
-          if (bytes == 0) return bytes.innerHTML = '0 Bytes';
+          if (bytes === 0) return bytes.innerHTML = '0 Bytes';
           const k = 1024,
             dm = decimals <= 0 ? 0 : decimals || 2,
             sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
@@ -124,6 +124,7 @@
         bytesLoaded.innerHTML = formatBytes(progressEvent.loaded);
         bytesTotal.innerHTML = formatBytes(progressEvent.total);
         indicator.appendChild(buildRing);
+        uploadTitle.innerHTML = 'Uploading ('+ status.done + ' done,' + status.progress + '     progress)';
         modal.dispatchEvent(
           new CustomEvent('xhrLoading', {
             detail: {
@@ -149,7 +150,7 @@
 
       xhr(function(event) {
         let percentLoaded = Math.round((event.loaded / event.total) * 100);
-        toggleCheckmark(percentLoaded)
+        toggleCheckmark(percentLoaded);
         if (buildRing !== null) {
           buildRing.setAttribute('progress', percentLoaded);
         }
