@@ -1,5 +1,3 @@
-
-
 (function(w, doc) {
   'use strict';
   const currentDoc = doc.querySelector('link[href$="file-upload.html"]').import,
@@ -92,6 +90,7 @@
     renderProgressItems(data, target, xhr) {
       const infoClone = doc.importNode(info.content.cloneNode(true), true),
         checkClone = doc.importNode(check.content.cloneNode(true), true),
+        modal = doc.querySelector('upload-modal'),
         progressTarget = this.shadowRoot.querySelector('#progressContainer'),
         filename = infoClone.querySelector('.filename'),
         bytesLoaded = infoClone.querySelector('.bytes-loaded'),

@@ -10,12 +10,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var dotevn = require('dotenv').config();
-
 (function (w, doc) {
   'use strict';
 
-  console.log(process.env);
   var currentDoc = doc.querySelector('link[href$="file-upload.html"]').import,
       template = currentDoc.querySelector('#template'),
       info = currentDoc.querySelector('#progressInfo'),
@@ -119,6 +116,7 @@ var dotevn = require('dotenv').config();
       value: function renderProgressItems(data, target, xhr) {
         var infoClone = doc.importNode(info.content.cloneNode(true), true),
             checkClone = doc.importNode(check.content.cloneNode(true), true),
+            modal = doc.querySelector('upload-modal'),
             progressTarget = this.shadowRoot.querySelector('#progressContainer'),
             filename = infoClone.querySelector('.filename'),
             bytesLoaded = infoClone.querySelector('.bytes-loaded'),
