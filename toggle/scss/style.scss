@@ -98,16 +98,16 @@
 }
 
 
-:host .toggle-off {
+:host .toggle-on {
   right: 27px
 }
 
-:host .toggle-on {
+:host .toggle-off {
   right: 5px
 }
 
-:host(:not([on]))>span.toggle-off,
-:host([on])>span.toggle-on{
+:host(:not([on]))>span.toggle-on,
+:host([on])>span.toggle-off{
   display: none
 }
 
