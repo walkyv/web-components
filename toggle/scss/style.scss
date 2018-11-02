@@ -68,7 +68,7 @@
 }
 
 :host([on])::before {
-  left: 31px
+  left: 32px
 }
 
 :host([disabled])::before {
@@ -76,7 +76,7 @@
 }
 
 :host::before {
-  left: 2px;
+  left: 1px;
   width: 20px;
   height: 20px;
   background: #fff;
