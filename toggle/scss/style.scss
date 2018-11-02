@@ -98,6 +98,10 @@
   pointer-events: none
 }
 
+:host([hidelabels]) > span {
+  display: none;
+}
+
 
 :host .toggle-on {
   right: 27px
