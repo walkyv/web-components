@@ -31,6 +31,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     event.stopPropagation();
   }
 
+  function formatBytes(bytes, decimalPoint) {
+    if (bytes === 0) return '0 Bytes';
+    var k = 1000,
+        dm = decimalPoint || 2,
+        sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+        i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+  function generateAlert(opts) {
+    var alert = doc.createElement('pearson-alert');
+    for (var attrName in opts) {
+      alert.setAttribute(attrName, opts[attrName]);
+    }
+    return alert;
+  }
+
   var FileUpload = function (_HTMLElement) {
     _inherits(FileUpload, _HTMLElement);
 
@@ -51,6 +68,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.target = clone.querySelector('#progressContainer');
       _this.dropArea = clone.querySelector('#drop');
       _this.modal = doc.querySelector('upload-modal');
+      _this.max = clone.querySelector('#maxFileSize');
 
       _this.handleFiles = _this.handleFiles.bind(_this);
       _this.uploadFile = _this.uploadFile.bind(_this);
@@ -83,6 +101,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.dropArea.addEventListener('dragover', this.highlight);
         this.dropArea.addEventListener('dragleave', this.unhighlight);
         this.dropArea.addEventListener('drop', this.handleDrop);
+
+        this.max.innerHTML = formatBytes(this.maxFileSize);
       }
     }, {
       key: 'handleFiles',
@@ -92,8 +112,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'uploadFile',
       value: function uploadFile(file) {
-        var url = 'https://pearson-file-upload.s3.amazonaws.com/',
-            xhr = new XMLHttpRequest(),
+        var max = parseInt(this.maxFileSize);
+        var current = parseInt(file.size);
+        var tooLarge = current >= max;
+
+        var xhr = new XMLHttpRequest(),
             formData = new FormData();
 
         function uploadProgress(callback) {
@@ -105,18 +128,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           };
         }
 
-        this.renderProgressItems(file, this.target, uploadProgress);
-        xhr.open('POST', url, true);
-        formData.append('key', file.name);
-        formData.append('file', file);
-        xhr.send(formData);
+        if (!tooLarge) {
+          this.renderProgressItems(file, this.target, uploadProgress);
+          xhr.open('POST', this.apiUrl, true);
+          formData.append('key', file.name);
+          formData.append('file', file);
+          xhr.send(formData);
+        } else {
+
+          var alert = generateAlert({
+            returnNode: '#attachButton',
+            type: 'error',
+            level: 'global',
+            animated: true
+          });
+          console.log(alert);
+          alert.innerHTML = '   <h2 id="alertTitle" class="pe-label alert-title">  ' + '     <strong>Heads up!</strong>  ' + '   </h2>  ' + '   <p id="alertText" class="pe-paragraph alert-text">  ' + '     <a href="#">Something has happened!</a>  ' + '  </p>  ';
+          if (alert.level === 'inline') {
+            doc.body.insertBefore(alert, e.target.nextSibling);
+          } else {
+            doc.body.appendChild(alert);
+          }
+        }
       }
     }, {
       key: 'renderProgressItems',
       value: function renderProgressItems(data, target, xhr) {
         var infoClone = doc.importNode(info.content.cloneNode(true), true),
             checkClone = doc.importNode(check.content.cloneNode(true), true),
-            modal = doc.querySelector('upload-modal'),
+            modal = this.shadowRoot.querySelector('upload-modal'),
             progressTarget = this.shadowRoot.querySelector('#progressContainer'),
             filename = infoClone.querySelector('.filename'),
             bytesLoaded = infoClone.querySelector('.bytes-loaded'),
@@ -134,14 +174,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
           }
 
-          function formatBytes(bytes, decimals) {
-            if (bytes === 0) return bytes.innerHTML = '0 Bytes';
-            var k = 1024,
-                dm = decimals <= 0 ? 0 : decimals || 2,
-                sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-                i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-          }
           progressTarget.appendChild(infoClone);
           buildRing.setAttribute('stroke', 3);
           buildRing.setAttribute('radius', 25);
@@ -158,6 +190,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           }));
         }
 
+        console.log(this.shadowRoot.querySelector('upload-modal'));
         if (modal.footer !== true) {
           modal.footer = true;
           this.uploadInfo.style.display = 'block';
@@ -199,6 +232,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var dt = event.dataTransfer;
         var files = dt.files;
         this.handleFiles(files);
+      }
+    }, {
+      key: 'apiUrl',
+      get: function get() {
+        return this.getAttribute('apiUrl');
+      }
+    }, {
+      key: 'maxFileSize',
+      get: function get() {
+        return this.getAttribute('maxByteFileSize');
       }
     }]);
 

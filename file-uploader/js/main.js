@@ -18,6 +18,23 @@
     event.stopPropagation();
   }
 
+  function formatBytes(bytes, decimalPoint) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1000,
+      dm = decimalPoint || 2,
+      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+      i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+  function generateAlert(opts) {
+    const alert = doc.createElement('pearson-alert');
+    for (let attrName in opts) {
+      alert.setAttribute(attrName, opts[attrName])
+    }
+    return alert;
+  }
+
   class FileUpload extends HTMLElement {
     constructor() {
       super();
@@ -33,6 +50,7 @@
       this.target = clone.querySelector('#progressContainer');
       this.dropArea = clone.querySelector('#drop');
       this.modal = doc.querySelector('upload-modal');
+      this.max = clone.querySelector('#maxFileSize');
 
       this.handleFiles = this.handleFiles.bind(this);
       this.uploadFile = this.uploadFile.bind(this);
@@ -60,6 +78,16 @@
       this.dropArea.addEventListener('dragover', this.highlight);
       this.dropArea.addEventListener('dragleave', this.unhighlight);
       this.dropArea.addEventListener('drop', this.handleDrop);
+
+      this.max.innerHTML = formatBytes(this.maxFileSize)
+    }
+
+    get apiUrl() {
+      return this.getAttribute('apiUrl');
+    }
+
+    get maxFileSize () {
+      return this.getAttribute('maxByteFileSize');
     }
 
     handleFiles(files) {
@@ -67,8 +95,11 @@
     }
 
     uploadFile(file) {
-      const url = 'https://pearson-file-upload.s3.amazonaws.com/',
-        xhr = new XMLHttpRequest(),
+      const max = parseInt(this.maxFileSize);
+      const current = parseInt(file.size);
+      const tooLarge = current >= max;
+
+      const xhr = new XMLHttpRequest(),
         formData = new FormData();
 
       function uploadProgress(callback) {
@@ -80,17 +111,44 @@
         };
       }
 
-      this.renderProgressItems(file, this.target, uploadProgress);
-      xhr.open('POST', url, true);
-      formData.append('key', file.name);
-      formData.append('file', file);
-      xhr.send(formData);
+        if (!tooLarge) {
+          this.renderProgressItems(file, this.target, uploadProgress);
+          xhr.open('POST', this.apiUrl, true);
+          formData.append('key', file.name);
+          formData.append('file', file);
+          xhr.send(formData);
+        } else {
+
+          const alert = generateAlert({
+            returnNode: '#attachButton',
+            type: 'error',
+            level: 'global',
+            animated: true
+          })
+          console.log(alert)
+          alert.innerHTML = (
+            '   <h2 id="alertTitle" class="pe-label alert-title">  ' +
+            '     <strong>Heads up!</strong>  ' +
+            '   </h2>  ' +
+            '   <p id="alertText" class="pe-paragraph alert-text">  ' +
+            '     <a href="#">Something has happened!</a>  ' +
+            '  </p>  '
+          );
+          if (alert.level === 'inline') {
+            doc.body.insertBefore(alert, e.target.nextSibling)
+          } else {
+            doc.body.appendChild(alert)
+          }
+        }
+
+
+
     }
 
     renderProgressItems(data, target, xhr) {
       const infoClone = doc.importNode(info.content.cloneNode(true), true),
         checkClone = doc.importNode(check.content.cloneNode(true), true),
-        modal = doc.querySelector('upload-modal'),
+        modal = this.shadowRoot.querySelector('upload-modal'),
         progressTarget = this.shadowRoot.querySelector('#progressContainer'),
         filename = infoClone.querySelector('.filename'),
         bytesLoaded = infoClone.querySelector('.bytes-loaded'),
@@ -108,14 +166,7 @@
           }
         }
 
-        function formatBytes(bytes, decimals) {
-          if (bytes === 0) return bytes.innerHTML = '0 Bytes';
-          const k = 1024,
-            dm = decimals <= 0 ? 0 : decimals || 2,
-            sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-            i = Math.floor(Math.log(bytes) / Math.log(k));
-          return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-        }
+
         progressTarget.appendChild(infoClone);
         buildRing.setAttribute('stroke', 3);
         buildRing.setAttribute('radius', 25);
@@ -134,6 +185,7 @@
         );
       }
 
+      console.log(this.shadowRoot.querySelector('upload-modal'))
       if (modal.footer !== true) {
         modal.footer = true;
         this.uploadInfo.style.display = 'block';

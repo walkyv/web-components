@@ -15,6 +15,7 @@
 	<!--<link rel="stylesheet" href="css/style.css" media="all" />-->
 
 	<!-- import web components -->
+	<link rel="import" href="components/alert/alert.html" />
 	<link rel="import" href="components/upload-modal/upload-modal.html" />
 	<link rel="import" href="file-upload.html" />
 
@@ -29,9 +30,15 @@
 	</section>
 </main>
 
-<upload-modal triggerId="trigger-modal" titleText="Upload Files" successBtnText="Done" style="display:none">
-	<pearson-uploader></pearson-uploader>
-</upload-modal>
+	<pearson-uploader
+		apiUrl="https://pearson-file-upload.s3.amazonaws.com/"
+		apikey=""
+		maxByteFileSize="150000000"
+		maxNumberOfFiles=""
+	>
+
+	</pearson-uploader>
+
 
 </body>
 
