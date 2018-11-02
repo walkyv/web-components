@@ -16,8 +16,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var currentDoc = doc.querySelector('link[href$="file-upload.html"]').import,
       template = currentDoc.querySelector('#template'),
       info = currentDoc.querySelector('#progressInfo'),
-      check = currentDoc.querySelector('#check'),
-      modal = doc.querySelector('upload-modal');
+      check = currentDoc.querySelector('#check');
 
   var status = {
     'done': 0,
@@ -46,6 +45,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       alert.setAttribute(attrName, opts[attrName]);
     }
     return alert;
+  }
+
+  function tooLarge(current, max) {
+    return current >= max;
   }
 
   var FileUpload = function (_HTMLElement) {
@@ -91,6 +94,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           _this2.attachBtn.focus({
             preventScroll: true
           });
+          _this2.realUploadInput.value = '';
         });
 
         this.attachBtn.addEventListener('click', function () {
@@ -112,10 +116,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'uploadFile',
       value: function uploadFile(file) {
-        var max = parseInt(this.maxFileSize);
-        var current = parseInt(file.size);
-        var tooLarge = current >= max;
-
         var xhr = new XMLHttpRequest(),
             formData = new FormData();
 
@@ -128,23 +128,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           };
         }
 
-        if (!tooLarge) {
+        if (!tooLarge(parseInt(file.size), parseInt(this.maxFileSize))) {
           this.renderProgressItems(file, this.target, uploadProgress);
           xhr.open('POST', this.apiUrl, true);
           formData.append('key', file.name);
           formData.append('file', file);
           xhr.send(formData);
+          var cancelButton = this.shadowRoot.querySelector('upload-modal').shadowRoot.querySelector('#cancelButton');
+          console.log(status);
+          cancelButton.addEventListener('click', function (event) {
+            xhr.abort();
+          });
         } else {
-
           var alert = generateAlert({
-            returnNode: '#attachButton',
+            returnNode: '#attachFiles',
             type: 'error',
             level: 'global',
             animated: true
           });
-          console.log(alert);
-          alert.innerHTML = '   <h2 id="alertTitle" class="pe-label alert-title">  ' + '     <strong>Heads up!</strong>  ' + '   </h2>  ' + '   <p id="alertText" class="pe-paragraph alert-text">  ' + '     <a href="#">Something has happened!</a>  ' + '  </p>  ';
+          alert.innerHTML = '   \n                <h2 id="alertTitle" class="pe-label alert-title">  \n                    <strong>' + file.name + '</strong> is too large to be uploaded. Please try again. \n                 </h2>  \n            ';
           this.shadowRoot.appendChild(alert);
+          return false;
         }
       }
     }, {
@@ -163,11 +167,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             buildRing = document.createElement('progress-ring');
 
         function buildMarkup(file, progressEvent) {
+          var uploader = doc.querySelector('pearson-uploader'),
+              modal = uploader.shadowRoot.querySelector('upload-modal'),
+              cancelBtn = modal.shadowRoot.querySelector('#cancelButton'),
+              successBtn = modal.shadowRoot.querySelector('#successButton');
+
           if (progressEvent.loaded === progressEvent.total) {
             status.done++;
             if (status.progress > 0) {
               status.progress--;
             }
+          }
+
+          if (status.progress >= 1) {
+            cancelBtn.disabled = false;
+          } else {
+            cancelBtn.disabled = true;
+          }
+
+          if (status.progress === 0 && status.done >= 1) {
+            successBtn.disabled = false;
+          } else {
+            successBtn.disabled = true;
           }
 
           progressTarget.appendChild(infoClone);
@@ -178,6 +199,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           bytesTotal.innerHTML = formatBytes(progressEvent.total);
           indicator.appendChild(buildRing);
           uploadTitle.innerHTML = 'Uploading (' + status.done + ' done,' + status.progress + '     progress)';
+
           modal.dispatchEvent(new CustomEvent('xhrLoading', {
             detail: {
               done: status.done,
@@ -186,7 +208,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           }));
         }
 
-        console.log(this.shadowRoot.querySelector('upload-modal'));
         if (modal.footer !== true) {
           modal.footer = true;
           this.uploadInfo.style.display = 'block';

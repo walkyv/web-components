@@ -86,7 +86,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.alert.removeEventListener('animationend', this._onAnimationEnd);
         this.closeBtn.removeEventListener('click', this._onClose);
 
-        returnNode.focus();
+        document.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal #attachFiles').focus();
       }
     }, {
       key: '_onClose',
@@ -117,7 +117,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: '_findReturnNode',
       value: function _findReturnNode() {
-        return doc.querySelector(this.getAttribute('returnNode'));
+        return doc.querySelector(this.returnNode);
+      }
+    }, {
+      key: 'returnNode',
+      get: function get() {
+        return this.getAttribute('returnnode');
       }
     }, {
       key: 'isAnimated',

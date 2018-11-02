@@ -3,8 +3,7 @@
   const currentDoc = doc.querySelector('link[href$="file-upload.html"]').import,
     template = currentDoc.querySelector('#template'),
     info = currentDoc.querySelector('#progressInfo'),
-    check = currentDoc.querySelector('#check'),
-    modal = doc.querySelector('upload-modal');
+    check = currentDoc.querySelector('#check');
 
   let status = {
     'done': 0,
@@ -34,6 +33,11 @@
     }
     return alert;
   }
+
+  function tooLarge (current, max) {
+    return current >= max;
+  }
+
 
   class FileUpload extends HTMLElement {
     constructor() {
@@ -68,6 +72,7 @@
         this.attachBtn.focus({
           preventScroll: true
         });
+        this.realUploadInput.value = ''
       });
 
       this.attachBtn.addEventListener('click', () => {
@@ -95,10 +100,6 @@
     }
 
     uploadFile(file) {
-      const max = parseInt(this.maxFileSize);
-      const current = parseInt(file.size);
-      const tooLarge = current >= max;
-
       const xhr = new XMLHttpRequest(),
         formData = new FormData();
 
@@ -111,34 +112,34 @@
         };
       }
 
-        if (!tooLarge) {
+        if (!tooLarge(parseInt(file.size), parseInt(this.maxFileSize))) {
           this.renderProgressItems(file, this.target, uploadProgress);
           xhr.open('POST', this.apiUrl, true);
           formData.append('key', file.name);
           formData.append('file', file);
           xhr.send(formData);
+          const cancelButton = this.shadowRoot.querySelector('upload-modal').shadowRoot.querySelector('#cancelButton');
+          console.log(status)
+          cancelButton.addEventListener('click', event => {
+            xhr.abort();
+          })
         } else {
-
           const alert = generateAlert({
-            returnNode: '#attachButton',
+            returnNode: '#attachFiles',
             type: 'error',
             level: 'global',
             animated: true
-          })
-          console.log(alert)
+          });
           alert.innerHTML = (
-            '   <h2 id="alertTitle" class="pe-label alert-title">  ' +
-            '     <strong>Heads up!</strong>  ' +
-            '   </h2>  ' +
-            '   <p id="alertText" class="pe-paragraph alert-text">  ' +
-            '     <a href="#">Something has happened!</a>  ' +
-            '  </p>  '
+            `   
+                <h2 id="alertTitle" class="pe-label alert-title">  
+                    <strong>${file.name}</strong> is too large to be uploaded. Please try again. 
+                 </h2>  
+            `
           );
           this.shadowRoot.appendChild(alert)
+          return false
         }
-
-
-
     }
 
     renderProgressItems(data, target, xhr) {
@@ -154,12 +155,31 @@
         uploadTitle = this.shadowRoot.querySelector('#uploadTitle'),
         buildRing = document.createElement('progress-ring');
 
+
       function buildMarkup(file, progressEvent) {
+        const uploader = doc.querySelector('pearson-uploader'),
+          modal = uploader.shadowRoot.querySelector('upload-modal'),
+          cancelBtn = modal.shadowRoot.querySelector('#cancelButton'),
+          successBtn = modal.shadowRoot.querySelector('#successButton');
+
+
         if (progressEvent.loaded === progressEvent.total) {
           status.done++;
           if (status.progress > 0){
             status.progress--
           }
+        }
+
+        if (status.progress >= 1) {
+          cancelBtn.disabled = false
+        } else {
+          cancelBtn.disabled = true
+        }
+
+        if (status.progress === 0 && status.done >=1) {
+          successBtn.disabled = false
+        } else {
+          successBtn.disabled = true
         }
 
         progressTarget.appendChild(infoClone);
@@ -170,6 +190,9 @@
         bytesTotal.innerHTML = formatBytes(progressEvent.total);
         indicator.appendChild(buildRing);
         uploadTitle.innerHTML = 'Uploading ('+ status.done + ' done,' + status.progress + '     progress)';
+
+
+
         modal.dispatchEvent(
           new CustomEvent('xhrLoading', {
             detail: {
@@ -180,7 +203,6 @@
         );
       }
 
-      console.log(this.shadowRoot.querySelector('upload-modal'))
       if (modal.footer !== true) {
         modal.footer = true;
         this.uploadInfo.style.display = 'block';
@@ -201,7 +223,9 @@
           buildRing.setAttribute('progress', percentLoaded);
         }
         buildMarkup(data, event, percentLoaded)
+
       });
+
     }
 
     highlight(event) {

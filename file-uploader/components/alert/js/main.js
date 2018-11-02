@@ -70,7 +70,7 @@
       this.alert.removeEventListener('animationend', this._onAnimationEnd);
       this.closeBtn.removeEventListener('click', this._onClose);
 
-      returnNode.focus();
+      document.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal #attachFiles').focus();
     }
 
     _onClose() {
@@ -100,7 +100,11 @@
     }
 
     _findReturnNode() {
-      return doc.querySelector(this.getAttribute('returnNode'));
+      return doc.querySelector(this.returnNode);
+    }
+
+    get returnNode () {
+      return this.getAttribute('returnnode')
     }
 
     get isAnimated() {
