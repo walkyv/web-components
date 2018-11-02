@@ -144,11 +144,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           });
           console.log(alert);
           alert.innerHTML = '   <h2 id="alertTitle" class="pe-label alert-title">  ' + '     <strong>Heads up!</strong>  ' + '   </h2>  ' + '   <p id="alertText" class="pe-paragraph alert-text">  ' + '     <a href="#">Something has happened!</a>  ' + '  </p>  ';
-          if (alert.level === 'inline') {
-            doc.body.insertBefore(alert, e.target.nextSibling);
-          } else {
-            doc.body.appendChild(alert);
-          }
+          this.shadowRoot.appendChild(alert);
         }
       }
     }, {

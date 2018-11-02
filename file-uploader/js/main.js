@@ -134,11 +134,7 @@
             '     <a href="#">Something has happened!</a>  ' +
             '  </p>  '
           );
-          if (alert.level === 'inline') {
-            doc.body.insertBefore(alert, e.target.nextSibling)
-          } else {
-            doc.body.appendChild(alert)
-          }
+          this.shadowRoot.appendChild(alert)
         }
 
 
@@ -165,7 +161,6 @@
             status.progress--
           }
         }
-
 
         progressTarget.appendChild(infoClone);
         buildRing.setAttribute('stroke', 3);
