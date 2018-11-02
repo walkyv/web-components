@@ -22,7 +22,7 @@ const babel = require('gulp-babel');
 gulp.task('babel', () =>
   gulp.src('js/main.js')
   .pipe(babel({
-    presets: ['es2015']
+    presets: [['env', {'targets': {'ie': '11'}, 'modules': false}]]
   }))
   .pipe(gulp.dest('js/dist'))
 );
