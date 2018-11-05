@@ -79,6 +79,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.highlight = _this.highlight.bind(_this);
       _this.unhighlight = _this.unhighlight.bind(_this);
       _this.handleDrop = _this.handleDrop.bind(_this);
+      _this.removeProgressItems = _this.removeProgressItems.bind(_this);
 
       _this.shadowRoot.appendChild(clone);
       return _this;
@@ -126,16 +127,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               callback(event);
             }
           };
+          xhr.upload.addEventListener('abort', function (event) {
+            console.log(event.currentTarget, event.srcElement, event.target);
+            preventDefaults(event);
+            console.log(file);
+            var uploader = document.querySelector('pearson-uploader'),
+                filename = uploader.shadowRoot.querySelectorAll('upload-modal #progressContainer .filename');
+          });
         }
 
         if (!tooLarge(parseInt(file.size), parseInt(this.maxFileSize))) {
-          this.renderProgressItems(file, this.target, uploadProgress);
+          this.renderProgressItems(file, this.target, uploadProgress, status.type);
           xhr.open('POST', this.apiUrl, true);
           formData.append('key', file.name);
           formData.append('file', file);
           xhr.send(formData);
+
           var cancelButton = this.shadowRoot.querySelector('upload-modal').shadowRoot.querySelector('#cancelButton');
-          console.log(status);
           cancelButton.addEventListener('click', function (event) {
             xhr.abort();
           });
@@ -151,6 +159,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return false;
         }
       }
+    }, {
+      key: 'removeProgressItems',
+      value: function removeProgressItems() {}
     }, {
       key: 'renderProgressItems',
       value: function renderProgressItems(data, target, xhr) {

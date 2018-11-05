@@ -62,6 +62,7 @@
       this.highlight = this.highlight.bind(this);
       this.unhighlight = this.unhighlight.bind(this);
       this.handleDrop = this.handleDrop.bind(this);
+      this.removeProgressItems = this.removeProgressItems.bind(this);
 
       this.shadowRoot.appendChild(clone);
     }
@@ -110,16 +111,24 @@
             callback(event)
           }
         };
+        xhr.upload.addEventListener('abort', event => {
+          console.log(event.currentTarget, event.srcElement, event.target);
+          preventDefaults(event)
+          console.log(file)
+          const uploader = document.querySelector('pearson-uploader'),
+            filename = uploader.shadowRoot.querySelectorAll('upload-modal #progressContainer .filename');
+
+        })
       }
 
         if (!tooLarge(parseInt(file.size), parseInt(this.maxFileSize))) {
-          this.renderProgressItems(file, this.target, uploadProgress);
+          this.renderProgressItems(file, this.target, uploadProgress, status.type);
           xhr.open('POST', this.apiUrl, true);
           formData.append('key', file.name);
           formData.append('file', file);
           xhr.send(formData);
+
           const cancelButton = this.shadowRoot.querySelector('upload-modal').shadowRoot.querySelector('#cancelButton');
-          console.log(status)
           cancelButton.addEventListener('click', event => {
             xhr.abort();
           })
@@ -141,7 +150,9 @@
           return false
         }
     }
+    removeProgressItems (){
 
+    }
     renderProgressItems(data, target, xhr) {
       const infoClone = doc.importNode(info.content.cloneNode(true), true),
         checkClone = doc.importNode(check.content.cloneNode(true), true),
@@ -216,14 +227,13 @@
         }
       }
 
-      xhr(function(event) {
+      xhr( event => {
         let percentLoaded = Math.round((event.loaded / event.total) * 100);
         toggleCheckmark(percentLoaded);
         if (buildRing !== null) {
           buildRing.setAttribute('progress', percentLoaded);
         }
         buildMarkup(data, event, percentLoaded)
-
       });
 
     }
