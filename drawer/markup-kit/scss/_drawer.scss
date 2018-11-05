@@ -84,7 +84,10 @@
       }
     }
   }
-
-
-
 }
+
+button > * {
+  pointer-events: none;
+}
+
+

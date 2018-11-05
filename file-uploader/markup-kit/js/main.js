@@ -14,6 +14,7 @@
   };
 
   function buildMarkup (file, progressEvent, total) {
+
     if (total === 100) {
       status.done = status.done + 1;
       if (status.progress > 0){
@@ -22,7 +23,7 @@
     }
 
     function formatBytes(bytes,decimals) {
-      if(bytes == 0) return '0 Bytes';
+      if (bytes == 0) return '0 Bytes';
       const k = 1024,
         dm = decimals <= 0 ? 0 : decimals || 2,
         sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
@@ -45,6 +46,10 @@
         `
       }
     }
+
+    modal.dispatchEvent(
+      new CustomEvent('xhrLoading', {detail: {done: status.done, progress: status.progress} })
+    );
 
     uploadTitle.innerHTML = `Uploading  (${status.done} done, ${status.progress} in progress)`;
     return `
@@ -69,6 +74,7 @@
   }
 
   function renderProgressItems (data, target, xhr) {
+
     if (modal.footer !== true) {
       modal.footer = true;
       uploadInfo.style.display = 'block';
@@ -80,8 +86,8 @@
     xhr(function(event) {
       let percentLoaded = Math.round((event.loaded / event.total) * 100);
       div.innerHTML = buildMarkup(data, event, percentLoaded)
-    });
 
+    });
   }
 
   // highlight function to outline drop area when a file is over area
@@ -135,7 +141,6 @@
     formData.append('key', file.name);
     formData.append('file', file);
     xhr.send(formData);
-
   }
 
   // remove item
@@ -158,6 +163,7 @@
 
   realUploadInput.addEventListener('change', event=> {
     handleFiles(event.srcElement.files)
+    attachBtn.focus();
   });
 
   // setup drag and drop area

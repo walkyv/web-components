@@ -1,5 +1,5 @@
 {
-  "name": "ui",
+  "name": "Pearson Drawer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,8 +19,7 @@
     "gulp-babel": "7.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-postcss": "^7.0.1",
-    "gulp-sass": "^4.0.1",
-    "gulp-sourcemaps": "^2.6.4"
+    "gulp-sass": "^4.0.1"
   },
   "author": "",
   "license": "ISC"

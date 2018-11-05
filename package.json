@@ -1,6 +1,6 @@
 {
   "name": "web-components",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "a library of pearson web components",
   "main": "index.js",
   "repository": {
