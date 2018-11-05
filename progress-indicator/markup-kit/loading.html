@@ -27,7 +27,7 @@
 </div>
 <script>
     function changeProgress(percent){
-        var progressBar=document.getElementById("progress");
+        var progressBar = document.getElementById("progress");
         var label = document.getElementById("label");
         var currentProgress = 0;
         var step = 1;
@@ -44,7 +44,9 @@
                 if (progress == 100){
                     clearInterval(interval);
                     setTimeout(
-                        function() {document.getElementById("liveregion").innerHTML = "Done loading"}
+                        function() {
+                            document.getElementById("liveregion").innerHTML = "Done loading"
+                        }, 800
                     )
                 }
             }, 500);
