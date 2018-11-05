@@ -12,6 +12,64 @@
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-uploader');
 
+  function returnOperator (opr,type) {
+    if (opr === 'plus') {
+     return status[type]++
+    } else if (opr === 'minus'){
+     return status[type]--
+    } else {
+      return
+    }
+  }
+
+  function updateProgress () {
+    const modal = doc.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal'),
+      uploadTitle = modal.querySelector('#uploadTitle'),
+      uploadInfo = modal.querySelector('#info'),
+      cancelBtn = modal.shadowRoot.querySelector('#cancelButton'),
+      successBtn = modal.shadowRoot.querySelector('#successButton');
+
+    if (status.progress >= 1) {
+      cancelBtn.disabled = false
+    } else {
+      cancelBtn.disabled = true
+    }
+
+    if (status.progress === 0 && status.done >=1) {
+      successBtn.disabled = false
+    } else {
+      successBtn.disabled = true
+    }
+
+    if (status.progress === 0 && status.done === 0) {
+      modal.footer = false
+      uploadInfo.style.display = 'none';
+    }
+    uploadTitle.innerHTML = `Uploading (${status.done} done, ${status.progress} progress)`;
+  }
+
+  function dispatchEvent () {
+    const modal = doc.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal');
+    modal.dispatchEvent(
+      new CustomEvent('xhrLoading', {
+        detail: {
+          done: status.done,
+          progress: status.progress
+        }
+      })
+    );
+  }
+
+  function updateStatus (opr, statusType) {
+    const modal = doc.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal');
+    returnOperator(opr, statusType)
+    if (modal.footer) {
+      updateProgress()
+    }
+    dispatchEvent();
+  }
+
+
   function preventDefaults(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -38,7 +96,6 @@
     return current >= max;
   }
 
-
   class FileUpload extends HTMLElement {
     constructor() {
       super();
@@ -53,7 +110,7 @@
       this.attachBtn = clone.querySelector('#attachFiles');
       this.target = clone.querySelector('#progressContainer');
       this.dropArea = clone.querySelector('#drop');
-      this.modal = doc.querySelector('upload-modal');
+
       this.max = clone.querySelector('#maxFileSize');
 
       this.handleFiles = this.handleFiles.bind(this);
@@ -62,11 +119,12 @@
       this.highlight = this.highlight.bind(this);
       this.unhighlight = this.unhighlight.bind(this);
       this.handleDrop = this.handleDrop.bind(this);
-
       this.shadowRoot.appendChild(clone);
+
     }
 
     connectedCallback() {
+      const modal = doc.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal');
       this.realUploadInput.addEventListener('change', event => {
         this.handleFiles(event.srcElement.files);
         this.attachBtn.focus({
@@ -83,6 +141,13 @@
       this.dropArea.addEventListener('dragover', this.highlight);
       this.dropArea.addEventListener('dragleave', this.unhighlight);
       this.dropArea.addEventListener('drop', this.handleDrop);
+
+      modal.addEventListener('click', event => {
+        if (event.target.classList.contains('remove-file')) {
+          event.target.parentNode.parentNode.remove();
+          updateStatus('minus','done');
+        }
+      });
 
       this.max.innerHTML = formatBytes(this.maxFileSize)
     }
@@ -113,44 +178,9 @@
 
         xhr.upload.addEventListener('abort', (event) => {
           const uploader = document.querySelector('pearson-uploader'),
-            modal = uploader.shadowRoot.querySelector('upload-modal'),
-            uploadInfo = modal.querySelector('#info'),
-            uploadTitle = modal.querySelector('#uploadTitle'),
-            cancelBtn = modal.shadowRoot.querySelector('#cancelButton'),
-            successBtn = modal.shadowRoot.querySelector('#successButton'),
             element = uploader.shadowRoot.querySelector(`[data-file="${file.name}"]`);
-
           element.remove();
-          status.progress--
-          uploadTitle.innerHTML = `Uploading (${status.done} done, ${status.progress} progress)`;
-
-          console.log(cancelBtn)
-
-          if (status.progress >= 1) {
-            cancelBtn.disabled = false
-          } else {
-            cancelBtn.disabled = true
-          }
-
-          if (status.progress === 0 && status.done >=1) {
-            successBtn.disabled = false
-          } else {
-            successBtn.disabled = true
-          }
-
-          if (status.progress === 0 && status.done === 0) {
-            modal.footer = false
-            uploadInfo.style.display = 'none';
-          }
-
-          modal.dispatchEvent(
-            new CustomEvent('xhrLoading', {
-              detail: {
-                done: status.done,
-                progress: status.progress
-              }
-            })
-          );
+          updateStatus('minus','progress');
         })
       }
 
@@ -213,17 +243,7 @@
           }
         }
 
-        if (status.progress >= 1) {
-          cancelBtn.disabled = false
-        } else {
-          cancelBtn.disabled = true
-        }
-
-        if (status.progress === 0 && status.done >=1) {
-          successBtn.disabled = false
-        } else {
-          successBtn.disabled = true
-        }
+        updateProgress();
 
         progressTarget.appendChild(infoClone);
         buildRing.setAttribute('stroke', 3);
@@ -233,17 +253,8 @@
         bytesLoaded.innerHTML = formatBytes(progressEvent.loaded);
         bytesTotal.innerHTML = formatBytes(progressEvent.total);
         indicator.appendChild(buildRing);
-        uploadTitle.innerHTML = `Uploading (${status.done} done, ${status.progress} progress)`;
 
-
-        modal.dispatchEvent(
-          new CustomEvent('xhrLoading', {
-            detail: {
-              done: status.done,
-              progress: status.progress
-            }
-          })
-        );
+        dispatchEvent();
       }
 
       if (modal.footer !== true) {

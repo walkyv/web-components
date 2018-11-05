@@ -25,6 +25,61 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-uploader');
 
+  function returnOperator(opr, type) {
+    if (opr === 'plus') {
+      return status[type]++;
+    } else if (opr === 'minus') {
+      return status[type]--;
+    } else {
+      return;
+    }
+  }
+
+  function updateProgress() {
+    var modal = doc.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal'),
+        uploadTitle = modal.querySelector('#uploadTitle'),
+        uploadInfo = modal.querySelector('#info'),
+        cancelBtn = modal.shadowRoot.querySelector('#cancelButton'),
+        successBtn = modal.shadowRoot.querySelector('#successButton');
+
+    if (status.progress >= 1) {
+      cancelBtn.disabled = false;
+    } else {
+      cancelBtn.disabled = true;
+    }
+
+    if (status.progress === 0 && status.done >= 1) {
+      successBtn.disabled = false;
+    } else {
+      successBtn.disabled = true;
+    }
+
+    if (status.progress === 0 && status.done === 0) {
+      modal.footer = false;
+      uploadInfo.style.display = 'none';
+    }
+    uploadTitle.innerHTML = 'Uploading (' + status.done + ' done, ' + status.progress + ' progress)';
+  }
+
+  function dispatchEvent() {
+    var modal = doc.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal');
+    modal.dispatchEvent(new CustomEvent('xhrLoading', {
+      detail: {
+        done: status.done,
+        progress: status.progress
+      }
+    }));
+  }
+
+  function updateStatus(opr, statusType) {
+    var modal = doc.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal');
+    returnOperator(opr, statusType);
+    if (modal.footer) {
+      updateProgress();
+    }
+    dispatchEvent();
+  }
+
   function preventDefaults(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -70,7 +125,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.attachBtn = clone.querySelector('#attachFiles');
       _this.target = clone.querySelector('#progressContainer');
       _this.dropArea = clone.querySelector('#drop');
-      _this.modal = doc.querySelector('upload-modal');
+
       _this.max = clone.querySelector('#maxFileSize');
 
       _this.handleFiles = _this.handleFiles.bind(_this);
@@ -79,8 +134,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.highlight = _this.highlight.bind(_this);
       _this.unhighlight = _this.unhighlight.bind(_this);
       _this.handleDrop = _this.handleDrop.bind(_this);
-
       _this.shadowRoot.appendChild(clone);
+
       return _this;
     }
 
@@ -89,6 +144,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this2 = this;
 
+        var modal = doc.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal');
         this.realUploadInput.addEventListener('change', function (event) {
           _this2.handleFiles(event.srcElement.files);
           _this2.attachBtn.focus({
@@ -105,6 +161,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.dropArea.addEventListener('dragover', this.highlight);
         this.dropArea.addEventListener('dragleave', this.unhighlight);
         this.dropArea.addEventListener('drop', this.handleDrop);
+
+        modal.addEventListener('click', function (event) {
+          if (event.target.classList.contains('remove-file')) {
+            event.target.parentNode.parentNode.remove();
+            updateStatus('minus', 'done');
+          }
+        });
 
         this.max.innerHTML = formatBytes(this.maxFileSize);
       }
@@ -129,42 +192,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
           xhr.upload.addEventListener('abort', function (event) {
             var uploader = document.querySelector('pearson-uploader'),
-                modal = uploader.shadowRoot.querySelector('upload-modal'),
-                uploadInfo = modal.querySelector('#info'),
-                uploadTitle = modal.querySelector('#uploadTitle'),
-                cancelBtn = modal.shadowRoot.querySelector('#cancelButton'),
-                successBtn = modal.shadowRoot.querySelector('#successButton'),
                 element = uploader.shadowRoot.querySelector('[data-file="' + file.name + '"]');
-
             element.remove();
-            status.progress--;
-            uploadTitle.innerHTML = 'Uploading (' + status.done + ' done, ' + status.progress + ' progress)';
-
-            console.log(cancelBtn);
-
-            if (status.progress >= 1) {
-              cancelBtn.disabled = false;
-            } else {
-              cancelBtn.disabled = true;
-            }
-
-            if (status.progress === 0 && status.done >= 1) {
-              successBtn.disabled = false;
-            } else {
-              successBtn.disabled = true;
-            }
-
-            if (status.progress === 0 && status.done === 0) {
-              modal.footer = false;
-              uploadInfo.style.display = 'none';
-            }
-
-            modal.dispatchEvent(new CustomEvent('xhrLoading', {
-              detail: {
-                done: status.done,
-                progress: status.progress
-              }
-            }));
+            updateStatus('minus', 'progress');
           });
         }
 
@@ -220,17 +250,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
           }
 
-          if (status.progress >= 1) {
-            cancelBtn.disabled = false;
-          } else {
-            cancelBtn.disabled = true;
-          }
-
-          if (status.progress === 0 && status.done >= 1) {
-            successBtn.disabled = false;
-          } else {
-            successBtn.disabled = true;
-          }
+          updateProgress();
 
           progressTarget.appendChild(infoClone);
           buildRing.setAttribute('stroke', 3);
@@ -240,14 +260,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           bytesLoaded.innerHTML = formatBytes(progressEvent.loaded);
           bytesTotal.innerHTML = formatBytes(progressEvent.total);
           indicator.appendChild(buildRing);
-          uploadTitle.innerHTML = 'Uploading (' + status.done + ' done, ' + status.progress + ' progress)';
 
-          modal.dispatchEvent(new CustomEvent('xhrLoading', {
-            detail: {
-              done: status.done,
-              progress: status.progress
-            }
-          }));
+          dispatchEvent();
         }
 
         if (modal.footer !== true) {
