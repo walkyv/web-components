@@ -62,7 +62,6 @@
       this.highlight = this.highlight.bind(this);
       this.unhighlight = this.unhighlight.bind(this);
       this.handleDrop = this.handleDrop.bind(this);
-      this.removeProgressItems = this.removeProgressItems.bind(this);
 
       this.shadowRoot.appendChild(clone);
     }
@@ -111,13 +110,47 @@
             callback(event)
           }
         };
-        xhr.upload.addEventListener('abort', event => {
-          console.log(event.currentTarget, event.srcElement, event.target);
-          preventDefaults(event)
-          console.log(file)
-          const uploader = document.querySelector('pearson-uploader'),
-            filename = uploader.shadowRoot.querySelectorAll('upload-modal #progressContainer .filename');
 
+        xhr.upload.addEventListener('abort', (event) => {
+          const uploader = document.querySelector('pearson-uploader'),
+            modal = uploader.shadowRoot.querySelector('upload-modal'),
+            uploadInfo = modal.querySelector('#info'),
+            uploadTitle = modal.querySelector('#uploadTitle'),
+            cancelBtn = modal.shadowRoot.querySelector('#cancelButton'),
+            successBtn = modal.shadowRoot.querySelector('#successButton'),
+            element = uploader.shadowRoot.querySelector(`[data-file="${file.name}"]`);
+
+          element.remove();
+          status.progress--
+          uploadTitle.innerHTML = `Uploading (${status.done} done, ${status.progress} progress)`;
+
+          console.log(cancelBtn)
+
+          if (status.progress >= 1) {
+            cancelBtn.disabled = false
+          } else {
+            cancelBtn.disabled = true
+          }
+
+          if (status.progress === 0 && status.done >=1) {
+            successBtn.disabled = false
+          } else {
+            successBtn.disabled = true
+          }
+
+          if (status.progress === 0 && status.done === 0) {
+            modal.footer = false
+            uploadInfo.style.display = 'none';
+          }
+
+          modal.dispatchEvent(
+            new CustomEvent('xhrLoading', {
+              detail: {
+                done: status.done,
+                progress: status.progress
+              }
+            })
+          );
         })
       }
 
@@ -140,24 +173,23 @@
             animated: true
           });
           alert.innerHTML = (
-            `   
-                <h2 id="alertTitle" class="pe-label alert-title">  
-                    <strong>${file.name}</strong> is too large to be uploaded. Please try again. 
-                 </h2>  
+            `
+                <h2 id="alertTitle" class="pe-label alert-title">
+                    <strong>${file.name}</strong> is too large to be uploaded. Please try again.
+                 </h2>
             `
           );
           this.shadowRoot.appendChild(alert)
           return false
         }
     }
-    removeProgressItems (){
 
-    }
     renderProgressItems(data, target, xhr) {
       const infoClone = doc.importNode(info.content.cloneNode(true), true),
         checkClone = doc.importNode(check.content.cloneNode(true), true),
         modal = this.shadowRoot.querySelector('upload-modal'),
         progressTarget = this.shadowRoot.querySelector('#progressContainer'),
+        progress = infoClone.querySelector('.progress'),
         filename = infoClone.querySelector('.filename'),
         bytesLoaded = infoClone.querySelector('.bytes-loaded'),
         bytesTotal = infoClone.querySelector('.bytes-total'),
@@ -196,12 +228,12 @@
         progressTarget.appendChild(infoClone);
         buildRing.setAttribute('stroke', 3);
         buildRing.setAttribute('radius', 25);
+        progress.setAttribute('data-file', file.name)
         filename.innerHTML = file.name;
         bytesLoaded.innerHTML = formatBytes(progressEvent.loaded);
         bytesTotal.innerHTML = formatBytes(progressEvent.total);
         indicator.appendChild(buildRing);
-        uploadTitle.innerHTML = 'Uploading ('+ status.done + ' done,' + status.progress + '     progress)';
-
+        uploadTitle.innerHTML = `Uploading (${status.done} done, ${status.progress} progress)`;
 
 
         modal.dispatchEvent(

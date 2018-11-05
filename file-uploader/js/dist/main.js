@@ -79,7 +79,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.highlight = _this.highlight.bind(_this);
       _this.unhighlight = _this.unhighlight.bind(_this);
       _this.handleDrop = _this.handleDrop.bind(_this);
-      _this.removeProgressItems = _this.removeProgressItems.bind(_this);
 
       _this.shadowRoot.appendChild(clone);
       return _this;
@@ -127,12 +126,45 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               callback(event);
             }
           };
+
           xhr.upload.addEventListener('abort', function (event) {
-            console.log(event.currentTarget, event.srcElement, event.target);
-            preventDefaults(event);
-            console.log(file);
             var uploader = document.querySelector('pearson-uploader'),
-                filename = uploader.shadowRoot.querySelectorAll('upload-modal #progressContainer .filename');
+                modal = uploader.shadowRoot.querySelector('upload-modal'),
+                uploadInfo = modal.querySelector('#info'),
+                uploadTitle = modal.querySelector('#uploadTitle'),
+                cancelBtn = modal.shadowRoot.querySelector('#cancelButton'),
+                successBtn = modal.shadowRoot.querySelector('#successButton'),
+                element = uploader.shadowRoot.querySelector('[data-file="' + file.name + '"]');
+
+            element.remove();
+            status.progress--;
+            uploadTitle.innerHTML = 'Uploading (' + status.done + ' done, ' + status.progress + ' progress)';
+
+            console.log(cancelBtn);
+
+            if (status.progress >= 1) {
+              cancelBtn.disabled = false;
+            } else {
+              cancelBtn.disabled = true;
+            }
+
+            if (status.progress === 0 && status.done >= 1) {
+              successBtn.disabled = false;
+            } else {
+              successBtn.disabled = true;
+            }
+
+            if (status.progress === 0 && status.done === 0) {
+              modal.footer = false;
+              uploadInfo.style.display = 'none';
+            }
+
+            modal.dispatchEvent(new CustomEvent('xhrLoading', {
+              detail: {
+                done: status.done,
+                progress: status.progress
+              }
+            }));
           });
         }
 
@@ -154,14 +186,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             level: 'global',
             animated: true
           });
-          alert.innerHTML = '   \n                <h2 id="alertTitle" class="pe-label alert-title">  \n                    <strong>' + file.name + '</strong> is too large to be uploaded. Please try again. \n                 </h2>  \n            ';
+          alert.innerHTML = '\n                <h2 id="alertTitle" class="pe-label alert-title">\n                    <strong>' + file.name + '</strong> is too large to be uploaded. Please try again.\n                 </h2>\n            ';
           this.shadowRoot.appendChild(alert);
           return false;
         }
       }
-    }, {
-      key: 'removeProgressItems',
-      value: function removeProgressItems() {}
     }, {
       key: 'renderProgressItems',
       value: function renderProgressItems(data, target, xhr) {
@@ -169,6 +198,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             checkClone = doc.importNode(check.content.cloneNode(true), true),
             modal = this.shadowRoot.querySelector('upload-modal'),
             progressTarget = this.shadowRoot.querySelector('#progressContainer'),
+            progress = infoClone.querySelector('.progress'),
             filename = infoClone.querySelector('.filename'),
             bytesLoaded = infoClone.querySelector('.bytes-loaded'),
             bytesTotal = infoClone.querySelector('.bytes-total'),
@@ -205,11 +235,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           progressTarget.appendChild(infoClone);
           buildRing.setAttribute('stroke', 3);
           buildRing.setAttribute('radius', 25);
+          progress.setAttribute('data-file', file.name);
           filename.innerHTML = file.name;
           bytesLoaded.innerHTML = formatBytes(progressEvent.loaded);
           bytesTotal.innerHTML = formatBytes(progressEvent.total);
           indicator.appendChild(buildRing);
-          uploadTitle.innerHTML = 'Uploading (' + status.done + ' done,' + status.progress + '     progress)';
+          uploadTitle.innerHTML = 'Uploading (' + status.done + ' done, ' + status.progress + ' progress)';
 
           modal.dispatchEvent(new CustomEvent('xhrLoading', {
             detail: {
