@@ -126,8 +126,10 @@ class FileUpload extends HTMLElement {
     this.attachBtn = clone.querySelector("#attachFiles");
     this.target = clone.querySelector("#progressContainer");
     this.dropArea = clone.querySelector("#drop");
-    this.modal = this.shadowRoot.querySelector("upload-modal");
+    this.modal = clone.querySelector("upload-modal");
     this.max = clone.querySelector("#maxFileSize");
+    this.fileNumber = clone.querySelector("#maxNumberOfFiles");
+    this.modal.setAttribute('triggerId', this.triggerId);
 
     this.handleFiles = this.handleFiles.bind(this);
     this.uploadFile = this.uploadFile.bind(this);
@@ -167,6 +169,7 @@ class FileUpload extends HTMLElement {
     });
 
     this.max.innerHTML = formatBytes(this.maxFileSize);
+    this.fileNumber.innerHTML = this.maxNumberOfFiles
   }
 
   get apiUrl() {
@@ -177,8 +180,25 @@ class FileUpload extends HTMLElement {
     return this.getAttribute("maxByteFileSize");
   }
 
+  get maxNumberOfFiles() {
+    return this.getAttribute("maxNumberOfFiles");
+  }
+
+  get triggerId () {
+    return this.getAttribute("triggerId");
+  }
+
   handleFiles(files) {
-    [...files].forEach(this.uploadFile);
+    const alertMessage = {
+      "strong": `Too many files.`,
+      "text": ` You can only upload a max number of ${this.maxNumberOfFiles} files`
+    };
+    if (files.length <= parseInt(this.maxNumberOfFiles)) {
+      [...files].forEach(this.uploadFile);
+    } else {
+      modal.appendChild(buildAlert(alertMessage));
+    }
+
   }
 
   deleteFile(event) {

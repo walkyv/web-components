@@ -138,8 +138,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.attachBtn = clone.querySelector("#attachFiles");
       _this.target = clone.querySelector("#progressContainer");
       _this.dropArea = clone.querySelector("#drop");
-      _this.modal = _this.shadowRoot.querySelector("upload-modal");
+      _this.modal = clone.querySelector("upload-modal");
       _this.max = clone.querySelector("#maxFileSize");
+      _this.fileNumber = clone.querySelector("#maxNumberOfFiles");
+      _this.modal.setAttribute('triggerId', _this.triggerId);
 
       _this.handleFiles = _this.handleFiles.bind(_this);
       _this.uploadFile = _this.uploadFile.bind(_this);
@@ -184,11 +186,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
 
         this.max.innerHTML = formatBytes(this.maxFileSize);
+        this.fileNumber.innerHTML = this.maxNumberOfFiles;
       }
     }, {
       key: "handleFiles",
       value: function handleFiles(files) {
-        [].concat(_toConsumableArray(files)).forEach(this.uploadFile);
+        var alertMessage = {
+          "strong": "Too many files.",
+          "text": " You can only upload a max number of " + this.maxNumberOfFiles + " files"
+        };
+        if (files.length <= parseInt(this.maxNumberOfFiles)) {
+          [].concat(_toConsumableArray(files)).forEach(this.uploadFile);
+        } else {
+          modal.appendChild(buildAlert(alertMessage));
+        }
       }
     }, {
       key: "deleteFile",
@@ -347,6 +358,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: "maxFileSize",
       get: function get() {
         return this.getAttribute("maxByteFileSize");
+      }
+    }, {
+      key: "maxNumberOfFiles",
+      get: function get() {
+        return this.getAttribute("maxNumberOfFiles");
+      }
+    }, {
+      key: "triggerId",
+      get: function get() {
+        return this.getAttribute("triggerId");
       }
     }]);
 
