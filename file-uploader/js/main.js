@@ -176,16 +176,16 @@
       const xhr = new XMLHttpRequest(),
         fileName = event.target.parentNode.parentNode.getAttribute("data-file"),
         url = this.apiUrl + fileName,
-        target = doc
-        .querySelector("pearson-uploader")
-        .shadowRoot.querySelector("upload-modal"),
+        target = doc.querySelector("pearson-uploader").shadowRoot.querySelector("upload-modal"),
         domNode = event.target.parentNode.parentNode;
       xhr.open("DELETE", url, true);
+      domNode.style.display = 'none';
       xhr.onload = function() {
         if (xhr.readyState === 4 && xhr.status === 204) {
           domNode.remove();
           updateStatus("minus", "done");
         } else {
+          domNode.style.display = 'flex';
           const alert = generateAlert({
             returnNode: "#attachFiles",
             type: "error",
@@ -206,27 +206,26 @@
     uploadFile(file) {
       const xhr = new XMLHttpRequest(),
         formData = new FormData(),
-        target = doc
-        .querySelector("pearson-uploader")
-        .shadowRoot.querySelector("upload-modal");
+        target = doc.querySelector("pearson-uploader").shadowRoot.querySelector("upload-modal");
 
       function uploadProgress(callback) {
-        status.progress++;
-        xhr.upload.onprogress = function(event) {
-          if (event.lengthComputable) {
-            callback(event);
-          }
-        };
+      status.progress++;
+      xhr.upload.onprogress = function(event) {
+        if (event.lengthComputable) {
+          callback(event);
+        }
+      };
 
-        xhr.upload.addEventListener("abort", event => {
-          const uploader = document.querySelector("pearson-uploader"),
-            element = uploader.shadowRoot.querySelector(
-              `[data-file="${file.name}"]`
-            );
-          element.remove();
-          updateStatus("minus", "progress");
-        });
-      }
+      xhr.upload.addEventListener("abort", event => {
+        const uploader = document.querySelector("pearson-uploader"),
+          element = uploader.shadowRoot.querySelector(
+            `[data-file="${file.name}"]`
+          );
+
+        element.remove();
+        updateStatus("minus", "progress");
+      });
+    }
 
       if (!tooLarge(parseInt(file.size), parseInt(this.maxFileSize))) {
         this.renderProgressItems(
@@ -237,8 +236,9 @@
         );
 
         xhr.open("POST", this.apiUrl, true);
+        console.log(xhr)
         xhr.onload = function () {
-          if (xhr.readyState === 4 && xhr.status === 204) {
+          if (xhr.readyState === 4 && xhr.status === 200) {
 
           } else {
             const alert = generateAlert({
@@ -249,7 +249,7 @@
             });
             alert.innerHTML = `
               <h2 id="alertTitle" class="pe-label alert-title">
-                  <strong>File not deleted</strong> There was a problem with the server try again.
+                  <strong>There was a problem uploading ${file.name}</strong> Please try again.
                </h2>
           `;
             target.appendChild(alert);

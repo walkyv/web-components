@@ -184,11 +184,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             target = doc.querySelector("pearson-uploader").shadowRoot.querySelector("upload-modal"),
             domNode = event.target.parentNode.parentNode;
         xhr.open("DELETE", url, true);
+        domNode.style.display = 'none';
         xhr.onload = function () {
           if (xhr.readyState === 4 && xhr.status === 204) {
             domNode.remove();
             updateStatus("minus", "done");
           } else {
+            domNode.style.display = 'flex';
             var alert = generateAlert({
               returnNode: "#attachFiles",
               type: "error",
@@ -219,6 +221,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           xhr.upload.addEventListener("abort", function (event) {
             var uploader = document.querySelector("pearson-uploader"),
                 element = uploader.shadowRoot.querySelector("[data-file=\"" + file.name + "\"]");
+
             element.remove();
             updateStatus("minus", "progress");
           });
@@ -228,15 +231,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.renderProgressItems(file, this.target, uploadProgress, status.type);
 
           xhr.open("POST", this.apiUrl, true);
+          console.log(xhr);
           xhr.onload = function () {
-            if (xhr.readyState === 4 && xhr.status === 204) {} else {
+            if (xhr.readyState === 4 && xhr.status === 200) {} else {
               var alert = generateAlert({
                 returnNode: "#attachFiles",
                 type: "error",
                 level: "global",
                 animated: true
               });
-              alert.innerHTML = "\n              <h2 id=\"alertTitle\" class=\"pe-label alert-title\">\n                  <strong>File not deleted</strong> There was a problem with the server try again.\n               </h2>\n          ";
+              alert.innerHTML = "\n              <h2 id=\"alertTitle\" class=\"pe-label alert-title\">\n                  <strong>There was a problem uploading " + file.name + "</strong> Please try again.\n               </h2>\n          ";
               target.appendChild(alert);
             }
           };
