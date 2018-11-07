@@ -35,8 +35,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }
   }
 
-  function updateProgress() {
-    var modal = doc.querySelector("pearson-uploader").shadowRoot.querySelector("upload-modal"),
+  function updateProgress(element) {
+    var modal = element.querySelector("upload-modal"),
         uploadTitle = modal.querySelector("#uploadTitle"),
         uploadInfo = modal.querySelector("#info"),
         cancelBtn = modal.shadowRoot.querySelector("#cancelButton"),
@@ -58,11 +58,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       modal.footer = false;
       uploadInfo.style.display = "none";
     }
+
     uploadTitle.innerHTML = "Uploading (" + status.done + " done, " + status.progress + " progress)";
   }
 
-  function dispatchEvent() {
-    var modal = doc.querySelector("pearson-uploader").shadowRoot.querySelector("upload-modal");
+  function dispatchEvent(element) {
+    var modal = element.querySelector("upload-modal");
     modal.dispatchEvent(new CustomEvent("xhrLoading", {
       detail: {
         done: status.done,
@@ -71,13 +72,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }));
   }
 
-  function updateStatus(opr, statusType) {
-    var modal = doc.querySelector("pearson-uploader").shadowRoot.querySelector("upload-modal");
+  function updateStatus(opr, statusType, element) {
+    console.log(element);
+    var modal = element.querySelector("upload-modal");
     returnOperator(opr, statusType);
     if (modal.footer) {
-      updateProgress();
+      updateProgress(element);
     }
-    dispatchEvent();
+    dispatchEvent(element);
   }
 
   function preventDefaults(event) {
@@ -99,6 +101,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     for (var attrName in opts) {
       alert.setAttribute(attrName, opts[attrName]);
     }
+    return alert;
+  }
+
+  function buildAlert(opts) {
+    var alert = generateAlert({
+      returnNode: "#attachFiles",
+      type: "error",
+      level: "global",
+      animated: true
+    });
+    alert.innerHTML = "\n      <h2 id=\"alertTitle\" class=\"pe-label alert-title\">\n          <strong>" + opts.strong + "</strong>" + opts.text + "\n       </h2>\n  ";
     return alert;
   }
 
@@ -125,7 +138,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.attachBtn = clone.querySelector("#attachFiles");
       _this.target = clone.querySelector("#progressContainer");
       _this.dropArea = clone.querySelector("#drop");
-
+      _this.modal = _this.shadowRoot.querySelector("upload-modal");
       _this.max = clone.querySelector("#maxFileSize");
 
       _this.handleFiles = _this.handleFiles.bind(_this);
@@ -135,6 +148,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.unhighlight = _this.unhighlight.bind(_this);
       _this.handleDrop = _this.handleDrop.bind(_this);
       _this.deleteFile = _this.deleteFile.bind(_this);
+
       _this.shadowRoot.appendChild(clone);
       return _this;
     }
@@ -144,7 +158,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this2 = this;
 
-        var modal = doc.querySelector("pearson-uploader").shadowRoot.querySelector("upload-modal");
+        var modal = this.shadowRoot.querySelector("upload-modal");
         this.realUploadInput.addEventListener("change", function (event) {
           _this2.handleFiles(event.srcElement.files);
           _this2.attachBtn.focus({
@@ -178,73 +192,78 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: "deleteFile",
       value: function deleteFile(event) {
+        var _this3 = this;
+
         var xhr = new XMLHttpRequest(),
             fileName = event.target.parentNode.parentNode.getAttribute("data-file"),
             url = this.apiUrl + fileName,
-            target = doc.querySelector("pearson-uploader").shadowRoot.querySelector("upload-modal"),
-            domNode = event.target.parentNode.parentNode;
+            modal = this.shadowRoot.querySelector("upload-modal"),
+            domNode = event.target.parentNode.parentNode,
+            alertMessage = {
+          "strong": fileName + " ",
+          "text": "was not deleted. There was a problem with the server."
+        };
+
         xhr.open("DELETE", url, true);
-        domNode.style.display = 'none';
-        xhr.onload = function () {
+
+        xhr.addEventListener('load', function () {
           if (xhr.readyState === 4 && xhr.status === 204) {
             domNode.remove();
-            updateStatus("minus", "done");
+            updateStatus("minus", "done", _this3.shadowRoot);
           } else {
             domNode.style.display = 'flex';
-            var alert = generateAlert({
-              returnNode: "#attachFiles",
-              type: "error",
-              level: "global",
-              animated: true
-            });
-            alert.innerHTML = "\n              <h2 id=\"alertTitle\" class=\"pe-label alert-title\">\n                  <strong>File not deleted</strong> There was a problem with the server try again.\n               </h2>\n          ";
-            target.appendChild(alert);
+            modal.appendChild(buildAlert(alertMessage));
           }
-        };
+        });
+
+        domNode.style.display = 'none';
         xhr.send(null);
       }
     }, {
       key: "uploadFile",
       value: function uploadFile(file) {
+        var _this4 = this;
+
         var xhr = new XMLHttpRequest(),
             formData = new FormData(),
-            target = doc.querySelector("pearson-uploader").shadowRoot.querySelector("upload-modal");
+            modal = this.shadowRoot.querySelector("upload-modal"),
+            alertMessage = {
+          "strong": file.name + " ",
+          "text": "was not uploaded. There was a problem with the server."
+        },
+            alertMessage2 = {
+          "strong": file.name + " ",
+          "text": "is too large to be uploaded."
+        },
+            fileNotTooLarge = !tooLarge(parseInt(file.size), parseInt(this.maxFileSize));
 
-        function uploadProgress(callback) {
-          status.progress++;
-          xhr.upload.onprogress = function (event) {
-            if (event.lengthComputable) {
-              callback(event);
-            }
-          };
+        xhr.addEventListener("load", function (event) {
+          updateStatus("plus", "done", _this4.shadowRoot);
+          if (status.progress > 0) {
+            updateStatus("minus", "progress", _this4.shadowRoot);
+          }
+        });
 
-          xhr.upload.addEventListener("abort", function (event) {
-            var uploader = document.querySelector("pearson-uploader"),
-                element = uploader.shadowRoot.querySelector("[data-file=\"" + file.name + "\"]");
+        xhr.addEventListener("error", function (event) {
+          target.appendChild(buildAlert(alertMessage));
+        });
 
-            element.remove();
-            updateStatus("minus", "progress");
-          });
-        }
+        xhr.addEventListener("abort", function (event) {
+          var uploader = document.querySelector("pearson-uploader"),
+              element = uploader.shadowRoot.querySelector("[data-file=\"" + file.name + "\"]");
+          element.remove();
+          updateStatus("minus", "progress", _this4.shadowRoot);
+        });
 
-        if (!tooLarge(parseInt(file.size), parseInt(this.maxFileSize))) {
-          this.renderProgressItems(file, this.target, uploadProgress, status.type);
-
+        if (fileNotTooLarge) {
           xhr.open("POST", this.apiUrl, true);
-          console.log(xhr);
-          xhr.onload = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {} else {
-              var alert = generateAlert({
-                returnNode: "#attachFiles",
-                type: "error",
-                level: "global",
-                animated: true
-              });
-              alert.innerHTML = "\n              <h2 id=\"alertTitle\" class=\"pe-label alert-title\">\n                  <strong>There was a problem uploading " + file.name + "</strong> Please try again.\n               </h2>\n          ";
-              target.appendChild(alert);
-            }
-          };
+          status.progress++;
+          if (modal.footer !== true) {
+            modal.footer = true;
+            this.uploadInfo.style.display = "block";
+          }
 
+          this.renderProgressItems(file, xhr);
           formData.append("key", file.name);
           formData.append("file", file);
           xhr.send(formData);
@@ -254,77 +273,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             xhr.abort();
           });
         } else {
-          var alert = generateAlert({
-            returnNode: "#attachFiles",
-            type: "error",
-            level: "global",
-            animated: true
-          });
-          alert.innerHTML = "\n              <h2 id=\"alertTitle\" class=\"pe-label alert-title\">\n                  <strong>" + file.name + "</strong> is too large to be uploaded. Please try again.\n               </h2>\n          ";
-          target.appendChild(alert);
-          return false;
+          modal.appendChild(buildAlert(alertMessage2));
         }
       }
     }, {
       key: "renderProgressItems",
-      value: function renderProgressItems(data, target, xhr) {
+      value: function renderProgressItems(file, xhr) {
+        var _this5 = this;
+
         var infoClone = doc.importNode(info.content.cloneNode(true), true),
             checkClone = doc.importNode(check.content.cloneNode(true), true),
-            modal = this.shadowRoot.querySelector("upload-modal"),
             progressTarget = this.shadowRoot.querySelector("#progressContainer"),
             progress = infoClone.querySelector(".progress"),
+            indicator = infoClone.querySelector(".indicator"),
             filename = infoClone.querySelector(".filename"),
+            textTotal = infoClone.querySelector(".total"),
             bytesLoaded = infoClone.querySelector(".bytes-loaded"),
             bytesTotal = infoClone.querySelector(".bytes-total"),
-            textTotal = infoClone.querySelector(".total"),
-            indicator = infoClone.querySelector(".indicator"),
             buildRing = document.createElement("progress-ring");
 
-        function buildMarkup(file, progressEvent) {
-          var uploader = doc.querySelector("pearson-uploader"),
-              modal = uploader.shadowRoot.querySelector("upload-modal");
+        progressTarget.appendChild(infoClone);
+        indicator.appendChild(buildRing);
+        progress.setAttribute("data-file", file.name);
+        filename.innerHTML = file.name;
 
-          if (progressEvent.loaded === progressEvent.total) {
-            status.done++;
-            if (status.progress > 0) {
-              status.progress--;
-            }
-          }
-
-          updateProgress();
-
-          progressTarget.appendChild(infoClone);
+        xhr.upload.addEventListener("progress", function (event) {
+          var percentLoaded = Math.round(event.loaded / event.total * 100);
+          bytesLoaded.innerHTML = formatBytes(event.loaded);
+          bytesTotal.innerHTML = formatBytes(event.total);
+          buildRing.setAttribute("progress", percentLoaded);
           buildRing.setAttribute("stroke", 3);
           buildRing.setAttribute("radius", 25);
-          progress.setAttribute("data-file", file.name);
-          filename.innerHTML = file.name;
-          bytesLoaded.innerHTML = formatBytes(progressEvent.loaded);
-          bytesTotal.innerHTML = formatBytes(progressEvent.total);
-          indicator.appendChild(buildRing);
 
-          dispatchEvent();
-        }
-
-        if (modal.footer !== true) {
-          modal.footer = true;
-          this.uploadInfo.style.display = "block";
-        }
-
-        function toggleCheckmark(total) {
-          if (total !== 100) {
-            return textTotal.innerHTML = total;
+          if (percentLoaded !== 100) {
+            updateProgress(_this5.shadowRoot);
+            return textTotal.innerHTML = percentLoaded;
           } else {
             return textTotal.innerHTML = checkClone.querySelector("span").innerHTML;
           }
-        }
-
-        xhr(function (event) {
-          var percentLoaded = Math.round(event.loaded / event.total * 100);
-          toggleCheckmark(percentLoaded);
-          if (buildRing !== null) {
-            buildRing.setAttribute("progress", percentLoaded);
-          }
-          buildMarkup(data, event, percentLoaded);
         });
       }
     }, {
