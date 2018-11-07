@@ -268,7 +268,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           formData.append("file", file);
           xhr.send(formData);
 
-          var cancelButton = this.shadowRoot.querySelector("upload-modal").shadowRoot.querySelector("#cancelButton");
+          var cancelButton = this.shadowRoot.querySelector("upload-modal").shadowRoot.querySelector("#cancelButton"),
+              successButton = this.shadowRoot.querySelector("upload-modal").shadowRoot.querySelector("#successButton");
+
           cancelButton.addEventListener("click", function (event) {
             xhr.abort();
           });

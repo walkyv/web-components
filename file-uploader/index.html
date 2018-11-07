@@ -27,23 +27,24 @@
 </head>
 
 <body>
-
 <main id="main">
 	<section class="container">
 		<button id="trigger-modal" class="pe-btn pe-btn--btn_large">Attach files</button>
 	</section>
 </main>
+<pearson-uploader
+	apiUrl="https://pearson-file-upload.s3.amazonaws.com/"
+	apikey=""
+	maxByteFileSize="155500000"
+	maxNumberOfFiles=""
+>
+</pearson-uploader>
 
-	<pearson-uploader
-		apiUrl="https://pearson-file-upload.s3.amazonaws.com/"
-		apikey=""
-		maxByteFileSize="155500000"
-		maxNumberOfFiles=""
-	>
-
-	</pearson-uploader>
-
-
+<script>
+	const modal = document.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal');
+	modal.addEventListener('success', event=> {
+	  console.log('SUCCESS')
+	})
+</script>
 </body>
-
 </html>

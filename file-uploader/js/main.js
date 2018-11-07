@@ -254,10 +254,14 @@ class FileUpload extends HTMLElement {
       formData.append("file", file);
       xhr.send(formData);
 
-      const cancelButton = this.shadowRoot.querySelector("upload-modal").shadowRoot.querySelector("#cancelButton");
+      const cancelButton = this.shadowRoot.querySelector("upload-modal").shadowRoot.querySelector("#cancelButton"),
+        successButton = this.shadowRoot.querySelector("upload-modal").shadowRoot.querySelector("#successButton");
+
       cancelButton.addEventListener("click", event => {
         xhr.abort();
       });
+
+
     } else {
       modal.appendChild(buildAlert(alertMessage2));
     }
