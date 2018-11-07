@@ -288,6 +288,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             indicator = infoClone.querySelector(".indicator"),
             filename = infoClone.querySelector(".filename"),
             textTotal = infoClone.querySelector(".total"),
+            removeBtn = infoClone.querySelector(".remove-file"),
             bytesLoaded = infoClone.querySelector(".bytes-loaded"),
             bytesTotal = infoClone.querySelector(".bytes-total"),
             buildRing = document.createElement("progress-ring");
@@ -296,6 +297,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         indicator.appendChild(buildRing);
         progress.setAttribute("data-file", file.name);
         filename.innerHTML = file.name;
+        removeBtn.style.visibility = "hidden";
 
         xhr.upload.addEventListener("progress", function (event) {
           var percentLoaded = Math.round(event.loaded / event.total * 100);
@@ -309,6 +311,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             updateProgress(_this5.shadowRoot);
             return textTotal.innerHTML = percentLoaded;
           } else {
+            removeBtn.style.visibility = "visible";
             return textTotal.innerHTML = checkClone.querySelector("span").innerHTML;
           }
         });

@@ -176,7 +176,6 @@ class FileUpload extends HTMLElement {
     return this.getAttribute("maxByteFileSize");
   }
 
-
   handleFiles(files) {
     [...files].forEach(this.uploadFile);
   }
@@ -221,8 +220,6 @@ class FileUpload extends HTMLElement {
         "text": "is too large to be uploaded."
       },
       fileNotTooLarge = !tooLarge(parseInt(file.size), parseInt(this.maxFileSize));
-
-
 
     xhr.addEventListener("load", event => {
       updateStatus("plus", "done", this.shadowRoot);
@@ -274,6 +271,7 @@ class FileUpload extends HTMLElement {
       indicator = infoClone.querySelector(".indicator"),
       filename = infoClone.querySelector(".filename"),
       textTotal = infoClone.querySelector(".total"),
+      removeBtn = infoClone.querySelector(".remove-file"),
       bytesLoaded = infoClone.querySelector(".bytes-loaded"),
       bytesTotal = infoClone.querySelector(".bytes-total"),
       buildRing = document.createElement("progress-ring");
@@ -282,6 +280,7 @@ class FileUpload extends HTMLElement {
     indicator.appendChild(buildRing);
     progress.setAttribute("data-file", file.name);
     filename.innerHTML = file.name;
+    removeBtn.style.visibility = "hidden";
 
     xhr.upload.addEventListener("progress", (event) => {
       let percentLoaded = Math.round((event.loaded / event.total) * 100);
@@ -295,6 +294,7 @@ class FileUpload extends HTMLElement {
         updateProgress(this.shadowRoot);
         return textTotal.innerHTML = percentLoaded;
       } else {
+        removeBtn.style.visibility = "visible"
         return textTotal.innerHTML = checkClone.querySelector("span").innerHTML;
       }
     });
