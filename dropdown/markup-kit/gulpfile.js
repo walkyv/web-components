@@ -2,7 +2,19 @@ const gulp = require('gulp'),
   sass = require('gulp-sass'),
   postcss = require('gulp-postcss'),
   autoprefixer = require('autoprefixer'),
-  cssnano = require('cssnano');
+  cssnano = require('cssnano'),
+  browserSync = require('browser-sync').create();
+
+gulp.task('serve', event => {
+  browserSync.init({
+    server: "./"
+  });
+
+  gulp.watch('js/*.js', ['babel']);
+  gulp.watch('scss/**/*.scss', ['styles']);
+  gulp.watch("./*.html").on('change', browserSync.reload);
+});
+
 
 gulp.task('styles', function () {
   return gulp.src('scss/style.scss')
@@ -15,6 +27,7 @@ gulp.task('styles', function () {
     cssnano()
   ]))
   .pipe(gulp.dest('./css'))
+  .pipe(browserSync.stream());
 });
 
 
@@ -25,6 +38,7 @@ gulp.task('babel', () =>
     presets: ['es2015']
   }))
   .pipe(gulp.dest('js/dist'))
+  .pipe(browserSync.stream())
 );
 
 

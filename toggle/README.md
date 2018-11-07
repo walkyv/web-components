@@ -8,7 +8,7 @@
    1. [Semantics](#usage-semantics)
 4. [API](#api)
    1. [Attributes](#api-attributes)
-   3. [Events](#api-events)
+   2. [Events](#api-events)
 
 A shareable, accessible toggle.
 
@@ -68,13 +68,15 @@ All of the attributes in `pearson-toggle`'s API are reflected as _properties_. A
 <a name="api-attributes"></a>
 
 ### Attributes
-| Attribute  | Type      | Default  | Description                               |
-| ---------- | --------- | -------- | ----------------------------------------- |
-| `id`       | `String`  | Required | The unique ID of the toggle               |
-| `on`       | `boolean` | `false`  | Determines whether the toggle is on       |
-| `disabled` | `boolean` | `false`  | Determines whether the toggle is disabled |
-| `name`     | `String`  | unset    | The name of the toggle                    |
-| `value`    | `String`  | unset    | The value of the toggle                   |
+
+| Attribute    | Type      | Default  | Description                                                   |
+| ------------ | --------- | -------- | ------------------------------------------------------------- |
+| `id`         | `String`  | Required | The unique ID of the toggle                                   |
+| `on`         | `boolean` | `false`  | Determines whether the toggle is on                           |
+| `disabled`   | `boolean` | `false`  | Determines whether the toggle is disabled                     |
+| `hideLabels` | `boolean` | `false`  | Determines whether the ON/OFF text inside the toggle is shown |
+| `name`       | `String`  | unset    | The name of the toggle                                        |
+| `value`      | `String`  | unset    | The value of the toggle                                       |
 
 <a name="api-attributes-example"></a>
 
