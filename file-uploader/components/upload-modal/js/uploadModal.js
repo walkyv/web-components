@@ -251,7 +251,7 @@
       this.triggerBtn = doc.querySelector('#' + triggerId);
 
       this.modal = this.clone.querySelector('#modal');
-      this.eventBtns = this.clone.querySelectorAll('[data-event]');
+      this.eventBtns = this.modal.querySelectorAll('[data-event]');
       this.overlay = this.clone.querySelector('#modalOverlay');
 
       // When the modal trigger is clicked, open modal
@@ -264,6 +264,9 @@
             this.closeModal(eventType);
           } else if (btn.id === 'minimizeButton') {
             this.minimized = true;
+          } else if (btn.id === 'successButton') {
+            console.log('success')
+            this.closeModal(eventType);
           }
 
         });
@@ -408,7 +411,10 @@
       if (successBtnText !== null) {
         saveButton.innerHTML = successBtnText;
       }
-
+      saveButton.addEventListener('click', event=> {
+        const eventType = event.target.dataset.event;
+        this.closeModal(eventType);
+      });
       modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
     }
 

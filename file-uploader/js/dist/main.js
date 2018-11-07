@@ -62,9 +62,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     uploadTitle.innerHTML = "Uploading (" + status.done + " done, " + status.progress + " progress)";
   }
 
-  function dispatchEvent(element) {
+  function dispatchEvent(element, name) {
     var modal = element.querySelector("upload-modal");
-    modal.dispatchEvent(new CustomEvent("xhrLoading", {
+    modal.dispatchEvent(new CustomEvent(name, {
       detail: {
         done: status.done,
         progress: status.progress
@@ -79,7 +79,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     if (modal.footer) {
       updateProgress(element);
     }
-    dispatchEvent(element);
+    dispatchEvent(element, "xhrLoading");
   }
 
   function preventDefaults(event) {
@@ -150,6 +150,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.deleteFile = _this.deleteFile.bind(_this);
 
       _this.shadowRoot.appendChild(clone);
+
       return _this;
     }
 
@@ -268,8 +269,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           formData.append("file", file);
           xhr.send(formData);
 
-          var cancelButton = this.shadowRoot.querySelector("upload-modal").shadowRoot.querySelector("#cancelButton"),
-              successButton = this.shadowRoot.querySelector("upload-modal").shadowRoot.querySelector("#successButton");
+          var cancelButton = this.shadowRoot.querySelector("upload-modal").shadowRoot.querySelector("#cancelButton");
 
           cancelButton.addEventListener("click", function (event) {
             xhr.abort();

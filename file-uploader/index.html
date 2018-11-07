@@ -41,10 +41,16 @@
 </pearson-uploader>
 
 <script>
-	const modal = document.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal');
+	const uploader = document.querySelector('pearson-uploader'),
+		modal = uploader.shadowRoot.querySelector('upload-modal');
+
 	modal.addEventListener('success', event=> {
 	  console.log('SUCCESS')
 	})
+
+    modal.addEventListener('cancel', event=> {
+      console.log('CANCEL')
+    })
 </script>
 </body>
 </html>

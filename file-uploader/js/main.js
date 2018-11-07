@@ -49,10 +49,10 @@ function updateProgress(element) {
   uploadTitle.innerHTML = `Uploading (${status.done} done, ${status.progress} progress)`;
 }
 
-function dispatchEvent(element) {
+function dispatchEvent(element, name) {
   const modal = element.querySelector("upload-modal");
   modal.dispatchEvent(
-    new CustomEvent("xhrLoading", {
+    new CustomEvent(name, {
       detail: {
         done: status.done,
         progress: status.progress
@@ -68,7 +68,7 @@ function updateStatus(opr, statusType, element) {
   if (modal.footer) {
     updateProgress(element);
   }
-  dispatchEvent(element);
+  dispatchEvent(element, "xhrLoading");
 }
 
 function preventDefaults(event) {
@@ -138,6 +138,7 @@ class FileUpload extends HTMLElement {
     this.deleteFile = this.deleteFile.bind(this);
 
     this.shadowRoot.appendChild(clone);
+
   }
 
   connectedCallback() {
@@ -254,8 +255,7 @@ class FileUpload extends HTMLElement {
       formData.append("file", file);
       xhr.send(formData);
 
-      const cancelButton = this.shadowRoot.querySelector("upload-modal").shadowRoot.querySelector("#cancelButton"),
-        successButton = this.shadowRoot.querySelector("upload-modal").shadowRoot.querySelector("#successButton");
+      const cancelButton = this.shadowRoot.querySelector("upload-modal").shadowRoot.querySelector("#cancelButton");
 
       cancelButton.addEventListener("click", event => {
         xhr.abort();
