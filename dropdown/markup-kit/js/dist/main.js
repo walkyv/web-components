@@ -65,14 +65,14 @@
     }
   }, true);
 
-  focusableElements.forEach(function (button, index) {
+  Array.prototype.forEach.call(focusableElements, function (button, index) {
     button.setAttribute('data-index', index);
     button.addEventListener('click', function (event) {
       var isChecked = button.getAttribute('aria-checked'),
           multiSelect = dropdownMenu.hasAttribute('multiselect');
 
       if (multiSelect === false) {
-        focusableElements.forEach(function (element) {
+        Array.prototype.forEach.call(focusableElements, function (element) {
           element.setAttribute('aria-checked', 'false');
         });
         button.setAttribute('aria-checked', 'true');
