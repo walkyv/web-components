@@ -2,12 +2,10 @@ const gulp = require('gulp'),
   sass = require('gulp-sass'),
   postcss = require('gulp-postcss'),
   autoprefixer = require('autoprefixer'),
-  cssnano = require('cssnano'),
-  sourcemaps = require('gulp-sourcemaps');
+  cssnano = require('cssnano');
 
 gulp.task('styles', function () {
   return gulp.src('scss/style.scss')
-  .pipe(sourcemaps.init())
   .pipe(sass()).on('error', sass.logError)
   .pipe(postcss([
     autoprefixer({
@@ -16,16 +14,15 @@ gulp.task('styles', function () {
     }),
     cssnano()
   ]))
-  .pipe(sourcemaps.write())
   .pipe(gulp.dest('./css'))
 });
 
 
 const babel = require('gulp-babel');
 gulp.task('babel', () =>
-  gulp.src('js/main.js')
+  gulp.src('js/*.js')
   .pipe(babel({
-    presets: ['es2015']
+    presets: [['env', {'targets': {'ie': '11'}, 'modules': false}]]
   }))
   .pipe(gulp.dest('js/dist'))
 );

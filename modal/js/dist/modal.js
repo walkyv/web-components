@@ -108,22 +108,25 @@ var Modal = function (_HTMLElement) {
       // Get component attributes
       var titleText = this.getAttribute('titletext'),
           triggerId = this.getAttribute('triggerid'),
-          footer = this.hasAttribute('footer');
+          footer = this.hasAttribute('footer'),
+          elements = this.getAttribute('elements');
 
       // Clone content for shadow DOM
-      var currentDoc = document.querySelector('link[href$="index.html"]').import;
+      var currentDoc = document.querySelector('link[href$="modal.html"]').import;
       var template = currentDoc.querySelector('#template');
       var clone = document.importNode(template.content, true);
 
       // Create elements
-
       // Target the body of the modal
-
       // create the footer
+
       if (footer) {
         this.renderfooter(clone);
       }
 
+      this.renderStyles(clone);
+
+      console.log(elements);
       var overlayButtonTemplate = currentDoc.querySelector('#overlayDiv'),
           overlayButtonClone = document.importNode(overlayButtonTemplate.content, true),
           overlayEntryPoint = clone.querySelector('#modalPlaceholder');
@@ -287,7 +290,7 @@ var Modal = function (_HTMLElement) {
           hideCancel = this.getAttribute('hidecancel'),
           hideSuccess = this.getAttribute('hidesuccess');
 
-      var currentDoc = document.querySelector('link[href$="index.html"]').import;
+      var currentDoc = document.querySelector('link[href$="modal.html"]').import;
 
       var selector = hideCancel !== null ? '#actions-noCancel' : hideSuccess !== null ? '#actions-noSuccess' : '#actions',
           actionsTemplate = currentDoc.querySelector(selector),
@@ -306,6 +309,18 @@ var Modal = function (_HTMLElement) {
       }
 
       modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
+    }
+  }, {
+    key: 'renderStyles',
+    value: function renderStyles(parentNode) {
+      var elementsVersion = this.hasAttribute('elements'),
+          currentDoc = document.querySelector('link[href$="modal.html"]').import,
+          selector = elementsVersion ? '#old' : '#new',
+          styleTemplate = currentDoc.querySelector(selector),
+          styleClone = document.importNode(styleTemplate.content, true),
+          modalBody = parentNode.querySelector('.deep-encapsulation');
+
+      modalBody.parentNode.insertBefore(styleClone, modalBody.nextSibling);
     }
   }, {
     key: 'footer',

@@ -1,9 +1,9 @@
 {
-  "name": "@pearson-ux/modal",
-  "author": "David O'Dey | david.odey@pearson.com",
+  "name": "@pearson-ux/example",
+  "author": "Your Name | your.email@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.2.0",
-  "description": "Modal web component",
+  "version": "0.1.0",
+  "description": "Example web component",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,27 +13,23 @@
     "url": "git+https://github.com/pearson-ux/web-components.git"
   },
   "keywords": [
+    "example",
     "pearson-components",
-    "modal",
     "web components"
   ],
   "bugs": {
     "url": "https://github.com/pearson-ux/web-components/issues"
   },
-  "homepage": "https://github.com/pearson-ux/web-components/blob/master/modal/README.md",
-  "dependencies": {
-    "@pearson-components/elements-sdk": "git+https://github.com/Pearson-Higher-Ed/elements-sdk.git#unstable-2.0-GLP"
-  },
+  "homepage": "https://github.com/pearson-ux/web-components/blob/master/example/README.md",
   "devDependencies": {
     "autoprefixer": "^9.0.0",
-    "babel-cli": "6.0.0",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
     "cssnano": "^4.0.3",
     "gulp": "^3.9.1",
-    "gulp-babel": "7.0.0",
+    "gulp-babel": "^7.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-postcss": "^7.0.1",
-    "gulp-sass": "^4.0.1",
-    "gulp-sourcemaps": "^2.6.4"
+    "gulp-sass": "^4.0.1"
   }
 }
