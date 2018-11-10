@@ -5,7 +5,7 @@ const gulp = require('gulp'),
   cssnano = require('cssnano');
 
 gulp.task('styles', function () {
-  return gulp.src('scss/style.scss')
+  return gulp.src('scss/glp.scss')
   .pipe(sass()).on('error', sass.logError)
   .pipe(postcss([
     autoprefixer({
