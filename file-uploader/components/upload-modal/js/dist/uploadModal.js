@@ -11,7 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
-  var currentDoc = doc.querySelector('link[href$="modal.html"]').import;
+  var currentDoc = doc.querySelector('link[href$="upload-modal.html"]').import;
   var styles = currentDoc.querySelector('#styles');
   var template = currentDoc.querySelector('#template');
   var minimizedTemplate = currentDoc.querySelector('#minimized');
@@ -234,7 +234,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.triggerBtn = doc.querySelector('#' + triggerId);
 
         this.modal = this.clone.querySelector('#modal');
-        this.eventBtns = this.clone.querySelectorAll('[data-event]');
+        this.eventBtns = this.modal.querySelectorAll('[data-event]');
         this.overlay = this.clone.querySelector('#modalOverlay');
 
         // When the modal trigger is clicked, open modal
@@ -247,6 +247,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               _this4.closeModal(eventType);
             } else if (btn.id === 'minimizeButton') {
               _this4.minimized = true;
+            } else if (btn.id === 'successButton') {
+              console.log('success');
+              _this4.closeModal(eventType);
             }
           });
         });
@@ -379,6 +382,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'renderfooter',
       value: function renderfooter(parentNode) {
+        var _this9 = this;
+
         var successBtnText = this.getAttribute('successBtnText'),
             cancelBtnText = this.getAttribute('cancelBtnText');
 
@@ -396,7 +401,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (successBtnText !== null) {
           saveButton.innerHTML = successBtnText;
         }
-
+        saveButton.addEventListener('click', function (event) {
+          var eventType = event.target.dataset.event;
+          _this9.closeModal(eventType);
+        });
         modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
       }
     }, {

@@ -2,7 +2,7 @@ const gulp = require('gulp'),
   sass = require('gulp-sass'),
   postcss = require('gulp-postcss'),
   autoprefixer = require('autoprefixer'),
-  cssnano = require('cssnano')
+  cssnano = require('cssnano');
 
 gulp.task('styles', function () {
   return gulp.src('scss/style.scss')
@@ -14,14 +14,13 @@ gulp.task('styles', function () {
     }),
     cssnano()
   ]))
-
   .pipe(gulp.dest('./css'))
 });
 
 
 const babel = require('gulp-babel');
 gulp.task('babel', () =>
-  gulp.src('js/modal.js')
+  gulp.src('js/main.js')
   .pipe(babel({
     presets: ['es2015']
   }))
