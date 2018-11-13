@@ -23,12 +23,26 @@
     color: $pe-color-medium-gray;
     background-color: transparent;
     border: 0;
+    position: relative;
     &:not([disabled]) {
       cursor: pointer;
     }
 
     &.ellipsis {
       min-width: 32px;
+    }
+    &:focus {
+      outline: none;
+      &:after {
+        border: 2px solid $pe-color-digital-pearson-blue;
+        content: "";
+        width: calc(100% - 10px);
+        height: calc(100% - 10px);
+        position: absolute;
+        top: 3px;
+        left: 5px;
+        border-radius: 3px;
+      }
     }
     &:hover span,
     &:focus span {
@@ -47,10 +61,24 @@
     border: 1px solid $pe-color-concrete;
     border-radius: 50%;
     transition: background-color .2s;
+    position: relative;
 
     &:hover,
     &:focus {
       background-color: $pe-color-moonlight;
+      outline: none;
+    }
+    &:focus {
+      &:after {
+        border: 2px solid $pe-color-digital-pearson-blue;
+        content: "";
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        border-radius: 100%;
+      }
     }
 
     &:hover span,

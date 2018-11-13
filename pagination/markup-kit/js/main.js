@@ -44,7 +44,6 @@
       })
 
       var start = this.activePage < this.maxButtons ? 1 : this.activePage > this.totalPages-(this.maxButtons-2) ? this.totalPages - this.maxButtons : this.activePage - 2
-      console.log(start)
       for(let i=0;i<this.maxButtons;i++){
         // if the activePage > maxButtons, ellipis goes first
         if(this.activePage >= this.maxButtons && i === 0){
@@ -80,10 +79,14 @@
 
     prevBtn.addEventListener("click", e => {
       e.preventDefault()
+      this.clicked = e.currentTarget
+      this.changeButton = false
       move.bind(this)(e, "prev")
     })
     nextBtn.addEventListener("click", e => {
       e.preventDefault()
+      this.clicked = e.currentTarget
+      this.changeButton = false
       move.bind(this)(e, "next")
     })
   }
@@ -93,10 +96,12 @@
       // use the model to render the buttons
       // take off old buttons first and then re-insert all into the DOM
       const oldButtons = this.querySelectorAll("button")
+      // TODO: this seems like a memory leak... should remove old buttons better
       this.innerHTML = ""
       // insert first button
       this.appendChild(oldButtons[0])
-      this.model.forEach(item => {
+      this.model.forEach((item,i) => {
+        oldButtons[i+1].remove()
         let newButton = document.createElement("button")
         newButton.setAttribute("type", "button")
         if(item.ellipsis){
@@ -111,6 +116,8 @@
           }
           newButton.addEventListener("click", e => {
             this.activePage = parseInt(e.currentTarget.querySelector("span").textContent)
+            this.clicked = e.currentTarget
+            this.changeButton = true
             buildModel.bind(this)()
             render.bind(this)()
           })
@@ -123,6 +130,21 @@
       this.querySelector(".current-page").textContent = this.activePage
       this.querySelector(".total-pages").textContent = this.totalPages
     }
+
+    // re-insert focus on the target
+    if(this.clicked){
+      var Button = this.clicked
+      if(this.changeButton){
+        const buttons = this.querySelectorAll("button")
+        buttons.forEach((button, i) => {
+          if(button.querySelector("span") && this.activePage == button.querySelector("span").textContent){
+            Button = button
+          }
+        })
+      }
+      Button.focus()
+    }
+
   }
 
   const move = function(e, way){

@@ -45,7 +45,6 @@
       });
 
       var start = this.activePage < this.maxButtons ? 1 : this.activePage > this.totalPages - (this.maxButtons - 2) ? this.totalPages - this.maxButtons : this.activePage - 2;
-      console.log(start);
       for (var _i = 0; _i < this.maxButtons; _i++) {
         // if the activePage > maxButtons, ellipis goes first
         if (this.activePage >= this.maxButtons && _i === 0) {
@@ -83,10 +82,14 @@
 
     prevBtn.addEventListener("click", function (e) {
       e.preventDefault();
+      _this.clicked = e.currentTarget;
+      _this.changeButton = false;
       move.bind(_this)(e, "prev");
     });
     nextBtn.addEventListener("click", function (e) {
       e.preventDefault();
+      _this.clicked = e.currentTarget;
+      _this.changeButton = false;
       move.bind(_this)(e, "next");
     });
   };
@@ -98,10 +101,12 @@
       // use the model to render the buttons
       // take off old buttons first and then re-insert all into the DOM
       var oldButtons = this.querySelectorAll("button");
+      // TODO: this seems like a memory leak... should remove old buttons better
       this.innerHTML = "";
       // insert first button
       this.appendChild(oldButtons[0]);
-      this.model.forEach(function (item) {
+      this.model.forEach(function (item, i) {
+        oldButtons[i + 1].remove();
         var newButton = document.createElement("button");
         newButton.setAttribute("type", "button");
         if (item.ellipsis) {
@@ -116,6 +121,8 @@
           }
           newButton.addEventListener("click", function (e) {
             _this2.activePage = parseInt(e.currentTarget.querySelector("span").textContent);
+            _this2.clicked = e.currentTarget;
+            _this2.changeButton = true;
             buildModel.bind(_this2)();
             render.bind(_this2)();
           });
@@ -127,6 +134,20 @@
     } else {
       this.querySelector(".current-page").textContent = this.activePage;
       this.querySelector(".total-pages").textContent = this.totalPages;
+    }
+
+    // re-insert focus on the target
+    if (this.clicked) {
+      var Button = this.clicked;
+      if (this.changeButton) {
+        var buttons = this.querySelectorAll("button");
+        buttons.forEach(function (button, i) {
+          if (button.querySelector("span") && _this2.activePage == button.querySelector("span").textContent) {
+            Button = button;
+          }
+        });
+      }
+      Button.focus();
     }
   };
 
