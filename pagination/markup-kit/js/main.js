@@ -1,5 +1,5 @@
-'use strict';
 (function() {
+  'use strict';
   // handle some button clicks on the pagination
   const init = function(){
     // set up eventing

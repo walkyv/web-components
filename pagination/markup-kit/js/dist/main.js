@@ -1,7 +1,9 @@
-'use strict';
+"use strict";
 
 (function () {
+  'use strict';
   // handle some button clicks on the pagination
+
   var init = function init() {
     // set up eventing
     setupEvents.bind(this)();
