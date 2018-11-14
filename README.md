@@ -22,7 +22,7 @@ If you prefer not to use a CDN, you can download these polyfills locally with NP
 
 > **Important note:**  Anyone can contribute.  All code must be subject to a througough accessibility review.  All code must be submitted through a pull request.  All code must go through proper code review before it can be merged into master.  If you have any questions about the process, please email david.odey@pearson.com 
 
-[anchor](**For a step-by-step walkthrough, click here.**)
+[For a step-by-step walkthrough, click here.](#anchor)
 
 **To get started assign yourself an open issue in GitHub.**  
 https://github.com/pearson-ux/web-components/issues
@@ -63,7 +63,7 @@ https://github.com/pearson-ux/web-components/projects
 To view an existing modal component and review its structure you can visit: https://github.com/pearson-ux/web-components/tree/master/modal
  
 
-[anchor] (**Step-by-step walkthrough**)
+[Step-by-step walkthrough] (#anchor)
 1. Pick up an issue: https://github.com/pearson-ux/web-components/issues  
 2. Clone the web-components repo: https://github.com/pearson-ux/web-components  
 3. Create a folder and label it the component name (e.g. tooltip)  
@@ -73,12 +73,12 @@ To view an existing modal component and review its structure you can visit: http
 7. Download the markup-kit as ZIP file (```-**_DO NOT CLONE markup-kit_**```)  
 8. Don’t worry about creating a separate branch for this repo (web-component-markup-kit), just npm install...  
 9. Unzip this file and cd into it… run these commands:  
-        a. `npm install`  
-        b. `npm start`  
-        c. Other commands to get you started (i.e. compile scss, run babel, watch for changes):  
-            i. `gulp styles`  
-            ii. `gulp babel`  
-            iii. `gulp watch`  
+        &nbsp;&nbsp;&nbsp;&nbsp;a. `npm install`  
+        &nbsp;&nbsp;&nbsp;&nbsp;b. `npm start`  
+        &nbsp;&nbsp;&nbsp;&nbsp;c. Other commands to get you started (i.e. compile scss, run babel, watch for changes):  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    i. `gulp styles`  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    ii. `gulp babel`  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   iii. `gulp watch`  
 10. Add polyfills to the <head> tag:  
     `<head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script>
