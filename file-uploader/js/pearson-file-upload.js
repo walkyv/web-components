@@ -30,7 +30,6 @@
   `;
 
   progressInfo.innerHTML = `
-  <template id="progressInfo">
   <div class="progress">
     <div class="group">
       <div class="indicator">
