@@ -22,7 +22,7 @@ If you prefer not to use a CDN, you can download these polyfills locally with NP
 
 > **Important note:**  Anyone can contribute.  All code must be subject to a througough accessibility review.  All code must be submitted through a pull request.  All code must go through proper code review before it can be merged into master.  If you have any questions about the process, please email david.odey@pearson.com 
 
-[For a step-by-step walkthrough, click here.](#anchor)
+[For a step-by-step walkthrough, click here.](#step-by-step)
 
 **To get started assign yourself an open issue in GitHub.**  
 https://github.com/pearson-ux/web-components/issues
@@ -63,7 +63,7 @@ https://github.com/pearson-ux/web-components/projects
 To view an existing modal component and review its structure you can visit: https://github.com/pearson-ux/web-components/tree/master/modal
  
 
-[Step-by-step walkthrough] (#anchor)
+[Step-by-step walkthrough](#step-by-step)
 1. Pick up an issue: https://github.com/pearson-ux/web-components/issues  
 2. Clone the web-components repo: https://github.com/pearson-ux/web-components  
 3. Create a folder and label it the component name (e.g. tooltip)  
@@ -80,11 +80,11 @@ To view an existing modal component and review its structure you can visit: http
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    ii. `gulp babel`  
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   iii. `gulp watch`  
 10. Add polyfills to the <head> tag:  
-    `<head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-    </head>`
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    </head>
 11. Make your component.  
 12. Once you complete making your component, copy all of your files from the markup-kit and paste it in the web-components/component-name/markup-kit (e.g. web-components/tooltip/markup-kit)  
 13. Go back to you web-components repo, and make sure you are in your branch.  
