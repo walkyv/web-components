@@ -151,7 +151,9 @@
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      const minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized'),
+      const minimizedContainer = this.shadowRoot.querySelector(
+          '.pe-modal-container__minimized'
+        ),
         modalOverlay = this.shadowRoot.querySelector('#modalOverlay'),
         minimizeButton = this.shadowRoot.querySelector('#minimizeButton');
 
@@ -169,12 +171,12 @@
       }
 
       if (name === 'minimized') {
-        if(!this.minimized) {
+        if (!this.minimized) {
           if (isIE11) {
             minimizedContainer.remove();
             this.modal.classList.remove('hidden');
             modalOverlay.classList.remove('hidden');
-          }  else {
+          } else {
             minimizedContainer.remove();
             this.modal.classList.remove('hidden');
             modalOverlay.classList.remove('hidden');
@@ -186,11 +188,10 @@
           setTimeout(() => {
             minimizeButton.focus();
           }, 250);
-
         } else {
           this.addEventListener('xhrLoading', event => {
             this.minimizeDetail = event.detail;
-            this.updateProgress(this.minimizeDetail)
+            this.updateProgress(this.minimizeDetail);
           });
           this.renderMinimized();
           if (isIE11) {
@@ -201,7 +202,7 @@
             this.modal.classList.add('fadeOutFast');
             modalOverlay.classList.add('fadeOutFast');
           }
-        this.updateProgress(this.minimizeDetail)
+          this.updateProgress(this.minimizeDetail);
         }
 
         modalOverlay.addEventListener('animationend', event => {
@@ -258,18 +259,20 @@
       }
     }
 
-    updateProgress (data) {
-      const minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized');
+    updateProgress(data) {
+      const minimizedContainer = this.shadowRoot.querySelector(
+        '.pe-modal-container__minimized'
+      );
       if (minimizedContainer !== null) {
         const done = minimizedContainer.querySelector('#done'),
           progress = minimizedContainer.querySelector('#progress');
 
         done.innerHTML = data.done;
-        progress.innerHTML = data.progress
+        progress.innerHTML = data.progress;
       }
     }
 
-    renderFull(){
+    renderFull() {
       // Get component attributes
       const titleText = this.getAttribute('titleText'),
         triggerId = this.getAttribute('triggerId'),
@@ -281,8 +284,8 @@
         this.renderfooter(this.clone);
       }
 
-
-      const overlayButtonClone = overlayButtonTemplate.content,overlayEntryPoint = this.clone.querySelector('#modalPlaceholder');
+      const overlayButtonClone = overlayButtonTemplate.content,
+        overlayEntryPoint = this.clone.querySelector('#modalPlaceholder');
 
       overlayEntryPoint.parentNode.insertBefore(
         overlayButtonClone,
@@ -317,13 +320,11 @@
           } else if (btn.id === 'minimizeButton') {
             this.minimized = true;
           } else if (btn.id === 'successButton') {
-            console.log('success')
+            console.log('success');
             this.closeModal(eventType);
           }
-
         });
       });
-
 
       // sets the positioning for modals that are programmatically created and have scrolling content
       this.setPosition();
@@ -332,12 +333,11 @@
       doc.body.addEventListener('focus', this.maintainFocus, true);
     }
 
-
     renderMinimized() {
       this.shadowRoot.appendChild(this.minimizedClone);
       const expandButton = this.shadowRoot.querySelector('#expandButton');
       expandButton.addEventListener('click', event => {
-        this.minimized = false
+        this.minimized = false;
       });
       setTimeout(() => {
         expandButton.focus();
@@ -347,7 +347,7 @@
     openModal(e) {
       const thisButton = e.currentTarget,
         buttonDisabled = thisButton.getAttribute('disabled');
-      this.style.display = "block";
+      this.style.display = 'block';
       if (buttonDisabled === null) {
         thisButton.setAttribute('disabled', true);
         this.main.setAttribute('aria-hidden', 'true');
@@ -443,7 +443,6 @@
       }, 100);
     }
 
-
     renderfooter(parentNode) {
       const successBtnText = this.getAttribute('successBtnText'),
         cancelBtnText = this.getAttribute('cancelBtnText');
@@ -461,14 +460,12 @@
       if (successBtnText !== null) {
         saveButton.innerHTML = successBtnText;
       }
-      saveButton.addEventListener('click', event=> {
+      saveButton.addEventListener('click', event => {
         const eventType = event.target.dataset.event;
         this.closeModal(eventType);
       });
       modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
     }
-
-
   }
 
   customElements.define('upload-modal', Modal);

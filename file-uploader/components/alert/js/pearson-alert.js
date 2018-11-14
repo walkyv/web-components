@@ -91,7 +91,10 @@
       this.alert.removeEventListener('animationend', this._onAnimationEnd);
       this.closeBtn.removeEventListener('click', this._onClose);
 
-      document.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal #attachFiles').focus();
+      document
+        .querySelector('pearson-uploader')
+        .shadowRoot.querySelector('upload-modal #attachFiles')
+        .focus();
     }
 
     _onClose() {
@@ -124,8 +127,8 @@
       return doc.querySelector(this.returnNode);
     }
 
-    get returnNode () {
-      return this.getAttribute('returnnode')
+    get returnNode() {
+      return this.getAttribute('returnnode');
     }
 
     get isAnimated() {
