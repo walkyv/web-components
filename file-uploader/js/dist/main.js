@@ -374,3 +374,94 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   customElements.define('pearson-uploader', FileUpload);
 })(window, document);
+
+(function (w, doc) {
+  'use strict';
+
+  var ProgressRing = function (_HTMLElement2) {
+    _inherits(ProgressRing, _HTMLElement2);
+
+    function ProgressRing() {
+      _classCallCheck(this, ProgressRing);
+
+      var _this6 = _possibleConstructorReturn(this, (ProgressRing.__proto__ || Object.getPrototypeOf(ProgressRing)).call(this));
+
+      var stroke = _this6.getAttribute('stroke');
+      var radius = _this6.getAttribute('radius');
+      var normalizedRadius = 25 - 3 * 2;
+      _this6._circumference = normalizedRadius * 2 * Math.PI;
+
+      _this6._root = _this6.attachShadow({ mode: 'open' });
+      _this6._root.innerHTML = '\n        <svg\n          height="50"\n          width="50"\n          aria-hidden="true"\n          focusable="false"\n         >\n           <circle\n             stroke="#047a9c"\n             stroke-dasharray="' + _this6._circumference + ' ' + _this6._circumference + '"\n             style="stroke-dashoffset:' + _this6._circumference + '"\n             stroke-width="3"\n             fill="transparent"\n             r="' + normalizedRadius + '"\n             cx="25"\n             cy="25"\n          />\n        </svg>\n  \n        <style>\n          circle {\n            transition: stroke-dashoffset 0.35s;\n            transform: rotate(-90deg);\n            transform-origin: 50% 50%;\n          }\n        </style>\n      ';
+      return _this6;
+    }
+
+    _createClass(ProgressRing, [{
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        if (!this.hasAttribute('role') || this.getAttribute('role') !== 'progressbar') {
+          this.setAttribute('role', 'progressbar');
+        }
+        if (!this.hasAttribute('aria-valuemin') || this.getAttribute('aria-valuemin') !== 0) {
+          this.setAttribute('aria-valuemin', 0);
+        }
+
+        if (!this.hasAttribute('aria-valuemax') || this.getAttribute('aria-valuemax') !== 100) {
+          this.setAttribute('aria-valuemax', 100);
+        }
+
+        if (!this.hasAttribute('aria-valuenow') || this.getAttribute('aria-valuenow') !== this.progress) {
+          this.setAttribute('aria-valuenow', this.progress);
+        }
+
+        var valueText = this.progress + ' percent complete';
+        if (!this.hasAttribute('aria-valueText') || this.getAttribute('aria-valueText') !== valueText) {
+          this.setAttribute('aria-valueText', valueText);
+        }
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'progress') {
+          this.setProgress(newValue);
+        }
+      }
+    }, {
+      key: 'setProgress',
+      value: function setProgress(percent) {
+        var offset = this._circumference - percent / 100 * this._circumference;
+        var circle = this._root.querySelector('circle');
+        circle.style.strokeDashoffset = offset;
+
+        this.setAttribute('aria-valuenow', percent);
+        this.setAttribute('aria-valuetext', percent + ' percent complete');
+      }
+    }, {
+      key: 'upgradeProp',
+      value: function upgradeProp(prop) {
+        if (this.hasOwnProperty(prop)) {
+          var value = this[prop];
+          delete this[prop];
+          this[prop] = value;
+        }
+      }
+    }, {
+      key: 'progress',
+      get: function get() {
+        return this.getAttribute('progress');
+      },
+      set: function set(value) {
+        this.setAttribute('progress', value);
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['progress', 'radius', 'stroke'];
+      }
+    }]);
+
+    return ProgressRing;
+  }(HTMLElement);
+
+  w.customElements.define('progress-ring', ProgressRing);
+})(window, document);
