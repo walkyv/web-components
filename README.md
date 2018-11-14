@@ -79,17 +79,17 @@ To view an existing modal component and review its structure you can visit: http
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    ii. `gulp babel`  
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   iii. `gulp watch`  
 10. Add polyfills in between `<head>  </head>` tags:  
-<pre>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>  
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-</pre>      
-11. Make your component.  
-12. Once you complete making your component, copy all of your files from the markup-kit and paste it in the web-components/component-name/markup-kit (e.g. web-components/tooltip/markup-kit)  
-13. Go back to you web-components repo, and make sure you are in your branch.  
-14. Add and commit your work. The commit message should be in the present tense, here are some guidelines: https://github.com/pearson-ux/web-components/wiki/Committing,-Branching,-and-Merging  
-15. Go to github and create a pull request. Add “pearson-ux/prototyping” team to reviewers, and wait for review.  
-16. Tktktk Web Component spec kit process: https://github.com/pearson-ux/web-component-spec-kit  
+    <pre>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>  
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    </pre>      
+11. Make your component.   
+12. Once you complete making your component, copy all of your files from the markup-kit and paste it in the web-components/component-name/markup-kit (e.g. web-components/tooltip/markup-kit)   
+13. Go back to you web-components repo, and make sure you are in your branch.   
+14. Add and commit your work. The commit message should be in the present tense, here are some guidelines: https://github.com/pearson-ux/web-components/wiki/Committing,-Branching,-and-Merging   
+15. Go to github and create a pull request. Add “pearson-ux/prototyping” team to reviewers, and wait for review.   
+16. Tktktk Web Component spec kit process: https://github.com/pearson-ux/web-component-spec-kit   
 
 Other references:
 https://www.webcomponents.org/introduction
