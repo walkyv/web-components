@@ -22,6 +22,8 @@ If you prefer not to use a CDN, you can download these polyfills locally with NP
 
 > **Important note:**  Anyone can contribute.  All code must be subject to a througough accessibility review.  All code must be submitted through a pull request.  All code must go through proper code review before it can be merged into master.  If you have any questions about the process, please email david.odey@pearson.com 
 
+[Take me there](**For a step-by-step walkthrough, click here.**)
+
 **To get started assign yourself an open issue in GitHub.**  
 https://github.com/pearson-ux/web-components/issues
 
@@ -60,3 +62,38 @@ https://github.com/pearson-ux/web-components/projects
 
 To view an existing modal component and review its structure you can visit: https://github.com/pearson-ux/web-components/tree/master/modal
  
+
+[Take me there] (**Step-by-step walkthrough**)
+1. Pick up an issue: https://github.com/pearson-ux/web-components/issues
+2. Clone the web-components repo: https://github.com/pearson-ux/web-components
+3. Create a folder and label it the component name (e.g. tooltip)
+4. Inside your component folder, create a folder and label it “markup-kit”
+5. Create a branch ‘markup/component-name’ (e.g. markup/tooltip)
+6. Now head over to Web component markup kit - https://github.com/pearson-ux/web-component-markup-kit
+7. Download the markup-kit as ZIP file (```-**_DO NOT CLONE markup-kit_**```)
+8. Unzip this file and cd into it… run these commands:
+        a. `npm install`
+        b. `npm start`
+        c. Other commands to get you started (i.e. compile scss, run babel, watch for changes):
+            i. `gulp styles`
+            ii. `gulp babel`
+            iii. `gulp watch`
+9. Add polyfills to the <head> tag:
+    `<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    </head>`
+10. Make your component.
+11. Once you complete making your component, copy all of your files from the markup-kit and paste it in the web-components/component-name/markup-kit (e.g. web-components/tooltip/markup-kit)
+12. Go back to you web-components repo, and make sure you are in your branch.
+13. Add and commit your work. The commit message should be in the present tense, here are some guidelines: https://github.com/pearson-ux/web-components/wiki/Committing,-Branching,-and-Merging
+14. Go to github and create a pull request. Add “pearson-ux/prototyping” team to reviewers, and wait for review.
+15. Tktktk Web Component spec kit process: https://github.com/pearson-ux/web-component-spec-kit
+
+Other references:
+https://www.webcomponents.org/introduction
+
+
+
+
