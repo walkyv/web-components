@@ -16,7 +16,7 @@
             <p class="pe-title">Drag files here</p>
             <p class="text">or</p>
             <input type="file" name="file" multiple>
-            <button id="attachFiles" class="pe-btn--btn_large" data-action="toggle-footer">Browse Files</button>
+            <button id="attachFiles" class="pe-btn--btn_large" data-action="toggle-footer" type="button">Browse Files</button>
             <p class="info">Upload up to <span id="maxNumberOfFiles"></span> files.</p>
             <p class="info">Max file size <span id="maxFileSize"></span></p>
           </div>
