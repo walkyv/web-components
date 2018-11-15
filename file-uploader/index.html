@@ -13,12 +13,6 @@
 
 	<!-- load pearson and global styles -->
 	<!--<link rel="stylesheet" href="css/style.css" media="all" />-->
-
-	<!-- import web components -->
-	<link rel="import" href="components/alert/alert.html" />
-	<link rel="import" href="components/upload-modal/upload-modal.html" />
-	<link rel="import" href="file-upload.html" />
-
 <style>
 	html {
 		font-size:14px;
@@ -41,9 +35,14 @@
 >
 </pearson-uploader>
 
+<!-- Import componnet modules -->
+<script src="components/alert/js/dist/pearson-alert.js"></script>
+<script src="components/upload-modal/js/dist/uploadModal.js"></script>
+<script src="js/dist/pearson-file-upload.js"></script>
+
 <script>
-	const uploader = document.querySelector('pearson-uploader'),
-		modal = uploader.shadowRoot.querySelector('upload-modal');
+	const uploader = document.querySelector('pearson-uploader');
+	const modal = uploader.shadowRoot.querySelector('upload-modal');
 
 	modal.addEventListener('success', event=> {
 	  console.log('SUCCESS')
