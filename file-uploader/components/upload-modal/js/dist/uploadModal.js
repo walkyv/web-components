@@ -292,7 +292,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         var thisButton = e.currentTarget,
             buttonDisabled = thisButton.getAttribute('disabled');
-        this.style.display = "block";
+        this.style.display = 'block';
         if (buttonDisabled === null) {
           thisButton.setAttribute('disabled', true);
           this.main.setAttribute('aria-hidden', 'true');
