@@ -90,18 +90,24 @@ $success: #19a6a4;
   }
 }
 
-button.pe-icon {
+.pe-alert button.pe-icon {
   background-color: transparent;
   border: 0;
   padding: 0;
   position: relative;
+  overflow: visible;
 }
 
-button.pe-icon:focus {
+.pe-alert button.pe-icon:focus {
   outline: 0;
 }
 
-button.pe-icon:focus::after {
+.pe-alert button.pe-icon::-moz-focus-inner {
+  border: 0;
+}
+
+.pe-alert button.pe-icon:focus::after {
+  display: block;
   border: 2px solid #0b73da;
   border-radius: 4px;
   content: "";
@@ -113,13 +119,13 @@ button.pe-icon:focus::after {
   z-index: 1;
 }
 
-img.pe-icon:not([src='']) {
+.pe-alert img.pe-icon:not([src='']) {
   margin-right: 12px;
   width: 18px;
   height: 18px;
 }
 
-svg {
+.pe-alert svg {
   width: 24px;
   height: 24px;
 }
