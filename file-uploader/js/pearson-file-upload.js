@@ -151,8 +151,11 @@
       returnNode: '#attachFiles',
       type: 'error',
       level: 'global',
-      animated: true
+      animated: true,
+      focusOnOpen: true
     });
+
+    
     alert.innerHTML = `
       <h2 id="alertTitle" class="pe-label alert-title">
           <strong>${opts.strong}</strong>${opts.text}
