@@ -2,7 +2,7 @@
   "name": "@pearson-ux/alert",
   "author": "EJ Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "description": "Modal web component",
   "main": "index.html",
   "scripts": {
@@ -21,9 +21,7 @@
     "url": "https://github.com/pearson-ux/web-components/issues"
   },
   "homepage": "https://github.com/pearson-ux/web-components/blob/master/modal/README.md",
-  "dependencies": {
-    "@pearson-components/elements-sdk": "git+https://github.com/Pearson-Higher-Ed/elements-sdk.git#unstable-2.0-GLP"
-  },
+  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^9.0.0",
     "babel-cli": "6.0.0",
