@@ -89,11 +89,12 @@
     }
 
     _onAnimationEnd(e) {
-      if (e.animationName === 'fadeOut' || e.animationName === 'slideOutDown') {
+      const { animationName } = e;
+      if (animationName === 'fadeOut' || animationName === 'slideOutDown') {
         this.remove();
       }
-      if (e.animationName === 'fadeIn' || e.animationName === 'slideInDown') {
-        if (this.type === 'important') {
+      if (animationName === 'fadeIn' || animationName === 'slideInDown') {
+        if (this.focusOnOpen) {
           this.closeBtn.focus();
         }
       }
@@ -105,6 +106,10 @@
 
     get isAnimated() {
       return this.hasAttribute('animated');
+    }
+
+    get focusOnOpen() {
+      return this.hasAttribute('focusOnOpen');
     }
 
     get level() {

@@ -105,11 +105,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: '_onAnimationEnd',
       value: function _onAnimationEnd(e) {
-        if (e.animationName === 'fadeOut' || e.animationName === 'slideOutDown') {
+        var animationName = e.animationName;
+
+        if (animationName === 'fadeOut' || animationName === 'slideOutDown') {
           this.remove();
         }
-        if (e.animationName === 'fadeIn' || e.animationName === 'slideInDown') {
-          if (this.type === 'important') {
+        if (animationName === 'fadeIn' || animationName === 'slideInDown') {
+          if (this.focusOnOpen) {
             this.closeBtn.focus();
           }
         }
@@ -123,6 +125,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'isAnimated',
       get: function get() {
         return this.hasAttribute('animated');
+      }
+    }, {
+      key: 'focusOnOpen',
+      get: function get() {
+        return this.hasAttribute('focusOnOpen');
       }
     }, {
       key: 'level',
