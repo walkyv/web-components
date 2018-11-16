@@ -82,7 +82,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'disconnectedCallback',
       value: function disconnectedCallback() {
-        var returnNode = this._findReturnNode();
 
         this.alert.removeEventListener('animationend', this._onAnimationEnd);
         this.closeBtn.removeEventListener('click', this._onClose);
@@ -116,11 +115,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             this.closeBtn.focus();
           }
         }
-      }
-    }, {
-      key: '_findReturnNode',
-      value: function _findReturnNode() {
-        return doc.querySelector(this.getAttribute('returnNode'));
       }
     }, {
       key: 'isAnimated',

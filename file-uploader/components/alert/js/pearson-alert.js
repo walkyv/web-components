@@ -86,7 +86,6 @@
     }
 
     disconnectedCallback() {
-      const returnNode = this._findReturnNode();
 
       this.alert.removeEventListener('animationend', this._onAnimationEnd);
       this.closeBtn.removeEventListener('click', this._onClose);
@@ -122,10 +121,6 @@
           this.closeBtn.focus();
         }
       }
-    }
-
-    _findReturnNode() {
-      return doc.querySelector(this.getAttribute('returnNode'));
     }
 
     get isAnimated() {
