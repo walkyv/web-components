@@ -1,9 +1,6 @@
 (function(w, doc) {
   'use strict';
 
-  // const currentDoc = doc.querySelector('link[href$="alert.html"]').import;
-  // const template = currentDoc.querySelector('#template');
-
   const template = doc.createElement('template');
 
   template.innerHTML = `
