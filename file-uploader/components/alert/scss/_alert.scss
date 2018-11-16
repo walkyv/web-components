@@ -8,7 +8,7 @@ $success: #19a6a4;
   visibility: hidden;
   opacity: 0;
   color: #252525;
-  z-index: 9999;
+  z-index: 2000;
 }
 
 @media (max-width: 480px) {
@@ -57,10 +57,10 @@ $success: #19a6a4;
   margin-bottom: 1em;
   max-width: 580px;
   transition: all 0.2s ease;
-  z-index: 20000;
+  z-index: 10;
   background: white;
   border-left-color: $success;
-  
+
 }
 
 .pe-alert-box .close-title {
@@ -80,6 +80,7 @@ $success: #19a6a4;
 .pe-alert-box .alert-title {
   margin-right: 4px;
   display: inline;
+
 }
 
 .pe-alert-box .alert-text {
