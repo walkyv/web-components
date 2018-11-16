@@ -39,7 +39,7 @@
 
       this.attachShadow({ mode: 'open' });
 
-      const clone = doc.importNode(template.content.cloneNode(true), true);
+      const clone = template.content.cloneNode(true);
 
       this.alert = clone.querySelector('#peAlert');
       this.contentContainer = clone.querySelector('#contentContainer');
