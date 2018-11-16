@@ -113,8 +113,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       returnNode: '#attachFiles',
       type: 'error',
       level: 'global',
-      animated: true
+      animated: true,
+      focusOnOpen: true
     });
+
     alert.innerHTML = '\n      <h2 id="alertTitle" class="pe-label alert-title">\n          <strong>' + opts.strong + '</strong>' + opts.text + '\n       </h2>\n  ';
     return alert;
   }
