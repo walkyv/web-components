@@ -20,7 +20,7 @@ gulp.task('styles', function () {
 
 const babel = require('gulp-babel');
 gulp.task('babel', () =>
-  gulp.src('js/main.js')
+  gulp.src('js/*.js')
   .pipe(babel({
     presets: ['es2015']
   }))
