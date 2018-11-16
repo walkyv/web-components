@@ -1,8 +1,6 @@
 button > * {
   pointer-events: none;
 }
-
-
   .pe-modal-container {
     width:475px;
       > .pe-title {
@@ -10,20 +8,6 @@ button > * {
         width: 100%;
         text-align: center;
         padding: 20px 0;
-      }
-      .actions {
-        button {
-          &:disabled {
-            &:hover {
-              cursor: default !important;
-              border: #e9e9e9 !important;
-              color: #c7c7c7 !important;
-              background-color: #e9e9e9 !important;
-              box-shadow: none !important;
-              text-decoration: none !important;
-            }
-          }
-        }
       }
     }
 
@@ -210,3 +194,6 @@ button > * {
     font-size:.875em;
     color: $pe-color-charcoal;
   }
+
+
+
