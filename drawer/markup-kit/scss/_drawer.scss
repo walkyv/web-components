@@ -1,5 +1,6 @@
 
 .panel {
+  position: relative;
   display:flex;
   flex-direction: column;
   width:320px;
@@ -26,26 +27,6 @@
 
   .pe-title {
     margin-bottom:0;
-  }
-
-  button {
-    border:0;
-    cursor:pointer;
-    background:none;
-    height:44px;
-    width:44px;
-
-    &.back {
-      display:flex;
-      align-items: center;
-      width:auto;
-      svg {
-        margin-right:.5em;
-      }
-      h3 {
-        margin:0;
-      }
-    }
   }
 }
 
@@ -76,9 +57,6 @@
     &.pe-link--btn {
       text-decoration: none;
     }
-    & > * {
-      pointer-events: none;
-    }
   }
 
 
@@ -88,8 +66,37 @@
   }
 }
 
-button > * {
+.panel button > * {
   pointer-events: none;
 }
 
+.panel button.back {
+  border:0;
+  cursor:pointer;
+  background:none;
+  height:44px;
+  width:44px;
+  display:flex;
+  align-items: center;
+  width:auto;
+}
 
+  .panel button.back svg {
+    margin-right: 0.5em;
+  }
+
+  .panel button.back h3 {
+    margin:0;
+  }
+
+
+.panel button.close {
+  position: absolute;
+  top: 22px;
+  right: 15px;
+  border: 0;
+  cursor: pointer;
+  background: none;
+  height: 44px;
+  width: 44px;
+}
