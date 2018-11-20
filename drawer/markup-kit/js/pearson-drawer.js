@@ -166,6 +166,8 @@
   });
 
   function bindKeyPress(e) {
+    if (!drawerOpen) return;
+
     if (e.which === ESCAPE_KEY) {
       closePanel(getPanelElem());
     }
