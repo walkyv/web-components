@@ -67,8 +67,7 @@
     trigger = doc.getElementById('openDrawer'),
     panelOne = doc.querySelector('[data-panel="1"]'),
     drawer = doc.getElementById('drawer'),
-    panels = drawer.querySelectorAll('[data-panel]'),
-    questions = panelOne.querySelectorAll('input, button, select, a');
+    panels = drawer.querySelectorAll('[data-panel]');
 
   let drawerOpen = false;
 
@@ -134,25 +133,26 @@
     panel.setAttribute('aria-hidden', 'true');
   }
 
-  // sets up the ui for first use
-  forEach.call(questions, question => {
-    question.addEventListener('click', event => {
-      if (!question.classList.contains('close')) {
-        const showPanelNumber = event.currentTarget.getAttribute(
-          'data-show-panel'
-        );
-        expandPanel(getPanelElem());
-        drawer.setAttribute('data-current-panel', showPanelNumber);
-        showPanel(getPanelElem());
-        clickHandlers(getPanelElem());
-      } else {
-        closePanel(getPanelElem());
-      }
-    });
-  });
-
   function openDrawer() {
     showPanel(getPanelElem());
+  }
+
+  function bindPanelClicks(event) {
+    const el = event.target;
+    if (!el.hasAttribute('data-show-panel')) return;
+
+    if (!el.classList.contains('close')) {
+      const panelIdentifier = event.target.getAttribute(
+        'data-show-panel'
+      );
+      
+      expandPanel(getPanelElem());
+      drawer.setAttribute('data-current-panel', panelIdentifier);
+      showPanel(getPanelElem());
+      clickHandlers(getPanelElem());
+    } else {
+      closePanel(getPanelElem());
+    }
   }
 
   function bindExternalClicks(e) {
@@ -184,7 +184,8 @@
 
   // opens the drawer
   trigger.addEventListener('click', openDrawer);
-  
+  drawer.addEventListener('click', bindPanelClicks);
+
   doc.addEventListener('focus', trapFocus, true);
   doc.addEventListener('click', bindExternalClicks, true);
   doc.addEventListener('keydown', bindKeyPress, true);
