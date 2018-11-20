@@ -106,6 +106,12 @@
     });
   }
 
+  function hidePanel(panel) {
+    panel.style.right = '320px';
+    panel.style.display = 'none';
+    panel.setAttribute('aria-hidden', 'true');
+  }
+
   // toggle the panels in ui
   function showPanel(panel) {
     panel.style.right = '0';
@@ -127,12 +133,6 @@
     drawerOpen = false;
   }
 
-  function expandPanel(panel) {
-    panel.style.right = '320px';
-    panel.style.display = 'none';
-    panel.setAttribute('aria-hidden', 'true');
-  }
-
   function openDrawer() {
     showPanel(getPanelElem());
   }
@@ -146,7 +146,7 @@
         'data-show-panel'
       );
       
-      expandPanel(getPanelElem());
+      hidePanel(getPanelElem());
       drawer.setAttribute('data-current-panel', panelIdentifier);
       showPanel(getPanelElem());
       clickHandlers(getPanelElem());
