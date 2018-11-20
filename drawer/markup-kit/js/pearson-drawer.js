@@ -8,13 +8,13 @@
     mainContent = document.getElementById('main');
 
   // returns current panel displayed in ui
-  function currentPanel() {
+  function getPanelIdentifier() {
     return drawer.getAttribute('data-current-panel');
   }
 
   // returns a new panel to displayed in ui
-  function returnPanel() {
-    let panelToShow = currentPanel();
+  function getPanelElem() {
+    let panelToShow = getPanelIdentifier();
     let show = '';
     Array.prototype.forEach.call(panels, panel => {
       const dataPanel = panel.getAttribute('data-panel');
@@ -31,12 +31,12 @@
     Array.prototype.forEach.call(buttons, button => {
       button.addEventListener('click', event => {
         if (event.currentTarget.classList.contains('back')) {
-          closePanel(returnPanel());
+          closePanel(getPanelElem());
           showPanel(panelOne);
           drawer.setAttribute('data-current-panel', '1');
         } else {
           closePanel(panelOne);
-          closePanel(returnPanel());
+          closePanel(getPanelElem());
         }
       });
     });
@@ -89,24 +89,24 @@
         const showPanelNumber = event.currentTarget.getAttribute(
           'data-show-panel'
         );
-        expandPanel(returnPanel());
+        expandPanel(getPanelElem());
         drawer.setAttribute('data-current-panel', showPanelNumber);
-        showPanel(returnPanel());
-        clickHandlers(returnPanel());
+        showPanel(getPanelElem());
+        clickHandlers(getPanelElem());
       } else {
-        closePanel(returnPanel());
+        closePanel(getPanelElem());
       }
     });
   });
 
   // opens the panel
   trigger.addEventListener('click', event => {
-    showPanel(returnPanel());
+    showPanel(getPanelElem());
   });
 
   document.addEventListener('keyup', event => {
     if (event.code === 'Escape') {
-      closePanel(returnPanel());
+      closePanel(getPanelElem());
     }
   });
 })();
