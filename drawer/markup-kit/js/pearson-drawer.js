@@ -106,7 +106,7 @@
 
   document.addEventListener('keyup', event => {
     if (event.code === 'Escape') {
-      console.log('close');
+      closePanel(returnPanel());
     }
   });
 })();
