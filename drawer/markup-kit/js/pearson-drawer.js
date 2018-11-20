@@ -138,9 +138,8 @@
 
   function bindDrawerClicks(event) {
     const el = event.target;
-    if (!el.hasAttribute('data-show-panel')) return;
 
-    if (!el.classList.contains('close')) {
+    if (el.hasAttribute('data-show-panel')) {
       const panelIdentifier = event.target.getAttribute(
         'data-show-panel'
       );
@@ -149,7 +148,8 @@
       setActivePanel(panelIdentifier);
       showPanel(getActivePanel());
       bindPanelClicks(getActivePanel());
-    } else {
+    }
+    if (el.classList.contains('close')) {
       closePanel(getActivePanel());
     }
   }
