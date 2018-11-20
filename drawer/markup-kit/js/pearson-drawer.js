@@ -70,6 +70,8 @@
     panels = drawer.querySelectorAll('[data-panel]'),
     questions = panelOne.querySelectorAll('input, button, select, a');
 
+  let drawerOpen = false;
+
   // returns current panel displayed in ui
   function getPanelIdentifier() {
     return drawer.getAttribute('data-current-panel');
@@ -113,6 +115,7 @@
     focusTrap(panel);
     mainContent.setAttribute('aria-hidden', 'true');
     drawer.setAttribute('aria-hidden', 'false');
+    drawerOpen = true;
   }
 
   function closePanel(panel) {
@@ -122,6 +125,7 @@
     trigger.focus();
     mainContent.setAttribute('aria-hidden', 'false');
     drawer.setAttribute('aria-hidden', 'true');
+    drawerOpen = false;
   }
 
   function expandPanel(panel) {
