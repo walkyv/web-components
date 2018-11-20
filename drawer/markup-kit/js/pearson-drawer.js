@@ -84,6 +84,10 @@
     return show;
   }
 
+  function setActivePanel(panelIdentifier) {
+    drawer.setAttribute('data-current-panel', panelIdentifier);
+  }
+
   // attaches event handlers to pre defined questions that open panels
   function clickHandlers(element) {
     const buttons = element.querySelectorAll('button');
@@ -142,7 +146,7 @@
       );
       
       hidePanel(getActivePanel());
-      drawer.setAttribute('data-current-panel', panelIdentifier);
+      setActivePanel(panelIdentifier);
       showPanel(getActivePanel());
       clickHandlers(getActivePanel());
     } else {
