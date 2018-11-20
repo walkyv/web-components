@@ -5,6 +5,8 @@
   
   100% {
     right: 0px;
+    // TODO: create separate animation for visibility!  
+    visibility: visible;
   }
 }
 
@@ -21,8 +23,7 @@
 
 .slideInRight {
   animation-name: slideInRight;
-  // TODO: create separate animation for visibility!  
-  visibility: visible !important;
+  // display: flex;
 
 }
 

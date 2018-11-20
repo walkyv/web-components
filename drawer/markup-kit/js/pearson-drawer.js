@@ -107,14 +107,14 @@
 
   function hidePanel(panel) {
     panel.style.right = '320px';
-    panel.style.display = 'none';
-    panel.setAttribute('aria-hidden', 'true');
+    panel.style.visibility = 'hidden';
   }
 
-  // toggle the panels in ui
+  // TODO: Only animate top-level panel
   function showPanel(panel) {
     panel.style.right = '0';
     panel.style.display = 'flex';
+    panel.style.visibility = 'visible';
     panel.setAttribute('aria-hidden', 'false');
     mainContent.setAttribute('aria-hidden', 'true');
     drawer.setAttribute('aria-hidden', 'false');
@@ -124,7 +124,7 @@
 
   function closePanel(panel) {
     panel.style.right = '-320px';
-    panel.style.display = 'none';
+    panel.style.visibility = 'hidden';
     panel.setAttribute('aria-hidden', 'true');
     trigger.focus();
     mainContent.setAttribute('aria-hidden', 'false');
