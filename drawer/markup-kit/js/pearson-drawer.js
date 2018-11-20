@@ -138,17 +138,22 @@
 
   function bindDrawerClicks(event) {
     const el = event.target;
+    // TODO: clean up this grammar :(
+    // maybe consistent `data-action` attr
+    if (
+      !(el.classList.contains('close') || el.hasAttribute('data-show-panel'))
+    ) {
+      return;
+    }
 
     if (el.hasAttribute('data-show-panel')) {
-      const panelIdentifier = event.target.getAttribute(
-        'data-show-panel'
-      );
-      
+      const panelIdentifier = event.target.getAttribute('data-show-panel');
+
       hidePanel(getActivePanel());
       setActivePanel(panelIdentifier);
       showPanel(getActivePanel());
       bindPanelClicks(getActivePanel());
-    }
+    } 
     if (el.classList.contains('close')) {
       closePanel(getActivePanel());
     }
