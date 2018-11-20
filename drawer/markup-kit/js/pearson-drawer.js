@@ -89,7 +89,7 @@
   }
 
   // attaches event handlers to pre defined questions that open panels
-  function clickHandlers(element) {
+  function bindPanelClicks(element) {
     const buttons = element.querySelectorAll('button');
     forEach.call(buttons, button => {
       button.addEventListener('click', event => {
@@ -148,7 +148,7 @@
       hidePanel(getActivePanel());
       setActivePanel(panelIdentifier);
       showPanel(getActivePanel());
-      clickHandlers(getActivePanel());
+      bindPanelClicks(getActivePanel());
     } else {
       closePanel(getActivePanel());
     }
