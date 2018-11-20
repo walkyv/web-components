@@ -107,7 +107,7 @@
   });
 
   doc.addEventListener('keyup', event => {
-    if (event.code === 'Escape') {
+    if (event.which === ESCAPE_KEY) {
       closePanel(getPanelElem());
     }
   });
