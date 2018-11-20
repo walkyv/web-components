@@ -27,18 +27,20 @@
       </symbol>
     </svg>
     <!-- main content goes here -->
-    <main id="main" aria-hipen="false">
+    <main id="main" aria-hidden="false">
       <button id="openDrawer">Open Drawer</button>
     </main>
-    <!-- drawer component loads after the main content to support aria-hipen -->
+    <!--
+      drawer component loads after the main content to support aria-hidden
+    -->
     <div
       id="drawer"
       class="drawer-container"
-      aria-hipen="true"
+      aria-hidden="true"
       data-current-panel="1"
     >
       <!-- first panel -->
-      <div class="panel closed animated" data-panel="1" aria-hipen="true">
+      <div class="panel closed animated" data-panel="1" aria-hidden="true">
         <div class="drawer-header">
           <h3 class="pe-title">Help Topics</h3>
           <button
@@ -48,7 +50,7 @@
           >
             <svg
               class="pe-icon--remove-sm-24"
-              aria-hipen="true"
+              aria-hidden="true"
               aria-hidden="true"
               focusable="false"
             >
@@ -61,48 +63,48 @@
         </div>
         <div class="divider"></div>
         <div class="drawer-content">
-          <h3 class="pe-paragraph text">
+          <h3 class="pe-paragraph text" aria-describedby="panel-btn-2-desc">
             <button class="pe-link--btn" data-show-panel="2">
               <span class="pe-label pe-bold"
                 >Having trouble signing in or account locked?</span
               >
             </button>
           </h3>
-          <p class="pe-paragraph text">
+          <p id="panel-btn-2-desc" class="pe-paragraph text">
             You have a Pearson username and password if you've ever used a
             Pearson product
           </p>
-          <h3 class="pe-paragraph text">
+          <h3 class="pe-paragraph text" aria-describedby="panel-btn-3-desc">
             <button class="pe-link--btn" data-show-panel="3">
               <span class="pe-label pe-bold">How do I enable cookies?</span>
             </button>
           </h3>
-          <p class="pe-paragraph text">
+          <p id="panel-btn-3-desc" class="pe-paragraph text">
             Cookies are files from websites that store your browsing
             information, including
           </p>
-          <h3 class="pe-paragraph text">
+          <h3 class="pe-paragraph text" aria-describedby="panel-btn-4-desc">
             <button class="pe-link--btn" data-show-panel="4">
               <span class="pe-label pe-bold"
                 >What if I get a date or clock error?</span
               >
             </button>
           </h3>
-          <p class="pe-paragraph text">
+          <p id="panel-btn-4-desc" class="pe-paragraph text">
             If the date or clock for your computer or other device is set
             incorrectly for
           </p>
           <h3 class="pe-paragraph text">
             <button class="pe-link--btn" data-show-panel="5">
-              <span class="pe-label pe-bold"
-                >Having trouble or need support?</span
-              >
+              <span class="pe-label pe-bold">
+                Having trouble or need support?
+              </span>
             </button>
           </h3>
         </div>
       </div>
       <!-- second panel -->
-      <div class="panel closed animated" data-panel="2" aria-hipen="true">
+      <div class="panel closed animated" data-panel="2" aria-hidden="true">
         <div class="drawer-header">
           <button
             type="button"
@@ -110,7 +112,7 @@
             aria-label="back to questions"
           >
             <svg
-							class="pe-icon--chevron-back-18"
+              class="pe-icon--chevron-back-18"
               aria-hidden="true"
               focusable="false"
             >
@@ -127,7 +129,7 @@
             aria-label="close drawer"
           >
             <svg
-							class="pe-icon--remove-sm-24"
+              class="pe-icon--remove-sm-24"
               aria-hidden="true"
               focusable="false"
             >
@@ -195,7 +197,7 @@
         </div>
       </div>
       <!-- third panel -->
-      <div class="panel closed animated" data-panel="3" aria-hipen="true">
+      <div class="panel closed animated" data-panel="3" aria-hidden="true">
         <div class="drawer-header">
           <button
             type="button"
@@ -203,7 +205,7 @@
             aria-label="back to questions"
           >
             <svg
-							class="pe-icon--chevron-back-18"
+              class="pe-icon--chevron-back-18"
               aria-hidden="true"
               focusable="false"
             >
@@ -220,7 +222,7 @@
             aria-label="close drawer"
           >
             <svg
-							class="pe-icon--remove-sm-24"
+              class="pe-icon--remove-sm-24"
               aria-hidden="true"
               focusable="false"
             >
@@ -275,7 +277,7 @@
         </div>
       </div>
       <!-- fourth panel -->
-      <div class="panel closed animated" data-panel="4" aria-hipen="true">
+      <div class="panel closed animated" data-panel="4" aria-hidden="true">
         <div class="drawer-header">
           <button
             type="button"
@@ -283,7 +285,7 @@
             aria-label="back to questions"
           >
             <svg
-							class="pe-icon--chevron-back-18"
+              class="pe-icon--chevron-back-18"
               aria-hidden="true"
               focusable="false"
             >
@@ -300,7 +302,7 @@
             aria-label="close drawer"
           >
             <svg
-							class="pe-icon--remove-sm-24"
+              class="pe-icon--remove-sm-24"
               aria-hidden="true"
               focusable="false"
             >
@@ -339,7 +341,7 @@
         </div>
       </div>
       <!-- fifth panel -->
-      <div class="panel closed animated" data-panel="5" aria-hipen="true">
+      <div class="panel closed animated" data-panel="5" aria-hidden="true">
         <div class="drawer-header">
           <button
             type="button"
@@ -364,7 +366,7 @@
             aria-label="close drawer"
           >
             <svg
-							class="pe-icon--remove-sm-24"
+              class="pe-icon--remove-sm-24"
               aria-hidden="true"
               focusable="false"
             >
