@@ -148,11 +148,13 @@
 
     if (el.hasAttribute('data-show-panel')) {
       const panelIdentifier = event.target.getAttribute('data-show-panel');
+      let activePanel = getActivePanel();
 
-      hidePanel(getActivePanel());
+      hidePanel(activePanel);
       setActivePanel(panelIdentifier);
-      showPanel(getActivePanel());
-      bindPanelClicks(getActivePanel());
+      activePanel = getActivePanel();
+      showPanel(activePanel);
+      bindPanelClicks(activePanel);
     } 
     if (el.classList.contains('close')) {
       closePanel(getActivePanel());
