@@ -134,7 +134,6 @@
   function focusTrap(panel) {
     const focusItems = panel.querySelectorAll('button, a, input, select');
     focusItems[0].focus();
-    console.log(focusItems);
     focusItems[focusItems.length - 1].addEventListener('blur', event => {
       if (event.sourceCapabilities) {
         focusItems[0].focus();
@@ -162,14 +161,16 @@
     });
   });
 
+  function bindKeyPress(e) {
+    if (e.which === ESCAPE_KEY) {
+      closePanel(getPanelElem());
+    }
+  }
+
   // opens the panel
   trigger.addEventListener('click', event => {
     showPanel(getPanelElem());
   });
 
-  doc.addEventListener('keyup', event => {
-    if (event.which === ESCAPE_KEY) {
-      closePanel(getPanelElem());
-    }
-  });
+  doc.addEventListener('keydown', bindKeyPress, true);
 })(window, document);
