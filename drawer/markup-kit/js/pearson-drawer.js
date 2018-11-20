@@ -4,7 +4,7 @@
     trigger = doc.getElementById('openDrawer'),
     panelOne = doc.querySelector('[data-panel="1"]'),
     drawer = doc.getElementById('drawer'),
-    panels = drawer.querySelectorAll('.panel'),
+    panels = drawer.querySelectorAll('[data-panel]'),
     questions = panelOne.querySelectorAll('input, button, select, a');
 
   const forEach = Array.prototype.forEach;
