@@ -11,7 +11,8 @@
   top:0;
 
   &[data-panel] {
-    right:-320px
+    right:-320px;
+    visibility: hidden;
   }
 }
 
