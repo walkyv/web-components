@@ -136,7 +136,7 @@
     showPanel(getActivePanel());
   }
 
-  function bindPanelClicks(event) {
+  function bindDrawerClicks(event) {
     const el = event.target;
     if (!el.hasAttribute('data-show-panel')) return;
 
@@ -183,7 +183,7 @@
 
   // opens the drawer
   trigger.addEventListener('click', openDrawer);
-  drawer.addEventListener('click', bindPanelClicks);
+  drawer.addEventListener('click', bindDrawerClicks);
 
   doc.addEventListener('focus', trapFocus, true);
   doc.addEventListener('click', bindExternalClicks, true);
