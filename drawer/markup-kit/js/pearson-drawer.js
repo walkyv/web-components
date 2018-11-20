@@ -155,6 +155,12 @@
     showPanel(getPanelElem());
   }
 
+  function bindExternalClicks(e) {
+    if (drawerOpen && !drawer.contains(e.target)) {
+      closePanel(getPanelElem());
+    }
+  }
+
   function bindKeyPress(e) {
     if (!drawerOpen) return;
 
@@ -178,6 +184,8 @@
 
   // opens the drawer
   trigger.addEventListener('click', openDrawer);
-  doc.body.addEventListener('keydown', bindKeyPress, true);
-  doc.body.addEventListener('focus', trapFocus, true);
+  
+  doc.addEventListener('focus', trapFocus, true);
+  doc.addEventListener('click', bindExternalClicks, true);
+  doc.addEventListener('keydown', bindKeyPress, true);
 })(window, document);
