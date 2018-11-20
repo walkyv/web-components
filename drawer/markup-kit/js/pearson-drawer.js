@@ -19,7 +19,7 @@
   const { filter, forEach } = Array.prototype;
 
   function getDeepActiveElement() {
-    let a = document.activeElement;
+    let a = doc.activeElement;
     while (a && a.shadowRoot && a.shadowRoot.activeElement) {
       a = a.shadowRoot.activeElement;
     }
@@ -112,10 +112,10 @@
     panel.style.right = '0';
     panel.style.display = 'flex';
     panel.setAttribute('aria-hidden', 'false');
-    focusTrap(panel);
     mainContent.setAttribute('aria-hidden', 'true');
     drawer.setAttribute('aria-hidden', 'false');
     drawerOpen = true;
+    setFocusToFirstChild(panel);
   }
 
   function closePanel(panel) {
@@ -132,20 +132,6 @@
     panel.style.right = '320px';
     panel.style.display = 'none';
     panel.setAttribute('aria-hidden', 'true');
-  }
-
-  // sets focus trap on the panels
-  function focusTrap(panel) {
-    const focusItems = panel.querySelectorAll('button, a, input, select');
-    focusItems[0].focus();
-    focusItems[focusItems.length - 1].addEventListener('blur', event => {
-      if (event.sourceCapabilities) {
-        focusItems[0].focus();
-      } else {
-        focusItems[0].focus();
-      }
-      event.stopImmediatePropagation();
-    });
   }
 
   // sets up the ui for first use
@@ -165,18 +151,33 @@
     });
   });
 
+  function openDrawer() {
+    showPanel(getPanelElem());
+  }
+
   function bindKeyPress(e) {
     if (!drawerOpen) return;
 
+    const panel = getPanelElem();
+
+    if (e.which === TAB_KEY) {
+      trapTabKey(panel, e);
+    }
+
     if (e.which === ESCAPE_KEY) {
-      closePanel(getPanelElem());
+      closePanel(panel);
     }
   }
 
-  // opens the panel
-  trigger.addEventListener('click', event => {
-    showPanel(getPanelElem());
-  });
+  function trapFocus() {
+    const panel = getPanelElem();
+    if (drawerOpen && !panel.contains(getDeepActiveElement())) {
+      setFocusToFirstChild(panel);
+    }
+  }
 
-  doc.addEventListener('keydown', bindKeyPress, true);
+  // opens the drawer
+  trigger.addEventListener('click', openDrawer);
+  doc.body.addEventListener('keydown', bindKeyPress, true);
+  doc.body.addEventListener('focus', trapFocus, true);
 })(window, document);
