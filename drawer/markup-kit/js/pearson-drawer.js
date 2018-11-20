@@ -1,13 +1,74 @@
 (function(w, doc) {
   'use strict';
+
+  const FOCUSABLE_ELEMENTS = `
+  a[href]:not([tabindex^="-"]):not([inert]),
+  area[href]:not([tabindex^="-"]):not([inert]),
+  input:not([disabled]):not([inert]),
+  select:not([disabled]):not([inert]),
+  textarea:not([disabled]):not([inert]),
+  button:not([disabled]):not([inert]),
+  iframe:not([tabindex^="-"]):not([inert]),
+  audio:not([tabindex^="-"]):not([inert]),
+  video:not([tabindex^="-"]):not([inert]),
+  [contenteditable]:not([tabindex^="-"]):not([inert]),
+  [tabindex]:not([tabindex^="-"]):not([inert])`,
+    TAB_KEY = 9,
+    ESCAPE_KEY = 27;
+
+  const { filter, forEach } = Array.prototype;
+
+  function getDeepActiveElement() {
+    let a = document.activeElement;
+    while (a && a.shadowRoot && a.shadowRoot.activeElement) {
+      a = a.shadowRoot.activeElement;
+    }
+    return a;
+  }
+
+  function getFocusableChildren(node) {
+    const focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+    return filter.call(focusableChildren, function(child) {
+      return !!(
+        child.offsetWidth ||
+        child.offsetHeight ||
+        child.getClientRects().length
+      );
+    });
+  }
+
+  function setFocusToFirstChild(node) {
+    const focusableChildren = getFocusableChildren(node),
+      focusableChild =
+        node.querySelector('[autofocus]') || focusableChildren[0];
+
+    if (focusableChild) {
+      focusableChild.focus();
+    }
+  }
+
+  function trapTabKey(node, e) {
+    const focusableChildren = getFocusableChildren(node),
+      focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
+      lastFocusableIdx = focusableChildren.length - 1;
+
+    if (e.shiftKey && focusedItemIdx === 0) {
+      focusableChildren[lastFocusableIdx].focus();
+      e.preventDefault();
+    }
+
+    if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
+      focusableChildren[0].focus();
+      e.preventDefault();
+    }
+  }
+
   const mainContent = doc.getElementById('main'),
     trigger = doc.getElementById('openDrawer'),
     panelOne = doc.querySelector('[data-panel="1"]'),
     drawer = doc.getElementById('drawer'),
     panels = drawer.querySelectorAll('[data-panel]'),
     questions = panelOne.querySelectorAll('input, button, select, a');
-
-  const forEach = Array.prototype.forEach;
 
   // returns current panel displayed in ui
   function getPanelIdentifier() {
