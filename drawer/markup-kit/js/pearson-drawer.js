@@ -71,14 +71,9 @@
 
   let drawerOpen = false;
 
-  // returns current panel displayed in ui
-  function getPanelIdentifier() {
-    return drawer.getAttribute('data-current-panel');
-  }
-
   // returns a new panel to displayed in ui
-  function getPanelElem() {
-    let panelToShow = getPanelIdentifier();
+  function getActivePanel() {
+    let panelToShow = drawer.getAttribute('data-current-panel');
     let show = '';
     forEach.call(panels, panel => {
       const dataPanel = panel.getAttribute('data-panel');
@@ -95,12 +90,12 @@
     forEach.call(buttons, button => {
       button.addEventListener('click', event => {
         if (event.currentTarget.classList.contains('back')) {
-          closePanel(getPanelElem());
+          closePanel(getActivePanel());
           showPanel(panelOne);
           drawer.setAttribute('data-current-panel', '1');
         } else {
           closePanel(panelOne);
-          closePanel(getPanelElem());
+          closePanel(getActivePanel());
         }
       });
     });
@@ -134,7 +129,7 @@
   }
 
   function openDrawer() {
-    showPanel(getPanelElem());
+    showPanel(getActivePanel());
   }
 
   function bindPanelClicks(event) {
@@ -146,25 +141,25 @@
         'data-show-panel'
       );
       
-      hidePanel(getPanelElem());
+      hidePanel(getActivePanel());
       drawer.setAttribute('data-current-panel', panelIdentifier);
-      showPanel(getPanelElem());
-      clickHandlers(getPanelElem());
+      showPanel(getActivePanel());
+      clickHandlers(getActivePanel());
     } else {
-      closePanel(getPanelElem());
+      closePanel(getActivePanel());
     }
   }
 
   function bindExternalClicks(e) {
     if (drawerOpen && !drawer.contains(e.target)) {
-      closePanel(getPanelElem());
+      closePanel(getActivePanel());
     }
   }
 
   function bindKeyPress(e) {
     if (!drawerOpen) return;
 
-    const panel = getPanelElem();
+    const panel = getActivePanel();
 
     if (e.which === TAB_KEY) {
       trapTabKey(panel, e);
@@ -176,7 +171,7 @@
   }
 
   function trapFocus() {
-    const panel = getPanelElem();
+    const panel = getActivePanel();
     if (drawerOpen && !panel.contains(getDeepActiveElement())) {
       setFocusToFirstChild(panel);
     }
