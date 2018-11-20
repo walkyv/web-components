@@ -1,11 +1,13 @@
-(function() {
+(function(w, doc) {
   'use strict';
-  const trigger = document.getElementById('openDrawer'),
-    drawer = document.getElementById('drawer'),
+  const mainContent = doc.getElementById('main'),
+    trigger = doc.getElementById('openDrawer'),
+    panelOne = doc.querySelector('[data-panel="1"]'),
+    drawer = doc.getElementById('drawer'),
     panels = drawer.querySelectorAll('.panel'),
-    panelOne = document.querySelector('[data-panel="1"]'),
-    questions = panelOne.querySelectorAll('input, button, select, a'),
-    mainContent = document.getElementById('main');
+    questions = panelOne.querySelectorAll('input, button, select, a');
+
+  const forEach = Array.prototype.forEach;
 
   // returns current panel displayed in ui
   function getPanelIdentifier() {
@@ -16,7 +18,7 @@
   function getPanelElem() {
     let panelToShow = getPanelIdentifier();
     let show = '';
-    Array.prototype.forEach.call(panels, panel => {
+    forEach.call(panels, panel => {
       const dataPanel = panel.getAttribute('data-panel');
       if (panelToShow === dataPanel) {
         show = panel;
@@ -28,7 +30,7 @@
   // attaches event handlers to pre defined questions that open panels
   function clickHandlers(element) {
     const buttons = element.querySelectorAll('button');
-    Array.prototype.forEach.call(buttons, button => {
+    forEach.call(buttons, button => {
       button.addEventListener('click', event => {
         if (event.currentTarget.classList.contains('back')) {
           closePanel(getPanelElem());
@@ -83,7 +85,7 @@
   }
 
   // sets up the ui for first use
-  Array.prototype.forEach.call(questions, question => {
+  forEach.call(questions, question => {
     question.addEventListener('click', event => {
       if (!question.classList.contains('close')) {
         const showPanelNumber = event.currentTarget.getAttribute(
@@ -104,9 +106,9 @@
     showPanel(getPanelElem());
   });
 
-  document.addEventListener('keyup', event => {
+  doc.addEventListener('keyup', event => {
     if (event.code === 'Escape') {
       closePanel(getPanelElem());
     }
   });
-})();
+})(window, document);
