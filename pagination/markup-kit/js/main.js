@@ -2,13 +2,15 @@
   'use strict';
   // handle some button clicks on the pagination
   const init = function(){
-    // set up eventing
-    setupEvents.bind(this)()
-
     // set up the current page and type
     this.activePage = parseInt(this.getAttribute("data-active-page"))
     this.type = this.getAttribute("data-type")
     this.totalPages = parseInt(this.getAttribute("data-pages-total"))
+    this.label = this.getAttribute("data-label")
+    this.plural = this.getAttribute("data-label-plural")
+
+    // set up eventing
+    setupEvents.bind(this)()
 
     // set up the data model for non-compact
     if(this.type !== "compact"){
@@ -77,6 +79,10 @@
     const prevBtn = this.querySelector("button:first-child"),
           nextBtn = this.querySelector("button:last-child")
 
+    // set up labels
+    prevBtn.setAttribute("aria-label", "Previous "+this.label)
+    nextBtn.setAttribute("aria-label", "Next "+this.label)
+
     prevBtn.addEventListener("click", e => {
       e.preventDefault()
       this.clicked = e.currentTarget
@@ -95,26 +101,30 @@
     if(this.type !== "compact"){
       // use the model to render the buttons
       // take off old buttons first and then re-insert all into the DOM
-      const oldButtons = this.querySelectorAll("button")
+      const oldButtons = this.querySelectorAll("button, a")
       // TODO: this seems like a memory leak... should remove old buttons better
       this.innerHTML = ""
       // insert first button
       this.appendChild(oldButtons[0])
       this.model.forEach((item,i) => {
         oldButtons[i+1].remove()
-        let newButton = document.createElement("button")
-        newButton.setAttribute("type", "button")
+        let newButton = document.createElement("a")
+        newButton.setAttribute("href", "#")
         if(item.ellipsis){
           newButton.innerHTML = '<svg focusable="false" role="img"><use xlink:href="#ellipsis-18"></use></svg>'
           newButton.setAttribute("disabled", "disabled")
+          newButton.setAttribute("aria-label", "Additional "+this.plural)
         } else {
           let span = document.createElement("span")
           span.textContent = item.page
           newButton.appendChild(span)
           if(item.active){
-            newButton.setAttribute("aria-current", "page")
+            newButton.setAttribute("aria-current", this.label)
           }
+          newButton.setAttribute("aria-label", this.label+" "+item.page)
           newButton.addEventListener("click", e => {
+            console.log("clicked")
+            e.preventDefault()
             this.activePage = parseInt(e.currentTarget.querySelector("span").textContent)
             this.clicked = e.currentTarget
             this.changeButton = true
@@ -135,7 +145,7 @@
     if(this.clicked){
       var Button = this.clicked
       if(this.changeButton){
-        const buttons = this.querySelectorAll("button")
+        const buttons = this.querySelectorAll("button, a")
         buttons.forEach((button, i) => {
           if(button.querySelector("span") && this.activePage == button.querySelector("span").textContent){
             Button = button

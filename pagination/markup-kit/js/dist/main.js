@@ -5,13 +5,15 @@
   // handle some button clicks on the pagination
 
   var init = function init() {
-    // set up eventing
-    setupEvents.bind(this)();
-
     // set up the current page and type
     this.activePage = parseInt(this.getAttribute("data-active-page"));
     this.type = this.getAttribute("data-type");
     this.totalPages = parseInt(this.getAttribute("data-pages-total"));
+    this.label = this.getAttribute("data-label");
+    this.plural = this.getAttribute("data-label-plural");
+
+    // set up eventing
+    setupEvents.bind(this)();
 
     // set up the data model for non-compact
     if (this.type !== "compact") {
@@ -82,6 +84,10 @@
     var prevBtn = this.querySelector("button:first-child"),
         nextBtn = this.querySelector("button:last-child");
 
+    // set up labels
+    prevBtn.setAttribute("aria-label", "Previous " + this.label);
+    nextBtn.setAttribute("aria-label", "Next " + this.label);
+
     prevBtn.addEventListener("click", function (e) {
       e.preventDefault();
       _this.clicked = e.currentTarget;
@@ -102,26 +108,30 @@
     if (this.type !== "compact") {
       // use the model to render the buttons
       // take off old buttons first and then re-insert all into the DOM
-      var oldButtons = this.querySelectorAll("button");
+      var oldButtons = this.querySelectorAll("button, a");
       // TODO: this seems like a memory leak... should remove old buttons better
       this.innerHTML = "";
       // insert first button
       this.appendChild(oldButtons[0]);
       this.model.forEach(function (item, i) {
         oldButtons[i + 1].remove();
-        var newButton = document.createElement("button");
-        newButton.setAttribute("type", "button");
+        var newButton = document.createElement("a");
+        newButton.setAttribute("href", "#");
         if (item.ellipsis) {
           newButton.innerHTML = '<svg focusable="false" role="img"><use xlink:href="#ellipsis-18"></use></svg>';
           newButton.setAttribute("disabled", "disabled");
+          newButton.setAttribute("aria-label", "Additional " + _this2.plural);
         } else {
           var span = document.createElement("span");
           span.textContent = item.page;
           newButton.appendChild(span);
           if (item.active) {
-            newButton.setAttribute("aria-current", "page");
+            newButton.setAttribute("aria-current", _this2.label);
           }
+          newButton.setAttribute("aria-label", _this2.label + " " + item.page);
           newButton.addEventListener("click", function (e) {
+            console.log("clicked");
+            e.preventDefault();
             _this2.activePage = parseInt(e.currentTarget.querySelector("span").textContent);
             _this2.clicked = e.currentTarget;
             _this2.changeButton = true;
@@ -142,7 +152,7 @@
     if (this.clicked) {
       var Button = this.clicked;
       if (this.changeButton) {
-        var buttons = this.querySelectorAll("button");
+        var buttons = this.querySelectorAll("button, a");
         buttons.forEach(function (button, i) {
           if (button.querySelector("span") && _this2.activePage == button.querySelector("span").textContent) {
             Button = button;

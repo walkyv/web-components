@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html class="">
 <head>
-	<title>Web Component Markup Kit</title>
+	<title>Pagination Markup Kit</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width" />
 	<link rel="stylesheet" href="css/style.css" media="all" />
 
 	<!-- Styles below are for markup-kit demo only -->
 	<style>
+		main {
+			padding: 50px;
+		}
 		section {
 			margin: 50px 0;
 		}
@@ -35,26 +38,26 @@
 	<h1>Pagination</h1>
 	<section>
 		<h2>Normal Pagination</h2>
-		<nav aria-label="pagination" class="pagination" data-pages-total="10" data-max-buttons="5" data-active-page="1">
-		  <button type="button" aria-label="previous" disabled>
+		<nav aria-label="pagination" class="pagination" data-pages-total="10" data-max-buttons="5" data-active-page="1" data-label="page" data-label-plural="pages">
+		  <button type="button" aria-label="Previous page" disabled>
 				<span class="pagination-prev">
 					<svg focusable="false" aria-hidden="true">
 						<use xlink:href="#chevron-back-sm-18"></use>
 					</svg>
 				</span>
 			</button>
-		  <button type="button" aria-current="page"><span>1</span></button>
-	    <button type="button"><span>2</span></button>
-	    <button type="button"><span>3</span></button>
-	    <button type="button"><span>4</span></button>
-	    <button type="button"><span>5</span></button>
-	    <button class="ellipsis" type="button" disabled="">
+		  <a href="#" aria-current="page"><span>1</span></a>
+	    <a href="#"><span>2</span></a>
+	    <a href="#"><span>3</span></a>
+	    <a href="#"><span>4</span></a>
+	    <a href="#"><span>5</span></a>
+	    <a href="#" class="ellipsis" disabled="">
 	      <svg focusable="false" aria-hidden="true">
 	        <use xlink:href="#ellipsis-18"></use>
 	      </svg>
-	    </button>
-	    <button type="button"><span>100</span></button>
-	    <button type="button" aria-label="next">
+	    </a>
+	    <a href="#"><span>100</span></a>
+	    <button type="button" aria-label="Next page">
 				<span class="pagination-next">
 					<svg focusable="false" aria-hidden="true">
 						<use xlink:href="#chevron-next-sm-18"></use>
@@ -65,7 +68,7 @@
 	</section>
 	<section>
 		<h2>Compact Pagination</h2>
-		<nav aria-label="pagination" class="pagination" data-pages-total="10" data-type="compact" data-active-page="1">
+		<nav aria-label="pagination" class="pagination" data-pages-total="10" data-type="compact" data-active-page="1" data-label="page" data-label-plural="pages">
 		  <button type="button" aria-label="previous" disabled>
 				<span class="pagination-prev">
 					<svg focusable="false" aria-hidden="true">

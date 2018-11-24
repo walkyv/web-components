@@ -16,14 +16,17 @@
 
 
 .pagination {
-  button {
-    min-width: 44px;
-    min-height: 44px;
+  button,
+  a {
     padding: 0;
     color: $pe-color-medium-gray;
     background-color: transparent;
     border: 0;
     position: relative;
+    display: inline-block;
+    min-width: 44px;
+    text-align: center;
+    text-decoration: none;
     &:not([disabled]) {
       cursor: pointer;
     }
@@ -53,6 +56,9 @@
       border-bottom: 2px solid $pe-color-charcoal;
       font-weight: bold;
     }
+  }
+  a {
+    padding: 14px 0;
   }
   button:first-child,
   button:last-child {
