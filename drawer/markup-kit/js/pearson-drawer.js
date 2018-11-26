@@ -88,52 +88,27 @@
     drawer.setAttribute('data-current-panel', panelIdentifier);
   }
 
-  // attaches event handlers to pre defined questions that open panels
-  function bindPanelClicks(element) {
-    const buttons = element.querySelectorAll('button');
-    forEach.call(buttons, button => {
-      button.addEventListener('click', event => {
-        if (event.currentTarget.classList.contains('back')) {
-          closePanel(getActivePanel());
-          showPanel(panelOne);
-          drawer.setAttribute('data-current-panel', '1');
-        } else {
-          closePanel(panelOne);
-          closePanel(getActivePanel());
-        }
-      });
-    });
-  }
-
   function hidePanel(panel) {
-    panel.style.right = '320px';
-    panel.style.visibility = 'hidden';
+    panel.classList.remove('active');
   }
 
-  // TODO: Only animate top-level panel
   function showPanel(panel) {
-    panel.style.right = '0';
-    panel.style.display = 'flex';
-    panel.style.visibility = 'visible';
-    panel.setAttribute('aria-hidden', 'false');
-    mainContent.setAttribute('aria-hidden', 'true');
-    drawer.setAttribute('aria-hidden', 'false');
-    drawerOpen = true;
+    panel.classList.add('active');
     setFocusToFirstChild(panel);
   }
 
-  function closePanel(panel) {
-    panel.style.right = '-320px';
-    panel.style.visibility = 'hidden';
-    panel.setAttribute('aria-hidden', 'true');
-    trigger.focus();
-    mainContent.setAttribute('aria-hidden', 'false');
-    drawer.setAttribute('aria-hidden', 'true');
-    drawerOpen = false;
+  function openDrawer() {
+    drawer.classList.add('open');
+    showPanel(getActivePanel());
+    mainContent.setAttribute('aria-hidden', 'true');
+    drawerOpen = true;
   }
 
-  function openDrawer() {
-    showPanel(getActivePanel());
+  function closeDrawer() {
+    drawerOpen = false;
+    mainContent.setAttribute('aria-hidden', 'false');
+    trigger.focus();
+    drawer.classList.remove('open');
   }
 
   function bindDrawerClicks(event) {
@@ -141,7 +116,11 @@
     // TODO: clean up this grammar :(
     // maybe consistent `data-action` attr
     if (
-      !(el.classList.contains('close') || el.hasAttribute('data-show-panel'))
+      !(
+        el.classList.contains('back') ||
+        el.classList.contains('close') ||
+        el.hasAttribute('data-show-panel')
+      )
     ) {
       return;
     }
@@ -154,16 +133,22 @@
       setActivePanel(panelIdentifier);
       activePanel = getActivePanel();
       showPanel(activePanel);
-      bindPanelClicks(activePanel);
-    } 
+    }
+
+    if (el.classList.contains('back')) {
+      hidePanel(getActivePanel());
+      showPanel(panelOne);
+      drawer.setAttribute('data-current-panel', '1');
+    }
+
     if (el.classList.contains('close')) {
-      closePanel(getActivePanel());
+      closeDrawer();
     }
   }
 
   function bindExternalClicks(e) {
     if (drawerOpen && !drawer.contains(e.target)) {
-      closePanel(getActivePanel());
+      closeDrawer();
     }
   }
 
@@ -177,7 +162,7 @@
     }
 
     if (e.which === ESCAPE_KEY) {
-      closePanel(panel);
+      closeDrawer(panel);
     }
   }
 
