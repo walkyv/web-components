@@ -21,23 +21,23 @@
 	<button id="openDrawer">Open Drawer</button>
 </main>
 <!-- drawer component loads after the main content to support aria-hidden -->
-<div id="drawer" class="drawer-container" aria-hidden="true" data-current-panel="1">
+<div id="drawer" class="drawer animated" aria-hidden="true" data-current-panel="1">
 
 	<!-- first panel -->
-	<div class="panel closed animated" data-panel="1" aria-hidden="true">
+	<div class="panel" data-panel="1">
 		<div class="drawer-header">
-			<h3 class="pe-title">Help Topics</h3>
-			<button type="button" class="pe-icon--btn close" aria-label="close drawer">
-				<svg class="pe-icon--remove-sm-24" aria-hidden="true" focusable="false">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>
-				</svg>
-			</button>
+			<h3 class="pe-title" tabindex="-1">Help Topics</h3>
 		</div>
 		<div class="divider"></div>
 		<div class="drawer-content">
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce imperdiet dui vitae fringilla tristique. Donec faucibus fringilla scelerisque. Sed maximus non nisl sit amet dapibus. Nullam enim lorem, pretium sollicitudin nisi vitae, pulvinar sodales sapien. Suspendisse dapibus ante id quam luctus hendrerit. Cras tempor sodales tempus. Pellentesque ligula augue, ornare efficitur ullamcorper non, fringilla at mauris. Sed sit amet mauris nec nisl tempus fringilla. Curabitur nec dui sit amet ipsum fermentum pellentesque sit amet eu metus. Aenean vel pharetra magna. Nunc convallis vestibulum eros sed tempus. Praesent nisi erat, sollicitudin nec est non, faucibus ullamcorper purus. Mauris eros lectus, rutrum nec orci et, gravida ullamcorper dui. Vestibulum eget ex feugiat, auctor neque sed, dictum urna. Ut a ipsum tristique, sagittis neque ac, dignissim lorem. Nulla congue tellus in tincidunt poop.</p>
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce imperdiet dui vitae fringilla tristique. Donec faucibus fringilla scelerisque. Sed maximus non nisl sit amet dapibus. Nullam enim lorem, pretium sollicitudin nisi vitae, pulvinar sodales sapien. Suspendisse dapibus ante id quam luctus hendrerit. Cras tempor sodales tempus. Pellentesque ligula augue, ornare efficitur ullamcorper non, fringilla at mauris. Sed sit amet mauris nec nisl tempus fringilla. Curabitur nec dui sit amet ipsum fermentum pellentesque sit amet eu metus. Aenean vel pharetra magna. Nunc convallis vestibulum eros sed tempus. Praesent nisi erat, sollicitudin nec est non, faucibus ullamcorper purus. Mauris eros lectus, rutrum nec orci et, gravida ullamcorper dui. Vestibulum eget ex feugiat, auctor neque sed, dictum urna. Ut a ipsum tristique, sagittis neque ac, dignissim lorem. Nulla congue tellus in tincidunt poop.</p>
 		</div>
+		<button type="button" class="pe-icon--btn close" aria-label="close drawer">
+			<svg class="pe-icon--remove-sm-24" aria-hidden="true" focusable="false">
+				<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#remove-sm-24"></use>
+			</svg>
+		</button>
 	</div>
 </div>
 <script src="dist/js/pearson-drawer.js"></script>
