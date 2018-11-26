@@ -36,7 +36,7 @@
    */
   function getFocusableChildren(node) {
     const focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
-    return focusableChildren.filter(function(child) {
+    return Array.prototype.filter.call(focusableChildren, function(child) {
       return !!(
         child.offsetWidth ||
         child.offsetHeight ||
