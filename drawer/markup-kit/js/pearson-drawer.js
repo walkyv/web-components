@@ -112,19 +112,13 @@
 
   function bindDrawerClicks(event) {
     const el = event.target;
-    // TODO: clean up this grammar :(
-    // maybe consistent `data-action` attr
-    if (
-      !(
-        el.classList.contains('back') ||
-        el.classList.contains('close') ||
-        el.hasAttribute('data-show-panel')
-      )
-    ) {
+    if (!el.hasAttribute('data-action')) {
       return;
     }
 
-    if (el.hasAttribute('data-show-panel')) {
+    const action = el.getAttribute('data-action');
+
+    if (action === 'show') {
       const panelIdentifier = event.target.getAttribute('data-show-panel');
       let activePanel = getActivePanel();
 
@@ -134,13 +128,13 @@
       showPanel(activePanel);
     }
 
-    if (el.classList.contains('back')) {
+    if (action === 'back') {
       hidePanel(getActivePanel());
       showPanel(panelOne);
       drawer.setAttribute('data-current-panel', '1');
     }
 
-    if (el.classList.contains('close')) {
+    if (action === 'close') {
       closeDrawer();
     }
   }
