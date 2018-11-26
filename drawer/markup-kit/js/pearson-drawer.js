@@ -16,7 +16,7 @@
     TAB_KEY = 9,
     ESCAPE_KEY = 27;
 
-  const { filter, forEach } = Array.prototype;
+  const  filter = Array.prototype.filter;
 
   function getDeepActiveElement() {
     let a = doc.activeElement;
@@ -90,7 +90,9 @@
   }
 
   function openDrawer() {
+    drawer.classList.remove('slideOutRight');
     drawer.classList.add('open');
+    drawer.classList.add('slideInRight');
     showPanel(getActivePanel());
     mainContent.setAttribute('aria-hidden', 'true');
     drawerOpen = true;
@@ -100,7 +102,11 @@
     drawerOpen = false;
     mainContent.setAttribute('aria-hidden', 'false');
     trigger.focus();
-    drawer.classList.remove('open');
+    drawer.classList.remove('slideInRight');
+    drawer.classList.add('slideOutRight');
+    setTimeout(() => {
+      drawer.classList.remove('open');      
+    }, 700);
   }
 
   function bindDrawerClicks(event) {
