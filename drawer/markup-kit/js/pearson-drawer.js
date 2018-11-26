@@ -90,6 +90,7 @@
   }
 
   function openDrawer() {
+    drawer.removeAttribute('aria-hidden');
     drawer.classList.remove('slideOutRight');
     drawer.classList.add('open');
     drawer.classList.add('slideInRight');
@@ -100,12 +101,13 @@
 
   function closeDrawer() {
     drawerOpen = false;
-    mainContent.setAttribute('aria-hidden', 'false');
+    mainContent.removeAttribute('aria-hidden');
     trigger.focus();
     drawer.classList.remove('slideInRight');
     drawer.classList.add('slideOutRight');
     setTimeout(() => {
-      drawer.classList.remove('open');      
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true');
     }, 700);
   }
 
