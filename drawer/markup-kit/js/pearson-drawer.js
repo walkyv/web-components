@@ -66,22 +66,14 @@
   const mainContent = doc.getElementById('main'),
     trigger = doc.getElementById('openDrawer'),
     panelOne = doc.querySelector('[data-panel="1"]'),
-    drawer = doc.getElementById('drawer'),
-    panels = drawer.querySelectorAll('[data-panel]');
+    drawer = doc.getElementById('drawer');
 
   let drawerOpen = false;
 
   // returns a new panel to displayed in ui
   function getActivePanel() {
     let panelToShow = drawer.getAttribute('data-current-panel');
-    let show = '';
-    forEach.call(panels, panel => {
-      const dataPanel = panel.getAttribute('data-panel');
-      if (panelToShow === dataPanel) {
-        show = panel;
-      }
-    });
-    return show;
+    return doc.querySelector(`[data-panel="${panelToShow}"]`);
   }
 
   function setActivePanel(panelIdentifier) {
