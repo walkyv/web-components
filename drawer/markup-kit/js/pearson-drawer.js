@@ -12,7 +12,7 @@
   audio:not([tabindex^="-"]):not([inert]),
   video:not([tabindex^="-"]):not([inert]),
   [contenteditable]:not([tabindex^="-"]):not([inert]),
-  [tabindex]:not([tabindex^="-"]):not([inert])`,
+  [tabindex]:not([inert])`,
     TAB_KEY = 9,
     ESCAPE_KEY = 27;
 
@@ -41,7 +41,6 @@
     const focusableChildren = getFocusableChildren(node),
       focusableChild =
         node.querySelector('[autofocus]') || focusableChildren[0];
-
     if (focusableChild) {
       focusableChild.focus();
     }
