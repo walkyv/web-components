@@ -183,10 +183,10 @@
   }
 
   // opens the drawer
-  trigger.addeListener('click', openDrawer);
-  drawer.addeListener('click', bindDrawerClicks);
+  trigger.addEventListener('click', openDrawer);
+  drawer.addEventListener('click', bindDrawerClicks);
 
-  doc.addeListener('focus', trapFocus, true);
-  doc.addeListener('click', bindExternalClicks, true);
-  doc.addeListener('keydown', bindKeyPress, true);
+  doc.addEventListener('focus', trapFocus, true);
+  doc.addEventListener('click', bindExternalClicks, true);
+  doc.addEventListener('keydown', bindKeyPress, true);
 })(window, document);
