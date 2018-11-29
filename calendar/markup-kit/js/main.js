@@ -6,8 +6,6 @@
         const grid = calendar.querySelector(".pe-cal-dates"),
             dates = calendar.querySelectorAll(".date-selector:not(:disabled)");
 
-        console.log(dates);
-
         function unfocusAll() {
             Array.prototype.forEach.call(dates, function(date) {
                 date.setAttribute("tabindex","-1");
@@ -64,7 +62,6 @@
 
             if (which === 39) {
                 //ArrowRight
-                //event.stopPropagation();
                 event.preventDefault();
                 focusDate( dates[focusedItem + 1]);
             }
@@ -88,7 +85,6 @@
 
         dates.forEach(date => {
             date.addEventListener("click", event => {
-                //focusDate(event.currentTarget)
                 selectDate(event.currentTarget);
             })
         })
