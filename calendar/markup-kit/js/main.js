@@ -3,8 +3,8 @@
     const calendars = document.querySelectorAll(".pe-calendar");
 
     calendars.forEach(calendar => {
-        const grid = calendar.querySelector("[role=grid]"),
-            dates = calendar.querySelectorAll("[role=gridcell]:not(:disabled)");
+        const grid = calendar.querySelector(".pe-cal-dates"),
+            dates = calendar.querySelectorAll(".date-selector:not(:disabled)");
 
         console.log(dates);
 
@@ -15,22 +15,38 @@
         }
 
         function selectDate(date) {
+            focusDate(date);
+            Array.prototype.forEach.call(dates, function(others) {
+                others.setAttribute("aria-pressed","false");
+
+                if ( others.classList.contains("pe-cal-selected") ) {
+                    others.classList.remove("pe-cal-selected");
+
+
+
+                    var oldLabel = others.getAttribute("aria-label");
+                    console.log(oldLabel);
+
+                    var newLabel = oldLabel.replace(" (Selected)", "");
+                    others.setAttribute("aria-label", newLabel)
+                }
+            });
+            date.classList.add("pe-cal-selected");
+            date.setAttribute("aria-pressed","true");
+
+            var currentLabel = date.getAttribute("aria-label");
+            date.setAttribute("aria-label", currentLabel + " (Selected)");
+
+        }
+
+        function focusDate(date) {
             unfocusAll();
             grid.setAttribute("aria-activedescendant", date.id);
             date.setAttribute("tabindex","0");
             date.focus();
-
-            Array.prototype.forEach.call(dates, function(others) {
-                others.removeAttribute("aria-selected");
-
-                if ( others.querySelector(".pe-cal-cell-square").classList.contains("pe-cal-selected") ) {
-                    others.querySelector(".pe-cal-cell-square").classList.remove("pe-cal-selected");
-                }
-            });
-            date.querySelector(".pe-cal-cell-square").classList.add("pe-cal-selected");
-            date.setAttribute("aria-selected","true");
-
         }
+
+
         //onload, make sure all dates are set to tabindex -1
         unfocusAll();
         //set focus to already selected date (if available)
@@ -44,39 +60,35 @@
             //get position of active descendant in array
             var focusedItem = [].indexOf.call(dates,document.getElementById(activeDescendant));
 
-            switch(event.key) {
-                case "ArrowRight":
-                    selectDate( dates[focusedItem + 1]);
-                    break;
+            var which = event.which;
 
-                case "ArrowLeft":
-                    selectDate(dates[focusedItem - 1])
-                    break;
-                case "ArrowDown":
-                    selectDate(dates[focusedItem + 7]);
-                    break;
-                case "ArrowUp":
-                    selectDate( dates[focusedItem - 7]);
-                    break;
-                case "PageUp":
-                    //previous month
-                    break;
-                case "PageDown":
-                    //next month
-                    break;
-                case "Home":
-                    //beginning of month
-                    selectDate(dates[0]);
-                    break;
-                case "End":
-                    //end of month
-                    selectDate(dates[dates.length - 1])
-                    break;
+            if (which === 39) {
+                //ArrowRight
+                //event.stopPropagation();
+                event.preventDefault();
+                focusDate( dates[focusedItem + 1]);
             }
+            else if (which === 37) {
+                //ArrowLeft
+                event.preventDefault();
+                focusDate(dates[focusedItem - 1])
+            }
+            else if (which === 40) {
+                //ArrowDown
+                event.preventDefault();
+                focusDate(dates[focusedItem + 7]);
+            }
+            else if (which === 38) {
+                //ArrowUp
+                event.preventDefault();
+                focusDate( dates[focusedItem - 7]);
+            }
+
         })
 
         dates.forEach(date => {
             date.addEventListener("click", event => {
+                //focusDate(event.currentTarget)
                 selectDate(event.currentTarget);
             })
         })
