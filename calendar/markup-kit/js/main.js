@@ -80,6 +80,16 @@
                 event.preventDefault();
                 focusDate( dates[focusedItem - 7]);
             }
+            else if (which === 36) {
+                //Home
+                event.preventDefault();
+                focusDate( dates[0]);
+            }
+            else if (which === 35) {
+                //End
+                event.preventDefault();
+                focusDate( dates[dates.length - 1]);
+            }
 
         })
 

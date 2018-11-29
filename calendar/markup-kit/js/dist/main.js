@@ -7,8 +7,6 @@
         var grid = calendar.querySelector(".pe-cal-dates"),
             dates = calendar.querySelectorAll(".date-selector:not(:disabled)");
 
-        console.log(dates);
-
         function unfocusAll() {
             Array.prototype.forEach.call(dates, function (date) {
                 date.setAttribute("tabindex", "-1");
@@ -61,7 +59,6 @@
 
             if (which === 39) {
                 //ArrowRight
-                //event.stopPropagation();
                 event.preventDefault();
                 focusDate(dates[focusedItem + 1]);
             } else if (which === 37) {
@@ -76,12 +73,19 @@
                 //ArrowUp
                 event.preventDefault();
                 focusDate(dates[focusedItem - 7]);
+            } else if (which === 36) {
+                //Home
+                event.preventDefault();
+                focusDate(dates[0]);
+            } else if (which === 35) {
+                //End
+                event.preventDefault();
+                focusDate(dates[dates.length - 1]);
             }
         });
 
         dates.forEach(function (date) {
             date.addEventListener("click", function (event) {
-                //focusDate(event.currentTarget)
                 selectDate(event.currentTarget);
             });
         });
