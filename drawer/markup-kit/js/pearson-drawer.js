@@ -67,14 +67,15 @@
       focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
       lastFocusableIdx = focusableChildren.length - 1;
 
+
     if (e.shiftKey && focusedItemIdx === 0) {
       focusableChildren[lastFocusableIdx].focus();
-      e.preDefault();
+      e.preventDefault();
     }
 
     if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
       focusableChildren[0].focus();
-      e.preDefault();
+      e.preventDefault();
     }
   }
 
