@@ -1,8 +1,8 @@
 (function(w, doc) {
   'use strict';
 
-  // A selector for targeting all elements that could receive 
-  // browser focus. 
+  // A selector for targeting all elements that could receive
+  // browser focus.
   // @see getFocusableChildren
   const FOCUSABLE_ELEMENTS = `
   a[href]:not([tabindex^="-"]):not([inert]),
@@ -31,7 +31,7 @@
   }
   /**
    * Get all focusable children of a DOM node, excluding children that are too small to be seen by the user.
-   * @param {HTMLElement} node 
+   * @param {HTMLElement} node
    * @returns HTMLElement
    */
   function getFocusableChildren(node) {
@@ -46,7 +46,7 @@
   }
   /**
    * Set the browser focus to the first child of a node OR to a child that has the `autotofocus` attribute.
-   * @param {HTMLElement} node 
+   * @param {HTMLElement} node
    */
   function setFocusToFirstChild(node) {
     const focusableChildren = getFocusableChildren(node),
@@ -67,7 +67,6 @@
       focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
       lastFocusableIdx = focusableChildren.length - 1;
 
-
     if (e.shiftKey && focusedItemIdx === 0) {
       focusableChildren[lastFocusableIdx].focus();
       e.preventDefault();
@@ -78,6 +77,10 @@
       e.preventDefault();
     }
   }
+
+  const reducedMotionQuery = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  );
 
   const mainContent = doc.getElementById('main'),
     trigger = doc.getElementById('openDrawer'),
@@ -123,7 +126,7 @@
     drawer.classList.add('slideOutRight');
     setTimeout(() => {
       drawer.classList.remove('open');
-    }, 700);
+    }, (reducedMotionQuery.matches ? 0 : 700));
   }
 
   function bindDrawerClicks(e) {
