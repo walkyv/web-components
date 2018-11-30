@@ -147,7 +147,7 @@
     if (action === 'back') {
       hidePanel(getActivePanel());
       showPanel(panelOne);
-      drawer.setAttribute('data-current-panel', '1');
+      setActivePanel(1);
     }
 
     if (action === 'close') {
