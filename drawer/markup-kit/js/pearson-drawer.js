@@ -123,7 +123,6 @@
     drawer.classList.add('slideOutRight');
     setTimeout(() => {
       drawer.classList.remove('open');
-      drawer.setAttribute('aria-hidden', 'true');
     }, 700);
   }
 
