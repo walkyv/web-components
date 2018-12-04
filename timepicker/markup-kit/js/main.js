@@ -57,7 +57,6 @@
                 }
 
             })
-            item.setAttribute("tabindex","0")
             item.setAttribute("aria-selected","true");
         }
 
