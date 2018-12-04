@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class="" lang="EN">
+	<head>
+		<title>Pearson Web Component</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width" />
+
+		<!-- loads web component polyfills -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
+		<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+		<link rel="import" href="footer.html" />
+		
+		<style>
+			.footer-dark-bg {
+				background-color: #005a70;
+				padding: 1em 0;
+        	}
+		</style>
+	</head>
+	<body>
+		<main id="main">
+			<h2>GLP style</h2>
+			<pearson-footer
+				type='glp'
+				url='https://www.pearson.com/us/terms-of-use.html, https://www.pearson.com/us/patent-notice.html, https://www.pearson.com/us/accessibility.html'
+				text='Terms of Use, Privacy Statement, Accessibility'
+			>
+			</pearson-footer>
+			<h2>Default style</h2>
+			<pearson-footer
+				url='https://www.pearson.com/us/terms-of-use.html, https://www.pearson.com/us/patent-notice.html, https://www.pearson.com/us/accessibility.html'
+				text='Terms of Use, Privacy Statement, Accessibility'
+			>
+			</pearson-footer>
+			<h2>Light text on dark background</h2>
+			<div class="footer-dark-bg">
+				<pearson-footer
+					type='lightText'
+					url='https://www.pearson.com/us/terms-of-use.html,https://www.pearson.com/us/patent-notice.html,https://www.pearson.com/us/accessibility.html'
+				text='Terms of Use,Privacy Statement,Accessibility'
+				>
+				</pearson-footer>
+
+			</div>
+			<h2>With branding</h2>
+			<pearson-footer
+				type='logo'
+				url='https://www.pearson.com/us/terms-of-use.html, https://www.pearson.com/us/patent-notice.html, https://www.pearson.com/us/accessibility.html'
+				text='Terms of Use, Privacy Statement, Accessibility'
+			>
+			</pearson-footer>
+		</main>
+	</body>
+</html>
