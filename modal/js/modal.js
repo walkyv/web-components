@@ -201,7 +201,7 @@
       });
 
       // sets the positioning for modals that are programmatically created and have scrolling content
-      this.setPosition();
+
 
       this.shadowRoot.appendChild(clone);
 
@@ -230,6 +230,8 @@
 
     openModal(e) {
       // unhide it on open, to prevent FOUC
+
+      this.setPosition();
       this.style.display = 'block';
 
       const thisButton = e.currentTarget,

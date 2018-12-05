@@ -174,7 +174,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
 
         // sets the positioning for modals that are programmatically created and have scrolling content
-        this.setPosition();
+
 
         this.shadowRoot.appendChild(clone);
 
@@ -193,6 +193,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var _this3 = this;
 
         // unhide it on open, to prevent FOUC
+
+        this.setPosition();
         this.style.display = 'block';
 
         var thisButton = e.currentTarget,
