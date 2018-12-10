@@ -34,7 +34,7 @@
     <div class="pe-timepicker-main">
         <label class="pe-textLabelInput__label" for="someGiantId1">Select time (hh:mm am/pm)</label>
         <div class="pe-timepicker-container">
-            <input type="text" id="someGiantId1" class="pe-textInput--basic" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-owns="itemlist" aria-autocomplete="list">
+            <input type="text" id="someGiantId1" class="pe-textInput--basic" role="combobox" aria-haspopup="true" aria-expanded="false" aria-controls="itemlist" aria-owns="itemlist" aria-autocomplete="none">
             <span class="pe-icon-wrapper">
                 <svg focusable="false" aria-hidden="true" class="pe-icon--clock-18">
                     <use xlink:href="#clock-18"></use>
@@ -42,7 +42,7 @@
             </span>
         </div>
         <div class="pe-dropdown-container">
-            <ul id="itemlist" class="pe-itemList animated" role="listbox" style="display:none;">
+            <ul id="itemlist" class="pe-itemList animated" role="listbox" style="display:none;" tabindex="0">
                 <li id="someGiantId1-list-item-0" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">6:00 AM</li>
                 <li id="someGiantId1-list-item-1" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">7:00 AM</li>
                 <li id="someGiantId1-list-item-2" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">8:00 AM</li>

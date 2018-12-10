@@ -15,7 +15,6 @@
         listItems.forEach(function (item) {
             availableTimes.push({ "id": item.id, "time": item.innerHTML });
         });
-        console.log(availableTimes);
 
         var icon = '<span class="pe-icon-wrapper"><svg focusable="false" aria-hidden="true" class="pe-icon--check-sm-18"><use xlink:href="#check-sm-18"></use></svg></span>';
 
@@ -29,7 +28,7 @@
             if (listbox.classList.contains("with-selection")) {
                 var selection = listbox.querySelector("[aria-selected=true]");
 
-                listbox.setAttribute("aria-activedescendant", selection.id);
+                input.setAttribute("aria-activedescendant", selection.id);
             }
         }
 
@@ -41,7 +40,7 @@
         }
 
         function moveFocus(item) {
-            listbox.setAttribute('aria-activedescendant', item.id);
+            input.setAttribute('aria-activedescendant', item.id);
             item.focus();
         }
 
@@ -55,7 +54,6 @@
                     }
                 }
             });
-            item.setAttribute("tabindex", "0");
             item.setAttribute("aria-selected", "true");
         }
 
@@ -72,7 +70,6 @@
             input.setAttribute("aria-invalid", "true");
             input.setAttribute("aria-describedby", "error1");
             input.parentNode.parentNode.insertBefore(errorMsg, input.parentNode.nextSibling);
-            closeList();
         }
 
         function clearError() {
@@ -119,7 +116,7 @@
 
                 listbox.classList.add("with-selection");
                 selectItem(listItems[index]);
-                listbox.setAttribute('aria-activedescendant', listItems[index].id);
+                input.setAttribute('aria-activedescendant', listItems[index].id);
                 var currentTime = listItems[index].innerHTML;
                 listItems[index].innerHTML = icon + currentTime;
 
@@ -128,12 +125,25 @@
                 } else {
                     listbox.scrollTo(0, 0);
                 }
+            } else {
+                input.removeAttribute("aria-activedescendant");
+                //deselect all
+                listItems.forEach(function (listitem) {
+                    listitem.setAttribute("aria-selected", "false");
+                    if (listbox.classList.contains("with-selection")) {
+                        var selectedItem = listbox.querySelector(".pe-icon-wrapper");
+                        if (selectedItem) {
+                            selectedItem.parentNode.removeChild(selectedItem);
+                        }
+                        listbox.classList.remove("with-selection");
+                    }
+                });
             }
 
             //enhancement to set closest value as active descendant (but not select)
         });
         input.addEventListener("blur", function (event) {
-            if (!input.value == "") {
+            if (!input.value == "" && !input.hasAttribute("aria-invalid")) {
                 validateTime();
                 //a little buggy trying to select a new time after error is thrown
             }
@@ -145,8 +155,8 @@
                     event.preventDefault();
                     openList();
                     //if selected item exists go to selected item
-                    if (listbox.hasAttribute("aria-activedescendant")) {
-                        var activeDescendant = listbox.getAttribute("aria-activedescendant");
+                    if (input.hasAttribute("aria-activedescendant")) {
+                        var activeDescendant = input.getAttribute("aria-activedescendant");
                         moveFocus(document.getElementById(activeDescendant));
                     } else {
                         //else go to first item
@@ -165,7 +175,7 @@
         });
 
         listbox.addEventListener("keydown", function (event) {
-            var activeDescendant = listbox.getAttribute("aria-activedescendant"),
+            var activeDescendant = input.getAttribute("aria-activedescendant"),
                 focusedItemIndex = [].indexOf.call(listItems, document.getElementById(activeDescendant));
 
             var firstFocusableElement = listItems[0],
@@ -199,6 +209,9 @@
                 case "Enter":
                 case "Space":
                     selectItem(document.activeElement);
+                    if (input.hasAttribute("aria-invalid")) {
+                        clearError();
+                    }
 
                     input.value = document.activeElement.innerText;
                     listbox.classList.add("with-selection");
@@ -207,6 +220,7 @@
                     document.activeElement.innerHTML = icon + currentTime;
 
                     closeList();
+
                     input.focus();
 
                     break;

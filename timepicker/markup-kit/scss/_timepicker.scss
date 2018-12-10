@@ -69,8 +69,24 @@
           left:12px;
         }
 
-        &:hover, &:focus {
+        &:hover {
           background-color: $pe-color-moonlight;
+        }
+        &:focus {
+          background-color: $pe-color-moonlight;
+          outline:0;
+
+          &:after {
+            border: 2px solid $pe-focus-color;
+            content: "";
+            position: absolute;
+            border-radius: 4px;
+            width: calc(100%);
+            height: calc(100% + 4px);
+            top: -2px;
+            left: 0;
+            z-index: 1;
+          }
         }
 
       }
