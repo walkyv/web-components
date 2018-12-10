@@ -1,16 +1,15 @@
-'use strict';
 (function() {
+    'use strict';
     const calendars = document.querySelectorAll(".pe-calendar");
-
+    function unfocusAll(calendar) {
+        const dates = calendar.querySelectorAll(".date-selector:not(:disabled)");
+        Array.prototype.forEach.call(dates, function(date) {
+            date.setAttribute("tabindex","-1");
+        });
+    }
     calendars.forEach(calendar => {
         const grid = calendar.querySelector(".pe-cal-dates"),
             dates = calendar.querySelectorAll(".date-selector:not(:disabled)");
-
-        function unfocusAll() {
-            Array.prototype.forEach.call(dates, function(date) {
-                date.setAttribute("tabindex","-1");
-            });
-        }
 
         function selectDate(date) {
             focusDate(date);
@@ -38,7 +37,7 @@
         }
 
         function focusDate(date) {
-            unfocusAll();
+            unfocusAll(calendar);
             grid.setAttribute("aria-activedescendant", date.id);
             date.setAttribute("tabindex","0");
             date.focus();
@@ -46,7 +45,7 @@
 
 
         //onload, make sure all dates are set to tabindex -1
-        unfocusAll();
+        unfocusAll(calendar);
         //set focus to already selected date (if available)
         var activeDescendant = grid.getAttribute("aria-activedescendant");
         if (activeDescendant) {
