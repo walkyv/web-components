@@ -17,6 +17,10 @@
 @import 'popper';
 
 // FOR DEMO ONLY - DO NOT BRING INTO WEB COMPONENT
+ul li {
+  list-style-type: none;
+  margin:1em;
+}
 #main {
   display:flex;
   align-items: center;
@@ -24,7 +28,7 @@
   min-height:100vh;
 }
 .target {
-  width:25%;
+  width:45%;
   margin:1em;
   padding:1em;
   border:1px solid;
@@ -48,6 +52,19 @@
   border-radius: 2px;
   width: 280px;
   box-shadow: 0 3px 7px 0 rgba(0,0,0,.25);
+  &.informational {
+    .content {
+      background-color: #ffed9a
+    }
+  }
+  &.generic {
+    .content {
+      background-color: white
+    }
+    .coach-link {
+      color:#047A9C;
+    }
+  }
   &.bottom-center {
     &:after {
       border-bottom: 8px solid #daf0ed;

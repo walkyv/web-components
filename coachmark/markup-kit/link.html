@@ -22,22 +22,25 @@
       </symbol>
     </svg>
     <main id="main">
-      <ul>
-        <li><a href="./bottom.html">Bottom</a></li>
-        <li><a href="./bottom-end.html">Bottom End</a></li>
-        <li><a href="./bottom-start.html">Bottom Start</a></li>
-        <li><a href="./generic.html">Generic</a></li>
-        <li><a href="./informational.html">Informational</a></li>
-        <li><a href="./left.html">Left</a></li>
-        <li><a href="./left-end.html">Left End</a></li>
-        <li><a href="./left-start.html">Left Start</a></li>
-        <li><a href="./right.html">Right</a></li>
-        <li><a href="./right-end.html">Right End</a></li>
-        <li><a href="./right-start.html">Right Start</a></li>
-        <li><a href="./top.html">Top</a></li>
-        <li><a href="./top-end.html">Top End</a></li>
-        <li><a href="./top-start.html">Top Start</a></li>
-      </ul>
+    <div id="reference" class="target">
+      <button id="openBottom">Default Coach Mark</button>
+    </div>
     </main>
+    <div role="dialog" aria-labelledby="coachmark-title" aria-describedby="coachmark-body" class="coachmark-container popper animated animateIn hidden">
+      <div class="coachmark">
+        <div class="content">
+          <div class="title-container">
+            <div id="coachmark-title" class="pe-label pe-label--bold">Ready to invite students?</div>
+          </div>
+          <p id="coachmark-body" class="pe-label">
+            Open the course menu to access invite instructions.
+          </p>
+          <button class="coach-link" href="#" aria-label="Close top coach mark">Got it</button>
+        </div>
+      </div>
+      <div class="popper__arrow" x-arrow></div>
+    </div>
+    <script src="https://unpkg.com/popper.js@1.14.6/dist/umd/popper.min.js"></script>
+  <script src="./js/pearson-coachmark.js"></script>
   </body>
 </html>

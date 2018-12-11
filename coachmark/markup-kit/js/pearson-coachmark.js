@@ -1,27 +1,70 @@
 (function(w, doc) {
   'use strict';
 
-  const openBtn = doc.querySelector('#trigger'),
+  const triggers = doc.querySelectorAll
+    (`
+      #openBottom,
+      #openTop, 
+      #openTopStart, 
+      #openTopEnd,
+      #openBottomStart,
+      #openBottomEnd,
+      #openLeft,
+      #openLeftEnd,
+      #openLeftStart,
+      #openRight,
+      #openRightEnd,
+      #openRightStart
+      `),
     coachMark = doc.querySelector('.coachmark-container'),
     closeBtn = coachMark.querySelector('.dismiss');
 
-  openBtn.addEventListener('click', (event) => {
+  function createPopper (placement) {
+    const reference = document.querySelector('#reference');
+    const popperInstance = new Popper(reference, coachMark, {
+      placement: placement,
+      modifiers: {
+        arrow: { enabled: true },
+      }
+    });
     coachMark.classList.remove('hidden');
     closeBtn.focus();
-    if (event.target.id === 'trigger') {
-      const reference = doc.querySelector('#bottom');
-      const popperInstance = new Popper(reference, coachMark, {
-        placement: 'bottom',
-        modifiers: {
-          arrow: { enabled: true },
-        }
-      });
-    }
+    return popperInstance
+  }
+
+
+  triggers.forEach(trigger => {
+    trigger.addEventListener('click', event => {
+      if (event.target.id === 'openBottom') {
+        createPopper('bottom');
+      } else if (event.target.id === 'openTop') {
+        createPopper('top');
+      } else if (event.target.id === 'openTopStart') {
+        createPopper('top-start');
+      } else if (event.target.id === 'openTopEnd') {
+        createPopper('top-end');
+      } else if (event.target.id === 'openBottomStart') {
+        createPopper('bottom-start');
+      } else if (event.target.id === 'openBottomEnd') {
+        createPopper('bottom-end');
+      } else if (event.target.id === 'openLeft') {
+        createPopper('left');
+      } else if (event.target.id === 'openLeftStart') {
+        createPopper('left-start');
+      } else if (event.target.id === 'openLeftEnd') {
+        createPopper('left-end');
+      } else if (event.target.id === 'openRight') {
+        createPopper('right');
+      } else if (event.target.id === 'openRightStart') {
+        createPopper('right-start');
+      } else if (event.target.id === 'openRightEnd') {
+        createPopper('right-end');
+      }
+    })
   });
 
   closeBtn.addEventListener('click', () => {
     coachMark.classList.add('hidden');
-    openBtn.focus();
   });
 
   // Your code ends here!

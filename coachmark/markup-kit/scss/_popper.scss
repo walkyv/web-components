@@ -65,11 +65,17 @@ p.bold {
     margin: 5px;
 }
 
-.tooltip .tooltip-arrow,
-.popper .popper__arrow {
+.tooltip .tooltip-arrow, .popper .popper__arrow {
     border-color: #daf0ed;
-
 }
+.popper .popper__arrow.informational {
+    border-color: #ffed9a;
+}
+
+.popper .popper__arrow.generic{
+    border-color: white;
+}
+
 .style5 .tooltip .tooltip-arrow {
     border-color: #1E252B;
 }
@@ -79,11 +85,11 @@ p.bold {
 }
 .popper[x-placement^="top"] .popper__arrow,
 .tooltip[x-placement^="top"] .tooltip-arrow {
-    border-width: 10px 10px 0 10px;
+    border-width: 13px 13px 0 13px;
     border-left-color: transparent;
     border-right-color: transparent;
     border-bottom-color: transparent;
-    bottom: -10px;
+    bottom: -13px;
     left: calc(50% - 5px);
     margin-top: 0;
     margin-bottom: 0;
@@ -111,14 +117,15 @@ p.bold {
 }
 .popper[x-placement^="right"] .popper__arrow,
 .tooltip[x-placement^="right"] .tooltip-arrow {
-    border-width: 10px 10px 10px 0;
+    border-width: 13px 13px 13px 0;
     border-left-color: transparent;
     border-top-color: transparent;
     border-bottom-color: transparent;
-    left: -10px;
+    left: -13px;
     top: calc(50% - 5px);
     margin-left: 0;
     margin-right: 0;
+    filter: drop-shadow(-1px -1px 1px #ddd);
 }
 .popper[x-placement^="left"],
 .tooltip[x-placement^="left"] {
@@ -126,12 +133,19 @@ p.bold {
 }
 .popper[x-placement^="left"] .popper__arrow,
 .tooltip[x-placement^="left"] .tooltip-arrow {
-    border-width: 10px 0 10px 10px;
+    border-width: 13px 0 13px 13px;
     border-top-color: transparent;
     border-right-color: transparent;
     border-bottom-color: transparent;
-    right: -10px;
+    right: -13px;
     top: calc(50% - 5px);
     margin-left: 0;
     margin-right: 0;
+filter: drop-shadow(1px 2px 0px #ddd)
+}
+
+.no-arrow {
+    .popper__arrow {
+        display:none !important;
+    }
 }
