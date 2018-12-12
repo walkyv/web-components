@@ -55,16 +55,9 @@
 .animateIn {
   animation-name: fadeIn;
   animation-duration: .5s;
-  @media(max-width:480px) {
-    animation-name: slideInUp;
-  }
-
 }
 
 .animateOut {
   animation-name: fadeOut;
   animation-duration: .2s;
-  @media(max-width:480px) {
-    animation-name: fadeOutUp;
-  }
 }

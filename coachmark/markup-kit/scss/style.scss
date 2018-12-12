@@ -144,7 +144,7 @@ ul li {
     border: none;
     text-decoration: underline;
     cursor:pointer;
-    &.dismiss {
+    &.dismiss:not(.coach-link) {
       right: -18px;
       position: relative;
       top: -14px;

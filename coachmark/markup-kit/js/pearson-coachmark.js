@@ -19,16 +19,25 @@
     coachMark = doc.querySelector('.coachmark-container'),
     closeBtn = coachMark.querySelector('.dismiss');
 
-  function createPopper (placement) {
-    const reference = document.querySelector('#reference');
-    const popperInstance = new Popper(reference, coachMark, {
-      placement: placement,
-      modifiers: {
-        arrow: { enabled: true },
-      }
-    });
+  function createPopper (placement, triggerId = event.target.id) {
+    const reference = document.querySelector('#reference'),
+      trigger = document.getElementById(triggerId),
+
+      popperInstance = new Popper(reference, coachMark, {
+        placement: placement,
+        modifiers: {
+          arrow: { enabled: true },
+        }
+      });
+
     coachMark.classList.remove('hidden');
     closeBtn.focus();
+
+    closeBtn.addEventListener('click', () => {
+      coachMark.classList.add('hidden');
+      trigger.focus();
+    });
+
     return popperInstance
   }
 
