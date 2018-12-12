@@ -45,6 +45,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this._onToggleKeyUp = _this._onToggleKeyUp.bind(_this);
 
       _this._onLabelClick = _this._onLabelClick.bind(_this);
+
+      _this._onDOMLoaded = _this._onDOMLoaded.bind(_this);
       return _this;
     }
 
@@ -69,19 +71,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.addEventListener('keyup', this._onToggleKeyUp);
 
         // If the consumer did not set an `aria-label`,
-        // We need to find an external one
         if (!this.hasAttribute('aria-label')) {
-          this.labelNode = this._findLabelNode();
-
-          // If the external label does not have an ID, we must
-          // ensure that it has one
-          if (!this.labelNode.id) this.labelNode.id = this.id + '_label';
-
-          // This toggle must be labelled by the external label node
-          this.setAttribute('aria-labelledby', this.labelNode.id);
-
-          // We listen for the external label to be clicked
-          this.labelNode.addEventListener('click', this._onLabelClick);
+          // We need to find an external one
+          doc.addEventListener('DOMContentLoaded', this._onDOMLoaded, true);
         }
       }
     }, {
@@ -154,6 +146,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.focus();
       }
     }, {
+      key: '_onDOMLoaded',
+      value: function _onDOMLoaded() {
+        this.labelNode = this._findLabelNode();
+
+        // If the external label does not have an ID, we must
+        // ensure that it has one
+        if (!this.labelNode.id) this.labelNode.id = this.id + '_label';
+
+        // This toggle must be labelled by the external label node
+        this.setAttribute('aria-labelledby', this.labelNode.id);
+
+        // We listen for the external label to be clicked
+        this.labelNode.addEventListener('click', this._onLabelClick);
+      }
+    }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
         var isTruthy = newValue !== null;
@@ -175,6 +182,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function disconnectedCallback() {
         this.removeEventListener('click', this._onToggleClick);
         this.removeEventListener('keyup', this._onToggleKeyUp);
+
+        doc.removeEventListener('DOMContentLoaded', this._onDOMLoaded);
 
         if (this.labelNode) {
           this.labelNode.removeEventListener('click', this._onLabelClick);
