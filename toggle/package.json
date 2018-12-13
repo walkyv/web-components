@@ -2,7 +2,7 @@
   "name": "@pearson-ux/toggle",
   "author": "Elias Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Toggle web component",
   "main": "index.html",
   "scripts": {
