@@ -14,13 +14,13 @@
 </svg>
 
 <main id="main" aria-hidden="false">
-	<h1>Datepicker</h1>
+	<h1>Readonly datepicker</h1>
     <div class="pe-datepicker-main">
-        <label class="pe-textLabelInput__label" for="datepicker">Select date (mm/dd/yyyy)</label>
+        <label class="pe-textLabelInput__label" for="datepicker">Select date (mm/dd/yyyy)</label> 
         <div class="pe-datepicker-container">
-            <input type="text" class="pe-textInput--basic" id="datepicker" aria-label="enter date" placeholder="">
+            <input type="text" class="pe-textInput--input_readonly" id="datepicker" aria-label="enter date" placeholder="12/13/2018" readonly>
             <span class="pe-icon-wrapper">
-                <svg focusable="false" class="pe-icon--calendar-18" aria-hidden="true" >
+                <svg focusable="false" class="pe-icon--calendar-18" aria-hidden="true">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#calendar-18"></use>
                 </svg>
             </span>
@@ -30,6 +30,7 @@
         </section>
     </div>
 </main>
+
 <script src="dist/js/datepicker.js"></script>
 </body>
 </html>

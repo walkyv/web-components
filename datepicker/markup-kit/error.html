@@ -4,7 +4,7 @@
 	<title>Datepicker</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width" />
-	<link rel="stylesheet" href="css/style.css" media="all" />
+	<link rel="stylesheet" href="dist/css/style.css" media="all" />
 </head>
 <body class="">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="pe-icons-sprite" style="display:none">
@@ -14,26 +14,24 @@
 </svg>
 
 <main id="main" aria-hidden="false">
-	<h1>Datepicker</h1>
-    <div class="datepicker-container">
-        <div class="datepicker">
-            <div class="basic-input flex">
-                <div>
-                    <label class="pe-textLabelInput__label--label_error" for="datepicker">Select date (mm/dd/yyyy)</label>
-                    <input type="text" class="pe-textInput--basic_error" id="datepicker" aria-invalid="true" aria-describedby="errorMsg">
-                    <p id="errorMsg" class="pe-input--error_message">Enter a valid date</p>
-                </div>
-                <svg focusable="false" class="pe-icon--calendar-18 pe-label--secondary" aria-hidden="true">
+	<h1>Error datepicker</h1>
+    <div class="pe-datepicker-main">
+        <label class="pe-textLabelInput__label--label_error" for="datepicker">Select date (mm/dd/yyyy)</label>   
+        <div class="pe-datepicker-container">
+            <input type="text" class="pe-textInput--basic_error" id="datepicker" aria-invalid="true" aria-describedby="errorMsg">
+            <span id="errorMsg" class="pe-input--error_message">Enter a valid date</span>
+            <span class="pe-icon-wrapper">
+                <svg focusable="false" class="pe-icon--calendar-18" aria-hidden="true">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#calendar-18"></use>
                 </svg>
-            </div>
-        </div> 
+            </span>
+        </div>
         <section class="calendar">
         </section>
     </div>
 </main>
 
-<script src="js/dist/datepicker.js"></script>
+<script src="dist/js/datepicker.js"></script>
 </body>
 </html>
 

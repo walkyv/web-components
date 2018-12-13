@@ -8,32 +8,28 @@
 
 @import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/color/color";
 
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/html-tags";
-
 @import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/typography/font-face";
 @import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/typography/type";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/icons/icons";
 
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/variables";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/mixins";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/select-input-abstracts";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/inputMessages";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/basic-input-mixins";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/fancy-input";
+
+@include selectAbstracts();
+
+@include textInput();
+@include textInputLabel();
+@include textInputBasic();
+@include textInputBasicError();
+@include textInputBasicDisabled();
+@include textInputBasicReadonly();
+
+@include inputMessages();
+
+@import "../node_modules/@pearson-components/elements-sdk/src/components/DatePicker/DatePicker";
 
 // Write the CSS for your markup here!
-
-.datepicker-container {
-  position: relative;
-
-  .datepicker {
-    max-width: 150px;
-
-    + div {
-      margin-top: .5em;
-    }
-  }
-
-  .calendar {
-    position: absolute;
-    height: 10px;
-    background-color: red;
-  }
-
-  .hidden {
-    display: none;
-  }
-}
