@@ -33,3 +33,26 @@
 @import "../node_modules/@pearson-components/elements-sdk/src/components/DatePicker/DatePicker";
 
 // Write the CSS for your markup here!
+.calendar {
+    height: 340px;
+    width: 320px;
+    position: relative;
+    background-color: #047b9c;
+    margin-top: 4px;
+    &:after {
+        position: absolute;
+        content: "I'm a placeholder";
+        color: white;
+    }
+    &.error {
+        margin-top: 19px;
+    }
+}
+.hidden {
+    display: none;
+}
+.pe-textInput--basic.native {
+    &::-webkit-clear-button, &::-webkit-inner-spin-button, &::-webkit-calendar-picker-indicator {
+        display: none;
+    } 
+}
