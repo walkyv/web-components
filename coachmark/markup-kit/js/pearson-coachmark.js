@@ -42,7 +42,7 @@
   }
 
 
-  triggers.forEach(trigger => {
+  Array.prototype.forEach.call(triggers, (trigger) => {
     trigger.addEventListener('click', event => {
       if (event.target.id === 'openBottom') {
         createPopper('bottom');
@@ -68,9 +68,11 @@
         createPopper('right-start');
       } else if (event.target.id === 'openRightEnd') {
         createPopper('right-end');
+
       }
     })
-  });
+  })
+
 
   closeBtn.addEventListener('click', () => {
     coachMark.classList.add('hidden');

@@ -28,7 +28,7 @@
     return popperInstance;
   }
 
-  triggers.forEach(function (trigger) {
+  Array.prototype.forEach.call(triggers, function (trigger) {
     trigger.addEventListener('click', function (event) {
       if (event.target.id === 'openBottom') {
         createPopper('bottom');
