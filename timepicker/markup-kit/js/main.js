@@ -14,7 +14,6 @@
             availableTimes.push({"id": item.id, "time": item.innerHTML})
         })
 
-
         var icon = '<span class="pe-icon-wrapper"><svg focusable="false" aria-hidden="true" class="pe-icon--check-sm-18"><use xlink:href="#check-sm-18"></use></svg></span>';
 
         function openList() {
@@ -107,6 +106,7 @@
             //closeList()
 
             //Greg suggestion: find closest time and put focus on it in the list (see Google Calendar)
+
 
             var currentInput = input.value;
             var times = []

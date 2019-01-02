@@ -105,6 +105,7 @@
 
             //Greg suggestion: find closest time and put focus on it in the list (see Google Calendar)
 
+
             var currentInput = input.value;
             var times = [];
             listItems.forEach(function (item) {
