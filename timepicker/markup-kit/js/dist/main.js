@@ -50,7 +50,8 @@
   Array.prototype.forEach.call(timepickers, function (timepicker) {
     var input = timepicker.querySelector('input'),
         dropdown = timepicker.querySelector('.pe-dropdown-container'),
-        list = timepicker.querySelector('#itemList');
+        list = timepicker.querySelector('#itemList'),
+        listItems = list.querySelectorAll('li');
 
     function selectTime(node) {
       var icon = node.querySelector('.pe-icon-wrapper');
@@ -82,6 +83,18 @@
       }
     }
 
+    function focusListItem() {
+      var selected = returnSelectedNode(list),
+          firstFocusableElement = listItems[0],
+          lastFocusableElement = listItems[listItems.length - 1];
+      if (selected === null) {
+        firstFocusableElement.focus();
+        clearError(timepicker);
+      } else {
+        selected.focus();
+      }
+    }
+
     input.style.textTransform = 'uppercase';
 
     doc.addEventListener('click', function (event) {
@@ -89,6 +102,12 @@
         if (event.target !== input) {
           dropdown.style.display = 'none';
         }
+      }
+    });
+
+    doc.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        dropdown.style.display = 'none';
       }
     });
 
@@ -108,12 +127,17 @@
     input.addEventListener('keyup', function (event) {
       input.value = input.value.toUpperCase();
       hoverTime(filterSelected(list, input.value));
-      if (event.key === 'Enter') {
-        if (filterSelected(list, input.value) === null) {
-          throwError(timepicker);
-        } else {
-          filterSelected(list, input.value).click();
-        }
+      switch (event.code) {
+        case 'Enter':
+          if (filterSelected(list, input.value) === null) {
+            throwError(timepicker);
+          } else {
+            filterSelected(list, input.value).click();
+          }
+          break;
+        case 'ArrowDown':
+          focusListItem();
+          break;
       }
     });
 

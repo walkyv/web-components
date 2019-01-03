@@ -47,7 +47,8 @@
   Array.prototype.forEach.call(timepickers, timepicker => {
     const input = timepicker.querySelector('input'),
       dropdown = timepicker.querySelector('.pe-dropdown-container'),
-      list = timepicker.querySelector('#itemList');
+      list = timepicker.querySelector('#itemList'),
+      listItems = list.querySelectorAll('li');
 
     function selectTime (node) {
       const icon = node.querySelector('.pe-icon-wrapper');
@@ -79,6 +80,18 @@
       }
     }
 
+    function focusListItem () {
+      const selected = returnSelectedNode(list),
+        firstFocusableElement = listItems[0],
+        lastFocusableElement = listItems[listItems.length - 1];
+      if (selected === null) {
+        firstFocusableElement.focus();
+        clearError(timepicker)
+      } else {
+        selected.focus();
+      }
+    }
+
     input.style.textTransform = 'uppercase';
 
     doc.addEventListener('click', event => {
@@ -86,6 +99,12 @@
         if (event.target !== input) {
           dropdown.style.display = 'none';
         }
+      }
+    });
+
+    doc.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        dropdown.style.display = 'none';
       }
     });
 
@@ -105,14 +124,18 @@
     input.addEventListener('keyup', event => {
       input.value = input.value.toUpperCase();
       hoverTime(filterSelected(list, input.value));
-      if (event.key === 'Enter') {
-        if (filterSelected(list, input.value) === null) {
-         throwError(timepicker)
-        } else {
-          filterSelected(list, input.value).click();
+        switch (event.code) {
+          case 'Enter':
+            if (filterSelected(list, input.value) === null) {
+              throwError(timepicker)
+            } else {
+              filterSelected(list, input.value).click();
+            }
+            break;
+          case 'ArrowDown':
+            focusListItem();
+            break;
         }
-
-      }
     });
 
     dropdown.addEventListener('click', event => {
