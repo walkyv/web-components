@@ -3,25 +3,26 @@
   const timepickers = document.querySelectorAll(".pe-timepicker-main");
   const icon = '<span class="pe-icon-wrapper"><svg focusable="false" aria-hidden="true" class="pe-icon--check-sm-18"><use xlink:href="#check-sm-18"></use></svg></span>';
 
-  timepickers.forEach(timepicker => {
+  Array.prototype.forEach.call(timepickers, timepicker => {
     const input = timepicker.querySelector(".pe-textInput--basic"),
       listbox = timepicker.querySelector("[role=listbox]"),
       listItems = listbox.querySelectorAll("[role=option]"),
       availableTimes = [];
 
-    listItems.forEach(item => {
+    Array.prototype.forEach.call(listItems, item => {
       availableTimes.push({
         "id": item.id,
         "time": item.innerHTML
       })
-    });
+    })
+
 
 
     function openList() {
       const selection = listbox.querySelector("[aria-selected=true]");
-      listItems.forEach(item => {
+      Array.prototype.forEach.call(listItems, item => {
         item.classList.remove('in-view')
-      });
+      })
       input.setAttribute("aria-expanded", "true");
       listbox.classList.remove('animateOut');
       listbox.classList.add('animateIn');
@@ -48,7 +49,7 @@
     }
 
     function selectItem(item) {
-      listItems.forEach(listitem => {
+      Array.prototype.forEach.call(listItems, listitem => {
         listitem.setAttribute("aria-selected", "false");
         if (listbox.classList.contains("with-selection")) {
           const selectedItem = listbox.querySelector(".pe-icon-wrapper");
@@ -56,7 +57,7 @@
             selectedItem.parentNode.removeChild(selectedItem)
           }
         }
-      })
+      });
       item.setAttribute("aria-selected", "true");
     }
 
@@ -99,10 +100,16 @@
       openList()
     });
 
+    input.addEventListener('keyup', event=> {
+      console.log(input.value)
+      input.value.toLocaleUpperCase();
+    });
     input.addEventListener("input", event => {
+      console.log(event)
       if (isNaN(input.value.charAt(0))) {
         input.value = '';
       } else if (event.data === ':') {
+        console.log('add 00')
         input.value = input.value + '00 '
       } else if (event.data === 'p' || event.data === 'P') {
         input.value = input.value.slice(0, -1);
@@ -121,12 +128,12 @@
       } else {
         const currentInput = input.value;
         const times = [];
-        listItems.forEach(item => {
+        Array.prototype.forEach.call(listItems, item => {
           times.push(item.innerHTML.toLowerCase());
           item.classList.remove('in-view')
         });
 
-        times.forEach(time => {
+        Array.prototype.forEach.call(times, time => {
           const selected = listbox.querySelector(`[data-time^="${input.value.charAt(0)}"]`);
           if (currentInput.charAt(0) === time.charAt(0)) {
             if (selected !== null) {
@@ -138,15 +145,19 @@
 
         if (times.indexOf(currentInput.toLowerCase()) > -1) {
           const index = times.indexOf(currentInput.toLowerCase());
-          listbox.classList.add("with-selection")
+          listbox.classList.add("with-selection");
           selectItem(listItems[index])
           input.setAttribute('aria-activedescendant', listItems[index].id);
           const currentTime = listItems[index].innerHTML;
           listItems[index].innerHTML = icon + currentTime;
+          Array.prototype.forEach.call(listItems, item => {
+            item.classList.remove('in-view')
+          })
+          listItems[index].classList.add('in-view');
+          listItems[index].scrollIntoView()
         } else {
           input.removeAttribute("aria-activedescendant")
-          //deselect all
-          listItems.forEach(listitem => {
+          Array.prototype.forEach.call(listItems, listitem => {
             listitem.setAttribute("aria-selected", "false");
             if (listbox.classList.contains("with-selection")) {
               const selectedItem = listbox.querySelector(".pe-icon-wrapper");
@@ -155,7 +166,7 @@
               }
               listbox.classList.remove("with-selection")
             }
-          })
+          });
         }
       }
     })
@@ -245,7 +256,7 @@
       }
     })
 
-    listItems.forEach(listitem => {
+    Array.prototype.forEach.call(listItems, listitem => {
       listitem.addEventListener("click", event => {
         selectItem(event.target);
         input.value = event.target.innerText;
@@ -267,4 +278,5 @@
       }
     })
   })
+
 })();

@@ -6,13 +6,13 @@
   var timepickers = document.querySelectorAll(".pe-timepicker-main");
   var icon = '<span class="pe-icon-wrapper"><svg focusable="false" aria-hidden="true" class="pe-icon--check-sm-18"><use xlink:href="#check-sm-18"></use></svg></span>';
 
-  timepickers.forEach(function (timepicker) {
+  Array.prototype.forEach.call(timepickers, function (timepicker) {
     var input = timepicker.querySelector(".pe-textInput--basic"),
         listbox = timepicker.querySelector("[role=listbox]"),
         listItems = listbox.querySelectorAll("[role=option]"),
         availableTimes = [];
 
-    listItems.forEach(function (item) {
+    Array.prototype.forEach.call(listItems, function (item) {
       availableTimes.push({
         "id": item.id,
         "time": item.innerHTML
@@ -21,7 +21,7 @@
 
     function openList() {
       var selection = listbox.querySelector("[aria-selected=true]");
-      listItems.forEach(function (item) {
+      Array.prototype.forEach.call(listItems, function (item) {
         item.classList.remove('in-view');
       });
       input.setAttribute("aria-expanded", "true");
@@ -50,7 +50,7 @@
     }
 
     function selectItem(item) {
-      listItems.forEach(function (listitem) {
+      Array.prototype.forEach.call(listItems, function (listitem) {
         listitem.setAttribute("aria-selected", "false");
         if (listbox.classList.contains("with-selection")) {
           var selectedItem = listbox.querySelector(".pe-icon-wrapper");
@@ -101,10 +101,16 @@
       openList();
     });
 
+    input.addEventListener('keyup', function (event) {
+      console.log(input.value);
+      input.value.toLocaleUpperCase();
+    });
     input.addEventListener("input", function (event) {
+      console.log(event);
       if (isNaN(input.value.charAt(0))) {
         input.value = '';
       } else if (event.data === ':') {
+        console.log('add 00');
         input.value = input.value + '00 ';
       } else if (event.data === 'p' || event.data === 'P') {
         input.value = input.value.slice(0, -1);
@@ -121,12 +127,12 @@
       } else {
         var currentInput = input.value;
         var times = [];
-        listItems.forEach(function (item) {
+        Array.prototype.forEach.call(listItems, function (item) {
           times.push(item.innerHTML.toLowerCase());
           item.classList.remove('in-view');
         });
 
-        times.forEach(function (time) {
+        Array.prototype.forEach.call(times, function (time) {
           var selected = listbox.querySelector('[data-time^="' + input.value.charAt(0) + '"]');
           if (currentInput.charAt(0) === time.charAt(0)) {
             if (selected !== null) {
@@ -143,10 +149,14 @@
           input.setAttribute('aria-activedescendant', listItems[index].id);
           var currentTime = listItems[index].innerHTML;
           listItems[index].innerHTML = icon + currentTime;
+          Array.prototype.forEach.call(listItems, function (item) {
+            item.classList.remove('in-view');
+          });
+          listItems[index].classList.add('in-view');
+          listItems[index].scrollIntoView();
         } else {
           input.removeAttribute("aria-activedescendant");
-          //deselect all
-          listItems.forEach(function (listitem) {
+          Array.prototype.forEach.call(listItems, function (listitem) {
             listitem.setAttribute("aria-selected", "false");
             if (listbox.classList.contains("with-selection")) {
               var selectedItem = listbox.querySelector(".pe-icon-wrapper");
@@ -245,7 +255,7 @@
       }
     });
 
-    listItems.forEach(function (listitem) {
+    Array.prototype.forEach.call(listItems, function (listitem) {
       listitem.addEventListener("click", function (event) {
         selectItem(event.target);
         input.value = event.target.innerText;
