@@ -26,11 +26,10 @@
         margin-bottom:16px;
     }
     .pe-timepicker-main {
-        max-width:400px;
+
     }
 </style>
 <main id="main" aria-hidden="false">
-    <h1>Timepicker using type=text</h1>
     <div class="pe-timepicker-main">
         <label class="pe-textLabelInput__label" for="someGiantId1">Select time (hh:mm am/pm)</label>
         <div class="pe-timepicker-container">
@@ -42,31 +41,30 @@
             </span>
         </div>
         <div class="pe-dropdown-container">
-            <ul id="itemlist" class="pe-itemList animated" role="listbox" style="display:none;" tabindex="0">
-                <li id="someGiantId1-list-item-0" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">6:00 AM</li>
-                <li id="someGiantId1-list-item-1" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">7:00 AM</li>
-                <li id="someGiantId1-list-item-2" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">8:00 AM</li>
-                <li id="someGiantId1-list-item-3" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">9:00 AM</li>
-                <li id="someGiantId1-list-item-4" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">10:00 AM</li>
-                <li id="someGiantId1-list-item-5" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">11:00 AM</li>
-                <li id="someGiantId1-list-item-6" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">12:00 PM</li>
-                <li id="someGiantId1-list-item-7" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">1:00 PM</li>
-                <li id="someGiantId1-list-item-8" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">2:00 PM</li>
-                <li id="someGiantId1-list-item-9" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">3:00 PM</li>
-                <li id="someGiantId1-list-item-10" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">4:00 PM</li>
-                <li id="someGiantId1-list-item-11" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">5:00 PM</li>
-                <li id="someGiantId1-list-item-12" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">6:00 PM</li>
-                <li id="someGiantId1-list-item-13" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">7:00 PM</li>
-                <li id="someGiantId1-list-item-14" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">8:00 PM</li>
-                <li id="someGiantId1-list-item-15" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">9:00 PM</li>
-                <li id="someGiantId1-list-item-16" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">10:00 PM</li>
-                <li id="someGiantId1-list-item-17" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">11:00 PM</li>
-                <li id="someGiantId1-list-item-18" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">12:00 AM</li>
-                <li id="someGiantId1-list-item-19" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">1:00 AM</li>
-                <li id="someGiantId1-list-item-20" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">2:00 AM</li>
-                <li id="someGiantId1-list-item-21" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">3:00 AM</li>
-                <li id="someGiantId1-list-item-22" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">4:00 AM</li>
-                <li id="someGiantId1-list-item-23" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false">5:00 AM</li>
+            <ul id="itemList" class="pe-itemList animated" role="listbox" style="display:none;" tabindex="0">
+                <li id="someGiantId1-list-item-0" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="6:00 AM">6:00 AM</li>
+                <li id="someGiantId1-list-item-1" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="7:00 AM">7:00 AM</li>
+                <li id="someGiantId1-list-item-2" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="8:00 AM">8:00 AM</li>
+                <li id="someGiantId1-list-item-3" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="9:00 AM">9:00 AM</li>
+                <li id="someGiantId1-list-item-4" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="10:00 AM">10:00 AM</li>
+                <li id="someGiantId1-list-item-5" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="11:00 AM">11:00 AM</li>
+                <li id="someGiantId1-list-item-6" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="12:00 PM">12:00 PM</li>
+                <li id="someGiantId1-list-item-7" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="1:00 PM">1:00 PM</li>
+                <li id="someGiantId1-list-item-8" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="2:00 PM">2:00 PM</li>
+                <li id="someGiantId1-list-item-9" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="3:00 PM">3:00 PM</li>
+                <li id="someGiantId1-list-item-10" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="4:00 PM">4:00 PM</li>
+                <li id="someGiantId1-list-item-11" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="5:00 PM">5:00 PM</li>
+                <li id="someGiantId1-list-item-12" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="6:00 PM">6:00 PM</li>
+                <li id="someGiantId1-list-item-13" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="7:00 PM">7:00 PM</li>
+                <li id="someGiantId1-list-item-14" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="8:00 PM">8:00 PM</li>
+                <li id="someGiantId1-list-item-16" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="10:00 PM">10:00 PM</li>
+                <li id="someGiantId1-list-item-17" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="11:00 PM">11:00 PM</li>
+                <li id="someGiantId1-list-item-18" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="12:00 AM">12:00 AM</li>
+                <li id="someGiantId1-list-item-19" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="1:00 AM">1:00 AM</li>
+                <li id="someGiantId1-list-item-20" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="2:00 AM">2:00 AM</li>
+                <li id="someGiantId1-list-item-21" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="3:00 AM">3:00 AM</li>
+                <li id="someGiantId1-list-item-22" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="4:00 AM">4:00 AM</li>
+                <li id="someGiantId1-list-item-23" class="pe-itemList-item" role="option" tabindex="-1" aria-selected="false" data-time="5:00 AM">5:00 AM</li>
             </ul>
         </div>
     </div>
