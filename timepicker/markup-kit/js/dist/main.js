@@ -152,9 +152,7 @@
           } else {
             dropdown.style.display = 'block';
             input.setAttribute('aria-expanded', true);
-            if (returnSelectedNode(list) !== null) {
-              returnSelectedNode(list).scrollIntoView();
-            }
+            returnSelectedNode(list).scrollIntoView();
           }
           break;
       }
