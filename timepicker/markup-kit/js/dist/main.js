@@ -137,7 +137,6 @@
       hoverTime(filterSelected(list, input.value));
       switch (event.code) {
         case 'Backspace':
-          console.log('backspace');
           removeIcons(list);
           break;
         case 'Enter':
