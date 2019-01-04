@@ -39,14 +39,6 @@
     });
   }
 
-  function throwError(node) {
-    node.classList.add('error');
-  }
-
-  function clearError(node) {
-    node.classList.remove('error');
-  }
-
   function getFocusableElements(node) {
     return node.querySelectorAll('[role^="option"]');
   }
@@ -68,11 +60,12 @@
       removeIcons(list);
       setSelectedFalse(timepicker);
       closeDropdown(dropdown, input);
+      input.setAttribute('aria-expanded', false);
+      list.setAttribute('data-selected', node.getAttribute('data-time'));
+      input.value = node.getAttribute('data-time');
       icon.style.display = 'block';
       node.setAttribute('aria-selected', true);
       node.classList.add('in-view');
-      list.setAttribute('data-selected', node.getAttribute('data-time'));
-      input.value = node.getAttribute('data-time');
       validateTime();
     }
 
@@ -87,10 +80,10 @@
     function validateTime() {
       var isValid = /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/.test(input.value);
       if (!isValid) {
-        throwError(timepicker);
+        timepicker.classList.add('error');
         return false;
       } else {
-        clearError(timepicker);
+        timepicker.classList.remove('error');
         return true;
       }
     }
@@ -99,14 +92,11 @@
       var selected = returnSelectedNode(list);
       if (selected === null) {
         firstFocusableElement.focus();
-        clearError(timepicker);
+        timepicker.classList.remove('error');
       } else {
-        console.log(selected);
         selected.focus();
       }
     }
-
-    input.style.textTransform = 'uppercase';
 
     doc.addEventListener('click', function (event) {
       if (dropdown.style.display === 'block') {
@@ -159,10 +149,9 @@
     list.addEventListener('keydown', function (event) {
       var nextItem = parseInt(event.target.getAttribute('data-index')) + 1,
           prevItem = parseInt(event.target.getAttribute('data-index')) - 1;
-      console.log(event);
+      event.preventDefault();
       switch (event.code) {
         case 'ArrowDown':
-          event.preventDefault();
           if (document.activeElement === lastFocusableElement) {
             firstFocusableElement.focus();
           } else {
@@ -170,7 +159,6 @@
           }
           break;
         case 'ArrowUp':
-          event.preventDefault();
           if (document.activeElement === firstFocusableElement) {
             lastFocusableElement.focus();
           } else {
@@ -178,17 +166,21 @@
           }
           break;
         case 'Space':
-          event.preventDefault();
+          event.target.click();
+          input.focus();
+          break;
+        case 'Enter':
           event.target.click();
           input.focus();
           break;
         case 'Home':
-          event.preventDefault();
           firstFocusableElement.focus();
           break;
         case 'End':
-          event.preventDefault();
           lastFocusableElement.focus();
+          break;
+        case 'Escape':
+          closeDropdown(dropdown, input);
           break;
       }
     });
