@@ -47,11 +47,21 @@
     node.classList.remove('error');
   }
 
+  function getFocusableElements(node) {
+    return node.querySelectorAll('[role^="option"]');
+  }
+
   Array.prototype.forEach.call(timepickers, function (timepicker) {
     var input = timepicker.querySelector('input'),
         dropdown = timepicker.querySelector('.pe-dropdown-container'),
         list = timepicker.querySelector('#itemList'),
-        listItems = list.querySelectorAll('li');
+        focusableElements = getFocusableElements(timepicker),
+        firstFocusableElement = focusableElements[0],
+        lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+    Array.prototype.forEach.call(focusableElements, function (el, index) {
+      el.setAttribute('data-index', index);
+    });
 
     function selectTime(node) {
       var icon = node.querySelector('.pe-icon-wrapper');
@@ -78,19 +88,20 @@
       var isValid = /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/.test(input.value);
       if (!isValid) {
         throwError(timepicker);
+        return false;
       } else {
         clearError(timepicker);
+        return true;
       }
     }
 
     function focusListItem() {
-      var selected = returnSelectedNode(list),
-          firstFocusableElement = listItems[0],
-          lastFocusableElement = listItems[listItems.length - 1];
+      var selected = returnSelectedNode(list);
       if (selected === null) {
         firstFocusableElement.focus();
         clearError(timepicker);
       } else {
+        console.log(selected);
         selected.focus();
       }
     }
@@ -115,13 +126,17 @@
       var selected = returnSelectedNode(list);
       dropdown.style.display = 'block';
       event.target.setAttribute('aria-expanded', true);
-      if (input.value.length > 6) {
+      if (input.value.length > 6 && selected !== null) {
         selected.scrollIntoView();
       }
     });
 
     input.addEventListener('blur', function (event) {
-      validateTime();
+      if (event.relatedTarget === null) {
+        if (validateTime() === true) {
+          filterSelected(list, input.value).click();
+        }
+      }
     });
 
     input.addEventListener('keyup', function (event) {
@@ -137,6 +152,43 @@
           break;
         case 'ArrowDown':
           focusListItem();
+          break;
+      }
+    });
+
+    list.addEventListener('keydown', function (event) {
+      var nextItem = parseInt(event.target.getAttribute('data-index')) + 1,
+          prevItem = parseInt(event.target.getAttribute('data-index')) - 1;
+      console.log(event);
+      switch (event.code) {
+        case 'ArrowDown':
+          event.preventDefault();
+          if (document.activeElement === lastFocusableElement) {
+            firstFocusableElement.focus();
+          } else {
+            focusableElements[nextItem].focus();
+          }
+          break;
+        case 'ArrowUp':
+          event.preventDefault();
+          if (document.activeElement === firstFocusableElement) {
+            lastFocusableElement.focus();
+          } else {
+            focusableElements[prevItem].focus();
+          }
+          break;
+        case 'Space':
+          event.preventDefault();
+          event.target.click();
+          input.focus();
+          break;
+        case 'Home':
+          event.preventDefault();
+          firstFocusableElement.focus();
+          break;
+        case 'End':
+          event.preventDefault();
+          lastFocusableElement.focus();
           break;
       }
     });
