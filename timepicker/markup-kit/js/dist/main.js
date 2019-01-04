@@ -32,8 +32,8 @@
   }
 
   function setSelectedFalse(node) {
-    var list = node.querySelectorAll('#itemList li');
-    return Array.prototype.forEach.call(list, function (item) {
+    var items = node.querySelectorAll('#itemList li');
+    return Array.prototype.forEach.call(items, function (item) {
       item.classList.remove('in-view');
       item.setAttribute('aria-selected', false);
     });
@@ -81,6 +81,7 @@
       var isValid = /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/.test(input.value);
       if (!isValid) {
         timepicker.classList.add('error');
+        removeIcons(list);
         return false;
       } else {
         timepicker.classList.remove('error');
@@ -135,6 +136,10 @@
       input.value = input.value.toUpperCase();
       hoverTime(filterSelected(list, input.value));
       switch (event.code) {
+        case 'Backspace':
+          console.log('backspace');
+          removeIcons(list);
+          break;
         case 'Enter':
           if (filterSelected(list, input.value) === null) {
             throwError(timepicker);
