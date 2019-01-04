@@ -106,6 +106,8 @@
     doc.addEventListener('keydown', event => {
       if (event.key === 'Escape') {
         dropdown.style.display = 'none';
+        input.setAttribute('aria-expanded', false);
+        input.focus();
       }
     });
     // opens the dropdown menu and sets position of selected element
@@ -142,10 +144,11 @@
               focusListItem();
             } else {
               dropdown.style.display = 'block';
-              input.setAttribute('aria-expanded', false);
-              returnSelectedNode(list).scrollIntoView();
+              input.setAttribute('aria-expanded', true);
+              if (returnSelectedNode(list) !== null) {
+                returnSelectedNode(list).scrollIntoView();
+              }
             }
-
             break;
         }
     });
