@@ -112,7 +112,7 @@
       }
     });
     // opens the dropdown menu and sets position of selected element
-    input.addEventListener('focus', function (event) {
+    input.addEventListener('click', function (event) {
       var selected = returnSelectedNode(list);
       dropdown.style.display = 'block';
       event.target.setAttribute('aria-expanded', true);
@@ -141,7 +141,14 @@
           }
           break;
         case 'ArrowDown':
-          focusListItem();
+          if (dropdown.style.display === 'block') {
+            focusListItem();
+          } else {
+            dropdown.style.display = 'block';
+            input.setAttribute('aria-expanded', false);
+            returnSelectedNode(list).scrollIntoView();
+          }
+
           break;
       }
     });
