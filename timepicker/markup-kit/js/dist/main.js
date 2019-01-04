@@ -50,11 +50,11 @@
         focusableElements = getFocusableElements(timepicker),
         firstFocusableElement = focusableElements[0],
         lastFocusableElement = focusableElements[focusableElements.length - 1];
-
+    // sets a data index to all the focusable items
     Array.prototype.forEach.call(focusableElements, function (el, index) {
       el.setAttribute('data-index', index);
     });
-
+    // main function controlling the dropdown mneu
     function selectTime(node) {
       var icon = node.querySelector('.pe-icon-wrapper');
       removeIcons(list);
@@ -68,7 +68,7 @@
       node.classList.add('in-view');
       validateTime();
     }
-
+    // sets the highlight state of autocomplete
     function hoverTime(match) {
       setSelectedFalse(timepicker);
       if (match !== null) {
@@ -76,7 +76,7 @@
         match.scrollIntoView();
       }
     }
-
+    // validates the input form
     function validateTime() {
       var isValid = /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/.test(input.value);
       if (!isValid) {
@@ -87,7 +87,7 @@
         return true;
       }
     }
-
+    // sets focus based on element previously selected
     function focusListItem() {
       var selected = returnSelectedNode(list);
       if (selected === null) {
@@ -97,21 +97,21 @@
         selected.focus();
       }
     }
-
+    // closes dropdown when click is outside of component
     doc.addEventListener('click', function (event) {
       if (dropdown.style.display === 'block') {
         if (event.target !== input) {
-          dropdown.style.display = 'none';
+          closeDropdown(dropdown, input);
         }
       }
     });
-
+    // closes dropdown on escape keypress
     doc.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') {
         dropdown.style.display = 'none';
       }
     });
-
+    // opens the dropdown menu and sets position of selected element
     input.addEventListener('focus', function (event) {
       var selected = returnSelectedNode(list);
       dropdown.style.display = 'block';
@@ -120,7 +120,7 @@
         selected.scrollIntoView();
       }
     });
-
+    // on blur time is validated and selected in menu
     input.addEventListener('blur', function (event) {
       if (event.relatedTarget === null) {
         if (validateTime() === true) {
@@ -128,7 +128,7 @@
         }
       }
     });
-
+    // on keyup add hover to the menu and if arrow down is pressed set focus to menu item
     input.addEventListener('keyup', function (event) {
       input.value = input.value.toUpperCase();
       hoverTime(filterSelected(list, input.value));
@@ -145,7 +145,7 @@
           break;
       }
     });
-
+    // keyboard functionality for accessibility
     list.addEventListener('keydown', function (event) {
       var nextItem = parseInt(event.target.getAttribute('data-index')) + 1,
           prevItem = parseInt(event.target.getAttribute('data-index')) - 1;
@@ -179,12 +179,9 @@
         case 'End':
           lastFocusableElement.focus();
           break;
-        case 'Escape':
-          closeDropdown(dropdown, input);
-          break;
       }
     });
-
+    // selects the item on menu click
     dropdown.addEventListener('click', function (event) {
       selectTime(event.target);
       event.stopImmediatePropagation();
