@@ -22,7 +22,7 @@
     <div class="timepicker-container">
         <label class="pe-textLabelInput__label" for="timePickerInput">Select time (HH:MM AM/PM)</label>
         <div class="timepicker">
-            <input type="text" id="timePickerInput" class="pe-textInput--input_readonly" role="combobox" aria-haspopup="true" aria-expanded="false" aria-controls="itemList" aria-owns="itemList" aria-autocomplete="none" readonly="false" value="12:00 AM">
+            <input type="text" id="timePickerInput" class="pe-textInput--basic" role="combobox" aria-haspopup="true" aria-expanded="false" aria-controls="itemList" aria-owns="itemList" aria-autocomplete="none">
             <span class="pe-icon-wrapper">
                 <svg focusable="false" aria-hidden="true" class="pe-icon--clock-18">
                     <use xlink:href="#clock-18"></use>
@@ -36,7 +36,7 @@
             Enter a valid time.
         </p>
         <div id="dropDown" class="pe-dropdown-container" style="display:none;">
-            <ul id="itemList" class="itemList animated" role="listbox" tabindex="0" data-selected>
+            <ul id="itemList" class="itemList animated" role="listbox" tabindex="0" data-selected data-time-type="12 hour">
                 <li class="item" role="option" tabindex="-1" aria-selected="false" data-time="6:00 AM">
                     <span class="pe-icon-wrapper"><svg focusable="false" aria-hidden="true" class="pe-icon--check-sm-18"><use xlink:href="#check-sm-18"></use></svg></span>
                     6:00 AM
@@ -91,11 +91,11 @@
                 </li>
                 <li class="item" role="option" tabindex="-1" aria-selected="false" data-time="7:00 PM">
                     <span class="pe-icon-wrapper"><svg focusable="false" aria-hidden="true" class="pe-icon--check-sm-18"><use xlink:href="#check-sm-18"></use></svg></span>
-                    7:00 PM
+                   7:00 PM
                 </li>
                 <li class="item" role="option" tabindex="-1" aria-selected="false" data-time="8:00 PM">
                     <span class="pe-icon-wrapper"><svg focusable="false" aria-hidden="true" class="pe-icon--check-sm-18"><use xlink:href="#check-sm-18"></use></svg></span>
-                    8:00 PM
+                   8:00 PM
                 </li>
                 <li class="item" role="option" tabindex="-1" aria-selected="false" data-time="9:00 PM">
                     <span class="pe-icon-wrapper"><svg focusable="false" aria-hidden="true" class="pe-icon--check-sm-18"><use xlink:href="#check-sm-18"></use></svg></span>
@@ -103,7 +103,7 @@
                 </li>
                 <li class="item" role="option" tabindex="-1" aria-selected="false" data-time="10:00 PM">
                     <span class="pe-icon-wrapper"><svg focusable="false" aria-hidden="true" class="pe-icon--check-sm-18"><use xlink:href="#check-sm-18"></use></svg></span>
-                    10:00 PM
+                   10:00 PM
                 </li>
                 <li class="item" role="option" tabindex="-1" aria-selected="false" data-time="11:00 PM">
                     <span class="pe-icon-wrapper"><svg focusable="false" aria-hidden="true" class="pe-icon--check-sm-18"><use xlink:href="#check-sm-18"></use></svg></span>

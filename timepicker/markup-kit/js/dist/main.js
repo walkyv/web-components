@@ -1,263 +1,236 @@
-"use strict";
+'use strict';
 
-(function () {
-    'use strict';
+(function (win, doc) {
+  'use strict';
+  // helper functions and globals go here
 
-    var timepickers = document.querySelectorAll(".pe-timepicker-main");
+  var timepickers = doc.querySelectorAll('.timepicker-container');
 
-    timepickers.forEach(function (timepicker) {
-        var input = timepicker.querySelector(".pe-textInput--basic"),
-            listbox = timepicker.querySelector("[role=listbox]"),
-            listItems = listbox.querySelectorAll("[role=option]");
+  function closeDropdown(node, input) {
+    node.style.display = 'none';
+    input.setAttribute('aria-expanded', false);
+  }
 
-        var availableTimes = [];
-
-        listItems.forEach(function (item) {
-            availableTimes.push({ "id": item.id, "time": item.innerHTML });
-        });
-
-        var icon = '<span class="pe-icon-wrapper"><svg focusable="false" aria-hidden="true" class="pe-icon--check-sm-18"><use xlink:href="#check-sm-18"></use></svg></span>';
-
-        function openList() {
-            input.setAttribute("aria-expanded", "true");
-
-            listbox.classList.remove('animateOut');
-            listbox.classList.add('animateIn');
-            listbox.style.display = "block";
-
-            if (listbox.classList.contains("with-selection")) {
-                var selection = listbox.querySelector("[aria-selected=true]");
-
-                input.setAttribute("aria-activedescendant", selection.id);
-            }
-        }
-
-        function closeList() {
-            input.setAttribute("aria-expanded", "false");
-            listbox.classList.add('animateOut');
-            listbox.classList.remove('animateIn');
-            listbox.style.display = "none";
-        }
-
-        function moveFocus(item) {
-            input.setAttribute('aria-activedescendant', item.id);
-            item.focus();
-        }
-
-        function selectItem(item) {
-            listItems.forEach(function (listitem) {
-                listitem.setAttribute("aria-selected", "false");
-                if (listbox.classList.contains("with-selection")) {
-                    var selectedItem = listbox.querySelector(".pe-icon-wrapper");
-                    if (selectedItem) {
-                        selectedItem.parentNode.removeChild(selectedItem);
-                    }
-                }
-            });
-            item.setAttribute("aria-selected", "true");
-        }
-
-        function throwError() {
-
-            var errorMsg = document.createElement("p");
-
-            errorMsg.classList.add("error-msg");
-            errorMsg.setAttribute("id", "error1");
-            errorMsg.innerHTML = '<svg focusable="false" class="pe-icon--warning-sm-18" role="img" aria-label="Error"><use xlink:href="#warning-sm-18"></use></svg> Enter a valid time format';
-
-            input.parentNode.previousElementSibling.classList.add("error"); //label
-            input.classList.add("error");
-            input.setAttribute("aria-invalid", "true");
-            input.setAttribute("aria-describedby", "error1");
-            input.parentNode.parentNode.insertBefore(errorMsg, input.parentNode.nextSibling);
-        }
-
-        function clearError() {
-            var errorMsg = timepicker.querySelector(".error-msg");
-            input.parentNode.previousElementSibling.classList.remove("error");
-            input.classList.remove("error");
-            input.removeAttribute("aria-invalid");
-            input.removeAttribute("aria-describedby");
-            if (errorMsg) {
-                timepicker.removeChild(errorMsg);
-            }
-        }
-
-        function validateTime() {
-            var isValid = /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/.test(input.value);
-            if (!isValid) {
-                throwError();
-            } else {
-                clearError();
-            }
-        }
-
-        input.addEventListener("click", function (event) {
-            if (input.classList.contains("error")) {
-                clearError();
-            }
-            openList();
-        });
-
-        input.addEventListener("input", function (event) {
-            //on typing, close the dropdown (original UXF spec)
-            //closeList()
-
-            //Greg suggestion: find closest time and put focus on it in the list (see Google Calendar)
-
-            var currentInput = input.value;
-            var times = [];
-            listItems.forEach(function (item) {
-                times.push(item.innerHTML.toLowerCase());
-            });
-
-            if (times.indexOf(currentInput.toLowerCase()) > -1) {
-                var index = times.indexOf(currentInput.toLowerCase());
-
-                listbox.classList.add("with-selection");
-                selectItem(listItems[index]);
-                input.setAttribute('aria-activedescendant', listItems[index].id);
-                var currentTime = listItems[index].innerHTML;
-                listItems[index].innerHTML = icon + currentTime;
-
-                if (listItems[index].offsetTop > 150) {
-                    listbox.scrollTo(0, listItems[index].offsetTop - 150);
-                } else {
-                    listbox.scrollTo(0, 0);
-                }
-            } else {
-                input.removeAttribute("aria-activedescendant");
-                //deselect all
-                listItems.forEach(function (listitem) {
-                    listitem.setAttribute("aria-selected", "false");
-                    if (listbox.classList.contains("with-selection")) {
-                        var selectedItem = listbox.querySelector(".pe-icon-wrapper");
-                        if (selectedItem) {
-                            selectedItem.parentNode.removeChild(selectedItem);
-                        }
-                        listbox.classList.remove("with-selection");
-                    }
-                });
-            }
-
-            //enhancement to set closest value as active descendant (but not select)
-        });
-        input.addEventListener("blur", function (event) {
-            if (!input.value == "" && !input.hasAttribute("aria-invalid")) {
-                validateTime();
-                //a little buggy trying to select a new time after error is thrown
-            }
-        });
-
-        input.addEventListener("keydown", function (event) {
-            switch (event.code) {
-                case "ArrowDown":
-                    event.preventDefault();
-                    openList();
-                    //if selected item exists go to selected item
-                    if (input.hasAttribute("aria-activedescendant")) {
-                        var activeDescendant = input.getAttribute("aria-activedescendant");
-                        moveFocus(document.getElementById(activeDescendant));
-                    } else {
-                        //else go to first item
-                        moveFocus(listItems[0]);
-                    }
-                    break;
-                case "Escape":
-                    closeList();
-                    input.focus();
-                    break;
-                case "Enter":
-                    closeList();
-                    break;
-
-            }
-        });
-
-        listbox.addEventListener("keydown", function (event) {
-            var activeDescendant = input.getAttribute("aria-activedescendant"),
-                focusedItemIndex = [].indexOf.call(listItems, document.getElementById(activeDescendant));
-
-            var firstFocusableElement = listItems[0],
-                lastFocusableElement = listItems[listItems.length - 1];
-
-            switch (event.code) {
-                case "ArrowDown":
-                    event.preventDefault();
-                    if (document.activeElement === lastFocusableElement) {
-                        moveFocus(firstFocusableElement);
-                    } else {
-                        moveFocus(listItems[focusedItemIndex + 1]);
-                    }
-                    break;
-
-                case "ArrowUp":
-                    event.preventDefault();
-                    if (document.activeElement === firstFocusableElement) {
-                        moveFocus(lastFocusableElement);
-                    } else {
-                        moveFocus(listItems[focusedItemIndex - 1]);
-                    }
-                    break;
-                case "Home":
-                    moveFocus(firstFocusableElement);
-                    break;
-                case "End":
-                    moveFocus(lastFocusableElement);
-                    break;
-
-                case "Enter":
-                case "Space":
-                    selectItem(document.activeElement);
-                    if (input.hasAttribute("aria-invalid")) {
-                        clearError();
-                    }
-
-                    input.value = document.activeElement.innerText;
-                    listbox.classList.add("with-selection");
-                    //add icon
-                    var currentTime = document.activeElement.innerHTML;
-                    document.activeElement.innerHTML = icon + currentTime;
-
-                    closeList();
-
-                    input.focus();
-
-                    break;
-                case "Escape":
-                    closeList();
-                    input.focus();
-                    break;
-
-            }
-        });
-
-        listItems.forEach(function (listitem) {
-
-            listitem.addEventListener("click", function (event) {
-                selectItem(event.target);
-
-                input.value = event.target.innerText;
-                //add icon
-                var currentTime = event.target.innerHTML;
-                event.target.innerHTML = icon + currentTime;
-
-                listbox.classList.add("with-selection");
-                input.focus();
-
-                closeList();
-
-                if (document.activeElement !== event.target) {
-                    closeList();
-                    input.focus();
-                }
-            });
-        });
-
-        document.addEventListener('click', function (event) {
-            if (!event.target.closest('.pe-timepicker-main')) {
-                closeList();
-            }
-        });
+  function removeIcons(node) {
+    var icons = node.querySelectorAll('.pe-icon-wrapper');
+    return Array.prototype.forEach.call(icons, function (icon) {
+      icon.style.display = 'none';
     });
-})();
+  }
+
+  function filterSelected(node, value) {
+    return node.querySelector('[data-time^=\'' + value + '\']');
+  }
+
+  function returnSelected(node) {
+    return node.getAttribute('data-selected');
+  }
+
+  function returnSelectedNode(node) {
+    var time = returnSelected(node);
+    return node.querySelector('[data-time=\'' + time + '\']');
+  }
+
+  function setSelectedFalse(node) {
+    var items = node.querySelectorAll('#itemList li');
+    return Array.prototype.forEach.call(items, function (item) {
+      item.classList.remove('in-view');
+      item.setAttribute('aria-selected', false);
+    });
+  }
+
+  function getFocusableElements(node) {
+    return node.querySelectorAll('[role^="option"]');
+  }
+
+  Array.prototype.forEach.call(timepickers, function (timepicker) {
+    var input = timepicker.querySelector('input'),
+        dropdown = timepicker.querySelector('.pe-dropdown-container'),
+        list = timepicker.querySelector('#itemList'),
+        focusableElements = getFocusableElements(timepicker),
+        firstFocusableElement = focusableElements[0],
+        lastFocusableElement = focusableElements[focusableElements.length - 1];
+    // sets a data index to all the focusable items
+    Array.prototype.forEach.call(focusableElements, function (el, index) {
+      el.setAttribute('data-index', index);
+    });
+    // main function controlling the dropdown menu
+    function selectTime(node) {
+      var icon = node.querySelector('.pe-icon-wrapper');
+      removeIcons(list);
+      setSelectedFalse(timepicker);
+      closeDropdown(dropdown, input);
+      input.setAttribute('aria-expanded', false);
+      list.setAttribute('data-selected', node.getAttribute('data-time'));
+      input.value = node.getAttribute('data-time');
+      icon.style.display = 'block';
+      node.setAttribute('aria-selected', true);
+      node.classList.add('in-view');
+      validateTime();
+    }
+    // sets the highlight state of autocomplete
+    function hoverTime(match) {
+      setSelectedFalse(timepicker);
+      if (match !== null) {
+        match.classList.add('in-view');
+        match.scrollIntoView();
+      }
+    }
+    // validates the input form
+    function validateTime() {
+      function isValids() {
+        var type = list.getAttribute('data-time-type');
+        var isValid = void 0;
+        if (type === '24 hour') {
+          isValid = /^([01]\d|2[0-3]):?([0-5]\d)$/.test(input.value);
+          return isValid;
+        } else {
+          isValid = /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/.test(input.value);
+          return isValid;
+        }
+      }
+      var isValid = isValids();
+      if (!isValid && input.value !== '') {
+        timepicker.classList.add('error');
+        removeIcons(list);
+        return false;
+      } else {
+        timepicker.classList.remove('error');
+        return true;
+      }
+    }
+    // sets focus based on element previously selected
+    function focusListItem() {
+      var selected = returnSelectedNode(list);
+      if (selected === null) {
+        firstFocusableElement.focus();
+        timepicker.classList.remove('error');
+      } else {
+        selected.focus();
+      }
+    }
+    // closes dropdown when click is outside of component
+    doc.addEventListener('click', function (event) {
+      if (dropdown.style.display === 'block') {
+        if (event.target !== input) {
+          closeDropdown(dropdown, input);
+        }
+      }
+    });
+    // closes dropdown on escape keypress
+    doc.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        dropdown.style.display = 'none';
+        input.setAttribute('aria-expanded', false);
+        input.focus();
+      }
+    });
+    // opens the dropdown menu and sets position of selected element
+    input.addEventListener('click', function (event) {
+      var readOnly = input.getAttribute('readonly');
+      if (!readOnly) {
+        var selected = returnSelectedNode(list);
+        dropdown.style.display = 'block';
+        event.target.setAttribute('aria-expanded', true);
+        if (input.value.length > 6 && selected !== null) {
+          selected.scrollIntoView();
+        }
+      } else {
+        return true;
+      }
+    });
+    // on blur time is validated and selected in menu
+    input.addEventListener('blur', function (event) {
+      if (event.relatedTarget === null) {
+        if (validateTime() === true) {
+          if (filterSelected(list, input.value) !== null) {
+            filterSelected(list, input.value).click();
+          }
+        }
+      }
+    });
+    // on keyup add hover to the menu and if arrow down is pressed set focus to menu item
+    input.addEventListener('keyup', function (event) {
+      input.value = input.value.toUpperCase();
+      hoverTime(filterSelected(list, input.value));
+      switch (event.code) {
+        case 'Backspace':
+          removeIcons(list);
+          break;
+        case 'Enter':
+          if (filterSelected(list, input.value) === null) {
+            timepicker.classList.add('error');
+            removeIcons(list);
+          } else {
+            filterSelected(list, input.value).click();
+          }
+          break;
+        case 'ArrowDown':
+          if (dropdown.style.display === 'block') {
+            focusListItem();
+          } else {
+            dropdown.style.display = 'block';
+            input.setAttribute('aria-expanded', true);
+            if (returnSelectedNode(list) !== null) {
+              returnSelectedNode(list).scrollIntoView();
+            }
+          }
+          break;
+      }
+    });
+    // keyboard functionality for accessibility
+    list.addEventListener('keydown', function (event) {
+      console.log(event);
+      var nextItem = parseInt(event.target.getAttribute('data-index')) + 1,
+          prevItem = parseInt(event.target.getAttribute('data-index')) - 1;
+      event.preventDefault();
+      switch (event.code) {
+        case 'Tab':
+          input.focus();
+          closeDropdown(dropdown, input);
+          break;
+        case 'ArrowDown':
+          if (document.activeElement === lastFocusableElement) {
+            firstFocusableElement.focus();
+          } else {
+            if (focusableElements[nextItem] !== undefined) {
+              focusableElements[nextItem].focus();
+            } else {
+              return;
+            }
+          }
+          break;
+        case 'ArrowUp':
+          if (document.activeElement === firstFocusableElement) {
+            lastFocusableElement.focus();
+          } else {
+            if (focusableElements[prevItem] !== undefined) {
+              focusableElements[prevItem].focus();
+            } else {
+              return;
+            }
+          }
+          break;
+        case 'Space':
+          event.target.click();
+          input.focus();
+          break;
+        case 'Enter':
+          event.target.click();
+          input.focus();
+          break;
+        case 'Home':
+          firstFocusableElement.focus();
+          break;
+        case 'End':
+          lastFocusableElement.focus();
+          break;
+      }
+    });
+    // selects the item on menu click
+    dropdown.addEventListener('click', function (event) {
+      selectTime(event.target);
+      event.stopImmediatePropagation();
+    });
+  });
+})(window, document);
