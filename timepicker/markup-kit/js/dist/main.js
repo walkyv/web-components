@@ -54,7 +54,7 @@
     Array.prototype.forEach.call(focusableElements, function (el, index) {
       el.setAttribute('data-index', index);
     });
-    // main function controlling the dropdown mneu
+    // main function controlling the dropdown menu
     function selectTime(node) {
       var icon = node.querySelector('.pe-icon-wrapper');
       removeIcons(list);
@@ -79,7 +79,7 @@
     // validates the input form
     function validateTime() {
       var isValid = /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/.test(input.value);
-      if (!isValid) {
+      if (!isValid && input.value !== '') {
         timepicker.classList.add('error');
         removeIcons(list);
         return false;
@@ -127,7 +127,9 @@
     input.addEventListener('blur', function (event) {
       if (event.relatedTarget === null) {
         if (validateTime() === true) {
-          filterSelected(list, input.value).click();
+          if (filterSelected(list, input.value) !== null) {
+            filterSelected(list, input.value).click();
+          }
         }
       }
     });
@@ -141,7 +143,8 @@
           break;
         case 'Enter':
           if (filterSelected(list, input.value) === null) {
-            throwError(timepicker);
+            timepicker.classList.add('error');
+            removeIcons(list);
           } else {
             filterSelected(list, input.value).click();
           }
@@ -152,29 +155,44 @@
           } else {
             dropdown.style.display = 'block';
             input.setAttribute('aria-expanded', true);
-            returnSelectedNode(list).scrollIntoView();
+            if (returnSelectedNode(list) !== null) {
+              returnSelectedNode(list).scrollIntoView();
+            }
           }
           break;
       }
     });
     // keyboard functionality for accessibility
     list.addEventListener('keydown', function (event) {
+      console.log(event);
       var nextItem = parseInt(event.target.getAttribute('data-index')) + 1,
           prevItem = parseInt(event.target.getAttribute('data-index')) - 1;
       event.preventDefault();
       switch (event.code) {
+        case 'Tab':
+          input.focus();
+          closeDropdown(dropdown, input);
+          break;
         case 'ArrowDown':
           if (document.activeElement === lastFocusableElement) {
             firstFocusableElement.focus();
           } else {
-            focusableElements[nextItem].focus();
+            if (focusableElements[nextItem] !== undefined) {
+              focusableElements[nextItem].focus();
+            } else {
+              return;
+            }
           }
           break;
         case 'ArrowUp':
           if (document.activeElement === firstFocusableElement) {
             lastFocusableElement.focus();
           } else {
-            focusableElements[prevItem].focus();
+            if (focusableElements[prevItem] !== undefined) {
+              focusableElements[prevItem].focus();
+            } else {
+              return;
+            }
           }
           break;
         case 'Space':
