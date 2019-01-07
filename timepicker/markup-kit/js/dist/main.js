@@ -4,7 +4,8 @@
   'use strict';
   // helper functions and globals go here
 
-  var timepickers = doc.querySelectorAll('.timepicker-container');
+  var timepickers = doc.querySelectorAll('.timepicker-container'),
+      isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
 
   function closeDropdown(node, input) {
     node.style.display = 'none';
@@ -90,6 +91,7 @@
         }
       }
       var isValid = isValids();
+      console.log('validate');
       if (!isValid && input.value !== '') {
         timepicker.classList.add('error');
         removeIcons(list);
@@ -119,7 +121,7 @@
     });
     // closes dropdown on escape keypress
     doc.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape') {
+      if (event.keyCode === 27) {
         dropdown.style.display = 'none';
         input.setAttribute('aria-expanded', false);
         input.focus();
@@ -141,23 +143,26 @@
     });
     // on blur time is validated and selected in menu
     input.addEventListener('blur', function (event) {
-      if (event.relatedTarget === null) {
+      if (event.relatedTarget === null && !isIE11) {
         if (validateTime() === true) {
           if (filterSelected(list, input.value) !== null) {
             filterSelected(list, input.value).click();
           }
         }
+      } else if (isIE11) {
+        validateTime();
       }
     });
     // on keyup add hover to the menu and if arrow down is pressed set focus to menu item
     input.addEventListener('keyup', function (event) {
+      event.preventDefault();
       input.value = input.value.toUpperCase();
       hoverTime(filterSelected(list, input.value));
-      switch (event.code) {
-        case 'Backspace':
+      switch (event.keyCode) {
+        case 8:
           removeIcons(list);
           break;
-        case 'Enter':
+        case 13:
           if (filterSelected(list, input.value) === null) {
             timepicker.classList.add('error');
             removeIcons(list);
@@ -165,7 +170,7 @@
             filterSelected(list, input.value).click();
           }
           break;
-        case 'ArrowDown':
+        case 40:
           if (dropdown.style.display === 'block') {
             focusListItem();
           } else {
@@ -180,16 +185,16 @@
     });
     // keyboard functionality for accessibility
     list.addEventListener('keydown', function (event) {
-      console.log(event);
       var nextItem = parseInt(event.target.getAttribute('data-index')) + 1,
           prevItem = parseInt(event.target.getAttribute('data-index')) - 1;
       event.preventDefault();
-      switch (event.code) {
-        case 'Tab':
+      console.log(event.keyCode);
+      switch (event.keyCode) {
+        case 9:
           input.focus();
           closeDropdown(dropdown, input);
           break;
-        case 'ArrowDown':
+        case 40:
           if (document.activeElement === lastFocusableElement) {
             firstFocusableElement.focus();
           } else {
@@ -200,7 +205,7 @@
             }
           }
           break;
-        case 'ArrowUp':
+        case 38:
           if (document.activeElement === firstFocusableElement) {
             lastFocusableElement.focus();
           } else {
@@ -211,18 +216,18 @@
             }
           }
           break;
-        case 'Space':
+        case 32:
           event.target.click();
           input.focus();
           break;
-        case 'Enter':
+        case 13:
           event.target.click();
           input.focus();
           break;
-        case 'Home':
+        case 36:
           firstFocusableElement.focus();
           break;
-        case 'End':
+        case 35:
           lastFocusableElement.focus();
           break;
       }
