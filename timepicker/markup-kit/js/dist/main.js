@@ -78,7 +78,18 @@
     }
     // validates the input form
     function validateTime() {
-      var isValid = /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/.test(input.value);
+      function isValids() {
+        var type = list.getAttribute('data-time-type');
+        var isValid = void 0;
+        if (type === '24 hour') {
+          isValid = /^([01]\d|2[0-3]):?([0-5]\d)$/.test(input.value);
+          return isValid;
+        } else {
+          isValid = /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/.test(input.value);
+          return isValid;
+        }
+      }
+      var isValid = isValids();
       if (!isValid && input.value !== '') {
         timepicker.classList.add('error');
         removeIcons(list);
@@ -116,11 +127,16 @@
     });
     // opens the dropdown menu and sets position of selected element
     input.addEventListener('click', function (event) {
-      var selected = returnSelectedNode(list);
-      dropdown.style.display = 'block';
-      event.target.setAttribute('aria-expanded', true);
-      if (input.value.length > 6 && selected !== null) {
-        selected.scrollIntoView();
+      var readOnly = input.getAttribute('readonly');
+      if (!readOnly) {
+        var selected = returnSelectedNode(list);
+        dropdown.style.display = 'block';
+        event.target.setAttribute('aria-expanded', true);
+        if (input.value.length > 6 && selected !== null) {
+          selected.scrollIntoView();
+        }
+      } else {
+        return true;
       }
     });
     // on blur time is validated and selected in menu
