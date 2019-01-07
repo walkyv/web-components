@@ -11,20 +11,24 @@
 		<script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
 		<script src="./js/dist/pearson-toggle.js"></script>
-	</head>
+		
+		<!-- THESE IMPORTS ARE NECESSARY FOR PROPER RENDERING DURING DEVELOPMENT -->
+		<!-- DO NOT DELETE -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
 	<style>
 	* {
 		box-sizing: border-box;
 	}
 
 	html {
-		font: 100%/1.25 sans-serif;
+		font: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
 	}
 	pearson-toggle, label {
 		display: inline-block;
 		vertical-align: middle;
 	}
 	</style>
+	</head>
 	<body>
 
 		<main id="main">
@@ -48,15 +52,6 @@
 				<pearson-toggle id="wrapped-toggle" name="wrapped"></pearson-toggle>
 				The wrapped one
 			</label>
-			<h2>Toggle disabled default</h2>
-			<pearson-toggle
-				id="pe-toggle__disabled"
-				name="disabledToggle"
-				on
-				disabled
-			>
-			</pearson-toggle>
-			<label for="pe-toggle__disabled">The disabled one</label>
 			<h2>The one with hidden internal text</h2>
 			<pearson-toggle
 				id="pe-toggle__noText"
@@ -66,6 +61,15 @@
 			>
 			</pearson-toggle>
 			<label for="pe-toggle__noText">I have hidden text</label>
+			<h2>Toggle disabled default</h2>
+			<pearson-toggle
+				id="pe-toggle__disabled"
+				name="disabledToggle"
+				on
+				disabled
+			>
+			</pearson-toggle>
+			<label for="pe-toggle__disabled">The disabled one</label>
 			<div id="toggleMsg" style="margin-top: 30px; font-size: 20px;">Click on a toggle to test it</div>
 		</main>
 		<script>
