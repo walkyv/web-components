@@ -67,7 +67,6 @@
     button {
       padding:0;
       border:0;
-      background-color: transparent;
       position:relative;
       cursor:pointer;
       display:block;
@@ -92,24 +91,6 @@
         font-weight: 600;
         color: $pe-color-white;
         background-color: $pe-color-medium-gray;
-      }
-
-      &:not(:disabled) {
-        &:hover, &:focus {
-          .pe-cal-cell-square {
-            color: $pe-color-charcoal;
-            background-color: $pe-color-moonlight;
-
-          }
-        }
-        &.pe-cal-selected {
-          &:hover, &:focus {
-            .pe-cal-cell-square {
-              color: $pe-color-white;
-              background-color: $pe-color-medium-gray;
-            }
-          }
-        }
       }
 
     }
@@ -154,21 +135,6 @@
       background-color: $pe-color-white;
     }
 
-    .pe-cal-date button {
-      &:not(:disabled) {
-        &:hover, &:focus {
-          .pe-cal-cell-square {
-            color: $pe-color-charcoal;
-            background-color: $pe-color-moonlight;
-            &.pe-cal-selected {
-              color: $pe-color-charcoal;
-              background-color: $pe-color-white;
-            }
-          }
-
-        }
-      }
-    }
 
     .pe-cal-past .pe-cal-cell-square {
       color: $pe-color-digital-pearson-blue;
@@ -183,4 +149,19 @@
   background-color: transparent;
   border:0;
   position:relative;
+}
+
+.date-selector {
+  &:hover {
+    background-color:$pe-color-moonlight;
+    color: $pe-color-charcoal;
+    cursor: pointer;
+  }
+  &.selected {
+    background-color: $pe-color-medium-gray;
+    color:white;
+  }
+}
+.currentDate-box {
+  border:1px solid $pe-color-concrete;
 }
