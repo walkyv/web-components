@@ -150,7 +150,12 @@
   border:0;
   position:relative;
 }
-
+.pe-icon-wrapper {
+  button {
+    color:$pe-color-medium-gray;
+    cursor:pointer;
+  }
+}
 .date-selector {
   &:hover {
     background-color:$pe-color-moonlight;
