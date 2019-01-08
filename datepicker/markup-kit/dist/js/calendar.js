@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var datepickers = document.querySelectorAll('.datepicker-container');
+  var calendars = document.querySelectorAll(".pe-calendar");
 
   function unfocusAll(node) {
     var dates = node.querySelectorAll(".date-selector:not(:disabled)");
@@ -10,19 +10,10 @@
     });
   }
 
-  Array.prototype.forEach.call(datepickers, function (datepicker) {
-    var grid = datepicker.querySelector(".pe-cal-dates"),
-        dates = datepicker.querySelectorAll(".date-selector:not(:disabled)"),
+  calendars.forEach(function (calendar) {
+    var grid = calendar.querySelector(".pe-cal-dates"),
+        dates = calendar.querySelectorAll(".date-selector:not(:disabled)"),
         activeDescendant = grid.getAttribute("aria-activedescendant");
-
-    function focusDate(date) {
-      unfocusAll(datepicker);
-      if (date !== undefined) {
-        grid.setAttribute("aria-activedescendant", date.id);
-        date.setAttribute("tabindex", "0");
-        date.focus();
-      }
-    }
 
     function selectDate(date) {
       var currentLabel = date.getAttribute("aria-label");
@@ -41,8 +32,17 @@
       date.setAttribute("aria-label", currentLabel + " (Selected)");
     }
 
+    function focusDate(date) {
+      unfocusAll(calendar);
+      if (date !== undefined) {
+        grid.setAttribute("aria-activedescendant", date.id);
+        date.setAttribute("tabindex", "0");
+        date.focus();
+      }
+    }
+
     //onload, make sure all dates are set to tabindex -1
-    unfocusAll(datepicker);
+    unfocusAll(calendar);
 
     //set focus to already selected date (if available)
     if (activeDescendant) {

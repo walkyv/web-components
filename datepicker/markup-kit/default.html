@@ -11,21 +11,257 @@
     <symbol id="calendar-18" viewBox="0 0 18 18">
         <path d="M4 3L5 3 5 1 4 1 4 3zM13 3L14 3 14 1 13 1 13 3zM18 5L18 1.5C18 1.224 17.776 1 17.5 1L15 1 15 .5C15 .224 14.776 0 14.5 0L12.5 0C12.224 0 12 .224 12 .5L12 1 6 1 6 .5C6 .224 5.776 0 5.5 0L3.5 0C3.224 0 3 .224 3 .5L3 1 .5 1C.224 1 0 1.224 0 1.5L0 5 18 5zM14.0762 15L10.8262 15C10.5502 15 10.3262 14.776 10.3262 14.5 10.3262 14.224 10.5502 14 10.8262 14L12.0002 14 12.0002 9.707 11.3752 10.331C11.1802 10.526 10.8632 10.526 10.6682 10.331 10.4722 10.136 10.4722 9.819 10.6682 9.624L12.1462 8.146C12.2892 8.003 12.5062 7.96 12.6912 8.038 12.8782 8.116 13.0002 8.298 13.0002 8.5L13.0002 14 14.0762 14C14.3522 14 14.5762 14.224 14.5762 14.5 14.5762 14.776 14.3522 15 14.0762 15L14.0762 15zM9.0002 14.5C9.0002 14.776 8.7762 15 8.5002 15L4.5002 15C4.2232 15 4.0002 14.776 4.0002 14.5L4.0002 13.5C4.0002 13.224 4.2232 13 4.5002 13 4.7762 13 5.0002 13.224 5.0002 13.5L5.0002 14 8.0002 14 8.0002 12 5.6992 12C5.4232 12 5.1992 11.776 5.1992 11.5 5.1992 11.224 5.4232 11 5.6992 11L8.0002 11 8.0002 9 5.0002 9 5.0002 9.5C5.0002 9.776 4.7762 10 4.5002 10 4.2232 10 4.0002 9.776 4.0002 9.5L4.0002 8.5C4.0002 8.224 4.2232 8 4.5002 8L8.5002 8C8.7762 8 9.0002 8.224 9.0002 8.5L9.0002 14.5zM.0002 6L.0002 17.5C.0002 17.776.2232 18 .5002 18L17.5002 18C17.7762 18 18.0002 17.776 18.0002 17.5L18.0002 6 .0002 6z"/>
     </symbol>
+    <symbol id="chevron-back-18" viewBox="0 0 18 18">
+        <path d="M13.749,17.6606035 C14.112,17.2486035 14.076,16.6116035 13.662,16.2436035 L5.509,8.9996035 L13.662,1.7566035 C14.077,1.3896035 14.113,0.752603504 13.749,0.339603504 C13.383,-0.0763964961 12.751,-0.115396496 12.338,0.252603504 L3.338,8.2476035 C3.123,8.4376035 3,8.7126035 3,8.9996035 C3,9.2876035 3.123,9.5616035 3.338,9.7526035 L12.338,17.7476035 C12.751,18.1156035 13.383,18.0766035 13.749,17.6606035"></path>
+    </symbol>
+    <symbol id="chevron-next-18" viewBox="0 0 18 18">
+        <path d="M4.2506,17.6606035 C3.8876,17.2486035 3.9236,16.6116035 4.3376,16.2436035 L12.4906,8.9996035 L4.3376,1.7566035 C3.9226,1.3896035 3.8866,0.752603504 4.2506,0.339603504 C4.6166,-0.0763964961 5.2486,-0.115396496 5.6616,0.252603504 L14.6616,8.2476035 C14.8766,8.4376035 14.9996,8.7126035 14.9996,8.9996035 C14.9996,9.2876035 14.8766,9.5616035 14.6616,9.7526035 L5.6616,17.7476035 C5.2486,18.1156035 4.6166,18.0766035 4.2506,17.6606035"></path>
+    </symbol>
 </svg>
 
 <main id="main" aria-hidden="false">
-	<h1>Datepicker</h1>
-    <div class="pe-datepicker-main">
+    <div class="datepicker-container">
         <label class="pe-textLabelInput__label" for="datepicker">Select date (mm/dd/yyyy)</label>
-        <div class="pe-datepicker-container">
+        <div class="datepicker">
             <input type="text" class="pe-textInput--basic" id="datepicker" aria-label="enter date" placeholder="">
             <span class="pe-icon-wrapper">
                 <svg focusable="false" class="pe-icon--calendar-18" aria-hidden="true" >
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#calendar-18"></use>
                 </svg>
             </span>
-        </div> 
-        <section class="calendar hidden">
+        </div>
+        <section class="calendar-container animated animateIn">
+            <div class="pe-calendar ">
+                <fieldset class="pe-inner">
+                    <legend class="pe-cal-title pe-title--small" id="pe-cal-month">November 2018</legend>
+                    <div class="pe-cal-actions">
+
+                        <button class="pe-arrowIcons pe-icon--btn" type="button" aria-label="Previous month">
+                            <svg focusable="false" aria-hidden="true" class="pe-icon--chevron-back-18">
+                                <use xlink:href="#chevron-back-18">
+                                </use>
+                            </svg>
+                        </button>
+                        <button class="pe-arrowIcons pe-icon--btn" type="button" aria-label="Next month">
+                            <svg focusable="false" aria-hidden="true" class="pe-icon--chevron-next-18">
+                                <use xlink:href="#chevron-next-18">
+                                </use>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="pe-cal-row pe-cal-weekdays">
+                        <div class="pe-cal-cell pe-label--small pe-cal-cell-dayNames ">
+                            <abbr title="Sunday">S</abbr>
+                        </div>
+                        <div class="pe-cal-cell pe-label--small pe-cal-cell-dayNames ">
+                            <abbr title="Monday">M</abbr>
+                        </div>
+                        <div class="pe-cal-cell pe-label--small pe-cal-cell-dayNames ">
+                            <abbr title="Tuesday">T</abbr>
+                        </div>
+                        <div class="pe-cal-cell pe-label--small pe-cal-cell-dayNames ">
+                            <abbr title="Wednesday">W</abbr>
+                        </div>
+                        <div class="pe-cal-cell pe-label--small pe-cal-cell-dayNames ">
+                            <abbr title="Thursday">T</abbr>
+                        </div>
+                        <div class="pe-cal-cell pe-label--small pe-cal-cell-dayNames ">
+                            <abbr title="Friday">F</abbr>
+                        </div>
+                        <div class="pe-cal-cell pe-label--small pe-cal-cell-dayNames ">
+                            <abbr title="Saturday">S</abbr>
+                        </div>
+                    </div>
+                    <div class="pe-cal-dates" aria-activedescendant="day14">
+                        <div class="pe-cal-row">
+                            <div class="pe-cal-cell">
+                            </div>
+                            <div class="pe-cal-cell">
+                            </div>
+                            <div class="pe-cal-cell">
+                            </div>
+                            <div class="pe-cal-cell">
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date pe-cal-past">
+                                <button class="date-selector" type="button" id="day1" aria-label="Thursday, November 1, 2018" disabled>
+                                    <div class="pe-cal-cell-square">1</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date pe-cal-past">
+                                <button class="date-selector" type="button" id="day2" aria-label="Friday, November 2, 2018" disabled>
+                                    <div class="pe-cal-cell-square">2</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date pe-cal-past">
+                                <button class="date-selector" type="button" id="day3" aria-label="Saturday, November 3, 2018" disabled>
+                                    <div class="pe-cal-cell-square">3</div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="pe-cal-row">
+                            <div class="pe-cal-cell pe-cal-date pe-cal-past">
+                                <button class="date-selector" type="button" id="day4" aria-label="Sunday, November 4, 2018" disabled>
+                                    <div class="pe-cal-cell-square">4</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date pe-cal-past">
+                                <button class="date-selector" type="button" id="day5" aria-label="Monday, November 5, 2018" disabled>
+                                    <div class="pe-cal-cell-square">5</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day6" aria-label="Tuesday, November 6, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">6</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day7" aria-label="Wednesday, November 7, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">7</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day8" aria-label="Thursday, November 8, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">8</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day9" aria-label="Friday, November 9, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">9</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day10" aria-label="Saturday, November 10, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">10</div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="pe-cal-row">
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day11" aria-label="Sunday, November 11, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">11</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day12" aria-label="Monday, November 12, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">12</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day13" aria-label="Tuesday, November 13, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">13</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector pe-cal-selected" type="button" id="day14" aria-label="Wednesday, November 14, 2018 (Selected)" aria-pressed="true">
+                                    <div class="pe-cal-cell-square">14</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day15" aria-label="Thursday, November 15, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">15</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day16" aria-label="Friday, November 16, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">16</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day17" aria-label="Saturday, November 17, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">17</div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="pe-cal-row">
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day18" aria-label="Sunday, November 18, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">18</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day19" aria-label="Monday, November 19, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square secondary-date">19</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day20" aria-label="Tuesday, November 20, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">20</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day21" aria-label="Wednesday, November 21, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">21</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day22" aria-label="Thursday, November 22, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">22</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day23" aria-label="Friday, November 23, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square" >23</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day24" aria-label="Saturday, November 24, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">24</div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="pe-cal-row">
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day25" aria-label="Sunday, November 25, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">25</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day26" aria-label="Monday, November 26, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">26</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day27" aria-label="Tuesday, November 27, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">27</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector currentDate-box" id="day28" type="button" aria-label="Wednesday, November 28, 2018 (Today)" aria-current="date" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">28</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day29" aria-label="Thursday, November 29, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">29</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell pe-cal-date ">
+                                <button class="date-selector" type="button" id="day30" aria-label="Friday, November 30, 2018" aria-pressed="false">
+                                    <div class="pe-cal-cell-square">30</div>
+                                </button>
+                            </div>
+                            <div class="pe-cal-cell">
+                            </div>
+                        </div>
+                        <div class="pe-cal-row">
+                            <div class="pe-cal-cell">
+                            </div>
+                            <div class="pe-cal-cell">
+                            </div>
+                            <div class="pe-cal-cell">
+                            </div>
+                            <div class="pe-cal-cell">
+                            </div>
+                            <div class="pe-cal-cell">
+                            </div>
+                            <div class="pe-cal-cell">
+                            </div>
+                            <div class="pe-cal-cell">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
         </section>
     </div>
 </main>

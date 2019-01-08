@@ -1,58 +1,14 @@
 // only import the necessary modules outlined in the spec you are working on, do not load all of elements
 // These are the base modules necessary for loading the rest of the component styles
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/normalize";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/variables";
 @import "../node_modules/@pearson-components/elements-sdk/src/styles/base/mixins";
 @import "../node_modules/@pearson-components/elements-sdk/src/styles/base/functions";
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/normalize";
-
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/variables";
-
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/color/color";
-
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/typography/font-face";
 @import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/typography/type";
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/icons/icons";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/html-tags";
 
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/variables";
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/mixins";
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/select-input-abstracts";
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/inputMessages";
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/basic-input-mixins";
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/fancy-input";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/inputs/_inputs.scss";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/elements/icons/_icons.scss";
 
-@include selectAbstracts();
-
-@include textInput();
-@include textInputLabel();
-@include textInputBasic();
-@include textInputBasicError();
-@include textInputBasicDisabled();
-@include textInputBasicReadonly();
-
-@include inputMessages();
-
-@import "../node_modules/@pearson-components/elements-sdk/src/components/DatePicker/DatePicker";
-
-// Write the CSS for your markup here!
-.calendar {
-    height: 340px;
-    width: 320px;
-    position: relative;
-    background-color: #047b9c;
-    margin-top: 4px;
-    &:after {
-        position: absolute;
-        content: "I'm a placeholder";
-        color: white;
-    }
-    &.error {
-        margin-top: 19px;
-    }
-}
-.hidden {
-    display: none;
-}
-.pe-textInput--basic.native {
-    &::-webkit-clear-button, &::-webkit-inner-spin-button, &::-webkit-calendar-picker-indicator {
-        display: none;
-    } 
-}
+@import "datepicker";
+@import "calendar";
