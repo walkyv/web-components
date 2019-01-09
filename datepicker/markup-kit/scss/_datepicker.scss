@@ -2,7 +2,9 @@
   position:relative;
   min-width:150px;
   max-width:322px;
-
+  @media all and (-ms-high-contrast:none) {
+    max-width:350px;
+  }
   .datepicker {
     position:relative;
 

@@ -11,6 +11,9 @@
   border: 1px solid $pe-color-concrete;
   background-color: $pe-color-white;
   //position: absolute; //better to have absolute positioning in datepicker?
+  @media all and (-ms-high-contrast:none) {
+    width: 308px;
+  }
 
   fieldset {
     margin:0;
@@ -155,8 +158,12 @@
     color:$pe-color-medium-gray;
     cursor:pointer;
   }
+  @media all and (-ms-high-contrast:none) {
+   bottom: calc(50% - 12px) !important
+  }
 }
 .date-selector {
+  background:none;
   &:hover {
     background-color:$pe-color-moonlight;
     color: $pe-color-charcoal;
@@ -170,3 +177,5 @@
 .currentDate-box {
   border:1px solid $pe-color-concrete;
 }
+
+
