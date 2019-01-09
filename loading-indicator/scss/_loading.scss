@@ -1,7 +1,30 @@
-.pe-loadingSpinner {
-  width: 25px;
-  height: 25px;
+:host, :host * {
+  box-sizing: border-box;
+}
+
+:host {
+  display: block;
   position: relative;
+  font: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
+  color: #ffffff;
+  background-color: #252525;
+  width: 200px;
+  height: 70px;
+  padding: 0 20px;
+  margin: auto;
+  border: 1px solid #252525;
+  border-radius: 5px;
+}
+
+.pe-loadingSpinner, .loading-text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.pe-loadingSpinner {
+  position: relative;
+  width: 23px;
+  height: 23px;
 }
 .pe-loadingSpinner-container1 > div, .pe-loadingSpinner-container2 > div {
   width: 4px;
@@ -59,27 +82,16 @@
   animation-delay: -0.2s;
 }
 
-.loading-indicator-wrapper {
-  border-radius: 5px;
-  margin: auto;
-  width: 200px;
-  padding: 30px 20px 20px 20px;
-  background-color: #252525;
-  border: 1px solid #252525;
-}
 .loading-indicator {
-  color: white;
-  margin: auto;
-  width: 50%;
-  background-color: #252525;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: auto;
+  transform: translate(-50%, -50%);
 }
+
 .loading-text {
-  padding-left: 30px;
-  display: block;
-  margin: auto;
-  width: 50%;
-  position: relative;
-  top: -20px;
+  margin-left: 12px;
 }
 
 #loaded-content main {
