@@ -1,4 +1,5 @@
-:host, :host * {
+:host,
+:host * {
   box-sizing: border-box;
 }
 
@@ -6,7 +7,7 @@
   display: block;
   position: relative;
   font: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
-  text-align:center;
+  text-align: center;
   color: #ffffff;
   background-color: #252525;
   width: 200px;
@@ -27,7 +28,8 @@
   display: inline-block;
 }
 
-.pe-loadingSpinner, .loading-text {
+.pe-loadingSpinner,
+.loading-text {
   display: inline-block;
   vertical-align: middle;
 }
@@ -37,10 +39,11 @@
   width: 23px;
   height: 23px;
 }
-.pe-loadingSpinner-container1 > div, .pe-loadingSpinner-container2 > div {
+.pe-loadingSpinner-container1 > div,
+.pe-loadingSpinner-container2 > div {
   width: 4px;
   height: 4px;
-  background-color: #19A6A4;
+  background-color: #19a6a4;
   border-radius: 100%;
   position: absolute;
   animation: bouncedelay 1.6s infinite ease-in-out;
@@ -77,7 +80,7 @@
   animation-delay: -1.2s;
 }
 .pe-loadingSpinner-container2 .circle2 {
-  animation-delay: -1.0s;
+  animation-delay: -1s;
 }
 .pe-loadingSpinner-container1 .circle3 {
   animation-delay: -0.8s;
@@ -95,8 +98,4 @@
 
 .loading-text {
   margin-left: 12px;
-}
-
-#loaded-content main {
-  animation: fadein 2s;
 }
