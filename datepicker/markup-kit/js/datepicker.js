@@ -31,7 +31,6 @@
     const value = node.getAttribute('data-date');
 
     Array.prototype.forEach.call(dates, date => {
-      console.log('REMOVE SELECTED')
       date.classList.remove('selected');
       date.setAttribute('aria-pressed', false)
     });
@@ -93,11 +92,16 @@
         const nextItem = parseInt(event.target.getAttribute('data-index')) + 1,
           prevItem = parseInt(event.target.getAttribute('data-index')) - 1,
           nextWeek = parseInt(event.target.getAttribute('data-index')) + 7,
-          prevWeek = parseInt(event.target.getAttribute('data-index')) - 7;
+          prevWeek = parseInt(event.target.getAttribute('data-index')) - 7,
+          currentlySelected = input.getAttribute('data-selected'),
+          nodeCurrentlySelected = datepicker.querySelector(`[data-date="${currentlySelected}"]`),
+          previousMonth = datepicker.querySelector('.previous'),
+          nextMonth = datepicker.querySelector('.next');
 
         event.preventDefault();
         event.stopImmediatePropagation();
         switch (event.keyCode) {
+
           case 39:
             if (document.activeElement === lastFocusableElement) {
               console.log('fire off next month')
@@ -136,12 +140,28 @@
             }
             break;
           case 13:
-            selectDate(event.target, input, dates);
-            closeCalendar(calendar, input,openCalendarBtn);
+            if (document.activeElement !== previousMonth && document.activeElement !== nextMonth ) {
+              selectDate(event.target, input, dates);
+              closeCalendar(calendar, input,openCalendarBtn)
+            } else if (document.activeElement === previousMonth){
+              console.log('fire off previous Month')
+            } else if (document.activeElement === nextMonth) {
+              console.log('fire off next Month')
+            } else {
+              return
+            }
             break;
           case 32:
-            selectDate(event.target, input, dates);
-            closeCalendar(calendar, input,openCalendarBtn)
+            if (document.activeElement !== previousMonth && document.activeElement !== nextMonth ) {
+              selectDate(event.target, input, dates);
+              closeCalendar(calendar, input,openCalendarBtn)
+            } else if (document.activeElement === previousMonth){
+              console.log('fire off previous Month')
+            } else if (document.activeElement === nextMonth) {
+              console.log('fire off next Month')
+            } else {
+              return
+            }
             break;
           case 33:
             console.log('fire off prev month')
@@ -151,7 +171,6 @@
             break;
           case 35:
             const endOfWeek = event.target.parentNode.parentNode.lastElementChild.querySelector('button');
-            console.log(endOfWeek)
             endOfWeek.focus();
             break;
           case 36:
@@ -159,10 +178,6 @@
             firstOfWeek.focus();
             break;
           case 9:
-            const currentlySelected = input.getAttribute('data-selected'),
-              nodeCurrentlySelected = datepicker.querySelector(`[data-date="${currentlySelected}"]`),
-              previousMonth = datepicker.querySelector('.previous'),
-              nextMonth = datepicker.querySelector('.next');
             if (document.activeElement === previousMonth) {
               nextMonth.focus();
             } else if (document.activeElement === nextMonth){
