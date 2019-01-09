@@ -170,12 +170,12 @@
             console.log('fire off next month')
             break;
           case 35:
-            const endOfWeek = event.target.parentNode.parentNode.lastElementChild.querySelector('button');
-            endOfWeek.focus();
+            const endOfMonth = datepicker.querySelector('.end');
+            endOfMonth.focus();
             break;
           case 36:
-            const firstOfWeek = event.target.parentNode.parentNode.firstElementChild.querySelector('button');
-            firstOfWeek.focus();
+            const firstOfMonth = datepicker.querySelector('.start');
+            firstOfMonth.focus();
             break;
           case 9:
             if (document.activeElement === previousMonth) {
@@ -185,6 +185,9 @@
             } else {
               previousMonth.focus();
             }
+            break;
+          case 27:
+            closeCalendar(calendar, input,openCalendarBtn)
             break;
         }
       });
