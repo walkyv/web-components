@@ -139,6 +139,25 @@
             selectDate(event.target, input, dates);
             closeCalendar(calendar, input, openCalendarBtn);
             break;
+          case 32:
+            selectDate(event.target, input, dates);
+            closeCalendar(calendar, input, openCalendarBtn);
+            break;
+          case 33:
+            console.log('fire off prev month');
+            break;
+          case 34:
+            console.log('fire off next month');
+            break;
+          case 35:
+            var endOfWeek = event.target.parentNode.parentNode.lastElementChild.querySelector('button');
+            console.log(endOfWeek);
+            endOfWeek.focus();
+            break;
+          case 36:
+            var firstOfWeek = event.target.parentNode.parentNode.firstElementChild.querySelector('button');
+            firstOfWeek.focus();
+            break;
           case 9:
             var currentlySelected = input.getAttribute('data-selected'),
                 nodeCurrentlySelected = datepicker.querySelector('[data-date="' + currentlySelected + '"]'),
