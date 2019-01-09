@@ -34,13 +34,13 @@
 		</div>
 `;
 
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-example');
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-loading');
 
   /** Any helper functions that do not need to be part of the class
    * can be declared here, before the class is defined.
    */
 
-  class Example extends HTMLElement {
+  class Loading extends HTMLElement {
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
@@ -86,5 +86,5 @@
       this.shadowRoot.appendChild(doc.createTextNode('Shadow button clicked!'));
     }
   }
-  customElements.define('pearson-example', Example);
+  customElements.define('pearson-example', Loading);
 })(window, document);
