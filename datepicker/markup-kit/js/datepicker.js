@@ -29,13 +29,16 @@
 
   function selectDate(node, input, dates) {
     const value = node.getAttribute('data-date');
+
     Array.prototype.forEach.call(dates, date => {
       console.log('REMOVE SELECTED')
       date.classList.remove('selected');
+      date.setAttribute('aria-pressed', false)
     });
     input.setAttribute('data-selected', value);
     input.value = value;
     node.classList.add('selected');
+    node.setAttribute('aria-pressed', true);
   }
 
   Array.prototype.forEach.call(datepickers, datepicker => {
@@ -74,7 +77,6 @@
         firstFocusableElement = focusableElements[0],
         lastFocusableElement = focusableElements[focusableElements.length - 1];
 
-      console.log('ANIMATION END SHOW DATES')
       // sets the date when number is clicked
       calendar.addEventListener('click', event => {
         event.stopImmediatePropagation();
@@ -136,6 +138,19 @@
           case 13:
             selectDate(event.target, input, dates);
             closeCalendar(calendar, input,openCalendarBtn)
+            break;
+          case 9:
+            const currentlySelected = input.getAttribute('data-selected'),
+              nodeCurrentlySelected = datepicker.querySelector(`[data-date="${currentlySelected}"]`),
+              previousMonth = datepicker.querySelector('.previous'),
+              nextMonth = datepicker.querySelector('.next');
+            if (document.activeElement === previousMonth) {
+              nextMonth.focus();
+            } else if (document.activeElement === nextMonth){
+              nodeCurrentlySelected.focus();
+            } else {
+              previousMonth.focus();
+            }
             break;
         }
       });
