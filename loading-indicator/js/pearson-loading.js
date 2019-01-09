@@ -1,13 +1,7 @@
 (function(w, doc) {
   'use strict';
 
-  // Create a template element
   const template = doc.createElement('template');
-
-  //Styles must be copied from the css file
-  // and pasted between the style tags below
-
-  // Other markup should be written after the closing tag.
 
   template.innerHTML = ` 
     <style>
@@ -34,10 +28,6 @@
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-loading');
 
-  /** Any helper functions that do not need to be part of the class
-   * can be declared here, before the class is defined.
-   */
-
   class Loading extends HTMLElement {
     constructor() {
       super();
@@ -45,43 +35,11 @@
 
       const clone = template.content.cloneNode(true);
 
-      /** If we need references to the children of the component,
-       * we can create them here. If they are created elsewhere,
-       * they will not be available our lifecycle methods.
-       */
-
-      this.heading = clone.querySelector('#title');
-      this.button = clone.querySelector('#button');
-
-      /** After all this, we can append our clone to the shadowRoot */
       this.shadowRoot.appendChild(clone);
-
-      /** We should also bind any event listeners to `this` so their
-       * references do not get lost.
-       */
-      this.handleClick = this.handleClick.bind(this);
     }
 
     connectedCallback() {
-      /** Any changes to what the component renders should be done here. */
-
-      // Get the attributes set by the consumer
-      const titleText = this.getAttribute('title');
-      const buttonText = this.getAttribute('buttonText');
-
-      this.heading.textContent = titleText;
-      this.button.textContent = buttonText;
-
-      /** Event listeners should also be bound here. */
-      this.button.addEventListener('click', this.handleClick);
-    }
-
-    diconnectedCallback() {
-      this.button.removeEventListener('click', this.handleClick);
-    }
-
-    handleClick() {
-      this.shadowRoot.appendChild(doc.createTextNode('Shadow button clicked!'));
+      // TODO: Add checks to ensure, apply ARIA attrs
     }
   }
   customElements.define('pearson-loading', Loading);
