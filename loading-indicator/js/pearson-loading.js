@@ -86,5 +86,5 @@
       this.shadowRoot.appendChild(doc.createTextNode('Shadow button clicked!'));
     }
   }
-  customElements.define('pearson-example', Loading);
+  customElements.define('pearson-loading', Loading);
 })(window, document);

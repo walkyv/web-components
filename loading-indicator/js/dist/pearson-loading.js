@@ -86,5 +86,5 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     return Loading;
   }(HTMLElement);
 
-  customElements.define('pearson-example', Loading);
+  customElements.define('pearson-loading', Loading);
 })(window, document);
