@@ -55,6 +55,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       var clone = template.content.cloneNode(true);
 
+      _this.loadingText = clone.querySelector('#loading-text');
+
       _this.shadowRoot.appendChild(clone);
       return _this;
     }
@@ -63,7 +65,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'connectedCallback',
       value: function connectedCallback() {
         // Check for and apply correct ARIA attributes
-
         ensureAttrs(this, REQUIRED_A11Y_ATTRS);
       }
     }, {
@@ -74,6 +75,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           ensureAttrs(this, {
             'aria-label': newLabel
           });
+
+          if (this.loadingText.textContent !== newLabel) {
+            this.loadingText.textContent = newLabel;
+          }
         }
       }
     }]);

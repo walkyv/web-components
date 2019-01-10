@@ -60,12 +60,13 @@
 
       const clone = template.content.cloneNode(true);
 
+      this.loadingText = clone.querySelector('#loading-text');
+
       this.shadowRoot.appendChild(clone);
     }
 
     connectedCallback() {
       // Check for and apply correct ARIA attributes
-
       ensureAttrs(this, REQUIRED_A11Y_ATTRS);
     }
 
@@ -75,6 +76,10 @@
         ensureAttrs(this, {
           'aria-label': newLabel
         });
+
+        if (this.loadingText.textContent !== newLabel) {
+          this.loadingText.textContent = newLabel;
+        }
       }
     }
   }
