@@ -17,6 +17,7 @@
     margin:0;
     line-height:18px;
     font-size:14px;
+    font-family: 'Open Sans', Calibri, Tahoma, sans-serif;
 
     &:after {
       content: '';
@@ -46,8 +47,7 @@
     left:0;
     bottom:0;
     background-color: $pe-color-digital-marine-turquoise;
-    transition: .2s;
-    animation: shift 0.2s linear infinite;
+    animation: shift 0.25s linear infinite;
   }
 
   &.loading {
