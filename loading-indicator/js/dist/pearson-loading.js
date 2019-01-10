@@ -34,7 +34,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Loading, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        // TODO: Add checks to ensure, apply ARIA attrs
+        // Check for and apply correct ARIA attributes
+
+        if (!this.hasAttribute('role') || this.getAttribute('role') === 'progressbar') {
+          this.setAttribute('role', 'progressbar');
+        }
+
+        if (!this.hasAttribute('aria-valuemin') || this.getAttribute('aria-valuemin') === '0') {
+          this.setAttribute('aria-valuemin', '0');
+        }
+
+        if (!this.hasAttribute('aria-valuemax') || this.getAttribute('aria-valuemax') === '100') {
+          this.setAttribute('aria-valuemax', '100');
+        }
+
+        if (!this.hasAttribute('aria-label') || this.getAttribute('aria-label') === 'Loading') {
+          this.setAttribute('aria-label', 'Loading');
+        }
       }
     }]);
 
