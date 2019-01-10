@@ -26,7 +26,7 @@
 		</div>
 `;
 
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-loading');
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-loading-indicator');
 
   // ARIA attributes (and values) required for accessibility
   const REQUIRED_A11Y_ATTRS = {
@@ -51,7 +51,7 @@
     }
   }
 
-  class Loading extends HTMLElement {
+  class LoadingIndicator extends HTMLElement {
     static get observedAttributes() {
       return ['loaded'];
     }
@@ -99,5 +99,5 @@
       }
     }
   }
-  customElements.define('pearson-loading', Loading);
+  customElements.define('pearson-loading-indicator', LoadingIndicator);
 })(window, document);
