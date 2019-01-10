@@ -32,8 +32,7 @@
   const REQUIRED_A11Y_ATTRS = {
     'role': 'progressbar',
     'aria-valuemin': '0',
-    'aria-valuemax': '100',
-    'aria-label': 'Loading'
+    'aria-valuemax': '100'
   };
 
   /**
@@ -51,6 +50,10 @@
   }
 
   class Loading extends HTMLElement {
+    static get observedAttributes() {
+      return ['loaded'];
+    }
+
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
@@ -64,6 +67,15 @@
       // Check for and apply correct ARIA attributes
 
       ensureAttrs(this, REQUIRED_A11Y_ATTRS);
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      if (name === 'loaded') {
+        const newLabel = (newValue !== null) ? 'Loaded!' : 'Loading...';
+        ensureAttrs(this, {
+          'aria-label': newLabel
+        });
+      }
     }
   }
   customElements.define('pearson-loading', Loading);

@@ -19,8 +19,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var REQUIRED_A11Y_ATTRS = {
     'role': 'progressbar',
     'aria-valuemin': '0',
-    'aria-valuemax': '100',
-    'aria-label': 'Loading'
+    'aria-valuemax': '100'
   };
 
   /**
@@ -39,6 +38,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   var Loading = function (_HTMLElement) {
     _inherits(Loading, _HTMLElement);
+
+    _createClass(Loading, null, [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['loaded'];
+      }
+    }]);
 
     function Loading() {
       _classCallCheck(this, Loading);
@@ -59,6 +65,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         // Check for and apply correct ARIA attributes
 
         ensureAttrs(this, REQUIRED_A11Y_ATTRS);
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'loaded') {
+          var newLabel = newValue !== null ? 'Loaded!' : 'Loading...';
+          ensureAttrs(this, {
+            'aria-label': newLabel
+          });
+        }
       }
     }]);
 
