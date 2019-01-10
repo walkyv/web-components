@@ -15,6 +15,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-loading');
 
+  // ARIA attributes (and values) required for accessibility
+  var REQUIRED_A11Y_ATTRS = {
+    'role': 'progressbar',
+    'aria-valuemin': '0',
+    'aria-valuemax': '100',
+    'aria-label': 'Loading'
+  };
+
+  /**
+   * Ensure that the provided node has the attributes in the provided attr collection.
+   * @param {HTMLElement} node Element whose attributes we are ensuring
+   * @param {Object} attrs Collection of attributes and values to assign to the node
+   */
+  function ensureAttrs(node, attrs) {
+    for (var attrName in attrs) {
+      var requiredVal = attrs[attrName];
+      if (!node.hasAttribute(attrName) || node.getAttribute(attrName) !== requiredVal) {
+        node.setAttribute(attrName, requiredVal);
+      }
+    }
+  }
+
   var Loading = function (_HTMLElement) {
     _inherits(Loading, _HTMLElement);
 
@@ -36,21 +58,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         // Check for and apply correct ARIA attributes
 
-        if (!this.hasAttribute('role') || this.getAttribute('role') === 'progressbar') {
-          this.setAttribute('role', 'progressbar');
-        }
-
-        if (!this.hasAttribute('aria-valuemin') || this.getAttribute('aria-valuemin') === '0') {
-          this.setAttribute('aria-valuemin', '0');
-        }
-
-        if (!this.hasAttribute('aria-valuemax') || this.getAttribute('aria-valuemax') === '100') {
-          this.setAttribute('aria-valuemax', '100');
-        }
-
-        if (!this.hasAttribute('aria-label') || this.getAttribute('aria-label') === 'Loading') {
-          this.setAttribute('aria-label', 'Loading');
-        }
+        ensureAttrs(this, REQUIRED_A11Y_ATTRS);
       }
     }]);
 
