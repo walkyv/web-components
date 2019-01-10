@@ -31,6 +31,7 @@
   // ARIA attributes (and values) required for accessibility
   const REQUIRED_A11Y_ATTRS = {
     'role': 'progressbar',
+    'aria-label': 'Loading',
     'aria-valuemin': '0',
     'aria-valuemax': '100',
     'aria-valuetext': 'Loading indicator'

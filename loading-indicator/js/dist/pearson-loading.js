@@ -18,6 +18,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   // ARIA attributes (and values) required for accessibility
   var REQUIRED_A11Y_ATTRS = {
     'role': 'progressbar',
+    'aria-label': 'Loading',
     'aria-valuemin': '0',
     'aria-valuemax': '100',
     'aria-valuetext': 'Loading indicator'
