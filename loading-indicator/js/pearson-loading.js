@@ -32,7 +32,8 @@
   const REQUIRED_A11Y_ATTRS = {
     'role': 'progressbar',
     'aria-valuemin': '0',
-    'aria-valuemax': '100'
+    'aria-valuemax': '100',
+    'aria-valuetext': 'Loading indicator'
   };
 
   /**

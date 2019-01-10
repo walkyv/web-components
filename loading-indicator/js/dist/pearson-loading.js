@@ -19,7 +19,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var REQUIRED_A11Y_ATTRS = {
     'role': 'progressbar',
     'aria-valuemin': '0',
-    'aria-valuemax': '100'
+    'aria-valuemax': '100',
+    'aria-valuetext': 'Loading indicator'
   };
 
   /**
