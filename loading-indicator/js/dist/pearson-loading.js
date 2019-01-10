@@ -40,7 +40,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var Loading = function (_HTMLElement) {
     _inherits(Loading, _HTMLElement);
 
-    _createClass(Loading, null, [{
+    _createClass(Loading, [{
+      key: 'loaded',
+      get: function get() {
+        return this.hasAttribute('loaded');
+      },
+      set: function set(newValue) {
+        var isLoaded = Boolean(newValue);
+
+        if (isLoaded) {
+          this.setAttribute('loaded', '');
+        } else {
+          this.removeAttribute('loaded');
+        }
+      }
+    }], [{
       key: 'observedAttributes',
       get: function get() {
         return ['loaded'];

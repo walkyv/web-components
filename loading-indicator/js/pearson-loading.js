@@ -55,6 +55,20 @@
       return ['loaded'];
     }
 
+    get loaded() {
+      return this.hasAttribute('loaded');
+    }
+
+    set loaded(newValue) {
+      const isLoaded = Boolean(newValue);
+
+      if (isLoaded) {
+        this.setAttribute('loaded', '');
+      } else {
+        this.removeAttribute('loaded');
+      }
+    }
+
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
