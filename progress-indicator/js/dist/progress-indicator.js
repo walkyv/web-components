@@ -39,6 +39,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'progress',
       get: function get() {
         return this.getAttribute('progress');
+      },
+      set: function set(newValue) {
+        this.setAttribute('progress', newValue);
       }
     }, {
       key: 'type',

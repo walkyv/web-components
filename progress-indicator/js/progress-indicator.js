@@ -41,6 +41,10 @@
       return this.getAttribute('progress');
     }
 
+    set progress(newValue) {
+      this.setAttribute('progress', newValue);
+    }
+
     get type() {
       return this.getAttribute('type');
     }
