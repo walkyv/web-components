@@ -108,7 +108,7 @@
         this.progressBar = newValue;
         if (this.type === 'loading') {
           if (parseInt(this.progress) % 20 === 0) {
-            this.alertMessage = this.progress + ' percent loaded'
+            this.alertMessage = this.progress + ' percent loaded';
           }
           if (this.progress === '100') {
             this.alertMessage = 'Done loading';
