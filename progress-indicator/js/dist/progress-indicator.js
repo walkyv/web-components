@@ -11,16 +11,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   // Create a template element
 
-  var standard = doc.createElement('template'),
-      alert = doc.createElement('template');
+  var component = doc.createElement('template'),
+      liveRegion = doc.createElement('template');
 
   //Styles must be copied from the css file
   // and pasted between the style tags below
-  alert.innerHTML = '\n        <div role="alert" aria-live="polite" class="loading-bar-liveregion" id="liveregion">\n          <!-- insert loaded confirmation message here, visually hidden region -->\n        </div>\n  ';
+  liveRegion.innerHTML = '\n        <div role="alert" aria-live="polite" class="loading-bar-liveregion" id="liveRegion">\n          <!-- insert loaded confirmation message here, visually hidden region -->\n        </div>\n  ';
 
-  standard.innerHTML = ' \n    <style>\n    .loading-bar-liveregion{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px)}.pe-progress-bar{position:relative;padding-bottom:16px}.pe-progress-bar .fullbar{width:100%;text-align:center;margin:0;line-height:18px;font-size:14px;font-family:Open Sans,Calibri,Tahoma,sans-serif}.pe-progress-bar .fullbar:after{content:"";height:4px;width:100%;position:absolute;bottom:4px;left:0;background-color:#c7c7c7}.pe-progress-bar.left-aligned .fullbar{text-align:left}.pe-progress-bar.right-aligned .fullbar{text-align:right}.pe-progress-bar div[role=progressbar]{height:12px;width:0;position:absolute;left:0;bottom:0;background-color:#19a6a4;-webkit-animation:shift .25s linear infinite;animation:shift .25s linear infinite}.pe-progress-bar.loading div[role=progressbar]{background-image:-webkit-linear-gradient(315deg,#19a6a4 33.33%,#daf0ed 0,#daf0ed 50%,#19a6a4 0,#19a6a4 83.33%,#daf0ed 0,#daf0ed);background-image:linear-gradient(135deg,#19a6a4 33.33%,#daf0ed 0,#daf0ed 50%,#19a6a4 0,#19a6a4 83.33%,#daf0ed 0,#daf0ed);background-size:18px 18px}@-webkit-keyframes shift{to{background-position:9px 9px}}@keyframes shift{to{background-position:9px 9px}}@media screen and (prefers-reduced-motion:reduce){.pe-progress-bar div[role=progressbar]{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:unset!important;transition:unset!important}}\n    </style>\n     <div class="pe-progress-bar">\n      <p class="fullbar" id="label">0%</p>\n      <div role="progressbar" aria-valuenow="0" aria-valuemax="100" aria-valuemin="0" id="progress"></div>\n  </div>\n';
+  component.innerHTML = ' \n    <style>\n    .loading-bar-liveregion{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px)}.pe-progress-bar{position:relative;padding-bottom:16px}.pe-progress-bar .fullbar{width:100%;text-align:center;margin:0;line-height:18px;font-size:14px;font-family:Open Sans,Calibri,Tahoma,sans-serif}.pe-progress-bar .fullbar:after{content:"";height:4px;width:100%;position:absolute;bottom:4px;left:0;background-color:#c7c7c7}.pe-progress-bar.left-aligned .fullbar{text-align:left}.pe-progress-bar.right-aligned .fullbar{text-align:right}.pe-progress-bar div[role=progressbar]{height:12px;width:0;position:absolute;left:0;bottom:0;background-color:#19a6a4;-webkit-animation:shift .25s linear infinite;animation:shift .25s linear infinite}.pe-progress-bar.loading div[role=progressbar]{background-image:-webkit-linear-gradient(315deg,#19a6a4 33.33%,#daf0ed 0,#daf0ed 50%,#19a6a4 0,#19a6a4 83.33%,#daf0ed 0,#daf0ed);background-image:linear-gradient(135deg,#19a6a4 33.33%,#daf0ed 0,#daf0ed 50%,#19a6a4 0,#19a6a4 83.33%,#daf0ed 0,#daf0ed);background-size:18px 18px}@-webkit-keyframes shift{to{background-position:9px 9px}}@keyframes shift{to{background-position:9px 9px}}@media screen and (prefers-reduced-motion:reduce){.pe-progress-bar div[role=progressbar]{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:unset!important;transition:unset!important}}\n    </style>\n     <div class="pe-progress-bar">\n      <p class="fullbar" id="label">0%</p>\n      <div role="progressbar" aria-valuenow="0" aria-valuemax="100" aria-valuemin="0" id="progress"></div>\n  </div>\n';
 
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(standard, 'progress-indicator');
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(component, 'progress-indicator');
 
   var ProgressIndicator = function (_HTMLElement) {
     _inherits(ProgressIndicator, _HTMLElement);
@@ -97,17 +97,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       var _this = _possibleConstructorReturn(this, (ProgressIndicator.__proto__ || Object.getPrototypeOf(ProgressIndicator)).call(this));
 
       _this.attachShadow({ mode: 'open' });
-      var clone = standard.content.cloneNode(true);
-      var alertClone = alert.content.cloneNode(true);
 
-      _this.liveRegion = alertClone.querySelector('#liveregion');
-      _this.shadowRoot.appendChild(alertClone);
+      var componentClone = component.content.cloneNode(true);
+      var liveRegionClone = liveRegion.content.cloneNode(true);
 
-      _this.loadingBar = clone.querySelector('[role=progressbar]');
-      _this.wrapper = clone.querySelector('.pe-progress-bar');
-      _this.label = clone.querySelector('#label');
+      _this.liveRegion = liveRegionClone.querySelector('#liveRegion');
 
-      _this.shadowRoot.appendChild(clone);
+      _this.loadingBar = componentClone.querySelector('[role=progressbar]');
+      _this.wrapper = componentClone.querySelector('.pe-progress-bar');
+      _this.label = componentClone.querySelector('#label');
+
+      _this.shadowRoot.appendChild(liveRegionClone);
+      _this.shadowRoot.appendChild(componentClone);
       return _this;
     }
 
