@@ -33,18 +33,13 @@
     let progress = loader.getAttribute('progress');
     let count = parseInt(progress);
     setInterval( function (event) {
-      if (count <= 100) {
+      if (count < 100) {
         count++;
         loader.setAttribute('progress', count.toString());
       } else {
         return
       }
-    },100)
-
-    loader.addEventListener('loaded', function () {
-      alert('progress loaded - click OK to reset')
-      count = 0
-    })
+    },200)
   </script>
   </body>
 </html>
