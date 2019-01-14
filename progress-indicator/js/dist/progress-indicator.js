@@ -38,7 +38,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'progress',
       get: function get() {
-        return this.getAttribute('progress');
+        return parseInt(this.getAttribute('progress'), 10);
       },
       set: function set(newValue) {
         this.setAttribute('progress', newValue);
@@ -115,6 +115,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(ProgressIndicator, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
+        if (!this.hasAttribute('progress')) {
+          this.setAttribute('progress', '0');
+        }
+
         this.progressBar = this.progress;
         this.loaderType = this.type;
         this.maxValue = this.max;

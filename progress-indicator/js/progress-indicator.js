@@ -39,7 +39,7 @@
     }
 
     get progress() {
-      return this.getAttribute('progress');
+      return parseInt(this.getAttribute('progress'), 10);
     }
 
     set progress(newValue) {
@@ -83,7 +83,7 @@
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
-      
+
       const componentClone = component.content.cloneNode(true);
       const liveRegionClone = liveRegion.content.cloneNode(true);
 
@@ -98,6 +98,10 @@
     }
 
     connectedCallback() {
+      if (!this.hasAttribute('progress')) {
+        this.setAttribute('progress', '0');
+      }
+
       this.progressBar = this.progress;
       this.loaderType = this.type;
       this.maxValue = this.max;
