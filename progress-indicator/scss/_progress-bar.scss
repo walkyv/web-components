@@ -1,5 +1,7 @@
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/variables";
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/functions";
+$pe-color-digital-ice-blue: #DAF0ED;
+$pe-color-digital-marine-turquoise: #19A6A4;
+$pe-color-concrete: #C7C7C7;
+$pe-focus-color: #0B73DA;
 
 .loading-bar-liveregion {
   position: absolute !important;
@@ -17,6 +19,7 @@
     margin:0;
     line-height:18px;
     font-size:14px;
+    font-family: 'Open Sans', Calibri, Tahoma, sans-serif;
 
     &:after {
       content: '';
@@ -46,8 +49,7 @@
     left:0;
     bottom:0;
     background-color: $pe-color-digital-marine-turquoise;
-    transition: .2s;
-    animation: shift 0.2s linear infinite;
+    animation: shift 0.25s linear infinite;
   }
 
   &.loading {
