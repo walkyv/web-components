@@ -132,15 +132,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (name === 'progress') {
           this.progressBar = newValue;
 
-          if (this.progress === 100) {
-            this.alertMessage = 'Done loading';
-            this.dispatchEvent(new Event('loaded', {
-              bubbles: true
-            }));
+          if (oldValue === '0') {
+            this.alertMessage = 'Starting.';
           }
 
           if (this.progress % 20 === 0) {
-            this.alertMessage = this.progress + ' percent loaded';
+            this.alertMessage = this.progress + ' percent loaded.';
+          }
+
+          if (this.progress === 100) {
+            this.alertMessage = 'Finished loading.';
+            this.dispatchEvent(new Event('loaded', {
+              bubbles: true
+            }));
           }
         }
       }
