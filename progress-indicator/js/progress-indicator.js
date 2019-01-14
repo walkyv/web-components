@@ -76,13 +76,17 @@
     }
 
     set alertMessage(message) {
-      this.wrapper.querySelector('#liveregion').innerHTML = message;
+      this.liveRegion.innerHTML = message;
     }
 
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
       const clone = standard.content.cloneNode(true);
+      const alertClone = alert.content.cloneNode(true);
+      
+      this.liveRegion = alertClone.querySelector('#liveregion');
+      this.shadowRoot.appendChild(alertClone);
 
       this.loadingBar = clone.querySelector('[role=progressbar]');
       this.wrapper = clone.querySelector('.pe-progress-bar');
@@ -92,15 +96,10 @@
     }
 
     connectedCallback() {
-      const alertClone = alert.content.cloneNode(true);
       this.progressBar = this.progress;
       this.loaderType = this.type;
       this.maxValue = this.max;
       this.titleAlignment = this.alignment;
-
-      if (this.type === 'loading') {
-        this.wrapper.appendChild(alertClone);
-      }
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

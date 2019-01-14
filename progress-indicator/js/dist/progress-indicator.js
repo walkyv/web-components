@@ -82,7 +82,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'alertMessage',
       set: function set(message) {
-        this.wrapper.querySelector('#liveregion').innerHTML = message;
+        this.liveRegion.innerHTML = message;
       }
     }], [{
       key: 'observedAttributes',
@@ -98,6 +98,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.attachShadow({ mode: 'open' });
       var clone = standard.content.cloneNode(true);
+      var alertClone = alert.content.cloneNode(true);
+
+      _this.liveRegion = alertClone.querySelector('#liveregion');
+      _this.shadowRoot.appendChild(alertClone);
 
       _this.loadingBar = clone.querySelector('[role=progressbar]');
       _this.wrapper = clone.querySelector('.pe-progress-bar');
@@ -110,15 +114,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(ProgressIndicator, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var alertClone = alert.content.cloneNode(true);
         this.progressBar = this.progress;
         this.loaderType = this.type;
         this.maxValue = this.max;
         this.titleAlignment = this.alignment;
-
-        if (this.type === 'loading') {
-          this.wrapper.appendChild(alertClone);
-        }
       }
     }, {
       key: 'attributeChangedCallback',
