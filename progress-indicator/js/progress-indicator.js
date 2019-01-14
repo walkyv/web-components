@@ -109,20 +109,22 @@
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
+      if (this.type !== 'loading') return;
+      
       if (name === 'progress') {
         this.progressBar = newValue;
-        if (this.type === 'loading') {
-          if (parseInt(this.progress) % 20 === 0) {
-            this.alertMessage = this.progress + ' percent loaded';
-          }
-          if (this.progress === '100') {
-            this.alertMessage = 'Done loading';
-            this.dispatchEvent(
-              new Event('loaded', {
-                bubbles: true
-              })
-            );
-          }
+
+        if (this.progress === 100) {
+          this.alertMessage = 'Done loading';
+          this.dispatchEvent(
+            new Event('loaded', {
+              bubbles: true 
+            })
+          );
+        }
+        
+        if (this.progress % 20 === 0) {
+          this.alertMessage = this.progress + ' percent loaded';
         }
       }
     }
