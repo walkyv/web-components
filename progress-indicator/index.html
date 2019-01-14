@@ -31,10 +31,12 @@
 
   <script>
     const loader = document.querySelector('[type="loading"]');
-    const startBrn = document.querySelector('button');
+    const startBtn = document.querySelector('button');
     let progress = loader.getAttribute('progress');
     let count = parseInt(progress);
-    setInterval( function (event) {
+    
+    startBtn.addEventListener('click', function (e) {
+      setInterval( function (event) {
       if (count < 100) {
         count++;
         loader.progress = count.toString();
@@ -42,6 +44,7 @@
         return
       }
     },200)
+    })
   </script>
   </body>
 </html>
