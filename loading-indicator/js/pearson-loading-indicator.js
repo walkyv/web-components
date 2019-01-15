@@ -22,7 +22,7 @@
           <div class="circle4"></div>
         </div>
       </div>
-      <span class="loading-text" id="loading-text">Loading...</span>
+      <span class="loading-text" id="loading-text"></span>
 		</div>
 `;
 
@@ -34,7 +34,7 @@
     'aria-label': 'Loading',
     'aria-valuemin': '0',
     'aria-valuemax': '100',
-    'aria-valuetext': 'Loading indicator'
+    'aria-live': 'polite'
   };
 
   /**
@@ -82,8 +82,9 @@
     }
 
     connectedCallback() {
-      // Check for and apply correct ARIA attributes
       ensureAttrs(this, REQUIRED_A11Y_ATTRS);
+
+      this.loadingText.textContent = 'Loading...';
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
