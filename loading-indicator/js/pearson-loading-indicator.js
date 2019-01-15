@@ -73,20 +73,20 @@
       }
     }
 
-    get loadingStateText() {
-      return this.getAttribute('loadingStateText');
+    get loadingStateLabel() {
+      return this.getAttribute('loadingStateLabel');
     }
 
-    set loadingStateText(newValue) {
-      this.setAttribute('loadingStateText', newValue);
+    set loadingStateLabel(newValue) {
+      this.setAttribute('loadingStateLabel', newValue);
     }
 
-    get finishedStateText() {
-      return this.getAttribute('finishedStateText');
+    get finishedStateLabel() {
+      return this.getAttribute('finishedStateLabel');
     }
 
-    set finishedStateText(newValue) {
-      this.setAttribute('finishedStateText', newValue);
+    set finishedStateLabel(newValue) {
+      this.setAttribute('finishedStateLabel', newValue);
     }
 
     constructor() {
@@ -101,26 +101,26 @@
     }
 
     connectedCallback() {
-      const loadingStateText =
-        this.loadingStateText !== null ? this.loadingStateText : 'Loading...';
-      const finishedStateText =
-        this.finishedStateText !== null ? this.finishedStateText : 'Loaded!';
+      const loadingStateLabel =
+        this.loadingStateLabel !== null ? this.loadingStateLabel : 'Loading...';
+      const finishedStateLabel =
+        this.finishedStateLabel !== null ? this.finishedStateLabel : 'Loaded!';
 
       const consumerAttrs = {
-        loadingStateText,
-        finishedStateText,
-        'aria-label': loadingStateText
+        loadingStateLabel,
+        finishedStateLabel,
+        'aria-label': loadingStateLabel
       };
 
       ensureAttrs(this, Object.assign({}, DEFAULT_A11Y_ATTRS, consumerAttrs));
 
-      this.label.textContent = this.loadingStateText;
+      this.label.textContent = this.loadingStateLabel;
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'loaded') {
         const newLabel =
-          newValue !== null ? this.finishedStateText : this.loadingStateText;
+          newValue !== null ? this.finishedStateLabel : this.loadingStateLabel;
         ensureAttrs(this, {
           'aria-label': newLabel
         });

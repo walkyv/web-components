@@ -55,20 +55,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
       }
     }, {
-      key: 'loadingStateText',
+      key: 'loadingStateLabel',
       get: function get() {
-        return this.getAttribute('loadingStateText');
+        return this.getAttribute('loadingStateLabel');
       },
       set: function set(newValue) {
-        this.setAttribute('loadingStateText', newValue);
+        this.setAttribute('loadingStateLabel', newValue);
       }
     }, {
-      key: 'finishedStateText',
+      key: 'finishedStateLabel',
       get: function get() {
-        return this.getAttribute('finishedStateText');
+        return this.getAttribute('finishedStateLabel');
       },
       set: function set(newValue) {
-        this.setAttribute('finishedStateText', newValue);
+        this.setAttribute('finishedStateLabel', newValue);
       }
     }], [{
       key: 'observedAttributes',
@@ -95,24 +95,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(LoadingIndicator, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var loadingStateText = this.loadingStateText !== null ? this.loadingStateText : 'Loading...';
-        var finishedStateText = this.finishedStateText !== null ? this.finishedStateText : 'Loaded!';
+        var loadingStateLabel = this.loadingStateLabel !== null ? this.loadingStateLabel : 'Loading...';
+        var finishedStateLabel = this.finishedStateLabel !== null ? this.finishedStateLabel : 'Loaded!';
 
         var consumerAttrs = {
-          loadingStateText: loadingStateText,
-          finishedStateText: finishedStateText,
-          'aria-label': loadingStateText
+          loadingStateLabel: loadingStateLabel,
+          finishedStateLabel: finishedStateLabel,
+          'aria-label': loadingStateLabel
         };
 
         ensureAttrs(this, Object.assign({}, DEFAULT_A11Y_ATTRS, consumerAttrs));
 
-        this.label.textContent = this.loadingStateText;
+        this.label.textContent = this.loadingStateLabel;
       }
     }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'loaded') {
-          var newLabel = newValue !== null ? this.finishedStateText : this.loadingStateText;
+          var newLabel = newValue !== null ? this.finishedStateLabel : this.loadingStateLabel;
           ensureAttrs(this, {
             'aria-label': newLabel
           });
