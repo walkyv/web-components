@@ -29,7 +29,7 @@
 }
 
 .pe-loadingSpinner,
-.loading-text {
+.label {
   display: inline-block;
   vertical-align: middle;
 }
@@ -96,6 +96,6 @@
   animation-delay: -0.2s;
 }
 
-.loading-text {
+.label {
   margin-left: 12px;
 }
