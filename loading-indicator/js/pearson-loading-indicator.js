@@ -31,7 +31,7 @@
   // ARIA attributes (and values) required for accessibility
   const DEFAULT_A11Y_ATTRS = {
     'role': 'progressbar',
-    'aria-label': 'Loading',
+    'aria-label': 'Loading...',
     'aria-valuemin': '0',
     'aria-valuemax': '100',
     'aria-live': 'polite'
@@ -70,6 +70,22 @@
       }
     }
 
+    get loadingStateText() {
+      return this.getAttribute('loadingStateText');
+    }
+
+    set loadingStateText(newValue) {
+      this.setAttribute('loadingStateText', newValue);
+    }
+
+    get finishedStateText() {
+      return this.getAttribute('finishedStateText');
+    }
+
+    set finishedStateText(newValue) {
+      this.setAttribute('finishedStateText', newValue);
+    }
+
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
@@ -84,12 +100,12 @@
     connectedCallback() {
       ensureAttrs(this, DEFAULT_A11Y_ATTRS);
 
-      this.loadingText.textContent = 'Loading...';
+      this.loadingText.textContent = this.loadingStateText;
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'loaded') {
-        const newLabel = (newValue !== null) ? 'Loaded!' : 'Loading...';
+        const newLabel = (newValue !== null) ? this.finishedStateText : this.loadingStateText;
         ensureAttrs(this, {
           'aria-label': newLabel
         });

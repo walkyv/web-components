@@ -18,7 +18,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   // ARIA attributes (and values) required for accessibility
   var DEFAULT_A11Y_ATTRS = {
     'role': 'progressbar',
-    'aria-label': 'Loading',
+    'aria-label': 'Loading...',
     'aria-valuemin': '0',
     'aria-valuemax': '100',
     'aria-live': 'polite'
@@ -55,6 +55,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.removeAttribute('loaded');
         }
       }
+    }, {
+      key: 'loadingStateText',
+      get: function get() {
+        return this.getAttribute('loadingStateText');
+      },
+      set: function set(newValue) {
+        this.setAttribute('loadingStateText', newValue);
+      }
+    }, {
+      key: 'finishedStateText',
+      get: function get() {
+        return this.getAttribute('finishedStateText');
+      },
+      set: function set(newValue) {
+        this.setAttribute('finishedStateText', newValue);
+      }
     }], [{
       key: 'observedAttributes',
       get: function get() {
@@ -82,13 +98,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         ensureAttrs(this, DEFAULT_A11Y_ATTRS);
 
-        this.loadingText.textContent = 'Loading...';
+        this.loadingText.textContent = this.loadingStateText;
       }
     }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'loaded') {
-          var newLabel = newValue !== null ? 'Loaded!' : 'Loading...';
+          var newLabel = newValue !== null ? this.finishedStateText : this.loadingStateText;
           ensureAttrs(this, {
             'aria-label': newLabel
           });
