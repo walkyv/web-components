@@ -16,7 +16,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-loading-indicator');
 
   // ARIA attributes (and values) required for accessibility
-  var REQUIRED_A11Y_ATTRS = {
+  var DEFAULT_A11Y_ATTRS = {
     'role': 'progressbar',
     'aria-label': 'Loading',
     'aria-valuemin': '0',
@@ -80,7 +80,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(LoadingIndicator, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        ensureAttrs(this, REQUIRED_A11Y_ATTRS);
+        ensureAttrs(this, DEFAULT_A11Y_ATTRS);
 
         this.loadingText.textContent = 'Loading...';
       }

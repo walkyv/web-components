@@ -29,7 +29,7 @@
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-loading-indicator');
 
   // ARIA attributes (and values) required for accessibility
-  const REQUIRED_A11Y_ATTRS = {
+  const DEFAULT_A11Y_ATTRS = {
     'role': 'progressbar',
     'aria-label': 'Loading',
     'aria-valuemin': '0',
@@ -82,7 +82,7 @@
     }
 
     connectedCallback() {
-      ensureAttrs(this, REQUIRED_A11Y_ATTRS);
+      ensureAttrs(this, DEFAULT_A11Y_ATTRS);
 
       this.loadingText.textContent = 'Loading...';
     }
