@@ -17,8 +17,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   // ARIA attributes (and values) required for accessibility
   var DEFAULT_A11Y_ATTRS = {
-    'role': 'progressbar',
-    'aria-label': 'Loading...',
+    role: 'progressbar',
     'aria-valuemin': '0',
     'aria-valuemax': '100',
     'aria-live': 'polite'
@@ -96,7 +95,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(LoadingIndicator, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        ensureAttrs(this, DEFAULT_A11Y_ATTRS);
+        var loadingStateText = this.loadingStateText !== null ? this.loadingStateText : 'Loading...';
+        var finishedStateText = this.finishedStateText !== null ? this.finishedStateText : 'Loaded!';
+
+        var consumerAttrs = {
+          loadingStateText: loadingStateText,
+          finishedStateText: finishedStateText,
+          'aria-label': loadingStateText
+        };
+
+        ensureAttrs(this, Object.assign({}, DEFAULT_A11Y_ATTRS, consumerAttrs));
 
         this.loadingText.textContent = this.loadingStateText;
       }

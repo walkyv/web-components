@@ -26,12 +26,12 @@
 		</div>
 `;
 
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-loading-indicator');
+  if (w.ShadyCSS)
+    w.ShadyCSS.prepareTemplate(template, 'pearson-loading-indicator');
 
   // ARIA attributes (and values) required for accessibility
   const DEFAULT_A11Y_ATTRS = {
-    'role': 'progressbar',
-    'aria-label': 'Loading...',
+    role: 'progressbar',
     'aria-valuemin': '0',
     'aria-valuemax': '100',
     'aria-live': 'polite'
@@ -45,7 +45,10 @@
   function ensureAttrs(node, attrs) {
     for (let attrName in attrs) {
       const requiredVal = attrs[attrName];
-      if (!node.hasAttribute(attrName) || node.getAttribute(attrName) !== requiredVal) {
+      if (
+        !node.hasAttribute(attrName) ||
+        node.getAttribute(attrName) !== requiredVal
+      ) {
         node.setAttribute(attrName, requiredVal);
       }
     }
@@ -98,14 +101,26 @@
     }
 
     connectedCallback() {
-      ensureAttrs(this, DEFAULT_A11Y_ATTRS);
+      const loadingStateText =
+        this.loadingStateText !== null ? this.loadingStateText : 'Loading...';
+      const finishedStateText =
+        this.finishedStateText !== null ? this.finishedStateText : 'Loaded!';
+        
+      const consumerAttrs = {
+        loadingStateText,
+        finishedStateText,
+        'aria-label': loadingStateText
+      };
+
+      ensureAttrs(this, Object.assign({}, DEFAULT_A11Y_ATTRS, consumerAttrs));
 
       this.loadingText.textContent = this.loadingStateText;
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'loaded') {
-        const newLabel = (newValue !== null) ? this.finishedStateText : this.loadingStateText;
+        const newLabel =
+          newValue !== null ? this.finishedStateText : this.loadingStateText;
         ensureAttrs(this, {
           'aria-label': newLabel
         });
