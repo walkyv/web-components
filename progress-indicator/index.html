@@ -17,17 +17,13 @@
 		<!-- RENAME THIS FILE DURING DEVELOPMENT -->
 		<!-- e.g., 'pearson-alert' -->
     <script src="js/dist/progress-indicator.js"></script>
-    <style>
-      progress-indicator {
-
-        margin:2em;
-      }
-    </style>
   </head>
   <body>
-    <progress-indicator type="loading" progress="25" max="100" alignment="center"></progress-indicator>
+    <h2>Standard progress indicator</h2>
     <progress-indicator type="standard" progress="50" max="100" alignment="center" text="Question 2 of 4"></progress-indicator>
-    <button>Start progress bar</button>
+    <h2>Active progress indicator</h2>
+    <progress-indicator type="loading" max="100" alignment="center"></progress-indicator>
+    <button style="margin-top:1rem">Start progress bar</button>
 
   <script>
     const loader = document.querySelector('[type="loading"]');
@@ -39,7 +35,7 @@
       setInterval( function (event) {
       if (count < 100) {
         count++;
-        loader.progress = count.toString();
+        loader.progress = count;
       } else {
         return
       }
