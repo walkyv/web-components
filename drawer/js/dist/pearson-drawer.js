@@ -35,6 +35,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var Drawer = function (_HTMLElement) {
     _inherits(Drawer, _HTMLElement);
 
+    _createClass(Drawer, [{
+      key: 'open',
+      get: function get() {
+        return this.hasAttribute('open');
+      },
+      set: function set(newValue) {
+        var isOpen = Boolean(newValue);
+
+        if (isOpen) {
+          this.setAttribute('open', '');
+        } else {
+          this.removeAttribute('open');
+        }
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['open'];
+      }
+    }]);
+
     function Drawer() {
       _classCallCheck(this, Drawer);
 

@@ -60,6 +60,24 @@
    */
 
   class Drawer extends HTMLElement {
+    static get observedAttributes() {
+      return ['open'];
+    }
+
+    get open() {
+      return this.hasAttribute('open');
+    }
+
+    set open(newValue) {
+      const isOpen = Boolean(newValue);
+
+      if (isOpen) {
+        this.setAttribute('open', '');
+      } else {
+        this.removeAttribute('open');
+      }
+    }
+
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
