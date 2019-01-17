@@ -23,7 +23,7 @@
   </div>
 `;
 
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(component, 'progress-indicator');
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(component, 'pearson-progress-bar');
 
   class ProgressBar extends HTMLElement {
     static get observedAttributes() {
