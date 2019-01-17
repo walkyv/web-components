@@ -16,13 +16,13 @@
 		<!-- load the web component script -->
 		<!-- RENAME THIS FILE DURING DEVELOPMENT -->
 		<!-- e.g., 'pearson-alert' -->
-    <script src="js/dist/progress-indicator.js"></script>
+    <script src="js/dist/progress-bar.js"></script>
   </head>
   <body>
     <h2>Standard progress indicator</h2>
-    <progress-indicator type="standard" progress="50" max="100" alignment="center" text="Question 2 of 4"></progress-indicator>
+    <pearson-progress-bar type="standard" progress="50" max="100" alignment="center" text="Question 2 of 4"></pearson-progress-bar>
     <h2>Active progress indicator</h2>
-    <progress-indicator type="loading" max="100" alignment="center"></progress-indicator>
+    <pearson-progress-bar type="loading" max="100" alignment="center"></pearson-progress-bar>
     <button style="margin-top:1rem">Start progress bar</button>
 
   <script>
@@ -30,7 +30,7 @@
     const startBtn = document.querySelector('button');
     let progress = loader.getAttribute('progress');
     let count = parseInt(progress);
-    
+
     startBtn.addEventListener('click', function (e) {
       setInterval( function (event) {
       if (count < 100) {

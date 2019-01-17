@@ -25,7 +25,7 @@
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(component, 'progress-indicator');
 
-  class ProgressIndicator extends HTMLElement {
+  class ProgressBar extends HTMLElement {
     static get observedAttributes() {
       return ['progress', 'type', 'max', 'alignment', 'text'];
     }
@@ -88,11 +88,11 @@
       const liveRegionClone = liveRegion.content.cloneNode(true);
 
       this.liveRegion = liveRegionClone.querySelector('#liveRegion');
-      
+
       this.loadingBar = componentClone.querySelector('[role=progressbar]');
       this.wrapper = componentClone.querySelector('.pe-progress-bar');
       this.label = componentClone.querySelector('#label');
-      
+
       this.shadowRoot.appendChild(liveRegionClone);
       this.shadowRoot.appendChild(componentClone);
     }
@@ -110,7 +110,7 @@
 
     attributeChangedCallback(name, oldValue, newValue) {
       if (this.type !== 'loading') return;
-      
+
       if (name === 'progress') {
         this.progressBar = newValue;
 
@@ -126,12 +126,12 @@
           this.alertMessage = 'Finished loading.';
           this.dispatchEvent(
             new Event('loaded', {
-              bubbles: true 
+              bubbles: true
             })
           );
         }
       }
     }
   }
-  customElements.define('progress-indicator', ProgressIndicator);
+  customElements.define('pearson-progress-bar', ProgressBar);
 })(window, document);

@@ -22,10 +22,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(component, 'progress-indicator');
 
-  var ProgressIndicator = function (_HTMLElement) {
-    _inherits(ProgressIndicator, _HTMLElement);
+  var ProgressBar = function (_HTMLElement) {
+    _inherits(ProgressBar, _HTMLElement);
 
-    _createClass(ProgressIndicator, [{
+    _createClass(ProgressBar, [{
       key: 'alignment',
       get: function get() {
         return this.getAttribute('alignment');
@@ -91,10 +91,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       }
     }]);
 
-    function ProgressIndicator() {
-      _classCallCheck(this, ProgressIndicator);
+    function ProgressBar() {
+      _classCallCheck(this, ProgressBar);
 
-      var _this = _possibleConstructorReturn(this, (ProgressIndicator.__proto__ || Object.getPrototypeOf(ProgressIndicator)).call(this));
+      var _this = _possibleConstructorReturn(this, (ProgressBar.__proto__ || Object.getPrototypeOf(ProgressBar)).call(this));
 
       _this.attachShadow({ mode: 'open' });
 
@@ -112,7 +112,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       return _this;
     }
 
-    _createClass(ProgressIndicator, [{
+    _createClass(ProgressBar, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
         if (!this.hasAttribute('progress')) {
@@ -150,8 +150,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       }
     }]);
 
-    return ProgressIndicator;
+    return ProgressBar;
   }(HTMLElement);
 
-  customElements.define('progress-indicator', ProgressIndicator);
+  customElements.define('pearson-progress-bar', ProgressBar);
 })(window, document);
