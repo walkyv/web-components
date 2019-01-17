@@ -51,11 +51,22 @@
   </head>
 
   <body>
+    <main>
+      <button type="button" id="openStandard">Open drawer</button>
+    </main>
     <pearson-drawer open>
       <h3 slot="title" class="title">Help Topics</h3>
       <div slot="content" class="content">
         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci vel necessitatibus amet, enim cumque cum est facilis dolores optio doloremque quibusdam quas a dolorum? Nobis doloremque tempora alias laborum mollitia?</p>
       </div>
     </pearson-drawer>
+    <script>
+    const openStandardBtn = document.querySelector('#openStandard');
+    const standardDrawer = document.querySelector('pearson-drawer');
+
+    openStandardBtn.addEventListener('click', function (e) {
+      standardDrawer.open = true;
+    });
+    </script>
   </body>
 </html>
