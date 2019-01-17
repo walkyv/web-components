@@ -92,7 +92,11 @@
 
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'open') {
-        console.log('changing');
+        // TODO: Logic for adding, removing animation classes
+        // (focus will happen here if not animated)
+        if (this.titleNode) {
+          this.titleNode.focus();
+        }
       }
     }
 
