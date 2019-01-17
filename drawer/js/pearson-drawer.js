@@ -87,6 +87,12 @@
       this.shadowRoot.appendChild(clone);
     }
 
+    attributeChangedCallback(name, oldValue, newValue) {
+      if (name === 'open') {
+        console.log('changing');
+      }
+    }
+
     connectedCallback() {
       const [ titleSlot, contentSlot ] = this.shadowRoot.querySelectorAll('slot');
 

@@ -70,6 +70,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }
 
     _createClass(Drawer, [{
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'open') {
+          console.log('changing');
+        }
+      }
+    }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
         var _shadowRoot$querySele = this.shadowRoot.querySelectorAll('slot'),
