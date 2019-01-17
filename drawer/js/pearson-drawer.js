@@ -133,7 +133,7 @@
     }
 
     bindWindowClick (e) {
-      if (e.target === this) return;
+      if (e.target === this || this.contains(e.target)) return;
 
       if (this.open) {
         this.open = false;
