@@ -119,14 +119,23 @@
 
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'loaded') {
-        const newLabel =
-          newValue !== null ? this.finishedStateLabel : this.loadingStateLabel;
+        const isLoaded = newValue !== null;
+        const newLabel = isLoaded
+          ? this.finishedStateLabel
+          : this.loadingStateLabel;
+
         ensureAttrs(this, {
           'aria-label': newLabel
         });
 
         if (this.label.textContent !== newLabel) {
           this.label.textContent = newLabel;
+        }
+
+        if (isLoaded) {
+          setTimeout(() => {
+            this.remove();
+          }, 250);
         }
       }
     }

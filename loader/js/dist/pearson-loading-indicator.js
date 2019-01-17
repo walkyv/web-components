@@ -111,14 +111,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
+        var _this2 = this;
+
         if (name === 'loaded') {
-          var newLabel = newValue !== null ? this.finishedStateLabel : this.loadingStateLabel;
+          var isLoaded = newValue !== null;
+          var newLabel = isLoaded ? this.finishedStateLabel : this.loadingStateLabel;
+
           ensureAttrs(this, {
             'aria-label': newLabel
           });
 
           if (this.label.textContent !== newLabel) {
             this.label.textContent = newLabel;
+          }
+
+          if (isLoaded) {
+            setTimeout(function () {
+              _this2.remove();
+            }, 250);
           }
         }
       }
