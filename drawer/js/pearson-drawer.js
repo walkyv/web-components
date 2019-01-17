@@ -85,11 +85,13 @@
       const clone = template.content.cloneNode(true);
 
       this.shadowRoot.appendChild(clone);
+
+      this.decorateTitle = this.decorateTitle.bind(this);
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'open') {
-        console.log('changing');
+        console.log('changing', this.titleNode);
       }
     }
 
@@ -106,9 +108,9 @@
      * @param {Event} e An Event object
      */
     decorateTitle(e) {
-      const titleNode = e.target.assignedNodes()[0];
-
-      titleNode.setAttribute('tabindex', '-1');
+      this.titleNode = e.target.assignedNodes()[0];
+      
+      this.titleNode.setAttribute('tabindex', '-1');
     }
   }
   customElements.define('pearson-drawer', Drawer);

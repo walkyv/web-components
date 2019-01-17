@@ -66,6 +66,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       var clone = template.content.cloneNode(true);
 
       _this.shadowRoot.appendChild(clone);
+
+      _this.decorateTitle = _this.decorateTitle.bind(_this);
       return _this;
     }
 
@@ -73,7 +75,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'open') {
-          console.log('changing');
+          console.log('changing', this.titleNode);
         }
       }
     }, {
@@ -98,9 +100,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'decorateTitle',
       value: function decorateTitle(e) {
-        var titleNode = e.target.assignedNodes()[0];
+        this.titleNode = e.target.assignedNodes()[0];
 
-        titleNode.setAttribute('tabindex', '-1');
+        this.titleNode.setAttribute('tabindex', '-1');
       }
     }]);
 
