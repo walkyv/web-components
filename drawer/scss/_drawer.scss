@@ -42,9 +42,12 @@
   margin-bottom: 20px;
 }
 
-.panel {
-  display: none;
+::slotted(.title:focus) {
+  box-shadow: none;
+  outline: 2px solid #0b73da;
+  outline-offset: 4px;
 }
+
 
 .panel.active {
   display: flex;
@@ -74,6 +77,10 @@
     margin-left: 0;
     margin-bottom:25px;
   }
+}
+
+.panel {
+  display: none;
 }
 
 .panel button > * {
