@@ -70,10 +70,22 @@
     }
 
     connectedCallback() {
-      /** Any changes to what the component renders should be done here. */
+      const [ titleSlot, contentSlot ] = this.shadowRoot.querySelectorAll('slot');
+
+      titleSlot.addEventListener('slotchange', this.decorateTitle);
     }
 
     diconnectedCallback() {}
+
+    /**
+     * Decorates the title of the drawer with tabindex. 
+     * @param {Event} e An Event object
+     */
+    decorateTitle(e) {
+      const titleNode = e.target.assignedNodes()[0];
+
+      titleNode.setAttribute('tabindex', '-1');
+    }
   }
   customElements.define('pearson-drawer', Drawer);
 })(window, document);

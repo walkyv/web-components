@@ -1,3 +1,5 @@
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -49,11 +51,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Drawer, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        /** Any changes to what the component renders should be done here. */
+        var _shadowRoot$querySele = this.shadowRoot.querySelectorAll('slot'),
+            _shadowRoot$querySele2 = _slicedToArray(_shadowRoot$querySele, 2),
+            titleSlot = _shadowRoot$querySele2[0],
+            contentSlot = _shadowRoot$querySele2[1];
+
+        titleSlot.addEventListener('slotchange', this.decorateTitle);
       }
     }, {
       key: 'diconnectedCallback',
       value: function diconnectedCallback() {}
+
+      /**
+       * Decorates the title of the drawer with tabindex. 
+       * @param {Event} e An Event object
+       */
+
+    }, {
+      key: 'decorateTitle',
+      value: function decorateTitle(e) {
+        var titleNode = e.target.assignedNodes()[0];
+
+        titleNode.setAttribute('tabindex', '-1');
+      }
     }]);
 
     return Drawer;
