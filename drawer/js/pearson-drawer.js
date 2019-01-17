@@ -47,7 +47,7 @@
       type="button"
       class="pe-icon--btn close"
       data-action="close"
-      aria-label="Close Help Topics"
+      aria-label=""
     >
       ${ICONS_REMOVE_SM_24}
     </button>
@@ -129,6 +129,7 @@
       this.titleNode = e.target.assignedNodes()[0];
 
       this.titleNode.setAttribute('tabindex', '-1');
+      this.closeBtn.setAttribute('aria-label', `Close ${this.titleNode.textContent.trim()}`);
     }
 
     bindWindowClick (e) {
