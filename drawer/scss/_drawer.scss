@@ -4,7 +4,7 @@
   color: #252525;
   visibility: hidden;
   position:fixed;
-  padding: 30px;
+  padding: 20px;
   padding-top: 25px;
   top:0;
   bottom: 0;
@@ -37,6 +37,10 @@
   width: 44px;
 }
 
+.content {
+  
+}
+
 .panel {
   display: none;
 }
@@ -46,12 +50,19 @@
   flex-direction: column;
 }
 
+.header, .content {
+  padding-left: 10px;
+  padding-right: 10px;
+}
 
-.drawer-header {
+
+.header {
   display:flex;
   align-items: center;
   justify-content: space-between;
-  padding:25px 15px 20px 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom:1px solid #d9d9d9;
 
   &:focus {
     outline: none;
@@ -62,32 +73,26 @@
   }
 }
 
-.divider {
-  margin:0 20px;
-  border-bottom:1px solid #d9d9d9;
-  height:1px;
-}
-
-.drawer-content {
-  padding:25px 30px 30px 30px;
+.content {
   position:relative;
-  height:100%;
-  &:focus {
-    outline: none;
-  }
   
-  button {
-    color: inherit;
-    cursor:pointer;
-    text-align: left;
-    background:none;
-    padding: 0;
-    border:0;
-    position:relative;
-    &.pe-link--btn {
-      text-decoration: none;
-    }
-  }
+  height:100%;
+  // &:focus {
+  //   outline: none;
+  // }
+  
+  // button {
+  //   color: inherit;
+  //   cursor:pointer;
+  //   text-align: left;
+  //   background:none;
+  //   padding: 0;
+  //   border:0;
+  //   position:relative;
+  //   &.pe-link--btn {
+  //     text-decoration: none;
+  //   }
+  //}
 
 
   dd {
