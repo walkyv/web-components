@@ -84,26 +84,35 @@
 
       const clone = template.content.cloneNode(true);
 
+      this.closeBtn = clone.querySelector('button[data-action="close"]');
+
       this.shadowRoot.appendChild(clone);
+
+      // TODO: find trigger using provided title of drawer
+      this.trigger = doc.querySelector('button');
 
       this.decorateTitle = this.decorateTitle.bind(this);
       this.bindWindowClick = this.bindWindowClick.bind(this);
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      if (name === 'open') {
-        // TODO: Logic for adding, removing animation classes
-        // (focus will happen here if not animated)
-        if (this.titleNode) {
-          this.titleNode.focus();
-        }
+      const isOpen = newValue !== null;
+      // TODO: Logic for adding, removing animation classes
+      // (focus will happen here if not animated)
+      if (isOpen && this.titleNode) {
+        this.titleNode.focus();
+      } else {
+        this.trigger.focus();
       }
     }
 
     connectedCallback() {
       const [titleSlot, contentSlot] = this.shadowRoot.querySelectorAll('slot');
+      
 
       titleSlot.addEventListener('slotchange', this.decorateTitle);
+
+      this.closeBtn.addEventListener('click', () => this.open = false); 
       
       w.addEventListener('click', this.bindWindowClick, true);
     }

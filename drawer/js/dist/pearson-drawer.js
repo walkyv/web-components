@@ -65,7 +65,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       var clone = template.content.cloneNode(true);
 
+      _this.closeBtn = clone.querySelector('button[data-action="close"]');
+
       _this.shadowRoot.appendChild(clone);
+
+      // TODO: find trigger using provided title of drawer
+      _this.trigger = doc.querySelector('button');
 
       _this.decorateTitle = _this.decorateTitle.bind(_this);
       _this.bindWindowClick = _this.bindWindowClick.bind(_this);
@@ -75,23 +80,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Drawer, [{
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'open') {
-          // TODO: Logic for adding, removing animation classes
-          // (focus will happen here if not animated)
-          if (this.titleNode) {
-            this.titleNode.focus();
-          }
+        var isOpen = newValue !== null;
+        // TODO: Logic for adding, removing animation classes
+        // (focus will happen here if not animated)
+        if (isOpen && this.titleNode) {
+          this.titleNode.focus();
+        } else {
+          this.trigger.focus();
         }
       }
     }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
+        var _this2 = this;
+
         var _shadowRoot$querySele = this.shadowRoot.querySelectorAll('slot'),
             _shadowRoot$querySele2 = _slicedToArray(_shadowRoot$querySele, 2),
             titleSlot = _shadowRoot$querySele2[0],
             contentSlot = _shadowRoot$querySele2[1];
 
         titleSlot.addEventListener('slotchange', this.decorateTitle);
+
+        this.closeBtn.addEventListener('click', function () {
+          return _this2.open = false;
+        });
 
         w.addEventListener('click', this.bindWindowClick, true);
       }
