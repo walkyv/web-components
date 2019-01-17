@@ -27,7 +27,7 @@
 `;
 
   if (w.ShadyCSS)
-    w.ShadyCSS.prepareTemplate(template, 'pearson-loading-indicator');
+    w.ShadyCSS.prepareTemplate(template, 'pearson-loader');
 
   // ARIA attributes (and values) required for accessibility
   const DEFAULT_A11Y_ATTRS = {
@@ -54,7 +54,7 @@
     }
   }
 
-  class LoadingIndicator extends HTMLElement {
+  class Loader extends HTMLElement {
     static get observedAttributes() {
       return ['loaded'];
     }
@@ -131,5 +131,5 @@
       }
     }
   }
-  customElements.define('pearson-loading-indicator', LoadingIndicator);
+  customElements.define('pearson-loader', Loader);
 })(window, document);
