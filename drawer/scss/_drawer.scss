@@ -37,8 +37,13 @@
   width: 44px;
 }
 
-.content {
-  
+::slotted(.title) {
+  font-size: 1.42857rem;
+  line-height: 1.85714rem;
+  font-weight: 400;
+  color: #252525;
+  margin: 0;
+  margin-bottom: 20px;
 }
 
 .panel {
