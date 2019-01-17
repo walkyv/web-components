@@ -7,6 +7,19 @@
   //Styles must be copied from the css file
   // and pasted between the style tags below
 
+  const ICONS_CHEVRON_BACK_18 = `
+<svg
+  class="pe-icon--chevron-back-18"
+  aria-hidden="true"
+  focusable="false"
+  style="width:18px;height:18px;"
+>
+  <path
+    d="M13.749,17.6606035 C14.112,17.2486035 14.076,16.6116035 13.662,16.2436035 L5.509,8.9996035 L13.662,1.7566035 C14.077,1.3896035 14.113,0.752603504 13.749,0.339603504 C13.383,-0.0763964961 12.751,-0.115396496 12.338,0.252603504 L3.338,8.2476035 C3.123,8.4376035 3,8.7126035 3,8.9996035 C3,9.2876035 3.123,9.5616035 3.338,9.7526035 L12.338,17.7476035 C12.751,18.1156035 13.383,18.0766035 13.749,17.6606035"
+  />
+</svg>
+`;
+
   const ICONS_REMOVE_SM_24 = `
     <svg
       class="pe-icon--remove-sm-24"
