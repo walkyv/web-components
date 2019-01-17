@@ -87,30 +87,43 @@
       this.shadowRoot.appendChild(clone);
 
       this.decorateTitle = this.decorateTitle.bind(this);
+      this.bindWindowClick = this.bindWindowClick.bind(this);
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'open') {
-        console.log('changing', this.titleNode);
+        console.log('changing');
       }
     }
 
     connectedCallback() {
-      const [ titleSlot, contentSlot ] = this.shadowRoot.querySelectorAll('slot');
+      const [titleSlot, contentSlot] = this.shadowRoot.querySelectorAll('slot');
 
       titleSlot.addEventListener('slotchange', this.decorateTitle);
+      
+      w.addEventListener('click', this.bindWindowClick, true);
     }
 
-    diconnectedCallback() {}
+    diconnectedCallback() {
+      w.removeEventListener(this.bindWindowClick);
+    }
 
     /**
-     * Decorates the title of the drawer with tabindex. 
+     * Decorates the title of the drawer with tabindex.
      * @param {Event} e An Event object
      */
     decorateTitle(e) {
       this.titleNode = e.target.assignedNodes()[0];
-      
+
       this.titleNode.setAttribute('tabindex', '-1');
+    }
+
+    bindWindowClick (e) {
+      if (e.target === this) return;
+
+      if (this.open) {
+        this.open = false;
+      }
     }
   }
   customElements.define('pearson-drawer', Drawer);

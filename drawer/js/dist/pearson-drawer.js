@@ -68,6 +68,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.shadowRoot.appendChild(clone);
 
       _this.decorateTitle = _this.decorateTitle.bind(_this);
+      _this.bindWindowClick = _this.bindWindowClick.bind(_this);
       return _this;
     }
 
@@ -75,7 +76,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'open') {
-          console.log('changing', this.titleNode);
+          console.log('changing');
         }
       }
     }, {
@@ -87,13 +88,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             contentSlot = _shadowRoot$querySele2[1];
 
         titleSlot.addEventListener('slotchange', this.decorateTitle);
+
+        w.addEventListener('click', this.bindWindowClick, true);
       }
     }, {
       key: 'diconnectedCallback',
-      value: function diconnectedCallback() {}
+      value: function diconnectedCallback() {
+        w.removeEventListener(this.bindWindowClick);
+      }
 
       /**
-       * Decorates the title of the drawer with tabindex. 
+       * Decorates the title of the drawer with tabindex.
        * @param {Event} e An Event object
        */
 
@@ -103,6 +108,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.titleNode = e.target.assignedNodes()[0];
 
         this.titleNode.setAttribute('tabindex', '-1');
+      }
+    }, {
+      key: 'bindWindowClick',
+      value: function bindWindowClick(e) {
+        if (e.target === this) return;
+
+        if (this.open) {
+          this.open = false;
+        }
       }
     }]);
 
