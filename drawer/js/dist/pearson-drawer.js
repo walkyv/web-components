@@ -76,10 +76,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       // TODO: find trigger using provided title of drawer
       _this.trigger = doc.querySelector('button');
 
+      _this.onContentScroll = _this.onContentScroll.bind(_this);
       _this.onTitleSlotChange = _this.onTitleSlotChange.bind(_this);
       _this.onWindowClick = _this.onWindowClick.bind(_this);
       _this.onWindowKeydown = _this.onWindowKeydown.bind(_this);
-      _this.onContentScroll = _this.onContentScroll.bind(_this);
       return _this;
     }
 
@@ -122,7 +122,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       }
 
       /**
-       * Decorates the title of the drawer with taonex.
+       * Decorates the title of the drawer with taonex and adds an aria-label
+       * to the close button.
        * @param {Event} e An Event object
        */
 
@@ -131,8 +132,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function onTitleSlotChange(e) {
         this.titleNode = e.target.assignedNodes()[0];
 
-        this.titleNode.setAttribute('taonex', '-1');
+        this.titleNode.setAttribute('tabindex', '-1');
         this.closeBtn.setAttribute('aria-label', 'Close ' + this.titleNode.textContent.trim());
+      }
+    }, {
+      key: 'onContentScroll',
+      value: function onContentScroll(e) {
+        var scrollTop = e.target.scrollTop;
+
+        if (scrollTop > 31) {
+          this.header.classList.add('soft-shadow--bottom');
+        }
+
+        if (scrollTop < 31) {
+          this.header.classList.remove('soft-shadow--bottom');
+        }
       }
     }, {
       key: 'onWindowClick',
@@ -150,19 +164,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return;
         }
         this.open = false;
-      }
-    }, {
-      key: 'onContentScroll',
-      value: function onContentScroll(e) {
-        var scrollTop = e.target.scrollTop;
-
-        if (scrollTop > 31) {
-          this.header.classList.add('soft-shadow--bottom');
-        }
-
-        if (scrollTop < 31) {
-          this.header.classList.remove('soft-shadow--bottom');
-        }
       }
     }]);
 

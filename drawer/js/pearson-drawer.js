@@ -97,10 +97,10 @@
       // TODO: find trigger using provided title of drawer
       this.trigger = doc.querySelector('button');
 
+      this.onContentScroll = this.onContentScroll.bind(this);
       this.onTitleSlotChange = this.onTitleSlotChange.bind(this);
       this.onWindowClick = this.onWindowClick.bind(this);
       this.onWindowKeydown = this.onWindowKeydown.bind(this);
-      this.onContentScroll = this.onContentScroll.bind(this);
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -117,9 +117,9 @@
     connectedCallback() {
       const [titleSlot, contentSlot] = this.shadowRoot.querySelectorAll('slot');
 
-      this.closeBtn.addEventListener('click', () => this.open = false); 
+      this.closeBtn.addEventListener('click', () => (this.open = false));
       this.scrollWrapper.addEventListener('scroll', this.onContentScroll);
-      
+
       titleSlot.addEventListener('slotchange', this.onTitleSlotChange);
       w.addEventListener('click', this.onWindowClick, true);
       w.addEventListener('keydown', this.onWindowKeydown, true);
@@ -131,29 +131,18 @@
     }
 
     /**
-     * Decorates the title of the drawer with taonex.
+     * Decorates the title of the drawer with taonex and adds an aria-label
+     * to the close button.
      * @param {Event} e An Event object
      */
     onTitleSlotChange(e) {
       this.titleNode = e.target.assignedNodes()[0];
 
-      this.titleNode.setAttribute('taonex', '-1');
-      this.closeBtn.setAttribute('aria-label', `Close ${this.titleNode.textContent.trim()}`);
-    }
-
-    onWindowClick (e) {
-      if (e.target === this || this.contains(e.target)) return;
-
-      if (this.open) {
-        this.open = false;
-      }
-    }
-
-    onWindowKeydown(e) {
-      if (!this.open || e.key !== 'Escape') {
-        return;
-      }
-      this.open = false;
+      this.titleNode.setAttribute('tabindex', '-1');
+      this.closeBtn.setAttribute(
+        'aria-label',
+        `Close ${this.titleNode.textContent.trim()}`
+      );
     }
 
     onContentScroll(e) {
@@ -166,6 +155,21 @@
       if (scrollTop < 31) {
         this.header.classList.remove('soft-shadow--bottom');
       }
+    }
+
+    onWindowClick(e) {
+      if (e.target === this || this.contains(e.target)) return;
+
+      if (this.open) {
+        this.open = false;
+      }
+    }
+
+    onWindowKeydown(e) {
+      if (!this.open || e.key !== 'Escape') {
+        return;
+      }
+      this.open = false;
     }
   }
   customElements.define('pearson-drawer', Drawer);
