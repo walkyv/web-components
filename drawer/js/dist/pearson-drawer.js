@@ -73,9 +73,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.trigger = doc.querySelector('button');
 
       _this.decorateTitle = _this.decorateTitle.bind(_this);
-      _this.bindWindowClick = _this.bindWindowClick.bind(_this);
-      _this.bindWindowKeydown = _this.bindWindowKeydown.bind(_this);
-      _this.bindWindowScroll = _this.bindWindowScroll.bind(_this);
+      _this.onWindowClick = _this.onWindowClick.bind(_this);
+      _this.onWindowKeydown = _this.onWindowKeydown.bind(_this);
+      _this.onWindowScroll = _this.onWindowScroll.bind(_this);
       return _this;
     }
 
@@ -107,18 +107,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return _this2.open = false;
         });
 
-        w.addEventListener('click', this.bindWindowClick, true);
-        w.addEventListener('keydown', this.bindWindowKeydown, true);
+        w.addEventListener('click', this.onWindowClick, true);
+        w.addEventListener('keydown', this.onWindowKeydown, true);
       }
     }, {
       key: 'diconnectedCallback',
       value: function diconnectedCallback() {
-        w.removeEventListener(this.bindWindowClick);
-        w.removeEventListener(this.bindWindowKeydown);
+        w.removeEventListener(this.onWindowClick);
+        w.removeEventListener(this.onWindowKeydown);
       }
 
       /**
-       * Decorates the title of the drawer with tabindex.
+       * Decorates the title of the drawer with taonex.
        * @param {Event} e An Event object
        */
 
@@ -127,12 +127,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function decorateTitle(e) {
         this.titleNode = e.target.assignedNodes()[0];
 
-        this.titleNode.setAttribute('tabindex', '-1');
+        this.titleNode.setAttribute('taonex', '-1');
         this.closeBtn.setAttribute('aria-label', 'Close ' + this.titleNode.textContent.trim());
       }
     }, {
-      key: 'bindWindowClick',
-      value: function bindWindowClick(e) {
+      key: 'onWindowClick',
+      value: function onWindowClick(e) {
         if (e.target === this || this.contains(e.target)) return;
 
         if (this.open) {
@@ -140,16 +140,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
       }
     }, {
-      key: 'bindWindowKeydown',
-      value: function bindWindowKeydown(e) {
+      key: 'onWindowKeydown',
+      value: function onWindowKeydown(e) {
         if (!this.open || e.key !== 'Escape') {
           return;
         }
         this.open = false;
       }
     }, {
-      key: 'bindWindowScroll',
-      value: function bindWindowScroll(e) {
+      key: 'onWindowScroll',
+      value: function onWindowScroll(e) {
         console.log('scrolling');
       }
     }]);

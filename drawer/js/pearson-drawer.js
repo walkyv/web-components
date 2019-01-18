@@ -94,9 +94,9 @@
       this.trigger = doc.querySelector('button');
 
       this.decorateTitle = this.decorateTitle.bind(this);
-      this.bindWindowClick = this.bindWindowClick.bind(this);
-      this.bindWindowKeydown = this.bindWindowKeydown.bind(this);
-      this.bindWindowScroll = this.bindWindowScroll.bind(this);
+      this.onWindowClick = this.onWindowClick.bind(this);
+      this.onWindowKeydown = this.onWindowKeydown.bind(this);
+      this.onWindowScroll = this.onWindowScroll.bind(this);
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -118,27 +118,27 @@
 
       this.closeBtn.addEventListener('click', () => this.open = false); 
       
-      w.addEventListener('click', this.bindWindowClick, true);
-      w.addEventListener('keydown', this.bindWindowKeydown, true);
+      w.addEventListener('click', this.onWindowClick, true);
+      w.addEventListener('keydown', this.onWindowKeydown, true);
     }
 
     diconnectedCallback() {
-      w.removeEventListener(this.bindWindowClick);
-      w.removeEventListener(this.bindWindowKeydown);
+      w.removeEventListener(this.onWindowClick);
+      w.removeEventListener(this.onWindowKeydown);
     }
 
     /**
-     * Decorates the title of the drawer with tabindex.
+     * Decorates the title of the drawer with taonex.
      * @param {Event} e An Event object
      */
     decorateTitle(e) {
       this.titleNode = e.target.assignedNodes()[0];
 
-      this.titleNode.setAttribute('tabindex', '-1');
+      this.titleNode.setAttribute('taonex', '-1');
       this.closeBtn.setAttribute('aria-label', `Close ${this.titleNode.textContent.trim()}`);
     }
 
-    bindWindowClick (e) {
+    onWindowClick (e) {
       if (e.target === this || this.contains(e.target)) return;
 
       if (this.open) {
@@ -146,14 +146,14 @@
       }
     }
 
-    bindWindowKeydown(e) {
+    onWindowKeydown(e) {
       if (!this.open || e.key !== 'Escape') {
         return;
       }
       this.open = false;
     }
 
-    bindWindowScroll(e) {
+    onWindowScroll(e) {
       console.log('scrolling');
     }
   }
