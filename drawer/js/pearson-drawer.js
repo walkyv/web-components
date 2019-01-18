@@ -95,6 +95,7 @@
 
       this.decorateTitle = this.decorateTitle.bind(this);
       this.bindWindowClick = this.bindWindowClick.bind(this);
+      this.bindWindowKeydown = this.bindWindowKeydown.bind(this);
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -117,10 +118,12 @@
       this.closeBtn.addEventListener('click', () => this.open = false); 
       
       w.addEventListener('click', this.bindWindowClick, true);
+      w.addEventListener('keydown', this.bindWindowKeydown, true);
     }
 
     diconnectedCallback() {
       w.removeEventListener(this.bindWindowClick);
+      w.removeEventListener(this.bindWindowKeydown);
     }
 
     /**
@@ -140,6 +143,13 @@
       if (this.open) {
         this.open = false;
       }
+    }
+
+    bindWindowKeydown(e) {
+      if (!this.open || e.key !== 'Escape') {
+        return;
+      }
+      this.open = false;
     }
   }
   customElements.define('pearson-drawer', Drawer);

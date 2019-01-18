@@ -74,6 +74,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.decorateTitle = _this.decorateTitle.bind(_this);
       _this.bindWindowClick = _this.bindWindowClick.bind(_this);
+      _this.bindWindowKeydown = _this.bindWindowKeydown.bind(_this);
       return _this;
     }
 
@@ -106,11 +107,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
 
         w.addEventListener('click', this.bindWindowClick, true);
+        w.addEventListener('keydown', this.bindWindowKeydown, true);
       }
     }, {
       key: 'diconnectedCallback',
       value: function diconnectedCallback() {
         w.removeEventListener(this.bindWindowClick);
+        w.removeEventListener(this.bindWindowKeydown);
       }
 
       /**
@@ -134,6 +137,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (this.open) {
           this.open = false;
         }
+      }
+    }, {
+      key: 'bindWindowKeydown',
+      value: function bindWindowKeydown(e) {
+        if (!this.open || e.key !== 'Escape') {
+          return;
+        }
+        this.open = false;
       }
     }]);
 
