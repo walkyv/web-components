@@ -76,7 +76,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       // TODO: find trigger using provided title of drawer
       _this.trigger = doc.querySelector('button');
 
-      _this.decorateTitle = _this.decorateTitle.bind(_this);
+      _this.onTitleSlotChange = _this.onTitleSlotChange.bind(_this);
       _this.onWindowClick = _this.onWindowClick.bind(_this);
       _this.onWindowKeydown = _this.onWindowKeydown.bind(_this);
       _this.onContentScroll = _this.onContentScroll.bind(_this);
@@ -110,7 +110,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
         this.scrollWrapper.addEventListener('scroll', this.onContentScroll);
 
-        titleSlot.addEventListener('slotchange', this.decorateTitle);
+        titleSlot.addEventListener('slotchange', this.onTitleSlotChange);
         w.addEventListener('click', this.onWindowClick, true);
         w.addEventListener('keydown', this.onWindowKeydown, true);
       }
@@ -127,8 +127,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
        */
 
     }, {
-      key: 'decorateTitle',
-      value: function decorateTitle(e) {
+      key: 'onTitleSlotChange',
+      value: function onTitleSlotChange(e) {
         this.titleNode = e.target.assignedNodes()[0];
 
         this.titleNode.setAttribute('taonex', '-1');

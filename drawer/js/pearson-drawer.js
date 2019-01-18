@@ -97,7 +97,7 @@
       // TODO: find trigger using provided title of drawer
       this.trigger = doc.querySelector('button');
 
-      this.decorateTitle = this.decorateTitle.bind(this);
+      this.onTitleSlotChange = this.onTitleSlotChange.bind(this);
       this.onWindowClick = this.onWindowClick.bind(this);
       this.onWindowKeydown = this.onWindowKeydown.bind(this);
       this.onContentScroll = this.onContentScroll.bind(this);
@@ -120,7 +120,7 @@
       this.closeBtn.addEventListener('click', () => this.open = false); 
       this.scrollWrapper.addEventListener('scroll', this.onContentScroll);
       
-      titleSlot.addEventListener('slotchange', this.decorateTitle);
+      titleSlot.addEventListener('slotchange', this.onTitleSlotChange);
       w.addEventListener('click', this.onWindowClick, true);
       w.addEventListener('keydown', this.onWindowKeydown, true);
     }
@@ -134,7 +134,7 @@
      * Decorates the title of the drawer with taonex.
      * @param {Event} e An Event object
      */
-    decorateTitle(e) {
+    onTitleSlotChange(e) {
       this.titleNode = e.target.assignedNodes()[0];
 
       this.titleNode.setAttribute('taonex', '-1');
