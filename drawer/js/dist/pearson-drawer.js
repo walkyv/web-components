@@ -151,11 +151,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'onWindowClick',
       value: function onWindowClick(e) {
-        if (e.target === this || this.contains(e.target)) return;
+        if (!this.open || e.target === this || this.contains(e.target)) return;
 
-        if (this.open) {
-          this.open = false;
-        }
+        this.open = false;
       }
     }, {
       key: 'onWindowKeydown',

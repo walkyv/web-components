@@ -158,11 +158,9 @@
     }
 
     onWindowClick(e) {
-      if (e.target === this || this.contains(e.target)) return;
+      if (!this.open || e.target === this || this.contains(e.target)) return;
 
-      if (this.open) {
-        this.open = false;
-      }
+      this.open = false;
     }
 
     onWindowKeydown(e) {
