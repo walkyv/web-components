@@ -75,6 +75,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.decorateTitle = _this.decorateTitle.bind(_this);
       _this.bindWindowClick = _this.bindWindowClick.bind(_this);
       _this.bindWindowKeydown = _this.bindWindowKeydown.bind(_this);
+      _this.bindWindowScroll = _this.bindWindowScroll.bind(_this);
       return _this;
     }
 
@@ -145,6 +146,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return;
         }
         this.open = false;
+      }
+    }, {
+      key: 'bindWindowScroll',
+      value: function bindWindowScroll(e) {
+        console.log('scrolling');
       }
     }]);
 

@@ -96,6 +96,7 @@
       this.decorateTitle = this.decorateTitle.bind(this);
       this.bindWindowClick = this.bindWindowClick.bind(this);
       this.bindWindowKeydown = this.bindWindowKeydown.bind(this);
+      this.bindWindowScroll = this.bindWindowScroll.bind(this);
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -150,6 +151,10 @@
         return;
       }
       this.open = false;
+    }
+
+    bindWindowScroll(e) {
+      console.log('scrolling');
     }
   }
   customElements.define('pearson-drawer', Drawer);
