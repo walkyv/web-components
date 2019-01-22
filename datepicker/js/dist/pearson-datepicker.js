@@ -107,7 +107,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             firstWeekDay = firstDay;
           }
 
-          var lastWeekDay = moment(endDay).week(weeknumber).day('Saturday');
+          var lastWeekDay = moment(endDay).year(data.year).week(weeknumber).day('Saturday');
           if (lastWeekDay.isAfter(endDay)) {
             lastWeekDay = endDay;
           }

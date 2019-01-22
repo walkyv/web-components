@@ -175,7 +175,7 @@ calendar.innerHTML = `
           firstWeekDay = firstDay;
         }
 
-        let lastWeekDay = moment(endDay).week(weeknumber).day('Saturday');
+        let lastWeekDay = moment(endDay).year(data.year).week(weeknumber).day('Saturday');
         if (lastWeekDay.isAfter(endDay)) {
           lastWeekDay = endDay;
         }
