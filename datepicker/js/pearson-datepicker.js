@@ -5,7 +5,7 @@
   const datepicker = doc.createElement('template'),
     calendar = doc.createElement('template'),
     row = doc.createElement('template'),
-    date = doc.createElement('template');
+    dateTemplate = doc.createElement('template');
 
 w['moment-range'].extendMoment(moment);
 datepicker.innerHTML = ` 
@@ -89,7 +89,7 @@ calendar.innerHTML = `
 <div class="pe-cal-row"></div>
 `
 
-  date.innerHTML = `
+  dateTemplate.innerHTML = `
  <div class="pe-cal-cell pe-cal-date">
       <button class="date-selector pe-cal-cell-square start" data-date="11/01/2018" aria-label="Thursday, November 1, 2018" aria-pressed="false">1</button>
   </div>
@@ -123,15 +123,20 @@ calendar.innerHTML = `
       this.setAttribute('open', bool)
     }
 
-    returnDateData() {
-      let date = {};
+    returnDateData(date, add) {
       if (this.year !== null) {
         date.year = this.year;
       } else {
-        date.year = moment().format('Y');
+        date.year = parseInt(moment().format('Y'),10);
       }
       if (this.month !== null) {
         date.month = parseInt(this.month - 1, 10);
+      } else if (add !== undefined){
+        date.month = moment().add(date.month+1, 'month').month();
+        if (date.month === 0) {
+        date.year = date.year + 1;
+          console.log(date)
+        }
       } else {
         date.month = moment().month();
       }
@@ -143,8 +148,8 @@ calendar.innerHTML = `
       return date
     }
 
-    returnCalendarData() {
-     let data = this.returnDateData(),
+    returnCalendarData(returnData) {
+     let data = returnData,
         date = moment([data.year, data.month]),
         firstDay = moment(date).startOf('M').day('Sunday'),
         endDay = moment(date).endOf('M').day('Saturday'),
@@ -166,24 +171,19 @@ calendar.innerHTML = `
         }
       }
 
-
       weeks.forEach( (week, index) => {
         const weeknumber = weeks[index];
-
         let firstWeekDay = moment(firstDay).week(weeknumber).day('Sunday');
         if (firstWeekDay.isBefore(firstDay)) {
           firstWeekDay = firstDay;
         }
-
         let lastWeekDay = moment(endDay).year(data.year).week(weeknumber).day('Saturday');
         if (lastWeekDay.isAfter(endDay)) {
           lastWeekDay = endDay;
         }
-
         let weekRange = moment.range(firstWeekDay, lastWeekDay);
         calendar.push(weekRange)
-
-      })
+      });
 
       calendar.forEach(range => {
         const weeks = [];
@@ -191,16 +191,26 @@ calendar.innerHTML = `
          weeks.push(day)
         }
          build.push(weeks);
-      })
+      });
+
       calendarData.month = moment(date).startOf('M').format("MMMM");
       calendarData.year = data.year;
       calendarData.weeks = build;
+
       return calendarData
     }
 
+    nextMonth () {
+      console.log(this.data)
+      this.data = this.returnDateData(this.data, 'add');
+      console.log(this.data)
+    }
+
     buildCalendar () {
-      const calendarTemplate = calendar.content.cloneNode(true);
-      console.log(this.returnCalendarData());
+      const calendarTemplate = calendar.content.cloneNode(true),
+        nextBtn = calendarTemplate.querySelector('.next');
+
+      nextBtn.addEventListener('click', this.nextMonth, false);
       return calendarTemplate;
     }
 
@@ -211,7 +221,7 @@ calendar.innerHTML = `
 
       this.openBtn = clone.querySelector('.open-calendar');
       this.datepicker = clone.querySelector('.datepicker-container');
-      // this.button = clone.querySelector('#button');
+      this.data = {};
 
       /** After all this, we can append our clone to the shadowRoot */
       this.shadowRoot.appendChild(clone);
@@ -219,9 +229,11 @@ calendar.innerHTML = `
       this.returnDateData = this.returnDateData.bind(this);
       this.buildCalendar = this.buildCalendar.bind(this);
       this.returnCalendarData = this.returnCalendarData.bind(this);
+      this.nextMonth = this.nextMonth.bind(this);
     }
 
     connectedCallback() {
+      this.data = this.returnDateData(this.data);
       this.openBtn.addEventListener('click', event => {
         if (this.open === 'false') {
           this.openState = 'true'
@@ -233,13 +245,10 @@ calendar.innerHTML = `
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-
-
     const calendarContainer = this.datepicker.querySelector('.calendar-container');
       if (name === 'open') {
         if (oldValue !== newValue) {
           if (newValue === 'true') {
-            this.datesToRender = this.returnDateData();
             let calendarTemplate = this.buildCalendar();
             this.datepicker.appendChild(calendarTemplate);
           }
