@@ -99,6 +99,7 @@
 
       this.onContentScroll = this.onContentScroll.bind(this);
       this.onTitleSlotChange = this.onTitleSlotChange.bind(this);
+      this.onContentSlotChange = this.onContentSlotChange.bind(this);
       this.onWindowClick = this.onWindowClick.bind(this);
       this.onWindowKeydown = this.onWindowKeydown.bind(this);
     }
@@ -121,13 +122,22 @@
       this.scrollWrapper.addEventListener('scroll', this.onContentScroll);
 
       titleSlot.addEventListener('slotchange', this.onTitleSlotChange);
+
+      if (this.getAttribute('type') === 'details') {
+        contentSlot.addEventListener('slotchange', this.onContentSlotChange);
+      }
+      
       w.addEventListener('click', this.onWindowClick, true);
       w.addEventListener('keydown', this.onWindowKeydown, true);
     }
-
+    
     diconnectedCallback() {
       w.removeEventListener(this.onWindowClick);
       w.removeEventListener(this.onWindowKeydown);
+    }
+    
+    convertPanelHeadings(headingNode) {
+      // TODO: Turn provided node into button
     }
 
     /**
@@ -143,6 +153,13 @@
         'aria-label',
         `Close ${this.titleNode.textContent.trim()}`
       );
+    }
+
+    onContentSlotChange(e) {
+      this.contentNode = e.target.assignedNodes()[0];
+      
+      // TODO: Get all h3 nodes in this slot
+      this.convertPanelHeadings();
     }
 
     onContentScroll(e) {

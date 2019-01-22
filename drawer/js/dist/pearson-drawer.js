@@ -78,6 +78,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.onContentScroll = _this.onContentScroll.bind(_this);
       _this.onTitleSlotChange = _this.onTitleSlotChange.bind(_this);
+      _this.onContentSlotChange = _this.onContentSlotChange.bind(_this);
       _this.onWindowClick = _this.onWindowClick.bind(_this);
       _this.onWindowKeydown = _this.onWindowKeydown.bind(_this);
       return _this;
@@ -111,6 +112,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.scrollWrapper.addEventListener('scroll', this.onContentScroll);
 
         titleSlot.addEventListener('slotchange', this.onTitleSlotChange);
+
+        if (this.getAttribute('type') === 'details') {
+          contentSlot.addEventListener('slotchange', this.onContentSlotChange);
+        }
+
         w.addEventListener('click', this.onWindowClick, true);
         w.addEventListener('keydown', this.onWindowKeydown, true);
       }
@@ -120,6 +126,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         w.removeEventListener(this.onWindowClick);
         w.removeEventListener(this.onWindowKeydown);
       }
+    }, {
+      key: 'convertPanelHeadings',
+      value: function convertPanelHeadings(headingNode) {}
+      // TODO: Turn provided node into button
+
 
       /**
        * Decorates the title of the drawer with taonex and adds an aria-label
@@ -134,6 +145,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.titleNode.setAttribute('tabindex', '-1');
         this.closeBtn.setAttribute('aria-label', 'Close ' + this.titleNode.textContent.trim());
+      }
+    }, {
+      key: 'onContentSlotChange',
+      value: function onContentSlotChange(e) {
+        this.contentNode = e.target.assignedNodes()[0];
+
+        // TODO: Get all h3 nodes in this slot
+        this.convertPanelHeadings();
       }
     }, {
       key: 'onContentScroll',
