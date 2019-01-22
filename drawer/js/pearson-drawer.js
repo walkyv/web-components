@@ -182,10 +182,7 @@
       this.scrollWrapper.addEventListener('scroll', this.onContentScroll);
 
       titleSlot.addEventListener('slotchange', this.onTitleSlotChange);
-
-      if (this.getAttribute('type') === 'details') {
-        contentSlot.addEventListener('slotchange', this.onContentSlotChange);
-      }
+      contentSlot.addEventListener('slotchange', this.onContentSlotChange);
       
       w.addEventListener('click', this.onWindowClick, true);
       w.addEventListener('keydown', this.onWindowKeydown, true);
@@ -250,7 +247,7 @@
       }
 
       if (e.key === 'Tab') {
-        trapTabKey(e, this);
+        trapTabKey(e, this, this.shadowRoot);
       }
     }
   }
