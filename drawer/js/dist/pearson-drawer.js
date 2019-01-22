@@ -224,10 +224,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'onWindowKeydown',
       value: function onWindowKeydown(e) {
-        if (!this.open || e.key !== 'Escape') {
+        if (!this.open) {
           return;
         }
-        this.open = false;
+
+        if (e.key === 'Escape') {
+          this.open = false;
+        }
+
+        if (e.key === 'Tab') {
+          trapTabKey(e, this);
+        }
       }
     }]);
 
