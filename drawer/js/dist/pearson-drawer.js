@@ -28,9 +28,56 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-drawer');
 
-  /** Any helper functions that do not need to be part of the class
-   * can be declared here, before the class is defined.
-   */
+  var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert]),\n    [tabindex]:not([tabindex^="-"]):not([inert])',
+      TAB_KEY = 9,
+      ESCAPE_KEY = 27;
+
+  function getDeepActiveElement() {
+    var a = doc.activeElement;
+    while (a && a.shadowRoot && a.shadowRoot.activeElement) {
+      a = a.shadowRoot.activeElement;
+    }
+    return a;
+  }
+
+  function getFocusableChildren(node) {
+    var filter = Array.prototype.filter,
+        focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+    return filter.call(focusableChildren, function (child) {
+      return !!(child.offsetWidth || child.offsetHeight || child.getClientRects().length);
+    });
+  }
+
+  function setFocusToFirstChild(node) {
+    var focusableChildren = getFocusableChildren(node),
+        focusableChild = node.querySelector('[autofocus]') || focusableChildren[0];
+
+    if (focusableChild) {
+      focusableChild.focus();
+    }
+  }
+
+  function trapTabKey(e) {
+    for (var _len = arguments.length, nodes = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      nodes[_key - 1] = arguments[_key];
+    }
+
+    var focusableChildren = nodes.reduce(function (acc, n) {
+      return acc.concat(getFocusableChildren(n));
+    }, []),
+        focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
+        lastFocusableIdx = focusableChildren.length - 1;
+
+    if (e.shiftKey && focusedItemIdx === 0) {
+      focusableChildren[lastFocusableIdx].focus();
+      e.preventDefault();
+    }
+
+    if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
+      focusableChildren[0].focus();
+      e.preventDefault();
+    }
+  }
 
   var Drawer = function (_HTMLElement) {
     _inherits(Drawer, _HTMLElement);
