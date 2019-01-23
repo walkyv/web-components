@@ -1,6 +1,7 @@
 :host {
   display: block;
   box-sizing: border-box;
+  font-family: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
   color: #252525;
   visibility: hidden;
   position:fixed;
@@ -72,6 +73,7 @@
   padding-left: 10px;
   padding-right: 10px;
   border-bottom:1px solid #d9d9d9;
+  height: 44px;
 }
 
 .content-scroll-wrapper {
@@ -117,10 +119,14 @@
   }
 
 .pe-icon--btn {
-  padding: 0;
-  background-color: transparent;
-  border: 0;
   position: relative;
+  font-size: inherit;
+  line-height: inherit;
+  font-family: inherit;
+  font-weight: 600;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
 }
 
 .pe-icon--btn:focus {
