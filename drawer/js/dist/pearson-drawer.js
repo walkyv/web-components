@@ -85,6 +85,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Drawer, [{
       key: 'activePanel',
       get: function get() {
+        if (!this.hasAttribute('activePanel')) {
+          return 0;
+        }
         return parseInt(this.getAttribute('activePanel'), 10);
       },
       set: function set(newValue) {
@@ -154,7 +157,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           // TODO: Logic for adding, removing animation classes
           // (focus will happen here if not animated)
           if (isOpen && this.titleNode) {
-            this.titleNode.focus();
+            if (this.activePanel === 0) {
+              this.titleNode.focus();
+            } else {
+              setFocusToFirstChild(this.panels[this.activePanel]);
+            }
           } else {
             this.trigger.focus();
           }

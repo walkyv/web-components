@@ -134,6 +134,9 @@
     }
 
     get activePanel() {
+      if (!this.hasAttribute('activePanel')) {
+        return 0;
+      }
       return parseInt(this.getAttribute('activePanel'), 10);
     }
 
@@ -191,7 +194,11 @@
         // TODO: Logic for adding, removing animation classes
         // (focus will happen here if not animated)
         if (isOpen && this.titleNode) {
-          this.titleNode.focus();
+          if (this.activePanel === 0) {
+            this.titleNode.focus();
+          } else {
+            setFocusToFirstChild(this.panels[this.activePanel]);
+          }
         } else {
           this.trigger.focus();
         }
