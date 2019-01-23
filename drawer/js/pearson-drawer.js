@@ -201,7 +201,7 @@
           <button
             class="pe-link--btn"
             data-action="show"
-            data-panel="${idx}"
+            data-panel="${idx + 2}"
             style="color:#252525;padding:0;text-align:left;text-decoration:none;"
           >
             <span class="pe-label pe-bold" style="pointer-events:none;">${headingText}</span>
@@ -263,6 +263,7 @@
       }
 
       const nextPanelId = target.dataset.panel;
+      this.showPanel(this.panels, nextPanelId)
     }
 
     onWindowClick(e) {
