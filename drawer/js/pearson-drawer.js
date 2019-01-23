@@ -75,7 +75,7 @@
     audio:not([tabindex^="-"]):not([inert]),
     video:not([tabindex^="-"]):not([inert]),
     [contenteditable]:not([tabindex^="-"]):not([inert]),
-    [tabindex]:not([tabindex^="-"]):not([inert])`;
+    [tabindex]:not([inert])`;
 
   function getDeepActiveElement() {
     let a = doc.activeElement;
@@ -95,6 +95,16 @@
         child.getClientRects().length
       );
     });
+  }
+
+  function setFocusToFirstChild(node) {
+    const focusableChildren = getFocusableChildren(node),
+      focusableChild =
+        node.querySelector('[autofocus]') || focusableChildren[0];
+
+    if (focusableChild) {
+      focusableChild.focus();
+    }
   }
 
   function trapTabKey(e, ...nodes) {
@@ -234,6 +244,7 @@
         }
       });
       nextPanel.style.display = 'block';
+      setFocusToFirstChild(nextPanel);
     }
 
     /**
