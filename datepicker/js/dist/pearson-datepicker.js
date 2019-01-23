@@ -53,7 +53,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
           } else if (add === 'subtract') {
             date.month = moment().add(date.month - 1, 'month').month();
-            if (date.month === 0) {
+            if (date.month === 11) {
               date.year = date.year - 1;
             }
           }
@@ -167,15 +167,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'nextMonth',
       value: function nextMonth() {
         this.data = this.returnDateData(this.data, 'add');
-        console.log(this.data, this.data.month, this.data.year);
         this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year;
+        this.renderCalendar(this.data);
       }
     }, {
       key: 'prevMonth',
       value: function prevMonth() {
         this.data = this.returnDateData(this.data, 'subtract');
-        console.log(this.data, this.data.month, this.data.year);
         this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year;
+        this.renderCalendar(this.data);
+      }
+    }, {
+      key: 'renderCalendar',
+      value: function renderCalendar(data) {
+        console.log('RENDER', data);
       }
     }, {
       key: 'buildCalendarContainer',
@@ -246,6 +251,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.returnCalendarData = _this.returnCalendarData.bind(_this);
       _this.nextMonth = _this.nextMonth.bind(_this);
       _this.prevMonth = _this.prevMonth.bind(_this);
+      _this.renderCalendar = _this.renderCalendar.bind(_this);
       return _this;
     }
 
@@ -271,7 +277,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           if (oldValue !== newValue) {
             if (newValue === 'true') {
               var calendarTemplate = this.buildCalendarContainer();
-
               this.datepicker.appendChild(calendarTemplate);
               this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year;
             }

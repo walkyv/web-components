@@ -139,13 +139,13 @@ calendar.innerHTML = `
         date.month = parseInt(this.month - 1, 10);
       } else if (add !== undefined) {
         if (add === 'add') {
-          date.month = moment().add(date.month+1, 'month').month();
+          date.month = moment().add(date.month + 1, 'month').month();
           if (date.month === 0) {
             date.year = date.year + 1;
           }
         } else if (add === 'subtract') {
           date.month = moment().add(date.month-1, 'month').month();
-          if (date.month === 0) {
+          if (date.month === 11) {
             date.year = date.year - 1;
           }
         }
@@ -214,14 +214,18 @@ calendar.innerHTML = `
 
     nextMonth () {
       this.data = this.returnDateData(this.data, 'add');
-      console.log(this.data, this.data.month, this.data.year)
       this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year
+      this.renderCalendar(this.data);
     }
 
     prevMonth () {
       this.data = this.returnDateData(this.data, 'subtract');
-      console.log(this.data, this.data.month, this.data.year)
       this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year
+      this.renderCalendar(this.data);
+    }
+
+    renderCalendar(data) {
+      console.log('RENDER', data)
     }
 
     buildCalendarContainer () {
@@ -231,6 +235,7 @@ calendar.innerHTML = `
 
       nextBtn.addEventListener('click', this.nextMonth, false);
       prevBtn.addEventListener('click', this.prevMonth, false);
+
 
       return calendarTemplate;
     }
@@ -252,6 +257,7 @@ calendar.innerHTML = `
       this.returnCalendarData = this.returnCalendarData.bind(this);
       this.nextMonth = this.nextMonth.bind(this);
       this.prevMonth = this.prevMonth.bind(this);
+      this.renderCalendar = this.renderCalendar.bind(this);
     }
 
     connectedCallback() {
@@ -272,7 +278,6 @@ calendar.innerHTML = `
         if (oldValue !== newValue) {
           if (newValue === 'true') {
             let calendarTemplate = this.buildCalendarContainer();
-
             this.datepicker.appendChild(calendarTemplate);
             this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year
           }
