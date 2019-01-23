@@ -41,7 +41,7 @@ calendar.innerHTML = `
         <section class="calendar-container animated animateIn">
             <div class="pe-calendar ">
                 <fieldset class="pe-inner">
-                    <legend class="pe-cal-title pe-title--small" id="pe-cal-month">November 2018</legend>
+                    <legend class="pe-cal-title pe-title--small" id="pe-cal-month"></legend>
                     <div class="pe-cal-actions">
                         <button class="pe-arrowIcons pe-icon--btn previous" aria-label="Previous month">
                             <svg focusable="false" aria-hidden="true" class="pe-icon--chevron-back-18">
@@ -119,23 +119,35 @@ calendar.innerHTML = `
       return this.getAttribute('day');
     }
 
+    set monthYearState(str) {
+      this.shadowRoot.querySelector('legend').innerHTML = str
+    }
     set openState(bool) {
       this.setAttribute('open', bool)
     }
 
     returnDateData(date, add) {
-      if (this.year !== null) {
-        date.year = this.year;
+      if (this.year !== null && add === undefined) {
+        date.year = parseInt(this.year,10);
+      } else if (add !== undefined){
+        date.year = date.year;
       } else {
         date.year = parseInt(moment().format('Y'),10);
       }
-      if (this.month !== null) {
+
+      if (this.month !== null && add === undefined) {
         date.month = parseInt(this.month - 1, 10);
-      } else if (add !== undefined){
-        date.month = moment().add(date.month+1, 'month').month();
-        if (date.month === 0) {
-        date.year = date.year + 1;
-          console.log(date)
+      } else if (add !== undefined) {
+        if (add === 'add') {
+          date.month = moment().add(date.month+1, 'month').month();
+          if (date.month === 0) {
+            date.year = date.year + 1;
+          }
+        } else if (add === 'subtract') {
+          date.month = moment().add(date.month-1, 'month').month();
+          if (date.month === 0) {
+            date.year = date.year - 1;
+          }
         }
       } else {
         date.month = moment().month();
@@ -201,16 +213,25 @@ calendar.innerHTML = `
     }
 
     nextMonth () {
-      console.log(this.data)
       this.data = this.returnDateData(this.data, 'add');
-      console.log(this.data)
+      console.log(this.data, this.data.month, this.data.year)
+      this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year
     }
 
-    buildCalendar () {
+    prevMonth () {
+      this.data = this.returnDateData(this.data, 'subtract');
+      console.log(this.data, this.data.month, this.data.year)
+      this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year
+    }
+
+    buildCalendarContainer () {
       const calendarTemplate = calendar.content.cloneNode(true),
-        nextBtn = calendarTemplate.querySelector('.next');
+        nextBtn = calendarTemplate.querySelector('.next'),
+        prevBtn = calendarTemplate.querySelector('.previous');
 
       nextBtn.addEventListener('click', this.nextMonth, false);
+      prevBtn.addEventListener('click', this.prevMonth, false);
+
       return calendarTemplate;
     }
 
@@ -227,9 +248,10 @@ calendar.innerHTML = `
       this.shadowRoot.appendChild(clone);
 
       this.returnDateData = this.returnDateData.bind(this);
-      this.buildCalendar = this.buildCalendar.bind(this);
+      this.buildCalendarContainer = this.buildCalendarContainer.bind(this);
       this.returnCalendarData = this.returnCalendarData.bind(this);
       this.nextMonth = this.nextMonth.bind(this);
+      this.prevMonth = this.prevMonth.bind(this);
     }
 
     connectedCallback() {
@@ -249,8 +271,10 @@ calendar.innerHTML = `
       if (name === 'open') {
         if (oldValue !== newValue) {
           if (newValue === 'true') {
-            let calendarTemplate = this.buildCalendar();
+            let calendarTemplate = this.buildCalendarContainer();
+
             this.datepicker.appendChild(calendarTemplate);
+            this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year
           }
           if (newValue === 'false' && calendarContainer !== null) {
            calendarContainer.remove();
