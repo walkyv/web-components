@@ -190,6 +190,7 @@
       this.onContentClick = this.onContentClick.bind(this);
       this.onWindowClick = this.onWindowClick.bind(this);
       this.onWindowKeydown = this.onWindowKeydown.bind(this);
+      this.onanimationend = this.onAnimationEnd .bind(this);
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -345,6 +346,11 @@
       if (e.key === 'Tab') {
         trapTabKey(e, this, this.shadowRoot);
       }
+    }
+
+    onAnimationEnd (e){
+      const animationName = e.animationName;
+      console.log(animationName);
     }
   }
   customElements.define('pearson-drawer', Drawer);

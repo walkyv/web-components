@@ -148,6 +148,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.onContentClick = _this.onContentClick.bind(_this);
       _this.onWindowClick = _this.onWindowClick.bind(_this);
       _this.onWindowKeydown = _this.onWindowKeydown.bind(_this);
+      _this.onanimationend = _this.onAnimationEnd.bind(_this);
       return _this;
     }
 
@@ -319,6 +320,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (e.key === 'Tab') {
           trapTabKey(e, this, this.shadowRoot);
         }
+      }
+    }, {
+      key: 'onAnimationEnd',
+      value: function onAnimationEnd(e) {
+        var animationName = e.animationName;
+        console.log(animationName);
       }
     }]);
 
