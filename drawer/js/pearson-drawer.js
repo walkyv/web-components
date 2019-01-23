@@ -35,7 +35,7 @@
     <style>
 :host{display:block;-webkit-box-sizing:border-box;box-sizing:border-box;font-family:14px,18px,Open Sans,Calibri,Tahoma,sans-serif;color:#252525;visibility:hidden;position:fixed;padding:25px 20px 20px;height:100%;top:0;bottom:0;right:-320px;width:320px;border-left:1px solid #d9d9d9;border-bottom:30px solid #fff;-webkit-box-shadow:0 0 5px 0 #c7c7c7;box-shadow:0 0 5px 0 #c7c7c7}:host *,:host :after,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box}:host([open]){visibility:visible;right:0}:host button.back,:host button.close{position:absolute;top:15px;right:15px;border:0;cursor:pointer;background:none;height:44px;width:44px}:host button.back{right:auto;width:auto}::slotted(.title){display:inline-block;margin:0 0 20px}::slotted(.title:focus){-webkit-box-shadow:none;box-shadow:none;outline:2px solid #0b73da;outline-offset:4px}.content,.header{padding-left:10px;padding-right:10px}.header{border-bottom:1px solid #d9d9d9;height:44px}.content-scroll-wrapper{height:-webkit-calc(100% - 30px);height:calc(100% - 30px);overflow-y:scroll}.content{position:relative;height:100%;margin-top:25px}.content dd{margin-left:0;margin-bottom:25px}.content button{color:red!important}.pe-icon--btn{position:relative;font-size:inherit;line-height:inherit;font-family:inherit;font-weight:600;padding:0;border:0;background-color:transparent}.pe-icon--btn:focus{outline:0}.pe-icon--btn:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:4px;width:-webkit-calc(100% + 8px);width:calc(100% + 8px);height:-webkit-calc(100% + 8px);height:calc(100% + 8px);top:-4px;left:-4px;z-index:1}.pe-icon--btn>*{pointer-events:none}svg[class^=pe-icon--]{display:inline-block;vertical-align:top;fill:#6a7070}svg:not(:root){overflow:hidden}.soft-shadow--bottom{-webkit-box-shadow:0 12px 5px -10px hsla(0,0%,78%,.7);box-shadow:0 12px 5px -10px hsla(0,0%,78%,.7)}@-webkit-keyframes slideInRight{0%{right:-320px}to{right:0;visibility:visible}}@keyframes slideInRight{0%{right:-320px}to{right:0;visibility:visible}}@-webkit-keyframes slideOutRight{0%{right:0}to{right:-320px;visibility:hidden}}@keyframes slideOutRight{0%{right:0}to{right:-320px;visibility:hidden}}.slideInRight{-webkit-animation-name:slideInRight;animation-name:slideInRight}.slideOutRight{-webkit-animation-name:slideOutRight;animation-name:slideOutRight}.animated{-webkit-animation-duration:.6s;animation-duration:.6s;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}@media (prefers-reduced-motion){.animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}
     </style>
-    <div class="header">
+    <div id="header" class="header">
       <button
         type="button"
         id="drawer-back"
@@ -48,7 +48,7 @@
       <slot name="title"></slot>
     </div>
     <div class="content-scroll-wrapper">
-      <div class="content">
+      <div id="content" class="content">
         <slot name="content"></slot>
       </div>
     </div>
@@ -148,8 +148,9 @@
       this.closeBtn = clone.querySelector('button[data-action="close"]');
 
       // TODO: use ID to select these
-      this.header = clone.querySelector('.header');
+      this.header = clone.querySelector('#header');
       this.scrollWrapper = clone.querySelector('.content-scroll-wrapper');
+      this.content = clone.querySelector('#content');
 
       this.shadowRoot.appendChild(clone);
 
@@ -158,6 +159,7 @@
       this.onContentScroll = this.onContentScroll.bind(this);
       this.onTitleSlotChange = this.onTitleSlotChange.bind(this);
       this.onContentSlotChange = this.onContentSlotChange.bind(this);
+      this.onContentClick = this.onContentClick.bind(this);
       this.onWindowClick = this.onWindowClick.bind(this);
       this.onWindowKeydown = this.onWindowKeydown.bind(this);
     }
@@ -176,11 +178,13 @@
     connectedCallback() {
       const [titleSlot, contentSlot] = this.shadowRoot.querySelectorAll('slot');
 
-      this.closeBtn.addEventListener('click', () => (this.open = false));
-      this.scrollWrapper.addEventListener('scroll', this.onContentScroll);
-
       titleSlot.addEventListener('slotchange', this.onTitleSlotChange);
       contentSlot.addEventListener('slotchange', this.onContentSlotChange);
+      
+      this.closeBtn.addEventListener('click', () => (this.open = false));
+      this.scrollWrapper.addEventListener('scroll', this.onContentScroll);
+      this.content.addEventListener('click', this.onContentClick, true);
+
 
       w.addEventListener('click', this.onWindowClick, true);
       w.addEventListener('keydown', this.onWindowKeydown, true);
@@ -247,6 +251,12 @@
 
       if (scrollTop < 31) {
         this.header.classList.remove('soft-shadow--bottom');
+      }
+    }
+
+    onContentClick(e) {
+      if (!e.target.matches('button[data-panel]')) {
+        return;
       }
     }
 
