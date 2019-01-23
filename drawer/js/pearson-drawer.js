@@ -98,7 +98,7 @@
 
   function setFocusToFirstChild(node) {
     const focusableChildren = getFocusableChildren(node),
-      // NB: OFF BY ONE ERROR IF NOT CHECK FOR TABINDEX-1 HERE
+      // TODO: INVESTIGATE OFF BY ONE ERROR IF NOT CHECK FOR TABINDEX-1 HERE
       focusableChild =
         node.querySelector('[autofocus]') || node.querySelector('[tabindex="-1"]') || focusableChildren[0];
 
