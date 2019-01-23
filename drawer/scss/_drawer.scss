@@ -45,6 +45,10 @@
   width: auto;
 }
 
+:host button.back svg {
+  margin-right: 1px;
+}
+
 ::slotted(.title) {
   display: inline-block;
   margin: 0;
