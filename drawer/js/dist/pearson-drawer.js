@@ -166,7 +166,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function convertPanelHeadings(headingNode, idx) {
         var headingText = headingNode.textContent;
         if (headingNode.parentNode.dataset.panel === '1') {
-          var btnWrapper = '\n          <button\n            class="pe-link--btn"\n            data-action="show"\n            data-panel="' + idx + '"\n            style="color:#252525;padding:0;text-align:left;text-decoration:none;"\n          >\n            <span class="pe-label pe-bold">' + headingText + '</span>\n          </button>';
+          var btnWrapper = '\n          <button\n            class="pe-link--btn"\n            data-action="show"\n            data-panel="' + idx + '"\n            style="color:#252525;padding:0;text-align:left;text-decoration:none;"\n          >\n            <span class="pe-label pe-bold" style="pointer-events:none;">' + headingText + '</span>\n          </button>';
           headingNode.innerHTML = btnWrapper;
         } else {
           headingNode.setAttribute('tabindex', '-1');

@@ -201,7 +201,7 @@
             data-panel="${idx}"
             style="color:#252525;padding:0;text-align:left;text-decoration:none;"
           >
-            <span class="pe-label pe-bold">${headingText}</span>
+            <span class="pe-label pe-bold" style="pointer-events:none;">${headingText}</span>
           </button>`;
         headingNode.innerHTML = btnWrapper;
       } else {
