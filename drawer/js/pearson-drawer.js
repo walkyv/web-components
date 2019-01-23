@@ -130,18 +130,18 @@
 
   class Drawer extends HTMLElement {
     static get observedAttributes() {
-      return ['activepanel', 'open'];
+      return ['activepanelidx', 'open'];
     }
 
-    get activePanel() {
-      if (!this.hasAttribute('activePanel')) {
+    get activePanelIdx() {
+      if (!this.hasAttribute('activePanelIdx')) {
         return 0;
       }
-      return parseInt(this.getAttribute('activePanel'), 10);
+      return parseInt(this.getAttribute('activePanelIdx'), 10);
     }
 
-    set activePanel(newValue) {
-      this.setAttribute('activePanel', newValue);
+    set activePanelIdx(newValue) {
+      this.setAttribute('activePanelIdx', newValue);
     }
 
     get open() {
@@ -194,16 +194,16 @@
         // TODO: Logic for adding, removing animation classes
         // (focus will happen here if not animated)
         if (isOpen && this.titleNode) {
-          if (this.activePanel === 0) {
+          if (this.activePanelIdx === 0) {
             this.titleNode.focus();
           } else {
-            setFocusToFirstChild(this.panels[this.activePanel]);
+            setFocusToFirstChild(this.panels[this.activePanelIdx]);
           }
         } else {
           this.trigger.focus();
         }
       }
-      if (name === 'activepanel') {
+      if (name === 'activepanelidx') {
         const panelIdx = parseInt(newValue, 10);
         
         this.showPanel(panelIdx);
@@ -230,7 +230,7 @@
       titleSlot.addEventListener('slotchange', this.onTitleSlotChange);
       contentSlot.addEventListener('slotchange', this.onContentSlotChange);
 
-      this.backBtn.addEventListener('click', () => (this.activePanel = 0));
+      this.backBtn.addEventListener('click', () => (this.activePanelIdx = 0));
       this.closeBtn.addEventListener('click', () => (this.open = false));
       this.scrollWrapper.addEventListener('scroll', this.onContentScroll);
       this.content.addEventListener('click', this.onContentClick, true);
@@ -316,7 +316,7 @@
         return;
       }
 
-      this.activePanel = parseInt(target.dataset.panel, 10) - 1;
+      this.activePanelIdx = parseInt(target.dataset.panel, 10) - 1;
     }
 
     onWindowClick(e) {

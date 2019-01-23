@@ -83,15 +83,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _inherits(Drawer, _HTMLElement);
 
     _createClass(Drawer, [{
-      key: 'activePanel',
+      key: 'activePanelIdx',
       get: function get() {
-        if (!this.hasAttribute('activePanel')) {
+        if (!this.hasAttribute('activePanelIdx')) {
           return 0;
         }
-        return parseInt(this.getAttribute('activePanel'), 10);
+        return parseInt(this.getAttribute('activePanelIdx'), 10);
       },
       set: function set(newValue) {
-        this.setAttribute('activePanel', newValue);
+        this.setAttribute('activePanelIdx', newValue);
       }
     }, {
       key: 'open',
@@ -115,7 +115,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['activepanel', 'open'];
+        return ['activepanelidx', 'open'];
       }
     }]);
 
@@ -157,16 +157,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           // TODO: Logic for adding, removing animation classes
           // (focus will happen here if not animated)
           if (isOpen && this.titleNode) {
-            if (this.activePanel === 0) {
+            if (this.activePanelIdx === 0) {
               this.titleNode.focus();
             } else {
-              setFocusToFirstChild(this.panels[this.activePanel]);
+              setFocusToFirstChild(this.panels[this.activePanelIdx]);
             }
           } else {
             this.trigger.focus();
           }
         }
-        if (name === 'activepanel') {
+        if (name === 'activepanelidx') {
           var panelIdx = parseInt(newValue, 10);
 
           this.showPanel(panelIdx);
@@ -200,7 +200,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         contentSlot.addEventListener('slotchange', this.onContentSlotChange);
 
         this.backBtn.addEventListener('click', function () {
-          return _this2.activePanel = 0;
+          return _this2.activePanelIdx = 0;
         });
         this.closeBtn.addEventListener('click', function () {
           return _this2.open = false;
@@ -289,7 +289,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return;
         }
 
-        this.activePanel = parseInt(target.dataset.panel, 10) - 1;
+        this.activePanelIdx = parseInt(target.dataset.panel, 10) - 1;
       }
     }, {
       key: 'onWindowClick',
