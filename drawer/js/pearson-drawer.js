@@ -32,8 +32,7 @@
   `;
 
   template.innerHTML = ` 
-    <style>
-    @-webkit-keyframes slideInRight{0%{right:-320px}to{right:0;visibility:visible}}@keyframes slideInRight{0%{right:-320px}to{right:0;visibility:visible}}@-webkit-keyframes slideOutRight{0%{right:0}to{right:-320px}}@keyframes slideOutRight{0%{right:0}to{right:-320px}}:host(.slideInRight){-webkit-animation-name:slideInRight;animation-name:slideInRight}:host(.slideOutRight){-webkit-animation-name:slideOutRight;animation-name:slideOutRight}:host(.animated){-webkit-animation-duration:.6s;animation-duration:.6s;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}@media (prefers-reduced-motion){:host(.animated){-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}:host{display:block;-webkit-box-sizing:border-box;box-sizing:border-box;font-family:14px,18px,Open Sans,Calibri,Tahoma,sans-serif;color:#252525;visibility:hidden;position:fixed;padding:25px 20px 20px;height:100%;top:0;bottom:0;right:-320px;width:320px;border-left:1px solid #d9d9d9;border-bottom:30px solid #fff;-webkit-box-shadow:0 0 5px 0 #c7c7c7;box-shadow:0 0 5px 0 #c7c7c7}:host *,:host :after,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box}:host button.back,:host button.close{position:absolute;top:15px;right:15px;border:0;cursor:pointer;background:none;height:44px;width:44px}:host button.back{right:auto;width:auto}:host button.back svg{margin-right:1px}::slotted(.title){display:inline-block;margin:0 0 20px}::slotted(.title:focus){-webkit-box-shadow:none;box-shadow:none;outline:2px solid #0b73da;outline-offset:4px}.content,.header{padding-left:10px;padding-right:10px}.header{border-bottom:1px solid #d9d9d9;height:44px}.content-scroll-wrapper{height:-webkit-calc(100% - 30px);height:calc(100% - 30px);overflow-y:scroll}.content{position:relative;height:100%;margin-top:25px}.pe-icon--btn{position:relative;font-size:inherit;line-height:inherit;font-family:inherit;font-weight:600;padding:0;border:0;background-color:transparent}.pe-icon--btn:focus{outline:0}.pe-icon--btn:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:4px;width:-webkit-calc(100% + 8px);width:calc(100% + 8px);height:-webkit-calc(100% + 8px);height:calc(100% + 8px);top:-4px;left:-4px;z-index:1}.pe-icon--btn>*{pointer-events:none}.soft-shadow--bottom{-webkit-box-shadow:0 12px 5px -10px hsla(0,0%,78%,.7);box-shadow:0 12px 5px -10px hsla(0,0%,78%,.7)}svg[class^=pe-icon--]{display:inline-block;vertical-align:top;fill:#6a7070}svg:not(:root){overflow:hidden}@media (prefers-reduced-motion){:host([open]){visibility:visible;right:0}}
+    <style>@-webkit-keyframes slideInRight{0%{right:-320px}to{right:0;visibility:visible}}@keyframes slideInRight{0%{right:-320px}to{right:0;visibility:visible}}@-webkit-keyframes slideOutRight{0%{right:0}to{right:-320px}}@keyframes slideOutRight{0%{right:0}to{right:-320px}}:host(.slideInRight){-webkit-animation-name:slideInRight;animation-name:slideInRight}:host(.slideOutRight){-webkit-animation-name:slideOutRight;animation-name:slideOutRight}:host(.animated){-webkit-animation-duration:.6s;animation-duration:.6s;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}@media (prefers-reduced-motion){:host(.animated){-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}:host{display:block;-webkit-box-sizing:border-box;box-sizing:border-box;font-family:14px,18px,Open Sans,Calibri,Tahoma,sans-serif;color:#252525;position:fixed;padding:25px 20px 20px;height:100%;top:0;right:-320px;bottom:0;width:320px;border-left:1px solid #d9d9d9;border-bottom:30px solid #fff;-webkit-box-shadow:0 0 5px 0 #c7c7c7;box-shadow:0 0 5px 0 #c7c7c7}:host(:not(.animated)){visibility:hidden}:host([open]:not(.animated)){visibility:visible;right:0}:host *,:host :after,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box}:host button.back,:host button.close{position:absolute;top:15px;right:15px;border:0;cursor:pointer;background:none;height:44px;width:44px}:host button.back{right:auto;width:auto}:host button.back svg{margin-right:1px}::slotted(.title){display:inline-block;margin:0 0 20px}::slotted(.title:focus){-webkit-box-shadow:none;box-shadow:none;outline:2px solid #0b73da;outline-offset:4px}.content,.header{padding-left:10px;padding-right:10px}.header{border-bottom:1px solid #d9d9d9;height:44px}.content-scroll-wrapper{height:-webkit-calc(100% - 30px);height:calc(100% - 30px);overflow-y:scroll}.content{position:relative;height:100%;margin-top:25px}.pe-icon--btn{position:relative;font-size:inherit;line-height:inherit;font-family:inherit;font-weight:600;padding:0;border:0;background-color:transparent}.pe-icon--btn:focus{outline:0}.pe-icon--btn:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:4px;width:-webkit-calc(100% + 8px);width:calc(100% + 8px);height:-webkit-calc(100% + 8px);height:calc(100% + 8px);top:-4px;left:-4px;z-index:1}.pe-icon--btn>*{pointer-events:none}.soft-shadow--bottom{-webkit-box-shadow:0 12px 5px -10px hsla(0,0%,78%,.7);box-shadow:0 12px 5px -10px hsla(0,0%,78%,.7)}svg[class^=pe-icon--]{display:inline-block;vertical-align:top;fill:#6a7070}svg:not(:root){overflow:hidden}@media (prefers-reduced-motion){:host([open]){visibility:visible;right:0}:host(:not([open])){visibility:hidden}}
     </style>
     <div id="header" class="header">
       <slot name="title"></slot>
@@ -196,9 +195,17 @@
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'open') {
         const isOpen = newValue !== null;
-        // TODO: Logic for adding, removing animation classes
-        // (focus will happen here if not animated)
-        this.manageOpenFocus(isOpen);
+        const isAnimated = this.classList.contains('animated') &&animationEnabled();
+
+        if (isAnimated) {
+          const prevAnimation = isOpen ? 'slideOutRight' : 'slideInRight';
+          const nextAnimation = isOpen ? 'slideInRight' : 'slideOutRight';
+
+          this.classList.add(nextAnimation);
+          this.classList.remove(prevAnimation);
+        } else {
+          this.manageOpenFocus(isOpen);
+        }
       }
       if (name === 'activepanelidx') {
         const panelIdx = parseInt(newValue, 10);
@@ -224,6 +231,10 @@
     connectedCallback() {
       const [titleSlot, contentSlot] = this.shadowRoot.querySelectorAll('slot');
 
+      if (!this.open && !this.hasAttribute('aria-hidden')) {
+        this.setAttribute('aria-hidden', true);
+      }
+
       titleSlot.addEventListener('slotchange', this.onTitleSlotChange);
       contentSlot.addEventListener('slotchange', this.onContentSlotChange);
 
@@ -231,6 +242,8 @@
       this.closeBtn.addEventListener('click', () => (this.open = false));
       this.scrollWrapper.addEventListener('scroll', this.onContentScroll);
       this.content.addEventListener('click', this.onContentClick, true);
+
+      this.addEventListener('animationend', this.onAnimationEnd);
 
       w.addEventListener('click', this.onWindowClick, true);
       w.addEventListener('keydown', this.onWindowKeydown, true);
@@ -272,6 +285,7 @@
 
     manageOpenFocus(isOpen) {
       if (isOpen && this.titleNode) {
+        this.removeAttribute('aria-hidden');
         if (this.activePanelIdx === 0) {
           this.titleNode.focus();
         } else {
@@ -279,6 +293,7 @@
         }
       } else {
         this.trigger.focus();
+        this.setAttribute('aria-hidden', 'true');
       }
     }
 
@@ -349,8 +364,7 @@
     }
 
     onAnimationEnd (e){
-      const animationName = e.animationName;
-      console.log(animationName);
+      this.manageOpenFocus(this.open);
     }
   }
   customElements.define('pearson-drawer', Drawer);
