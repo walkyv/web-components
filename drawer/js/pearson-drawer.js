@@ -126,6 +126,8 @@
     }
   }
 
+  const forEach = Array.prototype.forEach;
+
   class Drawer extends HTMLElement {
     static get observedAttributes() {
       return ['activepanel', 'open'];
@@ -149,7 +151,7 @@
       if (isOpen) {
         this.setAttribute('open', '');
       } else {
-        this.removeAttribute('open');``
+        this.removeAttribute('open');
       }
     }
 
@@ -203,7 +205,7 @@
 
       titleSlot.addEventListener('slotchange', this.onTitleSlotChange);
       contentSlot.addEventListener('slotchange', this.onContentSlotChange);
-      
+
       this.closeBtn.addEventListener('click', () => (this.open = false));
       this.scrollWrapper.addEventListener('scroll', this.onContentScroll);
       this.content.addEventListener('click', this.onContentClick, true);
@@ -237,8 +239,8 @@
 
     showPanel(panelId) {
       const nextPanel = this.panels[panelId];
-      
-      Array.prototype.forEach.call(this.panels, function (panel) {
+
+      forEach.call(this.panels, function(panel) {
         if (panel !== nextPanel) {
           panel.style.display = 'none';
         }
@@ -268,11 +270,8 @@
       const detailPanels = Array.prototype.slice.call(this.panels, 1);
       const headings = this.contentNode.querySelectorAll('h3');
 
-      Array.prototype.forEach.call(headings, this.convertPanelHeadings);
-      Array.prototype.forEach.call(
-        detailPanels,
-        p => (p.style.display = 'none')
-      );
+      forEach.call(headings, this.convertPanelHeadings);
+      forEach.call(detailPanels, p => (p.style.display = 'none'));
     }
 
     onContentScroll(e) {

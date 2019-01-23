@@ -75,6 +75,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }
   }
 
+  var forEach = Array.prototype.forEach;
+
   var Drawer = function (_HTMLElement) {
     _inherits(Drawer, _HTMLElement);
 
@@ -97,7 +99,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (isOpen) {
           this.setAttribute('open', '');
         } else {
-          this.removeAttribute('open');'';
+          this.removeAttribute('open');
         }
       }
     }, {
@@ -202,7 +204,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function showPanel(panelId) {
         var nextPanel = this.panels[panelId];
 
-        Array.prototype.forEach.call(this.panels, function (panel) {
+        forEach.call(this.panels, function (panel) {
           if (panel !== nextPanel) {
             panel.style.display = 'none';
           }
@@ -233,8 +235,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var detailPanels = Array.prototype.slice.call(this.panels, 1);
         var headings = this.contentNode.querySelectorAll('h3');
 
-        Array.prototype.forEach.call(headings, this.convertPanelHeadings);
-        Array.prototype.forEach.call(detailPanels, function (p) {
+        forEach.call(headings, this.convertPanelHeadings);
+        forEach.call(detailPanels, function (p) {
           return p.style.display = 'none';
         });
       }
