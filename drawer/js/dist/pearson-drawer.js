@@ -163,11 +163,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       }
     }, {
       key: 'convertPanelHeadings',
-      value: function convertPanelHeadings(headingNode) {
-        // TODO: Turn provided node into button
-        console.log('converting');
+      value: function convertPanelHeadings(headingNode, idx) {
         var headingText = headingNode.textContent;
-        var btnWrapper = '\n        <button class="pe-link--btn" data-action="show">\n          <span class="pe-label pe-bold">' + headingText + '</span>\n        </button>';
+        var btnWrapper = '\n        <button class="pe-link--btn" data-action="show" data-panel="' + idx + '">\n          <span class="pe-label pe-bold">' + headingText + '</span>\n        </button>';
 
         headingNode.innerHTML = btnWrapper;
       }

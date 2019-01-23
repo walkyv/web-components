@@ -191,12 +191,10 @@
       w.removeEventListener(this.onWindowKeydown);
     }
     
-    convertPanelHeadings(headingNode) {
-      // TODO: Turn provided node into button
-      console.log('converting')
+    convertPanelHeadings(headingNode, idx) {
       const headingText = headingNode.textContent;
       const btnWrapper = `
-        <button class="pe-link--btn" data-action="show">
+        <button class="pe-link--btn" data-action="show" data-panel="${idx}">
           <span class="pe-label pe-bold">${headingText}</span>
         </button>`;
 
