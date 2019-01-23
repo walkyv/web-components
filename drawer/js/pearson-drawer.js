@@ -74,7 +74,8 @@
     iframe:not([tabindex^="-"]):not([inert]),
     audio:not([tabindex^="-"]):not([inert]),
     video:not([tabindex^="-"]):not([inert]),
-    [contenteditable]:not([tabindex^="-"]):not([inert])`;
+    [contenteditable]:not([tabindex^="-"]):not([inert]),
+    [tabindex]:not([inert])`;
 
   function getDeepActiveElement() {
     let a = doc.activeElement;
@@ -98,9 +99,8 @@
 
   function setFocusToFirstChild(node) {
     const focusableChildren = getFocusableChildren(node),
-      // TODO: INVESTIGATE OFF BY ONE ERROR IF NOT CHECK FOR TABINDEX-1 HERE
       focusableChild =
-        node.querySelector('[autofocus]') || node.querySelector('[tabindex="-1"]') || focusableChildren[0];
+        node.querySelector('[autofocus]') || focusableChildren[0];
 
     if (focusableChild) {
       focusableChild.focus();

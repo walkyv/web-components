@@ -26,7 +26,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-drawer');
 
-  var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert])';
+  var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert]),\n    [tabindex]:not([inert])';
 
   function getDeepActiveElement() {
     var a = doc.activeElement;
@@ -46,9 +46,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   function setFocusToFirstChild(node) {
     var focusableChildren = getFocusableChildren(node),
-
-    // NB: OFF BY ONE ERROR IF NOT CHECK FOR TABINDEX-1 HERE
-    focusableChild = node.querySelector('[autofocus]') || node.querySelector('[tabindex="-1"]') || focusableChildren[0];
+        focusableChild = node.querySelector('[autofocus]') || focusableChildren[0];
 
     if (focusableChild) {
       focusableChild.focus();
