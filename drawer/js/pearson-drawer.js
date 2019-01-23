@@ -118,7 +118,7 @@
 
   class Drawer extends HTMLElement {
     static get observedAttributes() {
-      return ['activePanel', 'open'];
+      return ['activepanel', 'open'];
     }
 
     get activePanel() {
@@ -173,13 +173,18 @@
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      const isOpen = newValue !== null;
-      // TODO: Logic for adding, removing animation classes
-      // (focus will happen here if not animated)
-      if (isOpen && this.titleNode) {
-        this.titleNode.focus();
-      } else {
-        this.trigger.focus();
+      if (name === 'open') {
+        const isOpen = newValue !== null;
+        // TODO: Logic for adding, removing animation classes
+        // (focus will happen here if not animated)
+        if (isOpen && this.titleNode) {
+          this.titleNode.focus();
+        } else {
+          this.trigger.focus();
+        }
+      }
+      if (name === 'activepanel') {
+        this.showPanel(newValue);
       }
     }
 
@@ -220,10 +225,10 @@
       }
     }
 
-    showPanel(panels, panelId) {
-      const nextPanel = panels[panelId];
+    showPanel(panelId) {
+      const nextPanel = this.panels[panelId];
       
-      Array.prototype.forEach.call(panels, function (panel) {
+      Array.prototype.forEach.call(this.panels, function (panel) {
         if (panel !== nextPanel) {
           panel.style.display = 'none';
         }
@@ -277,8 +282,7 @@
         return;
       }
 
-      const nextPanelId = parseInt(target.dataset.panel, 10) - 1;
-      this.showPanel(this.panels, nextPanelId)
+      this.activePanel = parseInt(target.dataset.panel, 10) - 1;
     }
 
     onWindowClick(e) {

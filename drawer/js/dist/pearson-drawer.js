@@ -99,7 +99,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['activePanel', 'open'];
+        return ['activepanel', 'open'];
       }
     }]);
 
@@ -135,13 +135,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Drawer, [{
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
-        var isOpen = newValue !== null;
-        // TODO: Logic for adding, removing animation classes
-        // (focus will happen here if not animated)
-        if (isOpen && this.titleNode) {
-          this.titleNode.focus();
-        } else {
-          this.trigger.focus();
+        if (name === 'open') {
+          var isOpen = newValue !== null;
+          // TODO: Logic for adding, removing animation classes
+          // (focus will happen here if not animated)
+          if (isOpen && this.titleNode) {
+            this.titleNode.focus();
+          } else {
+            this.trigger.focus();
+          }
+        }
+        if (name === 'activepanel') {
+          this.showPanel(newValue);
         }
       }
     }, {
@@ -185,10 +190,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       }
     }, {
       key: 'showPanel',
-      value: function showPanel(panels, panelId) {
-        var nextPanel = panels[panelId];
+      value: function showPanel(panelId) {
+        var nextPanel = this.panels[panelId];
 
-        Array.prototype.forEach.call(panels, function (panel) {
+        Array.prototype.forEach.call(this.panels, function (panel) {
           if (panel !== nextPanel) {
             panel.style.display = 'none';
           }
@@ -244,8 +249,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return;
         }
 
-        var nextPanelId = parseInt(target.dataset.panel, 10) - 1;
-        this.showPanel(this.panels, nextPanelId);
+        this.activePanel = parseInt(target.dataset.panel, 10) - 1;
       }
     }, {
       key: 'onWindowClick',
