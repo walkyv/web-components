@@ -163,9 +163,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       }
     }, {
       key: 'convertPanelHeadings',
-      value: function convertPanelHeadings(headingNode) {}
-      // TODO: Turn provided node into button
+      value: function convertPanelHeadings(headingNode) {
+        // TODO: Turn provided node into button
+        console.log('converting');
+        var headingText = headingNode.textContent;
+        var btnWrapper = '\n        <button class="pe-link--btn" data-action="show">\n          <span class="pe-label pe-bold">' + headingText + '</span>\n        </button>';
 
+        headingNode.innerHTML = btnWrapper;
+      }
 
       /**
        * Decorates the title of the drawer with taonex and adds an aria-label
@@ -187,7 +192,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.contentNode = e.target.assignedNodes()[0];
 
         // TODO: Get all h3 nodes in this slot
-        this.convertPanelHeadings();
+        var headings = this.contentNode.querySelectorAll('h3');
+
+        Array.prototype.forEach.call(headings, this.convertPanelHeadings);
       }
     }, {
       key: 'onContentScroll',

@@ -193,6 +193,14 @@
     
     convertPanelHeadings(headingNode) {
       // TODO: Turn provided node into button
+      console.log('converting')
+      const headingText = headingNode.textContent;
+      const btnWrapper = `
+        <button class="pe-link--btn" data-action="show">
+          <span class="pe-label pe-bold">${headingText}</span>
+        </button>`;
+
+      headingNode.innerHTML = btnWrapper;
     }
 
     /**
@@ -214,7 +222,9 @@
       this.contentNode = e.target.assignedNodes()[0];
       
       // TODO: Get all h3 nodes in this slot
-      this.convertPanelHeadings();
+      const headings = this.contentNode.querySelectorAll('h3');
+
+      Array.prototype.forEach.call(headings, this.convertPanelHeadings);
     }
 
     onContentScroll(e) {
