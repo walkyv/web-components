@@ -123,6 +123,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       var clone = template.content.cloneNode(true);
 
+      _this.backBtn = clone.querySelector('#drawer-back');
       _this.closeBtn = clone.querySelector('button[data-action="close"]');
 
       // TODO: use ID to select these
@@ -157,7 +158,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           }
         }
         if (name === 'activepanel') {
-          this.showPanel(newValue);
+          var panelIdx = parseInt(newValue, 10);
+
+          this.showPanel(panelIdx);
+
+          if (panelIdx > 0) {
+            this.backBtn.style.display = 'block';
+            this.titleNode.style.display = 'none';
+          } else {
+            this.backBtn.style.display = 'none';
+            this.titleNode.style.display = 'block';
+          }
         }
       }
     }, {

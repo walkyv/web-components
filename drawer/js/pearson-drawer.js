@@ -165,6 +165,7 @@
 
       const clone = template.content.cloneNode(true);
 
+      this.backBtn = clone.querySelector('#drawer-back');
       this.closeBtn = clone.querySelector('button[data-action="close"]');
 
       // TODO: use ID to select these
@@ -196,7 +197,17 @@
         }
       }
       if (name === 'activepanel') {
-        this.showPanel(newValue);
+        const panelIdx = parseInt(newValue, 10);
+        
+        this.showPanel(panelIdx);
+
+        if (panelIdx > 0) {
+          this.backBtn.style.display = 'block';
+          this.titleNode.style.display = 'none';
+        } else {
+          this.backBtn.style.display = 'none';
+          this.titleNode.style.display = 'block';
+        }
       }
     }
 
