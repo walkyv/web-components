@@ -28,9 +28,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-drawer');
 
-  var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert]),\n    [tabindex]:not([tabindex^="-"]):not([inert])',
-      TAB_KEY = 9,
-      ESCAPE_KEY = 27;
+  var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert]),\n    [tabindex]:not([tabindex^="-"]):not([inert])';
 
   function getDeepActiveElement() {
     var a = doc.activeElement;
@@ -46,15 +44,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     return filter.call(focusableChildren, function (child) {
       return !!(child.offsetWidth || child.offsetHeight || child.getClientRects().length);
     });
-  }
-
-  function setFocusToFirstChild(node) {
-    var focusableChildren = getFocusableChildren(node),
-        focusableChild = node.querySelector('[autofocus]') || focusableChildren[0];
-
-    if (focusableChild) {
-      focusableChild.focus();
-    }
   }
 
   function trapTabKey(e) {

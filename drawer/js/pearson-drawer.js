@@ -68,9 +68,7 @@
     audio:not([tabindex^="-"]):not([inert]),
     video:not([tabindex^="-"]):not([inert]),
     [contenteditable]:not([tabindex^="-"]):not([inert]),
-    [tabindex]:not([tabindex^="-"]):not([inert])`,
-    TAB_KEY = 9,
-    ESCAPE_KEY = 27;
+    [tabindex]:not([tabindex^="-"]):not([inert])`;
 
   function getDeepActiveElement() {
     let a = doc.activeElement;
@@ -90,16 +88,6 @@
         child.getClientRects().length
       );
     });
-  }
-
-  function setFocusToFirstChild(node) {
-    const focusableChildren = getFocusableChildren(node),
-      focusableChild =
-        node.querySelector('[autofocus]') || focusableChildren[0];
-
-    if (focusableChild) {
-      focusableChild.focus();
-    }
   }
 
   function trapTabKey(e, ...nodes) {
