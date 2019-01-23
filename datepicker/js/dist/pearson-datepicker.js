@@ -167,20 +167,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'nextMonth',
       value: function nextMonth() {
         this.data = this.returnDateData(this.data, 'add');
-        this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year;
         this.renderCalendar(this.data);
       }
     }, {
       key: 'prevMonth',
       value: function prevMonth() {
         this.data = this.returnDateData(this.data, 'subtract');
-        this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year;
         this.renderCalendar(this.data);
       }
     }, {
       key: 'renderCalendar',
-      value: function renderCalendar(data) {
-        console.log('RENDER', data);
+      value: function renderCalendar(dateData) {
+        var calendarContainer = this.datepicker.querySelector('.calendar-container'),
+            calendar = calendarContainer.querySelector('.pe-cal-dates'),
+            data = this.returnCalendarData(dateData),
+            rows = row.content.cloneNode(true),
+            cells = dateTemplate.content.cloneNode(true);
+
+        data.weeks.forEach(function (week, index) {
+          // return week data
+          week.forEach(function (days) {
+            // return day data
+          });
+        });
+        calendar.appendChild(rows);
+        this.monthYearState = data.month + ' ' + data.year;
       }
     }, {
       key: 'buildCalendarContainer',
@@ -238,7 +249,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.attachShadow({ mode: 'open' });
       var clone = datepicker.content.cloneNode(true);
-
       _this.openBtn = clone.querySelector('.open-calendar');
       _this.datepicker = clone.querySelector('.datepicker-container');
       _this.data = {};
@@ -274,6 +284,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function attributeChangedCallback(name, oldValue, newValue) {
         var calendarContainer = this.datepicker.querySelector('.calendar-container');
         if (name === 'open') {
+
           if (oldValue !== newValue) {
             if (newValue === 'true') {
               var calendarTemplate = this.buildCalendarContainer();

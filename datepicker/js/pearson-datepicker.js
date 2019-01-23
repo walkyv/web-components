@@ -214,18 +214,29 @@ calendar.innerHTML = `
 
     nextMonth () {
       this.data = this.returnDateData(this.data, 'add');
-      this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year
       this.renderCalendar(this.data);
     }
 
     prevMonth () {
       this.data = this.returnDateData(this.data, 'subtract');
-      this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year
       this.renderCalendar(this.data);
     }
 
-    renderCalendar(data) {
-      console.log('RENDER', data)
+    renderCalendar(dateData) {
+      const calendarContainer = this.datepicker.querySelector('.calendar-container'),
+      calendar = calendarContainer.querySelector('.pe-cal-dates'),
+      data = this.returnCalendarData(dateData),
+      rows = row.content.cloneNode(true),
+      cells = dateTemplate.content.cloneNode(true);
+
+      data.weeks.forEach( (week, index) => {
+        // return week data
+        week.forEach(days => {
+          // return day data
+        })
+      })
+      calendar.appendChild(rows)
+      this.monthYearState = data.month + ' ' + data.year
     }
 
     buildCalendarContainer () {
@@ -244,7 +255,6 @@ calendar.innerHTML = `
       super();
       this.attachShadow({ mode: 'open' });
       const clone = datepicker.content.cloneNode(true);
-
       this.openBtn = clone.querySelector('.open-calendar');
       this.datepicker = clone.querySelector('.datepicker-container');
       this.data = {};
@@ -275,6 +285,7 @@ calendar.innerHTML = `
     attributeChangedCallback(name, oldValue, newValue) {
     const calendarContainer = this.datepicker.querySelector('.calendar-container');
       if (name === 'open') {
+
         if (oldValue !== newValue) {
           if (newValue === 'true') {
             let calendarTemplate = this.buildCalendarContainer();
