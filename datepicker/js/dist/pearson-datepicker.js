@@ -191,10 +191,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         var data = this.returnCalendarData(dateData),
             rowTarget = this.shadowRoot.querySelector('.pe-cal-dates');
+
         rowTarget.innerHTML = '';
+
         data.weeks.forEach(function (week, index2) {
           var rowTemplate = row.content.cloneNode(true),
               rows = rowTemplate.querySelector('.pe-cal-row');
+
           week.forEach(function (days, index) {
             var cellTemplate = dateTemplate.content.cloneNode(true),
                 button = cellTemplate.querySelector('button');
@@ -213,6 +216,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 event.target.setAttribute('aria-pressed', true);
                 event.target.classList.add('selected');
                 _this2.openState = false;
+                _this2.openBtn.focus();
               });
             } else {
               button.remove();
@@ -225,6 +229,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           rowTarget.appendChild(rowTemplate);
         });
         this.monthYearState = data.month + ' ' + data.year;
+        var selectedNode = this.shadowRoot.querySelector('[data-date="' + this.selected + '"]');
+        if (selectedNode !== null) {
+          selectedNode.classList.add('selected');
+        }
       }
     }, {
       key: 'open',
@@ -284,6 +292,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       var clone = datepicker.content.cloneNode(true);
       _this.openBtn = clone.querySelector('.open-calendar');
       _this.datepicker = clone.querySelector('.datepicker-container');
+      _this.input = clone.querySelector('input');
       _this.data = {};
 
       /** After all this, we can append our clone to the shadowRoot */
@@ -304,6 +313,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var _this3 = this;
 
         this.data = this.returnDateData(this.data);
+        this.input.addEventListener('keydown', function (event) {
+          switch (event.keyCode) {
+            case 40:
+              if (_this3.open === 'false') {
+                _this3.openState = 'true';
+                _this3.renderCalendar(_this3.data);
+                if (_this3.selected === '') {
+                  var currentNode = _this3.shadowRoot.querySelector('.currentDate-box button');
+                  if (currentNode !== null) {
+                    currentNode.focus();
+                  }
+                } else {
+                  var selectedNode = _this3.shadowRoot.querySelector('[data-date="' + _this3.selected + '"]');
+                  selectedNode.classList.add('selected');
+                  selectedNode.focus();
+                }
+              }
+              break;
+          }
+        });
+
         this.openBtn.addEventListener('click', function (event) {
           if (_this3.open === 'false') {
             _this3.openState = 'true';
@@ -326,14 +356,109 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
+        var _this4 = this;
+
         var calendarContainer = this.datepicker.querySelector('.calendar-container');
         if (name === 'open') {
-
           if (oldValue !== newValue) {
             if (newValue === 'true') {
               var calendarTemplate = this.buildCalendarContainer();
+              var dates = calendarTemplate.querySelector('.pe-cal-dates');
               this.datepicker.appendChild(calendarTemplate);
               this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year;
+              dates.addEventListener('keydown', function (event) {
+                var dateButtons = dates.querySelectorAll('button:not(:disabled)'),
+                    focusableElements = dateButtons,
+                    firstFocusableElement = focusableElements[0],
+                    lastFocusableElement = focusableElements[focusableElements.length - 1],
+                    nextItem = parseInt(event.target.getAttribute('data-index')),
+                    prevItem = parseInt(event.target.getAttribute('data-index')) - 2,
+                    nextWeek = parseInt(event.target.getAttribute('data-index')) + 6,
+                    prevWeek = parseInt(event.target.getAttribute('data-index')) - 8,
+                    currentlySelected = _this4.selected,
+                    nodeCurrentlySelected = _this4.datepicker.querySelector('[data-date="' + _this4.selected + '"]'),
+                    previousMonth = _this4.datepicker.querySelector('.previous'),
+                    nextMonth = _this4.datepicker.querySelector('.next');
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                console.log(focusableElements[focusableElements.length - 1]);
+                switch (event.keyCode) {
+                  case 39:
+                    // right arrow
+                    if (_this4.shadowRoot.activeElement === lastFocusableElement) {
+                      console.log('fire off next month');
+                      _this4.nextMonth();
+                      firstFocusableElement.focus();
+                      console.log(firstFocusableElement);
+                    } else {
+                      if (focusableElements[nextItem] !== undefined) {
+                        focusableElements[nextItem].focus();
+                      } else {
+                        return;
+                      }
+                    }
+                    break;
+                  case 37:
+                    // left arrow
+                    if (document.activeElement === firstFocusableElement) {
+                      console.log('fire off previous month');
+                      _this4.prevMonth();
+                      lastFocusableElement.focus();
+                    } else {
+                      if (focusableElements[prevItem] !== undefined) {
+                        focusableElements[prevItem].focus();
+                      } else {
+                        return;
+                      }
+                    }
+                    break;
+                  case 40:
+                    //arrow down
+                    if (focusableElements[nextWeek] !== undefined) {
+                      focusableElements[nextWeek].focus();
+                    } else {
+                      // target next month
+                      console.log('fire off next month');
+                      _this4.nextMonth();
+                    }
+                    break;
+                  case 38:
+                    // arrow up
+                    if (focusableElements[prevWeek] !== undefined) {
+                      focusableElements[prevWeek].focus();
+                    } else {
+                      console.log('fire off previous month');
+                    }
+                    break;
+                  case 13:
+                    // enter
+                    event.target.click();
+                    break;
+                  case 32:
+                    // space
+                    event.target.click();
+                    break;
+                  case 33:
+                    console.log('fire off prev month');
+                    break;
+                  case 34:
+                    console.log('fire off next month');
+                    break;
+                  case 35:
+                    lastFocusableElement.focus();
+                    break;
+                  case 36:
+                    firstFocusableElement.focus();
+                    break;
+                  case 27:
+                    _this4.openState = 'false';
+                    _this4.openBtn.focus();
+                    break;
+                  case 9:
+                    previousMonth.focus();
+                    break;
+                }
+              });
             }
             if (newValue === 'false' && calendarContainer !== null) {
               calendarContainer.remove();

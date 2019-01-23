@@ -244,11 +244,14 @@ calendar.innerHTML = `
     renderCalendar(dateData) {
       const data = this.returnCalendarData(dateData),
         rowTarget = this.shadowRoot.querySelector('.pe-cal-dates');
+
       rowTarget.innerHTML = ''
+
       data.weeks.forEach((week, index2) => {
         const rowTemplate = row.content.cloneNode(true),
           rows = rowTemplate.querySelector('.pe-cal-row');
-          week.forEach( (days, index) => {
+
+        week.forEach( (days, index) => {
             const cellTemplate = dateTemplate.content.cloneNode(true),
               button = cellTemplate.querySelector('button');
               if ( days.format('MMMM') === data.month) {
@@ -265,7 +268,8 @@ calendar.innerHTML = `
                   this.selectedState = event.target.getAttribute('data-date');
                   event.target.setAttribute('aria-pressed', true);
                   event.target.classList.add('selected');
-                  this.openState = false
+                  this.openState = false;
+                  this.openBtn.focus();
                 })
               } else {
                 button.remove();
@@ -278,6 +282,11 @@ calendar.innerHTML = `
         rowTarget.appendChild(rowTemplate)
       });
       this.monthYearState = data.month + ' ' + data.year
+      const selectedNode = this.shadowRoot.querySelector(`[data-date="${this.selected}"]`);
+      if (selectedNode !== null) {
+        selectedNode.classList.add('selected');
+      }
+
     }
 
     constructor() {
@@ -286,6 +295,7 @@ calendar.innerHTML = `
       const clone = datepicker.content.cloneNode(true);
       this.openBtn = clone.querySelector('.open-calendar');
       this.datepicker = clone.querySelector('.datepicker-container');
+      this.input = clone.querySelector('input');
       this.data = {};
 
       /** After all this, we can append our clone to the shadowRoot */
@@ -301,6 +311,27 @@ calendar.innerHTML = `
 
     connectedCallback() {
       this.data = this.returnDateData(this.data);
+      this.input.addEventListener('keydown', event => {
+        switch (event.keyCode) {
+          case 40:
+            if (this.open === 'false') {
+              this.openState = 'true';
+              this.renderCalendar(this.data);
+              if (this.selected === '') {
+                const currentNode = this.shadowRoot.querySelector('.currentDate-box button');
+                if (currentNode !== null) {
+                  currentNode.focus();
+                }
+              } else {
+                const selectedNode = this.shadowRoot.querySelector(`[data-date="${this.selected}"]`);
+                selectedNode.classList.add('selected');
+                selectedNode.focus();
+              }
+            }
+            break
+        }
+      });
+
       this.openBtn.addEventListener('click', event => {
         if (this.open === 'false') {
           this.openState = 'true'
@@ -325,12 +356,99 @@ calendar.innerHTML = `
     attributeChangedCallback(name, oldValue, newValue) {
     const calendarContainer = this.datepicker.querySelector('.calendar-container');
       if (name === 'open') {
-
         if (oldValue !== newValue) {
           if (newValue === 'true') {
             let calendarTemplate = this.buildCalendarContainer();
+            const dates = calendarTemplate.querySelector('.pe-cal-dates');
             this.datepicker.appendChild(calendarTemplate);
             this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year
+            dates.addEventListener('keydown', event => {
+              const dateButtons = dates.querySelectorAll('button:not(:disabled)'),
+                focusableElements = dateButtons,
+                firstFocusableElement = focusableElements[0],
+                lastFocusableElement = focusableElements[focusableElements.length-1],
+                nextItem = parseInt(event.target.getAttribute('data-index')),
+                prevItem = parseInt(event.target.getAttribute('data-index')) - 2,
+                nextWeek = parseInt(event.target.getAttribute('data-index')) + 6,
+                prevWeek = parseInt(event.target.getAttribute('data-index')) - 8,
+                currentlySelected = this.selected,
+                nodeCurrentlySelected = this.datepicker.querySelector(`[data-date="${this.selected}"]`),
+                previousMonth = this.datepicker.querySelector('.previous'),
+                nextMonth = this.datepicker.querySelector('.next');
+              event.preventDefault();
+              event.stopImmediatePropagation();
+              console.log(focusableElements[focusableElements.length-1])
+              switch (event.keyCode) {
+                case 39: // right arrow
+                  if (this.shadowRoot.activeElement === lastFocusableElement) {
+                    console.log('fire off next month')
+                    this.nextMonth();
+                    firstFocusableElement.focus();
+                    console.log(firstFocusableElement)
+                  } else {
+                    if (focusableElements[nextItem] !== undefined) {
+                      focusableElements[nextItem].focus();
+                    } else {
+                      return
+                    }
+                  }
+                  break;
+                case 37: // left arrow
+                  if (document.activeElement === firstFocusableElement) {
+                    console.log('fire off previous month')
+                    this.prevMonth();
+                    lastFocusableElement.focus();
+                  } else {
+                    if (focusableElements[prevItem] !== undefined) {
+                      focusableElements[prevItem].focus();
+                    } else {
+                      return
+                    }
+                  }
+                  break;
+                case 40:  //arrow down
+                  if (focusableElements[nextWeek] !== undefined) {
+                    focusableElements[nextWeek].focus();
+                  } else {
+                    // target next month
+                    console.log('fire off next month')
+                    this.nextMonth();
+                  }
+                  break;
+                case 38: // arrow up
+                  if (focusableElements[prevWeek] !== undefined) {
+                    focusableElements[prevWeek].focus();
+                  } else {
+                    console.log('fire off previous month')
+                  }
+                  break;
+                case 13: // enter
+                  event.target.click();
+                  break;
+                case 32: // space
+                  event.target.click();
+                  break;
+                case 33:
+                  console.log('fire off prev month')
+                  break;
+                case 34:
+                  console.log('fire off next month')
+                  break;
+                case 35:
+                  lastFocusableElement.focus();
+                  break;
+                case 36:
+                  firstFocusableElement.focus();
+                  break;
+                case 27:
+                  this.openState = 'false'
+                  this.openBtn.focus();
+                  break;
+                case 9:
+                  previousMonth.focus();
+                  break;
+              }
+            })
           }
           if (newValue === 'false' && calendarContainer !== null) {
            calendarContainer.remove();
