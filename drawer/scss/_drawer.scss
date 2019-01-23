@@ -28,7 +28,8 @@
   right: 0;
 }
 
-:host button.close {
+:host button.close,
+:host button.back {
   position: absolute;
   top: 15px;
   right: 15px;
@@ -37,6 +38,11 @@
   background: none;
   height: 44px;
   width: 44px;
+}
+
+:host button.back {
+  right: initial;
+  width: auto;
 }
 
 ::slotted(.title) {
@@ -91,32 +97,32 @@
   }
 }
 
-.panel {
-  display: none;
-}
+// .panel {
+//   display: none;
+// }
 
-.panel button > * {
-  pointer-events: none;
-}
+// .panel button > * {
+//   pointer-events: none;
+// }
 
-.panel button.back {
-  border:0;
-  cursor:pointer;
-  background:none;
-  height:25px;
-  width:44px;
-  display:flex;
-  align-items: center;
-  width:auto;
-}
+// .panel button.back {
+//   border:0;
+//   cursor:pointer;
+//   background:none;
+//   height:25px;
+//   width:44px;
+//   display:flex;
+//   align-items: center;
+//   width:auto;
+// }
 
-  .panel button.back svg {
-    margin-right: 0.5em;
-  }
+//   .panel button.back svg {
+//     margin-right: 0.5em;
+//   }
 
-  .panel button.back h3 {
-    margin:0;
-  }
+//   .panel button.back h3 {
+//     margin:0;
+//   }
 
 .pe-icon--btn {
   position: relative;
