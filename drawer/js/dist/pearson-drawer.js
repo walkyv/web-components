@@ -83,6 +83,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.removeAttribute('open');
         }
       }
+    }, {
+      key: 'type',
+      get: function get() {
+        return this.getAttribute('type');
+      }
     }], [{
       key: 'observedAttributes',
       get: function get() {

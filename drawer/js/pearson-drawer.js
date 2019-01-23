@@ -125,6 +125,10 @@
       return this.hasAttribute('open');
     }
 
+    get type() {
+      return this.getAttribute('type');
+    }
+
     set open(newValue) {
       const isOpen = Boolean(newValue);
 
