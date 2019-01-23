@@ -10,6 +10,7 @@
   z-index: 1;
   border: 1px solid $pe-color-concrete;
   background-color: $pe-color-white;
+  font-size:14px;
   //position: absolute; //better to have absolute positioning in datepicker?
   @media all and (-ms-high-contrast:none) {
     width: 308px;
@@ -19,6 +20,7 @@
     margin:0;
     border:0;
     padding:0;
+
   }
   .pe-cal-actions {
     display:inline-flex;
@@ -31,6 +33,7 @@
     width: calc(100% - 84px);
     display:inline-block;
     float:left;
+    font-size:18px;
   }
 
   .pe-arrowIcons {
@@ -54,6 +57,7 @@
     height: 40px;
     color: $pe-color-medium-gray;
     line-height: 40px;
+    font-size:12px;
   }
   .pe-cal-row {
     display:grid;
