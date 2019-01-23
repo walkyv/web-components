@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Details Drawer</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!-- THESE IMPORTS ARE NECESSARY FOR PROPER RENDERING DURING DEVELOPMENT -->
+    <!-- DO NOT DELETE -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
+
+    <style>
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+
+      html {
+        font: .875rem/1.15 'Open Sans', sans-serif;
+      }
+
+      body {
+        color: #252525;
+      }
+
+      .pe-title, h3 {
+        font-size: 1.42857rem;
+        line-height: 1.85714rem;
+        font-weight: 400;
+      }
+
+      .pe-paragraph, p {
+        font-size: 1rem;
+        line-height: 1.57143rem;
+        margin-bottom: .85714rem;
+        margin-top: 0;
+        color: #252525;
+      }
+    
+    </style>
+
+    <!-- loads web component polyfills -->
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
+
+		<!-- load the web component script -->
+    <script src="js/dist/pearson-drawer.js"></script>
+  </head>
+
+  <body>
+    <main>
+      <button type="button" id="pearsonDrawerTrigger">Open details drawer</button>
+    </main>
+    <pearson-drawer type="details" id="pearsonDrawer">
+      <h3 class="title" slot="title">Help Topics</h3>
+      <div class="content" slot="content">
+          <h3>
+              Having trouble signing in or account locked?
+            </h3>
+            <p>
+              You have a Pearson username and password if you've ever used a
+              Pearson product
+            </p>
+      </div>
+    </pearson-drawer>
+    <script>
+    const openBtn = document.querySelector('#pearsonDrawerTrigger');
+    const drawer = document.querySelector('#pearsonDrawer');
+
+    openBtn.addEventListener('click', function (e) {
+      drawer.open = true;
+    });
+    </script>
+  </body>
+</html>
