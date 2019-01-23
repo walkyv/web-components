@@ -178,7 +178,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'showPanel',
       value: function showPanel(panels, panelId) {
-        console.log(panelId);
+        var nextPanel = panels[panelId];
+
+        Array.prototype.forEach.call(panels, function (panel) {
+          if (panel !== nextPanel) {
+            panel.style.display = 'none';
+          }
+        });
+        nextPanel.style.display = 'block';
       }
 
       /**
@@ -229,7 +236,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return;
         }
 
-        var nextPanelId = target.dataset.panel;
+        var nextPanelId = parseInt(target.dataset.panel, 10) - 1;
         this.showPanel(this.panels, nextPanelId);
       }
     }, {

@@ -213,7 +213,14 @@
     }
 
     showPanel(panels, panelId) {
-      console.log(panelId)
+      const nextPanel = panels[panelId];
+      
+      Array.prototype.forEach.call(panels, function (panel) {
+        if (panel !== nextPanel) {
+          panel.style.display = 'none';
+        }
+      });
+      nextPanel.style.display = 'block';
     }
 
     /**
@@ -262,7 +269,7 @@
         return;
       }
 
-      const nextPanelId = target.dataset.panel;
+      const nextPanelId = parseInt(target.dataset.panel, 10) - 1;
       this.showPanel(this.panels, nextPanelId)
     }
 
