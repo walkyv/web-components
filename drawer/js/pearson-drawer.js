@@ -233,9 +233,8 @@
 
     onContentSlotChange(e) {
       this.contentNode = e.target.assignedNodes()[0];
-      const detailPanels = this.contentNode.querySelectorAll(
-        '[data-panel]:not([data-panel="1"])'
-      );
+      this.panels = this.contentNode.querySelectorAll('[data-panel]');
+      const detailPanels = Array.prototype.slice.call(this.panels, 1);
       const headings = this.contentNode.querySelectorAll('h3');
 
       Array.prototype.forEach.call(headings, this.convertPanelHeadings);

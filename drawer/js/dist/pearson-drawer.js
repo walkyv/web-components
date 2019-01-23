@@ -199,7 +199,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'onContentSlotChange',
       value: function onContentSlotChange(e) {
         this.contentNode = e.target.assignedNodes()[0];
-        var detailPanels = this.contentNode.querySelectorAll('[data-panel]:not([data-panel="1"])');
+        this.panels = this.contentNode.querySelectorAll('[data-panel]');
+        var detailPanels = Array.prototype.slice.call(this.panels, 1);
         var headings = this.contentNode.querySelectorAll('h3');
 
         Array.prototype.forEach.call(headings, this.convertPanelHeadings);
