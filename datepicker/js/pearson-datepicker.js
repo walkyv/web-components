@@ -222,23 +222,6 @@ calendar.innerHTML = `
       this.renderCalendar(this.data);
     }
 
-    renderCalendar(dateData) {
-      const calendarContainer = this.datepicker.querySelector('.calendar-container'),
-      calendar = calendarContainer.querySelector('.pe-cal-dates'),
-      data = this.returnCalendarData(dateData),
-      rows = row.content.cloneNode(true),
-      cells = dateTemplate.content.cloneNode(true);
-
-      data.weeks.forEach( (week, index) => {
-        // return week data
-        week.forEach(days => {
-          // return day data
-        })
-      })
-      calendar.appendChild(rows)
-      this.monthYearState = data.month + ' ' + data.year
-    }
-
     buildCalendarContainer () {
       const calendarTemplate = calendar.content.cloneNode(true),
         nextBtn = calendarTemplate.querySelector('.next'),
@@ -249,6 +232,30 @@ calendar.innerHTML = `
 
 
       return calendarTemplate;
+    }
+
+    destroyCalendar() {
+
+    }
+
+    renderCalendar(dateData) {
+      const data = this.returnCalendarData(dateData),
+        rowTarget = this.shadowRoot.querySelector('.pe-cal-dates');
+
+      rowTarget.innerHTML = ''
+      data.weeks.forEach((week, index) => {
+        const rowTemplate = row.content.cloneNode(true),
+          rows = rowTemplate.querySelector('.pe-cal-row');
+          week.forEach(days => {
+            const cellTemplate = dateTemplate.content.cloneNode(true),
+              button = cellTemplate.querySelector('button');
+              button.innerHTML = days.format('D');
+              rows.appendChild(cellTemplate)
+          });
+        rowTarget.appendChild(rowTemplate)
+      });
+
+      this.monthYearState = data.month + ' ' + data.year
     }
 
     constructor() {
@@ -268,6 +275,7 @@ calendar.innerHTML = `
       this.nextMonth = this.nextMonth.bind(this);
       this.prevMonth = this.prevMonth.bind(this);
       this.renderCalendar = this.renderCalendar.bind(this);
+      this.destroyCalendar = this.destroyCalendar.bind(this);
     }
 
     connectedCallback() {
@@ -275,6 +283,7 @@ calendar.innerHTML = `
       this.openBtn.addEventListener('click', event => {
         if (this.open === 'false') {
           this.openState = 'true'
+          this.renderCalendar(this.data);
         } else {
           this.openState = 'false'
         }

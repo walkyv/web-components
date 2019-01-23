@@ -176,24 +176,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.renderCalendar(this.data);
       }
     }, {
-      key: 'renderCalendar',
-      value: function renderCalendar(dateData) {
-        var calendarContainer = this.datepicker.querySelector('.calendar-container'),
-            calendar = calendarContainer.querySelector('.pe-cal-dates'),
-            data = this.returnCalendarData(dateData),
-            rows = row.content.cloneNode(true),
-            cells = dateTemplate.content.cloneNode(true);
-
-        data.weeks.forEach(function (week, index) {
-          // return week data
-          week.forEach(function (days) {
-            // return day data
-          });
-        });
-        calendar.appendChild(rows);
-        this.monthYearState = data.month + ' ' + data.year;
-      }
-    }, {
       key: 'buildCalendarContainer',
       value: function buildCalendarContainer() {
         var calendarTemplate = calendar.content.cloneNode(true),
@@ -204,6 +186,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         prevBtn.addEventListener('click', this.prevMonth, false);
 
         return calendarTemplate;
+      }
+    }, {
+      key: 'destroyCalendar',
+      value: function destroyCalendar() {}
+    }, {
+      key: 'renderCalendar',
+      value: function renderCalendar(dateData) {
+        var data = this.returnCalendarData(dateData),
+            rowTarget = this.shadowRoot.querySelector('.pe-cal-dates');
+
+        rowTarget.innerHTML = '';
+        data.weeks.forEach(function (week, index) {
+          var rowTemplate = row.content.cloneNode(true),
+              rows = rowTemplate.querySelector('.pe-cal-row');
+          week.forEach(function (days) {
+            var cellTemplate = dateTemplate.content.cloneNode(true),
+                button = cellTemplate.querySelector('button');
+            button.innerHTML = days.format('D');
+            rows.appendChild(cellTemplate);
+          });
+          rowTarget.appendChild(rowTemplate);
+        });
+
+        this.monthYearState = data.month + ' ' + data.year;
       }
     }, {
       key: 'open',
@@ -262,6 +268,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.nextMonth = _this.nextMonth.bind(_this);
       _this.prevMonth = _this.prevMonth.bind(_this);
       _this.renderCalendar = _this.renderCalendar.bind(_this);
+      _this.destroyCalendar = _this.destroyCalendar.bind(_this);
       return _this;
     }
 
@@ -274,6 +281,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.openBtn.addEventListener('click', function (event) {
           if (_this2.open === 'false') {
             _this2.openState = 'true';
+            _this2.renderCalendar(_this2.data);
           } else {
             _this2.openState = 'false';
           }
