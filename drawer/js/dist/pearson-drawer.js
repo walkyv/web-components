@@ -154,15 +154,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           var isOpen = newValue !== null;
           // TODO: Logic for adding, removing animation classes
           // (focus will happen here if not animated)
-          if (isOpen && this.titleNode) {
-            if (this.activePanelIdx === 0) {
-              this.titleNode.focus();
-            } else {
-              setFocusToFirstChild(this.panels[this.activePanelIdx]);
-            }
-          } else {
-            this.trigger.focus();
-          }
+          this.manageOpenFocus(isOpen);
         }
         if (name === 'activepanelidx') {
           var panelIdx = parseInt(newValue, 10);
@@ -237,6 +229,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           }
         });
         nextPanel.style.display = 'block';
+      }
+    }, {
+      key: 'manageFocus',
+      value: function manageFocus(isOpen) {
+        if (isOpen && this.titleNode) {
+          if (this.activePanelIdx === 0) {
+            this.titleNode.focus();
+          } else {
+            setFocusToFirstChild(this.panels[this.activePanelIdx]);
+          }
+        } else {
+          this.trigger.focus();
+        }
       }
 
       /**

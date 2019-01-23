@@ -193,15 +193,7 @@
         const isOpen = newValue !== null;
         // TODO: Logic for adding, removing animation classes
         // (focus will happen here if not animated)
-        if (isOpen && this.titleNode) {
-          if (this.activePanelIdx === 0) {
-            this.titleNode.focus();
-          } else {
-            setFocusToFirstChild(this.panels[this.activePanelIdx]);
-          }
-        } else {
-          this.trigger.focus();
-        }
+        this.manageOpenFocus(isOpen);
       }
       if (name === 'activepanelidx') {
         const panelIdx = parseInt(newValue, 10);
@@ -271,6 +263,18 @@
         }
       });
       nextPanel.style.display = 'block';
+    }
+
+    manageFocus(isOpen) {
+      if (isOpen && this.titleNode) {
+        if (this.activePanelIdx === 0) {
+          this.titleNode.focus();
+        } else {
+          setFocusToFirstChild(this.panels[this.activePanelIdx]);
+        }
+      } else {
+        this.trigger.focus();
+      }
     }
 
     /**
