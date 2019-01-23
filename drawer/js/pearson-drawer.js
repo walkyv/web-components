@@ -185,7 +185,6 @@
       this.scrollWrapper.addEventListener('scroll', this.onContentScroll);
       this.content.addEventListener('click', this.onContentClick, true);
 
-
       w.addEventListener('click', this.onWindowClick, true);
       w.addEventListener('keydown', this.onWindowKeydown, true);
     }
@@ -211,6 +210,10 @@
       } else {
         headingNode.setAttribute('tabindex', '-1');
       }
+    }
+
+    showPanel(panels, panelId) {
+      console.log(panelId)
     }
 
     /**
@@ -255,9 +258,12 @@
     }
 
     onContentClick(e) {
-      if (!e.target.matches('button[data-panel]')) {
+      const target = e.target;
+      if (!target.matches('button[data-panel]')) {
         return;
       }
+
+      const nextPanelId = target.dataset.panel;
     }
 
     onWindowClick(e) {

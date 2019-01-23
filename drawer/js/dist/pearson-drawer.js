@@ -175,6 +175,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           headingNode.setAttribute('tabindex', '-1');
         }
       }
+    }, {
+      key: 'showPanel',
+      value: function showPanel(panels, panelId) {
+        console.log(panelId);
+      }
 
       /**
        * Decorates the title of the drawer with taonex and adds an aria-label
@@ -218,9 +223,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'onContentClick',
       value: function onContentClick(e) {
-        if (!e.target.matches('button[data-panel]')) {
+        var target = e.target;
+        if (!target.matches('button[data-panel]')) {
           return;
         }
+
+        var nextPanelId = target.dataset.panel;
       }
     }, {
       key: 'onWindowClick',
