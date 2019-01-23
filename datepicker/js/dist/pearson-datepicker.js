@@ -156,11 +156,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
           build.push(weeks);
         });
-
         calendarData.month = moment(date).startOf('M').format("MMMM");
         calendarData.year = data.year;
         calendarData.weeks = build;
-        console.log(calendarData);
         return calendarData;
       }
     }, {
@@ -193,18 +191,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         var data = this.returnCalendarData(dateData),
             rowTarget = this.shadowRoot.querySelector('.pe-cal-dates');
-
         rowTarget.innerHTML = '';
-        data.weeks.forEach(function (week, index) {
+        data.weeks.forEach(function (week, index2) {
           var rowTemplate = row.content.cloneNode(true),
               rows = rowTemplate.querySelector('.pe-cal-row');
-          week.forEach(function (days) {
+          week.forEach(function (days, index) {
             var cellTemplate = dateTemplate.content.cloneNode(true),
                 button = cellTemplate.querySelector('button');
             if (days.format('MMMM') === data.month) {
               button.innerHTML = days.format('D');
               button.setAttribute('aria-label', days.format('dddd, MMMM Do YYYY'));
               button.setAttribute('data-date', days.format('L'));
+              button.setAttribute('data-index', days.format('D'));
+              button.addEventListener('click', function (event) {
+                var prevSelected = rowTarget.getElementsByClassName('selected')[0];
+                if (prevSelected !== undefined) {
+                  prevSelected.classList.remove('selected');
+                  prevSelected.setAttribute('aria-pressed', false);
+                }
+                _this2.selectedState = event.target.getAttribute('data-date');
+                event.target.setAttribute('aria-pressed', true);
+                event.target.classList.add('selected');
+                _this2.openState = false;
+              });
             } else {
               button.remove();
             }
@@ -215,7 +224,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           });
           rowTarget.appendChild(rowTemplate);
         });
-
         this.monthYearState = data.month + ' ' + data.year;
       }
     }, {
@@ -239,6 +247,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return this.getAttribute('day');
       }
     }, {
+      key: 'selected',
+      get: function get() {
+        return this.getAttribute('selected');
+      }
+    }, {
       key: 'monthYearState',
       set: function set(str) {
         this.shadowRoot.querySelector('legend').innerHTML = str;
@@ -248,10 +261,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       set: function set(bool) {
         this.setAttribute('open', bool);
       }
+    }, {
+      key: 'selectedState',
+      set: function set(selected) {
+        var input = this.shadowRoot.querySelector('input');
+        this.setAttribute('selected', selected);
+        input.value = this.selected;
+      }
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['open', 'year', 'month', 'day'];
+        return ['open', 'year', 'month', 'day', 'selected'];
       }
     }]);
 
@@ -288,6 +308,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           if (_this3.open === 'false') {
             _this3.openState = 'true';
             _this3.renderCalendar(_this3.data);
+            if (_this3.selected === '') {
+              var currentNode = _this3.shadowRoot.querySelector('.currentDate-box button');
+              if (currentNode !== null) {
+                currentNode.focus();
+              }
+            } else {
+              var selectedNode = _this3.shadowRoot.querySelector('[data-date="' + _this3.selected + '"]');
+              selectedNode.classList.add('selected');
+              selectedNode.focus();
+            }
           } else {
             _this3.openState = 'false';
           }

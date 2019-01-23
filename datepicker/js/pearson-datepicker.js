@@ -101,7 +101,7 @@ calendar.innerHTML = `
   // helpers
   class Datepicker extends HTMLElement {
     static get observedAttributes() {
-      return ['open', 'year', 'month', 'day'];
+      return ['open', 'year', 'month', 'day', 'selected'];
     }
 
     get open() {
@@ -120,11 +120,21 @@ calendar.innerHTML = `
       return this.getAttribute('day');
     }
 
+    get selected() {
+      return this.getAttribute('selected');
+    }
+
     set monthYearState(str) {
       this.shadowRoot.querySelector('legend').innerHTML = str
     }
     set openState(bool) {
       this.setAttribute('open', bool)
+    }
+
+    set selectedState(selected) {
+      const input = this.shadowRoot.querySelector('input');
+      this.setAttribute('selected', selected)
+      input.value = this.selected
     }
 
     returnDateData(date, add) {
@@ -205,12 +215,9 @@ calendar.innerHTML = `
         }
          build.push(weeks);
       });
-
-
       calendarData.month = moment(date).startOf('M').format("MMMM");
       calendarData.year = data.year;
       calendarData.weeks = build;
-      console.log(calendarData)
       return calendarData
     }
 
@@ -237,18 +244,29 @@ calendar.innerHTML = `
     renderCalendar(dateData) {
       const data = this.returnCalendarData(dateData),
         rowTarget = this.shadowRoot.querySelector('.pe-cal-dates');
-
       rowTarget.innerHTML = ''
-      data.weeks.forEach((week, index) => {
+      data.weeks.forEach((week, index2) => {
         const rowTemplate = row.content.cloneNode(true),
           rows = rowTemplate.querySelector('.pe-cal-row');
-          week.forEach(days => {
+          week.forEach( (days, index) => {
             const cellTemplate = dateTemplate.content.cloneNode(true),
               button = cellTemplate.querySelector('button');
               if ( days.format('MMMM') === data.month) {
                 button.innerHTML = days.format('D');
                 button.setAttribute('aria-label', days.format('dddd, MMMM Do YYYY'))
                 button.setAttribute('data-date', days.format('L'))
+                button.setAttribute('data-index',days.format('D'));
+                button.addEventListener('click', event => {
+                  const prevSelected = rowTarget.getElementsByClassName('selected')[0];
+                  if (prevSelected !== undefined) {
+                    prevSelected .classList.remove('selected');
+                    prevSelected .setAttribute('aria-pressed', false);
+                  }
+                  this.selectedState = event.target.getAttribute('data-date');
+                  event.target.setAttribute('aria-pressed', true);
+                  event.target.classList.add('selected');
+                  this.openState = false
+                })
               } else {
                 button.remove();
               }
@@ -259,7 +277,6 @@ calendar.innerHTML = `
           });
         rowTarget.appendChild(rowTemplate)
       });
-
       this.monthYearState = data.month + ' ' + data.year
     }
 
@@ -288,6 +305,16 @@ calendar.innerHTML = `
         if (this.open === 'false') {
           this.openState = 'true'
           this.renderCalendar(this.data);
+          if (this.selected === '') {
+            const currentNode = this.shadowRoot.querySelector('.currentDate-box button');
+            if (currentNode !== null) {
+              currentNode.focus();
+            }
+          } else {
+            const selectedNode = this.shadowRoot.querySelector(`[data-date="${this.selected}"]`);
+            selectedNode.classList.add('selected');
+            selectedNode.focus();
+          }
         } else {
           this.openState = 'false'
         }
