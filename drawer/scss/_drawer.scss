@@ -81,10 +81,6 @@
   position:relative;
   height: 100%;
   margin-top: 25px;
-  dd {
-    margin-left: 0;
-    margin-bottom:25px;
-  }
 }
 
 .pe-icon--btn {
@@ -118,15 +114,16 @@
     pointer-events: none;
   }
 
+.soft-shadow--bottom {
+  box-shadow: 0 12px 5px -10px rgba(199,199,199,0.70);
+}
+
 svg[class^=pe-icon--] {
   display: inline-block;
   vertical-align: top;
   fill: #6a7070;
 }
+
 svg:not(:root) {
   overflow: hidden;
-}
-
-.soft-shadow--bottom {
-  box-shadow: 0 12px 5px -10px rgba(199,199,199,0.70);
 }
