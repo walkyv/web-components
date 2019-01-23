@@ -18,28 +18,28 @@
   
   100% {
     right: -320px;
-    visibility: hidden;
+    // visibility: hidden;
   }
 }
 
-.slideInRight {
+:host(.slideInRight) {
   animation-name: slideInRight;
   // display: flex;
 
 }
 
-.slideOutRight {
+:host(.slideOutRight) {
   animation-name: slideOutRight;
 }
 
-.animated {
+:host(.animated) {
   animation-duration: 0.6s;
   animation-fill-mode: forwards;
 
 }
 
 @media (prefers-reduced-motion) {
-  .animated {
+  :host(.animated) {
     -webkit-animation: unset !important;
     animation: unset !important;
     -webkit-transition: none !important;
