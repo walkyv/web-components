@@ -107,8 +107,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.shadowRoot.appendChild(clone);
 
-      // TODO: find trigger using provided title of drawer
-      _this.trigger = doc.querySelector('button');
+      _this.trigger = doc.querySelector('#pearsonDrawerTrigger');
 
       _this.onContentScroll = _this.onContentScroll.bind(_this);
       _this.onTitleSlotChange = _this.onTitleSlotChange.bind(_this);

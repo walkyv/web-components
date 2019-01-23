@@ -149,8 +149,7 @@
 
       this.shadowRoot.appendChild(clone);
 
-      // TODO: find trigger using provided title of drawer
-      this.trigger = doc.querySelector('button');
+      this.trigger = doc.querySelector('#pearsonDrawerTrigger');
 
       this.onContentScroll = this.onContentScroll.bind(this);
       this.onTitleSlotChange = this.onTitleSlotChange.bind(this);
