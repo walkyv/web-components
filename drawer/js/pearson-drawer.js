@@ -181,16 +181,16 @@
 
       titleSlot.addEventListener('slotchange', this.onTitleSlotChange);
       contentSlot.addEventListener('slotchange', this.onContentSlotChange);
-      
+
       w.addEventListener('click', this.onWindowClick, true);
       w.addEventListener('keydown', this.onWindowKeydown, true);
     }
-    
+
     diconnectedCallback() {
       w.removeEventListener(this.onWindowClick);
       w.removeEventListener(this.onWindowKeydown);
     }
-    
+
     convertPanelHeadings(headingNode, idx) {
       const headingText = headingNode.textContent;
       if (headingNode.parentNode.dataset.panel === '1') {
@@ -226,11 +226,16 @@
 
     onContentSlotChange(e) {
       this.contentNode = e.target.assignedNodes()[0];
-      const detailPanels = this.contentNode.querySelectorAll('[data-panel]:not([data-panel="1"])');
+      const detailPanels = this.contentNode.querySelectorAll(
+        '[data-panel]:not([data-panel="1"])'
+      );
       const headings = this.contentNode.querySelectorAll('h3');
 
       Array.prototype.forEach.call(headings, this.convertPanelHeadings);
-      Array.prototype.forEach.call(detailPanels, (p) => p.style.display = 'none');
+      Array.prototype.forEach.call(
+        detailPanels,
+        p => (p.style.display = 'none')
+      );
     }
 
     onContentScroll(e) {
