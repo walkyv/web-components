@@ -118,15 +118,19 @@
 
   class Drawer extends HTMLElement {
     static get observedAttributes() {
-      return ['open'];
+      return ['activePanel', 'open'];
+    }
+
+    get activePanel() {
+      return parseInt(this.getAttribute('activePanel'), 10);
+    }
+
+    set activePanel(newValue) {
+      this.setAttribute('activePanel', newValue);
     }
 
     get open() {
       return this.hasAttribute('open');
-    }
-
-    get type() {
-      return this.getAttribute('type');
     }
 
     set open(newValue) {
@@ -135,8 +139,12 @@
       if (isOpen) {
         this.setAttribute('open', '');
       } else {
-        this.removeAttribute('open');
+        this.removeAttribute('open');``
       }
+    }
+
+    get type() {
+      return this.getAttribute('type');
     }
 
     constructor() {

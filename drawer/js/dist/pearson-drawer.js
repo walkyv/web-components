@@ -70,6 +70,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _inherits(Drawer, _HTMLElement);
 
     _createClass(Drawer, [{
+      key: 'activePanel',
+      get: function get() {
+        return parseInt(this.getAttribute('activePanel'), 10);
+      },
+      set: function set(newValue) {
+        this.setAttribute('activePanel', newValue);
+      }
+    }, {
       key: 'open',
       get: function get() {
         return this.hasAttribute('open');
@@ -80,7 +88,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (isOpen) {
           this.setAttribute('open', '');
         } else {
-          this.removeAttribute('open');
+          this.removeAttribute('open');'';
         }
       }
     }, {
@@ -91,7 +99,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['open'];
+        return ['activePanel', 'open'];
       }
     }]);
 
