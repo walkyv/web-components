@@ -29,15 +29,29 @@
       this.attachShadow({ mode: 'open' });
 
       const clone = template.content.cloneNode(true);
-      
+
       this.shadowRoot.appendChild(clone);
+
+      this.onTabSlotChange = this.onTabSlotChange.bind(this);
+      this.onPanelSlotChange = this.onPanelSlotChange.bind(this);
     }
 
-    connectedCallback() {}
+    connectedCallback() {
+      const [ tabSlot, panelSlot ] = this.shadowRoot.querySelectorAll('slot');
+
+      tabSlot.addEventListener('slotchange', this.onTabSlotChange);
+      panelSlot.addEventListener('slotchange', this.onPanelSlotChange);
+    }
 
     diconnectedCallback() {}
 
-    handleClick() {}
+    onTabSlotChange(e) {
+      this.tabList = e.target.assignedNodes()[1];
+    }
+
+    onPanelSlotChange(e) {
+      this.panels = e.target.assignedNodes()[1];
+    }
   }
   customElements.define('pearson-tabs', Tabs);
 })(window, document);
