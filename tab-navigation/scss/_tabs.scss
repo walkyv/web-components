@@ -8,7 +8,8 @@ $pe-color-alto: #D9D9D9;
 $pe-color-ink-blue: #005A70;
 $pe-focus-color: #0B73DA; 
 
-::slotted(.tabs) {
+ul,
+.tabs {
   position: relative;
   height: 41px;
   list-style-type: none;
@@ -17,5 +18,15 @@ $pe-focus-color: #0B73DA;
 }
 
 li {
-  color:red;
+  display: inline-block;
+}
+
+.tab {
+  color: #6a7070;
+  cursor: pointer;
+  display: block;
+  margin: .5em 1em;
+  padding: .5em 0;
+  text-decoration: none;
+  background:none; border:0;
 }

@@ -11,7 +11,7 @@
 
   template.innerHTML = ` 
     <style>
-    ::slotted(.tabs){position:relative;height:41px;list-style-type:none;padding:0;margin:0}li{color:red}
+    .tabs,ul{position:relative;height:41px;list-style-type:none;padding:0;margin:0}li{display:inline-block}.tab{color:#6a7070;cursor:pointer;display:block;margin:.5em 1em;padding:.5em 0;text-decoration:none;background:none;border:0}
     </style>
     <slot name="tabs"></slot>
     <slot name="panels"></slot>
@@ -46,7 +46,13 @@
     diconnectedCallback() {}
 
     onTabSlotChange(e) {
-      this.tabList = e.target.assignedNodes()[1];
+      this.tabList = e.target.assignedNodes()[0];
+      if (!this.tabList) return;
+
+      // TODO: Decorate tab list in button markup before moving
+      this.tabList.removeAttribute('slot');
+      this.shadowRoot.append(this.tabList);
+
     }
 
     onPanelSlotChange(e) {

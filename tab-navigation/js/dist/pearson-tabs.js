@@ -20,7 +20,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   // Other markup should be written after the closing tag.
 
-  template.innerHTML = ' \n    <style>\n    ::slotted(.tabs){position:relative;height:41px;list-style-type:none;padding:0;margin:0}li{color:red}\n    </style>\n    <slot name="tabs"></slot>\n    <slot name="panels"></slot>\n';
+  template.innerHTML = ' \n    <style>\n    .tabs,ul{position:relative;height:41px;list-style-type:none;padding:0;margin:0}li{display:inline-block}.tab{color:#6a7070;cursor:pointer;display:block;margin:.5em 1em;padding:.5em 0;text-decoration:none;background:none;border:0}\n    </style>\n    <slot name="tabs"></slot>\n    <slot name="panels"></slot>\n';
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-tabs');
 
@@ -64,7 +64,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'onTabSlotChange',
       value: function onTabSlotChange(e) {
-        this.tabList = e.target.assignedNodes()[1];
+        this.tabList = e.target.assignedNodes()[0];
+        if (!this.tabList) return;
+
+        // TODO: Decorate tab list in button markup before moving
+        this.tabList.removeAttribute('slot');
+        this.shadowRoot.append(this.tabList);
       }
     }, {
       key: 'onPanelSlotChange',
