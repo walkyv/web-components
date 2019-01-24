@@ -133,7 +133,7 @@
 
   class Drawer extends HTMLElement {
     static get observedAttributes() {
-      return ['activepanelidx', 'open'];
+      return ['activepanelidx', 'activePanelIdx', 'open'];
     }
 
     get activePanelIdx() {
@@ -203,9 +203,12 @@
           this.manageOpenFocus(isOpen);
         }
       }
-      if (name === 'activepanelidx') {
+
+      // Check for both cases because older browsers do not
+      // normalize observed attributes in lowercase
+      if (name === 'activepanelidx' || name === 'activePanelIdx') {
         const panelIdx = parseInt(newValue, 10);
-        
+
         this.showPanel(panelIdx);
 
         if (panelIdx > 0) {

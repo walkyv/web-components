@@ -112,7 +112,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['activepanelidx', 'open'];
+        return ['activepanelidx', 'activePanelIdx', 'open'];
       }
     }]);
 
@@ -164,7 +164,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             this.manageOpenFocus(isOpen);
           }
         }
-        if (name === 'activepanelidx') {
+
+        // Check for both cases because older browsers do not
+        // normalize observed attributes in lowercase
+        if (name === 'activepanelidx' || name === 'activePanelIdx') {
           var panelIdx = parseInt(newValue, 10);
 
           this.showPanel(panelIdx);
