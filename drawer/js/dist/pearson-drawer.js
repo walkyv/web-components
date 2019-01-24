@@ -337,7 +337,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       }
     }, {
       key: 'onAnimationEnd',
-      value: function onAnimationEnd(e) {
+      value: function onAnimationEnd() {
         this.manageOpenFocus(this.open);
       }
     }]);

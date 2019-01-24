@@ -126,8 +126,8 @@
     }
   }
 
-  function animationEnabled(){
-    return !(w.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  function animationEnabled() {
+    return !w.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
   const forEach = Array.prototype.forEach;
@@ -186,13 +186,14 @@
       this.onContentClick = this.onContentClick.bind(this);
       this.onWindowClick = this.onWindowClick.bind(this);
       this.onWindowKeydown = this.onWindowKeydown.bind(this);
-      this.onanimationend = this.onAnimationEnd .bind(this);
+      this.onanimationend = this.onAnimationEnd.bind(this);
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'open') {
         const isOpen = newValue !== null;
-        const isAnimated = this.classList.contains('animated') &&animationEnabled();
+        const isAnimated =
+          this.classList.contains('animated') && animationEnabled();
 
         if (isAnimated) {
           const prevAnimation = isOpen ? 'slideOutRight' : 'slideInRight';
@@ -363,7 +364,7 @@
       }
     }
 
-    onAnimationEnd (e){
+    onAnimationEnd() {
       this.manageOpenFocus(this.open);
     }
   }
