@@ -6,6 +6,7 @@
   @media all and (-ms-high-contrast:none) {
     max-width:350px;
   }
+
   .datepicker {
     position:relative;
 
@@ -14,9 +15,14 @@
       color: #6a7070;
       position: absolute;
       right: 14px;
+      button img {
+        top: 2px;
+        position: relative;
+      }
     }
   }
   .calendar-container {
     margin-top:2px;
   }
 }
+
