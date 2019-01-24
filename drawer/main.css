@@ -26,6 +26,10 @@ a {
   color: #005a70;
 }
 
+button::-moz-focus-inner {
+  border: 0;
+}
+
 a:focus {text-decoration: none}
 
 .pe-title,
