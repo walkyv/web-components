@@ -1,13 +1,7 @@
 (function(w, doc) {
   'use strict';
 
-  // Create a template element
   const template = doc.createElement('template');
-
-  //Styles must be copied from the css file
-  // and pasted between the style tags below
-
-  // Other markup should be written after the closing tag.
 
   template.innerHTML = ` 
     <style>
@@ -18,10 +12,6 @@
 `;
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-tabs');
-
-  /** Any helper functions that do not need to be part of the class
-   * can be declared here, before the class is defined.
-   */
 
   class Tabs extends HTMLElement {
     constructor() {

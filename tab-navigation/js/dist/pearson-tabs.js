@@ -11,22 +11,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
-  // Create a template element
-
   var template = doc.createElement('template');
-
-  //Styles must be copied from the css file
-  // and pasted between the style tags below
-
-  // Other markup should be written after the closing tag.
 
   template.innerHTML = ' \n    <style>\n    .tabs,ul{position:relative;height:41px;list-style-type:none;padding:0;margin:0}li{display:inline-block}.tab{color:#6a7070;cursor:pointer;display:block;margin:.5em 1em;padding:.5em 0;text-decoration:none;background:none;border:0}\n    </style>\n    <slot name="tabs"></slot>\n    <slot name="panels"></slot>\n';
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-tabs');
-
-  /** Any helper functions that do not need to be part of the class
-   * can be declared here, before the class is defined.
-   */
 
   var Tabs = function (_HTMLElement) {
     _inherits(Tabs, _HTMLElement);
