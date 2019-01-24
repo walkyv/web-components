@@ -21,9 +21,7 @@
     "url": "https://github.com/pearson-ux/web-components/issues"
   },
   "homepage": "https://github.com/pearson-ux/web-components/blob/master/example/README.md",
-  "dependencies": {
-    "@pearson-components/elements-sdk": "git+https://github.com/Pearson-Higher-Ed/elements-sdk.git#unstable-2.0-GLP"
-  },
+  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^9.4.3",
     "babel-core": "^6.26.3",
