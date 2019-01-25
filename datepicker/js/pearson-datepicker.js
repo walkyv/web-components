@@ -18,7 +18,7 @@
     <div class="datepicker-container" style="position: absolute">
         <label class="pe-textLabelInput__label" for="datepicker">Select date (mm/dd/yyyy)</label>
         <div class="datepicker">
-            <input type="text" class="pe-textInput--basic" id="datepicker" aria-label="enter date" aria-expanded="false">
+            <input type="text" class="pe-textInput--basic" id="datepicker" aria-expanded="false">
             <span class="pe-icon-wrapper">
                 <button class="pe-icon--btn open-calendar" aria-label="open calendar">
 				               <img src="${calendarIcon}" aria-hidden="true"/>
@@ -76,7 +76,7 @@
 
   dateTemplate.innerHTML = `
  <div class="pe-cal-cell pe-cal-date">
-      <button class="date-selector pe-cal-cell-square start" data-date="11/01/2018" aria-label="Thursday, November 1, 2018" aria-pressed="false">1</button>
+      <button class="date-selector pe-cal-cell-square start" data-date="11/01/2018" aria-label="" aria-pressed="false">1</button>
   </div>
   `
 
@@ -292,6 +292,7 @@
           }
           if (days.format('MMMM') === moment().format('MMMM') && this.data.day === days.format('D')) {
             button.parentNode.classList.add('currentDate-box')
+            button.setAttribute('aria-label', 'Today ' + days.format('dddd, MMMM Do YYYY'))
           }
           rows.appendChild(cellTemplate)
         });
@@ -310,12 +311,15 @@
         const currentNode = this.shadowRoot.querySelector('.currentDate-box button');
         if (currentNode !== null) {
           currentNode.focus();
+          currentNode.setAttribute('aria-pressed', true)
         }
       } else {
         const selectedNode = this.shadowRoot.querySelector(`[data-date="${this.selected}"]`);
         if (selectedNode !== null) {
           selectedNode.classList.add('selected');
           selectedNode.focus();
+          selectedNode.setAttribute('aria-pressed', true)
+
         }
       }
     }
