@@ -1,10 +1,10 @@
 {
-  "name": "@pearson-ux/example",
-  "author": "Your Name | your.email@pearson.com",
+  "name": "@pearson-ux/tabs",
+  "author": "EJ Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "version": "0.1.0",
-  "description": "Example web component",
-  "main": "index.html",
+  "description": "Tabpanel web component",
+  "main": "js/pearson-tabs.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,9 +21,7 @@
     "url": "https://github.com/pearson-ux/web-components/issues"
   },
   "homepage": "https://github.com/pearson-ux/web-components/blob/master/example/README.md",
-  "dependencies": {
-    "@pearson-components/elements-sdk": "git+https://github.com/Pearson-Higher-Ed/elements-sdk.git#unstable-2.0-GLP"
-  },
+  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^9.4.3",
     "babel-core": "^6.26.3",
