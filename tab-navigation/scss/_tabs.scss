@@ -20,9 +20,9 @@ $pe-focus-color: #0B73DA;
 }
 
 :focus {
-box-shadow: none;
-outline: 2px solid $pe-focus-color;
-outline-offset: 4px;
+  box-shadow: none;
+  outline: 2px solid $pe-focus-color;
+  outline-offset: 4px;
 }
 
 ul,
@@ -34,11 +34,12 @@ ul,
   margin: 0;
 }
 
-li {
+li,
+.tab {
   display: inline-block;
 }
 
-.tab {
+.tab-button {
   color: #6a7070;
   cursor: pointer;
   display: block;
@@ -50,7 +51,7 @@ li {
   border-bottom: 3px solid transparent;
 }
 
-.tab.active {
+.tab-button.active {
   color: $pe-color-charcoal;
 }
 
