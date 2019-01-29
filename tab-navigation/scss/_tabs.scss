@@ -19,6 +19,12 @@ $pe-focus-color: #0B73DA;
   box-sizing: border-box;
 }
 
+:focus {
+box-shadow: none;
+outline: 2px solid $pe-focus-color;
+outline-offset: 4px;
+}
+
 ul,
 .tabs {
   position: relative;
