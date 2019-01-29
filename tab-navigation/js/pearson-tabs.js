@@ -27,6 +27,15 @@
     static get observedattributes() {
       return ['activepanel', 'activePanel'];
     }
+
+    get activePanel() {
+      return parseInt(this.getAttribute('activePanel'), 10);
+    }
+
+    set activePanel(idx) {
+      return this.setAttribute('activePanel', idx);
+    }
+
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
@@ -35,6 +44,8 @@
 
       this.shadowRoot.appendChild(clone);
 
+      this.decorateTabs = this.decorateTabs.bind(this);
+
       this.onTabSlotChange = this.onTabSlotChange.bind(this);
       this.onPanelSlotChange = this.onPanelSlotChange.bind(this);
     }
@@ -42,11 +53,40 @@
     connectedCallback() {
       const [ tabSlot, panelSlot ] = this.shadowRoot.querySelectorAll('slot');
 
+      if (!this.hasAttribute('activePanel')) {
+        this.setAttribute('activePanel', '0');
+      }
+
       tabSlot.addEventListener('slotchange', this.onTabSlotChange);
       panelSlot.addEventListener('slotchange', this.onPanelSlotChange);
     }
 
     diconnectedCallback() {}
+
+    decorateTabs(child, idx) {
+      const { textContent } = child;
+
+      let classList = 'pe-label tab-button';
+
+      if (idx === this.activePanel) {
+        classList += ' active';
+      }
+
+      child.role = 'none';
+      child.innerHTML = `
+        <button
+          id="tab-${idx}-btn"
+          class="${classList}"
+          role="tab"
+          tabindex="-1"
+          aria-selected="false"
+          aria-controls="tab-${idx}" 
+          data-tab="${idx}"
+        >
+        ${textContent}
+        </button>
+      `;
+    }
 
     positionSlider() {
       // TODO: Store all tabs on constructor; store active tab; position slider with this data
@@ -57,24 +97,7 @@
       this.tabList = e.target.assignedNodes()[0];
       if (!this.tabList) return;
 
-      Array.prototype.forEach.call(this.tabList.children, function(child, idx) {
-        const { textContent } = child;
-
-        child.role = 'none';
-        child.innerHTML = `
-          <button
-            id="tab-${idx}-btn"
-            class="pe-label tab-button"
-            role="tab"
-            tabindex="-1"
-            aria-selected="false"
-            aria-controls="tab-${idx}" 
-            data-tab="${idx}"
-          >
-          ${textContent}
-				  </button>
-        `;
-      });
+      Array.prototype.forEach.call(this.tabList.children, this.decorateTabs);
 
       this.tabList.removeAttribute('slot');
       this.shadowRoot.append(this.tabList);

@@ -28,7 +28,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var Tabs = function (_HTMLElement) {
     _inherits(Tabs, _HTMLElement);
 
-    _createClass(Tabs, null, [{
+    _createClass(Tabs, [{
+      key: 'activePanel',
+      get: function get() {
+        return parseInt(this.getAttribute('activePanel'), 10);
+      },
+      set: function set(idx) {
+        return this.setAttribute('activePanel', idx);
+      }
+    }], [{
       key: 'observedattributes',
       get: function get() {
         return ['activepanel', 'activePanel'];
@@ -46,6 +54,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.shadowRoot.appendChild(clone);
 
+      _this.decorateTabs = _this.decorateTabs.bind(_this);
+
       _this.onTabSlotChange = _this.onTabSlotChange.bind(_this);
       _this.onPanelSlotChange = _this.onPanelSlotChange.bind(_this);
       return _this;
@@ -59,12 +69,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             tabSlot = _shadowRoot$querySele2[0],
             panelSlot = _shadowRoot$querySele2[1];
 
+        if (!this.hasAttribute('activePanel')) {
+          this.setAttribute('activePanel', '0');
+        }
+
         tabSlot.addEventListener('slotchange', this.onTabSlotChange);
         panelSlot.addEventListener('slotchange', this.onPanelSlotChange);
       }
     }, {
       key: 'diconnectedCallback',
       value: function diconnectedCallback() {}
+    }, {
+      key: 'decorateTabs',
+      value: function decorateTabs(child, idx) {
+        var textContent = child.textContent;
+
+
+        var classList = 'pe-label tab-button';
+
+        if (idx === this.activePanel) {
+          classList += ' active';
+        }
+
+        child.role = 'none';
+        child.innerHTML = '\n        <button\n          id="tab-' + idx + '-btn"\n          class="' + classList + '"\n          role="tab"\n          tabindex="-1"\n          aria-selected="false"\n          aria-controls="tab-' + idx + '" \n          data-tab="' + idx + '"\n        >\n        ' + textContent + '\n        </button>\n      ';
+      }
     }, {
       key: 'positionSlider',
       value: function positionSlider() {
@@ -77,13 +106,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.tabList = e.target.assignedNodes()[0];
         if (!this.tabList) return;
 
-        Array.prototype.forEach.call(this.tabList.children, function (child, idx) {
-          var textContent = child.textContent;
-
-
-          child.role = 'none';
-          child.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="pe-label tab-button"\n            role="tab"\n            tabindex="-1"\n            aria-selected="false"\n            aria-controls="tab-' + idx + '" \n            data-tab="' + idx + '"\n          >\n          ' + textContent + '\n\t\t\t\t  </button>\n        ';
-        });
+        Array.prototype.forEach.call(this.tabList.children, this.decorateTabs);
 
         this.tabList.removeAttribute('slot');
         this.shadowRoot.append(this.tabList);
