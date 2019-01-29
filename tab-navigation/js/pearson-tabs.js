@@ -98,7 +98,10 @@
     }
 
     positionSlider() {
-      console.log(this.activeTab);
+      const {left, width} = getPosition(this.activeTab);
+
+      this.slider.style.width = width + 'px';
+      this.slider.style.left = left - 14 + 'px';
     }
 
     onTabSlotChange(e) {

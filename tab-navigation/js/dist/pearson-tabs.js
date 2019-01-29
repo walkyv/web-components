@@ -105,7 +105,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'positionSlider',
       value: function positionSlider() {
-        console.log(this.activeTab);
+        var _getPosition = getPosition(this.activeTab),
+            left = _getPosition.left,
+            width = _getPosition.width;
+
+        this.slider.style.width = width + 'px';
+        this.slider.style.left = left - 14 + 'px';
       }
     }, {
       key: 'onTabSlotChange',
