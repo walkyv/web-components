@@ -25,10 +25,13 @@ $pe-focus-color: #0B73DA;
   outline-offset: 4px;
 }
 
-ul,
-.tabs {
+.tabs-wrapper {
   position: relative;
   height: 41px;
+}
+
+ul,
+.tabs {
   list-style-type: none;
   padding: 0;
   margin: 0;
