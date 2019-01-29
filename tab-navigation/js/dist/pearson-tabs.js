@@ -13,7 +13,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   var template = doc.createElement('template');
 
-  template.innerHTML = ' \n    <style>\n    .tabs,ul{position:relative;height:41px;list-style-type:none;padding:0;margin:0}li{display:inline-block}.tab{color:#6a7070;cursor:pointer;display:block;margin:.5em 1em;padding:.5em 0;text-decoration:none;background:none;border:0}\n    </style>\n    <slot name="tabs"></slot>\n    <slot name="panels"></slot>\n';
+  template.innerHTML = ' \n    <style>\n    :host{-webkit-box-sizing:border-box;box-sizing:border-box;font-family:14px,18px,Open Sans,Calibri,Tahoma,sans-serif}:host *,:host :after,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box}.tabs,ul{position:relative;height:41px;list-style-type:none;padding:0;margin:0}li{display:inline-block}.tab{color:#6a7070;cursor:pointer;display:block;margin:.5em 1em;padding:.5em 0;text-decoration:none;background:none;border:0;border-bottom:3px solid transparent}.tab.active{color:#252525}.tab-slider{height:3px;background-color:#19a6a4;position:absolute;padding:0;margin:.5em 1em;bottom:-8px;-webkit-transition:all .5s ease-in-out;transition:all .5s ease-in-out}.pe-tab-panels{padding:1em}.hidden{display:none}.pe-label{font-size:1rem;line-height:1.28571rem}\n    </style>\n    <slot name="tabs"></slot>\n    <slot name="panels"></slot>\n';
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-tabs');
 
@@ -57,6 +57,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (!this.tabList) return;
 
         // TODO: Decorate tab list in button markup before moving
+
+        Array.prototype.forEach.call(this.tabList.children, function (child, idx) {
+          var textContent = child.textContent;
+
+
+          child.role = 'none';
+          child.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="pe-label tab"\n            role="tab"\n            tabindex="-1"\n            aria-selected="false"\n            aria-controls="tab-' + idx + '" \n            data-tab="' + idx + '"\n          >\n          ' + textContent + '\n\t\t\t\t  </button>\n        ';
+        });
+
         this.tabList.removeAttribute('slot');
         this.shadowRoot.append(this.tabList);
       }
