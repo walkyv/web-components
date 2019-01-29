@@ -97,8 +97,11 @@
       this.tabList = e.target.assignedNodes()[0];
       if (!this.tabList) return;
 
+      
       Array.prototype.forEach.call(this.tabList.children, this.decorateTabs);
-
+      
+      this.tabs = this.tabList.children;
+      
       this.tabList.removeAttribute('slot');
       this.shadowRoot.append(this.tabList);
 

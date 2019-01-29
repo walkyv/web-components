@@ -108,6 +108,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         Array.prototype.forEach.call(this.tabList.children, this.decorateTabs);
 
+        this.tabs = this.tabList.children;
+
         this.tabList.removeAttribute('slot');
         this.shadowRoot.append(this.tabList);
       }
