@@ -52,6 +52,7 @@
       this.shadowRoot.appendChild(clone);
 
       this.decorateTabs = this.decorateTabs.bind(this);
+      this.manageActiveTabAttrs = this.manageActiveTabAttrs.bind(this);
 
       this.onTabSlotChange = this.onTabSlotChange.bind(this);
       this.onPanelSlotChange = this.onPanelSlotChange.bind(this);
@@ -84,17 +85,8 @@
 
     attributeChangedCallback(name, oldValue, newValue) {
       if (this.tabs && (name === 'activeIdx' || name === 'activeidx')) {
-        const manageActiveClass = (tab, idx) => {
-          if (idx !== this.activeIdx) {
-            tab.classList.remove('active');
-            tab.removeAttribute('aria-selected');
-          } else {
-            tab.classList.add('active');
-            tab.addAttribute('aria-selected', '');
-          }
-        };
 
-        forEach.call(this.tabs, manageActiveClass);
+        this.manageActiveTabAttrs();
         this.activeTab.focus();
         this.positionSlider();
       }
@@ -138,6 +130,18 @@
       `;
     }
 
+    manageActiveTabAttrs() {
+      forEach.call(this.tabs, (tab, idx) => {
+        if (idx !== this.activeIdx) {
+          tab.classList.remove('active');
+          tab.removeAttribute('aria-selected');
+        } else {
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', '');
+        }
+      });
+    }
+
     positionSlider() {
       const { left, width } = this.activeTab.getBoundingClientRect();
 
@@ -150,7 +154,7 @@
       this.tabList = e.target.assignedNodes()[0];
       if (!this.tabList) return;
 
-      Array.prototype.forEach.call(this.tabList.children, this.decorateTabs);
+      forEach.call(this.tabList.children, this.decorateTabs);
 
       this.tabs = this.tabList.querySelectorAll('button[id^="tab"]');
 

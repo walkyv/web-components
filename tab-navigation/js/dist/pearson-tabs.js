@@ -62,6 +62,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.shadowRoot.appendChild(clone);
 
       _this.decorateTabs = _this.decorateTabs.bind(_this);
+      _this.manageActiveTabAttrs = _this.manageActiveTabAttrs.bind(_this);
 
       _this.onTabSlotChange = _this.onTabSlotChange.bind(_this);
       _this.onPanelSlotChange = _this.onPanelSlotChange.bind(_this);
@@ -95,20 +96,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Tabs, [{
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
-        var _this2 = this;
-
         if (this.tabs && (name === 'activeIdx' || name === 'activeidx')) {
-          var manageActiveClass = function manageActiveClass(tab, idx) {
-            if (idx !== _this2.activeIdx) {
-              tab.classList.remove('active');
-              tab.removeAttribute('aria-selected');
-            } else {
-              tab.classList.add('active');
-              tab.addAttribute('aria-selected', '');
-            }
-          };
 
-          forEach.call(this.tabs, manageActiveClass);
+          this.manageActiveTabAttrs();
           this.activeTab.focus();
           this.positionSlider();
         }
@@ -147,6 +137,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         child.innerHTML = '\n        <button\n          id="tab-' + idx + '-btn"\n          class="' + classList + '"\n          role="tab"\n          tabindex="-1"\n          aria-selected="false"\n          aria-controls="tab-' + idx + '" \n          data-tab="' + idx + '"\n        >\n        ' + textContent + '\n        </button>\n      ';
       }
     }, {
+      key: 'manageActiveTabAttrs',
+      value: function manageActiveTabAttrs() {
+        var _this2 = this;
+
+        forEach.call(this.tabs, function (tab, idx) {
+          if (idx !== _this2.activeIdx) {
+            tab.classList.remove('active');
+            tab.removeAttribute('aria-selected');
+          } else {
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', '');
+          }
+        });
+      }
+    }, {
       key: 'positionSlider',
       value: function positionSlider() {
         var _activeTab$getBoundin = this.activeTab.getBoundingClientRect(),
@@ -165,7 +170,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.tabList = e.target.assignedNodes()[0];
         if (!this.tabList) return;
 
-        Array.prototype.forEach.call(this.tabList.children, this.decorateTabs);
+        forEach.call(this.tabList.children, this.decorateTabs);
 
         this.tabs = this.tabList.querySelectorAll('button[id^="tab"]');
 
