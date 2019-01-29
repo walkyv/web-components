@@ -67,8 +67,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.shadowRoot.appendChild(clone);
 
-      _this.initTabs = _this.initTabs.bind(_this);
-
       _this.onTabSlotChange = _this.onTabSlotChange.bind(_this);
       _this.onPanelSlotChange = _this.onPanelSlotChange.bind(_this);
 
@@ -142,7 +140,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           }
 
           child.role = 'none';
-          child.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="' + classList + '"\n            role="tab"\n            tabindex="-1"\n            aria-selected="false"\n            aria-controls="tab-' + idx + '" \n            data-tab="' + idx + '"\n          >\n          ' + textContent + '\n          </button>\n        ';
+          child.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="' + classList + '"\n            role="tab"\n            tabindex="-1"\n            aria-selected="false"\n            aria-controls="panel-' + idx + '" \n            data-tab="' + idx + '"\n          >\n          ' + textContent + '\n          </button>\n        ';
         });
       }
     }, {

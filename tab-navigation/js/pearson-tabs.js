@@ -56,8 +56,6 @@
 
       this.shadowRoot.appendChild(clone);
 
-      this.initTabs = this.initTabs.bind(this);
-
       this.onTabSlotChange = this.onTabSlotChange.bind(this);
       this.onPanelSlotChange = this.onPanelSlotChange.bind(this);
 
@@ -130,7 +128,7 @@
             role="tab"
             tabindex="-1"
             aria-selected="false"
-            aria-controls="tab-${idx}" 
+            aria-controls="panel-${idx}" 
             data-tab="${idx}"
           >
           ${textContent}
