@@ -100,7 +100,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         child.role = 'none';
-        child.innerHTML = '\n        <button\n          id="tab-' + idx + '-btn"\n          class="' + classList + '"\n          role="tab"\n          tabindex="-1"\n          aria-selected="false"\n          aria-controls="tab-' + idx + '" \n          data-tab="' + idx + '"\n        >\n        ' + textContent + '\n        </button>\n      ';
+        child.innerHTML = '\n        <button\n          id="tab-' + idx + '-btn"\n          class="' + classList + '"\n          role="tab"\n          tabindex="-1"\n          aria-selected="false"\n          aria-controls="tab-' + idx + '" \n          data-tab="' + idx + '"\n        >\n        <span>' + textContent + '</span>\n        </button>\n      ';
       }
     }, {
       key: 'positionSlider',
@@ -109,8 +109,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             left = _getPosition.left,
             width = _getPosition.width;
 
-        this.slider.style.width = width + 'px';
+        // 14px is the approx. padding of the button
+
+
         this.slider.style.left = left - 14 + 'px';
+        this.slider.style.width = width + 'px';
       }
     }, {
       key: 'onTabSlotChange',

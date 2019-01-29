@@ -16,7 +16,6 @@
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-tabs');
 
-
   /**
    * Get position and size data of an element.
    * @param {HTMLEkement} el An element whose coordinates we want to get.
@@ -60,7 +59,7 @@
     }
 
     connectedCallback() {
-      const [ tabSlot, panelSlot ] = this.shadowRoot.querySelectorAll('slot');
+      const [tabSlot, panelSlot] = this.shadowRoot.querySelectorAll('slot');
 
       if (!this.hasAttribute('activeIdx')) {
         this.setAttribute('activeIdx', '0');
@@ -92,16 +91,17 @@
           aria-controls="tab-${idx}" 
           data-tab="${idx}"
         >
-        ${textContent}
+        <span>${textContent}</span>
         </button>
       `;
     }
 
     positionSlider() {
-      const {left, width} = getPosition(this.activeTab);
+      const { left, width } = getPosition(this.activeTab);
 
-      this.slider.style.width = width + 'px';
+      // 14px is the approx. padding of the button
       this.slider.style.left = left - 14 + 'px';
+      this.slider.style.width = width + 'px';
     }
 
     onTabSlotChange(e) {
@@ -109,14 +109,13 @@
       if (!this.tabList) return;
 
       Array.prototype.forEach.call(this.tabList.children, this.decorateTabs);
-      
+
       this.tabs = this.tabList.querySelectorAll('button[id^="tab"]');
-      
+
       this.tabsWrapper.insertBefore(this.tabList, this.slider);
       this.positionSlider();
-      
-      e.target.remove();
 
+      e.target.remove();
     }
 
     onPanelSlotChange(e) {
