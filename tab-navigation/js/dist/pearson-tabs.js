@@ -67,7 +67,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.shadowRoot.appendChild(clone);
 
-      _this.decorateTabs = _this.decorateTabs.bind(_this);
+      _this.initTabs = _this.initTabs.bind(_this);
       _this.manageActiveTabAttrs = _this.manageActiveTabAttrs.bind(_this);
 
       _this.onTabSlotChange = _this.onTabSlotChange.bind(_this);
@@ -129,27 +129,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'diconnectedCallback',
       value: function diconnectedCallback() {}
     }, {
-      key: 'decorateTabs',
-      value: function decorateTabs(child, idx) {
-        var textContent = child.textContent;
+      key: 'initTabs',
+      value: function initTabs() {
+        var _this2 = this;
+
+        forEach.call(this.tabList.children, function (child, idx) {
+          var textContent = child.textContent;
 
 
-        var classList = 'pe-label tab-button';
+          var classList = 'pe-label tab-button';
 
-        if (idx === this.activeIdx) {
-          classList += ' active';
-        }
+          if (idx === _this2.activeIdx) {
+            classList += ' active';
+          }
 
-        child.role = 'none';
-        child.innerHTML = '\n        <button\n          id="tab-' + idx + '-btn"\n          class="' + classList + '"\n          role="tab"\n          tabindex="-1"\n          aria-selected="false"\n          aria-controls="tab-' + idx + '" \n          data-tab="' + idx + '"\n        >\n        ' + textContent + '\n        </button>\n      ';
+          child.role = 'none';
+          child.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="' + classList + '"\n            role="tab"\n            tabindex="-1"\n            aria-selected="false"\n            aria-controls="tab-' + idx + '" \n            data-tab="' + idx + '"\n          >\n          ' + textContent + '\n          </button>\n        ';
+        });
       }
     }, {
       key: 'manageActiveTabAttrs',
       value: function manageActiveTabAttrs() {
-        var _this2 = this;
+        var _this3 = this;
 
         forEach.call(this.tabs, function (tab, idx) {
-          if (idx !== _this2.activeIdx) {
+          if (idx !== _this3.activeIdx) {
             tab.classList.remove('active');
             tab.removeAttribute('aria-selected');
           } else {
@@ -161,10 +165,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'showActivePanel',
       value: function showActivePanel() {
-        var _this3 = this;
+        var _this4 = this;
 
         forEach.call(this.panels, function (panel) {
-          return panel.hidden = panel !== _this3.activePanel;
+          return panel.hidden = panel !== _this4.activePanel;
         });
       }
     }, {
@@ -186,7 +190,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.tabList = e.target.assignedNodes()[0];
         if (!this.tabList) return;
 
-        forEach.call(this.tabList.children, this.decorateTabs);
+        this.initTabs();
 
         this.tabs = this.tabList.querySelectorAll('button[id^="tab"]');
 

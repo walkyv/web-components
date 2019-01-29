@@ -56,7 +56,7 @@
 
       this.shadowRoot.appendChild(clone);
 
-      this.decorateTabs = this.decorateTabs.bind(this);
+      this.initTabs = this.initTabs.bind(this);
       this.manageActiveTabAttrs = this.manageActiveTabAttrs.bind(this);
 
       this.onTabSlotChange = this.onTabSlotChange.bind(this);
@@ -111,29 +111,31 @@
 
     diconnectedCallback() {}
 
-    decorateTabs(child, idx) {
-      const { textContent } = child;
+    initTabs() {
+      forEach.call(this.tabList.children, (child, idx) => {
+        const { textContent } = child;
 
-      let classList = 'pe-label tab-button';
+        let classList = 'pe-label tab-button';
 
-      if (idx === this.activeIdx) {
-        classList += ' active';
-      }
+        if (idx === this.activeIdx) {
+          classList += ' active';
+        }
 
-      child.role = 'none';
-      child.innerHTML = `
-        <button
-          id="tab-${idx}-btn"
-          class="${classList}"
-          role="tab"
-          tabindex="-1"
-          aria-selected="false"
-          aria-controls="tab-${idx}" 
-          data-tab="${idx}"
-        >
-        ${textContent}
-        </button>
-      `;
+        child.role = 'none';
+        child.innerHTML = `
+          <button
+            id="tab-${idx}-btn"
+            class="${classList}"
+            role="tab"
+            tabindex="-1"
+            aria-selected="false"
+            aria-controls="tab-${idx}" 
+            data-tab="${idx}"
+          >
+          ${textContent}
+          </button>
+        `; 
+      });
     }
 
     manageActiveTabAttrs() {
@@ -164,7 +166,7 @@
       this.tabList = e.target.assignedNodes()[0];
       if (!this.tabList) return;
 
-      forEach.call(this.tabList.children, this.decorateTabs);
+      this.initTabs();
 
       this.tabs = this.tabList.querySelectorAll('button[id^="tab"]');
 
