@@ -93,9 +93,11 @@
     attributeChangedCallback(name, oldValue, newValue) {
       if (this.tabs && (name === 'activeIdx' || name === 'activeidx')) {
         this.positionSlider();
-        this.manageActiveTabAttrs();
+        
+        this.setActiveTab();
         this.activeTab.focus();
-        this.showActivePanel();
+
+        this.setActivePanel();
       }
     }
 
@@ -139,7 +141,7 @@
       });
     }
 
-    manageActiveTabAttrs() {
+    setActiveTab() {
       forEach.call(this.tabs, (tab, idx) => {
         if (idx !== this.activeIdx) {
           tab.classList.remove('active');
@@ -151,7 +153,7 @@
       });
     }
 
-    showActivePanel() {
+    setActivePanel() {
       forEach.call(
         this.panels,
         panel => (panel.hidden = panel !== this.activePanel)
@@ -185,7 +187,7 @@
         
       if (!this.panels) return;
 
-      this.showActivePanel();
+      this.setActivePanel();
     }
   }
   customElements.define('pearson-tabs', Tabs);

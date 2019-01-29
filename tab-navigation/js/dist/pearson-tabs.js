@@ -103,9 +103,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function attributeChangedCallback(name, oldValue, newValue) {
         if (this.tabs && (name === 'activeIdx' || name === 'activeidx')) {
           this.positionSlider();
-          this.manageActiveTabAttrs();
+
+          this.setActiveTab();
           this.activeTab.focus();
-          this.showActivePanel();
+
+          this.setActivePanel();
         }
       }
     }, {
@@ -146,8 +148,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
       }
     }, {
-      key: 'manageActiveTabAttrs',
-      value: function manageActiveTabAttrs() {
+      key: 'setActiveTab',
+      value: function setActiveTab() {
         var _this3 = this;
 
         forEach.call(this.tabs, function (tab, idx) {
@@ -161,8 +163,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
       }
     }, {
-      key: 'showActivePanel',
-      value: function showActivePanel() {
+      key: 'setActivePanel',
+      value: function setActivePanel() {
         var _this4 = this;
 
         forEach.call(this.panels, function (panel) {
@@ -202,7 +204,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         if (!this.panels) return;
 
-        this.showActivePanel();
+        this.setActivePanel();
       }
     }]);
 
