@@ -101,13 +101,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Tabs, [{
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
-        if (this.tabs && (name === 'activeIdx' || name === 'activeidx')) {
+        if (!this.tabs || !this.panels) return;
+
+        if (name === 'activeIdx' || name === 'activeidx') {
           this.positionSlider();
-
           this.setActiveTab();
-          this.activeTab.focus();
-
-          this.setActivePanel();
         }
       }
     }, {
@@ -153,14 +151,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var _this3 = this;
 
         forEach.call(this.tabs, function (tab, idx) {
+          var panel = _this3.panels[idx];
+
           if (idx !== _this3.activeIdx) {
             tab.classList.remove('active');
             tab.removeAttribute('aria-selected');
+            panel.hidden = true;
           } else {
             tab.classList.add('active');
             tab.setAttribute('aria-selected', '');
+            panel.hidden = false;
           }
         });
+
+        this.activeTab.focus();
       }
     }, {
       key: 'initPanels',
@@ -170,15 +174,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         forEach.call(this.panels, function (panel, idx) {
           panel.id = 'panel-' + idx;
           panel.hidden = panel !== _this4.activePanel;
-        });
-      }
-    }, {
-      key: 'setActivePanel',
-      value: function setActivePanel() {
-        var _this5 = this;
-
-        forEach.call(this.panels, function (panel) {
-          return panel.hidden = panel !== _this5.activePanel;
         });
       }
     }, {

@@ -91,13 +91,11 @@
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      if (this.tabs && (name === 'activeIdx' || name === 'activeidx')) {
+      if (!this.tabs || !this.panels) return;
+
+      if (name === 'activeIdx' || name === 'activeidx') {
         this.positionSlider();
-
         this.setActiveTab();
-        this.activeTab.focus();
-
-        this.setActivePanel();
       }
     }
 
@@ -143,14 +141,20 @@
 
     setActiveTab() {
       forEach.call(this.tabs, (tab, idx) => {
+        const panel = this.panels[idx];
+
         if (idx !== this.activeIdx) {
           tab.classList.remove('active');
           tab.removeAttribute('aria-selected');
+          panel.hidden = true;
         } else {
           tab.classList.add('active');
           tab.setAttribute('aria-selected', '');
+          panel.hidden = false;
         }
       });
+
+      this.activeTab.focus();
     }
 
     initPanels() {
@@ -158,13 +162,6 @@
         panel.id = `panel-${idx}`;
         panel.hidden = panel !== this.activePanel;
       });
-    }
-
-    setActivePanel() {
-      forEach.call(
-        this.panels,
-        panel => (panel.hidden = panel !== this.activePanel)
-      );
     }
 
     positionSlider() {
