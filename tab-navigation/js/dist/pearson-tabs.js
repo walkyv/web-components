@@ -59,12 +59,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'diconnectedCallback',
       value: function diconnectedCallback() {}
     }, {
+      key: 'positionSlider',
+      value: function positionSlider() {
+        // TODO: Store all tabs on constructor; store active tab; position slider with this data
+
+      }
+    }, {
       key: 'onTabSlotChange',
       value: function onTabSlotChange(e) {
         this.tabList = e.target.assignedNodes()[0];
         if (!this.tabList) return;
-
-        // TODO: Decorate tab list in button markup before moving
 
         Array.prototype.forEach.call(this.tabList.children, function (child, idx) {
           var textContent = child.textContent;

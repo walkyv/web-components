@@ -45,11 +45,14 @@
 
     diconnectedCallback() {}
 
+    positionSlider() {
+      // TODO: Store all tabs on constructor; store active tab; position slider with this data
+
+    }
+
     onTabSlotChange(e) {
       this.tabList = e.target.assignedNodes()[0];
       if (!this.tabList) return;
-
-      // TODO: Decorate tab list in button markup before moving
 
       Array.prototype.forEach.call(this.tabList.children, function(child, idx) {
         const { textContent } = child;
@@ -68,7 +71,7 @@
           ${textContent}
 				  </button>
         `;
-      })
+      });
 
       this.tabList.removeAttribute('slot');
       this.shadowRoot.append(this.tabList);
