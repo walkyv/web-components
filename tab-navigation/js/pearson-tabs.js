@@ -115,9 +115,11 @@
         const { textContent } = child;
 
         let classList = 'pe-label tab-button';
+        let ariaSelected = '';
 
         if (idx === this.activeIdx) {
           classList += ' active';
+          ariaSelected = 'aria-selected';
         }
 
         child.role = 'none';
@@ -127,9 +129,8 @@
             class="${classList}"
             role="tab"
             tabindex="-1"
-            aria-selected="false"
             aria-controls="panel-${idx}" 
-            data-tab="${idx}"
+            ${ariaSelected}
           >
           ${textContent}
           </button>

@@ -134,13 +134,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
           var classList = 'pe-label tab-button';
+          var ariaSelected = '';
 
           if (idx === _this2.activeIdx) {
             classList += ' active';
+            ariaSelected = 'aria-selected';
           }
 
           child.role = 'none';
-          child.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="' + classList + '"\n            role="tab"\n            tabindex="-1"\n            aria-selected="false"\n            aria-controls="panel-' + idx + '" \n            data-tab="' + idx + '"\n          >\n          ' + textContent + '\n          </button>\n        ';
+          child.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="' + classList + '"\n            role="tab"\n            tabindex="-1"\n            aria-controls="panel-' + idx + '" \n            ' + ariaSelected + '\n          >\n          ' + textContent + '\n          </button>\n        ';
         });
       }
     }, {
