@@ -16,13 +16,8 @@
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-tabs');
 
-  /**
-   * Get position and size data of an element.
-   * @param {HTMLEkement} el An element whose coordinates we want to get.
-   */
-  function getPosition(el) {
-    return el.getBoundingClientRect();
-  }
+  const forEach = Array.prototype.forEach;
+  const indexOf = Array.prototype.indexOf;
 
   class Tabs extends HTMLElement {
     static get observedAttributes() {
@@ -64,8 +59,8 @@
       // TODO: make named listener
       this.shadowRoot.addEventListener('click', (e) => {
         if (!e.target.matches('button[id^="tab"]')) return;
-        
-        this.activeIdx = Array.prototype.indexOf.call(this.tabs, e.target);
+
+        this.activeIdx = indexOf.call(this.tabs, e.target);
       });
 
       // TODO: make named listener
@@ -97,7 +92,7 @@
           }
         };
 
-        Array.prototype.forEach.call(this.tabs, manageActiveClass);
+        forEach.call(this.tabs, manageActiveClass);
         this.activeTab.focus();
         this.positionSlider();
       }
@@ -142,7 +137,7 @@
     }
 
     positionSlider() {
-      const { left, width } = getPosition(this.activeTab);
+      const { left, width } = this.activeTab.getBoundingClientRect();
 
       // 14px is the approx. padding of the button
       this.slider.style.left = left - 14 + 'px';

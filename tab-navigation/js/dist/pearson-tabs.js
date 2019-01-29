@@ -17,13 +17,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-tabs');
 
-  /**
-   * Get position and size data of an element.
-   * @param {HTMLEkement} el An element whose coordinates we want to get.
-   */
-  function getPosition(el) {
-    return el.getBoundingClientRect();
-  }
+  var forEach = Array.prototype.forEach;
+  var indexOf = Array.prototype.indexOf;
 
   var Tabs = function (_HTMLElement) {
     _inherits(Tabs, _HTMLElement);
@@ -75,7 +70,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.shadowRoot.addEventListener('click', function (e) {
         if (!e.target.matches('button[id^="tab"]')) return;
 
-        _this.activeIdx = Array.prototype.indexOf.call(_this.tabs, e.target);
+        _this.activeIdx = indexOf.call(_this.tabs, e.target);
       });
 
       // TODO: make named listener
@@ -111,7 +106,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
           };
 
-          Array.prototype.forEach.call(this.tabs, manageActiveClass);
+          forEach.call(this.tabs, manageActiveClass);
           this.activeTab.focus();
           this.positionSlider();
         }
@@ -152,9 +147,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'positionSlider',
       value: function positionSlider() {
-        var _getPosition = getPosition(this.activeTab),
-            left = _getPosition.left,
-            width = _getPosition.width;
+        var _activeTab$getBoundin = this.activeTab.getBoundingClientRect(),
+            left = _activeTab$getBoundin.left,
+            width = _activeTab$getBoundin.width;
 
         // 14px is the approx. padding of the button
 
