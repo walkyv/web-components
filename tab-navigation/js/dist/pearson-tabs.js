@@ -68,7 +68,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.shadowRoot.appendChild(clone);
 
       _this.initTabs = _this.initTabs.bind(_this);
-      _this.manageActiveTabAttrs = _this.manageActiveTabAttrs.bind(_this);
 
       _this.onTabSlotChange = _this.onTabSlotChange.bind(_this);
       _this.onPanelSlotChange = _this.onPanelSlotChange.bind(_this);
@@ -85,8 +84,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (!e.target.matches('button[id^="tab"]')) return;
 
         var idxMap = {
-          'ArrowLeft': _this.activeIdx - 1,
-          'ArrowRight': _this.activeIdx + 1
+          ArrowLeft: _this.activeIdx - 1,
+          ArrowRight: _this.activeIdx + 1
         };
 
         var nextIdx = e.key in idxMap ? idxMap[e.key] : null;
@@ -103,7 +102,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
         if (this.tabs && (name === 'activeIdx' || name === 'activeidx')) {
-
           this.positionSlider();
           this.manageActiveTabAttrs();
           this.activeTab.focus();
@@ -201,6 +199,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'onPanelSlotChange',
       value: function onPanelSlotChange(e) {
         this.panels = e.target.assignedNodes()[0].querySelectorAll('[data-panel]');
+
         if (!this.panels) return;
 
         this.showActivePanel();

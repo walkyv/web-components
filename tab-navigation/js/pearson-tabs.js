@@ -57,40 +57,41 @@
       this.shadowRoot.appendChild(clone);
 
       this.initTabs = this.initTabs.bind(this);
-      this.manageActiveTabAttrs = this.manageActiveTabAttrs.bind(this);
 
       this.onTabSlotChange = this.onTabSlotChange.bind(this);
       this.onPanelSlotChange = this.onPanelSlotChange.bind(this);
 
       // TODO: make named listener
-      this.shadowRoot.addEventListener('click', (e) => {
+      this.shadowRoot.addEventListener('click', e => {
         if (!e.target.matches('button[id^="tab"]')) return;
 
         this.activeIdx = indexOf.call(this.tabs, e.target);
       });
 
       // TODO: make named listener
-      this.shadowRoot.addEventListener('keydown', (e) => {
-        if (!e.target.matches('button[id^="tab"]')) return;
+      this.shadowRoot.addEventListener(
+        'keydown',
+        e => {
+          if (!e.target.matches('button[id^="tab"]')) return;
 
-        const idxMap = {
-          'ArrowLeft': this.activeIdx - 1,
-          'ArrowRight': this.activeIdx + 1
-        };
+          const idxMap = {
+            ArrowLeft: this.activeIdx - 1,
+            ArrowRight: this.activeIdx + 1
+          };
 
-        const nextIdx = e.key in idxMap ? idxMap[e.key] : null;
-        
-        if(this.tabs[nextIdx]) {
-          e.preventDefault();
-          this.activeIdx = nextIdx;
-        }
+          const nextIdx = e.key in idxMap ? idxMap[e.key] : null;
 
-      }, true);
+          if (this.tabs[nextIdx]) {
+            e.preventDefault();
+            this.activeIdx = nextIdx;
+          }
+        },
+        true
+      );
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
       if (this.tabs && (name === 'activeIdx' || name === 'activeidx')) {
-
         this.positionSlider();
         this.manageActiveTabAttrs();
         this.activeTab.focus();
@@ -134,7 +135,7 @@
           >
           ${textContent}
           </button>
-        `; 
+        `;
       });
     }
 
@@ -151,7 +152,10 @@
     }
 
     showActivePanel() {
-      forEach.call(this.panels, (panel) => panel.hidden = panel !== this.activePanel);
+      forEach.call(
+        this.panels,
+        panel => (panel.hidden = panel !== this.activePanel)
+      );
     }
 
     positionSlider() {
@@ -175,7 +179,10 @@
     }
 
     onPanelSlotChange(e) {
-      this.panels = e.target.assignedNodes()[0].querySelectorAll('[data-panel]');
+      this.panels = e.target
+        .assignedNodes()[0]
+        .querySelectorAll('[data-panel]');
+        
       if (!this.panels) return;
 
       this.showActivePanel();
