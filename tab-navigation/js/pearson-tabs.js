@@ -87,8 +87,10 @@
         const manageActiveClass = (tab, idx) => {
           if (idx !== this.activeIdx) {
             tab.classList.remove('active');
+            tab.removeAttribute('aria-selected');
           } else {
             tab.classList.add('active');
+            tab.addAttribute('aria-selected', '');
           }
         };
 

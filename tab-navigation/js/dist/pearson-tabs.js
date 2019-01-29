@@ -101,8 +101,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           var manageActiveClass = function manageActiveClass(tab, idx) {
             if (idx !== _this2.activeIdx) {
               tab.classList.remove('active');
+              tab.removeAttribute('aria-selected');
             } else {
               tab.classList.add('active');
+              tab.addAttribute('aria-selected', '');
             }
           };
 
