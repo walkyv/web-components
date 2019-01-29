@@ -42,7 +42,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return this.tabs[this.activeIdx];
       }
     }], [{
-      key: 'observedattributes',
+      key: 'observedAttributes',
       get: function get() {
         return ['activeidx', 'activeIdx'];
       }
@@ -91,6 +91,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }
 
     _createClass(Tabs, [{
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        var _this2 = this;
+
+        if (this.tabs && (name === 'activeIdx' || name === 'activeidx')) {
+          var manageActiveClass = function manageActiveClass(tab, idx) {
+            if (idx !== _this2.activeIdx) {
+              tab.classList.remove('active');
+            } else {
+              tab.classList.add('active');
+            }
+          };
+
+          Array.prototype.forEach.call(this.tabs, manageActiveClass);
+          this.activeTab.focus();
+          this.positionSlider();
+        }
+      }
+    }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
         var _shadowRoot$querySele = this.shadowRoot.querySelectorAll('slot'),

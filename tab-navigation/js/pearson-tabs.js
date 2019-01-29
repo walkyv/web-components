@@ -25,7 +25,7 @@
   }
 
   class Tabs extends HTMLElement {
-    static get observedattributes() {
+    static get observedAttributes() {
       return ['activeidx', 'activeIdx'];
     }
 
@@ -71,13 +71,29 @@
         };
 
         const nextIdx = e.key in idxMap ? idxMap[e.key] : null;
-
+        
         if(this.tabs[nextIdx]) {
           e.preventDefault();
           this.activeIdx = nextIdx;
         }
 
       }, true);
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      if (this.tabs && (name === 'activeIdx' || name === 'activeidx')) {
+        const manageActiveClass = (tab, idx) => {
+          if (idx !== this.activeIdx) {
+            tab.classList.remove('active');
+          } else {
+            tab.classList.add('active');
+          }
+        };
+
+        Array.prototype.forEach.call(this.tabs, manageActiveClass);
+        this.activeTab.focus();
+        this.positionSlider();
+      }
     }
 
     connectedCallback() {
