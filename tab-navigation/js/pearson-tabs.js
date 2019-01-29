@@ -14,6 +14,15 @@
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-tabs');
 
+
+  /**
+   * Get position and size data of an element.
+   * @param {HTMLEkement} el An element whose coordinates we want to get.
+   */
+  function getPosition(el) {
+    return el.getBoundingClientRect();
+  }
+
   class Tabs extends HTMLElement {
     constructor() {
       super();
