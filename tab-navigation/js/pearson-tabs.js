@@ -25,15 +25,15 @@
 
   class Tabs extends HTMLElement {
     static get observedattributes() {
-      return ['activepanel', 'activePanel'];
+      return ['activeidx', 'activeIdx'];
     }
 
-    get activePanel() {
-      return parseInt(this.getAttribute('activePanel'), 10);
+    get activeIdx() {
+      return parseInt(this.getAttribute('activeIdx'), 10);
     }
 
-    set activePanel(idx) {
-      return this.setAttribute('activePanel', idx);
+    set activeIdx(idx) {
+      return this.setAttribute('activeIdx', idx);
     }
 
     constructor() {
@@ -53,8 +53,8 @@
     connectedCallback() {
       const [ tabSlot, panelSlot ] = this.shadowRoot.querySelectorAll('slot');
 
-      if (!this.hasAttribute('activePanel')) {
-        this.setAttribute('activePanel', '0');
+      if (!this.hasAttribute('activeIdx')) {
+        this.setAttribute('activeIdx', '0');
       }
 
       tabSlot.addEventListener('slotchange', this.onTabSlotChange);
@@ -68,7 +68,7 @@
 
       let classList = 'pe-label tab-button';
 
-      if (idx === this.activePanel) {
+      if (idx === this.activeIdx) {
         classList += ' active';
       }
 
@@ -97,7 +97,6 @@
       this.tabList = e.target.assignedNodes()[0];
       if (!this.tabList) return;
 
-      
       Array.prototype.forEach.call(this.tabList.children, this.decorateTabs);
       
       this.tabs = this.tabList.children;

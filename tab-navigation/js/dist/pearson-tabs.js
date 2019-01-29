@@ -29,17 +29,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _inherits(Tabs, _HTMLElement);
 
     _createClass(Tabs, [{
-      key: 'activePanel',
+      key: 'activeIdx',
       get: function get() {
-        return parseInt(this.getAttribute('activePanel'), 10);
+        return parseInt(this.getAttribute('activeIdx'), 10);
       },
       set: function set(idx) {
-        return this.setAttribute('activePanel', idx);
+        return this.setAttribute('activeIdx', idx);
       }
     }], [{
       key: 'observedattributes',
       get: function get() {
-        return ['activepanel', 'activePanel'];
+        return ['activeidx', 'activeIdx'];
       }
     }]);
 
@@ -69,8 +69,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             tabSlot = _shadowRoot$querySele2[0],
             panelSlot = _shadowRoot$querySele2[1];
 
-        if (!this.hasAttribute('activePanel')) {
-          this.setAttribute('activePanel', '0');
+        if (!this.hasAttribute('activeIdx')) {
+          this.setAttribute('activeIdx', '0');
         }
 
         tabSlot.addEventListener('slotchange', this.onTabSlotChange);
@@ -87,7 +87,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         var classList = 'pe-label tab-button';
 
-        if (idx === this.activePanel) {
+        if (idx === this.activeIdx) {
           classList += ' active';
         }
 
