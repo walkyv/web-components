@@ -28,6 +28,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var Tabs = function (_HTMLElement) {
     _inherits(Tabs, _HTMLElement);
 
+    _createClass(Tabs, null, [{
+      key: 'observedattributes',
+      get: function get() {
+        return ['activepanel', 'activePanel'];
+      }
+    }]);
+
     function Tabs() {
       _classCallCheck(this, Tabs);
 

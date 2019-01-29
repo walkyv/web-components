@@ -24,6 +24,9 @@
   }
 
   class Tabs extends HTMLElement {
+    static get observedattributes() {
+      return ['activepanel', 'activePanel'];
+    }
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
