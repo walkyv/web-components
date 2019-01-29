@@ -36,6 +36,10 @@
       return this.setAttribute('activeIdx', idx);
     }
 
+    get activeTab() {
+      return this.tabs[this.activeIdx];
+    }
+
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
@@ -89,8 +93,7 @@
     }
 
     positionSlider() {
-      // TODO: Store all tabs on constructor; store active tab; position slider with this data
-
+      console.log(this.activeTab);
     }
 
     onTabSlotChange(e) {
@@ -103,6 +106,7 @@
       
       this.tabList.removeAttribute('slot');
       this.shadowRoot.append(this.tabList);
+      this.positionSlider();
 
     }
 

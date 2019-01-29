@@ -36,6 +36,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       set: function set(idx) {
         return this.setAttribute('activeIdx', idx);
       }
+    }, {
+      key: 'activeTab',
+      get: function get() {
+        return this.tabs[this.activeIdx];
+      }
     }], [{
       key: 'observedattributes',
       get: function get() {
@@ -97,8 +102,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'positionSlider',
       value: function positionSlider() {
-        // TODO: Store all tabs on constructor; store active tab; position slider with this data
-
+        console.log(this.activeTab);
       }
     }, {
       key: 'onTabSlotChange',
@@ -112,6 +116,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.tabList.removeAttribute('slot');
         this.shadowRoot.append(this.tabList);
+        this.positionSlider();
       }
     }, {
       key: 'onPanelSlotChange',
