@@ -72,6 +72,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.onPanelSlotChange = _this.onPanelSlotChange.bind(_this);
 
       // TODO: make named listener
+      _this.shadowRoot.addEventListener('click', function (e) {
+        if (!e.target.matches('button[id^="tab"]')) return;
+
+        _this.activeIdx = Array.prototype.indexOf.call(_this.tabs, e.target);
+      });
+
+      // TODO: make named listener
       _this.shadowRoot.addEventListener('keydown', function (e) {
         if (!e.target.matches('button[id^="tab"]')) return;
 

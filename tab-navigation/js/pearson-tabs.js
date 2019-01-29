@@ -62,6 +62,13 @@
       this.onPanelSlotChange = this.onPanelSlotChange.bind(this);
 
       // TODO: make named listener
+      this.shadowRoot.addEventListener('click', (e) => {
+        if (!e.target.matches('button[id^="tab"]')) return;
+        
+        this.activeIdx = Array.prototype.indexOf.call(this.tabs, e.target);
+      });
+
+      // TODO: make named listener
       this.shadowRoot.addEventListener('keydown', (e) => {
         if (!e.target.matches('button[id^="tab"]')) return;
 
