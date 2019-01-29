@@ -58,6 +58,11 @@ li,
   color: $pe-color-charcoal;
 }
 
+.tab-button:not(.active):hover {
+  color: $pe-color-charcoal;
+  border-bottom-color: $pe-color-concrete;
+}
+
 
 .tab-slider {
   height:3px;
