@@ -36,6 +36,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       get: function get() {
         return this.tabs[this.activeIdx];
       }
+    }, {
+      key: 'activePanel',
+      get: function get() {
+        return this.panels[this.activeIdx];
+      }
     }], [{
       key: 'observedAttributes',
       get: function get() {
@@ -55,6 +60,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       // These are both assigned in a slotChange
       _this.tabList = null;
       _this.tabs = null;
+      _this.panels = null;
 
       _this.tabsWrapper = clone.querySelector('#tabs-wrapper');
       _this.slider = clone.querySelector('#slider');
@@ -101,6 +107,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.positionSlider();
           this.manageActiveTabAttrs();
           this.activeTab.focus();
+          this.showActivePanel();
         }
       }
     }, {
@@ -152,6 +159,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
       }
     }, {
+      key: 'showActivePanel',
+      value: function showActivePanel() {
+        var _this3 = this;
+
+        forEach.call(this.panels, function (panel) {
+          return panel.hidden = panel !== _this3.activePanel;
+        });
+      }
+    }, {
       key: 'positionSlider',
       value: function positionSlider() {
         var _activeTab$getBoundin = this.activeTab.getBoundingClientRect(),
@@ -180,7 +196,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'onPanelSlotChange',
       value: function onPanelSlotChange(e) {
-        this.panels = e.target.assignedNodes()[1];
+        this.panels = e.target.assignedNodes()[0].querySelectorAll('[data-panel]');
+        if (!this.panels) return;
+
+        this.showActivePanel();
       }
     }]);
 

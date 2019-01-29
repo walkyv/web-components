@@ -36,6 +36,10 @@
       return this.tabs[this.activeIdx];
     }
 
+    get activePanel() {
+      return this.panels[this.activeIdx];
+    }
+
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
@@ -45,6 +49,7 @@
       // These are both assigned in a slotChange
       this.tabList = null;
       this.tabs = null;
+      this.panels = null;
 
       this.tabsWrapper = clone.querySelector('#tabs-wrapper');
       this.slider = clone.querySelector('#slider');
@@ -89,6 +94,7 @@
         this.positionSlider();
         this.manageActiveTabAttrs();
         this.activeTab.focus();
+        this.showActivePanel();
       }
     }
 
@@ -142,6 +148,10 @@
       });
     }
 
+    showActivePanel() {
+      forEach.call(this.panels, (panel) => panel.hidden = panel !== this.activePanel);
+    }
+
     positionSlider() {
       const { left, width } = this.activeTab.getBoundingClientRect();
 
@@ -163,7 +173,10 @@
     }
 
     onPanelSlotChange(e) {
-      this.panels = e.target.assignedNodes()[1];
+      this.panels = e.target.assignedNodes()[0].querySelectorAll('[data-panel]');
+      if (!this.panels) return;
+
+      this.showActivePanel();
     }
   }
   customElements.define('pearson-tabs', Tabs);
