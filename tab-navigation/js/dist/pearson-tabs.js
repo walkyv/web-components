@@ -140,7 +140,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         child.role = 'none';
-        child.innerHTML = '\n        <button\n          id="tab-' + idx + '-btn"\n          class="' + classList + '"\n          role="tab"\n          tabindex="-1"\n          aria-selected="false"\n          aria-controls="tab-' + idx + '" \n          data-tab="' + idx + '"\n        >\n        <span>' + textContent + '</span>\n        </button>\n      ';
+        child.innerHTML = '\n        <button\n          id="tab-' + idx + '-btn"\n          class="' + classList + '"\n          role="tab"\n          tabindex="-1"\n          aria-selected="false"\n          aria-controls="tab-' + idx + '" \n          data-tab="' + idx + '"\n        >\n        ' + textContent + '\n        </button>\n      ';
       }
     }, {
       key: 'positionSlider',

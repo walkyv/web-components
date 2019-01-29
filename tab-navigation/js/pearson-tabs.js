@@ -129,7 +129,7 @@
           aria-controls="tab-${idx}" 
           data-tab="${idx}"
         >
-        <span>${textContent}</span>
+        ${textContent}
         </button>
       `;
     }
