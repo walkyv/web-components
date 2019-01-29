@@ -60,6 +60,24 @@
 
       this.onTabSlotChange = this.onTabSlotChange.bind(this);
       this.onPanelSlotChange = this.onPanelSlotChange.bind(this);
+
+      // TODO: make named listener
+      this.shadowRoot.addEventListener('keydown', (e) => {
+        if (!e.target.matches('button[id^="tab"]')) return;
+
+        const idxMap = {
+          'ArrowLeft': this.activeIdx - 1,
+          'ArrowRight': this.activeIdx + 1
+        };
+
+        const nextIdx = e.key in idxMap ? idxMap[e.key] : null;
+
+        if(this.tabs[nextIdx]) {
+          e.preventDefault();
+          this.activeIdx = nextIdx;
+        }
+
+      }, true);
     }
 
     connectedCallback() {
