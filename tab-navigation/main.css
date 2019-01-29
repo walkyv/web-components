@@ -39,6 +39,13 @@ h3 {
   font-weight: 400;
 }
 
+.pe-title--small {
+  font-size: 1.2857142857rem;
+  line-height: 1.5714285714rem;
+  font-weight: normal;
+  color: #252525;
+}
+
 .pe-paragraph,
 p {
   font-size: 1rem;
