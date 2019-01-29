@@ -163,12 +163,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
       }
     }, {
-      key: 'setActivePanel',
-      value: function setActivePanel() {
+      key: 'initPanels',
+      value: function initPanels() {
         var _this4 = this;
 
+        forEach.call(this.panels, function (panel, idx) {
+          panel.id = 'panel-' + idx;
+          panel.hidden = panel !== _this4.activePanel;
+        });
+      }
+    }, {
+      key: 'setActivePanel',
+      value: function setActivePanel() {
+        var _this5 = this;
+
         forEach.call(this.panels, function (panel) {
-          return panel.hidden = panel !== _this4.activePanel;
+          return panel.hidden = panel !== _this5.activePanel;
         });
       }
     }, {
@@ -204,7 +214,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         if (!this.panels) return;
 
-        this.setActivePanel();
+        this.initPanels();
       }
     }]);
 
