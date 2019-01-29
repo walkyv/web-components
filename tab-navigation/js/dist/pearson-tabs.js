@@ -120,7 +120,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         Array.prototype.forEach.call(this.tabList.children, this.decorateTabs);
 
-        this.tabs = this.tabList.children;
+        this.tabs = this.tabList.querySelectorAll('button[id^="tab"]');
 
         this.tabsWrapper.insertBefore(this.tabList, this.slider);
         this.positionSlider();
