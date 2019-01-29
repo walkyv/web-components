@@ -47,6 +47,10 @@
 
       const clone = template.content.cloneNode(true);
 
+      // These are both assigned in a slotChange
+      this.tabList = null;
+      this.tabs = null;
+
       this.tabsWrapper = clone.querySelector('#tabs-wrapper');
       this.slider = clone.querySelector('#slider');
 
@@ -114,8 +118,6 @@
 
       this.tabsWrapper.insertBefore(this.tabList, this.slider);
       this.positionSlider();
-
-      e.target.remove();
     }
 
     onPanelSlotChange(e) {

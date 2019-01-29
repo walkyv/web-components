@@ -57,6 +57,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       var clone = template.content.cloneNode(true);
 
+      // These are both assigned in a slotChange
+      _this.tabList = null;
+      _this.tabs = null;
+
       _this.tabsWrapper = clone.querySelector('#tabs-wrapper');
       _this.slider = clone.querySelector('#slider');
 
@@ -127,8 +131,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.tabsWrapper.insertBefore(this.tabList, this.slider);
         this.positionSlider();
-
-        e.target.remove();
       }
     }, {
       key: 'onPanelSlotChange',
