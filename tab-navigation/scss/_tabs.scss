@@ -75,24 +75,24 @@ li,
   border-bottom: 3px solid transparent;
 }
 
+
+.tab-button:hover {
+  color: $pe-color-charcoal;
+  border-bottom-color: $pe-color-concrete;
+}
+
 .tab-button.active {
   color: $pe-color-charcoal;
 }
 
-.tab-button:not(.active):hover {
-  color: $pe-color-charcoal;
-  border-bottom-color: $pe-color-concrete;
+:host-context(.dark) .tab-button:hover {
+  color: white;
+  border-bottom-color: $pe-color-alto;
 }
 
 :host-context(.dark) .tab-button.active {
   color: white;
 }
-
-:host-context(.dark) .tab-button:not(.active):hover {
-  color: white;
-  border-bottom-color: $pe-color-alto;
-}
-
 
 .tab-slider {
   height:3px;
