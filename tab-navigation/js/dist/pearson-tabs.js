@@ -179,15 +179,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'positionSlider',
       value: function positionSlider() {
-        var _activeTab$getBoundin = this.activeTab.getBoundingClientRect(),
-            left = _activeTab$getBoundin.left,
-            width = _activeTab$getBoundin.width;
+        var activeTab = this.activeTab;
 
-        // 14px is the approx. padding of the button
+        var _getBoundingClientRec = this.getBoundingClientRect(),
+            hostLeft = _getBoundingClientRec.left;
 
+        var _activeTab$getBoundin = activeTab.getBoundingClientRect(),
+            tabLeft = _activeTab$getBoundin.left,
+            tabWidth = _activeTab$getBoundin.width;
 
-        this.slider.style.left = left - 16 + 'px';
-        this.slider.style.width = width + 'px';
+        var tabMargin = parseInt(w.getComputedStyle(activeTab).getPropertyValue('margin-left').match(/\d+/)[0], 10);
+
+        this.slider.style.left = tabLeft - hostLeft - tabMargin + 'px';
+        this.slider.style.width = tabWidth + 'px';
       }
     }, {
       key: 'onTabSlotChange',

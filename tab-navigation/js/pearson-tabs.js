@@ -164,11 +164,22 @@
     }
 
     positionSlider() {
-      const { left, width } = this.activeTab.getBoundingClientRect();
+      const { activeTab } = this;
+      const { left: hostLeft } = this.getBoundingClientRect();
+      const {
+        left: tabLeft,
+        width: tabWidth
+      } = activeTab.getBoundingClientRect();
+      const tabMargin = parseInt(
+        w
+          .getComputedStyle(activeTab)
+          .getPropertyValue('margin-left')
+          .match(/\d+/)[0],
+        10
+      );
 
-      // 14px is the approx. padding of the button
-      this.slider.style.left = left - 16 + 'px';
-      this.slider.style.width = width + 'px';
+      this.slider.style.left = tabLeft - hostLeft - tabMargin + 'px';
+      this.slider.style.width = tabWidth + 'px';
     }
 
     onTabSlotChange(e) {
