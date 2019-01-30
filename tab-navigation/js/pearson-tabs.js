@@ -58,34 +58,8 @@
 
       this.onTabSlotChange = this.onTabSlotChange.bind(this);
       this.onPanelSlotChange = this.onPanelSlotChange.bind(this);
-
-      // TODO: make named listener
-      this.shadowRoot.addEventListener('click', e => {
-        if (!e.target.matches('button[id^="tab"]')) return;
-
-        this.activeIdx = indexOf.call(this.tabs, e.target);
-      });
-
-      // TODO: make named listener
-      this.shadowRoot.addEventListener(
-        'keydown',
-        e => {
-          if (!e.target.matches('button[id^="tab"]')) return;
-
-          const idxMap = {
-            ArrowLeft: this.activeIdx - 1,
-            ArrowRight: this.activeIdx + 1
-          };
-
-          const nextIdx = e.key in idxMap ? idxMap[e.key] : null;
-
-          if (this.tabs[nextIdx]) {
-            e.preventDefault();
-            this.activeIdx = nextIdx;
-          }
-        },
-        true
-      );
+      this.onShadowRootClick = this.onShadowRootClick.bind(this);
+      this.onShadowRootKeydown = this.onShadowRootKeydown.bind(this);
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -104,11 +78,16 @@
         this.setAttribute('activeIdx', '0');
       }
 
+      this.shadowRoot.addEventListener('click', this.onShadowRootClick, true);
+      this.shadowRoot.addEventListener(
+        'keydown',
+        this.onShadowRootKeydown,
+        true
+      );
+
       tabSlot.addEventListener('slotchange', this.onTabSlotChange);
       panelSlot.addEventListener('slotchange', this.onPanelSlotChange);
     }
-
-    diconnectedCallback() {}
 
     initTabs() {
       forEach.call(this.tabList.children, (child, idx) => {
@@ -202,6 +181,28 @@
       if (!this.panels) return;
 
       this.initPanels();
+    }
+
+    onShadowRootClick(e) {
+      if (!e.target.matches('button[id^="tab"]')) return;
+
+      this.activeIdx = indexOf.call(this.tabs, e.target);
+    }
+
+    onShadowRootKeydown(e) {
+      if (!e.target.matches('button[id^="tab"]')) return;
+
+      const idxMap = {
+        ArrowLeft: this.activeIdx - 1,
+        ArrowRight: this.activeIdx + 1
+      };
+
+      const nextIdx = e.key in idxMap ? idxMap[e.key] : null;
+
+      if (this.tabs[nextIdx]) {
+        e.preventDefault();
+        this.activeIdx = nextIdx;
+      }
     }
   }
   customElements.define('pearson-tabs', Tabs);

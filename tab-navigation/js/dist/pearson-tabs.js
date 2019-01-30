@@ -69,30 +69,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.onTabSlotChange = _this.onTabSlotChange.bind(_this);
       _this.onPanelSlotChange = _this.onPanelSlotChange.bind(_this);
-
-      // TODO: make named listener
-      _this.shadowRoot.addEventListener('click', function (e) {
-        if (!e.target.matches('button[id^="tab"]')) return;
-
-        _this.activeIdx = indexOf.call(_this.tabs, e.target);
-      });
-
-      // TODO: make named listener
-      _this.shadowRoot.addEventListener('keydown', function (e) {
-        if (!e.target.matches('button[id^="tab"]')) return;
-
-        var idxMap = {
-          ArrowLeft: _this.activeIdx - 1,
-          ArrowRight: _this.activeIdx + 1
-        };
-
-        var nextIdx = e.key in idxMap ? idxMap[e.key] : null;
-
-        if (_this.tabs[nextIdx]) {
-          e.preventDefault();
-          _this.activeIdx = nextIdx;
-        }
-      }, true);
+      _this.onShadowRootClick = _this.onShadowRootClick.bind(_this);
+      _this.onShadowRootKeydown = _this.onShadowRootKeydown.bind(_this);
       return _this;
     }
 
@@ -118,12 +96,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.setAttribute('activeIdx', '0');
         }
 
+        this.shadowRoot.addEventListener('click', this.onShadowRootClick, true);
+        this.shadowRoot.addEventListener('keydown', this.onShadowRootKeydown, true);
+
         tabSlot.addEventListener('slotchange', this.onTabSlotChange);
         panelSlot.addEventListener('slotchange', this.onPanelSlotChange);
       }
-    }, {
-      key: 'diconnectedCallback',
-      value: function diconnectedCallback() {}
     }, {
       key: 'initTabs',
       value: function initTabs() {
@@ -214,6 +192,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (!this.panels) return;
 
         this.initPanels();
+      }
+    }, {
+      key: 'onShadowRootClick',
+      value: function onShadowRootClick(e) {
+        if (!e.target.matches('button[id^="tab"]')) return;
+
+        this.activeIdx = indexOf.call(this.tabs, e.target);
+      }
+    }, {
+      key: 'onShadowRootKeydown',
+      value: function onShadowRootKeydown(e) {
+        if (!e.target.matches('button[id^="tab"]')) return;
+
+        var idxMap = {
+          ArrowLeft: this.activeIdx - 1,
+          ArrowRight: this.activeIdx + 1
+        };
+
+        var nextIdx = e.key in idxMap ? idxMap[e.key] : null;
+
+        if (this.tabs[nextIdx]) {
+          e.preventDefault();
+          this.activeIdx = nextIdx;
+        }
       }
     }]);
 
