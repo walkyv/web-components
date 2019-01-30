@@ -14,15 +14,22 @@ $pe-focus-color: #0B73DA;
   outline-offset: 4px;
 }
 
+*,
+*::after,
+*::before,
 :host {
   box-sizing: border-box;
-  font-family: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
 }
 
-:host *,
-:host *::after,
-:host *::before {
-  box-sizing: border-box;
+:host {
+  font-family: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
+  background-color: #ffffff;
+  color: $pe-color-medium-gray;
+}
+
+:host-context(.dark) {
+  background-color: $pe-color-ink-blue;
+  color: $pe-color-alto;
 }
 
 ::slotted(.panels) {
@@ -31,7 +38,7 @@ $pe-focus-color: #0B73DA;
 
 .tabs-wrapper {
   position: relative;
-  height: 41px;
+  background-color: inherit;
 }
 
 ul,
@@ -47,7 +54,7 @@ li,
 }
 
 .tab-button {
-  color: #6a7070;
+  color: inherit;
   cursor: pointer;
   display: block;
   margin: .5em 1em;
@@ -65,6 +72,15 @@ li,
 .tab-button:not(.active):hover {
   color: $pe-color-charcoal;
   border-bottom-color: $pe-color-concrete;
+}
+
+:host-context(.dark) .tab-button.active {
+  color: white;
+}
+
+:host-context(.dark) .tab-button:not(.active):hover {
+  color: white;
+  border-bottom-color: $pe-color-alto;
 }
 
 
