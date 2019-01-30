@@ -90,33 +90,37 @@
     }
 
     initTabs() {
-      forEach.call(this.tabList.children, (child, idx) => {
-        const { textContent } = child;
+      this.tabs = new Array(this.tabList.children.length);
 
-        let classList = 'tab-button';
-        let ariaSelected = '';
-        let tabindex = 'tabindex="-1"';
+      const upgradeTab = (tab, idx) => {
+        const { textContent } = tab;
+        const isActive = idx === this.activeIdx;
 
-        if (idx === this.activeIdx) {
-          classList += ' active';
-          ariaSelected = 'aria-selected';
-          tabindex = '';
-        }
+        const classList = isActive ? 'tab-button active' : 'tab-button';
+        const ariaSelected = isActive ? 'aria-selected' : '';
+        const tabIndex = isActive ? '' : 'tabindex="-1"';
 
-        child.setAttribute('role', 'presentation');
-        child.innerHTML = `
+        tab.setAttribute('role', 'presentation');
+        tab.innerHTML = `
           <button
             id="tab-${idx}-btn"
             class="${classList}"
             role="tab"
             aria-controls="panel-${idx}"
-            ${tabindex}
+            ${tabIndex}
             ${ariaSelected}
           >
           ${textContent}
           </button>
         `;
-      });
+
+        // Add tab element to this.tabs list
+        // so it can be accessed later.
+        this.tabs[idx] = tab.firstElementChild;
+      };
+
+      forEach.call(this.tabList.children, upgradeTab);
+      this.tabsWrapper.insertBefore(this.tabList, this.slider);
     }
 
     setActiveTab() {
@@ -171,10 +175,11 @@
 
       this.initTabs();
 
-      this.tabs = this.tabList.querySelectorAll('button[id^="tab"]');
-
-      this.tabsWrapper.insertBefore(this.tabList, this.slider);
-      this.positionSlider();
+      // Slightly delay positioning the slider
+      // so that initTabs has time to finish
+      setTimeout(() => {
+        this.positionSlider();
+      }, 50);
     }
 
     onPanelSlotChange(e) {

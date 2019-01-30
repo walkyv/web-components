@@ -107,23 +107,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function initTabs() {
         var _this2 = this;
 
-        forEach.call(this.tabList.children, function (child, idx) {
-          var textContent = child.textContent;
+        this.tabs = new Array(this.tabList.children.length);
 
+        var upgradeTab = function upgradeTab(tab, idx) {
+          var textContent = tab.textContent;
 
-          var classList = 'tab-button';
-          var ariaSelected = '';
-          var tabindex = 'tabindex="-1"';
+          var isActive = idx === _this2.activeIdx;
 
-          if (idx === _this2.activeIdx) {
-            classList += ' active';
-            ariaSelected = 'aria-selected';
-            tabindex = '';
-          }
+          var classList = isActive ? 'tab-button active' : 'tab-button';
+          var ariaSelected = isActive ? 'aria-selected' : '';
+          var tabIndex = isActive ? '' : 'tabindex="-1"';
 
-          child.setAttribute('role', 'presentation');
-          child.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="' + classList + '"\n            role="tab"\n            aria-controls="panel-' + idx + '"\n            ' + tabindex + '\n            ' + ariaSelected + '\n          >\n          ' + textContent + '\n          </button>\n        ';
-        });
+          tab.setAttribute('role', 'presentation');
+          tab.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="' + classList + '"\n            role="tab"\n            aria-controls="panel-' + idx + '"\n            ' + tabIndex + '\n            ' + ariaSelected + '\n          >\n          ' + textContent + '\n          </button>\n        ';
+
+          // Add tab element to this.tabs list
+          // so it can be accessed later.
+          _this2.tabs[idx] = tab.firstElementChild;
+        };
+
+        forEach.call(this.tabList.children, upgradeTab);
+        this.tabsWrapper.insertBefore(this.tabList, this.slider);
       }
     }, {
       key: 'setActiveTab',
@@ -178,15 +182,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'onTabSlotChange',
       value: function onTabSlotChange(e) {
+        var _this5 = this;
+
         this.tabList = e.target.assignedNodes()[0];
         if (!this.tabList) return;
 
         this.initTabs();
 
-        this.tabs = this.tabList.querySelectorAll('button[id^="tab"]');
-
-        this.tabsWrapper.insertBefore(this.tabList, this.slider);
-        this.positionSlider();
+        // Slightly delay positioning the slider
+        // so that initTabs has time to finish
+        setTimeout(function () {
+          _this5.positionSlider();
+        }, 50);
       }
     }, {
       key: 'onPanelSlotChange',
