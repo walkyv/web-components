@@ -113,14 +113,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
           var classList = 'tab-button';
           var ariaSelected = '';
+          var tabindex = 'tabindex="-1"';
 
           if (idx === _this2.activeIdx) {
             classList += ' active';
             ariaSelected = 'aria-selected';
+            tabindex = '';
           }
 
           child.setAttribute('role', 'presentation');
-          child.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="' + classList + '"\n            role="tab"\n            tabindex="-1"\n            aria-controls="panel-' + idx + '" \n            ' + ariaSelected + '\n          >\n          ' + textContent + '\n          </button>\n        ';
+          child.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="' + classList + '"\n            role="tab"\n            aria-controls="panel-' + idx + '"\n            ' + tabindex + '\n            ' + ariaSelected + '\n          >\n          ' + textContent + '\n          </button>\n        ';
         });
       }
     }, {
@@ -134,10 +136,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           if (idx !== _this3.activeIdx) {
             tab.classList.remove('active');
             tab.removeAttribute('aria-selected');
+            tab.setAttribute('tabindex', '-1');
             panel.hidden = true;
           } else {
             tab.classList.add('active');
             tab.setAttribute('aria-selected', '');
+            tab.removeAttribute('tabindex');
             panel.hidden = false;
           }
         });

@@ -95,10 +95,12 @@
 
         let classList = 'tab-button';
         let ariaSelected = '';
+        let tabindex = 'tabindex="-1"';
 
         if (idx === this.activeIdx) {
           classList += ' active';
           ariaSelected = 'aria-selected';
+          tabindex = '';
         }
 
         child.setAttribute('role', 'presentation');
@@ -107,8 +109,8 @@
             id="tab-${idx}-btn"
             class="${classList}"
             role="tab"
-            tabindex="-1"
-            aria-controls="panel-${idx}" 
+            aria-controls="panel-${idx}"
+            ${tabindex}
             ${ariaSelected}
           >
           ${textContent}
@@ -124,10 +126,12 @@
         if (idx !== this.activeIdx) {
           tab.classList.remove('active');
           tab.removeAttribute('aria-selected');
+          tab.setAttribute('tabindex', '-1');
           panel.hidden = true;
         } else {
           tab.classList.add('active');
           tab.setAttribute('aria-selected', '');
+          tab.removeAttribute('tabindex');
           panel.hidden = false;
         }
       });
