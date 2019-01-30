@@ -14,6 +14,9 @@
         max-width: 40rem;
         margin: auto;
       }
+      h2 {
+        text-align: center;
+      }
     </style>
 
     <!-- loads web component polyfills -->
@@ -28,6 +31,29 @@
   </head>
 
   <body>
+    <h2>Light theme</h2>
+    <pearson-tabs>
+        <ul class="tabs" slot="tabs">
+          <li>Tab one</li>
+          <li>Tab two</li>
+          <li>Tab three</li>
+        </ul>
+        <div class="panels" slot="panels">
+          <div data-panel>
+            <p>Content one!</p>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque voluptatum ullam possimus atque maiores placeat minus reprehenderit illum dignissimos aperiam, provident eveniet tempora similique harum porro aspernatur asperiores. Soluta, cupiditate!</p>
+          </div>
+          <div data-panel>
+            <p>Content two!</p>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque voluptatum ullam possimus atque maiores placeat minus reprehenderit illum dignissimos aperiam, provident eveniet tempora similique harum porro aspernatur asperiores. Soluta, cupiditate!</p>
+          </div>
+          <div data-panel>
+            <p>Content three!</p>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque voluptatum ullam possimus atque maiores placeat minus reprehenderit illum dignissimos aperiam, provident eveniet tempora similique harum porro aspernatur asperiores. Soluta, cupiditate!</p>
+          </div>
+        </div>
+      </pearson-tabs>
+    <h2>Dark theme</h2>
     <pearson-tabs class="dark">
       <ul class="tabs" slot="tabs">
         <li>Tab one</li>
