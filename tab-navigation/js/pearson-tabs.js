@@ -122,7 +122,7 @@
           ariaSelected = 'aria-selected';
         }
 
-        child.role = 'none';
+        child.setAttribute('role', 'presentation');
         child.innerHTML = `
           <button
             id="tab-${idx}-btn"

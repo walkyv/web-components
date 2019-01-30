@@ -141,7 +141,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             ariaSelected = 'aria-selected';
           }
 
-          child.role = 'none';
+          child.setAttribute('role', 'presentation');
           child.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="' + classList + '"\n            role="tab"\n            tabindex="-1"\n            aria-controls="panel-' + idx + '" \n            ' + ariaSelected + '\n          >\n          ' + textContent + '\n          </button>\n        ';
         });
       }
