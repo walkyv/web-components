@@ -26,13 +26,13 @@ $pe-focus-color: #0B73DA;
 }
 
 :host {
+  display: block;
   font-family: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
   background-color: #ffffff;
   color: $pe-color-medium-gray;
 }
 
 :host-context(.dark) {
-  background-color: $pe-color-ink-blue;
   color: $pe-color-alto;
 }
 
@@ -43,6 +43,10 @@ $pe-focus-color: #0B73DA;
 .tabs-wrapper {
   position: relative;
   background-color: inherit;
+}
+
+:host-context(.dark) .tabs-wrapper {
+  background-color: $pe-color-ink-blue;
 }
 
 ul,
