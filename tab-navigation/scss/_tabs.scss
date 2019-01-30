@@ -57,8 +57,8 @@ li,
   color: inherit;
   cursor: pointer;
   display: block;
-  margin: .5em 1em;
-  padding: .5em 0;
+  margin: 8px 16px;
+  padding: 8px 0;
   text-decoration: none;
   background:none;
   border:0;
@@ -89,8 +89,8 @@ li,
   background-color: $pe-color-digital-marine-turquoise;
   position:absolute;
   padding:0;
-  margin: .5em 1em;
-  bottom:-8px;
+  margin: 0 16px;
+  bottom: 8px;
   transition: all .5s ease-in-out;
 }
 
