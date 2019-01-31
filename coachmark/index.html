@@ -28,29 +28,71 @@
       <button id="openTop">Top Coach Mark</button>
     </div>
   </main>
-  <pearson-coachmark position="bottom" trigger="#openTop" reference="#reference"></pearson-coachmark>
   <script>
     (function (win,doc) {
       const trigger = doc.querySelector('#openTop'),
         target = doc.querySelector('#main'),
         coachMark = doc.createElement('pearson-coachmark');
-          function generateCoach () {
-                  const opts = {
-                      position: 'top',
-                      trigger: '#openTop',
-                      reference: '#reference',
-                      title: 'This is the title',
-                      content: 'Content for your enjoyment',
-                      type: 'default',
-                      arrow: true,
-                      gotIt: "Got It Dave",
-                    };
-            for (let attrName in opts) {
-              coachMark.setAttribute(attrName, opts[attrName])
-            }
-            target.appendChild(coachMark)
+
+        function generateCoach (opts) {
+          for (let attrName in opts) {
+            coachMark.setAttribute(attrName, opts[attrName])
           }
-      trigger.addEventListener('click', generateCoach);
+          target.appendChild(coachMark)
+        }
+
+      trigger.addEventListener('click', function (event) {
+        event.stopImmediatePropagation();
+        coachOne();
+      });
+
+      const coachOne = function (event) {
+        generateCoach({
+            position: 'top',
+            trigger: '#openTop',
+            reference: '#reference',
+            title: 'This is the title one',
+            content: 'Content for your enjoyment',
+            type: 'default',
+            arrow: true,
+            gotIt: "Got It Dave",
+
+          });
+          coachMark.addEventListener('next', coachTwo, false);
+      };
+
+      const coachTwo = function (event) {
+        coachMark.removeEventListener('next', coachTwo, false);
+        generateCoach({
+          position: 'bottom',
+          trigger: '#openTop',
+          reference: '#reference',
+          title: 'This is the title two',
+          content: 'Content for your enjoyment',
+          type: 'informational',
+          arrow: true,
+          gotIt: "Got It Dave",
+
+        });
+        coachMark.addEventListener('next', coachThree, false);
+      };
+
+      const coachThree = function (event) {
+        coachMark.removeEventListener('next', coachThree, false);
+        generateCoach({
+          position: 'left',
+          trigger: '#openTop',
+          reference: '#reference',
+          title: 'This is the title three',
+          content: 'Content for your enjoyment',
+          type: 'generic',
+          arrow: true,
+          gotIt: "Got It Dave",
+          dismiss: true
+        });
+      };
+
+
     })(window, document);
   </script>
 

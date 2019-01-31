@@ -3,7 +3,6 @@
 
   // Create a template element
   const template = doc.createElement('template'),
-    coachmarks = doc.getElementsByTagName('pearson-coachmark')[0],
     closeIcon = `
                   <svg focusable="false" class="pe-icon--remove-sm-18" aria-hidden="false" title="close coachmark" role="img" >
         <path d="M10.4066,9 L13.7086,5.698 C14.0976,5.31 14.0976,4.68 13.7086,4.291 C13.3196,3.903 12.6906,3.903 12.3016,4.291 L8.9996,7.593 L5.6976,4.291 C5.3096,3.903 4.6796,3.903 4.2916,4.291 C3.9026,4.68 3.9026,5.31 4.2916,5.698 L7.5936,9 L4.2916,12.302 C3.9026,12.69 3.9026,13.32 4.2916,13.709 C4.4856,13.903 4.7406,14 4.9946,14 C5.2496,14 5.5036,13.903 5.6976,13.709 L8.9996,10.407 L12.3016,13.709 C12.4966,13.903 12.7506,14 13.0056,14 C13.2596,14 13.5146,13.903 13.7086,13.709 C14.0976,13.32 14.0976,12.69 13.7086,12.302 L10.4066,9 Z"/>
@@ -45,7 +44,10 @@
    */
   class Coachmark extends HTMLElement {
     static get observedAttributes() {
-      return ['position', 'triggerId', 'referenceId', 'title', 'content', 'type', 'data', 'arrow', 'gotit', 'gotittext'];
+      return ['position', 'triggerId', 'referenceId', 'title', 'content', 'type', 'data', 'arrow', 'gotit', 'gotittext', 'dismiss'];
+    }
+    get dismiss() {
+      return this.getAttribute('dismiss')
     }
     get position() {
       return this.getAttribute('position');
@@ -100,13 +102,28 @@
       this.shadowRoot.querySelector('#coachmark-body').innerHTML = str
     }
 
-    destroyCoach() {
-      this.dispatchEvent(
-        new Event('dismiss', {
-          bubbles: true
-        })
-      );
-      this.remove();
+    destroyCoach(event) {
+      if (this.dismiss) {
+        this.remove();
+        this.closeBtn.removeEventListener('click', this.destroyCoach);
+        this.gotItBtn.removeEventListener('click', this.destroyCoach);
+        this.shadowRoot.querySelector('.coachmark').classList.remove(this.type);
+        this.shadowRoot.querySelector('.popper__arrow').classList.remove(this.type);
+        this.removeAttribute('dismiss');
+        this.dispatchEvent(
+          new Event('dismiss', {
+            bubbles: false
+          })
+        );
+      } else {
+        this.shadowRoot.querySelector('.coachmark').classList.remove(this.type);
+        this.shadowRoot.querySelector('.popper__arrow').classList.remove(this.type);
+        this.dispatchEvent(
+          new Event('next', {
+            bubbles: false
+          })
+        );
+      }
     }
 
     createPopper () {
@@ -120,8 +137,6 @@
         });
 
       this.closeBtn.focus();
-      this.closeBtn.addEventListener('click', this.destroyCoach);
-      this.gotItBtn.addEventListener('click', this.destroyCoach);
       this.titleState = this.title;
       this.contentState = this.content;
 
@@ -144,28 +159,24 @@
       /** After all this, we can append our clone to the shadowRoot */
       this.shadowRoot.appendChild(clone);
 
-
       /** We should also bind any event listeners to `this` so their
        * references do not get lost.
        */
 
       this.createPopper = this.createPopper.bind(this);
       this.destroyCoach = this.destroyCoach.bind(this);
-      if (coachmarks !== undefined) {
-        coachmarks.remove();
-      }
     }
 
     connectedCallback() {
-
       this.typeState = this.type;
       this.arrowState = this.arrow;
       this.gotItState = this.gotIt;
       this.createPopper();
+      this.closeBtn.addEventListener('click', this.destroyCoach);
+      this.gotItBtn.addEventListener('click', this.destroyCoach);
       }
 
     disconnectedCallback() {
-
       const trigger = document.querySelector(this.triggerId);
       trigger.focus();
     }
