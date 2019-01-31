@@ -97,7 +97,7 @@
         const isActive = idx === this.activeIdx;
 
         const classList = isActive ? 'tab-button active' : 'tab-button';
-        const ariaSelected = isActive ? 'aria-selected' : '';
+        const ariaSelected = isActive ? 'aria-selected="true"' : '';
         const tabIndex = isActive ? '' : 'tabindex="-1"';
 
         tab.setAttribute('role', 'presentation');
@@ -119,6 +119,8 @@
         this.tabs[idx] = tab.firstElementChild;
       };
 
+      this.tabList.setAttribute('role', 'tablist');
+
       forEach.call(this.tabList.children, upgradeTab);
       this.tabsWrapper.insertBefore(this.tabList, this.slider);
     }
@@ -134,7 +136,7 @@
           panel.hidden = true;
         } else {
           tab.classList.add('active');
-          tab.setAttribute('aria-selected', '');
+          tab.setAttribute('aria-selected', 'true');
           tab.removeAttribute('tabindex');
           panel.hidden = false;
         }
@@ -145,6 +147,7 @@
 
     initPanels() {
       forEach.call(this.panels, (panel, idx) => {
+        panel.setAttribute('role', 'tabpanel');
         panel.id = `panel-${idx}`;
         panel.hidden = panel !== this.activePanel;
       });

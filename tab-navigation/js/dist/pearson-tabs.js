@@ -115,7 +115,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           var isActive = idx === _this2.activeIdx;
 
           var classList = isActive ? 'tab-button active' : 'tab-button';
-          var ariaSelected = isActive ? 'aria-selected' : '';
+          var ariaSelected = isActive ? 'aria-selected="true"' : '';
           var tabIndex = isActive ? '' : 'tabindex="-1"';
 
           tab.setAttribute('role', 'presentation');
@@ -125,6 +125,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           // so it can be accessed later.
           _this2.tabs[idx] = tab.firstElementChild;
         };
+
+        this.tabList.setAttribute('role', 'tablist');
 
         forEach.call(this.tabList.children, upgradeTab);
         this.tabsWrapper.insertBefore(this.tabList, this.slider);
@@ -144,7 +146,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             panel.hidden = true;
           } else {
             tab.classList.add('active');
-            tab.setAttribute('aria-selected', '');
+            tab.setAttribute('aria-selected', 'true');
             tab.removeAttribute('tabindex');
             panel.hidden = false;
           }
@@ -158,6 +160,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var _this4 = this;
 
         forEach.call(this.panels, function (panel, idx) {
+          panel.setAttribute('role', 'tabpanel');
           panel.id = 'panel-' + idx;
           panel.hidden = panel !== _this4.activePanel;
         });
