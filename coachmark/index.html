@@ -4,6 +4,8 @@
     <title>Pearson Web Component</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+
     <!-- THESE IMPORTS ARE NECESSARY FOR PROPER RENDERING DURING DEVELOPMENT -->
     <!-- DO NOT DELETE -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
@@ -12,19 +14,45 @@
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
-
+    <script src="https://unpkg.com/popper.js@1.14.6/dist/umd/popper.min.js"></script>
 		<!-- load the web component script -->
 		<!-- RENAME THIS FILE DURING DEVELOPMENT -->
 		<!-- e.g., 'pearson-alert' -->
-    <script src="js/dist/pearson-example.js"></script>
+
+    <script src="js/dist/pearson-coachmark.js"></script>
   </head>
 
   <body>
-    <pearson-example
-      title="Hello I'm a title"
-      buttonText="I'm a shadow button!"
-    >
+  <main id="main">
+    <div id="reference" class="target" style="margin:4em; width: 400px; border:1px solid gray; margin:0 auto; margin-top:200px;">
+      <button id="openTop">Top Coach Mark</button>
+    </div>
+  </main>
+  <pearson-coachmark position="bottom" trigger="#openTop" reference="#reference"></pearson-coachmark>
+  <script>
+    (function (win,doc) {
+      const trigger = doc.querySelector('#openTop'),
+        target = doc.querySelector('#main'),
+        coachMark = doc.createElement('pearson-coachmark');
+          function generateCoach () {
+                  const opts = {
+                      position: 'top',
+                      trigger: '#openTop',
+                      reference: '#reference',
+                      title: 'This is the title',
+                      content: 'Content for your enjoyment',
+                      type: 'default',
+                      arrow: true,
+                      gotIt: "Got It Dave",
+                    };
+            for (let attrName in opts) {
+              coachMark.setAttribute(attrName, opts[attrName])
+            }
+            target.appendChild(coachMark)
+          }
+      trigger.addEventListener('click', generateCoach);
+    })(window, document);
+  </script>
 
-    </pearson-example>
   </body>
 </html>
