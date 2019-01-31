@@ -62,17 +62,21 @@
 
       trigger.addEventListener('click', function (event) {
         coachOne();
+        event.stopImmediatePropagation()
       });
 
       infoTrigger.addEventListener('click', function (event) {
         coachInfo();
+        event.stopImmediatePropagation()
       });
 
       genericTrigger.addEventListener('click', function (event) {
+        event.stopImmediatePropagation()
         coachGeneric();
       });
 
      specialTrigger.addEventListener('click', function (event) {
+       event.stopImmediatePropagation()
         coachSpecial();
       });
 
@@ -298,6 +302,7 @@
           position: 'bottom',
           trigger: '#special',
           reference: '#reference4',
+          type: 'default',
           title: 'This is special',
           content: 'Content for your enjoyment',
           dismiss: true

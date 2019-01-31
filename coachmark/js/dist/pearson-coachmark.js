@@ -40,6 +40,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.shadowRoot.querySelector('.coachmark').classList.remove(this.type);
           this.shadowRoot.querySelector('.popper__arrow').classList.remove(this.type);
           this.removeAttribute('dismiss');
+          this.removeAttribute('arrow');
+          this.removeAttribute('gotit');
           this.dispatchEvent(new Event('dismiss', {
             bubbles: false
           }));
@@ -129,6 +131,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           } else {
             this.shadowRoot.querySelector('.coach-link').innerHTML = "Got It";
           }
+        } else {
+          this.shadowRoot.querySelector('.coach-link').classList.add('hidden');
         }
       }
     }, {
@@ -136,11 +140,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       set: function set(bool) {
         if (bool) {
           this.shadowRoot.querySelector('.popper__arrow').classList.remove('hidden');
+        } else {
+          this.shadowRoot.querySelector('.popper__arrow').classList.add('hidden');
         }
       }
     }, {
       key: 'typeState',
       set: function set(str) {
+        console.log(str);
         this.shadowRoot.querySelector('.coachmark').classList.add(str);
         this.shadowRoot.querySelector('.popper__arrow').classList.add(str);
       }
@@ -167,21 +174,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       var _this = _possibleConstructorReturn(this, (Coachmark.__proto__ || Object.getPrototypeOf(Coachmark)).call(this));
 
       _this.attachShadow({ mode: 'open' });
-      var clone = template.content.cloneNode(true),
-          coachmarks = doc.getElementsByTagName('pearson-coachmark')[0];
-      /** If we need references to the children of the component,
-       * we can create them here. If they are created elsewhere,
-       * they will not be available our lifecycle methods.
-       */
+      var clone = template.content.cloneNode(true);
 
       _this.closeBtn = clone.querySelector('.dismiss');
       _this.gotItBtn = clone.querySelector('.coach-link');
-      /** After all this, we can append our clone to the shadowRoot */
-      _this.shadowRoot.appendChild(clone);
 
-      /** We should also bind any event listeners to `this` so their
-       * references do not get lost.
-       */
+      _this.shadowRoot.appendChild(clone);
 
       _this.createPopper = _this.createPopper.bind(_this);
       _this.destroyCoach = _this.destroyCoach.bind(_this);
@@ -191,6 +189,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Coachmark, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
+        console.log(this.arrow);
         this.typeState = this.type;
         this.arrowState = this.arrow;
         this.gotItState = this.gotIt;

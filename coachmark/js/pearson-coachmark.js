@@ -84,14 +84,21 @@
         } else {
           this.shadowRoot.querySelector('.coach-link').innerHTML = "Got It"
         }
+      } else {
+        this.shadowRoot.querySelector('.coach-link').classList.add('hidden')
       }
     }
     set arrowState(bool) {
       if (bool) {
         this.shadowRoot.querySelector('.popper__arrow').classList.remove('hidden')
+      } else {
+        this.shadowRoot.querySelector('.popper__arrow').classList.add('hidden')
+
       }
+
     }
     set typeState(str) {
+      console.log(str)
       this.shadowRoot.querySelector('.coachmark').classList.add(str)
       this.shadowRoot.querySelector('.popper__arrow').classList.add(str)
     }
@@ -110,6 +117,8 @@
         this.shadowRoot.querySelector('.coachmark').classList.remove(this.type);
         this.shadowRoot.querySelector('.popper__arrow').classList.remove(this.type);
         this.removeAttribute('dismiss');
+        this.removeAttribute('arrow');
+        this.removeAttribute('gotit');
         this.dispatchEvent(
           new Event('dismiss', {
             bubbles: false
@@ -140,34 +149,25 @@
       this.titleState = this.title;
       this.contentState = this.content;
 
-
       return popperInstance
     }
 
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
-      const clone = template.content.cloneNode(true),
-        coachmarks = doc.getElementsByTagName('pearson-coachmark')[0];
-      /** If we need references to the children of the component,
-       * we can create them here. If they are created elsewhere,
-       * they will not be available our lifecycle methods.
-       */
+      const clone = template.content.cloneNode(true);
 
       this.closeBtn = clone.querySelector('.dismiss');
       this.gotItBtn = clone.querySelector('.coach-link');
-      /** After all this, we can append our clone to the shadowRoot */
-      this.shadowRoot.appendChild(clone);
 
-      /** We should also bind any event listeners to `this` so their
-       * references do not get lost.
-       */
+      this.shadowRoot.appendChild(clone);
 
       this.createPopper = this.createPopper.bind(this);
       this.destroyCoach = this.destroyCoach.bind(this);
     }
 
     connectedCallback() {
+      console.log(this.arrow)
       this.typeState = this.type;
       this.arrowState = this.arrow;
       this.gotItState = this.gotIt;
@@ -175,6 +175,7 @@
       this.closeBtn.addEventListener('click', this.destroyCoach);
       this.gotItBtn.addEventListener('click', this.destroyCoach);
       }
+
 
     disconnectedCallback() {
       const trigger = document.querySelector(this.triggerId);
