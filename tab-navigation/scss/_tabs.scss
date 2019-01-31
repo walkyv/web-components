@@ -14,7 +14,7 @@ $pe-focus-color: #0B73DA;
   outline-offset: 4px;
 }
 
-:host-context(.dark) :focus {
+:host(.dark) :focus {
   outline-color: white;
 }
 
@@ -32,7 +32,7 @@ $pe-focus-color: #0B73DA;
   color: $pe-color-medium-gray;
 }
 
-:host-context(.dark) {
+:host(.dark) {
   color: $pe-color-alto;
 }
 
@@ -41,7 +41,7 @@ $pe-focus-color: #0B73DA;
   background-color: inherit;
 }
 
-:host-context(.dark) .tabs-wrapper {
+:host(.dark) .tabs-wrapper {
   background-color: $pe-color-ink-blue;
 }
 
@@ -81,12 +81,12 @@ li,
   color: $pe-color-charcoal;
 }
 
-:host-context(.dark) .tab-button:hover {
+:host(.dark) .tab-button:hover {
   color: white;
   border-bottom-color: $pe-color-alto;
 }
 
-:host-context(.dark) .tab-button.active {
+:host(.dark) .tab-button.active {
   color: white;
 }
 
