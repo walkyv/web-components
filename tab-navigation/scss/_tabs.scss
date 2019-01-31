@@ -72,6 +72,10 @@ li,
   border-bottom: 3px solid transparent;
 }
 
+.tab-button::-moz-focus-inner {
+  border: 0;
+}
+
 .tab-button:hover {
   color: $pe-color-charcoal;
   border-bottom-color: $pe-color-concrete;
