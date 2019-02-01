@@ -23,7 +23,7 @@
         <div class="content">
           <div class="title-container">
             <h3 id="coachmark-title" class="pe-label pe-label--bold"></h3>
-            <button id="close" class="dismiss pe-icon--btn" aria-label="Close coachmark">
+            <button id="close" class="dismiss pe-icon--btn" aria-label="Close coachmark" style="width:20px; height:20px;">
                 ${closeIcon}
             </button>
           </div>
