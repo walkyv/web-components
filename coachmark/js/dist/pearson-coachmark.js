@@ -71,11 +71,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return popperInstance;
       }
     }, {
-      key: 'close',
-      get: function get() {
-        this.hasAttribute('closebtn');
-      }
-    }, {
       key: 'dismiss',
       get: function get() {
         return this.getAttribute('dismiss');
@@ -119,16 +114,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'gotIt',
       get: function get() {
         return this.getAttribute('gotit');
-      }
-    }, {
-      key: 'closeBtnState',
-      set: function set(bool) {
-        if (bool === true) {
-          this.shadowRoot.querySelector('.dismiss').classList.remove('hidden');
-        } else {
-          this.shadowRoot.querySelector('.dismiss').classList.add('hidden');
-          this.shadowRoot.querySelector('.coach-link').focus();
-        }
       }
     }, {
       key: 'gotItState',
@@ -185,7 +170,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['position', 'triggerId', 'referenceId', 'title', 'content', 'type', 'arrow', 'gotit', 'gotittext', 'dismiss', 'close'];
+        return ['position', 'triggerId', 'referenceId', 'title', 'content', 'type', 'arrow', 'gotit', 'gotittext', 'dismiss'];
       }
     }]);
 
@@ -211,12 +196,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Coachmark, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-
         this.typeState = this.type;
         this.arrowState = this.arrow;
         this.gotItState = this.gotIt;
-        this.closeBtnState = this.close;
-        console.log(this.close);
         this.createPopper();
         this.closeBtn.setAttribute('aria-label', 'close ' + this.title + 'dialog');
         this.gotItBtn.setAttribute('aria-label', this.gotIt + ', close ' + this.title + ' dialog');
