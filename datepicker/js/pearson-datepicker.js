@@ -397,14 +397,19 @@
 
             // closes the calendar if outside the calendar target
             doc.addEventListener('click', event => {
-              let target = event.target;
-              do {
-                if (target === this) {
-                  return;
+              console.log('click')
+                if (this.open === 'true') {
+                  let target = event.target;
+                  do {
+                    if (target === this) {
+                      return;
+                    }
+                    target = target.parentNode;
+                  } while (target);
+                  this.closeCalendar();
+                } else {
+                return false
                 }
-                target = target.parentNode;
-              } while (target);
-              this.closeCalendar();
             }, true);
 
             // closes the calendar on escape

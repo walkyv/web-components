@@ -441,14 +441,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
               // closes the calendar if outside the calendar target
               doc.addEventListener('click', function (event) {
-                var target = event.target;
-                do {
-                  if (target === _this4) {
-                    return;
-                  }
-                  target = target.parentNode;
-                } while (target);
-                _this4.closeCalendar();
+                console.log('click');
+                if (_this4.open === 'true') {
+                  var target = event.target;
+                  do {
+                    if (target === _this4) {
+                      return;
+                    }
+                    target = target.parentNode;
+                  } while (target);
+                  _this4.closeCalendar();
+                } else {
+                  return false;
+                }
               }, true);
 
               // closes the calendar on escape
