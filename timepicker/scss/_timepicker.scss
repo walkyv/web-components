@@ -48,7 +48,7 @@
     width: 220px;
     padding: 12px 0;
     position: absolute;
-    top: 68px;
+    top: 46px;
     z-index: 1000;
 
     .itemList {
@@ -108,6 +108,10 @@
         visibility: hidden;
       }
     }
+  }
+  
+  &.error .pe-dropdown-container{
+    top: 68px;
   }
 }
 .in-view {
