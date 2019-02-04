@@ -4,36 +4,51 @@
     <title>Pearson Web Component</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-    <!-- THESE IMPORTS ARE NECESSARY FOR PROPER RENDERING DURING DEVELOPMENT -->
-    <!-- DO NOT DELETE -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
-
-    <!-- loads web component polyfills -->
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i"
+      rel="stylesheet"
+    />
+  
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
-
-		<!-- load the web component script -->
-		<!-- RENAME THIS FILE DURING DEVELOPMENT -->
-		<!-- e.g., 'pearson-alert' -->
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment-with-locales.min.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
     <script src="js/dist/pearson-timepicker.js"></script>
-<style>
-  pearson-timepicker {
-    display:block;
-    margin:2em;
-  }
-</style>
-
+    <style>
+      pearson-timepicker {
+        display: block;
+        margin: 2em;
+      }
+    </style>
   </head>
 
   <body>
-
-  <pearson-timepicker hours="12" increments="60" valid="true"></pearson-timepicker>
-  <pearson-timepicker hours="12" increments="30"  valid="true"></pearson-timepicker>
-  <pearson-timepicker hours="24" increments="60"  valid="true"> </pearson-timepicker>
-  <pearson-timepicker hours="12" increments="60"  valid="true" readonly value="2:15 PM"></pearson-timepicker>
-  <pearson-timepicker hours="12" increments="60" valid="true" disabled></pearson-timepicker>
+    <pearson-timepicker
+      hours="12"
+      increments="60"
+      valid="true"
+    ></pearson-timepicker>
+    <pearson-timepicker
+      hours="12"
+      increments="30"
+      valid="true"
+    ></pearson-timepicker>
+    <pearson-timepicker hours="24" increments="60" valid="true">
+    </pearson-timepicker>
+    <pearson-timepicker
+      hours="12"
+      increments="60"
+      valid="true"
+      readonly
+      value="2:15 PM"
+    ></pearson-timepicker>
+    <pearson-timepicker
+      hours="12"
+      increments="60"
+      valid="true"
+      disabled
+    ></pearson-timepicker>
   </body>
 </html>
