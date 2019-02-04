@@ -48,7 +48,7 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
 
 > The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
 
-`pearson-drawer` comes in two types: `standard` (the default) and `details`.
+`pearson-drawer` comes in two types: `standard` (the default) and `details`. It also requires a button to open. Details about JavaScript interactivity are explained in the [API section](#api).
 
 <a name="the standard drawer"></a>
 
@@ -343,12 +343,12 @@ Here is the entire drawer. Again, each `data-panel`:
 
 ### Example
 
-This standard drawer is open by default.
+This standard drawer is closed by default. To open it, we must create a button with a `for` attribute which indicates the uique ID of the drawer.
 
 HTML:
 
 ```html
-<button id="pearsonDrawerTrigger">Open drawer</button>
+<button for="pearsonDrawer">Open drawer</button>
 <pearson-drawer id="pearsonDrawer">
   <!-- content.... -->
 </pearson-drawer>
@@ -357,11 +357,13 @@ HTML:
 JS: 
 ``` js
 
-const trigger = document.getElementById('pearsonDrawerTrigger');
 const drawer = document.getElementById('pearsonDrawer');
+const trigger = document.querySelector('[for="pearsonDrawer"]');
 
 trigger.addEventListener('click', function(e) {
   drawer.open = true;
 });
 
 ```
+
+Now we can click on the button to open the drawer.
