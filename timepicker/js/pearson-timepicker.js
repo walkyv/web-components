@@ -218,7 +218,7 @@
       this.validateTime();
       this.input.focus();
     }
-
+    
     hoverTime(match) {
       setSelectedFalse(this.list);
       if (match !== null) {
@@ -226,23 +226,21 @@
         match.scrollIntoView();
       }
     }
-
+    
     validateTime() {
       const expToTest = TIME_FORMAT_REGEX[this.hours];
-
+      
       this.validState = expToTest.test(this.input.value);
     }
+    
+    // TODO: redesign focusListItem() to handle active descendant
+    focusListItem(nextItem) {
+      const forEach = Array.prototype.forEach;
 
-    focusListItem() {
-      const focusableElements = getFocusableElements(this.list),
-        firstFocusableElement = focusableElements[0],
-        selected = this.list.querySelector(`[data-time='${this.selected}']`);
-      if (selected === null) {
-        firstFocusableElement.focus();
-        this.container.classList.remove('error');
-      } else {
-        selected.focus();
-      }
+      forEach.call(this.list.children, (item => {
+        item.removeAttribute('aria-activedescendant');
+      }));
+      nextItem.setAttribute('aria-activedescendant', true);
     }
 
     onMouseDown(event) {
@@ -256,11 +254,10 @@
         38: 'PREV',
         40: 'NEXT'
       };
-      const nextItem = parseInt(event.target.getAttribute('data-index')) + 1,
-        prevItem = parseInt(event.target.getAttribute('data-index')) - 1,
-        focusableElements = getFocusableElements(this.list),
+      const focusableElements = this.list.children,
         firstFocusableElement = focusableElements[0],
         lastFocusableElement = focusableElements[focusableElements.length - 1];
+      const selected = this.list.querySelector(`[data-time='${this.selected}']`);
 
       this.hoverTime(filterSelected(this.list, this.input.value));
       const { keyCode } = event;
@@ -269,21 +266,27 @@
 
       if (action === null) return;
 
+      let nextActiveDescendant;
+
       switch(action) {
-        case 'PREV': 
+        case 'PREV':
           break;
         case 'NEXT':
-          firstFocusableElement.setAttribute('aria-activedescendant', 'true');
+          if (!selected) {
+            nextActiveDescendant = firstFocusableElement;
+          }
           break;
-        case 'HOME': 
+        case 'HOME':
+          nextActiveDescendant = firstFocusableElement;
           break;
         case 'END': 
+          nextActiveDescendant = lastFocusableElement;
           break;
         case 'SELECT': 
           break;
-        default:
-          console.log(action);
       }
+
+      this.focusListItem(nextActiveDescendant);
 
       event.preventDefault();
       event.stopImmediatePropagation();
