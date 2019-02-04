@@ -185,7 +185,7 @@
       this.arrowState = this.arrow;
       this.gotItState = this.gotIt;
       this.createPopper();
-      this.closeBtn.setAttribute('aria-label', 'close ' + this.title + 'dialog');
+      this.closeBtn.setAttribute('aria-label', 'close ' + this.title + ' dialog');
       this.gotItBtn.setAttribute('aria-label', this.gotIt + ', close ' + this.title + ' dialog');
       this.closeBtn.addEventListener('click', this.destroyCoach);
       this.gotItBtn.addEventListener('click', this.nextCoach);
