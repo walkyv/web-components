@@ -103,6 +103,9 @@
           padding: 4px 24px 4px 34px;
         }
       }
+      &:empty {
+        visibility: hidden;
+      }
     }
   }
 }
