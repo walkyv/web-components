@@ -135,12 +135,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var activeEl = this.list.querySelector('[aria-activedescendant]');
         var activeIdx = Array.prototype.indexOf.call(this.list.children, activeEl);
 
-        var focusableElements = this.list.children;
-        var firstFocusableEl = this.list.children[0];
-        var lastFocusableEl = this.list.children[this.list.children.length - 1];
+        var lastFocusableIdx = this.list.children.length - 1;
 
         var dirMap = {
-          35: focusableElements.length - 1,
+          35: lastFocusableIdx,
           36: 0,
           38: activeIdx - 1,
           40: activeIdx + 1
@@ -150,6 +148,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           8: 'BACKSPACE',
           13: 'SELECT',
           27: 'CLOSE',
+          38: 'PREV',
+          40: 'NEXT',
           32: 'SELECT'
         };
 
@@ -161,12 +161,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         var nextActiveIdx = keyCode in dirMap ? dirMap[keyCode] : null;
 
-        // TODO: handle prev, next when at ends of list
-        // TODO: Scroll when at end of visible list
+        if (action === 'PREV' && activeIdx === 0) {
+          nextActiveIdx = lastFocusableIdx;
+        }
+
+        if (action === 'NEXT' && activeIdx === lastFocusableIdx) {
+          nextActiveIdx = 0;
+        }
 
         if (!action && nextActiveIdx === -1) {
           return;
         }
+
+        // TODO: Scroll when at end of visible list
 
         if (action) {
           // TODO: do action

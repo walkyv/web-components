@@ -252,12 +252,10 @@
         activeEl
       );
 
-      const focusableElements = this.list.children;
-      const firstFocusableEl = this.list.children[0];
-      const lastFocusableEl = this.list.children[this.list.children.length - 1];
+      const lastFocusableIdx = this.list.children.length - 1;
 
       const dirMap = {
-        35: focusableElements.length - 1,
+        35: lastFocusableIdx,
         36: 0,
         38: activeIdx - 1,
         40: activeIdx + 1
@@ -267,6 +265,8 @@
         8: 'BACKSPACE',
         13: 'SELECT',
         27: 'CLOSE',
+        38: 'PREV',
+        40: 'NEXT',
         32: 'SELECT'
       };
 
@@ -277,12 +277,19 @@
       
       let nextActiveIdx = keyCode in dirMap ? dirMap[keyCode] : null;
 
-      // TODO: handle prev, next when at ends of list
-      // TODO: Scroll when at end of visible list
-      
+      if (action === 'PREV' && activeIdx === 0) {
+        nextActiveIdx = lastFocusableIdx;
+      }
+
+      if (action === 'NEXT' && activeIdx === lastFocusableIdx) {
+        nextActiveIdx = 0;
+      }
+
       if (!action && nextActiveIdx === -1) {
         return;
       }
+
+      // TODO: Scroll when at end of visible list
 
       if (action) {
         // TODO: do action
