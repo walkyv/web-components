@@ -132,50 +132,50 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'onMouseDown',
       value: function onMouseDown(event) {
-        var userActionMap = {
+        var activeEl = this.list.querySelector('[aria-activedescendant]');
+        var activeIdx = Array.prototype.indexOf.call(this.list.children, activeEl);
+
+        var focusableElements = this.list.children;
+        var firstFocusableEl = this.list.children[0];
+        var lastFocusableEl = this.list.children[this.list.children.length - 1];
+
+        var dirMap = {
+          35: focusableElements.length - 1,
+          36: 0,
+          38: activeIdx - 1,
+          40: activeIdx + 1
+        };
+
+        var actionMap = {
           8: 'BACKSPACE',
           13: 'SELECT',
           27: 'CLOSE',
-          32: 'SELECT',
-          35: 'END',
-          36: 'HOME',
-          38: 'PREV',
-          40: 'NEXT'
+          32: 'SELECT'
         };
-        var focusableElements = this.list.children,
-            firstFocusableElement = focusableElements[0],
-            lastFocusableElement = focusableElements[focusableElements.length - 1];
-        var selected = this.list.querySelector('[data-time=\'' + this.selected + '\']');
 
         this.hoverTime(filterSelected(this.list, this.input.value));
         var keyCode = event.keyCode;
 
 
-        var action = keyCode in userActionMap ? userActionMap[keyCode] : null;
+        var action = keyCode in actionMap ? actionMap[keyCode] : null;
 
-        if (action === null) return;
+        var nextActiveIdx = keyCode in dirMap ? dirMap[keyCode] : null;
 
-        var nextActiveDescendant = void 0;
+        // TODO: handle prev, next when at ends of list
+        // TODO: Scroll when at end of visible list
 
-        switch (action) {
-          case 'PREV':
-            break;
-          case 'NEXT':
-            if (!selected) {
-              nextActiveDescendant = firstFocusableElement;
-            }
-            break;
-          case 'HOME':
-            nextActiveDescendant = firstFocusableElement;
-            break;
-          case 'END':
-            nextActiveDescendant = lastFocusableElement;
-            break;
-          case 'SELECT':
-            break;
+        if (!action && nextActiveIdx === -1) {
+          return;
         }
 
-        this.focusListItem(nextActiveDescendant);
+        if (action) {
+          // TODO: do action
+        }
+
+        if (nextActiveIdx !== -1) {
+          var nextActiveEl = this.list.children[nextActiveIdx];
+          this.focusListItem(nextActiveEl);
+        }
 
         event.preventDefault();
         event.stopImmediatePropagation();

@@ -218,7 +218,7 @@
       this.validateTime();
       this.input.focus();
     }
-    
+
     hoverTime(match) {
       setSelectedFalse(this.list);
       if (match !== null) {
@@ -226,67 +226,73 @@
         match.scrollIntoView();
       }
     }
-    
+
     validateTime() {
       const expToTest = TIME_FORMAT_REGEX[this.hours];
-      
+
       this.validState = expToTest.test(this.input.value);
     }
-    
+
     // TODO: redesign focusListItem() to handle active descendant
     focusListItem(nextItem) {
       const forEach = Array.prototype.forEach;
 
-      forEach.call(this.list.children, (item => {
+      forEach.call(this.list.children, item => {
         item.removeAttribute('aria-activedescendant');
-      }));
+      });
       nextItem.setAttribute('aria-activedescendant', true);
     }
 
     onMouseDown(event) {
-      const userActionMap = {
+      const activeEl = this.list.querySelector(
+        `[aria-activedescendant]`
+      );
+      let activeIdx = Array.prototype.indexOf.call(
+        this.list.children,
+        activeEl
+      );
+
+      const focusableElements = this.list.children;
+      const firstFocusableEl = this.list.children[0];
+      const lastFocusableEl = this.list.children[this.list.children.length - 1];
+
+      const dirMap = {
+        35: focusableElements.length - 1,
+        36: 0,
+        38: activeIdx - 1,
+        40: activeIdx + 1
+      };
+
+      const actionMap = {
         8: 'BACKSPACE',
         13: 'SELECT',
         27: 'CLOSE',
-        32: 'SELECT',
-        35: 'END',
-        36: 'HOME',
-        38: 'PREV',
-        40: 'NEXT'
+        32: 'SELECT'
       };
-      const focusableElements = this.list.children,
-        firstFocusableElement = focusableElements[0],
-        lastFocusableElement = focusableElements[focusableElements.length - 1];
-      const selected = this.list.querySelector(`[data-time='${this.selected}']`);
 
       this.hoverTime(filterSelected(this.list, this.input.value));
       const { keyCode } = event;
 
-      const action = keyCode in userActionMap ? userActionMap[keyCode] : null;
+      const action = keyCode in actionMap ? actionMap[keyCode] : null;
+      
+      let nextActiveIdx = keyCode in dirMap ? dirMap[keyCode] : null;
 
-      if (action === null) return;
-
-      let nextActiveDescendant;
-
-      switch(action) {
-        case 'PREV':
-          break;
-        case 'NEXT':
-          if (!selected) {
-            nextActiveDescendant = firstFocusableElement;
-          }
-          break;
-        case 'HOME':
-          nextActiveDescendant = firstFocusableElement;
-          break;
-        case 'END': 
-          nextActiveDescendant = lastFocusableElement;
-          break;
-        case 'SELECT': 
-          break;
+      // TODO: handle prev, next when at ends of list
+      // TODO: Scroll when at end of visible list
+      
+      if (!action && nextActiveIdx === -1) {
+        return;
       }
 
-      this.focusListItem(nextActiveDescendant);
+      if (action) {
+        // TODO: do action
+      }
+
+      if (nextActiveIdx !== -1) {
+        const nextActiveEl = this.list.children[nextActiveIdx];
+        this.focusListItem(nextActiveEl);
+      }
+
 
       event.preventDefault();
       event.stopImmediatePropagation();
