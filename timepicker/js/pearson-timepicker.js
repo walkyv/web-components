@@ -254,28 +254,33 @@
 
       const lastFocusableIdx = this.list.children.length - 1;
 
-      const dirMap = {
-        35: lastFocusableIdx,
-        36: 0,
-        38: activeIdx - 1,
-        40: activeIdx + 1
-      };
-
-      const actionMap = {
+      const keyToActionMap = {
         8: 'BACKSPACE',
         13: 'SELECT',
         27: 'CLOSE',
+        35: 'END',
+        36: 'HOME',
         38: 'PREV',
         40: 'NEXT',
         32: 'SELECT'
       };
 
+      const actionToIdxMap = {
+        HOME: 0,
+        END: lastFocusableIdx,
+        PREV: activeIdx - 1,
+        NEXT: activeIdx + 1,
+        SELECT: activeIdx,
+      };
+
       this.hoverTime(filterSelected(this.list, this.input.value));
       const { keyCode } = event;
 
-      const action = keyCode in actionMap ? actionMap[keyCode] : null;
-      
-      let nextActiveIdx = keyCode in dirMap ? dirMap[keyCode] : null;
+      const action = keyCode in keyToActionMap ? keyToActionMap[keyCode] : null;
+
+      let nextActiveIdx = action in actionToIdxMap ? actionToIdxMap[action] : -1;
+
+      if (!action || activeIdx === -1 && action === 'PREV') return;
 
       if (action === 'PREV' && activeIdx === 0) {
         nextActiveIdx = lastFocusableIdx;
@@ -283,10 +288,6 @@
 
       if (action === 'NEXT' && activeIdx === lastFocusableIdx) {
         nextActiveIdx = 0;
-      }
-
-      if (!action && nextActiveIdx === -1) {
-        return;
       }
 
       // TODO: Scroll when at end of visible list
@@ -301,11 +302,10 @@
         }
       }
 
-      if (nextActiveIdx !== -1) {
+      if (nextActiveIdx >=  0) {
         const nextActiveEl = this.list.children[nextActiveIdx];
         this.setActiveItem(nextActiveEl);
       }
-
 
       event.preventDefault();
       event.stopImmediatePropagation();

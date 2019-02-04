@@ -137,29 +137,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         var lastFocusableIdx = this.list.children.length - 1;
 
-        var dirMap = {
-          35: lastFocusableIdx,
-          36: 0,
-          38: activeIdx - 1,
-          40: activeIdx + 1
-        };
-
-        var actionMap = {
+        var keyToActionMap = {
           8: 'BACKSPACE',
           13: 'SELECT',
           27: 'CLOSE',
+          35: 'END',
+          36: 'HOME',
           38: 'PREV',
           40: 'NEXT',
           32: 'SELECT'
+        };
+
+        var actionToIdxMap = {
+          HOME: 0,
+          END: lastFocusableIdx,
+          PREV: activeIdx - 1,
+          NEXT: activeIdx + 1,
+          SELECT: activeIdx
         };
 
         this.hoverTime(filterSelected(this.list, this.input.value));
         var keyCode = event.keyCode;
 
 
-        var action = keyCode in actionMap ? actionMap[keyCode] : null;
+        var action = keyCode in keyToActionMap ? keyToActionMap[keyCode] : null;
 
-        var nextActiveIdx = keyCode in dirMap ? dirMap[keyCode] : null;
+        var nextActiveIdx = action in actionToIdxMap ? actionToIdxMap[action] : -1;
+
+        if (!action || activeIdx === -1 && action === 'PREV') return;
 
         if (action === 'PREV' && activeIdx === 0) {
           nextActiveIdx = lastFocusableIdx;
@@ -167,10 +172,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         if (action === 'NEXT' && activeIdx === lastFocusableIdx) {
           nextActiveIdx = 0;
-        }
-
-        if (!action && nextActiveIdx === -1) {
-          return;
         }
 
         // TODO: Scroll when at end of visible list
@@ -185,7 +186,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           }
         }
 
-        if (nextActiveIdx !== -1) {
+        if (nextActiveIdx >= 0) {
           var nextActiveEl = this.list.children[nextActiveIdx];
           this.setActiveItem(nextActiveEl);
         }
