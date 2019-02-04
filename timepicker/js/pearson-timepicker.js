@@ -32,7 +32,7 @@
     </svg>`;
 
   timeItem.innerHTML = `
-    <li class="item" role="option" tabindex="-1" aria-selected="false" data-time="6:00 AM">
+    <li class="item" role="option" aria-selected="false" data-time="6:00 AM">
       <span class="pe-icon-wrapper">
 				${checkIcon}
       </span>
@@ -434,6 +434,7 @@
       if (name === 'open') {
         const isOpen = newValue !== null;
         if (isOpen) {
+          this.input.setAttribute('aria-expanded', true);
           this.list.innerHTML = '';
           this.timesToRender.forEach((time, index) => {
             const text = time.format(this.format);
@@ -453,6 +454,8 @@
           }
         }
         if (!isOpen) {
+          this.input.setAttribute('aria-expanded', false);
+          this.input.setAttribute('aria-activedescendant', '');
           this.dropdown.remove();
         }
       }
