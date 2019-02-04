@@ -74,7 +74,10 @@
     get gotIt() {
       return this.getAttribute('gotit')
     }
-
+    set ariaPopup (id) {
+      const button = document.querySelector(id);
+      button.setAttribute('aria-haspopup', 'dialog');
+    }
     set gotItState (bool) {
       if (bool) {
         this.shadowRoot.querySelector('.coach-link').classList.remove('hidden')
@@ -177,6 +180,7 @@
     }
 
     connectedCallback() {
+      this.ariaPopup = this.triggerId;
       this.typeState = this.type;
       this.arrowState = this.arrow;
       this.gotItState = this.gotIt;

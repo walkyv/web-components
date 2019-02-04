@@ -116,6 +116,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return this.getAttribute('gotit');
       }
     }, {
+      key: 'ariaPopup',
+      set: function set(id) {
+        var button = document.querySelector(id);
+        button.setAttribute('aria-haspopup', 'dialog');
+      }
+    }, {
       key: 'gotItState',
       set: function set(bool) {
         if (bool) {
@@ -196,6 +202,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Coachmark, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
+        this.ariaPopup = this.triggerId;
         this.typeState = this.type;
         this.arrowState = this.arrow;
         this.gotItState = this.gotIt;
