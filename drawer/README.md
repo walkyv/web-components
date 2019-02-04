@@ -1,4 +1,4 @@
-# Pearson Toggle Web Component
+# Pearson Drawer Web Component
 
 ## Table of Contents
 
