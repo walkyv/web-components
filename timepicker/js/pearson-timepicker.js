@@ -234,7 +234,7 @@
     }
 
     // TODO: redesign focusListItem() to handle active descendant
-    focusListItem(nextItem) {
+    setActiveItem(nextItem) {
       const forEach = Array.prototype.forEach;
 
       forEach.call(this.list.children, item => {
@@ -297,7 +297,7 @@
 
       if (nextActiveIdx !== -1) {
         const nextActiveEl = this.list.children[nextActiveIdx];
-        this.focusListItem(nextActiveEl);
+        this.setActiveItem(nextActiveEl);
       }
 
 

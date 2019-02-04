@@ -120,8 +120,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       // TODO: redesign focusListItem() to handle active descendant
 
     }, {
-      key: 'focusListItem',
-      value: function focusListItem(nextItem) {
+      key: 'setActiveItem',
+      value: function setActiveItem(nextItem) {
         var forEach = Array.prototype.forEach;
 
         forEach.call(this.list.children, function (item) {
@@ -181,7 +181,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         if (nextActiveIdx !== -1) {
           var nextActiveEl = this.list.children[nextActiveIdx];
-          this.focusListItem(nextActiveEl);
+          this.setActiveItem(nextActiveEl);
         }
 
         event.preventDefault();
