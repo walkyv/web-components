@@ -1,84 +1,367 @@
-# Web Component Markup Kit
+# Pearson Toggle Web Component
 
-An HTML, CSS, and JavaScript boilerplate for building a web component in the [Pearson Web Components project](https://github.com/pearson-ux/web-components).
+## Table of Contents
 
-## Getting Started
+1. [Demo](#demo)
+2. [Install](#install)
+3. [Usage](#usage)
+4. [The Standard drawer](#the-standard-drawer)
+5. [API](#api)
+   1. [Attributes](#api-attributes)
+   2. [Events](#api-events)
 
-Follow these steps carefully!
+A shareable, accessible drawer.
 
-1. Navigate to the folder where the existing markup for the component lives.
-2. Create a new git branch with the name `component/COMPONENT_NAME`, where `COMPONENT_NAME` is the name of the component you are building.
-3. Download this repository as a zipfile. 
-  * If you clone this repo, **you must remove its `.git` directory**. If you do not remove this directory, the spec kit will become a submodule in the web component's repo. Submodules are not the correct approach, and are not supported.
-4. Unzip the zipfile and move the contents of the resultant folder into the _root folder_ of the component you are working on.
-  * This means that the existing `markup-kit` folder should be a _sibling_ of the new files from the spec-kit folder
-5. Delete the folder that was created in the unzip operation.
-5. From within the root of this project, run `npm install` to install its dependencies.
-7. Run `gulp` to build, serve, and watch your spec kit. Your browser will open a new tab with a Browsersync server, which will automatically refresh as you develop.
+<a name="demo"></a>
 
-The code below accomplishes steps 1 through 7 using cloning. Replace `PATH_TO_WEB_COMPONENTS_DIRECTORY` with the path to the web components repo on your machine, and replace `COMPONENT_NAME` with the name of the component you are developing.
+## Demo
+
+https://pearson-ux.github.io/web-components/drawer/
+
+<a name="install"></a>
+
+## Installation
+
+Make sure you have all the appropriate polyfills from [the main README](https://github.com/pearson-ux/web-components/blob/master/README.md) in place. Then, run the following in your terminal:
 
 ```bash
-# Move to the directory housing the existing markup-kit.
-cd PATH_TO_WEB_COMPONENTS_DIRECTORY/COMPONENT_NAME
-# Create a new branch for the web component
-git checkout -b component/COMPONENT_NAME
-# Clone the spec kit starter, renaming it as `temp`
-# (the temp folder will be deleted shortly)
-git clone --depth 1 https://github.com/pearson-ux/web-component-spec-kit temp 
-# Move the contents of `temp` into this folder
-mv temp/* temp/.gitignore ./
-# Delete the temp directory and its contents
-rm -rf temp/
-# Install the kit's dependencies
-npm install
-# Build, serve, and watch the spec kit for changes.
-gulp
+# my-app is the directory containing your app
+cd my-app
+npm install --save @pearson-ux/drawer
 ```
 
-## Developing the web component
+<a name="usage"></a>
 
-The existing markup kit should be used as the basis for the styling and behaviors of the final web component. Refer to the [Pearson UX Framework](https://uxframework.pearson.com/) for more details about how your component should behave. If your component is not in the UXF, details about it should be documented on a relevant issue on [Web Components project board](https://github.com/pearson-ux/web-components/projects).
+## Usage
 
-### Building
+Import the web component onto the page, inbetween the `<head>` tags, like so:
 
-This kit comes with a Gulp build system to streamline development. It exposes the following tasks:
+```html
+<head>
+  <!-- polyfills and other stuff... -->
 
-- `default`: executes `build`, `watch`, and `serve`
-- `build`: Transpiles the SASS and JavaScript files
-- `watch`: Watches the HTML, SASS, and JavaScript files for changes
-- `serve`: Starts a Browsersync server
-
-Most of the time, the default task, executed by just running `gulp` itself, will be all you need.
-
-### Setting up
-
-After you run `gulp` the first time, the file tree in the spec kit will look like this:
-
-``` bash
-├── css
-│   └──style.css
-├── js
-│   ├── dist
-│   └── pearson-example.js
-├── markup-kit
-├── node_modules
-├── scss
-│    ├── _animations.scss
-│    ├── _elements.scss
-│    ├── _example.scss
-│    └── style.scss
-├── gulpfile.js
-├── index.html
-├── package-lock.json
-├── package.json
-└── README.md
+  <script src="/path-to-drawer/js/dist/drawer.js" />
+</head>
 ```
 
-Replace the word `example` in the SCSS and JavaScript file names with the name the component you are developing. For instance, `_example.scss` should become `_alert.scss` These file names will have to be edited in where they are referenced, as well: `index.html` imports the `example.js` file; `style.scss` imports the `_example.scss` file.
+**Important Note:**
 
-To see your stylesheet applied to your component, you _must_ copy the code in `css/style.css` into the template in your JS file.
+> The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
 
-## Contributing
+`pearson-drawer` comes in two types: `standard` (the default) and `details`.
 
-Consult the [Pearson Web Components project wiki](https://github.com/pearson-ux/web-components/wiki) to learn some best-practices for writing code and submitting pull requests to the project.
+<a name="the standard drawer"></a>
+
+### The Standard Drawer
+
+The standard drawer has exactly one panel. It takes two children: an `h3` element with the attributes `slot="title"` and `"class="title"`, and a div with the attributes`slot="content"` and `class="content"`. **These are necessary for the drawer to work.** The content of the `h3` becomes a title, and the content of the `.content` div, appropriately, becomes content.
+
+```html
+<pearson-drawer id="pearsonDrawer">
+  <h3 slot="title" class="title">Help Topics</h3>
+  <div slot="content" class="content">
+    <p>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci vel
+      necessitatibus amet, enim cumque cum est facilis dolores optio doloremque
+      quibusdam quas a dolorum? Nobis doloremque tempora alias laborum mollitia?
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt quas
+      dignissimos qui, inventore, quam, harum quo atque similique recusandae non
+      molestias id dolores pariatur. Asperiores cum fugit quis qui eaque. Lorem
+      ipsum dolor sit amet consectetur adipisicing elit. Magni, rerum?
+      <a href="#foo">Voluptatem</a> dolorum ad et quia veniam quas debitis
+      expedita eos eligendi ipsam, cumque neque id temporibus voluptatum alias
+      nihil natus? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Soluta cupiditate ex deserunt natus inventore, nihil laborum esse commodi
+      dignissimos autem animi alias laudantium iure beatae eum adipisci, eos
+      harum! Deleniti?
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, explicabo
+      repudiandae fugiat dolore officia corporis, quia pariatur corrupti odit
+      aliquam debitis iure! Quam exercitationem error dolorem autem quasi
+      consequuntur aperiam.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam optio
+      tenetur dolor sed eos voluptate quibusdam natus, sit corrupti! Cumque,
+      atque nulla tempora unde quibusdam voluptatibus eveniet dolores. Earum,
+      libero.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam corporis,
+      incidunt illo sunt dolor odio architecto quo ad aperiam temporibus amet
+      nostrum officia corrupti vitae quis, ducimus magni omnis minus!
+    </p>
+  </div>
+</pearson-drawer>
+```
+
+<a name="the-details-drawer"></a>
+
+### The Details Drawer
+
+The details drawer renders _multiple panels_, the contents of which you can define. It requires the same `title` and `content` slots as the standard drawer, but accepts more complex markup. To create the panels, you add `div` elements with the attribute `data-panel` as children of the `content` slot. The panels are all _siblings_ and each `data-panel` attribute takes a number as its value, starting at 1.
+
+**Panel 1** is the intial panel displayed in the drawer, which summarizes other content panels that are available. It displays buttons with short descriptions, and those buttons trigger other panels to open. To create the buttons for Panel 1, you must write an `h3` tag, followed by a `p` tag which described the heading. Like so:
+
+```html
+<div data-panel="1">
+  <h3 class="pe-paragraph">Having trouble signing in or account locked?</h3>
+  <p>
+    You have a Pearson username and password if you've ever used a Pearson
+    product...
+  </p>
+  <!-- Other h3-p pairings -->
+</div>
+```
+
+Note that the text of the paragraph tag is a truncated summary!
+
+Each of these `h3`-`p` pairings gets converted into a link that opens another panel. **Panel links are created in ascending order.** That means the `h3` above will always linl to Panel 2, and so on. You can create as many `h3` - `p` pairs as your drawer needs.
+
+**All subsequent panels** after panel 1 dispkay full, unabridged content. Each panel must be wrapped in its own `data-panel` div, and must include at least _one_ h3 tag for focus management. Here is the full markup for panel 2:
+
+```html
+<div data-panel="2">
+  <h3>Having trouble signing in or account locked?</h3>
+  <p>
+    You have a Pearson username and password if you've ever used a Pearson
+    product (for example, Revel, MyLab Math, or Mastering Biology).
+  </p>
+  <p>
+    <strong>Note:</strong> If you have an account but are asked to register,
+    select <strong>register</strong> and follow the instructions.
+  </p>
+  <p>Check out these tips for resolving common sign in issues:</p>
+  <p>
+    <strong>Username:</strong> This may be your email apress and differ from
+    your school or institution username.
+  </p>
+  <p>
+    <strong>Password:</strong> This is case-sensitive and has at least 1
+    uppercase letter, 1 number, and at least 8 characters. Select
+    <strong>SHOW</strong> to see your password as you enter it.
+  </p>
+  <p>
+    <strong>Get username and reset password:</strong> Select
+    <strong>Forgot username or password</strong>. You'll receive an email with
+    your username and a link to reset your password for each Pearson account
+    associated with your email apress. Reset the password only for the account
+    you want to use.
+  </p>
+  <p>
+    <strong>Incorrect username or password or account locked:</strong>
+    Try again or select
+    <strong>Forgot username or password</strong> to reset your password.
+  </p>
+  <p>
+    <strong>Browser cookies and cached files:</strong>&nbsp;<a
+      href="https://support.pearson.com/getsupport/s/article/Browser-Settings"
+      target="_blank"
+      >Enable cookies and, if necessary, delete cached browser files.</a
+    >
+  </p>
+  <p>
+    If you still can't sign in, contact
+    <a href="https://support.pearson.com/getsupport/s/" target="_blank"
+      >Pearson Support</a
+    >.
+  </p>
+</div>
+```
+
+Here is the entire drawer. Again, each `data-panel`:
+
+- Is a direct child of the `content` slot
+- has an attribute `data-panel=n` where `n` starts at 1
+- _must have at least one h3 element_
+
+```html
+<pearson-drawer id="pearsonDrawer" class="animated">
+  <h3 class="title" slot="title">Help Topics</h3>
+  <div slot="content">
+    <div data-panel="1">
+      <h3 class="pe-paragraph">
+        Having trouble signing in or account locked?
+      </h3>
+      <p>
+        You have a Pearson username and password if you've ever used a Pearson
+        product
+      </p>
+      <h3 class="pe-paragraph">I enable cookies?</h3>
+      <p>
+        Cookies are files from websites that store your browsing information,
+        including
+      </p>
+      <h3 class="pe-parahraph">What if I get a date or clock error?</h3>
+      <p>
+        If the date or clock for your computer or other device is set
+        incorrectly for your time zone, an error appears and you can't continue.
+      </p>
+      <h3 class="pe-title">Having trouble or need support?</h3>
+    </div>
+    <div data-panel="2">
+      <h3>Having trouble signing in or account locked?</h3>
+      <p>
+        You have a Pearson username and password if you've ever used a Pearson
+        product (for example, Revel, MyLab Math, or Mastering Biology).
+      </p>
+      <p>
+        <strong>Note:</strong> If you have an account but are asked to register,
+        select <strong>register</strong> and follow the instructions.
+      </p>
+      <p>Check out these tips for resolving common sign in issues:</p>
+      <p>
+        <strong>Username:</strong> This may be your email apress and differ from
+        your school or institution username.
+      </p>
+      <p>
+        <strong>Password:</strong> This is case-sensitive and has at least 1
+        uppercase letter, 1 number, and at least 8 characters. Select
+        <strong>SHOW</strong> to see your password as you enter it.
+      </p>
+      <p>
+        <strong>Get username and reset password:</strong> Select
+        <strong>Forgot username or password</strong>. You'll receive an email
+        with your username and a link to reset your password for each Pearson
+        account associated with your email apress. Reset the password only for
+        the account you want to use.
+      </p>
+      <p>
+        <strong>Incorrect username or password or account locked:</strong>
+        Try again or select
+        <strong>Forgot username or password</strong> to reset your password.
+      </p>
+      <p>
+        <strong>Browser cookies and cached files:</strong>&nbsp;<a
+          href="https://support.pearson.com/getsupport/s/article/Browser-Settings"
+          target="_blank"
+          >Enable cookies and, if necessary, delete cached browser files.</a
+        >
+      </p>
+      <p>
+        If you still can't sign in, contact
+        <a href="https://support.pearson.com/getsupport/s/" target="_blank"
+          >Pearson Support</a
+        >.
+      </p>
+    </div>
+    <div data-panel="3">
+      <h3 class="pe-title">
+        How do I enable cookies?
+      </h3>
+      <p>
+        Cookies are files from websites that store your browsing information,
+        including preferences and profile. To sign in or link accounts, you need
+        to
+        <a
+          href="https://support.pearson.com/getsupport/s/article/Browser-Settings"
+          target="_blank"
+          >enable third-party cookies</a
+        >.
+      </p>
+      <dl>
+        <h3 class="pe-paragraph text">
+          <strong>Chrome and Firefox:</strong> Enable all cookies or ap an
+          exception for <strong>pi.pearsoned.com</strong>.
+        </h3>
+        <h3 class="pe-paragraph text">
+          <strong>Internet Explorer:</strong> Enable all cookies or ap
+          exceptions for <strong>pi.pearsoned.com</strong> and
+          <strong>pearson.com</strong>.
+        </h3>
+        <h3 class="pe-paragraph text">
+          <strong>Safari and Edge:</strong> Enable all cookies.
+        </h3>
+      </dl>
+      <p>
+        If you still have trouble, try
+        <a
+          href="https://support.pearson.com/getsupport/s/article/Browser-Settings"
+          target="_blank"
+          >deleting browser cached files</a
+        >.
+      </p>
+      <p>
+        Check Help for your browser if it isn’t covered in these instructions.
+      </p>
+    </div>
+    <div data-panel="4">
+      <h3 class="pe-title">
+        What if I get a date or clock error?
+      </h3>
+      <p>
+        If the date or clock for your computer or other device is set
+        incorrectly for your time zone, an error appears and you can't continue.
+      </p>
+      <p>
+        For example, the defadlt time zone for computers with the Windows
+        operating system is Pacific Time. If you manually change the clock or
+        switch the time zone without immediately making sure the
+        clock—automatically or manually—matches the time zone, the error
+        appears.
+      </p>
+      <p>
+        <strong>Resolution:</strong>&nbsp;Switch to the correct time zone, if
+        applicable. Make sure the date and time are correct for your time zone.
+        If your clock is set manually—not from a network or Internet server,
+        make sure it comes close to the time according to the World Clock. (You
+        can search for the World Clock on the Internet.)
+      </p>
+    </div>
+    <div data-panel="5">
+      <h3 class="pe-title">
+        Having trouble or need support?
+      </h3>
+      <p>
+        Check out
+        <a href="https://support.pearson.com/getsupport/s/" target="_new"
+          >Pearson Support</a
+        >
+        for popdlar topics or contact information.
+      </p>
+    </div>
+  </div>
+</pearson-drawer>
+```
+
+<a name="api"></a>
+
+## API
+
+`pearson-drawer`'s API uses an `open` prop to manage the drawer's open state. You can use JavaScript to change the `open` prop to `true` or `false`.
+
+| Attribute | Type      | Default | Description                           |
+| --------- | --------- | ------- | ------------------------------------- |
+| `open`    | `boolean` | `false` | Determines whether the drawer is open |
+
+**You mau may also add an `animated` class to the drawer to enable animations
+
+<a name="api-attributes-example"></a>
+
+### Example
+
+This standard drawer is open by default.
+
+HTML:
+
+```html
+<button id="pearsonDrawerTrigger">Open drawer</button>
+<pearson-drawer id="pearsonDrawer">
+  <!-- content.... -->
+</pearson-drawer>
+```
+
+JS: 
+``` js
+
+const trigger = document.getElementById('pearsonDrawerTrigger');
+const drawer = document.getElementById('pearsonDrawer');
+
+trigger.addEventListener('click', function(e) {
+  drawer.open = true;
+});
+
+```
