@@ -46,13 +46,14 @@
 
   .pe-dropdown-container {
     width: 220px;
+    padding: 12px 0;
     position: absolute;
     top: 68px;
     z-index: 1000;
 
     .itemList {
       margin: 0;
-      padding: 12px 0;
+      padding: 4px 0;
       list-style-type: none;
       width: 218px;
       max-height: 300px;
