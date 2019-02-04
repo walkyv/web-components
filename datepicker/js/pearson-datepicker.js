@@ -131,30 +131,37 @@
     }
 
     // this data is fed to the calendar data function and is used to build the calendar object
-    returnDateData(date, add) {
+    returnDateData(date, type) {
       // return the year to populate calendar
-      if (this.year !== null && add === undefined) {
+      if (this.year !== null && type === undefined) {
         date.year = parseInt(this.year, 10);
-      } else if (add !== undefined) {
+      } else if (type !== undefined) {
         date.year = date.year;
       } else {
         date.year = parseInt(moment().format('Y'), 10);
+        console.log('returnDateData', date, type)
       }
 
       // return the month to populate calendar
-      if (this.month !== null && add === undefined) {
+      if (this.month !== null && type === undefined) {
         date.month = parseInt(this.month - 1, 10);
-      } else if (add !== undefined) {
-        if (add === 'add') {
-          date.month = moment().add(date.month + 1, 'month').month();
-          if (date.month === 0) {
+        console.log('returnDateData', date, type)
+      } else if (type !== undefined) {
+        if (type === 'add') {
+          date.month = date.month + 1
+          if (date.month === 12) {
+            date.month = 0
             date.year = date.year + 1;
           }
-        } else if (add === 'subtract') {
-          date.month = moment().add(date.month - 1, 'month').month();
-          if (date.month === 11) {
+          console.log(date.month)
+        } else if (type === 'subtract') {
+          // date.month = moment().subtract(date.month, 'month').month();
+          date.month = date.month -1
+          if (date.month === -1) {
+            date.month = 11
             date.year = date.year - 1;
           }
+          console.log(date.month)
         }
       } else {
         date.month = moment().month();
@@ -234,6 +241,7 @@
 
     // opens the calendar
     openCalendar() {
+      console.log('openCalendar', this.data)
       this.openState = 'true'
       this.renderCalendar(this.data);
       this.focusOnOpen();
@@ -290,7 +298,9 @@
           } else {
             button.remove();
           }
-          if (days.format('MMMM') === moment().format('MMMM') && this.data.day === days.format('D')) {
+
+          if (days.format('MMMM') === moment().format('MMMM') && this.data.day === days.format('D') && days.format('YYYY') === moment().format('YYYY')) {
+            console.log(days.format('YYYY'))
             button.parentNode.classList.add('currentDate-box')
             button.setAttribute('aria-label', 'Today ' + days.format('dddd, MMMM Do YYYY'))
           }
