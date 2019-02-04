@@ -1,9 +1,9 @@
 {
-  "name": "@pearson-ux/example",
-  "author": "Your Name | your.email@pearson.com",
+  "name": "@pearson-ux/drawer",
+  "author": "Elias Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "version": "0.1.0",
-  "description": "Example web component",
+  "description": "Pearson Drawer Web Component",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
