@@ -20,7 +20,7 @@
 
   <body>
     <main>
-      <button type="button" id="pearsonDrawerTrigger">Open standard drawer</button>
+      <button type="button" for="pearsonDrawer">Open standard drawer</button>
     </main>
     <pearson-drawer id="pearsonDrawer">
       <h3 slot="title" class="title">Help Topics</h3>
@@ -33,7 +33,7 @@
       </div>
     </pearson-drawer>
     <script>
-    const openBtn = document.querySelector('#pearsonDrawerTrigger');
+    const openBtn = document.querySelector('[for="pearsonDrawer"]');
     const drawer = document.querySelector('#pearsonDrawer');
 
     openBtn.addEventListener('click', function (e) {

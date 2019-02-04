@@ -1,8 +1,6 @@
-import browserSync from 'browser-sync';
-const server = browserSync.create();
-
 const autoprefixer = require('autoprefixer'),
   babel = require('gulp-babel'),
+  server = require('browser-sync').create(),
   concat = require('gulp-concat'),
   cssnano = require('cssnano'),
   gulp = require('gulp'),
@@ -13,9 +11,10 @@ const autoprefixer = require('autoprefixer'),
 // build steps
 const paths = {
   html: './*.html',
-  scripts: 'js/**/*.js',
-  styles: 'scss/**/*.scss',
-  dist: 'dist/'
+  scripts: ['./js/**/*.js', '!**/dist/*.js'],
+  styles: './scss/**/*.scss',
+  dist: './js/dist',
+  ignore: './js/dist',
 };
 
 function styles(done) {
@@ -25,7 +24,7 @@ function styles(done) {
     .on('error', sass.logError)
     .pipe(postcss([autoprefixer({ cascade: false }), cssnano()]))
     .pipe(concat('style.css'))
-    .pipe(gulp.dest(paths.dist + '/css'))
+    .pipe(gulp.dest('./css'))
     .pipe(server.stream());
   done();
 }
@@ -38,13 +37,11 @@ function scripts(done) {
         presets: [['env', { modules: false }]]
       })
     )
-    .pipe(gulp.dest(paths.dist + '/js'));
-    server.reload();
+    .pipe(gulp.dest(paths.dist));
   done();
 }
 
 function reload(done) {
-  console.log('reload')
   server.reload();
   done();
 }
@@ -54,17 +51,20 @@ function serve(done) {
     server: {
       baseDir: './'
     },
+    notify: false
   });
   done();
 }
 
 function watch() {
+  const opts = { ignored: paths.ignore };
+
   gulp.watch(paths.styles, styles);
-  gulp.watch(paths.scripts, gulp.series(scripts, reload));
-  gulp.watch(paths.html, gulp.series(reload));
+  gulp.watch(paths.scripts, opts, gulp.series(scripts, reload));
+  gulp.watch(paths.html, reload);
 }
 
-const build = gulp.series(styles, scripts, reload);
+const build = gulp.series(styles, scripts);
 
 exports.build = build;
 exports.serve = serve;

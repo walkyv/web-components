@@ -178,7 +178,7 @@
 
       this.shadowRoot.appendChild(clone);
 
-      this.trigger = doc.querySelector('#pearsonDrawerTrigger');
+      this.trigger = doc.querySelector(`[for="${this.id}"]`);
 
       this.onContentScroll = this.onContentScroll.bind(this);
       this.onTitleSlotChange = this.onTitleSlotChange.bind(this);
