@@ -176,7 +176,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         // TODO: Scroll when at end of visible list
 
         if (action) {
-          // TODO: do action
+          if (action === 'CLOSE') {
+            this.closeMenu();
+          }
+
+          if (action === 'SELECT') {
+            // TODO: do selection
+          }
         }
 
         if (nextActiveIdx !== -1) {
