@@ -182,7 +182,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           }
 
           if (action === 'SELECT') {
-            // TODO: do selection
+            this.selectTime(activeEl, this.list);
           }
         }
 

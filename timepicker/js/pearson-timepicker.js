@@ -298,7 +298,7 @@
         }
 
         if (action === 'SELECT') {
-          // TODO: do selection
+          this.selectTime(activeEl, this.list);
         }
       }
 
