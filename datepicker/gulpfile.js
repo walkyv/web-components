@@ -12,6 +12,7 @@ const autoprefixer = require('autoprefixer'),
 const paths = {
   html: './*.html',
   scripts: ['./js/**/*.js', '!**/dist/*.js'],
+  merge: ['./js/moment.js', './js/moment-range.js', './js/dist/datepicker.js'],
   styles: './scss/**/*.scss',
   dist: './js/dist',
   ignore: './js/dist',
@@ -31,13 +32,21 @@ function styles(done) {
 
 function scripts(done) {
   gulp
-    .src(paths.scripts)
+    .src('./js/datepicker.js')
     .pipe(
       babel({
         presets: [['env', { modules: false }]]
       })
     )
     .pipe(gulp.dest(paths.dist));
+  done();
+}
+
+function merge(done) {
+  gulp
+    .src(paths.merge)
+  .pipe(concat('pearson-datepicker.js'))
+  .pipe(gulp.dest('./js/dist/'));
   done();
 }
 
@@ -60,11 +69,11 @@ function watch() {
   const opts = { ignored: paths.ignore };
 
   gulp.watch(paths.styles, styles);
-  gulp.watch(paths.scripts, opts, gulp.series(scripts, reload));
+  gulp.watch(paths.scripts, opts, gulp.series(scripts, merge, reload));
   gulp.watch(paths.html, reload);
 }
 
-const build = gulp.series(styles, scripts);
+const build = gulp.series(styles, scripts, merge);
 
 exports.build = build;
 exports.serve = serve;

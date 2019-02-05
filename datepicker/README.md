@@ -60,7 +60,7 @@ After you run `gulp` the first time, the file tree in the spec kit will look lik
 │   └──style.css
 ├── js
 │   ├── dist
-│   └── pearson-datepicker.js
+│   └── datepicker.js
 ├── markup-kit
 ├── node_modules
 ├── scss
