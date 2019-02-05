@@ -369,7 +369,6 @@
       this.datepicker = clone.querySelector('.datepicker-container');
       this.input = clone.querySelector('input');
       this.data = {};
-
       /** After all this, we can append our clone to the shadowRoot */
       this.shadowRoot.appendChild(clone);
 
@@ -385,6 +384,7 @@
     }
 
     connectedCallback() {
+      this.setAttribute('open', false)
       this.data = this.returnDateData(this.data);
 
       // opens calendar when down arrow is pushed

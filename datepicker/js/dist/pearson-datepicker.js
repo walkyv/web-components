@@ -402,7 +402,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.datepicker = clone.querySelector('.datepicker-container');
       _this.input = clone.querySelector('input');
       _this.data = {};
-
       /** After all this, we can append our clone to the shadowRoot */
       _this.shadowRoot.appendChild(clone);
 
@@ -423,6 +422,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this3 = this;
 
+        this.setAttribute('open', false);
         this.data = this.returnDateData(this.data);
 
         // opens calendar when down arrow is pushed
