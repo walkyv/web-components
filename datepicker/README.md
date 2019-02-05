@@ -41,7 +41,7 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
   <!-- polyfills and other stuff... -->
 
   <!-- import web components -->
-	<script src="/path-to-datepicker/js/dist/datepicker.js" />
+	<script src="/path-to-datepicker/js/dist/pearson-datepicker.js" />
 </head>
 ```
 
@@ -49,7 +49,7 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
 
 > The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
 
-Add the `<pearson-datepicker> </pearson-datepicker>` tags to the page. `pearson-datepicker` renders as soon as it is in the DOM, so only create an alert as you need it.
+Add the `<pearson-datepicker> </pearson-datepicker>` tags to the page.
 
 <a name="api"></a>
 
