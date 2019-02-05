@@ -62,10 +62,8 @@ Add the `<pearson-datepicker> </pearson-datepicker>` tags to the page.
 All attributes in this API are optional.
 
 | Attribute    | Type    | Default | Description                                                                                                  |
-| ------------ | ------- | ------- | ------------------------------------------------------------------------------------------------------------ |
-| `month`      | String  | unset   | The default month the dropdown calendar will display                                        |
-| `day` | String  | unset   | The default day the dropdown calendar will display and appear selected                             |
-| `year`       | String  | unset   | The default year the dropdown calendar will display |
+| ------------ | ------- | ------- | ------------------------------------------------------------------------------------------------------------ |                          |
+| `value`       | String  | unset   | The default date you would like selected - MM/DD/YYYY.
 
 <a name="api-attributes-example"></a>
 
