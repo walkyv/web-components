@@ -39,6 +39,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     return data;
   }
 
+  function validateDate(testdate) {
+    var date_regex = /^\d{2}\/\d{2}\/\d{4}$/;
+    return date_regex.test(testdate);
+  }
+
   // helpers
 
   var Datepicker = function (_HTMLElement) {
@@ -414,6 +419,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               break;
           }
         });
+
+        this.input.addEventListener('blur', function (event) {
+          console.log(validateDate(_this3.input.value));
+        });
+
         // opens calendar when button is pressed
         this.openBtn.addEventListener('click', function (event) {
           if (_this3.open === 'false') {

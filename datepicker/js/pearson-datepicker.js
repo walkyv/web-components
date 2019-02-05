@@ -91,6 +91,11 @@
     return data;
   }
 
+  function validateDate(testdate) {
+    var date_regex = /^\d{2}\/\d{2}\/\d{4}$/ ;
+    return date_regex.test(testdate);
+  }
+
   // helpers
   class Datepicker extends HTMLElement {
     static get observedAttributes() {
@@ -372,6 +377,11 @@
             break
         }
       });
+
+      this.input.addEventListener('blur', event => {
+        console.log(validateDate(this.input.value))
+      });
+
       // opens calendar when button is pressed
       this.openBtn.addEventListener('click', event => {
         if (this.open === 'false') {
