@@ -129,6 +129,16 @@
       this.setAttribute('open', bool)
     }
 
+    set invalid(bool) {
+      const datepicker = this.shadowRoot.querySelector('.datepicker-container');
+      if (bool === false) {
+        datepicker.classList.add('error');
+      } else {
+        datepicker.classList.remove('error')
+      }
+
+    }
+
     set selectedState(selected) {
       const input = this.shadowRoot.querySelector('input');
       this.setAttribute('selected', selected)
@@ -379,7 +389,7 @@
       });
 
       this.input.addEventListener('blur', event => {
-        console.log(validateDate(this.input.value))
+        this.invalid = validateDate(this.input.value);
       });
 
       // opens calendar when button is pressed

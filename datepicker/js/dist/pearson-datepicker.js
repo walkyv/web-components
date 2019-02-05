@@ -360,6 +360,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.setAttribute('open', bool);
       }
     }, {
+      key: 'invalid',
+      set: function set(bool) {
+        var datepicker = this.shadowRoot.querySelector('.datepicker-container');
+        if (bool === false) {
+          datepicker.classList.add('error');
+        } else {
+          datepicker.classList.remove('error');
+        }
+      }
+    }, {
       key: 'selectedState',
       set: function set(selected) {
         var input = this.shadowRoot.querySelector('input');
@@ -421,7 +431,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
 
         this.input.addEventListener('blur', function (event) {
-          console.log(validateDate(_this3.input.value));
+          _this3.invalid = validateDate(_this3.input.value);
         });
 
         // opens calendar when button is pressed
