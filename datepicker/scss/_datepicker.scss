@@ -26,3 +26,16 @@
   }
 }
 
+#inputAriaId {
+  display: none;
+}
+.error #inputAriaId {
+  display:flex;
+  align-items: center;
+}
+.error input {
+  border:1px solid #db0020;
+}
+.error .pe-textLabelInput__label {
+  color:#db0020;
+}
