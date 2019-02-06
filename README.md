@@ -10,8 +10,8 @@ You will need to add the following 3 polyfills, in order for your project to be 
 
        <!-- loads web component polyfills -->
        <head>
-           <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"></script>
-           <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
+           <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
+           <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
            <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
        </head>
        
