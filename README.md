@@ -12,7 +12,7 @@ You will need to add the following 3 polyfills, in order for your project to be 
        <head>
            <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
            <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
-           <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+           <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
        </head>
        
 **Additionally** 
