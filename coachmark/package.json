@@ -1,9 +1,9 @@
 {
-  "name": "@pearson-ux/drawer",
-  "author": "Elias Mason | ej.mason@pearson.com",
+  "name": "@pearson-ux/coachmark",
+  "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "version": "0.1.0",
-  "description": "Pearson Drawer Web Component",
+  "description": "Coachmark web component",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,7 +21,9 @@
     "url": "https://github.com/pearson-ux/web-components/issues"
   },
   "homepage": "https://github.com/pearson-ux/web-components/blob/master/example/README.md",
-  "dependencies": {},
+  "dependencies": {
+    "@pearson-components/elements-sdk": "git+https://github.com/Pearson-Higher-Ed/elements-sdk.git#unstable-2.0-GLP"
+  },
   "devDependencies": {
     "autoprefixer": "^9.4.3",
     "babel-core": "^6.26.3",

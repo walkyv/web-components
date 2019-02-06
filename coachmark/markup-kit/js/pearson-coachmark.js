@@ -37,7 +37,6 @@
       coachMark.classList.add('hidden');
       trigger.focus();
     });
-
     return popperInstance
   }
 
@@ -68,7 +67,6 @@
         createPopper('right-start');
       } else if (event.target.id === 'openRightEnd') {
         createPopper('right-end');
-
       }
     })
   })

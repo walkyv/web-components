@@ -11,8 +11,7 @@ const autoprefixer = require('autoprefixer'),
 // build steps
 const paths = {
   html: './*.html',
-  // scripts: ['./js/**/*.js', '!**/dist/*.js'],
-  scripts: ['./js/moment.js', './js/moment-range.js', './js/datepicker.js'],
+  scripts: ['./js/popper.js', './js/coachmark.js'],
   styles: './scss/**/*.scss',
   dist: './js/dist',
   ignore: './js/dist',
@@ -38,7 +37,7 @@ function scripts(done) {
         presets: [['env', { modules: false }]]
       })
     )
-    .pipe(concat('pearson-datepicker.js'))
+    .pipe(concat('pearson-coachmark.js'))
     .pipe(gulp.dest(paths.dist));
   done();
 }

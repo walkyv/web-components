@@ -1,9 +1,9 @@
 {
-  "name": "@pearson-ux/example",
-  "author": "Your Name | your.email@pearson.com",
+  "name": "@pearson-ux/datepicker",
+  "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.0",
-  "description": "Example web component",
+  "version": "0.2.2",
+  "description": "Datepicker Web Component",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,7 +15,9 @@
   "keywords": [
     "example",
     "pearson-components",
-    "web components"
+    "web components",
+    "datepicker",
+    "calendar"
   ],
   "bugs": {
     "url": "https://github.com/pearson-ux/web-components/issues"

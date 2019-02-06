@@ -24,7 +24,6 @@
       coachMark.classList.add('hidden');
       trigger.focus();
     });
-
     return popperInstance;
   }
 
