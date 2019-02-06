@@ -434,12 +434,10 @@
 
             // closes the calendar if outside the calendar target
             doc.addEventListener('click', event => {
-              const targetContainer = this.shadowRoot.querySelector('.calendar-container');
-              console.log(targetContainer)
                 if (this.open === 'true') {
                   let target = event.target;
                   do {
-                    if (target === targetContainer) {
+                    if (target === this) {
                       return;
                     }
                     target = target.parentNode;

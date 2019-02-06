@@ -469,12 +469,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
               // closes the calendar if outside the calendar target
               doc.addEventListener('click', function (event) {
-                var targetContainer = _this4.shadowRoot.querySelector('.calendar-container');
-                console.log(targetContainer);
                 if (_this4.open === 'true') {
                   var target = event.target;
                   do {
-                    if (target === targetContainer) {
+                    if (target === _this4) {
                       return;
                     }
                     target = target.parentNode;
