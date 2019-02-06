@@ -2,7 +2,7 @@
   "name": "@pearson-ux/datepicker",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Datepicker Web Component",
   "main": "index.html",
   "scripts": {
