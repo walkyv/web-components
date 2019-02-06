@@ -10,7 +10,6 @@
 3. [Usage](#usage)
 4. [API](#api)
    1. [Attributes](#api-attributes)
-   2. [Events](#api-events)
 
 A shareable, accessible datepicker with calendar.
 
@@ -38,21 +37,25 @@ npm install --save @pearson-ux/datepicker
 
 Import the web component onto the page, inbetween the `<head>` tags, like so:
 
-```html
+``` html
 <head>
-  <!-- polyfills and other stuff... -->
+  <!-- Font stack-->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
+   
+  <!-- Polyfills -->
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
-  <!-- import web components -->
-   <script src="/path-to-datepicker/js/dist/pearson-datepicker.js" />
+  <!-- Web component script -->
+  <script src="/path-to-datepicker/js/dist/pearson-datepicker.js" />
 </head>
 ```
 
-**Important Note:**
+**Important Notes:**
 
-> The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
+1. The Google Fonts link is necessary to ensure that the components render properly. You must include it, **or** be sure that Open Sans is loaded in your app some other way.
+2. The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
 
 Add the `<pearson-datepicker> </pearson-datepicker>` tags to the page.
 
