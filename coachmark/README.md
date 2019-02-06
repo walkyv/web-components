@@ -1,8 +1,4 @@
-
-
-
-
-# Pearson Datepicker Web Component
+# Pearson Coachmark Web Component
 
 ## Table of Contents
 
@@ -13,7 +9,7 @@
    1. [Attributes](#api-attributes)
    2. [Events](#api-events)
 
-A shareable, accessible coachmark.
+A shareable, accessible coachmark component.
 
 <a name="demo"></a>
 
@@ -60,7 +56,37 @@ Import the web component onto the page, in between the `<head>` tags, like so:
 >
 > 2. The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location..
 
-In the main body of the document, add a button with a unique ID, to trigger the coachmark.
+
+
+<a name="api"></a>
+
+## API
+
+<a name="api-attributes"></a>
+
+### Required Attributes
+
+
+| Attribute    | Type    | Default | Description                                                                                                  |
+| ------------ | ------- | ------- | ------------------------------------------------------------------------------------------------------------ |
+| `position`      | String  | unset   | `top`  `right` `bottom` `left` Each placement can have a variation from `-start` `-end`
+|`trigger` | String | unset| The ID of the button invoking the coachmark, this is important for accessibility and focus management.
+|`reference` |String|unset|The ID of element you want the coachmark to appear on. |
+|`title`|String|unset|The title of the coachmark
+|`content`	| String|unset|The content you want the coachmark to display |
+|`type `|String|`default` |The type of coachmark `default` `informational` `generic` |
+
+
+### Optional Attributes
+
+| Attribute    | Type    | Default | Description                                                                                                  |
+| ------------ | ------- | ------- | ------------------------------------------------------------------------------------------------------------ |
+| `arrow`      | Bool  | unset   | Renders an arrow on the coachmark.
+|`gotit` | String | unset| If left blank `gotit=' '`, the coachmark will render an optional got it button.  If a value is specified e.g. `gotit='next coachmark` the coachmark will render a button with the label 'next coachmark'
+|`dismiss` |Bool|unset|If set to true, the got it button will also dismiss the coachmark |
+
+  ### Example:
+  In the main body of the document, add a button with a unique ID, to trigger the coachmark.
 ```
 <body>
 	 <button id="openTop">Trigger Coachmark</button>
@@ -112,37 +138,33 @@ Add a script that builds and renders a coachmark, once the button has been press
 	</script>
 </body>
 ```
-<a name="api"></a>
-
-## API
-
-<a name="api-attributes"></a>
-
-### Attributes
-
-Required Attributes.
-
-| Attribute    | Type    | Default | Description                                                                                                  |
-| ------------ | ------- | ------- | ------------------------------------------------------------------------------------------------------------ |
-| `position`      | String  | unset   | `top`  `right` `bottom` `left` Each placement can have a variation from `-start` `-end`
-|`trigger` | String | unset| The ID of the button invoking the coachmark, this is important for accessibility and focus management.
-|`reference` |String|unset|The ID of element you want the coachmark to appear on. |
-|`title`|String|unset|The title of the coachmark
-|`content`	| String|unset|The content you want the coachmark to display |
-|`type `|String|`default` |The type of coachmark `default` `informational` `generic` |
-
-
-Optional Attributes.
-
-| Attribute    | Type    | Default | Description                                                                                                  |
-| ------------ | ------- | ------- | ------------------------------------------------------------------------------------------------------------ |
-| `arrow`      | Bool  | unset   | Renders an arrow on the coachmark.
-|`gotit` | String | unset| If left blank `gotit=' '`, the coachmark will render an optional got it button.  If a value is specified e.g. `gotit='next coachmark` the coachmark will render a button with the label 'next coachmark'
-|`dismiss` |Bool|unset|If set to true, the got it button will also dismiss the coachmark |
-
-
 
 <a name="api-events"></a>
 
-### Events
+
+### Emitted Events
+
+`pearson-coachmark` emits two events: `dismiss` and `proceed`  Once an coachmark is dismissed, it is removed from the DOM.
+
+| Event     | Description                                              |
+| --------- | -------------------------------------------------------- |
+| `dismiss` | Will fire when the user interacts with the close button.|
+|`proceed` | Will fire when the user interacts with the 'got it' button and the `dismiss` attribute is not specified.
+
+  ### Example:
+
+```js
+ coachOne = function (event) {
+	  generateCoach({
+	      position: 'top-start',
+		  trigger: '#openTop',
+		  reference: '#reference',
+		  title: 'This is 1/12',
+		  content: 'Content for your enjoyment',
+		  type: 'default',
+		  arrow: true,
+		  gotIt: "Next Coachmark"
+	  });
+	  coachMark.addEventListener('proceed', coachTwo, false);
+	};
 ```

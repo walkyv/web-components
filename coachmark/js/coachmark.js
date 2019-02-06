@@ -67,7 +67,6 @@
     get type () {
       return this.getAttribute('type');
     }
-
     get arrow() {
       return this.hasAttribute('arrow')
     }
@@ -95,10 +94,9 @@
         this.shadowRoot.querySelector('.popper__arrow').classList.remove('hidden')
       } else {
         this.shadowRoot.querySelector('.popper__arrow').classList.add('hidden')
-
       }
-
     }
+
     set typeState(str) {
       if (str === 'informational') {
         this.shadowRoot.querySelector('.coachmark').classList.add('informational')
