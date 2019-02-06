@@ -14,12 +14,21 @@
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
   <script src="js/dist/pearson-loader.js"></script>
+    <style>
+      .target {margin:4em; width:50%; border:1px solid gray; margin:2em auto; padding:1em;}
+
+    </style>
   </head>
 
   <body>
-  <h1>Pearson Loading Indicator</h1>
-  <button type="button" id="content-loader">Load content</button>
-  <button type="button" id="content-copier">Copy content</button>
+
+  <div class="target">
+    <button type="button" id="content-loader">Load content</button>
+  </div>
+  <div class="target">
+    <button type="button" id="content-copier">Copy content</button>
+  </div>
+
   <div id="output" class="output"></div>
     <script>
     const loadBtn = document.querySelector('#content-loader');
