@@ -8,8 +8,7 @@ https://pearson-ux.github.io/web-components/modal/
 
 ## Install
 
-Before you install, make sure you have all the appropriate polyfills from the main README.md in place.
-https://github.com/pearson-ux/web-components/blob/master/README.md
+Run the following in your terminal:
 
 ``` bash
 cd my-app

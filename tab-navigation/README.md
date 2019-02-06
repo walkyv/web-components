@@ -23,7 +23,7 @@ https://pearson-ux.github.io/web-components/tab-navigation/
 
 ## Installation
 
-Make sure you have all the appropriate polyfills from [the main README](https://github.com/pearson-ux/web-components/blob/master/README.md) in place. Then, run the following in your terminal:
+Run the following in your terminal:
 
 ```bash
 # my-app is the directory containing your app
