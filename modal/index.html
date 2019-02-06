@@ -16,21 +16,24 @@
 		<!-- import web components -->
 		<script src="./js/dist/modal.js"></script>
 
+		<style>
+			.target {margin:4em; width:50%; border:1px solid gray; margin:2em auto; padding:1em;}
 
+		</style>
 	</head>
 	<body>
 	<!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
 	<main id="main">
-			<section class="container">
+			<section class="container target">
 				<button id="trigger-modal" class="pe-btn pe-btn--btn_large">Open Modal</button>
 			</section>
-			<section class="container">
+			<section class="container target">
 				<button id="trigger-modal-two" class="pe-btn pe-btn--btn_large">Open no cancel modal</button>
 			</section>
-			<section class="container">
+			<section class="container target">
 				<button id="trigger-modal-three" class="pe-btn pe-btn--btn_large">Open no success modal</button>
 			</section>
-		<section class="container">
+		<section class="container target">
 			<button id="trigger-modal-four" class="pe-btn pe-btn--btn_large">Open elements modal</button>
 		</section>
 		</main>

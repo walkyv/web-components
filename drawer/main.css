@@ -83,3 +83,4 @@ main {
 main button {
   margin:1em;
 }
+.target {margin:4em; width:50%; border:1px solid gray; margin:2em auto; padding:1em;}
