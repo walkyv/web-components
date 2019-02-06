@@ -135,8 +135,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.shadowRoot.appendChild(clone);
 
-      _this.trigger = doc.querySelector('[for="' + _this.id + '"]');
-
       _this.onContentScroll = _this.onContentScroll.bind(_this);
       _this.onTitleSlotChange = _this.onTitleSlotChange.bind(_this);
       _this.onContentSlotChange = _this.onContentSlotChange.bind(_this);
@@ -191,6 +189,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'connectedCallback',
       value: function connectedCallback() {
         var _this2 = this;
+
+        this.trigger = doc.querySelector('[for="' + this.id + '"]');
 
         var _shadowRoot$querySele = this.shadowRoot.querySelectorAll('slot'),
             _shadowRoot$querySele2 = _slicedToArray(_shadowRoot$querySele, 2),

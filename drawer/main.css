@@ -71,3 +71,15 @@ p {
 .pe-label--bold {
   font-weight: 600;
 }
+
+pearson-drawer {
+  background:white;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+main button {
+  margin:1em;
+}

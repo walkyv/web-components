@@ -178,7 +178,6 @@
 
       this.shadowRoot.appendChild(clone);
 
-      this.trigger = doc.querySelector(`[for="${this.id}"]`);
 
       this.onContentScroll = this.onContentScroll.bind(this);
       this.onTitleSlotChange = this.onTitleSlotChange.bind(this);
@@ -230,6 +229,7 @@
     }
 
     connectedCallback() {
+      this.trigger = doc.querySelector(`[for="${this.id}"]`);
       const [titleSlot, contentSlot] = this.shadowRoot.querySelectorAll('slot');
 
       if (!this.open && !this.hasAttribute('aria-hidden')) {
