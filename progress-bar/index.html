@@ -17,16 +17,24 @@
 		<!-- RENAME THIS FILE DURING DEVELOPMENT -->
 		<!-- e.g., 'pearson-alert' -->
     <script src="js/dist/progress-bar.js"></script>
+    <style>
+      .target {margin:4em; width:50%; border:1px solid gray; margin:2em auto; padding:1em;}
+    </style>
   </head>
   <body>
-    <h2>Standard progress indicator</h2>
+
+  <div class="target">
     <pearson-progress-bar type="standard" progress="50" max="100" alignment="center" text="Question 2 of 4"></pearson-progress-bar>
-    <h2>Active progress indicator</h2>
-    <pearson-progress-bar type="loading" max="100" alignment="center"></pearson-progress-bar>
+  </div>
+
+  <div class="target">
+    <pearson-progress-bar id="loading" progress="0" type="loading" max="100" alignment="center"></pearson-progress-bar>
     <button style="margin-top:1rem">Start progress bar</button>
+  </div>
+
 
   <script>
-    const loader = document.querySelector('[type="loading"]');
+    const loader = document.querySelector('#loading');
     const startBtn = document.querySelector('button');
     let progress = loader.getAttribute('progress');
     let count = parseInt(progress);
@@ -41,6 +49,7 @@
       }
     },200)
     })
+
   </script>
   </body>
 </html>
