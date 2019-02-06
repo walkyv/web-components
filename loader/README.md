@@ -1,84 +1,111 @@
-# Web Component Markup Kit
+# Pearson Datepicker Web Component
 
-An HTML, CSS, and JavaScript boilerplate for building a web component in the [Pearson Web Components project](https://github.com/pearson-ux/web-components).
+## Table of Contents
 
-## Getting Started
+1. [Demo](#demo)
+2. [Install](#install)
+3. [Usage](#usage)
+4. [API](#api)
+   1. [Attributes](#api-attributes)
+   1. [Classes](#api-classes)
+   1. [Example](#api-example)
 
-Follow these steps carefully!
+A shareable, accessible loader component. This component serves as a user-facing indicator when your app is loading new data via an AJAX request.
 
-1. Navigate to the folder where the existing markup for the component lives.
-2. Create a new git branch with the name `component/COMPONENT_NAME`, where `COMPONENT_NAME` is the name of the component you are building.
-3. Download this repository as a zipfile.
-  * If you clone this repo, **you must remove its `.git` directory**. If you do not remove this directory, the spec kit will become a submodule in the web component's repo. Submodules are not the correct approach, and are not supported.
-4. Unzip the zipfile and move the contents of the resultant folder into the _root folder_ of the component you are working on.
-  * This means that the existing `markup-kit` folder should be a _sibling_ of the new files from the spec-kit folder
-5. Delete the folder that was created in the unzip operation.
-5. From within the root of this project, run `npm install` to install its dependencies.
-7. Run `gulp` to build, serve, and watch your spec kit. Your browser will open a new tab with a Browsersync server, which will automatically refresh as you develop.
+<a name="demo"></a>
 
-The code below accomplishes steps 1 through 7 using cloning. Replace `PATH_TO_WEB_COMPONENTS_DIRECTORY` with the path to the web components repo on your machine, and replace `COMPONENT_NAME` with the name of the component you are developing.
+## Demo
+
+https://pearson-ux.github.io/web-components/loader/
+
+<a name="install"></a>
+
+## Installation
+
+Run the following in your terminal:
 
 ```bash
-# Move to the directory housing the existing markup-kit.
-cd PATH_TO_WEB_COMPONENTS_DIRECTORY/COMPONENT_NAME
-# Create a new branch for the web component
-git checkout -b component/COMPONENT_NAME
-# Clone the spec kit starter, renaming it as `temp`
-# (the temp folder will be deleted shortly)
-git clone --depth 1 https://github.com/pearson-ux/web-component-spec-kit temp
-# Move the contents of `temp` into this folder
-mv temp/* temp/.gitignore ./
-# Delete the temp directory and its contents
-rm -rf temp/
-# Install the kit's dependencies
-npm install
-# Build, serve, and watch the spec kit for changes.
-gulp
+# my-app is the directory containing your app
+cd my-app
+npm install --save @pearson-ux/loader
 ```
 
-## Developing the web component
+<a name="usage"></a>
 
-The existing markup kit should be used as the basis for the styling and behaviors of the final web component. Refer to the [Pearson UX Framework](https://uxframework.pearson.com/) for more details about how your component should behave. If your component is not in the UXF, details about it should be documented on a relevant issue on [Web Components project board](https://github.com/pearson-ux/web-components/projects).
+## Usage
 
-### Building
+Import the web component onto the page, inbetween the `<head>` tags, like so:
 
-This kit comes with a Gulp build system to streamline development. It exposes the following tasks:
+```html
+<head>
+  <!-- Font stack-->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i"
+    rel="stylesheet"
+  />
 
-- `default`: executes `build`, `watch`, and `serve`
-- `build`: Transpiles the SASS and JavaScript files
-- `watch`: Watches the HTML, SASS, and JavaScript files for changes
-- `serve`: Starts a Browsersync server
+  <!-- Polyfills -->
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
-Most of the time, the default task, executed by just running `gulp` itself, will be all you need.
-
-### Setting up
-
-After you run `gulp` the first time, the file tree in the spec kit will look like this:
-
-``` bash
-├── css
-│   └──style.css
-├── js
-│   ├── dist
-│   └── pearson-footer.js
-├── markup-kit
-├── node_modules
-├── scss
-│    ├── _animations.scss
-│    ├── _elements.scss
-│    ├── _example.scss
-│    └── style.scss
-├── gulpfile.js
-├── index.html
-├── package-lock.json
-├── package.json
-└── README.md
+  <!-- Web component script -->
+  <script src="/path-to-loader/js/dist/pearson-loader" />
+</head>
 ```
 
-Replace the word `example` in the SCSS and JavaScript file names with the name the component you are developing. For instance, `_example.scss` should become `_alert.scss` These file names will have to be edited in where they are referenced, as well: `index.html` imports the `example.js` file; `style.scss` imports the `_example.scss` file.
+**Important Notes:**
 
-To see your stylesheet applied to your component, you _must_ copy the code in `css/style.css` into the template in your JS file.
+1. The Google Fonts link is necessary to ensure that the components render properly. You must include it, **or** be sure that Open Sans is loaded in your app some other way.
+2. The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
 
-## Contributing
+Add the `pearson-loader` open and closing tags to the page.
 
-Consult the [Pearson Web Components project wiki](https://github.com/pearson-ux/web-components/wiki) to learn some best-practices for writing code and submitting pull requests to the project.
+<a name="api"></a>
+
+## API
+
+<a name="api-attributes"></a>
+
+### Attributes
+
+All attributes in this API are optional, and all of them are exposed as _properties_ on the component.
+
+| Attribute            | Type    | Default | Description                                                                                       |
+| -------------------- | ------- | ------- | ------------------------------------------------------------------------------------------------- |
+| `loadingStateLabel`  | String  | unset   | The word the user will see while the external content is still loading. Defaults to "loading...". |
+| `finishedStateLabel` | String  | unset   | The word the user will see while the external content is still loading. Defaults to "loaded!".    |
+| `loaded`             | Boolean | unset   | Whether or not the AJAX request has finished. Setting this will display the `finishedStateLabel`. |
+
+**Important Note:** You must set the `loaded` boolean yourself once your AJAX request is complete.
+
+<a name="api-example"></a>
+
+### Example
+
+Most of the time, you will be creating `pearson-loader` components in JavaScript, instead of in your HTML file.
+
+This example shows an AJAX request, after which the component's `loaded` boolean is set to `true`.
+
+```js
+function requestMyData(url) {
+  const copyLoader = document.createElement('pearson-loader');
+
+  copyLoader.loadingStateLabel = 'Copying...';
+  copyLoader.finishedStateLabel = 'Copied!';
+
+  document.body.appendChild(copyLoader);
+
+  fetch('new-data-for-my-app')
+    .then(res => res.json())
+    .then(json => {
+      // Do stuff to display the data in your application.
+
+      // Set the `loaded` prop of copyLoader
+      copyLoader.loaded = true;
+
+      // Remove the loader from the DOM.
+      copyLoader.remove();
+    });
+}
+```
