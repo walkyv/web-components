@@ -36,19 +36,26 @@ npm install --save @pearson-ux/drawer
 
 Import the web component onto the page, inbetween the `<head>` tags, like so:
 
-```html
+``` html
 <head>
-  <!-- polyfills and other stuff... -->
+  <!-- Font stack -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
+   
+  <!-- Polyfills -->
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
-  <script src="/path-to-drawer/js/dist/drawer.js" />
+  <!-- Web component script -->
+  <script src="/path-to-datepicker/js/dist/pearson-datepicker.js" />
 </head>
 ```
 
-**Important Note:**
 
-> The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
+**Important Notes:**
+1. The Google Fonts link is necessary to ensure that the components render properly. You must include it, **or** be sure that Open Sans is loaded in your app some other way.
+2. The import path will be in the **node_modules** folder, which is usually held outside the application source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
 
-`pearson-drawer` comes in two types: `standard` (the default) and `details`. It also requires a button to open. Details about JavaScript interactivity are explained in the [API section](#api).
 
 <a name="the standard drawer"></a>
 
