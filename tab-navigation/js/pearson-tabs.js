@@ -15,7 +15,6 @@
 `;
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-tabs');
-  console.log(w.ShadyCSS)
 
   const forEach = Array.prototype.forEach;
   const indexOf = Array.prototype.indexOf;
