@@ -1,4 +1,6 @@
 
+
+
 # Pearson Datepicker Web Component
 
 ## Table of Contents
@@ -39,9 +41,12 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
 ```html
 <head>
   <!-- polyfills and other stuff... -->
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
   <!-- import web components -->
-	<script src="/path-to-datepicker/js/dist/pearson-datepicker.js" />
+   <script src="/path-to-datepicker/js/dist/pearson-datepicker.js" />
 </head>
 ```
 
@@ -62,8 +67,14 @@ Add the `<pearson-datepicker> </pearson-datepicker>` tags to the page.
 All attributes in this API are optional.
 
 | Attribute    | Type    | Default | Description                                                                                                  |
-| ------------ | ------- | ------- | ------------------------------------------------------------------------------------------------------------ |                          |
-| `value`       | String  | unset   | The default date you would like selected - MM/DD/YYYY.
+| ------------ | ------- | ------- | ------------------------------------------------------------------------------------------------------------ |
+| `value`      | String  | unset   | The date you want the calendar to display.  If no value is set the calendar will default to today's date.
+
+
+  **Important Note:**
+
+> The value attribute will change when dates are entered or selected from the calendar dropdown.
+
 
 <a name="api-attributes-example"></a>
 
@@ -71,9 +82,7 @@ All attributes in this API are optional.
 
 ```html
 <pearson-datepicker
-  day="3"
-  month="2"
-  year="2019"
+   value="10/17/1978"
 >
 </pearson-datepicker>
 ```
