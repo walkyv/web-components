@@ -6,7 +6,8 @@
 		<meta name="viewport" content="width=device-width" />
 
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
-
+		<!-- load pearson and global styles -->
+		<link href="https://unpkg.com/@pearson-components/elements-sdk@1.15.3/build/css/elements.css#unstable-2.0-GLP" rel="stylesheet">
 		<!-- loads web component polyfills -->
 		<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
@@ -23,16 +24,16 @@
 	<!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
 	<main id="main">
 			<section class="container target">
-				<button id="trigger-modal" class="pe-btn pe-btn--btn_large">Open Modal</button>
+				<button id="trigger-modal">Open Modal</button>
 			</section>
 			<section class="container target">
-				<button id="trigger-modal-two" class="pe-btn pe-btn--btn_large">Open no cancel modal</button>
+				<button id="trigger-modal-two">Open no cancel modal</button>
 			</section>
 			<section class="container target">
-				<button id="trigger-modal-three" class="pe-btn pe-btn--btn_large">Open no success modal</button>
+				<button id="trigger-modal-three">Open no success modal</button>
 			</section>
 		<section class="container target">
-			<button id="trigger-modal-four" class="pe-btn pe-btn--btn_large">Open elements modal</button>
+			<button id="trigger-modal-four">Open elements modal</button>
 		</section>
 		</main>
 
