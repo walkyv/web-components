@@ -7,7 +7,8 @@
     <!-- THESE IMPORTS ARE NECESSARY FOR PROPER RENDERING DURING DEVELOPMENT -->
     <!-- DO NOT DELETE -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
-
+    <!-- load pearson and global styles -->
+    <link href="https://unpkg.com/@pearson-components/elements-sdk@1.15.3/build/css/elements.css#unstable-2.0-GLP" rel="stylesheet">
     <!-- loads web component polyfills -->
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
@@ -28,7 +29,7 @@
   </div>
 
   <div class="target">
-    <pearson-progress-bar id="loading" progress="0" type="loading" max="100" alignment="center"></pearson-progress-bar>
+    <pearson-progress-bar id="loading" progress="0" type="loading" max="100" alignment="center" text="donuts being made"></pearson-progress-bar>
     <button style="margin-top:1rem">Start progress bar</button>
   </div>
 

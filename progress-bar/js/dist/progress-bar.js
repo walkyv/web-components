@@ -66,7 +66,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (this.text === null) {
           this.label.innerHTML = progress + '%';
         } else {
-          this.label.innerHTML = this.text;
+          if (this.type === 'loading') {
+            this.label.innerHTML = progress + ' ' + this.text;
+          } else {
+            this.label.innerHTML = this.text;
+          }
         }
       }
     }, {
