@@ -7,14 +7,21 @@ A shareable, accessible, file uploader powered by web components.
 1. [Demo](#demo)
 2. [Install](#install)
 3. [Usage](#usage)
-4. [API](#api)
+   1. [Usage example](#usage-example)
+4. [Uploading](#uploading)
+5. [API](#api)
    1. [Attributes](#api-attributes)
+       1. [Attributes example](#attributes-example)
    2. [Events](#api-events)
+      1. [Events example](#events-example)
+
+<a name="demo"></a>
 
 ## Demo
 
 https://pearson-ux.github.io/web-components/file-uploader
 
+<a name="install"></a>
 ## Install
 
 Before you install, make sure you have all the appropriate polyfills from the main README.md in place.
@@ -22,6 +29,8 @@ https://github.com/pearson-ux/web-components/blob/master/README.md
 
     cd my-app
     npm install --save @pearson-ux/file-uploader
+
+<a name="usage"></a>
 
 ## Usage
 
@@ -57,7 +66,9 @@ Add the `<pearson-uploader> </pearson-uploader>` tags to the page, passing in a 
 
 > To maintain accessibility, the `pearson-uploader` tag must be a sibling of your main content. The main content must be wrapped in an element with an ID of 'main'.
 
-**Example Code:**
+<a name="usage-example"></a>
+
+### Example
 
 ```html
 <body>
@@ -74,16 +85,24 @@ Add the `<pearson-uploader> </pearson-uploader>` tags to the page, passing in a 
 </body>
 ```
 
+<a name="uploading"></a>
+
 ## Uploading
 
-This component takes a RESTful approach and uses a `XMLHttpRequest()` to upload and delete files.
+This component takes a RESTful approach and uses an `XMLHttpRequest()` to upload and delete files.
 Your server needs to accept and delete files from a single api endpoint. It uses a `POST` request to upload the file and a `DELETE` request to remove the file.
 
 This component will look for a return status of `204`
 
 To set the upload URL and configs, see the API below.
 
+<a name="api"></a>
+
 ## API
+
+<a name="api-attributes"></a>
+
+### Attributes
 
 | Attribute          | Type     | Default  | Description                                       |
 | ------------------ | -------- | -------- | ------------------------------------------------- |
@@ -92,7 +111,9 @@ To set the upload URL and configs, see the API below.
 | `maxByteFileSize`  | `String` | 10000000 | Max size of file to upload.                       |
 | `maxNumberOfFiles` | `String` | 5        | Max number of concurrent downloads.               |
 
-**Example Code:**
+<a name="api-example"></a>
+
+#### Example
 
 ```html
 <!-- for accessibility, the must be adjacent to an element with an id of main -->
@@ -111,8 +132,9 @@ To set the upload URL and configs, see the API below.
 >
 </pearson-uploader>
 ```
+<a name="events"></a>
 
-## Events
+### Events
 
 The `pearson-uploader` component is part of the `pearson-modal` component and emits two different events:
 
@@ -125,7 +147,9 @@ The `pearson-uploader` component is part of the `pearson-modal` component and em
 
 > For the purposes of event emission, the modal treats _any button that is not the success button_ as a 'cancel' button. If you want your modal to emit a `success` event, you _must_ show the footer and the success button. If the success button is independently hidden through the `hideSuccess` configuration, or if the footer is hidden by setting `footer` to `false`, it will prevent the emission of the `success` event completely.
 
-**Example Code:**
+<a name="events-example"></a>
+
+#### Example Code
 
 ```js
 // You can query a web component like any other element in JavaScript
