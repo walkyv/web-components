@@ -9,7 +9,7 @@
    1. [Attributes](#api-attributes)
    2. [Events](#api-events)
 
-A shareable, accessible toggle.
+A shareable, accessible alert.
 
 <a name="demo"></a>
 
@@ -35,20 +35,27 @@ npm install --save @pearson-ux/alert
 
 Import the web component onto the page, inbetween the `<head>` tags, like so:
 
-```html
+``` html
 <head>
-  <!-- polyfills and other stuff... -->
+  <!-- Font stack -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
+   
+  <!-- Polyfills -->
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
-  <!-- import web components -->
-  <link rel="import" href="/path/to/alert/index.html" />
+  <!-- Web component script -->
+  <script src="/path-to-datepicker/js/dist/pearson-alert.js" />
 </head>
 ```
 
-**Important Note:**
 
-> The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
+**Important Notes:**
+1. The Google Fonts link is necessary to ensure that the components render properly. You must include it, **or** be sure that Open Sans is loaded in your app some other way.
+2. The import path will be in the **node_modules** folder, which is usually held outside the application source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
+3. `pearson-alert` does not style the text you pass into it. You must import and apply the styles you want to apply to the text yourself.
 
-Add the `<pearson-alert> </pearson-alert>` tags to the page. `pearson-alert` renders as soon as it is in the DOM, so only create an alert as you need it.
 
 <a name="api"></a>
 
