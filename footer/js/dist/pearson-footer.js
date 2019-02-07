@@ -20,9 +20,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _inherits(Footer, _HTMLElement);
 
     _createClass(Footer, [{
-      key: 'dark',
+      key: 'theme',
       get: function get() {
-        return this.hasAttribute('dark');
+        return this.hasAttribute('theme');
       }
     }, {
       key: 'accessibility',
@@ -40,28 +40,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return this.hasAttribute('support');
       }
     }, {
-      key: 'darkMode',
+      key: 'darkTheme',
       set: function set(bool) {
         if (bool === true) {
           this.shadowRoot.querySelector('footer').classList.add('dark');
         }
       }
     }, {
-      key: 'accessibilityLink',
+      key: 'showAccessibilityLink',
       set: function set(bool) {
         if (bool === true) {
           this.shadowRoot.querySelector('.accessibility').classList.remove('hidden');
         }
       }
     }, {
-      key: 'permissionsLink',
+      key: 'showPermissionsLink',
       set: function set(bool) {
         if (bool === true) {
           this.shadowRoot.querySelector('.patent').classList.remove('hidden');
         }
       }
     }, {
-      key: 'supportLink',
+      key: 'showSupportLink',
       set: function set(bool) {
         if (bool === true) {
           this.shadowRoot.querySelector('.support').classList.remove('hidden');
@@ -70,7 +70,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['accessibility', 'permissions', 'support', 'dark'];
+        return ['accessibility', 'permissions', 'support', 'theme'];
       }
     }]);
 
@@ -90,11 +90,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var copyright = this.shadowRoot.querySelector('.copyright');
         copyright.innerHTML = 'Copyright © 1996-' + new Date().getFullYear() + ' Pearson Education Inc. All Rights Reserved.';
-        console.log(this.accessibility);
-        this.accessibilityLink = this.accessibility;
-        this.permissionsLink = this.permissions;
-        this.supportLink = this.support;
-        this.darkMode = this.dark;
+        this.showAccessibilityLink = this.accessibility;
+        this.showPermissionsLink = this.permissions;
+        this.showSupportLink = this.support;
+        this.darkTheme = this.theme;
       }
     }]);
 
