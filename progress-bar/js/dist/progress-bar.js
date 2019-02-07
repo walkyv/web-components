@@ -56,7 +56,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'titleAlignment',
       set: function set(alignment) {
-        this.wrapper.classList.add(alignment);
+        this.wrapper.classList.add(alignment + '-aligned');
       }
     }, {
       key: 'progressBar',

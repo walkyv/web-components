@@ -55,7 +55,7 @@
     }
 
     set titleAlignment(alignment) {
-      this.wrapper.classList.add(alignment);
+      this.wrapper.classList.add(alignment + '-aligned');
     }
 
     set progressBar(progress) {
