@@ -7,7 +7,9 @@
 3. [Usage](#usage)
 4. [API](#api)
    1. [Attributes](#api-attributes)
+     1. [Attributes example](#attributes-example)
    2. [Events](#api-events)
+     1. [Events example](#events-example)
 
 A shareable, accessible coachmark component.
 
@@ -83,7 +85,9 @@ Import the web component onto the page, in between the `<head>` tags, like so:
 | `gotit`   | String | unset   | If left blank `gotit=' '`, the coachmark will render an optional got it button. If a value is specified e.g.`gotit='next coachmark` the coachmark will render a button with the label 'next coachmark' |
 | `dismiss` | Bool   | unset   | If set to true, the got it button will also dismiss the coachmark                                                                                                                                       |
 
-### Example:
+<a name="api-example"></a>
+
+#### Example:
 
 In the main body of the document, add a button with a unique ID, to trigger the coachmark.
 
@@ -148,7 +152,9 @@ Add a script that builds and renders a coachmark, once the button has been press
 | `dismiss` | Will fire when the user interacts with the close button.                                                 |
 | `proceed` | Will fire when the user interacts with the 'got it' button and the `dismiss` attribute is not specified. |
 
-### Example:
+<a name="events-example"></a>
+
+#### Example:
 
 ```js
 coachOne = function(event) {
