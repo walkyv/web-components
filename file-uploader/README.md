@@ -1,5 +1,5 @@
 
-# A11y File Upload Web Component
+# File Upload Web Component
 
 A shareable, accessible, file uploader powered by web components.
 
@@ -19,25 +19,26 @@ https://github.com/pearson-ux/web-components/blob/master/README.md
 
 Import the web components onto the page, at the bottom before the closing `<body>` tag
 
-```html
-<body>
-  <!-- your public code -->
+``` html
+<head>
+  <!-- Font stack -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
+   
+  <!-- Polyfills -->
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
-  <!-- import web components -->
-<script src="/path/to/file-uploader/components/alert/js/dist/pearson-alert.js"></script>
-<script src="/path/to/file-uploader/components/upload-modal/js/dist/uploadModal.js"></script>
-<script src="/path/to/file-uploader/js/dist/pearson-file-upload.js"></script>
-
-</body>
+  <!-- Web component script -->
+  <script src="/path-to-datepicker/js/dist/pearson-uploader.js" />
+</head>
 ```
 
-**Important Note:**
-> The component has a total of 3 components to import, you must import all 3 for the component to work.
->
-> The import path will be in the **node_modules** folder, which is
-> usually held outside the application source. If you publish your
-> application to a **./public** or **./dist** folder you will want to
-> write a script to copy this dependency to a desired location.
+
+**Important Notes:**
+1. The Google Fonts link is necessary to ensure that the components render properly. You must include it, **or** be sure that Open Sans is loaded in your app some other way.
+2. The import path will be in the **node_modules** folder, which is usually held outside the application source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
+
 
 **To Use**
 Add the `<pearson-uploader> </pearson-uploader>` tags to the page, passing in a `triggerId`, the unique ID of the button you want to open the file uploader.
