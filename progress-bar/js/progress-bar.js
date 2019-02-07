@@ -27,7 +27,7 @@
 
   class ProgressBar extends HTMLElement {
     static get observedAttributes() {
-      return ['progress', 'type', 'alignment', 'label'];
+      return ['progress', 'type', 'max', 'alignment', 'label'];
     }
 
     get alignment() {
@@ -50,22 +50,34 @@
       return this.getAttribute('type');
     }
 
+    get max() {
+      return this.getAttribute('max');
+    }
+
     set titleAlignment(alignment) {
-      this.wrapperElement.classList.add(alignment + '-aligned');
+      this.wrapperElement.classList.add(alignment);
     }
 
     set progressBar(progress) {
       this.loadingBar.setAttribute('aria-valuenow', progress);
       this.loadingBar.setAttribute('style', 'width: ' + progress + '%;');
-      if (this.type === 'static' && this.label !== null) {
-        this.labelElement.innerHTML = this.label;
-      } else {
+      if (this.label === null) {
         this.labelElement.innerHTML = progress + '%';
+      } else {
+        if (this.type === 'loading') {
+          this.labelElement.innerHTML = progress + ' ' + this.label;
+        } else {
+          this.labelElement.innerHTML = this.label;
+        }
       }
     }
 
     set loaderType(value) {
       this.wrapperElement.classList.add(value);
+    }
+
+    set maxValue(value) {
+      this.loadingBar.setAttribute('aria-valuemax', value);
     }
 
     set alertMessage(message) {
@@ -96,6 +108,7 @@
 
       this.progressBar = this.progress;
       this.loaderType = this.type;
+      this.maxValue = this.max;
       this.titleAlignment = this.alignment;
     }
 

@@ -49,25 +49,39 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return this.getAttribute('type');
       }
     }, {
+      key: 'max',
+      get: function get() {
+        return this.getAttribute('max');
+      }
+    }, {
       key: 'titleAlignment',
       set: function set(alignment) {
-        this.wrapperElement.classList.add(alignment + '-aligned');
+        this.wrapperElement.classList.add(alignment);
       }
     }, {
       key: 'progressBar',
       set: function set(progress) {
         this.loadingBar.setAttribute('aria-valuenow', progress);
         this.loadingBar.setAttribute('style', 'width: ' + progress + '%;');
-        if (this.type === 'static' && this.label !== null) {
-          this.labelElement.innerHTML = this.label;
-        } else {
+        if (this.label === null) {
           this.labelElement.innerHTML = progress + '%';
+        } else {
+          if (this.type === 'loading') {
+            this.labelElement.innerHTML = progress + ' ' + this.label;
+          } else {
+            this.labelElement.innerHTML = this.label;
+          }
         }
       }
     }, {
       key: 'loaderType',
       set: function set(value) {
         this.wrapperElement.classList.add(value);
+      }
+    }, {
+      key: 'maxValue',
+      set: function set(value) {
+        this.loadingBar.setAttribute('aria-valuemax', value);
       }
     }, {
       key: 'alertMessage',
@@ -77,7 +91,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['progress', 'type', 'alignment', 'label'];
+        return ['progress', 'type', 'max', 'alignment', 'label'];
       }
     }]);
 
@@ -111,6 +125,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.progressBar = this.progress;
         this.loaderType = this.type;
+        this.maxValue = this.max;
         this.titleAlignment = this.alignment;
       }
     }, {
