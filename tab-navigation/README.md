@@ -132,19 +132,12 @@ The children of the `panels` slot must be `div` tags with a `data-panel` attribu
 
 All attributes in this API are optional.
 
-| Attribute   | Type   | Default | Description                                                                             |
-| ----------- | ------ | ------- | --------------------------------------------------------------------------------------- |
-| `activeIdx` | Number | unset   | The index of the tab and panel you want to be open by default. If unset, defaults to 0. |
+| Attribute   | Type   | Default | Description                                                                                                |
+| ----------- | ------ | ------- | ---------------------------------------------------------------------------------------------------------- |
+| `activeIdx` | Number | unset   | The index of the tab and panel you want to be open by default. If unset, defaults to 0.                    |
+| `dark`      | String | unset   | The color palette used to render the tabs. Accepted values: 'dark'. If unset, will render the light theme. |
 
 **Important Note:** The `activeIdx` attrubute is managed by the component, and will change as the user selects tabs.
-
-<a name="api-classes"></a>
-
-### Classes
-
-| Class         | Description                                                                                                |
-| ------------- | ---------------------------------------------------------------------------------------------------------- |
-| `theme--dark` | The color palette used to render the tabs. Accepted values: 'dark'. If unset, will render the light theme. |
 
 <a name="api-example"></a>
 
