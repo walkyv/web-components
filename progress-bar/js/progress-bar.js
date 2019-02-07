@@ -27,15 +27,15 @@
 
   class ProgressBar extends HTMLElement {
     static get observedAttributes() {
-      return ['progress', 'type', 'max', 'alignment', 'text'];
+      return ['progress', 'type', 'max', 'alignment', 'label'];
     }
 
     get alignment() {
       return this.getAttribute('alignment');
     }
 
-    get text() {
-      return this.getAttribute('text');
+    get label() {
+      return this.getAttribute('label');
     }
 
     get progress() {
@@ -55,21 +55,21 @@
     }
 
     set titleAlignment(alignment) {
-      this.wrapper.classList.add(alignment + '-aligned');
+      this.wrapperElement.classList.add(alignment + '-aligned');
     }
 
     set progressBar(progress) {
       this.loadingBar.setAttribute('aria-valuenow', progress);
       this.loadingBar.setAttribute('style', 'width: ' + progress + '%;');
-      if (this.type === 'static' && this.text !== null) {
-        this.label.innerHTML = this.text;
+      if (this.type === 'static' && this.label !== null) {
+        this.labelElement.innerHTML = this.label;
       } else {
-        this.label.innerHTML = progress + '%';
+        this.labelElement.innerHTML = progress + '%';
       }
     }
 
     set loaderType(value) {
-      this.wrapper.classList.add(value);
+      this.wrapperElement.classList.add(value);
     }
 
     set maxValue(value) {
@@ -90,8 +90,8 @@
       this.liveRegion = liveRegionClone.querySelector('#liveRegion');
 
       this.loadingBar = componentClone.querySelector('[role=progressbar]');
-      this.wrapper = componentClone.querySelector('.pe-progress-bar');
-      this.label = componentClone.querySelector('#label');
+      this.wrapperElement = componentClone.querySelector('.pe-progress-bar');
+      this.labelElement = componentClone.querySelector('#label');
 
       this.shadowRoot.appendChild(liveRegionClone);
       this.shadowRoot.appendChild(componentClone);

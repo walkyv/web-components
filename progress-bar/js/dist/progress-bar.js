@@ -31,9 +31,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return this.getAttribute('alignment');
       }
     }, {
-      key: 'text',
+      key: 'label',
       get: function get() {
-        return this.getAttribute('text');
+        return this.getAttribute('label');
       }
     }, {
       key: 'progress',
@@ -56,23 +56,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'titleAlignment',
       set: function set(alignment) {
-        this.wrapper.classList.add(alignment + '-aligned');
+        this.wrapperElement.classList.add(alignment + '-aligned');
       }
     }, {
       key: 'progressBar',
       set: function set(progress) {
         this.loadingBar.setAttribute('aria-valuenow', progress);
         this.loadingBar.setAttribute('style', 'width: ' + progress + '%;');
-        if (this.type === 'static' && this.text !== null) {
-          this.label.innerHTML = this.text;
+        if (this.type === 'static' && this.label !== null) {
+          this.labelElement.innerHTML = this.label;
         } else {
-          this.label.innerHTML = progress + '%';
+          this.labelElement.innerHTML = progress + '%';
         }
       }
     }, {
       key: 'loaderType',
       set: function set(value) {
-        this.wrapper.classList.add(value);
+        this.wrapperElement.classList.add(value);
       }
     }, {
       key: 'maxValue',
@@ -87,7 +87,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['progress', 'type', 'max', 'alignment', 'text'];
+        return ['progress', 'type', 'max', 'alignment', 'label'];
       }
     }]);
 
@@ -104,8 +104,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.liveRegion = liveRegionClone.querySelector('#liveRegion');
 
       _this.loadingBar = componentClone.querySelector('[role=progressbar]');
-      _this.wrapper = componentClone.querySelector('.pe-progress-bar');
-      _this.label = componentClone.querySelector('#label');
+      _this.wrapperElement = componentClone.querySelector('.pe-progress-bar');
+      _this.labelElement = componentClone.querySelector('#label');
 
       _this.shadowRoot.appendChild(liveRegionClone);
       _this.shadowRoot.appendChild(componentClone);
