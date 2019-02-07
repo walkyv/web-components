@@ -76,7 +76,7 @@ All attributes are optional. The `progress` attribute is exposed as a property i
 | `progress`  | Number | `0`   | The current position, as a number, that the bar has progressed to. Range: Between 0 and 100. |
 | `alignment` | String | unset   | The position of the progressbar's label. Possible values: `'left'`, `'right'`, `'center'`.   |
 | `type`      | String | unset   | The type of the bar. Possible values: `'static'`; `'loading'`.                               |
-| `label`     | String | unset   | The description of the bar. Can only be set if the type is `'loading'`.                      |
+| `label`     | String | unset   | The description of what the bar is loading. Varies based on the needs of your app. Can only be set on static progressbars.           |
 
 **Important Note:** You must set the `progress` prop in JavaScript to increment the bar.
 
@@ -84,7 +84,7 @@ All attributes are optional. The `progress` attribute is exposed as a property i
 
 ### Example
 
-This example shows a `loading`-type progress bar which will gradually increment.
+This example shows a standard `loading`-type progress bar 
 
 ```html
 <pearson-progress-bar id="loading" type="loading" alignment="center"></pearson-progress-bar>
@@ -106,3 +106,9 @@ startBtn.addEventListener('click', function(e) {
   },200)
 });
 ```
+
+<a name="roadmap"></a>
+
+## Roadmap
+
+In the near future, `pearson-progress-bar` plans to support a custom `max` setting, so that applications can track increments with non-precentage units. For instance, a loading progress bar which increments from "One of two files downloaded" to "Two of two files downloaded"
