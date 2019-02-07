@@ -51,7 +51,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'max',
       get: function get() {
-        return this.getAttribute('max');
+        return parseInt(this.getAttribute('max'), 10);
       }
     }, {
       key: 'titleAlignment',

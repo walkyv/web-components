@@ -51,7 +51,7 @@
     }
 
     get max() {
-      return this.getAttribute('max');
+      return parseInt(this.getAttribute('max'), 10);
     }
 
     set titleAlignment(alignment) {
