@@ -67,7 +67,7 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
 | Attribute | Type      | Default | Description                           |
 | --------- | --------- | ------- | ------------------------------------- |
 | `accessibility`    | boolean | `false` | Shows accessibility link in footer  |
-`permissions`| boolean | `false` | Shows permissions link in footer
+`patent`| boolean | `false` | Shows patent notice link in footer
 |`support` |boolean |`false` | Shows support link in footer |
 |`dark` | boolean | `false` | Changes the link and text color to support dark backgrounds
 
@@ -90,7 +90,7 @@ HTML:
   We can add 3 additional supported links by adding the attributes
   ```html
 <body>
-	<pearson-footer accessibility permissions support/>
+	<pearson-footer accessibility patent support/>
 </body>
 ```
 
