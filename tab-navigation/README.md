@@ -8,7 +8,7 @@
 4. [Structure](#usage-structure)
 5. [API](#api)
    1. [Attributes](#api-attributes)
-   1. [Example](#api-example)
+   2. [Example](#api-example)
 
 A shareable, accessible tab-navigation with calendar.
 

@@ -7,8 +7,7 @@
 3. [Usage](#usage)
 4. [API](#api)
    1. [Attributes](#api-attributes)
-   1. [Classes](#api-classes)
-   1. [Example](#api-example)
+   2. [Example](#api-example)
 
 A shareable, accessible loader component. This component serves as a user-facing indicator when your app is loading new data via an AJAX request.
 
