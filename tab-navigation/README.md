@@ -51,7 +51,7 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
   <!-- Web component script -->
-  <script src="/path-to-tab-navigation/js/dist/pearson-tabs" />
+  <script src="/path-to-tab-navigation/js/dist/pearson-tabs.js" />
 </head>
 ```
 
