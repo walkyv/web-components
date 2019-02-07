@@ -1,9 +1,9 @@
 {
-  "name": "@pearson-ux/progress-indicator",
+  "name": "@pearson-ux/progress-bar",
   "author": "Dave O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "version": "0.1.0",
-  "description": "Progress-indicator web component",
+  "description": "Progress-bar web component",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/pearson-ux/web-components.git"
   },
   "keywords": [
-    "progress indicator",
+    "progress bar",
     "pearson-components",
     "web components"
   ],
