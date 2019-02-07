@@ -1,34 +1,102 @@
 
-# Web Component Spec Kit
-A simple web component example to help you convert your existing HTML into a web component.
+# Pearson Footer Web Component
 
-## Get Started
-Download this kit as a zipfile and place in your web components folder, to use this as a starting point to convert your markup from the markup kit to a web component.  This kit has the following
+## Table of Contents
 
- - An example.html file that includes all the recommended polyfills and loads an existing web component
- - An index.html file that includes example markup for an HTML template.
- -  A main.js file that includes a basic scripting example for shadow dom.
- - Babel to compile your main.js file so its compatible with IE11
- -  SCSS compatibility
-
-Once your ready, install the dependancies:
-
-    npm install
-
-<br>
-
-**Basic commands to get you started:** 
-
-Compile scss
-
-    gulp styles
-
-Run babel
-
-    gulp babel
-
-Watch for changes
-
-    gulp watch
+1. [Demo](#demo)
+2. [Install](#install)
+3. [Usage](#usage)
+5. [API](#api)
+   1. [Attributes Examples](#api-attributes-example)
 
 
+A shareable, accessible drawer.
+
+<a name="demo"></a>
+
+## Demo
+
+https://pearson-ux.github.io/web-components/footer/
+
+<a name="install"></a>
+
+## Installation
+
+Make sure you have all the appropriate polyfills from [the main README](https://github.com/pearson-ux/web-components/blob/master/README.md) in place. Then, run the following in your terminal:
+
+```bash
+# my-app is the directory containing your app
+cd my-app
+npm install --save @pearson-ux/drawer
+```
+
+<a name="usage"></a>
+
+## Usage
+
+Import the web component onto the page, inbetween the `<head>` tags, like so:
+
+``` html
+<head>
+  <!-- Font stack -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
+
+  <!-- Polyfills -->
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
+
+  <!-- Web component script -->
+  <script src="/path-to-footer/js/dist/pearson-footer.js" />
+</head>
+```
+
+
+**Important Notes:**
+1. The Google Fonts link is necessary to ensure that the components render properly. You must include it, **or** be sure that Open Sans is loaded in your app some other way.
+2. The import path will be in the **node_modules** folder, which is usually held outside the application source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
+
+
+
+<a name="api"></a>
+
+## API
+
+`pearson-drawer`'s API uses an `open` prop to manage the drawer's open state. You can use JavaScript to change the `open` prop to `true` or `false`.
+
+| Attribute | Type      | Default | Description                           |
+| --------- | --------- | ------- | ------------------------------------- |
+| `accessibility`    | boolean | `false` | Shows accessibility link in footer  |
+`patent`| boolean | `false` | Shows patent notice link in footer
+|`support` |boolean |`false` | Shows support link in footer |
+|`dark` | boolean | `false` | Changes the link and text color to support dark backgrounds
+
+
+
+<a name="api-attributes-example"></a>
+
+### Example
+
+This footer only shows two default links.
+
+HTML:
+
+```html
+<body>
+  <pearson-footer/>
+</body>
+```
+
+  We can add 3 additional supported links by adding the attributes
+  ```html
+<body>
+	<pearson-footer accessibility patent support/>
+</body>
+```
+
+  We can change the appearance of the footer so it shows up on a dark background by adding the dark attribute.
+  ```html
+<body>
+	<pearson-footer dark/>
+</body>
+```
