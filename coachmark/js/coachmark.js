@@ -43,7 +43,8 @@
    */
   class Coachmark extends HTMLElement {
     static get observedAttributes() {
-      return ['position', 'trigger', 'reference', 'title', 'content', 'type', 'arrow', 'gotit', 'gotittext', 'dismiss']}
+      return ['position', 'trigger', 'reference', 'title', 'content', 'type', 'arrow', 'gotit', 'gotittext', 'dismiss']
+    }
 
 
     get dismiss() {
