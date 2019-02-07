@@ -6,10 +6,10 @@
 2. [Install](#install)
 3. [Usage](#usage)
 4. [API](#api)
-    1. [Attributes](#api-attributes)
-       1. [Attributes example](#attributes-example)
+   1. [Attributes](#api-attributes)
+      1. [Attributes example](#attributes-example)
    2. [Events](#api-events)
-       1. [Events example](#events-example)
+      1. [Events example](#events-example)
 
 A shareable, accessible coachmark component.
 
@@ -79,11 +79,11 @@ Import the web component onto the page, in between the `<head>` tags, like so:
 
 ### Optional Attributes
 
-| Attribute | Type   | Default | Description                                                                                                                                                                                             |
-| --------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `arrow`   | Bool   | unset   | Renders an arrow on the coachmark.                                                                                                                                                                      |
+| Attribute | Type   | Default | Description                                                                                                                                                                                            |
+| --------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `arrow`   | Bool   | unset   | Renders an arrow on the coachmark.                                                                                                                                                                     |
 | `gotit`   | String | unset   | If left blank `gotit=' '`, the coachmark will render an optional got it button. If a value is specified e.g.`gotit='next coachmark` the coachmark will render a button with the label 'next coachmark' |
-| `dismiss` | Bool   | unset   | If set to true, the got it button will also dismiss the coachmark                                                                                                                                       |
+| `dismiss` | Bool   | unset   | If set to true, the got it button will also dismiss the coachmark                                                                                                                                      |
 
 <a name="api-example"></a>
 
@@ -91,9 +91,9 @@ Import the web component onto the page, in between the `<head>` tags, like so:
 
 In the main body of the document, add a button with a unique ID, to trigger the coachmark.
 
-``` html
+```html
 <body>
-	 <button id="openTop">Trigger Coachmark</button>
+  <button id="openTop">Trigger Coachmark</button>
 </body>
 ```
 
