@@ -6,10 +6,10 @@
 2. [Install](#install)
 3. [Usage](#usage)
 4. [API](#api)
-   1. [Attributes](#api-attributes)
-     1. [Attributes example](#attributes-example)
+    1. [Attributes](#api-attributes)
+       1. [Attributes example](#attributes-example)
    2. [Events](#api-events)
-     1. [Events example](#events-example)
+       1. [Events example](#events-example)
 
 A shareable, accessible coachmark component.
 
