@@ -49,7 +49,7 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
   <!-- Web component script -->
-  <script src="/path-to-loader/js/dist/pearson-loader" />
+  <script src="/path-to-loader/js/dist/pearson-loader.js" />
 </head>
 ```
 
@@ -70,11 +70,11 @@ Add the `pearson-loader` open and closing tags to the page.
 
 All attributes in this API are optional, and all of them are exposed as _properties_ on the component.
 
-| Attribute            | Type    | Default | Description                                                                                       |
-| -------------------- | ------- | ------- | ------------------------------------------------------------------------------------------------- |
-| `loadingStateLabel`  | String  | unset   | The word the user will see while the external content is still loading. Defaults to "loading...". |
-| `finishedStateLabel` | String  | unset   | The word the user will see while the external content is still loading. Defaults to "loaded!".    |
-| `loaded`             | Boolean | unset   | Whether or not the AJAX request has finished. Setting this will display the `finishedStateLabel`. |
+| Attribute            | Type    | Default | Description                                                                                        |
+| -------------------- | ------- | ------- | -------------------------------------------------------------------------------------------------- |
+| `loadingStateLabel`  | String  | unset   | The word the user will see while the external content is still loading. Defaults to "loading...".  |
+| `finishedStateLabel` | String  | unset   | The word the user will see while the external content has finished loading. Defaults to "loaded!". |
+| `loaded`             | Boolean | unset   | Whether or not the AJAX request has finished. Setting this will display the `finishedStateLabel`.  |
 
 **Important Note:** You must set the `loaded` boolean yourself once your AJAX request is complete.
 
