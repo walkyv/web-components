@@ -27,7 +27,7 @@
 
   class ProgressBar extends HTMLElement {
     static get observedAttributes() {
-      return ['progress', 'type', 'max', 'alignment', 'label'];
+      return ['progress', 'type', 'alignment', 'label'];
     }
 
     get alignment() {
@@ -50,10 +50,6 @@
       return this.getAttribute('type');
     }
 
-    get max() {
-      return this.getAttribute('max');
-    }
-
     set titleAlignment(alignment) {
       this.wrapperElement.classList.add(alignment + '-aligned');
     }
@@ -70,10 +66,6 @@
 
     set loaderType(value) {
       this.wrapperElement.classList.add(value);
-    }
-
-    set maxValue(value) {
-      this.loadingBar.setAttribute('aria-valuemax', value);
     }
 
     set alertMessage(message) {
@@ -104,7 +96,6 @@
 
       this.progressBar = this.progress;
       this.loaderType = this.type;
-      this.maxValue = this.max;
       this.titleAlignment = this.alignment;
     }
 

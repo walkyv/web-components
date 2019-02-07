@@ -49,11 +49,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return this.getAttribute('type');
       }
     }, {
-      key: 'max',
-      get: function get() {
-        return this.getAttribute('max');
-      }
-    }, {
       key: 'titleAlignment',
       set: function set(alignment) {
         this.wrapperElement.classList.add(alignment + '-aligned');
@@ -75,11 +70,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.wrapperElement.classList.add(value);
       }
     }, {
-      key: 'maxValue',
-      set: function set(value) {
-        this.loadingBar.setAttribute('aria-valuemax', value);
-      }
-    }, {
       key: 'alertMessage',
       set: function set(message) {
         this.liveRegion.innerHTML = message;
@@ -87,7 +77,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['progress', 'type', 'max', 'alignment', 'label'];
+        return ['progress', 'type', 'alignment', 'label'];
       }
     }]);
 
@@ -121,7 +111,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.progressBar = this.progress;
         this.loaderType = this.type;
-        this.maxValue = this.max;
         this.titleAlignment = this.alignment;
       }
     }, {

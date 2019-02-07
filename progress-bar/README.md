@@ -8,6 +8,7 @@
 4. [API](#api)
    1. [Attributes](#api-attributes)
    2. [Example](#api-example)
+5. [Roadmap](#roadmap)
 
 A shareable, accessible progressbar component. This component serves as a user-facing indicator of the progress of a loading operation.
 
@@ -68,43 +69,40 @@ Add the `pearson-progress-bar` open and closing tags to the page.
 
 ### Attributes
 
-All attributes in this API are optional, and all of them are exposed as _properties_ on the component.
+All attributes are optional. The `progress` attribute is exposed as a property in JavaSctipt.
 
-| Attribute            | Type    | Default | Description                                                                                       |
-| -------------------- | ------- | ------- | ------------------------------------------------------------------------------------------------- |
-| `loadingStateLabel`  | String  | unset   | The word the user will see while the external content is still loading. Defaults to "loading...". |
-| `finishedStateLabel` | String  | unset   | The word the user will see while the external content is still loading. Defaults to "loaded!".    |
-| `loaded`             | Boolean | unset   | Whether or not the AJAX request has finished. Setting this will display the `finishedStateLabel`. |
+| Attribute   | Type   | Default | Description                                                                                  |
+| ----------- | ------ | ------- | -------------------------------------------------------------------------------------------- |
+| `progress`  | Number | `0`   | The current position, as a number, that the bar has progressed to. Range: Between 0 and 100. |
+| `alignment` | String | unset   | The position of the progressbar's label. Possible values: `'left'`, `'right'`, `'center'`.   |
+| `type`      | String | unset   | The type of the bar. Possible values: `'static'`; `'loading'`.                               |
+| `label`     | String | unset   | The description of the bar. Can only be set if the type is `'loading'`.                      |
 
-**Important Note:** You must set the `loaded` boolean yourself once your AJAX request is complete.
+**Important Note:** You must set the `progress` prop in JavaScript to increment the bar.
 
 <a name="api-example"></a>
 
 ### Example
 
-Most of the time, you will be creating `pearson-progress-bar` components in JavaScript, instead of in your HTML file.
+This example shows a `loading`-type progress bar which will gradually increment.
 
-This example shows an AJAX request, after which the component's `loaded` boolean is set to `true`.
+```html
+<pearson-progress-bar id="loading" type="loading" alignment="center"></pearson-progress-bar>
+<button id="start">Start progress bar</button>
+```
 
 ```js
-function requestMyData(url) {
-  const copyLoader = document.createElement('pearson-progress-bar');
+const startBtn = document.querySelector('start');
+const progressBar = document.querySelector('pearson-rogress-bar');
 
-  copyLoader.loadingStateLabel = 'Copying...';
-  copyLoader.finishedStateLabel = 'Copied!';
-
-  document.body.appendChild(copyLoader);
-
-  fetch('new-data-for-my-app')
-    .then(res => res.json())
-    .then(json => {
-      // Do stuff to display the data in your application.
-
-      // Set the `loaded` prop of copyLoader
-      copyLoader.loaded = true;
-
-      // Remove the progress-bar from the DOM.
-      copyLoader.remove();
-    });
-}
+startBtn.addEventListener('click', function(e) {
+  setInterval( function (event) {
+    if (count < 100) {
+      count++;
+      loader.progress = count;
+    } else {
+      return
+    }
+  },200)
+});
 ```
