@@ -22,11 +22,11 @@ html{font-size:.875rem}body{font-family:Open Sans,Calibri,Tahoma,sans-serif;colo
 
   class Footer extends HTMLElement {
     static get observedAttributes() {
-      return ['accessibility', 'permissions', 'support', 'dark']
+      return ['accessibility', 'permissions', 'support', 'theme']
     }
 
-    get dark () {
-      return this.hasAttribute('dark')
+    get theme () {
+      return this.hasAttribute('theme')
     }
 
     get accessibility () {
@@ -41,24 +41,25 @@ html{font-size:.875rem}body{font-family:Open Sans,Calibri,Tahoma,sans-serif;colo
       return this.hasAttribute('support')
     }
 
-    set darkMode (bool) {
+    set darkTheme (bool) {
       if (bool === true) {
         this.shadowRoot.querySelector('footer').classList.add('dark');
       }
     }
-    set accessibilityLink (bool) {
+
+    set showAccessibilityLink (bool) {
       if (bool === true) {
         this.shadowRoot.querySelector('.accessibility').classList.remove('hidden');
       }
     }
 
-    set permissionsLink (bool) {
+    set showPermissionsLink (bool) {
       if (bool === true) {
         this.shadowRoot.querySelector('.patent').classList.remove('hidden');
       }
     }
 
-    set supportLink (bool) {
+    set showSupportLink (bool) {
       if (bool === true) {
         this.shadowRoot.querySelector('.support').classList.remove('hidden');
       }
@@ -74,11 +75,10 @@ html{font-size:.875rem}body{font-family:Open Sans,Calibri,Tahoma,sans-serif;colo
     connectedCallback() {
       const copyright = this.shadowRoot.querySelector('.copyright');
       copyright.innerHTML = 'Copyright © 1996-' + new Date().getFullYear() + ' Pearson Education Inc. All Rights Reserved.';
-      console.log(this.accessibility);
-      this.accessibilityLink = this.accessibility;
-      this.permissionsLink = this.permissions;
-      this.supportLink = this.support;
-      this.darkMode = this.dark
+      this.showAccessibilityLink = this.accessibility;
+      this.showPermissionsLink = this.permissions;
+      this.showSupportLink = this.support;
+      this.darkTheme = this.theme
     }
 
   }
