@@ -21,7 +21,7 @@ https://pearson-ux.github.io/web-components/coachmark/
 
 ## Installation
 
-Make sure you have all the appropriate polyfills from [the main README](https://github.com/pearson-ux/web-components/blob/master/README.md) in place. Then, run the following in your terminal:
+Run the following in your terminal:
 
 ```bash
 # my-app is the directory containing your app
@@ -49,14 +49,13 @@ Import the web component onto the page, in between the `<head>` tags, like so:
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
   <!-- Web component script -->
-  <script src="/path-to-datepicker/js/dist/pearson-datepicker.js" />
+  <script src="/path-to-datepicker/js/dist/pearson-coachmark.js" />
 </head>
 ```
 
 **Important Notes:**
 
 > 1. The Google Fonts link is necessary to ensure that the components render properly. You must include it, **or** be sure that Open Sans is loaded in your app some other way.
->
 > 2. The import path will be in the **node_modules** folder, which is usually held outside the applicaiton source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location..
 
 <a name="api"></a>
@@ -88,7 +87,7 @@ Import the web component onto the page, in between the `<head>` tags, like so:
 
 In the main body of the document, add a button with a unique ID, to trigger the coachmark.
 
-```
+``` html
 <body>
 	 <button id="openTop">Trigger Coachmark</button>
 </body>
