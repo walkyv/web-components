@@ -135,7 +135,7 @@ All attributes in this API are optional.
 | Attribute   | Type   | Default | Description                                                                                                |
 | ----------- | ------ | ------- | ---------------------------------------------------------------------------------------------------------- |
 | `activeIdx` | Number | unset   | The index of the tab and panel you want to be open by default. If unset, defaults to 0.                    |
-| `dark`      | String | unset   | The color palette used to render the tabs. Accepted values: 'dark'. If unset, will render the light theme. |
+| `theme`      | String | unset   | The color palette used to render the tabs. Accepted values: 'dark'. If unset, will render the light theme. |
 
 **Important Note:** The `activeIdx` attrubute is managed by the component, and will change as the user selects tabs.
 
