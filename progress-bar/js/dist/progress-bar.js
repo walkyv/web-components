@@ -63,14 +63,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       set: function set(progress) {
         this.loadingBar.setAttribute('aria-valuenow', progress);
         this.loadingBar.setAttribute('style', 'width: ' + progress + '%;');
-        if (this.text === null) {
-          this.label.innerHTML = progress + '%';
+        if (this.type === 'static' && this.text !== null) {
+          this.label.innerHTML = this.text;
         } else {
-          if (this.type === 'loading') {
-            this.label.innerHTML = progress + ' ' + this.text;
-          } else {
-            this.label.innerHTML = this.text;
-          }
+          this.label.innerHTML = progress + '%';
         }
       }
     }, {
