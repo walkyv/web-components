@@ -1,29 +1,35 @@
+$pe-color-ink-blue: #005A70;
+
 .hidden {
   display:none !important;
 }
-footer {
+:host {
   display:flex;
+  flex: 0 0 100%;
   align-items: center;
   justify-content: center;
-  margin-bottom:24px;
+  position: fixed;
+  width: inherit;
   padding:0 1em;
   font-family: "Open Sans", Arial, Helvetica, sans-serif;
   font-size:14px;
+  background: #fff;
   @media(max-width:979px) {
     flex-direction: column;
   }
+}
 
-  &.dark {
-    li {
-      border-right:1px solid white
-    }
-    a {
-      color:white;
-      border-color: white;
-    }
-    .copyright {
-      color:white;
-    }
+:host(.dark) {
+  background: $pe-color-ink-blue;
+  li {
+    border-right:1px solid white
+  }
+  a {
+    color:white;
+    border-color: white;
+  }
+  .copyright {
+    color:white;
   }
 }
 .links {
