@@ -77,15 +77,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.attachShadow({ mode: 'open' });
       var clone = template.content.cloneNode(true);
+
+      _this.copyrightElement = clone.querySelector('.copyright');
+
       _this.shadowRoot.appendChild(clone);
       return _this;
     }
 
     _createClass(Footer, [{
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        if (name !== 'theme') {
+          this.shadowRoot.querySelector('.' + name).classList.remove('hidden');
+        }
+      }
+    }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var copyright = this.shadowRoot.querySelector('.copyright');
-        copyright.innerHTML = 'Copyright © 1996-' + new Date().getFullYear() + ' Pearson Education Inc. All Rights Reserved.';
+        if (!this.hasAttribute('role') || this.getAttribute('role') !== 'footer') {
+          this.setAttribute('role', 'footer');
+        }
+
+        this.copyrightElement.innerHTML = 'Copyright © 1996-' + new Date().getFullYear() + ' Pearson Education Inc. All Rights Reserved.';
       }
     }]);
 

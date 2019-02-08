@@ -21,7 +21,7 @@
 
   class Footer extends HTMLElement {
     static get observedAttributes() {
-      return ['accessibility', 'permissions', 'support', 'theme']
+      return ['accessibility', 'permissions', 'support', 'theme'];
     }
 
     get theme () {
@@ -72,12 +72,24 @@
       super();
       this.attachShadow({ mode: 'open' });
       const clone = template.content.cloneNode(true);
+
+      this.copyrightElement = clone.querySelector('.copyright');
+
       this.shadowRoot.appendChild(clone);
     }
 
+    attributeChangedCallback(name, oldValue, newValue) {
+      if (name !== 'theme') {
+        this.shadowRoot.querySelector(`.${name}`).classList.remove('hidden');
+      } 
+    }
+
     connectedCallback() {
-      const copyright = this.shadowRoot.querySelector('.copyright');
-      copyright.innerHTML = 'Copyright © 1996-' + new Date().getFullYear() + ' Pearson Education Inc. All Rights Reserved.';
+      if (!this.hasAttribute('role') || this.getAttribute('role') !== 'footer') {
+        this.setAttribute('role', 'footer');
+      }
+      
+      this.copyrightElement.innerHTML = 'Copyright © 1996-' + new Date().getFullYear() + ' Pearson Education Inc. All Rights Reserved.';
     }
 
   }
