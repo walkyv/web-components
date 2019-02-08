@@ -2,9 +2,9 @@
   "name": "@pearson-ux/alert",
   "author": "EJ Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Modal web component",
-  "main": "index.html",
+  "main": "./js/dist/pearson-alert.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

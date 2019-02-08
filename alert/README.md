@@ -1,3 +1,4 @@
+
 # Pearson Alert Web Component
 
 ## Table of Contents
@@ -8,6 +9,8 @@
 4. [API](#api)
    1. [Attributes](#api-attributes)
    2. [Events](#api-events)
+5. [React](#react)
+
 
 A shareable, accessible alert.
 
@@ -39,7 +42,7 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
 <head>
   <!-- Font stack -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
-   
+
   <!-- Polyfills -->
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
@@ -136,4 +139,31 @@ Because alerts are temporary, it usually makes the most sense for add a listener
 window.addEventListener('dismiss', function(e) {
   console.log(`You closed a(n) ${e.target.type} alert`);
 }, true);
+```
+
+<a name="react"></a>
+
+### React
+To use these web components in your react application do the following.
+First install the component.
+
+```bash
+npm  install --save @pearson-ux/alert
+```
+
+Import your component on the page you would like to use it on
+
+```js
+import "@pearson-ux/alert";
+```
+Then use the markup in your JSX code.  You can pass props in to available API attributes.
+
+```js
+render () {
+	return (
+		<div>
+			<pearson-alert></pearson-alert>
+		</div>
+	)
+}
 ```
