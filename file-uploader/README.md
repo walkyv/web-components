@@ -14,6 +14,7 @@ A shareable, accessible, file uploader powered by web components.
        1. [Attributes example](#attributes-example)
    2. [Events](#api-events)
       1. [Events example](#events-example)
+6. [React](#react)
 
 <a name="demo"></a>
 
@@ -163,4 +164,31 @@ modal.addEventListener('success', function() {
 modal.addEventListener('cancel', function() {
   console.log('CANCEL');
 });
+```
+
+<a name="react"></a>
+
+### React
+To use these web components in your react application do the following.
+First install the component.
+
+```bash
+npm  install --save @pearson-ux/file-uploader
+```
+
+Import your component on the page you would like to use it on
+
+```js
+import "@pearson-ux/file-uploader";
+```
+Then use the markup in your JSX code.  You can pass props in to available API attributes.
+
+```js
+render () {
+	return (
+		<div>
+			<pearson-uploader></pearson-uploader>
+		</div>
+	)
+}
 ```

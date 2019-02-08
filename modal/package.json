@@ -2,9 +2,9 @@
   "name": "@pearson-ux/modal",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.7.2",
+  "version": "1.0.0",
   "description": "Modal web component",
-  "main": "index.html",
+  "main": "./js/dist/modal.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

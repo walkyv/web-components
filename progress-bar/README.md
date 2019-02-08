@@ -9,6 +9,7 @@
    1. [Attributes](#api-attributes)
    2. [Example](#api-example)
 5. [Roadmap](#roadmap)
+6. [React](#react)
 
 A shareable, accessible progressbar component. This component serves as a user-facing indicator of the progress of a loading operation.
 
@@ -84,7 +85,7 @@ All attributes are optional. The `progress` attribute is exposed as a property i
 
 ### Example
 
-This example shows a standard `loading`-type progress bar 
+This example shows a standard `loading`-type progress bar
 
 ```html
 <pearson-progress-bar id="loading" type="loading" alignment="center"></pearson-progress-bar>
@@ -112,3 +113,30 @@ startBtn.addEventListener('click', function(e) {
 ## Roadmap
 
 In the near future, `pearson-progress-bar` plans to support a custom `max` setting, so that applications can track increments with non-precentage units. For instance, a loading progress bar which increments from "One of two files downloaded" to "Two of two files downloaded"
+
+<a name="react"></a>
+
+### React
+To use these web components in your react application do the following.
+First install the component.
+
+```bash
+npm  install --save @pearson-ux/progress-bar
+```
+
+Import your component on the page you would like to use it on
+
+```js
+import "@pearson-ux/progress-bar";
+```
+Then use the markup in your JSX code.  You can pass props in to available API attributes.
+
+```js
+render () {
+	return (
+		<div>
+			<pearson-progress-bar></pearson-progress-bar>
+		</div>
+	)
+}
+```

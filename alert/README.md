@@ -1,4 +1,3 @@
-
 # Pearson Alert Web Component
 
 ## Table of Contents

@@ -2,9 +2,9 @@
   "name": "@pearson-ux/loading-indicator",
   "author": "EJ Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Loading indicator web component",
-  "main": "index.html",
+  "main": "./js/dist/pearson-loader.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

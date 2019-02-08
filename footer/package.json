@@ -2,9 +2,9 @@
   "name": "@pearson-ux/footer",
   "author": "Wei Fang | wei.fang@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Footer web component",
-  "main": "index.html",
+  "main": "./js/dist/pearson-footer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

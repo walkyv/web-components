@@ -9,6 +9,7 @@
 4. [API](#api)
    1. [Attributes](#api-attributes)
    2. [Events](#api-events)
+5. [React](#react)
 
 A shareable, accessible toggle.
 
@@ -149,4 +150,30 @@ toggles.forEach(toggle => {
     console.log(self.on);
   });
 });
+```
+<a name="react"></a>
+
+### React
+To use these web components in your react application do the following.
+First install the component.
+
+```bash
+npm  install --save @pearson-ux/toggle
+```
+
+Import your component on the page you would like to use it on
+
+```js
+import "@pearson-ux/toggle";
+```
+Then use the markup in your JSX code.  You can pass props in to available API attributes.
+
+```js
+render () {
+	return (
+		<div>
+			<pearson-toggle></pearson-toggle>
+		</div>
+	)
+}
 ```

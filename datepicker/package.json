@@ -2,9 +2,9 @@
   "name": "@pearson-ux/datepicker",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "description": "Datepicker Web Component",
-  "main": "index.html",
+  "main": "./js/dist/pearson-datepicker.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

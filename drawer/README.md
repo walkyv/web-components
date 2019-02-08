@@ -9,6 +9,7 @@
 5. [API](#api)
    1. [Attributes](#api-attributes)
    2. [Events](#api-events)
+6. [React](#react)
 
 A shareable, accessible drawer.
 
@@ -40,7 +41,7 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
 <head>
   <!-- Font stack -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
-   
+
   <!-- Polyfills -->
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
@@ -361,7 +362,7 @@ HTML:
 </pearson-drawer>
 ```
 
-JS: 
+JS:
 ``` js
 
 const drawer = document.getElementById('pearsonDrawer');
@@ -374,3 +375,30 @@ trigger.addEventListener('click', function(e) {
 ```
 
 Now we can click on the button to open the drawer.
+
+<a name="react"></a>
+
+### React
+To use these web components in your react application do the following.
+First install the component.
+
+```bash
+npm  install --save @pearson-ux/drawer
+```
+
+Import your component on the page you would like to use it on
+
+```js
+import "@pearson-ux/drawer";
+```
+Then use the markup in your JSX code.  You can pass props in to available API attributes.
+
+```js
+render () {
+	return (
+		<div>
+			<pearson-drawer></pearson-drawer>
+		</div>
+	)
+}
+```

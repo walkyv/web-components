@@ -7,6 +7,7 @@
 3. [Usage](#usage)
 4. [API](#api)
    1. [Attributes Examples](#api-attributes-example)
+5. [React](#react)
 
 A shareable, accessible drawer.
 
@@ -98,4 +99,31 @@ We can change the appearance of the footer by adding the theme attribute.
 <body>
   <pearson-footer theme="dark" />
 </body>
+```
+
+<a name="react"></a>
+
+### React
+To use these web components in your react application do the following.
+First install the component.
+
+```bash
+npm  install --save @pearson-ux/footer
+```
+
+Import your component on the page you would like to use it on
+
+```js
+import "@pearson-ux/footer";
+```
+Then use the markup in your JSX code.  You can pass props in to available API attributes.
+
+```js
+render () {
+	return (
+		<div>
+			<pearson-footer></pearson-footer>
+		</div>
+	)
+}
 ```

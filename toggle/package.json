@@ -2,9 +2,9 @@
   "name": "@pearson-ux/toggle",
   "author": "Elias Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Toggle web component",
-  "main": "index.html",
+  "main": "./js/dist/pearson-toggle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
