@@ -32,42 +32,6 @@
       this.setAttribute('theme', theme);
     }
 
-    get showAccessibility () {
-      return this.hasAttribute('accessibility');
-    }
-
-    set showAccessibility (newVal) {
-      if (newVal !== null) {
-        this.setAttribute('showAccessibility', '');
-      } else {
-        this.removeAttribute('showAccessibility');
-      }
-    }
-
-    get showPermissions() {
-      return this.hasAttribute('showPermissions');
-    }
-
-    set showPermissions (newVal) {
-      if (newVal !== null) {
-        this.setAttribute('showPermissions', '');
-      } else {
-        this.removeAttribute('showPermissions');
-      }
-    }
-
-    get showSupport () {
-      return this.hasAttribute('support');
-    }
-
-    set showSupport (newVal) {
-      if (newVal !== null) {
-        this.setAttribute('showSupport', '');
-      } else {
-        this.removeAttribute('showSupport');
-      }
-    }
-
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
@@ -79,9 +43,9 @@
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      if (name !== 'theme') {
+      if (name !== 'theme' && newValue !== null) {
         this.shadowRoot.querySelector(`.${name}`).classList.remove('hidden');
-      } 
+      }
     }
 
     connectedCallback() {

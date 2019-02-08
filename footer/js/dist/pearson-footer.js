@@ -27,42 +27,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       set: function set(theme) {
         this.setAttribute('theme', theme);
       }
-    }, {
-      key: 'showAccessibility',
-      get: function get() {
-        return this.hasAttribute('accessibility');
-      },
-      set: function set(newVal) {
-        if (newVal !== null) {
-          this.setAttribute('showAccessibility', '');
-        } else {
-          this.removeAttribute('showAccessibility');
-        }
-      }
-    }, {
-      key: 'showPermissions',
-      get: function get() {
-        return this.hasAttribute('showPermissions');
-      },
-      set: function set(newVal) {
-        if (newVal !== null) {
-          this.setAttribute('showPermissions', '');
-        } else {
-          this.removeAttribute('showPermissions');
-        }
-      }
-    }, {
-      key: 'showSupport',
-      get: function get() {
-        return this.hasAttribute('support');
-      },
-      set: function set(newVal) {
-        if (newVal !== null) {
-          this.setAttribute('showSupport', '');
-        } else {
-          this.removeAttribute('showSupport');
-        }
-      }
     }], [{
       key: 'observedAttributes',
       get: function get() {
@@ -87,7 +51,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Footer, [{
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
-        if (name !== 'theme') {
+        if (name !== 'theme' && newValue !== null) {
           this.shadowRoot.querySelector('.' + name).classList.remove('hidden');
         }
       }
