@@ -96,6 +96,6 @@ We can change the appearance of the footer by adding the theme attribute.
 
 ```html
 <body>
-  <pearson-footer thene="dark" />
+  <pearson-footer theme="dark" />
 </body>
 ```
