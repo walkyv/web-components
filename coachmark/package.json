@@ -2,9 +2,9 @@
   "name": "@pearson-ux/coachmark",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Coachmark web component",
-  "main": "index.html",
+  "main": "./js/dist/pearson-coachmark.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
