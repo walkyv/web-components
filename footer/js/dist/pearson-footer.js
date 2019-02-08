@@ -22,49 +22,45 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Footer, [{
       key: 'theme',
       get: function get() {
-        return this.hasAttribute('theme');
+        return this.getAttribute('theme');
+      },
+      set: function set(theme) {
+        this.setAttribute('theme', theme);
       }
     }, {
-      key: 'accessibility',
+      key: 'showAccessibility',
       get: function get() {
         return this.hasAttribute('accessibility');
+      },
+      set: function set(newVal) {
+        if (newVal !== null) {
+          this.setAttribute('showAccessibility', '');
+        } else {
+          this.removeAttribute('showAccessibility');
+        }
       }
     }, {
-      key: 'permissions',
+      key: 'showPermissions',
       get: function get() {
-        return this.hasAttribute('patent');
+        return this.hasAttribute('showPermissions');
+      },
+      set: function set(newVal) {
+        if (newVal !== null) {
+          this.setAttribute('showPermissions', '');
+        } else {
+          this.removeAttribute('showPermissions');
+        }
       }
     }, {
-      key: 'support',
+      key: 'showSupport',
       get: function get() {
         return this.hasAttribute('support');
-      }
-    }, {
-      key: 'darkTheme',
-      set: function set(bool) {
-        if (bool === true) {
-          this.classList.add('dark');
-        }
-      }
-    }, {
-      key: 'showAccessibilityLink',
-      set: function set(bool) {
-        if (bool === true) {
-          this.shadowRoot.querySelector('.accessibility').classList.remove('hidden');
-        }
-      }
-    }, {
-      key: 'showPermissionsLink',
-      set: function set(bool) {
-        if (bool === true) {
-          this.shadowRoot.querySelector('.patent').classList.remove('hidden');
-        }
-      }
-    }, {
-      key: 'showSupportLink',
-      set: function set(bool) {
-        if (bool === true) {
-          this.shadowRoot.querySelector('.support').classList.remove('hidden');
+      },
+      set: function set(newVal) {
+        if (newVal !== null) {
+          this.setAttribute('showSupport', '');
+        } else {
+          this.removeAttribute('showSupport');
         }
       }
     }], [{
@@ -90,10 +86,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var copyright = this.shadowRoot.querySelector('.copyright');
         copyright.innerHTML = 'Copyright © 1996-' + new Date().getFullYear() + ' Pearson Education Inc. All Rights Reserved.';
-        this.showAccessibilityLink = this.accessibility;
-        this.showPermissionsLink = this.permissions;
-        this.showSupportLink = this.support;
-        this.darkTheme = this.theme;
       }
     }]);
 

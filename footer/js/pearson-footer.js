@@ -25,42 +25,46 @@
     }
 
     get theme () {
-      return this.hasAttribute('theme')
+      return this.getAttribute('theme');
     }
 
-    get accessibility () {
-      return this.hasAttribute('accessibility')
+    set theme (theme) {
+      this.setAttribute('theme', theme);
     }
 
-    get permissions () {
-      return this.hasAttribute('patent')
+    get showAccessibility () {
+      return this.hasAttribute('accessibility');
     }
 
-    get support () {
-      return this.hasAttribute('support')
-    }
-
-    set darkTheme (bool) {
-      if (bool === true) {
-        this.classList.add('dark');
+    set showAccessibility (newVal) {
+      if (newVal !== null) {
+        this.setAttribute('showAccessibility', '');
+      } else {
+        this.removeAttribute('showAccessibility');
       }
     }
 
-    set showAccessibilityLink (bool) {
-      if (bool === true) {
-        this.shadowRoot.querySelector('.accessibility').classList.remove('hidden');
+    get showPermissions() {
+      return this.hasAttribute('showPermissions');
+    }
+
+    set showPermissions (newVal) {
+      if (newVal !== null) {
+        this.setAttribute('showPermissions', '');
+      } else {
+        this.removeAttribute('showPermissions');
       }
     }
 
-    set showPermissionsLink (bool) {
-      if (bool === true) {
-        this.shadowRoot.querySelector('.patent').classList.remove('hidden');
-      }
+    get showSupport () {
+      return this.hasAttribute('support');
     }
 
-    set showSupportLink (bool) {
-      if (bool === true) {
-        this.shadowRoot.querySelector('.support').classList.remove('hidden');
+    set showSupport (newVal) {
+      if (newVal !== null) {
+        this.setAttribute('showSupport', '');
+      } else {
+        this.removeAttribute('showSupport');
       }
     }
 
@@ -74,10 +78,6 @@
     connectedCallback() {
       const copyright = this.shadowRoot.querySelector('.copyright');
       copyright.innerHTML = 'Copyright © 1996-' + new Date().getFullYear() + ' Pearson Education Inc. All Rights Reserved.';
-      this.showAccessibilityLink = this.accessibility;
-      this.showPermissionsLink = this.permissions;
-      this.showSupportLink = this.support;
-      this.darkTheme = this.theme
     }
 
   }
