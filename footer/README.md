@@ -1,4 +1,3 @@
-
 # Pearson Footer Web Component
 
 ## Table of Contents
@@ -6,9 +5,8 @@
 1. [Demo](#demo)
 2. [Install](#install)
 3. [Usage](#usage)
-5. [API](#api)
+4. [API](#api)
    1. [Attributes Examples](#api-attributes-example)
-
 
 A shareable, accessible drawer.
 
@@ -22,12 +20,12 @@ https://pearson-ux.github.io/web-components/footer/
 
 ## Installation
 
-Make sure you have all the appropriate polyfills from [the main README](https://github.com/pearson-ux/web-components/blob/master/README.md) in place. Then, run the following in your terminal:
+Run the following in your terminal:
 
 ```bash
 # my-app is the directory containing your app
 cd my-app
-npm install --save @pearson-ux/drawer
+npm install --save @pearson-ux/footer
 ```
 
 <a name="usage"></a>
@@ -36,10 +34,13 @@ npm install --save @pearson-ux/drawer
 
 Import the web component onto the page, inbetween the `<head>` tags, like so:
 
-``` html
+```html
 <head>
   <!-- Font stack -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i"
+    rel="stylesheet"
+  />
 
   <!-- Polyfills -->
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
@@ -51,12 +52,10 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
 </head>
 ```
 
-
 **Important Notes:**
+
 1. The Google Fonts link is necessary to ensure that the components render properly. You must include it, **or** be sure that Open Sans is loaded in your app some other way.
 2. The import path will be in the **node_modules** folder, which is usually held outside the application source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
-
-
 
 <a name="api"></a>
 
@@ -64,14 +63,12 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
 
 `pearson-drawer`'s API uses an `open` prop to manage the drawer's open state. You can use JavaScript to change the `open` prop to `true` or `false`.
 
-| Attribute | Type      | Default | Description                           |
-| --------- | --------- | ------- | ------------------------------------- |
-| `accessibility`    | boolean | `false` | Shows accessibility link in footer  |
-`patent`| boolean | `false` | Shows patent notice link in footer
-|`support` |boolean |`false` | Shows support link in footer |
-|`dark` | boolean | `false` | Changes the link and text color to support dark backgrounds
-
-
+| Attribute       | Type    | Default | Description                                            |
+| --------------- | ------- | ------- | ------------------------------------------------------ |
+| `accessibility` | boolean | `false` | Shows accessibility link in footer                     |
+| `patent`        | boolean | `false` | Shows patent notice link in footer                     |
+| `support`       | boolean | `false` | Shows support link in footer                           |
+| `theme`         | string  | unset   | Sets the theme of the footer. Accepted values: 'dark'. |
 
 <a name="api-attributes-example"></a>
 
@@ -83,20 +80,22 @@ HTML:
 
 ```html
 <body>
-  <pearson-footer/>
+  <pearson-footer />
 </body>
 ```
 
-  We can add 3 additional supported links by adding the attributes
-  ```html
+We can add 3 additional supported links by adding the attributes
+
+```html
 <body>
-	<pearson-footer accessibility patent support/>
+  <pearson-footer accessibility patent support />
 </body>
 ```
 
-  We can change the appearance of the footer so it shows up on a dark background by adding the dark attribute.
-  ```html
+We can change the appearance of the footer by adding the theme attribute.
+
+```html
 <body>
-	<pearson-footer dark/>
+  <pearson-footer thene="dark" />
 </body>
 ```
