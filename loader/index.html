@@ -54,9 +54,7 @@
       const copyIndicator = document.createElement('pearson-loader');
       copyIndicator.loadingStateLabel = 'Copying...';
       copyIndicator.finishedStateLabel = 'Copied!';
-
       outputRegion.innerHTML = '';
-
       outputRegion.appendChild(copyIndicator);
       setTimeout(function() {
         copyIndicator.loaded = true;

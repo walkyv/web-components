@@ -60,19 +60,19 @@
   animation-delay: -0.2s;
 }
 
-.loading-indicator-wrapper,
-.loading-indicator-wrapper *{
+:host,
+:host *{
   box-sizing: border-box;
 }
 
-.loading-indicator-wrapper::before {
+:host::before{
   content: '';
   display: inline-block;
   height: 100%;
   vertical-align: middle;
 }
 
-.loading-indicator-wrapper {
+:host {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,16 +86,18 @@
   font: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
 }
 
-.loading-indicator-wrapper .loading-indicator {
+:host .loading-indicator{
   display:flex;
   align-items: center;
   justify-content: center;
 }
 
-.loading-indicator-wrapper .label {
+:host .label {
   margin-left:12px;
 }
+
 
 #loaded-content main {
   animation: fadein 2s;
 }
+
