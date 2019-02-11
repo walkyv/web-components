@@ -1,28 +1,25 @@
-'use strict';
 (function(w, doc) {
-  const toggles = doc.querySelectorAll('.pe-toggle');
+  'use strict';
+  
+  const toggleBtns = doc.querySelectorAll('.pe-toggle > button');
 
-  function toggleAriaChecked(checked, target) {
-    if (checked === 'false') {
-      target.setAttribute('aria-checked', 'true');
-    } else {
-      target.setAttribute('aria-checked', 'false');
-    }
+  function toggleAriaChecked(el, isChecked) {
+    el.setAttribute('aria-checked', !isChecked);
   }
 
-  function toggleValue(checked, target) {
-    target.value = checked;
+  function setValue(el, value) {
+    el.value = value;
   }
 
-  toggles.forEach(toggle => {
-    const button = toggle.querySelector('button');
-
-    button.addEventListener('click', event => {
-      const target = event.currentTarget,
-        isChecked = target.getAttribute('aria-checked');
-
-      toggleValue(isChecked, target);
-      toggleAriaChecked(isChecked, target);
-    });
+  toggleBtns.forEach(function(button) {
+    button.addEventListener('click', onToggleClick);
   });
+
+  function onToggleClick(event) {
+    const target = event.currentTarget,
+      isChecked = target.getAttribute('aria-checked') === 'true';
+
+    setValue(target, isChecked);
+    toggleAriaChecked(target, isChecked);
+  }
 })(window, document);
