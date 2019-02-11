@@ -2,7 +2,7 @@
   "name": "@pearson-ux/loading-indicator",
   "author": "EJ Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Loading indicator web component",
   "main": "./js/dist/pearson-loader.js",
   "scripts": {
