@@ -59,6 +59,7 @@
 .pe-loadingSpinner-container2 .circle4 {
   animation-delay: -0.2s;
 }
+
 :host,
 :host *,
 .loading-indicator-wrapper,
@@ -101,4 +102,27 @@
 
 #loaded-content main {
   animation: fadein 2s;
+}
+
+@media all and (-ms-high-contrast:none) {
+.loading-indicator-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 70px;
+    margin: auto;
+    background: #252525;
+    color: white;
+    border-radius: 5px;
+    font: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
+  }
+  .loading-indicator-wrapper .loading-indicator {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .loading-indicator-wrapper .label {
+    margin-left:12px;
+  }
 }
