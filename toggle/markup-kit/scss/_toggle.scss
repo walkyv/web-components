@@ -1,0 +1,85 @@
+.pe-toggle {
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  line-height: 1.57143rem;
+  margin-bottom: 0.85714rem;
+  margin-top: 0;
+}
+
+.pe-toggle * {
+  box-sizing: border-box;
+}
+
+.pe-toggle button {
+  background: #6a7070;
+  position: relative;
+  vertical-align: middle;
+  border-radius: 100px;
+  display: inline-block;
+  width: 55px;
+  height: 25px;
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  transition: background 0.3s;
+  cursor: pointer;
+  border: 1px solid #c7c7c7;
+}
+
+.pe-toggle button::before {
+  content: '';
+  background: #fff;
+  display: block;
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  border-radius: 100%;
+  width: 23px;
+  height: 23px;
+  transition: left 0.3s;
+  border: 1px solid #6a7070;
+}
+
+.pe-toggle button:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #da0474;
+}
+
+.pe-toggle button[aria-checked='true'] {
+  background: #047a9c;
+}
+
+.pe-toggle button[aria-checked='true']::before {
+  left: 31px;
+}
+
+.pe-toggle span {
+  position: absolute;
+  top: 5px;
+  font-size: 0.8em;
+  pointer-events: none;
+}
+
+.pe-toggle span:first-child {
+  right: 27px;
+}
+
+.pe-toggle span:last-child {
+  right: 5px;
+}
+
+.pe-toggle button[aria-checked='false'] span:first-child,
+.pe-toggle button[aria-checked='true'] span:last-child {
+  display: none;
+}
+
+.pe-toggle button[aria-checked='false'] span:last-child,
+.pe-toggle button[aria-checked='true'] span:first-child {
+  color: #fff;
+}
+
+.pe-toggle label {
+  font-size: 1rem;
+  line-height: 1.28571rem;
+  vertical-align: middle;
+}
