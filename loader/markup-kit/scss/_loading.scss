@@ -1,49 +1,13 @@
-:host,
-:host * {
-  box-sizing: border-box;
-}
-
-:host {
-  display: block;
-  position: relative;
-  font: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
-  text-align: center;
-  color: #ffffff;
-  background-color: #252525;
-  width: 200px;
-  height: 70px;
-  padding: 0 20px;
-  margin: auto;
-  border: 1px solid #252525;
-  border-radius: 5px;
-}
-:host::before {
-  content: '';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-}
-
-.loading-indicator {
-  display: inline-block;
-}
-
-.pe-loadingSpinner,
-.label {
-  display: inline-block;
-  vertical-align: middle;
-}
-
 .pe-loadingSpinner {
+  width: 25px;
+  height: 25px;
   position: relative;
-  width: 23px;
-  height: 23px;
 }
 .pe-loadingSpinner-container1 > div,
 .pe-loadingSpinner-container2 > div {
   width: 4px;
   height: 4px;
-  background-color: #19a6a4;
+  background-color: #19A6A4;
   border-radius: 100%;
   position: absolute;
   animation: bouncedelay 1.6s infinite ease-in-out;
@@ -80,7 +44,7 @@
   animation-delay: -1.2s;
 }
 .pe-loadingSpinner-container2 .circle2 {
-  animation-delay: -1s;
+  animation-delay: -1.0s;
 }
 .pe-loadingSpinner-container1 .circle3 {
   animation-delay: -0.8s;
@@ -95,7 +59,46 @@
 .pe-loadingSpinner-container2 .circle4 {
   animation-delay: -0.2s;
 }
+:host,
+:host *,
+.loading-indicator-wrapper,
+.loading-indicator-wrapper *{
+  box-sizing: border-box;
+}
 
-.label {
-  margin-left: 12px;
+:host::before,
+.loading-indicator-wrapper::before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+:host, .loading-indicator-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 70px;
+  padding: 0 20px;
+  margin: auto;
+  background: #252525;
+  color: white;
+  border-radius: 5px;
+  font: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
+}
+
+:host .loading-indicator, .loading-indicator-wrapper .loading-indicator {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host .label, .loading-indicator-wrapper .label {
+  margin-left:12px;
+}
+
+
+#loaded-content main {
+  animation: fadein 2s;
 }

@@ -11,7 +11,7 @@
 
     setTimeout(function () {
       document.querySelector('#spinner-icon').setAttribute('aria-label', 'Loaded!');
-      document.querySelector('#loading-text').innerHTML = "Loaded!";
+      document.querySelector('#label').innerHTML = "Loaded!";
     }, 2000);
 
     setTimeout(function () {
@@ -26,7 +26,7 @@
       };
       request.send();
       liveregion.innerHTML = "";
-    }, 2500);
+    }, 2500000);
   }
 
   window.addEventListener('load', function (event) {
