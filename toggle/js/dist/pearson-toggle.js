@@ -58,11 +58,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'connectedCallback',
       value: function connectedCallback() {
         // Add attributes required for a11y
+        if (!this.hasAttribute('tabindex') && !this.disabled) {
+          this.setAttribute('tabindex', 0);
+        }
+
         if (!this.hasAttribute('role')) {
           this.setAttribute('role', 'switch');
         }
-        if (!this.hasAttribute('tabindex') && !this.disabled) {
-          this.setAttribute('tabindex', 0);
+
+        if (!this.hasAttribute('aria-checked')) {
+          this.setAttribute('aria-checked', 'false');
         }
 
         // Lazily upgrade properties to make sure
@@ -169,7 +174,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function attributeChangedCallback(name, oldValue, newValue) {
         var isTruthy = newValue !== null;
         if (name === 'on') {
-          this.setAttribute('aria-on', isTruthy);
+          this.setAttribute('aria-checked', isTruthy);
         }
         if (name === 'disabled') {
           this.setAttribute('aria-disabled', isTruthy);

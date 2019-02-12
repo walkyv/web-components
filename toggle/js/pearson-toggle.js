@@ -68,11 +68,16 @@
 
     connectedCallback() {
       // Add attributes required for a11y
+      if (!this.hasAttribute('tabindex') && !this.disabled) {
+        this.setAttribute('tabindex', 0);
+      }
+
       if (!this.hasAttribute('role')) {
         this.setAttribute('role', 'switch');
       }
-      if (!this.hasAttribute('tabindex') && !this.disabled) {
-        this.setAttribute('tabindex', 0);
+
+      if (!this.hasAttribute('aria-checked')) {
+        this.setAttribute('aria-checked', 'false');
       }
 
       // Lazily upgrade properties to make sure
@@ -203,7 +208,7 @@
     attributeChangedCallback(name, oldValue, newValue) {
       const isTruthy = newValue !== null;
       if (name === 'on') {
-        this.setAttribute('aria-on', isTruthy);
+        this.setAttribute('aria-checked', isTruthy);
       }
       if (name === 'disabled') {
         this.setAttribute('aria-disabled', isTruthy);
