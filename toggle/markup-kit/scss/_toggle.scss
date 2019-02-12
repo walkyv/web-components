@@ -96,8 +96,8 @@ button.pe-toggle[aria-checked='true'] svg:last-child {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  button,
-  button::before {
+  button.pe-toggle,
+  button.pe-toggle::before {
     transition: none !important;
   }
 }
