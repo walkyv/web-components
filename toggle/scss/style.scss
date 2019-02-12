@@ -1,119 +1,111 @@
-*,
-* ::after,
-* ::before,
-:host::after,
-:host::before {
-  box-sizing: border-box
-}
+$pe-color-concrete: #c7c7c7;
+$pe-color-digital-pearson-blue: #047a9c;
+$pe-color-moonlight: #e9e9e9;
+$pe-color-steel: #a9a9a9;
+
+$pe-color-focus-blue: #1977d4;
+$pe-focus-outline-distance: 4px;
 
 :host {
-  background: #6a7070;
-  border: 1px solid #c7c7c7;
-  border-radius: 100px;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-family: 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
-  font-size: 0;
-  height: 23px;
-  overflow: visible;
+  font-size: 24px;
+  box-sizing: border-box;
   position: relative;
-  text-transform: uppercase;
-  transition: background .3s;
-  vertical-align: middle;
-  width: 55px;
-}
-
-:host(:focus) {
-  outline: 0 !important;
-}
-
-:host(:focus)::after {
-  border: 2px solid #0b73da;
+  display: block;
+  width: 2em;
+  height: 1em;
+  padding: 0;
+  border: 0;
   border-radius: 22px;
-  content: "";
-  height: calc(100% + 10px);
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: calc(100% + 10px);
-  z-index: 1
-}
-
-:host::-moz-focus-inner {
-  border: 0
+  margin: 4px 0;
+  color: #fff;
+  background-color: $pe-color-steel;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
 :host([on]) {
-  background: #047a9c
+  background: $pe-color-digital-pearson-blue;
 }
 
 :host([disabled]) {
-  color: #F2F2F2;
+  color: $pe-color-concrete;
+  background-color: $pe-color-moonlight;
   cursor: not-allowed;
 }
 
-:host([on]:focus) {
-  background-color: #005a70;
-  border: 1px solid #005a70
+:host::before {
+  content: '';
+  background: #fff;
+  display: block;
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(1em * 3/4);
+  height: calc(1em * 3/4);
+  transition: left 0.3s;
+  border-radius: 100%;
 }
 
 :host([on])::before {
-  left: 32px
+  left: 26px;
 }
 
 :host([disabled])::before {
-  background: #F2F2F2;
+  background-color: $pe-color-concrete;
 }
 
-:host::before, :host>span {
+:host:focus {
+  outline: 0;
+}
+
+:host::-moz-focus-inner {
+  border: 0;
+}
+
+:host:focus::after {
+  content: '';
   position: absolute;
-  line-height: 23px;
+  left: 50%;
+  top: 50%;
+  width: calc(100% + #{$pe-focus-outline-distance});
+  height: calc(100% + #{$pe-focus-outline-distance});
+  border: 2px solid $pe-color-focus-blue;
+  border-radius: 22px;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
-:host::before {
-  left: 1px;
-  width: 20px;
-  height: 20px;
-  background: #fff;
-  border: 1px solid #6a7070;
-  border-radius: 100%;
-  content: "";
-  display: block;
-  transition: left .3s;
+
+
+
+
+svg {
+  width: calc(1em * 3/4);
+  height: calc(1em * 3/4);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: currentColor;
+  pointer-events: none;
 }
 
-:host>span {
-  top: -1px;
-  font-size: 11.2px;
-  pointer-events: none
+svg:first-child {
+  left: 5px;
 }
 
-:host([hidelabels]) > span {
+svg:last-child {
+  right: 5px;
+}
+
+:host svg:first-child,
+:host([on]) svg:last-child {
   display: none;
 }
 
-
-:host .toggle-on {
-  right: 27px
-}
-
-:host .toggle-off {
-  right: 5px
-}
-
-:host(:not([on]))>span.toggle-on,
-:host([on])>span.toggle-off{
-  display: none
-}
-
-
-
-@media screen and (prefers-reduced-motion: reduced) {
-
+@media (prefers-reduced-motion: reduce) {
   :host,
   :host::before {
-    transition: none !important
+    transition: none !important;
   }
 }
