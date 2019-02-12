@@ -21,6 +21,7 @@ button.pe-toggle {
   background-color: $pe-color-steel;
   cursor: pointer;
   transition: background 0.3s;
+  overflow: visible;
 }
 
 button.pe-toggle[aria-checked='true'] {
@@ -57,6 +58,10 @@ button.pe-toggle[disabled]::before {
 
 button.pe-toggle:focus {
   outline: 0;
+}
+
+button.pe-toggle::-moz-focus-inner {
+  border: 0;
 }
 
 button.pe-toggle:focus::after {
