@@ -1,35 +1,25 @@
 'use strict';
-(function() {
-  const FOCUSABLE_ELEMENTS = `
-    a[href]:not([tabindex^="-"]):not([inert]),
-    area[href]:not([tabindex^="-"]):not([inert]),
-    input:not([disabled]):not([inert]),
-    select:not([disabled]):not([inert]),
-    textarea:not([disabled]):not([inert]),
-    button:not([disabled]):not([inert]),
-    iframe:not([tabindex^="-"]):not([inert]),
-    audio:not([tabindex^="-"]):not([inert]),
-    video:not([tabindex^="-"]):not([inert]),
-    [contenteditable]:not([tabindex^="-"]):not([inert]),
-    [tabindex]:not([tabindex^="-"]):not([inert])`,
-    TAB_KEY = 9,
-    ESCAPE_KEY = 27; 
 
-  const body = document.body,
-    container = body.querySelector('#modalContainer');
+(function () {
+  var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert]),\n    [tabindex]:not([tabindex^="-"]):not([inert])',
+      TAB_KEY = 9,
+      ESCAPE_KEY = 27;
 
-  const main = body.querySelector('#main'),
-    modalButton = main.querySelector('#trigger-modal');
+  var body = document.body,
+      container = body.querySelector('#modalContainer');
 
-  const overlay = container.querySelector('#modalOverlay'),
-    modal = container.querySelector('#modal'),
-    modalBody = modal.querySelector('.modal-body'),
-    title = modal.querySelector('#dialog-heading'),
-    lastButton = modal.querySelector('#lastButton'),
-    isScroll = modal.getAttribute('data-scroll'),
-    isSticky = modal.getAttribute('data-sticky');
+  var main = body.querySelector('#main'),
+      modalButton = main.querySelector('#trigger-modal');
 
-  const viewPortHeight = window.innerHeight;
+  var overlay = container.querySelector('#modalOverlay'),
+      modal = container.querySelector('#modal'),
+      modalBody = modal.querySelector('.modal-body'),
+      title = modal.querySelector('#dialog-heading'),
+      lastButton = modal.querySelector('#lastButton'),
+      isScroll = modal.getAttribute('data-scroll'),
+      isSticky = modal.getAttribute('data-sticky');
+
+  var viewPortHeight = window.innerHeight;
 
   function bindKeyPress(e) {
     if (main.getAttribute('aria-hidden') === 'true') {
@@ -43,9 +33,9 @@
   }
 
   function trapTabKey(node, e) {
-    const focusableChildren = getFocusableChildren(node),
-      focusedItemIdx = focusableChildren.indexOf(document.activeElement),
-      lastFocusableIdx = focusableChildren.length - 1;
+    var focusableChildren = getFocusableChildren(node),
+        focusedItemIdx = focusableChildren.indexOf(document.activeElement),
+        lastFocusableIdx = focusableChildren.length - 1;
 
     if (e.target.getAttribute('tabindex') === '-1') {
       e.preventDefault();
@@ -64,30 +54,22 @@
   }
 
   function getFocusableChildren(node) {
-    const filter = Array.prototype.filter,
-      focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
-    return filter.call(focusableChildren, function(child) {
-      return !!(
-        child.offsetWidth ||
-        child.offsetHeight ||
-        child.getClientRects().length
-      );
+    var filter = Array.prototype.filter,
+        focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+    return filter.call(focusableChildren, function (child) {
+      return !!(child.offsetWidth || child.offsetHeight || child.getClientRects().length);
     });
   }
 
   function maintainFocus(e) {
-    if (
-      main.getAttribute('aria-hidden') === 'true' &&
-      !modal.contains(e.target)
-    ) {
+    if (main.getAttribute('aria-hidden') === 'true' && !modal.contains(e.target)) {
       setFocusToFirstChild(modal);
     }
   }
 
   function setFocusToFirstChild(node) {
-    const focusableChildren = getFocusableChildren(node),
-      focusableChild =
-        node.querySelector('[autofocus]') || focusableChildren[0];
+    var focusableChildren = getFocusableChildren(node),
+        focusableChild = node.querySelector('[autofocus]') || focusableChildren[0];
 
     if (focusableChild) {
       focusableChild.focus();
@@ -111,10 +93,10 @@
     }
   }
 
-  modalButton.addEventListener('click', event => {
-    let modal = document.getElementById('modal');
-    const thisButton = event.currentTarget,
-      buttonDisabled = thisButton.getAttribute('disabled');
+  modalButton.addEventListener('click', function (event) {
+    var modal = document.getElementById('modal');
+    var thisButton = event.currentTarget,
+        buttonDisabled = thisButton.getAttribute('disabled');
 
     if (buttonDisabled === null) {
       thisButton.setAttribute('disabled', true);
@@ -129,7 +111,7 @@
     if (isScroll === 'true') {
       modal = document.querySelector('.modal-container');
       modal.classList.remove('hidden');
-      setTimeout(() => {
+      setTimeout(function () {
         modal.scrollIntoView();
       }, 1);
     } else if (isSticky === 'true') {
@@ -137,7 +119,7 @@
       body.classList.add('hide-overflow');
       modalBody.classList.add('modal-scroll');
       modal.classList.add('sticky');
-      setTimeout(event => {
+      setTimeout(function (event) {
         modal.style.transform = 'translate(-50%, -50%)';
         modalBody.scrollTop = 0;
       }, 100);
@@ -151,12 +133,12 @@
   });
 
   if (lastButton) {
-    lastButton.addEventListener('click', () => {
+    lastButton.addEventListener('click', function () {
       closeModal();
     });
   }
 
-  overlay.addEventListener('click', () => {
+  overlay.addEventListener('click', function () {
     closeModal();
   });
 

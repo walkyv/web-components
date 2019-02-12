@@ -1,0 +1,24 @@
+.pe-modal-container .actions button {
+  background-color: #e9e9e9;
+  border: 1px solid #c7c7c7;
+  border-radius: 2px;
+  color: #252525;
+  position: relative;
+  text-decoration: none;
+}
+
+.pe-modal-container .actions button.pe-btn__primary--btn_large {
+  background-color: #047a9c;
+  border:1px solid  #047a9c;
+  color:white;
+}
+
+.pe-modal-container .actions button.pe-btn__primary--btn_large:focus {
+  background-color: #005a70;
+}
+.pe-modal-container .actions button:hover {
+  background-color: #d9d9d9;
+}
+.pe-modal-container .actions button:focus:after {
+  border-radius: 5px;
+}
