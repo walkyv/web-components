@@ -13,13 +13,14 @@ $pe-focus-outline-distance: 6px;
 }
 
 .pe-toggle button {
-  background: #6a7070;
+  background: #a9a9a9;
   position: relative;
   vertical-align: middle;
   border-radius: 100px;
   display: inline-block;
-  width: 55px;
-  height: 25px;
+  width: 48px;
+  height: 24px;
+  padding: 0;
   color: #fff;
   font-size: 14px;
   text-transform: uppercase;
@@ -33,13 +34,13 @@ $pe-focus-outline-distance: 6px;
   background: #fff;
   display: block;
   position: absolute;
-  left: -1px;
-  top: -1px;
-  border-radius: 100%;
-  width: 23px;
-  height: 23px;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
   transition: left 0.3s;
-  border: 1px solid #6a7070;
+  border-radius: 100%;
 }
 
 .pe-toggle button:focus {
@@ -47,16 +48,16 @@ $pe-focus-outline-distance: 6px;
 }
 
 .pe-toggle button:focus::after {
-    border: 2px solid #0b73da;
-    border-radius: 22px;
-    content: "";
-    height: calc(100% + #{$pe-focus-outline-distance});
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(100% + #{$pe-focus-outline-distance});
-    z-index: 1
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(100% + #{$pe-focus-outline-distance});
+  height: calc(100% + #{$pe-focus-outline-distance});
+  border: 2px solid #0b73da;
+  border-radius: 22px;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
 .pe-toggle button[aria-checked='true'] {
@@ -64,32 +65,30 @@ $pe-focus-outline-distance: 6px;
 }
 
 .pe-toggle button[aria-checked='true']::before {
-  left: 31px;
+  left: 24px;
 }
 
-.pe-toggle span {
+.pe-toggle svg {
+  width: 18px;
+  height: 18px;
   position: absolute;
-  top: 5px;
-  font-size: 0.8em;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: #fff;
   pointer-events: none;
 }
 
-.pe-toggle span:first-child {
-  right: 27px;
+.pe-toggle svg:first-child {
+  left: 5px;
 }
 
-.pe-toggle span:last-child {
+.pe-toggle svg:last-child {
   right: 5px;
 }
 
-.pe-toggle button[aria-checked='false'] span:first-child,
-.pe-toggle button[aria-checked='true'] span:last-child {
+.pe-toggle button[aria-checked='false'] svg:first-child,
+.pe-toggle button[aria-checked='true'] svg:last-child {
   display: none;
-}
-
-.pe-toggle button[aria-checked='false'] span:last-child,
-.pe-toggle button[aria-checked='true'] span:first-child {
-  color: #fff;
 }
 
 .pe-toggle label {
