@@ -19,11 +19,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-toggle');
 
-  var KEYCODE = {
-    ENTER: 13,
-    SPACE: 32
-  };
-
   var Toggle = function (_HTMLElement) {
     _inherits(Toggle, _HTMLElement);
 
@@ -160,9 +155,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return;
         }
 
-        switch (e.keyCode) {
-          case KEYCODE.ENTER:
-          case KEYCODE.SPACE:
+        switch (e.key) {
+          case 'Enter':
+          case ' ':
             e.preventDefault();
             this.click();
             return;

@@ -39,11 +39,6 @@
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-toggle');
 
-  const KEYCODE = {
-    ENTER: 13,
-    SPACE: 32
-  };
-
   class Toggle extends HTMLElement {
     static get observedAttributes() {
       return ['on', 'disabled'];
@@ -164,9 +159,9 @@
         return;
       }
 
-      switch (e.keyCode) {
-        case KEYCODE.ENTER:
-        case KEYCODE.SPACE:
+      switch (e.key) {
+        case 'Enter':
+        case ' ':
           e.preventDefault();
           this.click();
           return;
