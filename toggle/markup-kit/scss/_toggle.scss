@@ -1,3 +1,5 @@
+$pe-focus-outline-distance: 6px;
+
 .pe-toggle {
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   font-size: 1rem;
@@ -42,7 +44,19 @@
 
 .pe-toggle button:focus {
   outline: 0;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #da0474;
+}
+
+.pe-toggle button:focus::after {
+    border: 2px solid #0b73da;
+    border-radius: 22px;
+    content: "";
+    height: calc(100% + #{$pe-focus-outline-distance});
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% + #{$pe-focus-outline-distance});
+    z-index: 1
 }
 
 .pe-toggle button[aria-checked='true'] {
