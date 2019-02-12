@@ -1,11 +1,10 @@
-$pe-focus-outline-distance: 6px;
+$pe-color-strawberry-red: #d0021b;
+$pe-color-focus-outline: #1977d4;
+
+$pe-focus-outline-distance: 4px;
 
 .pe-toggle {
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
-  font-size: 1rem;
-  line-height: 1.57143rem;
-  margin-bottom: 0.85714rem;
-  margin-top: 0;
+  font: 14px/18px 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
 .pe-toggle * {
@@ -13,20 +12,19 @@ $pe-focus-outline-distance: 6px;
 }
 
 .pe-toggle button {
-  background: #a9a9a9;
   position: relative;
-  vertical-align: middle;
-  border-radius: 100px;
-  display: inline-block;
+  display: block;
   width: 48px;
   height: 24px;
   padding: 0;
+  border: 0;
+  border-radius: 22px;
+  margin: 4px 0;
   color: #fff;
-  font-size: 14px;
+  background-color: #a9a9a9;
+  cursor: pointer;
   text-transform: uppercase;
   transition: background 0.3s;
-  cursor: pointer;
-  border: 1px solid #c7c7c7;
 }
 
 .pe-toggle button::before {
@@ -91,8 +89,9 @@ $pe-focus-outline-distance: 6px;
   display: none;
 }
 
-.pe-toggle label {
-  font-size: 1rem;
-  line-height: 1.28571rem;
-  vertical-align: middle;
+@media (prefers-reduced-motion: reduce) {
+  button,
+  button::before {
+    transition: none !important;
+  }
 }

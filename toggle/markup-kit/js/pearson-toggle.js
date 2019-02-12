@@ -19,7 +19,6 @@
     const target = event.currentTarget,
       isChecked = target.getAttribute('aria-checked') === 'true';
 
-    // setValue(target, isChecked);
     toggleAriaChecked(target, isChecked);
   }
 })(window, document);
