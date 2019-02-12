@@ -86,16 +86,16 @@ svg {
   pointer-events: none;
 }
 
-svg:first-child {
+svg[class*="check"] {
   left: 5px;
 }
 
-svg:last-child {
+svg[class*="remove"] {
   right: 5px;
 }
 
-:host svg:first-child,
-:host([on]) svg:last-child {
+:host(:not([on])) svg[class*="check"],
+:host([on]) svg[class*="remove"] {
   display: none;
 }
 
