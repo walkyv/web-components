@@ -7,7 +7,7 @@
     el.setAttribute('aria-checked', !isChecked);
   }
 
-  toggleBtns.forEach(function(button) {
+  Array.prototype.forEach.call(toggleBtns, function(button) {
     button.addEventListener('click', onToggleClick);
   });
 
