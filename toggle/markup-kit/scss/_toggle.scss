@@ -23,6 +23,10 @@ button.pe-toggle {
   transition: background 0.3s;
 }
 
+button.pe-toggle[aria-checked='true'] {
+  background-color: $pe-color-digital-pearson-blue;
+}
+
 button.pe-toggle[disabled] {
   color: $pe-color-concrete;
   background-color: $pe-color-moonlight;
@@ -41,6 +45,10 @@ button.pe-toggle::before {
   height: calc(1em * 3/4);
   transition: left 0.3s;
   border-radius: 100%;
+}
+
+button.pe-toggle[aria-checked='true']::before {
+  left: 26px;
 }
 
 button.pe-toggle[disabled]::before {
@@ -62,14 +70,6 @@ button.pe-toggle:focus::after {
   border-radius: 22px;
   transform: translate(-50%, -50%);
   z-index: 1;
-}
-
-button.pe-toggle[aria-checked='true'] {
-  background: $pe-color-digital-pearson-blue;
-}
-
-button.pe-toggle[aria-checked='true']::before {
-  left: 26px;
 }
 
 .pe-toggle svg {
