@@ -23,7 +23,6 @@ function styles(done) {
   .pipe(sass())
   .on('error', sass.logError)
   .pipe(postcss([autoprefixer({ cascade: false }), cssnano()]))
-  .pipe(concat('style.css'))
   .pipe(gulp.dest('./css'))
   .pipe(server.stream());
   done();
