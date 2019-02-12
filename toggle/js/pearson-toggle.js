@@ -93,7 +93,7 @@
       this.shadowRoot.appendChild(clone);
 
       this.onToggleClick = this.onToggleClick.bind(this);
-      this.onToggleKeyUp = this.onToggleKeyUp.bind(this);
+      this.onToggleKeyDown = this.onToggleKeyDown.bind(this);
 
       this.onLabelClick = this.onLabelClick.bind(this);
 
@@ -137,7 +137,7 @@
 
       // Bind listeners to the toggle
       this.addEventListener('click', this.onToggleClick);
-      this.addEventListener('keyup', this.onToggleKeyUp);
+      this.addEventListener('keydown', this.onToggleKeyDown);
 
       // If the consumer did not set an `aria-label`,
       if (!this.hasAttribute('aria-label')) {
@@ -147,9 +147,6 @@
     }
 
     disconnectedCallback() {
-      this.removeEventListener('click', this.onToggleClick);
-      this.removeEventListener('keyup', this.onToggleKeyUp);
-
       doc.removeEventListener('DOMContentLoaded', this.onDOMLoaded);
 
       if (this.labelNode) {
@@ -162,14 +159,17 @@
       this.toggleOn();
     }
 
-    onToggleKeyUp(e) {
+    onToggleKeyDown(e) {
       if (e.altKey) {
         return;
       }
 
-      if (e.keyCode === KEYCODE.SPACE || e.keyCode === KEYCODE.ENTER) {
-        e.preventDefault();
-        this.toggleOn();
+      switch (e.keyCode) {
+        case KEYCODE.ENTER:
+        case KEYCODE.SPACE:
+          e.preventDefault();
+          this.toggleOn();
+          return;
       }
     }
 

@@ -82,7 +82,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.shadowRoot.appendChild(clone);
 
       _this.onToggleClick = _this.onToggleClick.bind(_this);
-      _this.onToggleKeyUp = _this.onToggleKeyUp.bind(_this);
+      _this.onToggleKeyDown = _this.onToggleKeyDown.bind(_this);
 
       _this.onLabelClick = _this.onLabelClick.bind(_this);
 
@@ -130,7 +130,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         // Bind listeners to the toggle
         this.addEventListener('click', this.onToggleClick);
-        this.addEventListener('keyup', this.onToggleKeyUp);
+        this.addEventListener('keydown', this.onToggleKeyDown);
 
         // If the consumer did not set an `aria-label`,
         if (!this.hasAttribute('aria-label')) {
@@ -141,9 +141,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'disconnectedCallback',
       value: function disconnectedCallback() {
-        this.removeEventListener('click', this.onToggleClick);
-        this.removeEventListener('keyup', this.onToggleKeyUp);
-
         doc.removeEventListener('DOMContentLoaded', this.onDOMLoaded);
 
         if (this.labelNode) {
@@ -157,15 +154,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.toggleOn();
       }
     }, {
-      key: 'onToggleKeyUp',
-      value: function onToggleKeyUp(e) {
+      key: 'onToggleKeyDown',
+      value: function onToggleKeyDown(e) {
         if (e.altKey) {
           return;
         }
 
-        if (e.keyCode === KEYCODE.SPACE || e.keyCode === KEYCODE.ENTER) {
-          e.preventDefault();
-          this.toggleOn();
+        switch (e.keyCode) {
+          case KEYCODE.ENTER:
+          case KEYCODE.SPACE:
+            e.preventDefault();
+            this.toggleOn();
+            return;
         }
       }
 
