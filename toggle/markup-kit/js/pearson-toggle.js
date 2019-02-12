@@ -1,14 +1,10 @@
 (function(w, doc) {
   'use strict';
   
-  const toggleBtns = doc.querySelectorAll('.pe-toggle > button');
+  const toggleBtns = doc.querySelectorAll('.pe-toggle');
 
   function toggleAriaChecked(el, isChecked) {
     el.setAttribute('aria-checked', !isChecked);
-  }
-
-  function setValue(el, value) {
-    el.value = value;
   }
 
   toggleBtns.forEach(function(button) {
