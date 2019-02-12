@@ -49,6 +49,40 @@
       return ['on', 'disabled'];
     }
 
+    get on() {
+      return this.hasAttribute('on');
+    }
+
+    set on(value) {
+      const isOn = Boolean(value);
+      if (isOn) {
+        this.setAttribute('on', '');
+      } else {
+        this.removeAttribute('on');
+      }
+    }
+
+    get disabled() {
+      return this.hasAttribute('disabled');
+    }
+
+    set disabled(value) {
+      const isDisabled = Boolean(value);
+      if (isDisabled) {
+        this.setAttribute('disabled', '');
+      } else {
+        this.removeAttribute('disabled');
+      }
+    }
+
+    get name() {
+      return this.getAttribute('name');
+    }
+
+    get value() {
+      return this.getAttribute('value');
+    }
+
     constructor() {
       super();
 
@@ -64,6 +98,22 @@
       this.onLabelClick = this.onLabelClick.bind(this);
 
       this.onDOMLoaded = this.onDOMLoaded.bind(this);
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      const isTruthy = newValue !== null;
+      if (name === 'on') {
+        this.setAttribute('aria-checked', isTruthy);
+      }
+      if (name === 'disabled') {
+        this.setAttribute('aria-disabled', isTruthy);
+        if (isTruthy) {
+          this.removeAttribute('tabindex');
+          this.blur();
+        } else {
+          this.setAttribute('tabindex', '0');
+        }
+      }
     }
 
     connectedCallback() {
@@ -96,6 +146,17 @@
       }
     }
 
+    disconnectedCallback() {
+      this.removeEventListener('click', this.onToggleClick);
+      this.removeEventListener('keyup', this.onToggleKeyUp);
+
+      doc.removeEventListener('DOMContentLoaded', this.onDOMLoaded);
+
+      if (this.labelNode) {
+        this.labelNode.removeEventListener('click', this.onLabelClick);
+      }
+    }
+
     onToggleClick(e) {
       e.stopPropagation();
       this.toggleOn();
@@ -110,6 +171,31 @@
         e.preventDefault();
         this.toggleOn();
       }
+    }
+
+    // When this label is clicked, we want to
+    // click on this toggle and focus on it
+    onLabelClick(e) {
+      e.preventDefault();
+
+      if (this.disabled) return;
+
+      this.click();
+      this.focus();
+    }
+
+    onDOMLoaded() {
+      this.labelNode = this.findLabelNode();
+
+      // If the external label does not have an ID, we must
+      // ensure that it has one
+      if (!this.labelNode.id) this.labelNode.id = this.id + 'label';
+
+      // This toggle must be labelled by the external label node
+      this.setAttribute('aria-labelledby', this.labelNode.id);
+
+      // We listen for the external label to be clicked
+      this.labelNode.addEventListener('click', this.onLabelClick);
     }
 
     upgradeProperty(prop) {
@@ -144,92 +230,6 @@
       }
       const scope = this.getRootNode();
       return scope.querySelector(`label[for="${this.id}"]`);
-    }
-
-    // When this label is clicked, we want to
-    // click on this toggle and focus on it
-    onLabelClick(e) {
-      e.preventDefault();
-
-      if (this.disabled) return;
-
-      this.click();
-      this.focus();
-    }
-
-    onDOMLoaded() {
-      this.labelNode = this.findLabelNode();
-
-      // If the external label does not have an ID, we must
-      // ensure that it has one
-      if (!this.labelNode.id) this.labelNode.id = this.id + 'label';
-
-      // This toggle must be labelled by the external label node
-      this.setAttribute('aria-labelledby', this.labelNode.id);
-
-      // We listen for the external label to be clicked
-      this.labelNode.addEventListener('click', this.onLabelClick);
-    }
-
-    get on() {
-      return this.hasAttribute('on');
-    }
-
-    set on(value) {
-      const ison = Boolean(value);
-      if (ison) {
-        this.setAttribute('on', '');
-      } else {
-        this.removeAttribute('on');
-      }
-    }
-
-    get disabled() {
-      return this.hasAttribute('disabled');
-    }
-
-    set disabled(value) {
-      const isDisabled = Boolean(value);
-      if (isDisabled) {
-        this.setAttribute('disabled', '');
-      } else {
-        this.removeAttribute('disabled');
-      }
-    }
-
-    get name() {
-      return this.getAttribute('name');
-    }
-
-    get value() {
-      return this.getAttribute('value');
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-      const isTruthy = newValue !== null;
-      if (name === 'on') {
-        this.setAttribute('aria-checked', isTruthy);
-      }
-      if (name === 'disabled') {
-        this.setAttribute('aria-disabled', isTruthy);
-        if (isTruthy) {
-          this.removeAttribute('tabindex');
-          this.blur();
-        } else {
-          this.setAttribute('tabindex', '0');
-        }
-      }
-    }
-
-    disconnectedCallback() {
-      this.removeEventListener('click', this.onToggleClick);
-      this.removeEventListener('keyup', this.onToggleKeyUp);
-
-      doc.removeEventListener('DOMContentLoaded', this.onDOMLoaded);
-
-      if (this.labelNode) {
-        this.labelNode.removeEventListener('click', this.onLabelClick);
-      }
     }
   }
 
