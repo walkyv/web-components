@@ -164,7 +164,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           case KEYCODE.ENTER:
           case KEYCODE.SPACE:
             e.preventDefault();
-            this.toggleOn();
+            this.click();
             return;
         }
       }

@@ -168,7 +168,7 @@
         case KEYCODE.ENTER:
         case KEYCODE.SPACE:
           e.preventDefault();
-          this.toggleOn();
+          this.click();
           return;
       }
     }
