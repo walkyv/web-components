@@ -1,17 +1,15 @@
-$pe-color-strawberry-red: #d0021b;
-$pe-color-focus-outline: #1977d4;
+$pe-color-digital-pearson-blue: #047a9c;
+$pe-color-steel: #a9a9a9;
 
+$pe-color-focus-blue: #1977d4;
 $pe-focus-outline-distance: 4px;
 
 .pe-toggle {
   font: 14px/18px 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
-.pe-toggle * {
-  box-sizing: border-box;
-}
-
 .pe-toggle button {
+  box-sizing: border-box;
   position: relative;
   display: block;
   width: 48px;
@@ -21,7 +19,7 @@ $pe-focus-outline-distance: 4px;
   border-radius: 22px;
   margin: 4px 0;
   color: #fff;
-  background-color: #a9a9a9;
+  background-color: $pe-color-steel;
   cursor: pointer;
   text-transform: uppercase;
   transition: background 0.3s;
@@ -52,14 +50,14 @@ $pe-focus-outline-distance: 4px;
   top: 50%;
   width: calc(100% + #{$pe-focus-outline-distance});
   height: calc(100% + #{$pe-focus-outline-distance});
-  border: 2px solid #0b73da;
+  border: 2px solid $pe-color-focus-blue;
   border-radius: 22px;
   transform: translate(-50%, -50%);
   z-index: 1;
 }
 
 .pe-toggle button[aria-checked='true'] {
-  background: #047a9c;
+  background: $pe-color-digital-pearson-blue;
 }
 
 .pe-toggle button[aria-checked='true']::before {
