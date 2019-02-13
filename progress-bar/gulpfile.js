@@ -18,26 +18,25 @@ const paths = {
 };
 
 function styles(done) {
-   gulp
-    .src(paths.styles)
-    .pipe(sass())
-    .on('error', sass.logError)
-    .pipe(postcss([autoprefixer({ cascade: false }), cssnano()]))
-    .pipe(concat('style.css'))
-    .pipe(gulp.dest('./css'))
-    .pipe(server.stream());
+  gulp
+  .src(paths.styles)
+  .pipe(sass())
+  .on('error', sass.logError)
+  .pipe(postcss([autoprefixer({ cascade: false }), cssnano()]))
+  .pipe(gulp.dest('./css'))
+  .pipe(server.stream());
   done();
 }
 
 function scripts(done) {
   gulp
-    .src(paths.scripts)
-    .pipe(
-      babel({
-        presets: [['env', { modules: false }]]
-      })
-    )
-    .pipe(gulp.dest(paths.dist));
+  .src(paths.scripts)
+  .pipe(
+    babel({
+      presets: [['env', { modules: false }]]
+    })
+  )
+  .pipe(gulp.dest(paths.dist));
   done();
 }
 
