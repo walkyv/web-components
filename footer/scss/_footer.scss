@@ -15,16 +15,18 @@
   bottom: 0;
   width: inherit;
   padding: 0 1em 24px;
-  font-family: Open Sans,Arial,Helvetica,sans-serif;
+  font-family: 'Open Sans',Arial,Helvetica,sans-serif;
   font-size: 14px;
 }
 
-:host([theme='dark']) a {
+:host([theme='dark']) a,
+:host([theme='dark']) .copyright{
   color:white;
   border-color: white;
 }
 
 :host([theme='dark']) li {
+  color:white;
   border-color: #fff;
 }
 

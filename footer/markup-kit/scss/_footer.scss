@@ -1,16 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
 footer {
-  display:flex;
+  display: flex;
+  flex: 0 0 100%;
   align-items: center;
   justify-content: center;
-  margin-bottom:24px;
-  padding:0 1em;
-  font-family: "Open Sans", Arial, Helvetica, sans-serif;
   position: fixed;
   bottom: 0;
-  left: 0;
-  width:100%;
-  font-size:14px;
+  width: inherit;
+  padding: 0 1em 24px;
+  font-family: 'Open Sans',Arial,Helvetica,sans-serif;
+  font-size: 14px;
   @media(max-width:979px) {
     flex-direction: column;
   }
