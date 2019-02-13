@@ -106,7 +106,7 @@
 
       Array.prototype.forEach.call(toggles, function(toggle) {
         toggle.addEventListener('change', function(e) {
-          const accessibleName = getAccessibleName(e.example);
+          const accessibleName = getAccessibleName(e.target);
           msg.innerHTML =
             'You switched <code>' +
             accessibleName +
