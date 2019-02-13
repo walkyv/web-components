@@ -1,4 +1,4 @@
-# Pearson Datepicker Web Component
+# Pearson Loader Web Component
 
 ## Table of Contents
 

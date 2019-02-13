@@ -1,4 +1,4 @@
-# Pearson Datepicker Web Component
+# Pearson Progress Bar Web Component
 
 ## Table of Contents
 

@@ -4,7 +4,14 @@
 	<title>Loading Indicator</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width" />
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet"/>
 	<link rel="stylesheet" href="css/style.css" media="all" />
+
+	<!-- loads web component polyfills -->
+	<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
+	<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
+	<script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
+
 </head>
 <body class="">
 	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="pe-icons-sprite" style="display:none">
@@ -33,7 +40,7 @@
 						<div class="circle4"></div>
 					</div>
 				</div>
-				<span class="loading-text" id="loading-text">Loading...</span>
+				<span class="label" id="label">Loading...</span>
 			</div>
 		</div>
 	</script>
