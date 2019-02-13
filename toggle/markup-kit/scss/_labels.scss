@@ -1,0 +1,16 @@
+$pe-color-strawberry-red: #d0021b;
+
+.pe-input-label {
+  font: 12px/16px 'Open Sans', serif, Arial, Helvetica, sans-serif;
+  color: #6a7070;
+}
+
+.pe-input-description,
+.pe-input-error {
+  display: block;
+  margin-top: 4px;
+}
+
+.pe-input-error {
+  color: $pe-color-strawberry-red;
+}

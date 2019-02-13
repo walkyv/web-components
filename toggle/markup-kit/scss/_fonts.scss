@@ -1,0 +1,9 @@
+$pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/' default;
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-regular.woff2') format('woff2'),
+       url('https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
