@@ -25,6 +25,7 @@ $pe-focus-outline-distance: 8px;
   cursor: pointer;
   transition: background 0.3s;
   overflow: visible;
+  min-width: 50px;
 }
 
 :host([on]) {
