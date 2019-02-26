@@ -7,9 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "gulp serve"
   },
-  "dependencies": {
-    "@pearson-components/elements-sdk": "git+https://github.com/Pearson-Higher-Ed/elements-sdk.git#unstable-2.0-GLP"
-  },
+  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^9.0.0",
     "babel-core": "^6.26.3",
