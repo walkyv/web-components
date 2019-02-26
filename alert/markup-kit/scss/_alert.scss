@@ -137,6 +137,14 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
   height: 18px;
 }
 
+.pe-variant-icon {
+  margin-right: 12px;
+}
+
+.pe-alert-content {
+  display: inline-block;
+}
+
 @media (min-width: 768px) {
   .pe-alert {
     padding: 24px 28px;
