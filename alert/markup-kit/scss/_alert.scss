@@ -41,7 +41,6 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
 }
 
 .pe-alert {
-  box-sizing: border-box;
   position: relative;
   padding: 20px 28px;
   font: 14px/22px 'Open Sans', Calibri, Tahoma, sans-serif;
@@ -72,10 +71,19 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
   outline-offset: 4px;
 }
 
+.pe-alert-content-container {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
 .pe-alert h2,
 .pe-alert h3,
 .pe-alert p {
-  display: inline-block;
+  display: inline;
   font: inherit;
   margin: 0;
   font-weight: 600;
@@ -87,11 +95,11 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
 
 .pe-alert a {
   color: $primary;
+  text-decoration: none;
 }
 
 .pe-alert a:hover, .pe-alert a:focus {
   color: $primary-two;
-  text-decoration: none;
 }
 
 .pe-alert .pe-icon--btn {
@@ -138,6 +146,7 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
 }
 
 .pe-variant-icon {
+  flex: 0 0 18px;
   margin-right: 12px;
 }
 
@@ -145,10 +154,20 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
   display: inline-block;
 }
 
+@media (min-width: 480px) {
+  .pe-alert[data-alert-type="global"] {
+    width: 440px;
+  }
+}
+
 @media (min-width: 768px) {
   .pe-alert {
     padding: 24px 28px;
     padding-right: 36px;
+  }
+
+  .pe-alert[data-alert-type="global"] {
+    width: 580px;
   }
 
   .pe-alert .pe-icon--btn {
