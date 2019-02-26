@@ -124,6 +124,14 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
   pointer-events: none;
 }
 
+.pe-alert svg[class*='check'] {
+  fill: $success;
+}
+
+.pe-alert svg[class*='warning'] {
+  fill: $error;
+}
+
 .pe-alert svg[class$='-18'] {
   width: 18px;
   height: 18px;
