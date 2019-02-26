@@ -1,8 +1,15 @@
-$error: #db0020;
+$primary: #047A9C;
+$primary-two: #005a70;
+
 $neutral: #c7c7c7;
 $neutral-three: #6a7070;
 $neutral-high-one: #252525;
+
 $success: #19a6a4;
+$error: #db0020;
+
+$pe-focus-color: #0B73DA;
+
 
 $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/' !default;
 
@@ -22,7 +29,6 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
   font-style: normal;
 }
 
-
 @mixin flex(
   $align-items: center,
   $justify-content: space-between,
@@ -34,14 +40,8 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
   flex-direction: #{$flex-direction};
 }
 
-.pe-alert,
-.pe-alert *,
-.pe-alert *::before,
-.pe-alert *::after {
-  box-sizing: border-box;
-}
-
 .pe-alert {
+  box-sizing: border-box;
   position: relative;
   padding: 20px 28px;
   font: 14px/22px 'Open Sans', Calibri, Tahoma, sans-serif;
@@ -49,7 +49,7 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
   color: $neutral-high-one;
   border: 1px solid $neutral;
   border-left: 3px solid transparent;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.16);
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.16);
   visibility: hidden;
   opacity: 0;
 }
@@ -63,6 +63,15 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
   border-left-color: $success;
 }
 
+.pe-alert * {
+  box-sizing: inherit;
+}
+
+.pe-alert *:focus {
+  outline: 2px solid $pe-focus-color;
+  outline-offset: 4px;
+}
+
 .pe-alert h2,
 .pe-alert h3,
 .pe-alert p {
@@ -74,6 +83,15 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
 
 .pe-alert p {
   font-weight: 400;
+}
+
+.pe-alert a {
+  color: $primary;
+}
+
+.pe-alert a:hover, .pe-alert a:focus {
+  color: $primary-two;
+  text-decoration: none;
 }
 
 .pe-alert .pe-icon--btn {
@@ -90,12 +108,17 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
   padding: 0;
 }
 
+.pe-alert .pe-icon--btn:focus {
+  outline-offset: 0;
+}
+
 .pe-alert .pe-icon--btn::-moz-focus-inner {
   border: none;
   padding: 0;
 }
 
-.pe-icon--btn svg {
+
+.pe-alert svg {
   vertical-align: top;
   fill: $neutral-three;
   pointer-events: none;
