@@ -14,92 +14,37 @@ $success: #19a6a4;
   flex-direction: #{$flex-direction};
 }
 
+.pe-alert,
+.pe-alert *,
+.pe-alert *::before,
+.pe-alert *::after {
+  box-sizing: border-box;
+}
+
 .pe-alert {
+  padding: 20px 28px;
+  font: 14px/18px 'Open Sans', Calibri, Tahoma, sans-serif;
+  background-color: #fff;
+  color: #252525;
   visibility: hidden;
   opacity: 0;
+  border: 1px solid $neutral;
+  border-left: 3px solid translucent;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.16);
+}
 
-  @media (max-width: 480px) {
-    max-width: 440px;
-    padding: 4px;
-  }
-
-  &[data-alert-type='inline'] {
-    position: absolute;
-  }
-
-  &[data-alert-type='global'] {
-    position: fixed;
-    top: 32px;
-    left: 0;
-    margin: 0 32px;
-    @media (max-width: 768px) {
-      top: 36px;
-      margin: 0 24px;
-    }
+@media (min-width: 768px) {
+  .pe-alert {
+    padding: 24px 28px;
+    padding-right: 36px;
   }
 }
 
-.pe-alert-box {
-  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.16);
-  padding: 8px;
-  border: 1px solid #c7c7c7;
-  border-left: 3px solid;
-  margin-bottom: 1em;
-  max-width: 580px;
-  transition: all 0.2s ease;
-  z-index: 10;
-  background: white;
+.pe-alert.error {
+  border-left-color: $error;
+}
 
-  &.error {
-    border-left-color: $error;
-
-    a {
-      color: $error;
-    }
-
-    .alert-content-container {
-      color: $error;
-
-      svg {
-        margin-top: 2px;
-      }
-    }
-  }
-
-  &.success,
-  &.info {
-    border-left-color: $success;
-
-    .alert-content-container {
-      color: $success;
-    }
-  }
-
-  .close-title button {
-    float: right;
-    color: $neutral-three;
-    cursor: pointer;
-  }
-
-  .alert-content-container {
-    @include flex;
-
-    align-items: flex-start;
-    padding: 20px 4px 20px 20px;
-
-    svg {
-      margin-right: 12px;
-      min-width: 18px;
-    }
-
-    .alert-title {
-      margin-right: 4px;
-      display: inline;
-    }
-
-    .alert-text {
-      margin-bottom: 0;
-      display: inline;
-    }
-  }
+.pe-alert.info,
+.pe-alert.success {
+  border-left-color: $success;
 }
