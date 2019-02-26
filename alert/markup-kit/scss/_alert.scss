@@ -1,6 +1,7 @@
 $error: #db0020;
 $neutral: #c7c7c7;
 $neutral-three: #6a7070;
+$neutral-high-one: #252525;
 $success: #19a6a4;
 
 @mixin flex(
@@ -22,22 +23,16 @@ $success: #19a6a4;
 }
 
 .pe-alert {
+  position: relative;
   padding: 20px 28px;
   font: 14px/18px 'Open Sans', Calibri, Tahoma, sans-serif;
   background-color: #fff;
-  color: #252525;
-  visibility: hidden;
-  opacity: 0;
+  color: $neutral-high-one;
   border: 1px solid $neutral;
   border-left: 3px solid transparent;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.16);
-}
-
-@media (min-width: 768px) {
-  .pe-alert {
-    padding: 24px 28px;
-    padding-right: 36px;
-  }
+  visibility: hidden;
+  opacity: 0;
 }
 
 .pe-alert.error {
@@ -47,4 +42,45 @@ $success: #19a6a4;
 .pe-alert.info,
 .pe-alert.success {
   border-left-color: $success;
+}
+
+.pe-alert .pe-icon--btn {
+  position: absolute;
+  padding: 4px 4px;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+.pe-alert .pe-icon--btn::-moz-focus-inner {
+  border: none;
+  padding: 0;
+}
+
+.pe-icon--btn svg {
+  vertical-align: top;
+  fill: $neutral-three;
+  pointer-events: none;
+}
+
+.pe-alert svg[class$='-18'] {
+  width: 18px;
+  height: 18px;
+}
+
+@media (min-width: 768px) {
+  .pe-alert {
+    padding: 24px 28px;
+    padding-right: 36px;
+  }
+
+  .pe-alert .pe-icon--btn {
+    padding: 8px 8px;
+  }
 }
