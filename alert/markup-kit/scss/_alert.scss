@@ -4,6 +4,25 @@ $neutral-three: #6a7070;
 $neutral-high-one: #252525;
 $success: #19a6a4;
 
+$pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/' !default;
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('#{$pe-fonts-path}opensans-regular.woff2') format('woff2'),
+    url('#{$pe-fonts-path}opensans-regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('#{$pe-fonts-path}opensans-semibold.woff2') format('woff2'),
+    url('#{$pe-fonts-path}opensans-semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+
+
 @mixin flex(
   $align-items: center,
   $justify-content: space-between,
@@ -25,7 +44,7 @@ $success: #19a6a4;
 .pe-alert {
   position: relative;
   padding: 20px 28px;
-  font: 14px/18px 'Open Sans', Calibri, Tahoma, sans-serif;
+  font: 14px/22px 'Open Sans', Calibri, Tahoma, sans-serif;
   background-color: #fff;
   color: $neutral-high-one;
   border: 1px solid $neutral;
@@ -42,6 +61,19 @@ $success: #19a6a4;
 .pe-alert.info,
 .pe-alert.success {
   border-left-color: $success;
+}
+
+.pe-alert h2,
+.pe-alert h3,
+.pe-alert p {
+  display: inline-block;
+  font: inherit;
+  margin: 0;
+  font-weight: 600;
+}
+
+.pe-alert p {
+  font-weight: 400;
 }
 
 .pe-alert .pe-icon--btn {
