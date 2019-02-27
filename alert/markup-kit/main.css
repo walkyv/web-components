@@ -1,0 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
+}
+
+body {
+  color: #252525;
+  width: 1000px;
+  margin: 0 auto;
+}
