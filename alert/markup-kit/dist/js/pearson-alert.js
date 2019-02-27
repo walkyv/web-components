@@ -34,7 +34,7 @@
       alert.classList.remove('slideOutDown');
     }
 
-    if (alert.hasAttribute('data-important')) {
+    if (alert.hasAttribute('data-needs-interaction')) {
       setTimeout(function () {
         alertClose.focus();
       }, 250);
