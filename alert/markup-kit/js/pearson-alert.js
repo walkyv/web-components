@@ -15,16 +15,10 @@
   let focusBeforeOpen;
 
   if (alertType === 'inline') {
-    const wrapper = doc.createElement('div');
-    wrapper.style.position = 'relative';
 
-    // Move the alert into an absolutely positioned wrapper
-    alert.parentNode.insertBefore(wrapper, alert);
-    wrapper.appendChild(alert);
-
-    // Place the wrapper in the dom rightg after the trigger
+    // Place the alert in the DOM right after the trigger
     alertTrigger.parentNode.insertBefore(
-      wrapper,
+      alert,
       alertTrigger.nextElementSibling
     );
   }
