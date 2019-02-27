@@ -55,8 +55,10 @@ $pe-fonts-path: 'https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/
 }
 
 .pe-alert[data-alert-type="inline"] {
-  margin: 0;
   position: absolute;
+  top: unset;
+  left: unset;
+  margin: 0;
 }
 
 .pe-alert * {
