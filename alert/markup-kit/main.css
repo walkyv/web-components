@@ -8,12 +8,13 @@ html {
 
 body {
   color: #252525;
-  width: 1000px;
+  width: 780px;
   margin: 0 auto;
 }
 
 .example {
   padding: 1rem 0.5rem;
+  margin-top: 2rem;
   border: 1px solid #252525;
 }
 
