@@ -1,6 +1,29 @@
 (function(w, doc) {
   'use strict';
 
+  const FOCUSABLE_ELEMENTS = `a:not([disabled]), button:not([disabled])`;
+
+  function getFocusableChildren(node) {
+    const filter = Array.prototype.filter,
+      focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+    return filter.call(focusableChildren, function(child) {
+      return !!(
+        child.offsetWidth ||
+        child.offsetHeight ||
+        child.getClientRects().length
+      );
+    });
+  }
+
+  function setFocusToFirstChild(node) {
+    const focusableChildren = getFocusableChildren(node),
+      focusableChild =
+        node.querySelector('[autofocus]') || focusableChildren[0];
+    if (focusableChild) {
+      focusableChild.focus();
+    }
+  }
+
   function moveIntoViewport(el) {
     el.style.top = w.scrollY + 'px';
     el.style.left = w.scrollX + 'px';
@@ -35,11 +58,9 @@
       moveIntoViewport(alert);
       alert.classList.add('slideInDown');
       alert.classList.remove('slideOutDown');
-    }
 
-    if (alert.hasAttribute('data-needs-interaction')) {
       setTimeout(() => {
-        alertClose.focus();
+        setFocusToFirstChild(alert);
       }, 250);
     }
   }
