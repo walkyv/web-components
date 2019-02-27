@@ -11,3 +11,12 @@ body {
   width: 1000px;
   margin: 0 auto;
 }
+
+.example {
+  padding: 1rem 0.5rem;
+  border: 1px solid #252525;
+}
+
+.example p:first-child {
+  margin-top: 0;
+}
