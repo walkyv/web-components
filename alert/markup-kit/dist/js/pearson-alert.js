@@ -19,11 +19,6 @@
     }
   }
 
-  function moveIntoViewport(el) {
-    el.style.top = w.scrollY + 'px';
-    el.style.left = w.scrollX + 'px';
-  }
-
   var alertTrigger = doc.querySelector('[data-action="trigger-alert"]'),
       alert = doc.querySelector('[data-alert]'),
       alertClose = alert.querySelector('[data-action="close-alert"]');
@@ -47,7 +42,6 @@
     }
 
     if (alertType === 'global') {
-      moveIntoViewport(alert);
       alert.classList.add('slideInDown');
       alert.classList.remove('slideOutDown');
 
