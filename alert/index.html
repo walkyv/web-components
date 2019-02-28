@@ -10,9 +10,8 @@
 	<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
 	<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
 	<script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
 
-	<!-- load pearson and global styles -->
-	<link href="https://unpkg.com/@pearson-components/elements-sdk@1.15.3/build/css/elements.css#unstable-2.0-GLP" rel="stylesheet">
 
 	<!-- import web components -->
 
@@ -46,6 +45,14 @@
 	<div class="target">
 		<div id="output" class="output" aria-live="polite" aria-atomic="true">
 			<pearson-alert level="global" type="error" class="animated slideInDown">
+					<h2 id="alertTitle">
+							<strong>Lorem ipsom dolor sit amet.</strong>
+						</h2>
+						<p id="alertText">
+							Ronsectetuer adipiscing elit. Aene eoo rjgieo roi an commodo ligula
+							eget dolor enean massa.
+						</p>
+						<a href="#foo">This is a link.</a>
 			</pearson-alert>
 		</div>
 	</div>
