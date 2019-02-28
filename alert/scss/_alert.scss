@@ -10,7 +10,8 @@ $error: #db0020;
 
 $pe-focus-color: #0B73DA;
 
-.pe-alert {
+:host {
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
@@ -26,16 +27,16 @@ $pe-focus-color: #0B73DA;
   opacity: 0;
 }
 
-.pe-alert.error {
+:host(.error) {
   border-left-color: $error;
 }
 
-.pe-alert.info,
-.pe-alert.success {
+:host(.info),
+:host(.success) {
   border-left-color: $success;
 }
 
-.pe-alert[data-alert-type="inline"] {
+:host([type="inline"]) {
   position: absolute;
   top: unset;
   left: unset;
@@ -43,16 +44,16 @@ $pe-focus-color: #0B73DA;
   margin: 0;
 }
 
-.pe-alert * {
+* {
   box-sizing: inherit;
 }
 
-.pe-alert *:focus {
+*:focus {
   outline: 2px solid $pe-focus-color;
   outline-offset: 4px;
 }
 
-.pe-alert .content-container {
+.content-container {
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -61,29 +62,29 @@ $pe-focus-color: #0B73DA;
   flex-direction: row;
 }
 
-.pe-alert h2,
-.pe-alert h3,
-.pe-alert p {
+h2,
+h3,
+p {
   display: inline;
   font: inherit;
   margin: 0;
   font-weight: 600;
 }
 
-.pe-alert p {
+p {
   font-weight: 400;
 }
 
-.pe-alert a {
+a {
   color: $primary;
   text-decoration: none;
 }
 
-.pe-alert a:hover, .pe-alert a:focus {
+a:hover, a:focus {
   color: $primary-two;
 }
 
-.pe-alert .pe-icon--btn {
+.pe-icon--btn {
   position: absolute;
   padding: 4px 4px;
   top: 0;
@@ -97,31 +98,31 @@ $pe-focus-color: #0B73DA;
   padding: 0;
 }
 
-.pe-alert .pe-icon--btn:focus {
+.pe-icon--btn:focus {
   outline-offset: 0;
 }
 
-.pe-alert .pe-icon--btn::-moz-focus-inner {
+.pe-icon--btn::-moz-focus-inner {
   border: none;
   padding: 0;
 }
 
 
-.pe-alert svg {
+svg {
   vertical-align: top;
   fill: $neutral-three;
   pointer-events: none;
 }
 
-.pe-alert svg[class*='check'] {
+svg[class*='check'] {
   fill: $success;
 }
 
-.pe-alert svg[class*='warning'] {
+svg[class*='warning'] {
   fill: $error;
 }
 
-.pe-alert svg[class$='-18'] {
+svg[class$='-18'] {
   width: 18px;
   height: 18px;
 }
@@ -131,32 +132,32 @@ $pe-focus-color: #0B73DA;
   margin-right: 12px;
 }
 
-.pe-alert .content {
+.content {
   display: inline-block;
 }
 
 @media (min-width: 480px) {
-  .pe-alert[data-alert-type="global"] {
+  :host([type="global"]) {
     width: 440px;
   }
 }
 
 @media (min-width: 768px) {
-  .pe-alert {
+  :host {
     padding: 24px 28px;
     margin: 32px;
     padding-right: 36px;
   }
 
-  .pe-alert[data-alert-type="global"] {
+  :host([type="global"]) {
     width: 580px;
   }
 
-  .pe-alert[data-alert-type="inline"] {
+  :host([type="inline"]) {
     min-width: 440px;
   }
 
-  .pe-alert .pe-icon--btn {
+  .pe-icon--btn {
     padding: 8px 8px;
   }
 }
