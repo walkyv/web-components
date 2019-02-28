@@ -62,26 +62,31 @@ $pe-focus-color: #0B73DA;
   flex-direction: row;
 }
 
-h2,
-h3,
-p {
+::slotted(h2),
+::slotted(h3),
+::slotted(p) {
   display: inline;
-  font: inherit;
+  font: 14px/22px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
   margin: 0;
   font-weight: 600;
 }
 
-p {
+::slotted(p) {
   font-weight: 400;
 }
 
-a {
+::slotted(a) {
   color: $primary;
   text-decoration: none;
 }
 
-a:hover, a:focus {
+::slotted(a:hover), ::slotted(a:focus) {
   color: $primary-two;
+}
+
+::slotted(a:focus) {
+  outline: 2px solid $pe-focus-color;
+  outline-offset: 4px;
 }
 
 .pe-icon--btn {
