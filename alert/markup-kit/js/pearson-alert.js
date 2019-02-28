@@ -79,7 +79,7 @@
 
   const alertTrigger = doc.querySelector('[data-action="trigger-alert"]'),
     alert = doc.querySelector('[data-alert]'),
-    alertClose = alert.querySelector('[data-action="close-alert"]');
+    alertInteractives = alert.querySelectorAll(FOCUSABLE_ELEMENTS);
 
   const alertType = alert.dataset.alertType;
 
@@ -112,6 +112,7 @@
   }
 
   function closeAlert() {
+    console.log('closing')
     if (alertType === 'inline') {
       alert.classList.add('fadeOut');
       alert.classList.remove('fadeIn');
@@ -124,5 +125,8 @@
   }
 
   alertTrigger.addEventListener('click', triggerAlert);
-  alertClose.addEventListener('click', closeAlert);
+  Array.prototype.forEach.call(alertInteractives, function (i) {
+    console.log(i)
+    i.addEventListener('click', closeAlert);
+  })
 })(window, document);
