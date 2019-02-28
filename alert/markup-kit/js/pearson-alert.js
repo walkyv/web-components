@@ -24,6 +24,59 @@
     }
   }
 
+  function constrainToParentWidth(el) {
+    const parent = el.parentElement;
+    const parentWidth = parent.getBoundingClientRect().width;
+    const parentComputedStyle = w.getComputedStyle(parent);
+    const parentPaddingWidth =
+      parseInt(
+        parentComputedStyle.getPropertyValue('padding-left').match(/\d+/)[0],
+        10
+      ) +
+      parseInt(
+        parentComputedStyle.getPropertyValue('padding-right').match(/\d+/)[0],
+        10
+      );
+
+    const parentBorderWidth =
+      parseInt(
+        parentComputedStyle
+          .getPropertyValue('border-left-width')
+          .match(/\d+/)[0],
+        10
+      ) +
+      parseInt(
+        parentComputedStyle
+          .getPropertyValue('border-right-width')
+          .match(/\d+/)[0],
+        10
+      );
+
+    const elMinWidth = parseInt(
+      w
+        .getComputedStyle(el)
+        .getPropertyValue('min-width')
+        .match(/\d+/)[0],
+      10
+    );
+
+    // The width should be equal to the parent's width,
+    // minus the padding and border
+    let nextElWidth = parentWidth - (parentPaddingWidth + parentBorderWidth);
+
+    if (nextElWidth > w.innerWidth) {
+      nextElWidth = w.innerWidth;
+    }
+
+    // If that number is less than the min-width,
+    if (nextElWidth < elMinWidth) {
+      //  use min-width instead
+      nextElWidth = elMinWidth;
+    }
+
+    el.style.width = nextElWidth + 'px';
+  }
+
   const alertTrigger = doc.querySelector('[data-action="trigger-alert"]'),
     alert = doc.querySelector('[data-alert]'),
     alertClose = alert.querySelector('[data-action="close-alert"]');
@@ -33,12 +86,11 @@
   let focusBeforeOpen;
 
   if (alertType === 'inline') {
-
-    // Place the alert in the DOM right after the trigger
     alertTrigger.parentNode.insertBefore(
       alert,
       alertTrigger.nextElementSibling
     );
+    constrainToParentWidth(alert);
   }
 
   function triggerAlert() {
