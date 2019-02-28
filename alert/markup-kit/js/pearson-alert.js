@@ -94,7 +94,6 @@
   }
 
   function triggerAlert() {
-    focusBeforeOpen = doc.activeElement;
 
     if (alertType === 'inline') {
       alert.classList.add('fadeIn');
@@ -112,7 +111,6 @@
   }
 
   function closeAlert() {
-    console.log('closing')
     if (alertType === 'inline') {
       alert.classList.add('fadeOut');
       alert.classList.remove('fadeIn');
@@ -121,12 +119,11 @@
       alert.classList.remove('slideInDown');
       alert.classList.add('slideOutDown');
     }
-    focusBeforeOpen.focus();
+    alertTrigger.focus();
   }
 
   alertTrigger.addEventListener('click', triggerAlert);
   Array.prototype.forEach.call(alertInteractives, function (i) {
-    console.log(i)
     i.addEventListener('click', closeAlert);
-  })
+  });
 })(window, document);
