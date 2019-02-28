@@ -44,9 +44,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Alert, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var animated = this.getAttribute('animated');
         var level = this.getAttribute('level');
         var type = this.getAttribute('type');
+
+        if (level === 'global') {
+          this.openingAnimation = 'slideInDown';
+          this.closingAnimation = 'slideOutDown';
+        }
+        if (level === 'inline') {
+          this.openingAnimation = 'fadeIn';
+          this.closingAnimation = 'fadeOut';
+        }
+
+        this.classList.add(this.openingAnimation);
       }
     }]);
 

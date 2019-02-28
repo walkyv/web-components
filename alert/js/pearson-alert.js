@@ -90,9 +90,19 @@
     }
 
     connectedCallback() {
-      const animated = this.getAttribute('animated');
       const level = this.getAttribute('level');
       const type = this.getAttribute('type');
+
+      if (level === 'global') {
+        this.openingAnimation = 'slideInDown';
+        this.closingAnimation = 'slideOutDown';
+      }
+      if (level === 'inline') {
+        this.openingAnimation = 'fadeIn';
+        this.closingAnimation = 'fadeOut';
+      }
+
+      this.classList.add(this.openingAnimation);
     }
   }
 
