@@ -1,0 +1,44 @@
+@font-face {
+  font-family: 'Open Sans';
+  src: url('https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-regular.woff2') format('woff2'),
+    url('https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-semibold.woff2') format('woff2'),
+    url('https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
+}
+
+body {
+  color: #252525;
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+button {
+  font: inherit;
+}
+
+.example {
+  padding: 1rem 0.5rem;
+  margin-top: 2rem;
+  border: 1px solid #252525;
+}
+
+.example p:first-child {
+  margin-top: 0;
+}

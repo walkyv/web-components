@@ -1,27 +1,96 @@
 (function(w, doc) {
   'use strict';
 
+  const FOCUSABLE_ELEMENTS = `a:not([disabled]), button:not([disabled])`;
+
+  function getFocusableChildren(node) {
+    const filter = Array.prototype.filter,
+      focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+    return filter.call(focusableChildren, function(child) {
+      return !!(
+        child.offsetWidth ||
+        child.offsetHeight ||
+        child.getClientRects().length
+      );
+    });
+  }
+
+  function setFocusToFirstChild(node) {
+    const focusableChildren = getFocusableChildren(node),
+      focusableChild =
+        node.querySelector('[autofocus]') || focusableChildren[0];
+    if (focusableChild) {
+      focusableChild.focus();
+    }
+  }
+
+  function constrainToParentWidth(el) {
+    const parent = el.parentElement;
+    const parentWidth = parent.getBoundingClientRect().width;
+    const parentComputedStyle = w.getComputedStyle(parent);
+    const parentPaddingWidth =
+      parseInt(
+        parentComputedStyle.getPropertyValue('padding-left').match(/\d+/)[0],
+        10
+      ) +
+      parseInt(
+        parentComputedStyle.getPropertyValue('padding-right').match(/\d+/)[0],
+        10
+      );
+
+    const parentBorderWidth =
+      parseInt(
+        parentComputedStyle
+          .getPropertyValue('border-left-width')
+          .match(/\d+/)[0],
+        10
+      ) +
+      parseInt(
+        parentComputedStyle
+          .getPropertyValue('border-right-width')
+          .match(/\d+/)[0],
+        10
+      );
+
+    const elMinWidth = parseInt(
+      w
+        .getComputedStyle(el)
+        .getPropertyValue('min-width')
+        .match(/\d+/)[0],
+      10
+    );
+
+    // The width should be equal to the parent's width,
+    // minus the padding and border
+    let nextElWidth = parentWidth - (parentPaddingWidth + parentBorderWidth);
+
+    if (nextElWidth > w.innerWidth) {
+      nextElWidth = w.innerWidth;
+    }
+
+    // If that number is less than the min-width,
+    if (nextElWidth < elMinWidth) {
+      //  use min-width instead
+      nextElWidth = elMinWidth;
+    }
+
+    el.style.width = nextElWidth + 'px';
+  }
+
   const alertTrigger = doc.querySelector('[data-action="trigger-alert"]'),
     alert = doc.querySelector('[data-alert]'),
-    alertClose = alert.querySelector('[data-action="close-alert"]');
+    alertInteractives = alert.querySelectorAll(FOCUSABLE_ELEMENTS);
 
   const alertType = alert.dataset.alertType;
 
   let focusBeforeOpen;
 
   if (alertType === 'inline') {
-    const wrapper = doc.createElement('div');
-    wrapper.style.position = 'relative';
-
-    // Move the alert into an absolutely positioned wrapper
-    alert.parentNode.insertBefore(wrapper, alert);
-    wrapper.appendChild(alert);
-
-    // Place the wrapper in the dom rightg after the trigger
     alertTrigger.parentNode.insertBefore(
-      wrapper,
+      alert,
       alertTrigger.nextElementSibling
     );
+    constrainToParentWidth(alert);
   }
 
   function triggerAlert() {
@@ -35,16 +104,15 @@
     if (alertType === 'global') {
       alert.classList.add('slideInDown');
       alert.classList.remove('slideOutDown');
-    }
 
-    if (alert.hasAttribute('data-important')) {
       setTimeout(() => {
-        alertClose.focus();
+        setFocusToFirstChild(alert);
       }, 250);
     }
   }
 
   function closeAlert() {
+    console.log('closing')
     if (alertType === 'inline') {
       alert.classList.add('fadeOut');
       alert.classList.remove('fadeIn');
@@ -57,5 +125,8 @@
   }
 
   alertTrigger.addEventListener('click', triggerAlert);
-  alertClose.addEventListener('click', closeAlert);
+  Array.prototype.forEach.call(alertInteractives, function (i) {
+    console.log(i)
+    i.addEventListener('click', closeAlert);
+  })
 })(window, document);
