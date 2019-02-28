@@ -24,7 +24,8 @@ html {
 
 body {
   color: #252525;
-  width: 780px;
+  width: 100%;
+  max-width: 780px;
   margin: 0 auto;
 }
 
