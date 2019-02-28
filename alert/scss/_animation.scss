@@ -59,24 +59,24 @@
   visibility: hidden;
 }
 
-:host(.animated.slideInDown) {
+:host(.slideInDown) {
   animation: 0.3s ease-in-out 0s slideInDown;
 }
 
-:host(.animated.slideOutDown) {
+:host(.slideOutDown) {
   animation: 0.2s ease-in 0s slideOutDown;
 }
 
-:host(.animated.fadeIn) {
+:host(.fadeIn) {
   animation: 0.3s linear 0s fadeIn;
 }
 
-:host(.animated.fadeOut) {
+:host(.fadeOut) {
   animation: 0.2s linear 0s fadeOut;
 }
 
 @media (prefers-reduced-motion) {
-  :host(.animated) {
+  :host([animated]) {
     animation: unset !important;
     transition: none !important;
   }
