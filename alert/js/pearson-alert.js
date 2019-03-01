@@ -151,6 +151,16 @@
     el.style.width = nextElWidth + 'px';
   }
 
+  function ensureAttrs(node, attrs) {
+    for (var attrName in attrs) {
+      var requiredVal = attrs[attrName];
+      if (!node.hasAttribute(attrName) || node.getAttribute(attrName) !== requiredVal) {
+        node.setAttribute(attrName, requiredVal);
+      }
+    }
+  }
+
+
   class Alert extends HTMLElement {
     get animated() {
       return (
@@ -186,15 +196,29 @@
     }
 
     connectedCallback() {
+      const a11yAttrs = {
+        'aria-labelledby': 'alertTitle',
+        'aria-describedby': 'alertDescription',
+      };
+
       if (this.level === 'global') {
+        a11yAttrs.role = 'dialog';
+        
         this.openingAnimation = 'slideInDown';
         this.closingAnimation = 'slideOutDown';
       }
       if (this.level === 'inline') {
         constrainToParentWidth(this);
+
+        a11yAttrs.role = this.type === 'error' ? 'alert' : 'status';
+        a11yAttrs['aria-live'] = this.type === 'error' ? 'assertive' : 'polite';
+
+        
         this.openingAnimation = 'fadeIn';
         this.closingAnimation = 'fadeOut';
       }
+
+      ensureAttrs(this, a11yAttrs);
 
       this.classList.add(this.openingAnimation);
 
