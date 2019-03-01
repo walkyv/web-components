@@ -123,6 +123,9 @@
 
       this.contentContainer = clone.querySelector('.content-container');
       this.closeBtn = clone.querySelector('button[data-action="close-alert"]');
+      this.returnNode =
+        doc.querySelector(`#${this.getAttribute('returnNode')}`) ||
+        doc.activeElement;
 
       this.shadowRoot.appendChild(clone);
 
@@ -148,6 +151,9 @@
       } else if (this.level === 'global') {
         setFocusToFirstChild(this);
       }
+    }
+    disconnectedCallback() {
+      this.returnNode.focus();
     }
 
     onCloseClick() {

@@ -70,6 +70,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.contentContainer = clone.querySelector('.content-container');
       _this.closeBtn = clone.querySelector('button[data-action="close-alert"]');
+      _this.returnNode = doc.querySelector('#' + _this.getAttribute('returnNode')) || doc.activeElement;
 
       _this.shadowRoot.appendChild(clone);
 
@@ -98,6 +99,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         } else if (this.level === 'global') {
           setFocusToFirstChild(this);
         }
+      }
+    }, {
+      key: 'disconnectedCallback',
+      value: function disconnectedCallback() {
+        this.returnNode.focus();
       }
     }, {
       key: 'onCloseClick',
