@@ -30,7 +30,7 @@ Import the web component onto the page, inbetween the `<head>` tags
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
   <!-- Web component script -->
-  <script src="/path-to-datepicker/js/dist/pearson-modal.js" />
+  <script src="/path-to-datepicker/js/dist/pearson-pearson-modal.js" />
 </head>
 ```
 

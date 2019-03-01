@@ -13,7 +13,7 @@
     [contenteditable]:not([tabindex^="-"]):not([inert]),
     [tabindex]:not([tabindex^="-"]):not([inert])`,
     TAB_KEY = 9,
-    ESCAPE_KEY = 27;
+    ESCAPE_KEY = 27; 
 
   const body = document.body,
     container = body.querySelector('#modalContainer');
