@@ -1,10 +1,80 @@
+// Primary Pallette
+$primary: #047A9C; // Pearson Blue
+$secondary: #FFB81C; // Sunshine Yellow
+$white: #ffffff;
+
+// Neutral Colors
+// High Contrast Tones
+$neutral-high-one: #252525; // Charcoal
+$neutral-high-two: #6A7070; // Medium Gray
+
+// Medium Tones
+$neutral-med-one: #A9A9A9; // Steel
+$neutral-med-two: #C7C7C7; // Concrete
+$neutral-med-three: #D9D9D9; // Alto
+$neutral-med-four: #E9E9E9; // Moonlight
+
+// Light Tones
+$neutral-light-one: #EEEEEE; // Stainless
+$neutral-light-two: #F5F5F5;  // White Gray
+
+// Conditional Colors
+$condition-one: #DB0020; // Alert Red
+$condition-two: #038238; // Confirm Green
+$condition-three: #DA0474; // Notification Pink
+
+// Themes
+// Aqua
+$theme-one-light: #CAEFEE; // Light Aqua
+$theme-one-med: #76D5D4; // Medium Aqua
+$theme-one-dark: #19A5A3;  // Dark Aqua
+
+// Violet
+$theme-two-light: #F2E5F1; // Light Violet
+$theme-two-med: #895B9A; // Medium Violet
+$theme-two-dark: #633673;  // Dark Violet
+
+// Chartreuse
+$theme-three-light: #F6F8CC; // Light Chartreuse
+$theme-three-med: #D2DB0E; // Medium Chartreuse
+$theme-three-dark: #B0B718;  // Dark Chartreuse
+
+// Indigo
+$theme-four-light: #D9E6F1; // Light Indigo
+$theme-four-med: #356286; // Medium Indigo
+$theme-four-dark: #1E496C;  // Dark Indigo
+
+// Lime
+$theme-five-light: #DFF5D5; // Light Lime
+$theme-five-med: #66BE3E; // Medium Lime
+$theme-five-dark: #288500;  // Dark Lime
+
+// Sky
+$theme-six-light: #D6ECF4; // Light Sky
+$theme-six-med: #80C5DD; // Medium Sky
+$theme-six-dark: #46A9CB;  // Dark Sky
+
+// Canary
+$theme-seven-light: #FAEBC3; // Light Canary
+$theme-seven-med: #F5C54C; // Medium Canary
+$theme-seven-dark: #DEA30D;  // Dark Canary
+
+// focus state
+$focus: #1977D4; // Blue focus circle
+
+// Typography
+$font-size: 16; // Default
+
+// Effects
+$box-shadow: rgba(0, 0, 0, .25);
+
 :host {
   width:322px;
 }
 .datepicker-container {
   position:relative;
   min-width:150px;
-  width:322px;
+  width: 296px;
   font-family: 'Open Sans', Calibri, Tahoma, sans-serif;
   @media all and (-ms-high-contrast:none) {
     max-width:350px;
@@ -12,7 +82,25 @@
 
   .datepicker {
     position:relative;
-
+    input {
+      border: 1px solid #252525
+    }
+    button {
+      bottom: -6px;
+      color: #6a7070;
+      position: absolute;
+      right: -42px;
+      margin: 0;
+    }
+    input:focus {
+      :focus {
+        outline: 0;
+        box-shadow: 0 0 0 2px white, 0 0 0 4px #0b73da
+      }
+    }
+    svg {
+      fill: #6A7070
+    }
     .pe-icon-wrapper {
       bottom: calc(50% - 11px);
       color: #6a7070;
@@ -41,4 +129,152 @@
 }
 .error .pe-textLabelInput__label {
   color:#db0020;
+}
+
+.gr-input {
+  display:block;
+  margin:4px 0;
+  padding: 0 12px;
+  height:36px;
+  color: $neutral-high-one;
+  border:1px solid $neutral-high-two;
+  background:$white;
+  border-radius:4px;
+  font-size:em(14);
+  width:100%;
+  max-width:100%;
+}
+
+.gr-input:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px $focus
+}
+
+.gr-btn {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  border:1px solid $neutral-high-two;
+  background: transparent;
+  color: $neutral-high-two;
+  min-width:152px;
+  padding:8px 24px;
+  font-size: em(16);
+  cursor:pointer;
+  border-radius:22px;
+  position:relative;
+  margin:12px;
+}
+
+.gr-btn:hover {
+  color:$neutral-high-one;
+  border:1px solid $neutral-high-one;
+}
+
+.gr-btn:focus {
+  outline: 0;
+}
+
+.gr-btn:focus:after {
+  border: 2px solid #1977d4;
+  border-radius: 8px;
+  content: "";
+  min-width: -webkit-calc(100% + 10px);
+  min-width: auto;
+  padding: 18px 18px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: absolute;
+  top: -3px;
+  left: 1px;
+  overflow: visible;
+}
+
+// Primary button styles
+
+.gr-btn.primary {
+  background-color:$primary;
+  border:1px solid $primary;
+  color: white;
+}
+
+.gr-btn.primary:hover {
+  color:white;
+  background-color: darken($primary, 7%)
+}
+
+.gr-btn.attention {
+  background-color:$secondary;
+  border:1px solid $secondary;
+  color: $neutral-high-one;
+}
+
+.gr-btn.attention:hover {
+  background-color: darken($secondary, 7%)
+}
+
+.gr-btn.small {
+  min-width:128px;
+  padding:7px 20px;
+  font-size: em(14);
+}
+
+.gr-btn.small:focus:after {
+  padding:18px 21px;
+}
+
+.gr-btn.extra-large {
+  min-width:152px;
+  padding:10px 24px;
+  font-size: em(16);
+}
+
+.gr-btn.extra-large:focus:after {
+  padding:22px 21px;
+  border-radius:24px;
+}
+
+.gr-btn:disabled {
+  background-color:$neutral-med-four !important;
+  color: $neutral-high-two !important;
+  border:0 !important;
+  cursor: default !important;
+}
+
+.gr-btn.icon-btn-24 {
+  min-width:auto;
+  padding: 5px 12px;
+  border:0;
+}
+
+.gr-btn.icon-btn-18 {
+  min-width:auto;
+  padding: 8px 12px;
+  border:0;
+}
+
+.gr-btn.no-border {
+  border:0;
+}
+
+.gr-btn.no-border:hover {
+  border:0;
+}
+.gr-btn.no-border:focus:after{
+  border-radius: 5px;
+  min-width:auto;
+  left:auto;
+  top: auto;
+  padding:16px;
+}
+
+.icon-18 {
+  width:18px;
+  height:18px;
 }
