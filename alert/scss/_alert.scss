@@ -49,8 +49,8 @@ $pe-focus-color: #0B73DA;
 }
 
 *:focus {
-  outline: 2px solid $pe-focus-color;
-  outline-offset: 4px;
+  //outline: 2px solid $pe-focus-color;
+  //outline-offset: 4px;
 }
 
 .content-container {
@@ -70,7 +70,9 @@ $pe-focus-color: #0B73DA;
   margin: 0;
   font-weight: 600;
 }
-
+::slotted(h2) {
+  margin-right:4px;
+}
 ::slotted(p) {
   font-weight: 400;
 }
@@ -92,19 +94,26 @@ $pe-focus-color: #0B73DA;
 .pe-icon--btn {
   position: absolute;
   padding: 4px 4px;
-  top: 0;
-  right: 0;
-  width: 44px;
+  width: 55px;
   height: 44px;
   background: none;
   border: none;
   color: inherit;
   cursor: pointer;
   padding: 0;
+  top:5px;
+  right:5px;
 }
 
+.pe-icon--btn svg {
+  height:24px;
+  width:24px;
+}
 .pe-icon--btn:focus {
-  outline-offset: 0;
+  outline: 0;
+  border: 2px solid $pe-focus-color;
+  border-radius: 22px;
+  min-width:55px;
 }
 
 .pe-icon--btn::-moz-focus-inner {
