@@ -21,17 +21,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
 
-  function isAnimated(wc) {
-    return wc.animated && !w.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  }
-
   var Alert = function (_HTMLElement) {
     _inherits(Alert, _HTMLElement);
 
     _createClass(Alert, [{
       key: 'animated',
       get: function get() {
-        return this.hasAttribute('animated');
+        return this.hasAttribute('animated') && w.matchMedia('(prefers-reduced-motion: reduce)');
+      }
+    }, {
+      key: 'level',
+      get: function get() {
+        return this.getAttribute('level');
       }
     }]);
 
@@ -50,23 +51,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.shadowRoot.appendChild(clone);
 
       _this.onCloseClick = _this.onCloseClick.bind(_this);
-
       return _this;
     }
 
     _createClass(Alert, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var _this2 = this;
-
-        var level = this.getAttribute('level');
-        var type = this.getAttribute('type');
-
-        if (level === 'global') {
+        if (this.level === 'global') {
           this.openingAnimation = 'slideInDown';
           this.closingAnimation = 'slideOutDown';
         }
-        if (level === 'inline') {
+        if (this.level === 'inline') {
           this.openingAnimation = 'fadeIn';
           this.closingAnimation = 'fadeOut';
         }
@@ -75,12 +70,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.closeBtn.addEventListener('click', this.onCloseClick);
 
-        if (isAnimated(this)) {
-          this.addEventListener('animationend', function (e) {
-            if (e.animationName === _this2.closingAnimation) {
-              _this2.remove();
-            }
-          });
+        if (this.animated) {
+          this.addEventListener('animationend', this.onAnimationEnd);
+        } else if (this.level === 'global') {
+          this.closeBtn.focus();
         }
       }
     }, {
@@ -92,7 +85,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           bubbles: true
         }));
 
-        if (!isAnimated(this)) {
+        if (!this.animated) {
+          this.remove();
+        }
+      }
+    }, {
+      key: 'onAnimationEnd',
+      value: function onAnimationEnd(e) {
+        if (this.level === 'global' && e.animationName === this.openingAnimation) {
+          this.closeBtn.focus();
+        }
+        if (e.animationName === this.closingAnimation) {
           this.remove();
         }
       }

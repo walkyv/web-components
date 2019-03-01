@@ -75,14 +75,16 @@
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
 
-  function isAnimated(wc) {
-    return wc.animated && !w.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  }
-
   class Alert extends HTMLElement {
-    
     get animated() {
-      return this.hasAttribute('animated');
+      return (
+        this.hasAttribute('animated') &&
+        w.matchMedia('(prefers-reduced-motion: reduce)')
+      );
+    }
+
+    get level() {
+      return this.getAttribute('level');
     }
 
     constructor() {
@@ -98,18 +100,14 @@
       this.shadowRoot.appendChild(clone);
 
       this.onCloseClick = this.onCloseClick.bind(this);
-
     }
 
     connectedCallback() {
-      const level = this.getAttribute('level');
-      const type = this.getAttribute('type');
-
-      if (level === 'global') {
+      if (this.level === 'global') {
         this.openingAnimation = 'slideInDown';
         this.closingAnimation = 'slideOutDown';
       }
-      if (level === 'inline') {
+      if (this.level === 'inline') {
         this.openingAnimation = 'fadeIn';
         this.closingAnimation = 'fadeOut';
       }
@@ -117,13 +115,11 @@
       this.classList.add(this.openingAnimation);
 
       this.closeBtn.addEventListener('click', this.onCloseClick);
-      
-      if (isAnimated(this)) {
-        this.addEventListener('animationend', (e)=> {
-          if (e.animationName === this.closingAnimation) {
-            this.remove();
-          }
-        });
+
+      if (this.animated) {
+        this.addEventListener('animationend', this.onAnimationEnd);
+      } else if (this.level === 'global') {
+        this.closeBtn.focus();
       }
     }
 
@@ -135,8 +131,20 @@
           bubbles: true
         })
       );
-      
-      if (!isAnimated(this)) {
+
+      if (!this.animated) {
+        this.remove();
+      }
+    }
+
+    onAnimationEnd(e) {
+      if (
+        this.level === 'global' &&
+        e.animationName === this.openingAnimation
+      ) {
+        this.closeBtn.focus();
+      }
+      if (e.animationName === this.closingAnimation) {
         this.remove();
       }
     }
