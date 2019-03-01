@@ -39,6 +39,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }
   }
 
+  function constrainToParentWidth(el) {
+    var parent = el.parentElement;
+    var parentWidth = parent.getBoundingClientRect().width;
+    var parentComputedStyle = w.getComputedStyle(parent);
+    var parentPaddingWidth = parseInt(parentComputedStyle.getPropertyValue('padding-left').match(/\d+/)[0], 10) + parseInt(parentComputedStyle.getPropertyValue('padding-right').match(/\d+/)[0], 10);
+
+    var parentBorderWidth = parseInt(parentComputedStyle.getPropertyValue('border-left-width').match(/\d+/)[0], 10) + parseInt(parentComputedStyle.getPropertyValue('border-right-width').match(/\d+/)[0], 10);
+
+    var elMinWidth = parseInt(w.getComputedStyle(el).getPropertyValue('min-width').match(/\d+/)[0], 10);
+
+    // The width should be equal to the parent's width,
+    // minus the padding and border
+    var nextElWidth = parentWidth - (parentPaddingWidth + parentBorderWidth);
+
+    if (nextElWidth > w.innerWidth) {
+      nextElWidth = w.innerWidth;
+    }
+
+    // If that number is less than the min-width,
+    if (nextElWidth < elMinWidth) {
+      //  use min-width instead
+      nextElWidth = elMinWidth;
+    }
+
+    el.style.width = nextElWidth + 'px';
+  }
+
   var Alert = function (_HTMLElement) {
     _inherits(Alert, _HTMLElement);
 
@@ -86,6 +113,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.closingAnimation = 'slideOutDown';
         }
         if (this.level === 'inline') {
+          constrainToParentWidth(this);
           this.openingAnimation = 'fadeIn';
           this.closingAnimation = 'fadeOut';
         }
