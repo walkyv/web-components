@@ -48,17 +48,17 @@
 
 	<div class="target">
 		<div id="output" class="output" aria-live="polite" aria-atomic="true">
-			<pearson-alert level="global" type="error" animated>
-					<h2 id="alertTitle">
-							<strong>Lorem ipsom dolor sit amet.</strong>
-						</h2>
-						<p id="alertText">
-							Ronsectetuer adipiscing elit. Aene eoo rjgieo roi an commodo ligula
-							eget dolor enean massa.
-						</p>
-						<a href="#foo">This is a link.</a>
-			</pearson-alert>
 		</div>
+		<pearson-alert level="global" type="error" animated>
+				<h2 id="alertTitle">
+						<strong>Lorem ipsom dolor sit amet.</strong>
+					</h2>
+					<p id="alertText">
+						Ronsectetuer adipiscing elit. Aene eoo rjgieo roi an commodo ligula
+						eget dolor enean massa.
+					</p>
+					<a href="#foo">This is a link.</a>
+		</pearson-alert>
 	</div>
 	<script src="js/dist/pearson-alert.js"></script>
 	<script>
@@ -117,7 +117,7 @@
 				}
 
 				function renderMessage(alertElem) {
-					// statusRegion.innerHTML = 'Closed ' + alertElem.type + ' alert';
+					statusRegion.innerHTML = 'Closed ' + alertElem.type + ' alert';
 				}
 
 				forEach.call(triggers, function (trigger) {
