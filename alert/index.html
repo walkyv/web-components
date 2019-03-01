@@ -48,7 +48,19 @@
       >
         Trigger global error alert
       </button>
-    </div>
+		</div>
+		<div class="target">
+				<button
+					id="trigger-2"
+					data-trigger="alert"
+					data-type="success"
+					data-level="global"
+					data-animated
+					data-focus-on-open
+				>
+					Trigger global success alert
+				</button>
+			</div>
 
     <div class="target">
       <button
@@ -61,30 +73,12 @@
         Trigger inline success alert
       </button>
     </div>
-
-    <div class="target">
-      <button
-        id="trigger-2"
-        data-trigger="alert"
-        data-type="important"
-        data-level="global"
-        data-animated
-        data-focus-on-open
-      >
-        Trigger global important alert
-      </button>
-    </div>
     <div
       id="output"
       class="target output"
       aria-live="polite"
       aria-atomic="true"
 		></div>
-		<pearson-alert level="global" type="error" class="slideInDown">
-			<h2 id="alertTitle">Foo bar baz</h2>
-			<p id="alertDescription">Lorem ipsum dolor sit amet </p>
-			<a id="alertLink" href="#foo">Pearson Support</a>. 
-		</pearson-alert>
     <script src="js/dist/pearson-alert.js"></script>
     <script>
       (function(w, doc) {
@@ -106,7 +100,6 @@
           const level = e.target.dataset.level;
 
           const animated = e.target.dataset.animated !== undefined;
-          const focusOnOpen = e.target.dataset.focusOnOpen !== undefined;
 
           const opts = {
             returnNode: returnNode,
@@ -118,22 +111,17 @@
             opts.animated = true;
           }
 
-          if (focusOnOpen) {
-            opts.focusOnOpen = true;
-          }
-
           const alert = generateAlert(opts);
 
           alert.innerHTML =
             '   <h2 id="alertTitle" class="pe-label alert-title">  ' +
-            '     <strong>Heads up!</strong>  ' +
-            '   </h2>  ' +
-            '   <p id="alertText" class="pe-paragraph alert-text">  ' +
-            '     <a href="#">Something has happened!</a>  ' +
-            '  </p>  ';
+            '     Heads up!' +
+						'   </h2>  ' +
+						'  <p id="alertDescription">Something happened!</p>  ' +
+            '  <a id="alertLink" href="#">Go here!</a>.  ';
 
           if (level === 'inline') {
-            doc.body.insertBefore(alert, e.target.parentNode);
+            e.target.parentNode.insertBefore(alert, e.target.nextSibling);
           } else {
             doc.body.appendChild(alert);
           }

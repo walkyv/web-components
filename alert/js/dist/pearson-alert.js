@@ -106,7 +106,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.contentContainer = clone.querySelector('.content-container');
       _this.closeBtn = clone.querySelector('button[data-action="close-alert"]');
-      _this.returnNode = doc.querySelector('#' + _this.getAttribute('returnNode')) || doc.activeElement;
+      _this.returnNode = doc.querySelector('#' + _this.getAttribute('returnNode')) || doc.querySelector('#' + _this.getAttribute('returnnode')) || doc.activeElement;
+
       _this.shadowRoot.appendChild(clone);
 
       _this.onCloseClick = _this.onCloseClick.bind(_this);
@@ -119,13 +120,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var slot = this.shadowRoot.querySelector('slot');
 
-        var a11yAttrs = {
-          'aria-labelledby': 'alertTitle',
-          'aria-describedby': 'alertDescription alertLink'
-        };
+        var a11yAttrs = {};
 
         if (this.level === 'global') {
           a11yAttrs.role = 'dialog';
+          a11yAttrs['aria-labelledby'] = 'alertTitle', a11yAttrs['aria-describedby'] = 'alertDescription alertLink';
 
           this.openingAnimation = 'slideInDown';
           this.closingAnimation = 'slideOutDown';

@@ -190,7 +190,9 @@
       this.closeBtn = clone.querySelector('button[data-action="close-alert"]');
       this.returnNode =
         doc.querySelector(`#${this.getAttribute('returnNode')}`) ||
+        doc.querySelector(`#${this.getAttribute('returnnode')}`) ||
         doc.activeElement;
+      
       this.shadowRoot.appendChild(clone);
 
       this.onCloseClick = this.onCloseClick.bind(this);
@@ -200,13 +202,12 @@
     connectedCallback() {
       const slot = this.shadowRoot.querySelector('slot');
 
-      const a11yAttrs = {
-        'aria-labelledby': 'alertTitle',
-        'aria-describedby': 'alertDescription alertLink'
-      };
+      const a11yAttrs = {};
 
       if (this.level === 'global') {
         a11yAttrs.role = 'dialog';
+        a11yAttrs['aria-labelledby'] = 'alertTitle',
+        a11yAttrs['aria-describedby'] = 'alertDescription alertLink';
 
         this.openingAnimation = 'slideInDown';
         this.closingAnimation = 'slideOutDown';
