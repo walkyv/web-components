@@ -21,6 +21,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
 
+  var FOCUSABLE_ELEMENTS = 'a:not([disabled]), button:not([disabled])';
+
+  function getFocusableChildren(node) {
+    var filter = Array.prototype.filter,
+        focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
+    return filter.call(focusableChildren, function (child) {
+      return !!(child.offsetWidth || child.offsetHeight || child.getClientRects().length);
+    });
+  }
+
+  function setFocusToFirstChild(node) {
+    var focusableChildren = getFocusableChildren(node),
+        focusableChild = node.querySelector('[autofocus]') || focusableChildren[0];
+    if (focusableChild) {
+      focusableChild.focus();
+    }
+  }
+
   var Alert = function (_HTMLElement) {
     _inherits(Alert, _HTMLElement);
 
@@ -73,7 +91,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (this.animated) {
           this.addEventListener('animationend', this.onAnimationEnd);
         } else if (this.level === 'global') {
-          this.closeBtn.focus();
+          setFocusToFirstChild(this);
         }
       }
     }, {
@@ -93,7 +111,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'onAnimationEnd',
       value: function onAnimationEnd(e) {
         if (this.level === 'global' && e.animationName === this.openingAnimation) {
-          this.closeBtn.focus();
+          setFocusToFirstChild(this);
         }
         if (e.animationName === this.closingAnimation) {
           this.remove();
