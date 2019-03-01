@@ -52,6 +52,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       get: function get() {
         return this.getAttribute('level');
       }
+    }, {
+      key: 'type',
+      get: function get() {
+        return this.getAttribute('type');
+      }
     }]);
 
     function Alert() {

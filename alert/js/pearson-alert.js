@@ -110,6 +110,10 @@
       return this.getAttribute('level');
     }
 
+    get type() {
+      return this.getAttribute('type');
+    }
+
     constructor() {
       super();
 
