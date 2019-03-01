@@ -60,7 +60,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.classList.add(this.openingAnimation);
 
-        this.icons[type].style.display = 'block';
+        this.closeBtn.addEventListener('click', this.onCloseClick);
+      }
+    }, {
+      key: 'onCloseClick',
+      value: function onCloseClick() {
+        this.classList.add(this.closingAnimation);
+
+        this.dispatchEvent(new Event('dismiss', {
+          bubbles: true
+        }));
       }
     }]);
 

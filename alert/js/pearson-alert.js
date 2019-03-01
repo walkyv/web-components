@@ -107,7 +107,17 @@
 
       this.classList.add(this.openingAnimation);
 
-      this.icons[type].style.display = 'block';
+      this.closeBtn.addEventListener('click', this.onCloseClick);
+    }
+
+    onCloseClick() {
+      this.classList.add(this.closingAnimation);
+
+      this.dispatchEvent(
+        new Event('dismiss', {
+          bubbles: true
+        })
+      );
     }
   }
 
