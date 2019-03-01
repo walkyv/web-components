@@ -117,6 +117,14 @@
       this.classList.add(this.openingAnimation);
 
       this.closeBtn.addEventListener('click', this.onCloseClick);
+      
+      if (isAnimated(this)) {
+        this.addEventListener('animationend', (e)=> {
+          if (e.animationName === this.closingAnimation) {
+            this.remove();
+          }
+        });
+      }
     }
 
     onCloseClick() {
@@ -127,6 +135,10 @@
           bubbles: true
         })
       );
+      
+      if (!isAnimated(this)) {
+        this.remove();
+      }
     }
   }
 

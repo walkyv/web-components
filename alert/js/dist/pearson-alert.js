@@ -57,6 +57,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Alert, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
+        var _this2 = this;
+
         var level = this.getAttribute('level');
         var type = this.getAttribute('type');
 
@@ -72,6 +74,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.classList.add(this.openingAnimation);
 
         this.closeBtn.addEventListener('click', this.onCloseClick);
+
+        if (isAnimated(this)) {
+          this.addEventListener('animationend', function (e) {
+            if (e.animationName === _this2.closingAnimation) {
+              _this2.remove();
+            }
+          });
+        }
       }
     }, {
       key: 'onCloseClick',
@@ -81,6 +91,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.dispatchEvent(new Event('dismiss', {
           bubbles: true
         }));
+
+        if (!isAnimated(this)) {
+          this.remove();
+        }
       }
     }]);
 
