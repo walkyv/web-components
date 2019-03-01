@@ -119,7 +119,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var a11yAttrs = {
           'aria-labelledby': 'alertTitle',
-          'aria-describedby': 'alertDescription'
+          'aria-describedby': 'alertDescription alertLink'
         };
 
         if (this.level === 'global') {

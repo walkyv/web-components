@@ -198,7 +198,7 @@
     connectedCallback() {
       const a11yAttrs = {
         'aria-labelledby': 'alertTitle',
-        'aria-describedby': 'alertDescription',
+        'aria-describedby': 'alertDescription alertLink',
       };
 
       if (this.level === 'global') {
