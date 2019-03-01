@@ -127,9 +127,18 @@ svg[class*='warning'] {
   fill: $error;
 }
 
+:host([type="success"]) svg[class*='check'] {
+  display: block;
+}
+
+:host([type="error"]) svg[class*='warning'] {
+  display: block;
+}
+
 .pe-variant-icon {
   flex: 0 0 18px;
   margin-right: 12px;
+  display: none;
 }
 
 .content {
