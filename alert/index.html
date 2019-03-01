@@ -1,121 +1,144 @@
 <!DOCTYPE html>
 <html class="" lang="EN">
+  <head>
+    <title>Pearson Web Component</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,600"
+      rel="stylesheet"
+    />
 
-<head>
-	<title>Pearson Web Component</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width" />
+    <!-- loads web component polyfills -->
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
-	<!-- loads web component polyfills -->
-	<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
-	<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
-	<script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
+    <!-- import web components -->
 
-	<!-- load pearson and global styles -->
-	<link href="https://unpkg.com/@pearson-components/elements-sdk@1.15.3/build/css/elements.css#unstable-2.0-GLP" rel="stylesheet">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      pearson-alert:not(:defined) {
+        display: none;
+      }
 
-	<!-- import web components -->
+      .output {
+        margin-top: 5rem;
+      }
+      .target {
+        margin: 4em;
+        width: 50%;
+        border: 1px solid gray;
+        margin: 2em auto;
+        padding: 1em;
+      }
+    </style>
+  </head>
 
-<style>
-.output {
-	margin-top: 5rem;
-}
-.target {margin:4em; width:50%; border:1px solid gray; margin:2em auto; padding:1em;}
-</style>
-</head>
+  <body>
+    <div class="target">
+      <button
+        id="trigger-0"
+        data-trigger="alert"
+        data-type="error"
+        data-level="global"
+        data-animated
+      >
+        Trigger global error alert
+      </button>
+		</div>
+		<div class="target">
+				<button
+					id="trigger-2"
+					data-trigger="alert"
+					data-type="success"
+					data-level="global"
+					data-animated
+					data-focus-on-open
+				>
+					Trigger global success alert
+				</button>
+			</div>
 
-<body>
-	<div class="target">
-		<button id="trigger-0" data-trigger="alert" data-type="error" data-level="global" data-animated>
-			Trigger global error alert
-		</button>
-	</div>
+    <div class="target">
+      <button
+        id="trigger-1"
+        data-trigger="alert"
+        data-type="success"
+        data-level="inline"
+        data-animated
+      >
+        Trigger inline success alert
+      </button>
+    </div>
+    <div
+      id="output"
+      class="target output"
+      aria-live="polite"
+      aria-atomic="true"
+		></div>
+    <script src="js/dist/pearson-alert.js"></script>
+    <script>
+      (function(w, doc) {
+        const forEach = Array.prototype.forEach;
+        const triggers = doc.querySelectorAll('button[data-trigger="alert"]');
+        const statusRegion = doc.querySelector('#output');
 
-	<div class="target">
-		<button id="trigger-1" data-trigger="alert" data-type="success" data-level="inline" data-animated>
-			Trigger inline success alert
-		</button>
-	</div>
+        function generateAlert(opts) {
+          const alert = doc.createElement('pearson-alert');
+          for (let attrName in opts) {
+            alert.setAttribute(attrName, opts[attrName]);
+          }
+          return alert;
+        }
 
-	<div class="target">
-		<button id="trigger-2" data-trigger="alert" data-type="important" data-level="global" data-animated data-focus-on-open>
-			Trigger global important alert
-		</button>
-	</div>
+        function triggerAlert(e) {
+          const returnNode = '#' + e.target.id;
+          const type = e.target.dataset.type;
+          const level = e.target.dataset.level;
 
-	<div class="target">
-		<div id="output" class="output" aria-live="polite" aria-atomic="true"></div>
-	</div>
-	<script src="js/dist/pearson-alert.js"></script>
-	<script>
-			(function (w, doc) {
-				const forEach = Array.prototype.forEach;
-				const triggers = doc
-					.querySelectorAll('button[data-trigger="alert"]');
-				const statusRegion = doc.querySelector('#output');
+          const animated = e.target.dataset.animated !== undefined;
 
-				function generateAlert(opts) {
-					const alert = doc.createElement('pearson-alert');
-					for (let attrName in opts) {
-						alert.setAttribute(attrName, opts[attrName])
-					}
-					return alert;
-				}
+          const opts = {
+            returnNode: returnNode,
+            type: type,
+            level: level
+          };
 
-				function triggerAlert(e) {
-					const returnNode = '#' + e.target.id;
-					const type = e.target.dataset.type;
-					const level = e.target.dataset.level;
+          if (animated) {
+            opts.animated = true;
+          }
 
-					const animated = e.target.dataset.animated !== undefined;
-					const focusOnOpen = e.target.dataset.focusOnOpen !== undefined;
+          const alert = generateAlert(opts);
 
-					const opts = {
-						returnNode: returnNode,
-						type: type,
-						level: level
-					}
-
-					if (animated) {
-						opts.animated = true;
-					}
-
-					if (focusOnOpen) {
-						opts.focusOnOpen = true;
-					}
-
-					const alert = generateAlert(opts);
-
-					alert.innerHTML = (
-						'   <h2 id="alertTitle" class="pe-label alert-title">  ' +
-						'     <strong>Heads up!</strong>  ' +
+          alert.innerHTML =
+            '   <h2 id="alertTitle" class="pe-label alert-title">  ' +
+            '     Heads up!' +
 						'   </h2>  ' +
-						'   <p id="alertText" class="pe-paragraph alert-text">  ' +
-						'     <a href="#">Something has happened!</a>  ' +
-						'  </p>  '
-					);
+						'  <p id="alertDescription">Something happened! Mauris lorem libero, dignissim ac condimentum viverra, egestas ut leo. Integer sit amet dui enim. Mauris lorem libero, dignissim ac condimentum viverra, egestas ut leo. Integer sit amet dui enim.</p>  ' +
+            '  <a id="alertLink" href="#">Go here!</a>.  ';
 
-					if (level === 'inline') {
-						doc.body.insertBefore(alert, e.target.parentNode)
-					} else {
-						doc.body.appendChild(alert)
-					}
-				}
+          if (level === 'inline') {
+            e.target.parentNode.insertBefore(alert, e.target.nextSibling);
+          } else {
+            doc.body.appendChild(alert);
+          }
+        }
 
-				function renderMessage(alertElem) {
-					statusRegion.innerHTML = 'Closed ' + alertElem.type + ' alert';
-				}
+        function renderMessage(alertElem) {
+          statusRegion.innerHTML = 'Closed ' + alertElem.level + ' ' + alertElem.type + ' alert';
+        }
 
-				forEach.call(triggers, function (trigger) {
-					trigger.addEventListener('click', triggerAlert);
-				})
+        forEach.call(triggers, function(trigger) {
+          trigger.addEventListener('click', triggerAlert);
+        });
 
-				w.addEventListener('dismiss', function (e) {
-					renderMessage(e.target);
-				});
-
-			})(window, document);
-		</script>
-
-</body>
+        w.addEventListener('dismiss', function(e) {
+          renderMessage(e.target);
+        });
+      })(window, document);
+    </script>
+  </body>
 </html>

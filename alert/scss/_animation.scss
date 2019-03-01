@@ -47,42 +47,42 @@
   }
 }
 
-.slideInDown,
-.fadeIn {
+:host(.slideInDown),
+:host(.fadeIn) {
   opacity: 1;
   visibility: visible;
 }
 
-.slideOutDown,
-.fadeOut {
+:host(.slideOutDown),
+:host(.fadeOut) {
   opacity: 0;
   visibility: hidden;
 }
 
-.animated.slideInDown {
+:host([animated].slideInDown) {
   animation: 0.3s ease-in-out 0s slideInDown;
 }
 
-.animated.slideOutDown {
+:host([animated].slideOutDown) {
   animation: 0.2s ease-in 0s slideOutDown;
 }
 
-.animated.fadeIn {
+:host([animated].fadeIn) {
   animation: 0.3s linear 0s fadeIn;
 }
 
-.animated.fadeOut {
+:host([animated].fadeOut) {
   animation: 0.2s linear 0s fadeOut;
 }
 
 @media (prefers-reduced-motion) {
-  .animated {
+  :host([animated]) {
     animation: unset !important;
     transition: none !important;
   }
 }
 
-html[data-prefers-reduced-motion] .animated {
+html[data-prefers-reduced-motion] :host(.animated) {
   animation: unset !important;
   transition: none !important;
 }
