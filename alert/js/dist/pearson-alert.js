@@ -107,16 +107,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.contentContainer = clone.querySelector('.content-container');
       _this.closeBtn = clone.querySelector('button[data-action="close-alert"]');
       _this.returnNode = doc.querySelector('#' + _this.getAttribute('returnNode')) || doc.activeElement;
-
       _this.shadowRoot.appendChild(clone);
 
       _this.onCloseClick = _this.onCloseClick.bind(_this);
+      _this.onSlotChange = _this.onSlotChange.bind(_this);
       return _this;
     }
 
     _createClass(Alert, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
+        var slot = this.shadowRoot.querySelector('slot');
+
         var a11yAttrs = {
           'aria-labelledby': 'alertTitle',
           'aria-describedby': 'alertDescription alertLink'
@@ -142,6 +144,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.classList.add(this.openingAnimation);
 
+        slot.addEventListener('slotchange', this.onSlotChange);
         this.closeBtn.addEventListener('click', this.onCloseClick);
 
         if (this.animated) {
@@ -167,6 +170,40 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (!this.animated) {
           this.remove();
         }
+      }
+    }, {
+      key: 'onSlotChange',
+      value: function onSlotChange(e) {
+        var contentNodes = e.target.assignedNodes();
+        var node = void 0;
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = contentNodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            node = _step.value;
+
+            if (node.id === 'alertTitle') {
+              break;
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        this.closeBtn.setAttribute('aria-label', 'Close ' + (node ? node.textContent : 'Alert'));
       }
     }, {
       key: 'onAnimationEnd',

@@ -154,12 +154,14 @@
   function ensureAttrs(node, attrs) {
     for (var attrName in attrs) {
       var requiredVal = attrs[attrName];
-      if (!node.hasAttribute(attrName) || node.getAttribute(attrName) !== requiredVal) {
+      if (
+        !node.hasAttribute(attrName) ||
+        node.getAttribute(attrName) !== requiredVal
+      ) {
         node.setAttribute(attrName, requiredVal);
       }
     }
   }
-
 
   class Alert extends HTMLElement {
     get animated() {
@@ -189,21 +191,23 @@
       this.returnNode =
         doc.querySelector(`#${this.getAttribute('returnNode')}`) ||
         doc.activeElement;
-
       this.shadowRoot.appendChild(clone);
 
       this.onCloseClick = this.onCloseClick.bind(this);
+      this.onSlotChange = this.onSlotChange.bind(this);
     }
 
     connectedCallback() {
+      const slot = this.shadowRoot.querySelector('slot');
+
       const a11yAttrs = {
         'aria-labelledby': 'alertTitle',
-        'aria-describedby': 'alertDescription alertLink',
+        'aria-describedby': 'alertDescription alertLink'
       };
 
       if (this.level === 'global') {
         a11yAttrs.role = 'dialog';
-        
+
         this.openingAnimation = 'slideInDown';
         this.closingAnimation = 'slideOutDown';
       }
@@ -213,7 +217,6 @@
         a11yAttrs.role = this.type === 'error' ? 'alert' : 'status';
         a11yAttrs['aria-live'] = this.type === 'error' ? 'assertive' : 'polite';
 
-        
         this.openingAnimation = 'fadeIn';
         this.closingAnimation = 'fadeOut';
       }
@@ -222,6 +225,7 @@
 
       this.classList.add(this.openingAnimation);
 
+      slot.addEventListener('slotchange', this.onSlotChange);
       this.closeBtn.addEventListener('click', this.onCloseClick);
 
       if (this.animated) {
@@ -246,6 +250,20 @@
       if (!this.animated) {
         this.remove();
       }
+    }
+
+    onSlotChange(e) {
+      const contentNodes = e.target.assignedNodes();
+      let node;
+      for (node of contentNodes) {
+        if (node.id === 'alertTitle') {
+          break;
+        }
+      }
+      this.closeBtn.setAttribute(
+        'aria-label',
+        'Close ' + (node ? node.textContent : 'Alert')
+      );
     }
 
     onAnimationEnd(e) {
