@@ -75,7 +75,16 @@
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
 
+  function isAnimated(wc) {
+    return wc.animated && !w.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
   class Alert extends HTMLElement {
+    
+    get animated() {
+      return this.hasAttribute('animated');
+    }
+
     constructor() {
       super();
 

@@ -21,8 +21,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
 
+  function isAnimated(wc) {
+    return wc.animated && !w.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
   var Alert = function (_HTMLElement) {
     _inherits(Alert, _HTMLElement);
+
+    _createClass(Alert, [{
+      key: 'animated',
+      get: function get() {
+        return this.hasAttribute('animated');
+      }
+    }]);
 
     function Alert() {
       _classCallCheck(this, Alert);
