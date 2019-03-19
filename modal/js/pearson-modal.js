@@ -81,7 +81,7 @@
   }
 
   const template = doc.createElement('template');
-  const overlayButtonTemplate = doc.createElement('template');
+  const overlayTemplate = doc.createElement('template');
   const actionsTemplate = doc.createElement('template');
   template.innerHTML = `
 <link href="./css/style.css" rel="stylesheet"/>
@@ -105,7 +105,7 @@
 	</div>
   `;
 
-  overlayButtonTemplate.innerHTML = `
+  overlayTemplate.innerHTML = `
   <div class="hidden modal-close animated fadeIn" id="modalOverlay" data-event="cancel"></div>
   `;
 
@@ -156,7 +156,7 @@
         footer = this.hasAttribute('footer');
       // Clone templates
       const clone = template.content.cloneNode(true);
-      const overlayButtonClone = overlayButtonTemplate.content.cloneNode(true);
+      const overlayClone = overlayTemplate.content.cloneNode(true);
 
       // Create elements
       // Target the body of the modal
@@ -169,7 +169,7 @@
       const overlayEntryPoint = clone.querySelector('#modalPlaceholder');
 
       overlayEntryPoint.parentNode.insertBefore(
-        overlayButtonClone,
+        overlayClone,
         overlayEntryPoint.nextElementSibling
       );
       overlayEntryPoint.remove();
