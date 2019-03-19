@@ -4,13 +4,19 @@
 		<title>Pearson Web Component</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
-
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
 		<!-- load pearson and global styles -->
 		<link href="https://unpkg.com/@pearson-ux/gravity-css@0.1.0/dist/gravity.css" rel="stylesheet">
 		<!-- loads web component polyfills -->
-		<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
+		<script type="text/javascript">
+          if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+          } else {
+            document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+            document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+          }
+		</script>
 		<script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
 		<!-- import web components -->
@@ -22,7 +28,7 @@
 	</head>
 	<body>
 	<!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
-	<main id="main" style="margin-top:900px">
+	<main id="main">
 			<section class="container target">
 				<button id="trigger-modal">Open Modal</button>
 			</section>
