@@ -118,14 +118,44 @@
 
   class Modal extends HTMLElement {
     static get observedAttributes() {
-      return ['footer', 'elements'];
+      return ['footer', 'elements', 'triggerid', 'titletext', 'successbtntext', 'cancelbtntext', 'hidecancel', 'hidesuccess'];
+    }
+    get hideCancel () {
+      return this.hasAttribute('hidecancel');
+    }
+    get hideSuccess() {
+      return this.hasAttribute('hideSuccess');
+    }
+    get triggerId () {
+      return this.getAttribute('triggerid');
+    }
+    get titleText () {
+      return this.getAttribute('titletext');
+    }
+    get successBtnText () {
+      return this.getAttribute('successbtntext');
+    }
+    get cancelBtnText () {
+      return this.getAttribute('successbtntext');
     }
     get elements() {
       return this.getAttribute('elements');
     }
+    get footer () {
+      return this.hasAttribute('footer');
+    }
+
+    set footer(value) {
+      const isfooterShown = Boolean(value);
+      if (isfooterShown) {
+        this.setAttribute('footer', '');
+      } else {
+        this.removeAttribute('footer');
+      }
+    }
+
     constructor() {
       super();
-
       this.attachShadow({ mode: 'open' });
 
       this.openModal = this.openModal.bind(this);
@@ -213,19 +243,6 @@
       doc.body.removeEventListener('focus', this.maintainFocus);
     }
 
-    get footer() {
-      return this.hasAttribute('footer');
-    }
-
-    set footer(value) {
-      const isfooterShown = Boolean(value);
-
-      if (isfooterShown) {
-        this.setAttribute('footer', '');
-      } else {
-        this.removeAttribute('footer');
-      }
-    }
 
     openModal(e) {
       this.setPosition();

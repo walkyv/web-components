@@ -73,14 +73,57 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _inherits(Modal, _HTMLElement);
 
     _createClass(Modal, [{
+      key: 'hideCancel',
+      get: function get() {
+        return this.hasAttribute('hidecancel');
+      }
+    }, {
+      key: 'hideSuccess',
+      get: function get() {
+        return this.hasAttribute('hideSuccess');
+      }
+    }, {
+      key: 'triggerId',
+      get: function get() {
+        return this.getAttribute('triggerid');
+      }
+    }, {
+      key: 'titleText',
+      get: function get() {
+        return this.getAttribute('titletext');
+      }
+    }, {
+      key: 'successBtnText',
+      get: function get() {
+        return this.getAttribute('successbtntext');
+      }
+    }, {
+      key: 'cancelBtnText',
+      get: function get() {
+        return this.getAttribute('successbtntext');
+      }
+    }, {
       key: 'elements',
       get: function get() {
         return this.getAttribute('elements');
       }
+    }, {
+      key: 'footer',
+      get: function get() {
+        return this.hasAttribute('footer');
+      },
+      set: function set(value) {
+        var isfooterShown = Boolean(value);
+        if (isfooterShown) {
+          this.setAttribute('footer', '');
+        } else {
+          this.removeAttribute('footer');
+        }
+      }
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['footer', 'elements'];
+        return ['footer', 'elements', 'triggerid', 'titletext', 'successbtntext', 'cancelbtntext', 'hidecancel', 'hidesuccess'];
       }
     }]);
 
@@ -327,20 +370,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (hideSuccess) successBtn.remove();
 
         modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
-      }
-    }, {
-      key: 'footer',
-      get: function get() {
-        return this.hasAttribute('footer');
-      },
-      set: function set(value) {
-        var isfooterShown = Boolean(value);
-
-        if (isfooterShown) {
-          this.setAttribute('footer', '');
-        } else {
-          this.removeAttribute('footer');
-        }
       }
     }]);
 
