@@ -93,6 +93,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return this.getAttribute('titletext');
       }
     }, {
+      key: 'setTitleText',
+      set: function set(value) {
+        this.setAttribute('titletext', value);
+      }
+    }, {
       key: 'successBtnText',
       get: function get() {
         return this.getAttribute('successbtntext');
@@ -136,55 +141,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.openModal = _this.openModal.bind(_this);
       _this.closeModal = _this.closeModal.bind(_this);
-
       _this.bindKeyPress = _this.bindKeyPress.bind(_this);
       _this.maintainFocus = _this.maintainFocus.bind(_this);
       return _this;
     }
 
     _createClass(Modal, [{
-      key: 'attributeChangedCallback',
-      value: function attributeChangedCallback(name, oldValue, newValue) {
-        // if `footer` is changing, but
-        // this.modal has not been defined yet,
-        // bail out.
-        if (name === 'footer' && !this.modal) return;
-        if (!this.footer) {
-          var actions = this.modal.querySelector('.actions');
-          actions.remove();
-        }
-        if (this.footer) {
-          this.renderfooter(this.modal);
-        }
-      }
-    }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
         var _this2 = this;
 
-        // Get component attributes
         var titleText = this.getAttribute('titletext'),
             triggerId = this.getAttribute('triggerid'),
-            footer = this.hasAttribute('footer');
-        // Clone templates
-        var clone = template.content.cloneNode(true);
-        var overlayClone = overlayTemplate.content.cloneNode(true);
+            clone = template.content.cloneNode(true),
+            overlayClone = overlayTemplate.content.cloneNode(true),
+            overlayEntryPoint = clone.querySelector('#modalPlaceholder'),
+            title = clone.querySelector('#dialogHeading');
 
-        // Create elements
-        // Target the body of the modal
-        // create the footer
-        if (footer) {
+        if (this.footer) {
           this.renderfooter(clone);
         }
-
-        var overlayEntryPoint = clone.querySelector('#modalPlaceholder');
 
         overlayEntryPoint.parentNode.insertBefore(overlayClone, overlayEntryPoint.nextElementSibling);
         overlayEntryPoint.remove();
 
-        var title = clone.querySelector('#dialogHeading');
-        if (titleText !== null) {
-          title.innerHTML = titleText;
+        if (this.titleText !== null) {
+          title.innerHTML = this.titleText;
         } else {
           title.innerHTML = 'Modal Title';
         }
@@ -214,6 +196,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         doc.addEventListener('keydown', this.bindKeyPress);
         doc.body.addEventListener('focus', this.maintainFocus, true);
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name) {
+        if (name === 'footer' && !this.modal) return;
+        if (!this.footer) {
+          var actions = this.modal.querySelector('.actions');
+          actions.remove();
+        }
+        if (this.footer) {
+          this.renderfooter(this.modal);
+        }
       }
     }, {
       key: 'disconnectedCallback',
