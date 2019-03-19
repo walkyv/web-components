@@ -333,12 +333,13 @@
 
     setPosition() {
       const modalBody = this.shadowRoot.querySelector('.pe-modal-container');
-      this.modal.style.top = '50px';
+      this.modal.style.top = window.pageYOffset + 50 +'px';
       this.modal.style.transform = 'translate(-50%)';
       this.modal.style.marginBottom = '50px';
 
       this.modal.addEventListener('animationstart', event => {
         const modalPosition = this.modal.getBoundingClientRect();
+        console.log(window.pageYOffset);
         if (modalPosition.height > window.innerHeight) {
           modalBody.classList.add('scroll');
         }
