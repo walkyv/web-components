@@ -30,7 +30,10 @@
           d="M12,10.5857864 L17.2928932,5.29289322 C17.6834175,4.90236893 18.3165825,4.90236893 18.7071068,5.29289322 C19.0976311,5.68341751 19.0976311,6.31658249 18.7071068,6.70710678 L13.4142136,12 L18.7071068,17.2928932 C19.0976311,17.6834175 19.0976311,18.3165825 18.7071068,18.7071068 C18.3165825,19.0976311 17.6834175,19.0976311 17.2928932,18.7071068 L12,13.4142136 L6.70710678,18.7071068 C6.31658249,19.0976311 5.68341751,19.0976311 5.29289322,18.7071068 C4.90236893,18.3165825 4.90236893,17.6834175 5.29289322,17.2928932 L10.5857864,12 L5.29289322,6.70710678 C4.90236893,6.31658249 4.90236893,5.68341751 5.29289322,5.29289322 C5.68341751,4.90236893 6.31658249,4.90236893 6.70710678,5.29289322 L12,10.5857864 Z"
         ></path>
       </svg>
-  `;
+  `,
+    template = doc.createElement('template'),
+    overlayTemplate = doc.createElement('template'),
+    actionsTemplate = doc.createElement('template');
 
   function getDeepActiveElement() {
     let a = doc.activeElement;
@@ -70,19 +73,21 @@
       lastFocusableIdx = focusableChildren.length - 1;
 
     if (e.shiftKey && focusedItemIdx === 0) {
-      focusableChildren[lastFocusableIdx].focus();
-      e.preventDefault();
+      if (focusableChildren[lastFocusableIdx !== undefined]){
+        focusableChildren[lastFocusableIdx].focus();
+        e.preventDefault();
+      }
     }
 
     if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
-      focusableChildren[0].focus();
-      e.preventDefault();
+      if (focusableChildren[0] !== undefined) {
+        focusableChildren[0].focus();
+        e.preventDefault();
+      }
     }
   }
 
-  const template = doc.createElement('template');
-  const overlayTemplate = doc.createElement('template');
-  const actionsTemplate = doc.createElement('template');
+
   template.innerHTML = `
 <link href="./css/style.css" rel="stylesheet"/>
 <!--<style>-->
@@ -132,7 +137,6 @@
     get titleText () {
       return this.getAttribute('titletext');
     }
-
     get successBtnText () {
       return this.getAttribute('successbtntext');
     }
@@ -146,6 +150,10 @@
       return this.hasAttribute('footer');
     }
 
+    set openState (bool) {
+      this.setAttribute('open', bool)
+    }
+
     set footer(value) {
       const isfooterShown = Boolean(value);
       if (isfooterShown) {
@@ -155,8 +163,6 @@
       }
     }
 
-
-
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
@@ -165,6 +171,7 @@
       this.closeModal = this.closeModal.bind(this);
       this.bindKeyPress = this.bindKeyPress.bind(this);
       this.maintainFocus = this.maintainFocus.bind(this);
+
     }
 
     connectedCallback() {
@@ -175,14 +182,9 @@
 
       this.modal = clone.querySelector('#modal');
       this.eventBtns = clone.querySelectorAll('[data-event]');
-      this.overlay = clone.querySelector('#modalOverlay');
       this.body = doc.querySelector('body');
       this.main = doc.querySelector('main');
-      this.triggerBtn = doc.querySelector(`${#this.triggerId}`);
-
-      if (this.footer) {
-        this.renderfooter(clone);
-      }
+      this.triggerBtn = doc.querySelector('#'+ this.triggerId);
 
       overlayEntryPoint.parentNode.insertBefore(
         overlayClone,
@@ -190,15 +192,16 @@
       );
       overlayEntryPoint.remove();
 
+      if (this.footer) {
+        this.renderfooter(clone);
+      }
+
       if (this.titleText !== null) {
         title.innerHTML = this.titleText
       } else {
         title.innerHTML = 'Modal Title';
       }
 
-
-
-      // When the modal trigger is clicked, open modal
       this.triggerBtn.addEventListener('click', this.openModal);
 
       this.eventBtns.forEach(btn => {
@@ -208,14 +211,27 @@
         });
       });
 
-      // sets the positioning for modals that are programmatically created and have scrolling content
-
-      this.shadowRoot.appendChild(clone);
+      this.modal.addEventListener('animationend', event => {
+        event.stopImmediatePropagation();
+        if (event.animationName === 'slideInDown') {
+          this.maintainFocus();
+          this.modal.classList.remove('slideInDown');
+        }
+        if (event.animationName === 'slideOutDown') {
+          const overlay = this.shadowRoot.querySelector('#modalOverlay');
+          this.triggerBtn.focus();
+          this.modal.classList.add('hidden');
+          this.modal.classList.remove('slideOutDown');
+          overlay.classList.add('hidden');
+          overlay.classList.remove('fadeOut');
+          this.triggerBtn.focus();
+        }
+      });
 
       doc.addEventListener('keydown', this.bindKeyPress);
       doc.body.addEventListener('focus', this.maintainFocus, true);
+      this.shadowRoot.appendChild(clone);
     }
-
 
     attributeChangedCallback(name) {
       if (name === 'footer' && !this.modal) return;
@@ -228,22 +244,21 @@
       }
     }
 
-
-
     disconnectedCallback() {
       doc.removeEventListener('keydown', this.bindKeyPress);
       doc.body.removeEventListener('focus', this.maintainFocus);
     }
 
-
     openModal(e) {
-      this.setPosition();
-      // unhide it on open, to prevent FOUC
-      document.body.style.overflow = 'hidden';
-      this.style.display = 'block';
-
       const thisButton = e.currentTarget,
-        buttonDisabled = thisButton.getAttribute('disabled');
+        buttonDisabled = thisButton.getAttribute('disabled'),
+        overlay = this.shadowRoot.querySelector('#modalOverlay');
+
+      this.openState = true;
+      this.setPosition();
+
+      doc.body.style.overflow = 'hidden';
+      this.style.display = 'block';
 
       if (this.elements === 'v1') {
         this.modal.classList.add('elements')
@@ -252,75 +267,50 @@
       if (buttonDisabled === null) {
         thisButton.setAttribute('disabled', true);
         this.main.setAttribute('aria-hidden', 'true');
-        this.overlay.removeAttribute('disabled');
       }
 
-      this.overlay.classList.remove('hidden');
-      this.overlay.classList.remove('fadeOut');
-      this.overlay.classList.add('fadeIn');
+      overlay.classList.remove('hidden', 'fadeOut');
+      overlay.classList.add('fadeIn');
 
-      this.modal.classList.remove('hidden');
-      this.modal.classList.remove('slideOutDown');
+      this.modal.classList.remove('hidden', 'slideOutDown');
       this.modal.classList.add('slideInDown');
-      this.open = true;
-
-      setTimeout(() => {
-        this.maintainFocus();
-      }, 250);
     }
 
     closeModal(eventName) {
-      const modalBody = this.shadowRoot.querySelector('.pe-modal-container');
-
+      const overlay = this.shadowRoot.querySelector('#modalOverlay');
       document.body.style.overflow = 'auto';
 
       this.triggerBtn.removeAttribute('disabled');
       this.main.setAttribute('aria-hidden', 'false');
+
       this.body.classList.remove('hide-overflow');
+      overlay.classList.remove('fadeIn');
 
-      this.overlay.classList.remove('fadeIn');
-      this.overlay.classList.add('fadeOut');
-
-      this.modal.classList.remove('slideInDown');
+      overlay.classList.add('fadeOut');
       this.modal.classList.add('slideOutDown');
+
       if (this.modal.classList.contains('scroll')) {
         this.modal.classList.remove('scroll');
       }
-
-      setTimeout(() => {
-        this.modal.classList.add('hidden');
-        this.modal.classList.remove('slideOutDown');
-      }, 400);
 
       setTimeout(() => {
         this.dispatchEvent(
           new Event(eventName, { bubbles: true, composed: true })
         );
       }, 500);
-
-      setTimeout(() => {
-        this.overlay.classList.add('hidden');
-        this.overlay.classList.remove('fadeOut');
-      }, 800);
-
-      setTimeout(() => {
-        this.triggerBtn.focus();
-      }, 801);
-
-      this.open = false;
+      this.openState = false
     }
 
     maintainFocus() {
+      const open = this.getAttribute('open');
       // if the modal is not open, stop the function
-      if (!this.open) return;
-
+      if (!open) return;
       /**
        * The DOM we want to trap focus in. If the consumer passed in
        * focusable children, it's the Light DOM; else, it's the Shadow DOM.
        */
       const targetDOM =
         getFocusableChildren(this).length > 0 ? this : this.modal;
-
       // if neither the Light DOM nor the Shadow DOM within the modal contain
       // the active element, set focus back into the targetDOM.
       if (
@@ -330,11 +320,13 @@
         setFocusToFirstChild(targetDOM);
       }
     }
+
     bindKeyPress(e) {
-      if (this.open && e.which === ESCAPE_KEY) {
+      const open = this.getAttribute('open');
+      if (open && e.which === ESCAPE_KEY) {
         this.closeModal('cancel');
       }
-      if (this.open && e.which === TAB_KEY) {
+      if (open && e.which === TAB_KEY) {
         trapTabKey(e, this, this.modal);
       }
     }
@@ -354,31 +346,23 @@
     }
 
     renderfooter(parentNode) {
-      const successBtnText = this.getAttribute('successbtntext'),
-        cancelBtnText = this.getAttribute('cancelbtntext'),
-        hideCancel = this.hasAttribute('hidecancel'),
-        hideSuccess = this.hasAttribute('hidesuccess');
-
       const actionsClone = actionsTemplate.content.cloneNode(true),
         cancelBtn = actionsClone.querySelector('#cancelButton'),
         successBtn = actionsClone.querySelector('#successButton');
 
-      const modalBody = parentNode.querySelector('#dialogDescription');
-
-      if (cancelBtnText !== null) {
-        cancelBtn.innerHTML = cancelBtnText;
+      if (parentNode) {
+        const modalBody = parentNode.querySelector('#dialogDescription');
+        modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
       }
-
-      if (successBtnText !== null) {
-        successBtn.innerHTML = successBtnText;
+      if (this.cancelBtnText !== null) {
+        cancelBtn.innerHTML = this.cancelBtnText;
       }
-
-      if (hideCancel) cancelBtn.remove();
-      if (hideSuccess) successBtn.remove();
-
-      modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
+      if (this.successBtnText !== null) {
+        successBtn.innerHTML = this.successBtnText;
+      }
+      if (this.hideCancel) cancelBtn.remove();
+      if (this.hideSuccess) successBtn.remove();
     }
-
   }
 
   customElements.define('pearson-modal', Modal);
