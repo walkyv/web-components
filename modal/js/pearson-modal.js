@@ -181,7 +181,6 @@
         title = clone.querySelector('#dialogHeading');
 
       this.modal = clone.querySelector('#modal');
-      this.eventBtns = clone.querySelectorAll('[data-event]');
       this.body = doc.querySelector('body');
       this.main = doc.querySelector('main');
       this.triggerBtn = doc.querySelector('#'+ this.triggerId);
@@ -190,7 +189,10 @@
         overlayClone,
         overlayEntryPoint.nextElementSibling
       );
+
       overlayEntryPoint.remove();
+
+
 
       if (this.footer) {
         this.renderfooter(clone);
@@ -203,8 +205,9 @@
       }
 
       this.triggerBtn.addEventListener('click', this.openModal);
+      const eventBtns = clone.querySelectorAll('[data-event]');
 
-      this.eventBtns.forEach(btn => {
+      eventBtns.forEach(btn => {
         btn.addEventListener('click', e => {
           const eventType = e.target.dataset.event;
           this.closeModal(eventType);

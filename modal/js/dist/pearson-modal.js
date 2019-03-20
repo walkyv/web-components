@@ -162,12 +162,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             title = clone.querySelector('#dialogHeading');
 
         this.modal = clone.querySelector('#modal');
-        this.eventBtns = clone.querySelectorAll('[data-event]');
         this.body = doc.querySelector('body');
         this.main = doc.querySelector('main');
         this.triggerBtn = doc.querySelector('#' + this.triggerId);
 
         overlayEntryPoint.parentNode.insertBefore(overlayClone, overlayEntryPoint.nextElementSibling);
+
         overlayEntryPoint.remove();
 
         if (this.footer) {
@@ -181,8 +181,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         this.triggerBtn.addEventListener('click', this.openModal);
+        var eventBtns = clone.querySelectorAll('[data-event]');
 
-        this.eventBtns.forEach(function (btn) {
+        eventBtns.forEach(function (btn) {
           btn.addEventListener('click', function (e) {
             var eventType = e.target.dataset.event;
             _this2.closeModal(eventType);
