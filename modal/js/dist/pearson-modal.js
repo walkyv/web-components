@@ -147,7 +147,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.closeModal = _this.closeModal.bind(_this);
       _this.bindKeyPress = _this.bindKeyPress.bind(_this);
       _this.maintainFocus = _this.maintainFocus.bind(_this);
-
       return _this;
     }
 

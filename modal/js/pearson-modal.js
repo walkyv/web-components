@@ -66,14 +66,14 @@
 
   function trapTabKey(e, ...nodes) {
     const focusableChildren = nodes.reduce(
-      (acc, n) => acc.concat(getFocusableChildren(n)),
-      []
+        (acc, n) => acc.concat(getFocusableChildren(n)),
+        []
       ),
       focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
       lastFocusableIdx = focusableChildren.length - 1;
 
     if (e.shiftKey && focusedItemIdx === 0) {
-      if (focusableChildren[lastFocusableIdx !== undefined]){
+      if (focusableChildren[lastFocusableIdx !== undefined]) {
         focusableChildren[lastFocusableIdx].focus();
         e.preventDefault();
       }
@@ -86,7 +86,6 @@
       }
     }
   }
-
 
   template.innerHTML = `
 <style>
@@ -123,35 +122,44 @@
 
   class Modal extends HTMLElement {
     static get observedAttributes() {
-      return ['footer', 'elements', 'triggerid', 'titletext', 'successbtntext', 'cancelbtntext', 'hidecancel', 'hidesuccess'];
+      return [
+        'footer',
+        'elements',
+        'triggerid',
+        'titletext',
+        'successbtntext',
+        'cancelbtntext',
+        'hidecancel',
+        'hidesuccess'
+      ];
     }
-    get hideCancel () {
+    get hideCancel() {
       return this.hasAttribute('hidecancel');
     }
     get hideSuccess() {
       return this.hasAttribute('hideSuccess');
     }
-    get triggerId () {
+    get triggerId() {
       return this.getAttribute('triggerid');
     }
-    get titleText () {
+    get titleText() {
       return this.getAttribute('titletext');
     }
-    get successBtnText () {
+    get successBtnText() {
       return this.getAttribute('successbtntext');
     }
-    get cancelBtnText () {
+    get cancelBtnText() {
       return this.getAttribute('cancelbtntext');
     }
     get elements() {
       return this.getAttribute('elements');
     }
-    get footer () {
+    get footer() {
       return this.hasAttribute('footer');
     }
 
-    set openState (bool) {
-      this.setAttribute('open', bool)
+    set openState(bool) {
+      this.setAttribute('open', bool);
     }
 
     set footer(value) {
@@ -171,7 +179,6 @@
       this.closeModal = this.closeModal.bind(this);
       this.bindKeyPress = this.bindKeyPress.bind(this);
       this.maintainFocus = this.maintainFocus.bind(this);
-
     }
 
     connectedCallback() {
@@ -183,7 +190,7 @@
       this.modal = clone.querySelector('#modal');
       this.body = doc.querySelector('body');
       this.main = doc.querySelector('main');
-      this.triggerBtn = doc.querySelector('#'+ this.triggerId);
+      this.triggerBtn = doc.querySelector('#' + this.triggerId);
 
       overlayEntryPoint.parentNode.insertBefore(
         overlayClone,
@@ -192,14 +199,12 @@
 
       overlayEntryPoint.remove();
 
-
-
       if (this.footer) {
         this.renderfooter(clone);
       }
 
       if (this.titleText !== null) {
-        title.innerHTML = this.titleText
+        title.innerHTML = this.titleText;
       } else {
         title.innerHTML = 'Modal Title';
       }
@@ -264,7 +269,7 @@
       this.style.display = 'block';
 
       if (this.elements === 'v1') {
-        this.modal.classList.add('elements')
+        this.modal.classList.add('elements');
       }
 
       if (buttonDisabled === null) {
@@ -301,7 +306,7 @@
           new Event(eventName, { bubbles: true, composed: true })
         );
       }, 500);
-      this.openState = false
+      this.openState = false;
     }
 
     maintainFocus() {
