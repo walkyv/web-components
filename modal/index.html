@@ -4,13 +4,19 @@
 		<title>Pearson Web Component</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
-
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
 		<!-- load pearson and global styles -->
-		<link href="https://unpkg.com/@pearson-components/elements-sdk@1.15.3/build/css/elements.css#unstable-2.0-GLP" rel="stylesheet">
+		<link href="https://unpkg.com/@pearson-ux/gravity-css@0.1.0/dist/gravity.css" rel="stylesheet">
 		<!-- loads web component polyfills -->
-		<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
+		<script type="text/javascript">
+          if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+          } else {
+            document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+            document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+          }
+		</script>
 		<script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
 		<!-- import web components -->
@@ -47,7 +53,14 @@
 				footer
 				style="display:none"
 		>
-			<p>Pass in elements as children to the modal</p>
+			<div>
+				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In massa tellus, porta in venenatis eget, pulvinar in arcu. Ut eu cursus augue. Sed eget tempus sem, nec suscipit justo. Cras sit amet accumsan massa, non elementum erat. Quisque et ultricies risus. Mauris id feugiat metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras quis libero a urna eleifend placerat. Nunc varius lorem at commodo viverra. Vivamus lobortis diam et nibh tempor, vitae laoreet sapien auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In massa tellus, porta in venenatis eget, pulvinar in arcu. Ut eu cursus augue. Sed eget tempus sem, nec suscipit justo. Cras sit amet accumsan massa, non elementum erat. Quisque et ultricies risus. Mauris id feugiat metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras quis libero a urna eleifend placerat. Nunc varius lorem at commodo viverra. Vivamus lobortis diam et nibh tempor, vitae laoreet sapien auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In massa tellus, porta in venenatis eget, pulvinar in arcu. Ut eu cursus augue. Sed eget tempus sem, nec suscipit justo. Cras sit amet accumsan massa, non elementum erat. Quisque et ultricies risus. Mauris id feugiat metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras quis libero a urna eleifend placerat. Nunc varius lorem at commodo viverra. Vivamus lobortis diam et nibh tempor, vitae laoreet sapien auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In massa tellus, porta in venenatis eget, pulvinar in arcu. Ut eu cursus augue. Sed eget tempus sem, nec suscipit justo. Cras sit amet accumsan massa, non elementum erat. Quisque et ultricies risus. Mauris id feugiat metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras quis libero a urna eleifend placerat. Nunc varius lorem at commodo viverra. Vivamus lobortis diam et nibh tempor, vitae laoreet sapien auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+
+
+			</div>
 		</pearson-modal>
 		<pearson-modal
 				triggerid="trigger-modal-two"
@@ -58,7 +71,7 @@
 				style="display:none"
 
 		>
-			<p>I like New York in June. How about you?</p>
+			<p style="margin-top:1000px">I like New York in June. How about you?</p>
 		</pearson-modal>
 		<pearson-modal
 				triggerid="trigger-modal-three"

@@ -1,52 +1,22 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
-
-:host {
-  box-sizing:border-box
-}
-*,:after,:before{
-  box-sizing:inherit
-}
 .hidden{
   display:none
 }
 .hide-overflow{
   overflow:hidden
 }
-.modal-scroll{
-  height:100%;
-  overflow:scroll;
-  -webkit-overflow-scrolling:touch
-}
-.sticky{
-  display:flex;
-  flex-direction:column
-}
+
 #modalOverlay{
   width:100%;
   height:100%;
-  z-index:2;
-  background-color:#222;
-  opacity:.6;
+  z-index:3;
+  background-color:rgba(37, 37, 37, 0.6);
   position:fixed;
   top:0;
   left:0;
   margin:0;
   padding:0
 }
-.pe-modal-container[data-sticky=true] h2{
-  border-bottom:1px solid #c7c7c7;
-  display:block;
-  padding-bottom:20px;
-  margin-bottom:0
-}
-.pe-modal-container[data-sticky=true] .modal-body{
-  margin:0;
-  padding-top:20px
-}
-.pe-modal-container[data-sticky=true] .actions{
-  border-top:1px solid #c7c7c7;
-  padding-top:20px
-}
+
 [role=dialog]{
   border:thin solid #000;
   background-color:#fff;
@@ -56,36 +26,15 @@
   left:50%;
   transform:translate(-50%,-50%)
 }
-.scroll-frame{
-  overflow:auto;
-  overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-  height:400px;
-  width:100%
-}
+
 button.close[aria-label="Close Dialog"]{
   position:absolute;
-  height:40px;
-  width:40px;
-  background:none;
-  border:0;
   top:2px;
   right:2px;
   cursor:pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-button.close[aria-label="Close Dialog"]:focus {
-  outline:none;
-}
-button.close[aria-label="Close Dialog"]:focus:after {
-  border: 2px solid #0b73da;
-  content: "";
-  position: absolute;
-  width:100%;
-  height:100%;
-  z-index: 1;
 }
 
 .close img {
@@ -99,7 +48,11 @@ button.close[aria-label="Close Dialog"]:focus:after {
   outline:none;
   background-color:#fff;
   border-radius:2px;
-  font-family: 'Open Sans', Calibri, Tahoma, sans-serif
+  font-family: 'Open Sans', Calibri, Tahoma, sans-serif;
+  height:auto;
+  &.scroll {
+    height: calc(100% - 100px)
+  }
 }
 @media (max-width:767px){
   .modal{
@@ -107,11 +60,7 @@ button.close[aria-label="Close Dialog"]:focus:after {
   }
 }
 .pe-modal-container h2{
-  line-height: 1.85714rem;
-  font-weight: 400;
-  color: #252525;
   margin: 0 0 20px;
-  font-size: 20px;
   padding-left: 40px;
   padding-top: 40px;
   padding-right: 40px;
@@ -128,62 +77,21 @@ button.close[aria-label="Close Dialog"]:focus:after {
 .pe-modal-container .modal-body{
   margin-bottom:28px;
   padding:0 40px;
-  font-size:14px;
-  line-height:1.5;
+  overflow: scroll;
+  height: calc(100% - 200px);
+
 }
 .pe-modal-container .actions{
   display:flex;
+  flex-direction: row;
   align-items:center;
   justify-content:flex-end;
   padding-left:40px;
   padding-right:40px;
   padding-bottom:40px
 }
-.pe-modal-container .actions button {
-  color: #505759;
-  background-color: transparent;
-  border: 1px solid #c7c7c7;
-  text-decoration: none;
-  position: relative;
-  z-index: 1;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  display: inline-block;
-  vertical-align: middle;
-  cursor: pointer;
-  height: 36px;
-  padding: 0 20px;
-  border-radius: 36px;
-  font-size: 14px;
-  line-height: 18px;
-  font-weight: 600;
-  overflow:visible;
-}
-.pe-modal-container .actions button {
-  outline:none;
-}
-.pe-modal-container .actions button:focus:after {
-  border: 2px solid #0b73da;
-  content: "";
-  position: absolute;
-  border-radius: 22px;
-  width: -webkit-calc(100% + 12px);
-  width: calc(100% + 12px);
-  height: -webkit-calc(100% + 12px);
-  height: calc(100% + 12px);
-  top: -6px;
-  left: -6px;
-  z-index: 1;
-}
-.pe-modal-container .actions button.pe-btn__primary--btn_large {
-  background-color: #047a9c;
-  border:1px solid  #047a9c;
-  color:white;
-}
 
-.pe-modal-container .actions button.pe-btn__primary--btn_large:hover {
-  background-color: #005a70;
-}
+
 
 @media (max-width:767px){
   .pe-modal-container .actions{
@@ -204,11 +112,7 @@ button.close[aria-label="Close Dialog"]:focus:after {
     margin:.5em 0
   }
 }
-@media (max-width:767px){
-  .pe-modal-container .actions button{
-    width:100%
-  }
-}
+
 //.pe-modal-container .actions button#modalOverlay:focus{
 //  outline:1px solid #da0474;
 //  outline-offset:2px
@@ -225,4 +129,28 @@ button.close[aria-label="Close Dialog"]:focus:after {
   margin:0 auto;
   top:0;
   left:0
+}
+.elements {
+  .gr-btn {
+    border-radius:3px;
+    background-color: #E9E9E9;
+    border: 1px solid #C7C7C7;
+    color: #252525;
+    &:hover {
+      background-color: #D9D9D9;
+    }
+    &.primary {
+      background-color: #047A9C;
+      border: 1px solid #047A9C;
+      color:white;
+      &:hover {
+        background: #005A70;
+        border:1px solid #005A70;
+      }
+    }
+    &.icon-btn-18 {
+      background-color:transparent;
+      border:0;
+    }
+  }
 }
