@@ -323,7 +323,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.modal.addEventListener('animationstart', function (event) {
           var modalPosition = _this4.modal.getBoundingClientRect();
-          console.log(window.pageYOffset);
           if (modalPosition.height > window.innerHeight) {
             modalBody.classList.add('scroll');
           }

@@ -342,7 +342,6 @@
 
       this.modal.addEventListener('animationstart', event => {
         const modalPosition = this.modal.getBoundingClientRect();
-        console.log(window.pageYOffset);
         if (modalPosition.height > window.innerHeight) {
           modalBody.classList.add('scroll');
         }
