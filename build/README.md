@@ -20,7 +20,7 @@ You will need to add the following 3 polyfills, in order for your project to be 
            document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
          }
        </script>
-
+	   <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
        </head>
 
 **Additionally**
