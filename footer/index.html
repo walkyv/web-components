@@ -5,13 +5,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <!-- THESE IMPORTS ARE NECESSARY FOR PROPER RENDERING DURING DEVELOPMENT -->
-    <!-- DO NOT DELETE -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/@pearson-ux/gravity-css/dist/gravity.css" />
 
-    <!-- loads web component polyfills -->
-    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
-    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
+    <script type="text/javascript">
+      if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
+      } else {
+        document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+        document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+      }
+    </script>
+
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
     <script src="js/dist/pearson-footer.js"></script>
     <style>
@@ -19,10 +25,13 @@
         width: 60rem;
         margin: 0 auto;
       }
+      pearson-footer {
+        width:100%;
+      }
     </style>
   </head>
 
   <body>
-    <pearson-footer theme="dark"/>
+  <pearson-footer></pearson-footer>
   </body>
 </html>

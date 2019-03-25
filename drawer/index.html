@@ -7,14 +7,20 @@
   <!-- THESE IMPORTS ARE NECESSARY FOR PROPER RENDERING DURING DEVELOPMENT -->
   <!-- DO NOT DELETE -->
   <!-- load pearson and global styles -->
-  <link href="https://unpkg.com/@pearson-components/elements-sdk@1.15.3/build/css/elements.css#unstable-2.0-GLP" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
-  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="https://unpkg.com/@pearson-ux/gravity-css/dist/gravity.css" />
 
-  <!-- loads web component polyfills -->
-  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
-  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
-  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0?rum=0"></script>
+  <script type="text/javascript">
+    if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
+    } else {
+      document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+      document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+    }
+  </script>
+
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+  <link href="main.css" rel="stylesheet"/>
 
   <!-- load the web component script -->
   <script src="js/dist/pearson-drawer.js"></script>
@@ -33,7 +39,7 @@
 </main>
 
 <pearson-drawer id="pearsonStandardDrawer">
-  <h3 slot="title" class="title">Help Topics</h3>
+  <h3 slot="title" class="gr-h3">Help Topics</h3>
   <div slot="content" class="content">
     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci vel necessitatibus amet, enim cumque cum est facilis dolores optio doloremque quibusdam quas a dolorum? Nobis doloremque tempora alias laborum mollitia?</p>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt quas dignissimos qui, inventore, quam, harum quo atque similique recusandae non molestias id dolores pariatur. Asperiores cum fugit quis qui eaque. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, rerum? <a href="#foo">Voluptatem</a> dolorum ad et quia veniam quas debitis expedita eos eligendi ipsam, cumque neque id temporibus voluptatum alias nihil natus? Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta cupiditate ex deserunt natus inventore, nihil laborum esse commodi dignissimos autem animi alias laudantium iure beatae eum adipisci, eos harum! Deleniti?</p>
@@ -45,26 +51,26 @@
 
 
 <pearson-drawer id="pearsonDetailsDrawer" class="animated">
-  <h3 class="title" slot="title">Help Topics</h3>
+  <h3 class="gr-h3" slot="title">Help Topics</h3>
   <div slot="content">
     <div data-panel="1">
-      <h3 class="pe-paragraph">
+      <h3 class="gr-h3">
         Having trouble signing in or account locked?
       </h3>
       <p>
         You have a Pearson username and password if you've ever used a Pearson product
       </p>
-      <h3 class="pe-paragraph">I enable cookies?</h3>
+      <h3 class="gr-h3">I enable cookies?</h3>
       <p>Cookies are files from websites that store your browsing
         information, including</p>
-      <h3 class="pe-parahraph">What if I get a date or clock error?</h3>
+      <h3 class="gr-h3">What if I get a date or clock error?</h3>
       <p>If the date or clock for your computer or other device is set
         incorrectly for your time zone, an error appears and you can't
         continue.</p>
-      <h3 class="pe-title">Having trouble or need support?</h3>
+      <h3 class="gr-h3">Having trouble or need support?</h3>
     </div>
     <div data-panel="2">
-      <h3>Having trouble signing in or account locked?</h3>
+      <h3 class="gr-h3">Having trouble signing in or account locked?</h3>
       <p>
         You have a Pearson username and password if you've ever used a
         Pearson product (for example, Revel, MyLab Math, or Mastering
@@ -109,7 +115,7 @@
       </p>
     </div>
     <div data-panel="3">
-      <h3 class="pe-title">
+      <h3 class="gr-h3">
         How do I enable cookies?
       </h3>
       <p>
@@ -123,16 +129,16 @@
         >.
       </p>
       <dl>
-        <h3 class="pe-paragraph text">
+        <h3 class="gr-h3">
           <strong>Chrome and Firefox:</strong> Enable all cookies or ap an
           exception for <strong>pi.pearsoned.com</strong>.
         </h3>
-        <h3 class="pe-paragraph text">
+        <h3 class="gr-h3">
           <strong>Internet Explorer:</strong> Enable all cookies or ap
           exceptions for <strong>pi.pearsoned.com</strong> and
           <strong>pearson.com</strong>.
         </h3>
-        <h3 class="pe-paragraph text">
+        <h3 class="gr-h3">
           <strong>Safari and Edge:</strong> Enable all cookies.
         </h3>
       </dl>
@@ -150,7 +156,7 @@
       </p>
     </div>
     <div data-panel="4">
-      <h3 class="pe-title">
+      <h3 class="gr-h3">
         What if I get a date or clock error?
       </h3>
       <p>
@@ -175,7 +181,7 @@
       </p>
     </div>
     <div data-panel="5">
-      <h3 class="pe-title">
+      <h3 class="gr-h3">
         Having trouble or need support?
       </h3>
       <p>
