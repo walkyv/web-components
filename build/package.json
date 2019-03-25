@@ -1,0 +1,34 @@
+{
+  "name": "@pearson-ux/pearson-web-components",
+  "version": "1.0.0",
+  "description": "Full library of pearson web components",
+  "main": "pearson-web-components-min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pearson-ux/web-components.git"
+  },
+  "keywords": [
+    "web",
+    "components",
+    "pearson",
+    "modal",
+    "tabs",
+    "toggle",
+    "alert",
+    "coachmark",
+    "drawer",
+    "file",
+    "uploader",
+    "footer",
+    "loader"
+  ],
+  "author": "David O'Dey & EJ Mason",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pearson-ux/web-components/issues"
+  },
+  "homepage": "https://github.com/pearson-ux/web-components#readme"
+}
