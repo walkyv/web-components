@@ -25,12 +25,19 @@ Import the web component onto the page, inbetween the `<head>` tags
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet">
 
    <!-- Polyfills -->
-  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
-  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
-  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
+       <script type="text/javascript">
+         if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+           document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+           document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
+         } else {
+           document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+           document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+         }
+       </script>
+	   <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
   <!-- Web component script -->
-  <script src="/path-to-datepicker/js/dist/pearson-pearson-modal.js" />
+  <script src="/path-to-pearson-modal/js/dist/pearson-modal.js" />
 </head>
 ```
 
