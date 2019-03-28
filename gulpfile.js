@@ -15,10 +15,9 @@ const paths = {
 function scripts(done) {
   gulp
     .src([
+      './datepicker/js/dist/pearson-datepicker.js',
       './alert/js/dist/pearson-alert.js',
       './coachmark/js/dist/pearson-coachmark.js',
-      './datepicker/js/dist/pearson-datepicker.js',
-      './drawer/js/dist/pearson-drawer.js',
       './drawer/js/dist/pearson-drawer.js',
       './file-uploader/js/dist/pearson-file-upload.js',
       './footer/js/dist/pearson-footer.js',
