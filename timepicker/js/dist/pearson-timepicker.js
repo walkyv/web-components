@@ -114,11 +114,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'hoverTime',
       value: function hoverTime(match) {
-        setSelectedFalse(this.list);
-        if (match !== null) {
-          match.classList.add('in-view');
-          match.scrollIntoView();
-        }
+        // setSelectedFalse(this.list);
+        // if (match !== null) {
+        //   match.classList.add('in-view');
+        //   match.scrollIntoView();
+        // }
       }
     }, {
       key: 'validateTime',
@@ -377,9 +377,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.list.addEventListener('keydown', this.onMouseDown);
         this.list.addEventListener('click', function (event) {
-          event.stopImmediatePropagation();
           _this2.selectTime(event.target, _this2.list);
-        });
+        }, true);
 
         this.addEventListener('focusout', this.closeMenu);
         doc.addEventListener('keydown', this.onMouseDown);

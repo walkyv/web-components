@@ -240,11 +240,11 @@
     }
 
     hoverTime(match) {
-      setSelectedFalse(this.list);
-      if (match !== null) {
-        match.classList.add('in-view');
-        match.scrollIntoView();
-      }
+      // setSelectedFalse(this.list);
+      // if (match !== null) {
+      //   match.classList.add('in-view');
+      //   match.scrollIntoView();
+      // }
     }
 
     validateTime() {
@@ -407,9 +407,8 @@
 
       this.list.addEventListener('keydown', this.onMouseDown);
       this.list.addEventListener('click', event => {
-        event.stopImmediatePropagation();
         this.selectTime(event.target, this.list);
-      });
+      }, true);
 
       this.addEventListener('focusout', this.closeMenu);
       doc.addEventListener('keydown', this.onMouseDown);
