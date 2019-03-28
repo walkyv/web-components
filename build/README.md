@@ -1,4 +1,5 @@
 
+
 # web-components
 A library of pearson web components
 
@@ -20,11 +21,21 @@ You will need to add the following 3 polyfills, in order for your project to be 
            document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
          }
        </script>
-	   <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+      <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
        </head>
 
 **Additionally**
 If you prefer not to use a CDN, you can download these polyfills locally with NPM
+
+
+
+  **Important Note:**
+
+
+> These components are dependant on Moment.JS please make sure you are importing moment and moment-range into your projects.   You can use the CDN links below, or use NPM.
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.2/moment-range.js"></script>
 
   ## Usage
   Adding all of our web components to your project is easy just add the following line of code to the bottom of the page
