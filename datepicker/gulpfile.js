@@ -12,7 +12,7 @@ const autoprefixer = require('autoprefixer'),
 const paths = {
   html: './*.html',
   // scripts: ['./js/**/*.js', '!**/dist/*.js'],
-  scripts: ['./js/moment.js', './js/moment-range.js', './js/datepicker.js'],
+  scripts: ['./js/datepicker.js'],
   styles: './scss/**/*.scss',
   dist: './js/dist',
   ignore: './js/dist',

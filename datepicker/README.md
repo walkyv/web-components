@@ -1,6 +1,7 @@
 
 
 
+
 # Pearson Datepicker Web Component
 
 ## Table of Contents
@@ -48,6 +49,10 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
+  <!-- Dependancies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.2/moment-range.js"></script>
+
   <!-- Web component script -->
   <script src="/path-to-datepicker/js/dist/pearson-datepicker.js" />
 </head>
@@ -77,6 +82,7 @@ All attributes in this API are optional.
 
   **Important Note:**
 
+
 > The value attribute will change when dates are entered or selected from the calendar dropdown.
 
 
@@ -94,6 +100,16 @@ All attributes in this API are optional.
 
 ### React
 To use these web components in your react application do the following.
+
+  **Important Note:**
+
+
+> This component is dependant on Moment.JS please make sure you are importing moment and moment-range into your projects.   You can use the CDN links below, or use NPM.
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.2/moment-range.js"></script>
+
+
 First install the component.
 
 ```bash
@@ -109,10 +125,10 @@ Then use the markup in your JSX code.  You can pass props in to available API at
 
 ```js
 render () {
-	return (
-		<div>
-			<pearson-datepicker></pearson-datepicker>
-		</div>
-	)
+   return (
+      <div>
+         <pearson-datepicker></pearson-datepicker>
+      </div>
+   )
 }
 ```
