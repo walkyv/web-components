@@ -142,7 +142,7 @@
   }
 
   function generateAlert(opts) {
-    const alert = doc.createElement('pearson-alert');
+    const alert = doc.createElement('pearson-upload-alert');
     for (let attrName in opts) {
       alert.setAttribute(attrName, opts[attrName]);
     }

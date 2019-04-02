@@ -139,5 +139,5 @@
     }
   }
 
-  customElements.define('pearson-alert', Alert);
+  customElements.define('pearson-upload-alert', Alert);
 })(window, document);
