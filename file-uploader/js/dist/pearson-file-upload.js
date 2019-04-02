@@ -414,7 +414,9 @@ function _inherits(subClass, superClass) {
                 this.overlay = this.clone.querySelector('#modalOverlay');
 
                 // When the modal trigger is clicked, open modal
-                this.triggerBtn.addEventListener('click', this.openModal);
+                if (this.triggerBtn !== null) {
+                    this.triggerBtn.addEventListener('click', this.openModal);
+                }
 
                 this.eventBtns.forEach(function (btn) {
                     btn.addEventListener('click', function (e) {
