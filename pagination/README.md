@@ -8,7 +8,7 @@ Follow these steps carefully!
 
 1. Navigate to the folder where the existing markup for the component lives.
 2. Create a new git branch with the name `component/COMPONENT_NAME`, where `COMPONENT_NAME` is the name of the component you are building.
-3. Download this repository as a zipfile. 
+3. Download this repository as a zipfile.
   * If you clone this repo, **you must remove its `.git` directory**. If you do not remove this directory, the spec kit will become a submodule in the web component's repo. Submodules are not the correct approach, and are not supported.
 4. Unzip the zipfile and move the contents of the resultant folder into the _root folder_ of the component you are working on.
   * This means that the existing `markup-kit` folder should be a _sibling_ of the new files from the spec-kit folder
@@ -25,7 +25,7 @@ cd PATH_TO_WEB_COMPONENTS_DIRECTORY/COMPONENT_NAME
 git checkout -b component/COMPONENT_NAME
 # Clone the spec kit starter, renaming it as `temp`
 # (the temp folder will be deleted shortly)
-git clone --depth 1 https://github.com/pearson-ux/web-component-spec-kit temp 
+git clone --depth 1 https://github.com/pearson-ux/web-component-spec-kit temp
 # Move the contents of `temp` into this folder
 mv temp/* temp/.gitignore ./
 # Delete the temp directory and its contents
@@ -60,7 +60,7 @@ After you run `gulp` the first time, the file tree in the spec kit will look lik
 │   └──style.css
 ├── js
 │   ├── dist
-│   └── pearson-example.js
+│   └── pearson-pagination.js
 ├── markup-kit
 ├── node_modules
 ├── scss
