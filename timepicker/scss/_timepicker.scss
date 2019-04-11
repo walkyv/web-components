@@ -1,8 +1,12 @@
+/* VARIABLES */
+
 $pe-color-strawberry-red: #db0020;
 $pe-color-charcoal: #252525;
 $pe-color-concrete: #c7c7c7;
 $pe-color-moonlight: #e9e9e9;
 $pe-focus-color: #0b73da;
+
+/* RESETS */
 
 input {
   font-family: inherit;
@@ -35,22 +39,24 @@ ul {
   color: $pe-color-charcoal;
 }
 
+/* TIMEPICKER */
+
 .timepicker-input {
   min-width: 150px;
 }
 
-.timepicker-listbox {
+.timepicker-error {
+  display: none;
+}
+
+/* LISTBOX */
+
+.listbox {
   min-width: 220px;
   width: 100%;
   padding: 0 14px;
   border: 1px solid $pe-color-concrete;
   border-radius: 2px;
-}
-
-
-
-.timepicker-error {
-  display: none;
 }
 
 // .timepicker-container {

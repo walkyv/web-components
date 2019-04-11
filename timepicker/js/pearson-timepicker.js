@@ -42,7 +42,7 @@
 
   template.innerHTML = `
 <style>
-input{font-family:inherit;font-weight:inherit;line-height:inherit;display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7c7;border-radius:2px}ul{list-style-type:none;padding:0;margin:0}:host,:host *,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box}:host{display:inline-block;max-width:400px;font:14px/18px Open Sans,Calibri,Tahoma,sans-serif;color:#252525}.timepicker-input{min-width:150px}.timepicker-listbox{min-width:220px;width:100%;padding:0 14px;border:1px solid #c7c7c7;border-radius:2px}.timepicker-error{display:none}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}
+input{font-family:inherit;font-weight:inherit;line-height:inherit;display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7c7;border-radius:2px}ul{list-style-type:none;padding:0;margin:0}:host,:host *,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box}:host{display:inline-block;max-width:400px;font:14px/18px Open Sans,Calibri,Tahoma,sans-serif;color:#252525}.timepicker-input{min-width:150px}.listbox{min-width:220px;width:100%;padding:0 14px;border:1px solid #c7c7c7;border-radius:2px}.timepicker-error{display:none}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}
 </style>
   <div class="timepicker">
     <label 
@@ -58,7 +58,7 @@ input{font-family:inherit;font-weight:inherit;line-height:inherit;display:block;
       role="combobox"
       aria-haspopup="listbox"
       aria-expanded="false"
-      aria-owns="timepicker-listbox"
+      aria-owns="listbox"
       aria-autocomplete="none"
     >
     <span class="pe-icon-wrapper">
@@ -70,12 +70,12 @@ input{font-family:inherit;font-weight:inherit;line-height:inherit;display:block;
     Enter a valid time.
   </p>
   <div
-    id="timepicker-listbox-wrapper"
-    class="timepicker-listbox-wrapper animated animateIn"
+    id="listbox-wrapper"
+    class="listbox-wrapper animated animateIn"
   >
     <ul
-      id="timepicker-listbox"
-      class="timepicker-listbox"
+      id="listbox"
+      class="listbox"
       role="listbox"
       data-selected data-time-type="12 hour"
     ></ul>
@@ -176,7 +176,7 @@ input{font-family:inherit;font-weight:inherit;line-height:inherit;display:block;
       const clone = template.content.cloneNode(true);
 
       this.input = clone.querySelector('#timepicker-input');
-      this.list = clone.querySelector('#timepicker-listbox');
+      this.list = clone.querySelector('#listbox');
 
       this.shadowRoot.append(clone);
 
