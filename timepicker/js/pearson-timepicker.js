@@ -42,22 +42,43 @@
 
   template.innerHTML = `
 <style>
-*{-webkit-box-sizing:border-box;box-sizing:border-box}.timepicker-container{min-width:150px;position:relative;max-width:400px;font-family:Open Sans,Calibri,Tahoma,sans-serif}.timepicker-container.error input{border-color:#db0020}.timepicker-container.error label{color:#db0020}.timepicker-container .timepicker{position:relative}.timepicker-container .timepicker input{padding-right:46px;text-transform:uppercase}.timepicker-container .timepicker .pe-textInput--basic.error{border-color:#db0020}.timepicker-container .timepicker .pe-icon-wrapper{color:#6a7070;position:absolute;right:14px;bottom:-webkit-calc(50% - 14px);bottom:calc(50% - 14px)}.timepicker-container .pe-textLabelInput__label.error{color:#db0020}.timepicker-container .error-msg{color:#db0020;margin-top:1px;margin-bottom:0;font-size:12px;line-height:18px}.timepicker-container .pe-dropdown-container{width:220px;padding:12px 0;position:absolute;top:46px;z-index:1000}.timepicker-container .pe-dropdown-container .itemList{margin:0;padding:4px 0;list-style-type:none;width:218px;max-height:300px;overflow-y:auto;border:1px solid #c7c7c7;border-radius:2px;background-color:#fff}.timepicker-container .pe-dropdown-container .itemList .item{padding:4px 24px;position:relative;display:block;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box;cursor:pointer;font-size:14px}.timepicker-container .pe-dropdown-container .itemList .item .pe-icon-wrapper{color:#6a7070;position:absolute;left:6px;display:none}.timepicker-container .pe-dropdown-container .itemList .item:hover{background-color:#e9e9e9}.timepicker-container .pe-dropdown-container .itemList .item[aria-activedescendant=true]{background-color:#e9e9e9;outline:0}.timepicker-container .pe-dropdown-container .itemList .item[aria-activedescendant=true]:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:4px;width:100%;height:-webkit-calc(100% + 4px);height:calc(100% + 4px);top:-2px;left:0;z-index:1}.timepicker-container .pe-dropdown-container .itemList.with-selection .pe-itemList-item{padding:4px 24px 4px 34px}.timepicker-container .pe-dropdown-container .itemList:empty{visibility:hidden}.timepicker-container.error .pe-dropdown-container{top:68px}.in-view{background-color:#e9e9e9}#inputAriaId{display:none}.error #inputAriaId{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}@media (-ms-high-contrast:none){.pe-icon-wrapper{width:20px;height:23px}}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}
-.hidden {visibility: hidden}
+:host,:host *,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box}:host{display:inline-block;max-width:400px;font:14px/18px Open Sans,Calibri,Tahoma,sans-serif;color:#252525}input{font-family:inherit;font-weight:inherit;line-height:inherit;display:block;width:100%;height:36px;padding:0 14px;min-width:150px}ul{list-style-type:none;padding:0}.pe-input--error_message{display:none}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}
 </style>
-  <div class="timepicker-container" role="combobox">
-    <label class="pe-textLabelInput__label" for="timePickerInput">Select time (HH:MM AM/PM)</label>
-    <input type="text" id="timePickerInput" class="pe-textInput--basic" role="combobox" aria-haspopup="true" aria-expanded="false" aria-controls="itemList" aria-owns="itemList" aria-autocomplete="none">
-  <span class="pe-icon-wrapper">
-    ${clockIcon}
-  </span> 
+  <div class="timepicker">
+    <label 
+      class="timepicker-label"
+      for="timepicker-input"
+    >
+      Select time (HH:MM AM/PM)
+    </label>
+    <input 
+      type="text" 
+      id="timepicker-input"
+      class="timepicker-input"
+      role="combobox"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      aria-owns="timepicker-listbox"
+      aria-autocomplete="none"
+    >
+    <span class="pe-icon-wrapper">
+      ${clockIcon}
+    </span> 
   </div>
-  <p id="inputAriaId" class="pe-input--error_message">
+  <p id="timepicker-error" class="timepicker-error">
     ${warningIcon}
     Enter a valid time.
   </p>
-  <div id="dropDown" class="pe-dropdown-container animated animateIn">
-    <ul id="itemList" class="itemList" role="listbox" data-selected data-time-type="12 hour"></ul>
+  <div
+    id="timepicker-listbox-wrapper"
+    class="timepicker-listbox-wrapper animated animateIn"
+  >
+    <ul
+      id="timepicker-listbox"
+      class="timepicker-listbox"
+      role="listbox"
+      data-selected data-time-type="12 hour"
+    ></ul>
   </div>
 `;
 
@@ -154,8 +175,8 @@
 
       const clone = template.content.cloneNode(true);
 
-      this.input = clone.querySelector('#timePickerInput');
-      this.list = clone.querySelector('#itemList');
+      this.input = clone.querySelector('#timepicker-input');
+      this.list = clone.querySelector('#timepicker-listbox');
 
       this.shadowRoot.append(clone);
 
