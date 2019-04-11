@@ -41,6 +41,16 @@ ul {
 
 /* TIMEPICKER */
 
+.timepicker {
+  position: relative;
+}
+
+.timepicker .pe-icon-wrapper {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+}
+
 .timepicker-input {
   min-width: 150px;
 }
@@ -58,6 +68,9 @@ ul {
   border: 1px solid $pe-color-concrete;
   border-radius: 2px;
 }
+
+
+
 
 // .timepicker-container {
 //   min-width: 150px;
