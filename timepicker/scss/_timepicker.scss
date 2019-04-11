@@ -12,12 +12,14 @@ input {
   width: 100%;
   height: 36px;
   padding: 0 14px;
-  min-width: 150px;
+  border: 1px solid $pe-color-concrete;
+  border-radius: 2px;
 }
 
 ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 :host,
@@ -33,9 +35,21 @@ ul {
   color: $pe-color-charcoal;
 }
 
+.timepicker-input {
+  min-width: 150px;
+}
+
+.timepicker-listbox {
+  min-width: 220px;
+  width: 100%;
+  padding: 0 14px;
+  border: 1px solid $pe-color-concrete;
+  border-radius: 2px;
+}
 
 
-.pe-input--error_message {
+
+.timepicker-error {
   display: none;
 }
 
