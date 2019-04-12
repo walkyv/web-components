@@ -72,15 +72,11 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         Enter a valid time.
     </p>
   </div>
-  <div
-    id="listbox-wrapper"
-    class="listbox-wrapper"
-  >
+  <div class="listbox-wrapper">
     <ul
       id="listbox"
       class="listbox animated"
       role="listbox"
-      data-selected data-time-type="12 hour"
     ></ul>
   </div>
 `;
@@ -218,12 +214,11 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     connectedCallback() {
-      calculate(this.increments)
-        .forEach((time, index) => {
-          const text = time.format(this.format);
-          this.listbox.appendChild(buildTimeEl(text, index));
-        });
-      
+      calculate(this.increments).forEach((time, index) => {
+        const text = time.format(this.format);
+        this.listbox.appendChild(buildTimeEl(text, index));
+      });
+
       this.times = this.listbox.children;
 
       this.input.addEventListener('focus', this.onInputFocus);
