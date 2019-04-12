@@ -24,21 +24,25 @@
 
 @keyframes fadeIn {
   from {
+    visibility: hidden;
     opacity: 0;
   }
 
   to {
     opacity: 1;
+    visibility: visible;
   }
 }
 
 @keyframes fadeOut {
   from {
     opacity: 1;
+    visibility: visible;
   }
 
   to {
     opacity: 0;
+    opacity: 1;
   }
 }
 
@@ -46,7 +50,7 @@
 
 .animated {
   animation-duration: 1s;
-  animation-fill-mode: backwards;
+  animation-fill-mode: forwards;
   @media screen and (prefers-reduced-motion: reduce) {
     animation: unset !important;
   }

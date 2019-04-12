@@ -115,6 +115,8 @@ svg {
   border: 1px solid $pe-color-concrete;
   border-radius: 2px;
   overflow-y: auto;
+  visibility: hidden;
+  opacity: 0
 }
 
 .listbox-item {
