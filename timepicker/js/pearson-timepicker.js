@@ -189,6 +189,8 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       this.input = clone.querySelector('#timepicker-input');
       this.listbox = clone.querySelector('#listbox');
 
+      this.activeIdx = -1;
+
       this.shadowRoot.append(clone);
 
       this.onInputKeyup = this.onInputKeyup.bind(this);
@@ -202,19 +204,21 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       if (name === 'open') {
         const isOpen = newValue !== null;
 
-        const classToRemove = isOpen ? 'animateOut': 'animateIn';
+        const classToRemove = isOpen ? 'animateOut' : 'animateIn';
         const classToAdd = isOpen ? 'animateIn' : 'animateOut';
-        
+
         this.input.setAttribute('aria-expanded', isOpen);
 
         this.listbox.classList.remove(classToRemove);
         this.listbox.classList.add(classToAdd);
 
-        doc.addEventListener('click', (e)=>{
-
-          this.open = e.target === this;
-        }, true);
-        
+        doc.addEventListener(
+          'click',
+          e => {
+            this.open = e.target === this;
+          },
+          true
+        );
       }
     }
 
@@ -224,7 +228,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         this.listbox.appendChild(buildTimeEl(text, index));
       });
 
-      this.times = this.listbox.children;
+      this.items = this.listbox.children;
 
       this.input.addEventListener('focus', this.onInputFocus);
       this.input.addEventListener('keydown', this.onInputKeydown);
@@ -237,11 +241,56 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       this.open = true;
     }
 
-    onInputKeydown() {}
+    onInputKeydown(e) {
+      const key = e.key;
+      const items = this.items;
+      let activeIdx = this.activeIdx;
+
+      if (key === 'Escape') {
+        this.open = false;
+        return;
+      }
+
+      const prevActive = items[activeIdx];
+      let activeItem;
+
+      switch (key) {
+        case 'ArrowUp':
+          if (activeIdx <= 0) {
+            activeIdx = this.items.length - 1;
+          } else {
+            activeIdx--;
+          }
+          break;
+        case 'ArrowDown':
+          if (activeIdx === -1 || activeIdx >= this.items.length) {
+            activeIdx = 0;
+          } else {
+            activeIdx++;
+          }
+          break;
+        default:
+          return;
+      }
+      e.preventDefault();
+
+      activeItem = this.items[activeIdx];
+      this.activeIdx = activeIdx;
+
+      if (prevActive) {
+        prevActive.classList.remove('pseudo-focus');
+        prevActive.setAttribute('aria-selected', 'false');
+      }
+
+      if (activeItem) {
+        this.input.setAttribute('aria-activedescendant', 'time-' + activeIdx);
+        activeItem.classList.add('pseudo-focus');
+      }
+    }
     onInputKeyup(e) {
       switch (e.key) {
-        case 'Up':
-        case 'Down':
+        case 'ArrowUp':
+        case 'ArrowDown':
         case 'Escape':
         case 'Enter':
           e.preventDefault();

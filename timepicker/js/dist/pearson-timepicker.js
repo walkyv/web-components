@@ -134,6 +134,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.input = clone.querySelector('#timepicker-input');
       _this.listbox = clone.querySelector('#listbox');
 
+      _this.activeIdx = -1;
+
       _this.shadowRoot.append(clone);
 
       _this.onInputKeyup = _this.onInputKeyup.bind(_this);
@@ -161,7 +163,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.listbox.classList.add(classToAdd);
 
           doc.addEventListener('click', function (e) {
-
             _this2.open = e.target === _this2;
           }, true);
         }
@@ -176,7 +177,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           _this3.listbox.appendChild(buildTimeEl(text, index));
         });
 
-        this.times = this.listbox.children;
+        this.items = this.listbox.children;
 
         this.input.addEventListener('focus', this.onInputFocus);
         this.input.addEventListener('keydown', this.onInputKeydown);
@@ -192,13 +193,58 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       }
     }, {
       key: 'onInputKeydown',
-      value: function onInputKeydown() {}
+      value: function onInputKeydown(e) {
+        var key = e.key;
+        var items = this.items;
+        var activeIdx = this.activeIdx;
+
+        if (key === 'Escape') {
+          this.open = false;
+          return;
+        }
+
+        var prevActive = items[activeIdx];
+        var activeItem = void 0;
+
+        switch (key) {
+          case 'ArrowUp':
+            if (activeIdx <= 0) {
+              activeIdx = this.items.length - 1;
+            } else {
+              activeIdx--;
+            }
+            break;
+          case 'ArrowDown':
+            if (activeIdx === -1 || activeIdx >= this.items.length) {
+              activeIdx = 0;
+            } else {
+              activeIdx++;
+            }
+            break;
+          default:
+            return;
+        }
+        e.preventDefault();
+
+        activeItem = this.items[activeIdx];
+        this.activeIdx = activeIdx;
+
+        if (prevActive) {
+          prevActive.classList.remove('pseudo-focus');
+          prevActive.setAttribute('aria-selected', 'false');
+        }
+
+        if (activeItem) {
+          this.input.setAttribute('aria-activedescendant', 'time-' + activeIdx);
+          activeItem.classList.add('pseudo-focus');
+        }
+      }
     }, {
       key: 'onInputKeyup',
       value: function onInputKeyup(e) {
         switch (e.key) {
-          case 'Up':
-          case 'Down':
+          case 'ArrowUp':
+          case 'ArrowDown':
           case 'Escape':
           case 'Enter':
             e.preventDefault();
