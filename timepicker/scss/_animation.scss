@@ -1,48 +1,48 @@
 @keyframes slideInUp {
   from {
     transform: translate3d(0, 100%, 0);
-    visibility: visible;
+    visibility: hidden;
   }
 
   to {
     transform: translate3d(0, 0, 0);
+    visibility: visible;
   }
 }
 
 
 @keyframes fadeOutUp {
   from {
-    opacity: 1;
+    visibility: visible;
   }
 
   to {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
+    visibility: hidden;
     transform: translate3d(0, -100%, 0);
   }
 }
 
 @keyframes fadeIn {
-  from {
+  0% {
     visibility: hidden;
     opacity: 0;
   }
 
-  to {
+  100% {
     opacity: 1;
     visibility: visible;
   }
 }
 
 @keyframes fadeOut {
-  from {
+  0% {
     opacity: 1;
     visibility: visible;
   }
 
-  to {
+  100% {
     opacity: 0;
-    opacity: 1;
+    visibility: hidden;
   }
 }
 
@@ -59,6 +59,7 @@
 .animateIn {
   animation-name: fadeIn;
   animation-duration: .5s;
+  visibility: visible;
   @media(max-width:480px) {
     animation-name: slideInUp;
   }
@@ -68,6 +69,7 @@
 .animateOut {
   animation-name: fadeOut;
   animation-duration: .2s;
+  visibility: hidden;
   @media(max-width:480px) {
     animation-name: fadeOutUp;
   }
