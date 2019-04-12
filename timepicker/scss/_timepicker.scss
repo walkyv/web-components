@@ -47,6 +47,7 @@ ul {
 }
 
 .pe-icon-wrapper {
+  position: absolute;
   color: $pe-color-medium-gray;
 }
 
@@ -57,7 +58,6 @@ ul {
 }
 
 .timepicker .pe-icon-wrapper {
-  position: absolute;
   right: 14px;
   top: 50%;
 }
@@ -75,9 +75,16 @@ ul {
 .listbox {
   min-width: 220px;
   width: 100%;
-  padding: 0 14px;
   border: 1px solid $pe-color-concrete;
   border-radius: 2px;
+}
+
+.listbox-item {
+  position: relative;
+  padding: 4px 24px;
+}
+.listbox-item .pe-icon-wrapper {
+  left: 5px;
 }
 
 // .timepicker-container {
