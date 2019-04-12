@@ -65,7 +65,7 @@ svg {
 
 .timepicker .pe-icon-wrapper {
   right: 14px;
-  top: 50%;
+  top: 27px;
 }
 
 .timepicker-input {
@@ -78,10 +78,6 @@ svg {
 
 .timepicker-input[aria-invalid='true']:focus {
   outline-color: $pe-color-strawberry-red;
-}
-
-.timepicker-input[aria-invalid='true'] ~ .pe-icon-wrapper {
-  top: calc(50% - 11px);
 }
 
 .timepicker-input[aria-invalid='true'] ~ .timepicker-error {
