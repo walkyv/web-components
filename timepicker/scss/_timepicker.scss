@@ -43,6 +43,7 @@ svg {
 }
 
 :host {
+  position: relative;
   display: inline-block;
   max-width: 400px;
   color: $pe-color-charcoal;
@@ -100,6 +101,12 @@ svg {
 }
 
 /* LISTBOX */
+
+.listbox-wrapper {
+  position: absolute;
+  width: 100%;
+  background-color: #fff;
+}
 
 .listbox {
   min-width: 220px;
