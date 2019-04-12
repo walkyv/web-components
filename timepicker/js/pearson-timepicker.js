@@ -179,7 +179,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       const clone = template.content.cloneNode(true);
 
       this.input = clone.querySelector('#timepicker-input');
-      this.list = clone.querySelector('#listbox');
+      this.listbox = clone.querySelector('#listbox');
 
       this.shadowRoot.append(clone);
 
@@ -194,32 +194,19 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     attributeChangedCallback(name, oldValue, newValue) {}
 
     connectedCallback() {
-      this.timesToRender = this.calculateTimes(this.increments);
-      this.timesToRender.forEach((time, index) => {
-        const text = time.format(this.format);
-        this.list.appendChild(buildTimeEl(text, index));
-      });
+      calculate(this.increments)
+        .forEach((time, index) => {
+          const text = time.format(this.format);
+          this.listbox.appendChild(buildTimeEl(text, index));
+        });
+      
+      this.times = this.listbox.children;
 
       this.input.addEventListener('keydown', this.onInputKeydown);
       this.input.addEventListener('keyup', this.onInputKeyup);
     }
 
     disconnectedCallback() {}
-
-    calculateTimes(increments) {
-      const endTime = moment().add(24, 'h'),
-        timeStops = [],
-        startTime = moment().add(
-          increments - (moment().minute() % increments),
-          'm'
-        );
-
-      while (startTime < endTime) {
-        timeStops.push(new moment(startTime));
-        startTime.add(increments, 'm').format('LLL');
-      }
-      return timeStops;
-    }
 
     onInputClick() {}
 

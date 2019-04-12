@@ -118,7 +118,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       var clone = template.content.cloneNode(true);
 
       _this.input = clone.querySelector('#timepicker-input');
-      _this.list = clone.querySelector('#listbox');
+      _this.listbox = clone.querySelector('#listbox');
 
       _this.shadowRoot.append(clone);
 
@@ -139,11 +139,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this2 = this;
 
-        this.timesToRender = this.calculateTimes(this.increments);
-        this.timesToRender.forEach(function (time, index) {
+        calculate(this.increments).forEach(function (time, index) {
           var text = time.format(_this2.format);
-          _this2.list.appendChild(buildTimeEl(text, index));
+          _this2.listbox.appendChild(buildTimeEl(text, index));
         });
+
+        this.times = this.listbox.children;
 
         this.input.addEventListener('keydown', this.onInputKeydown);
         this.input.addEventListener('keyup', this.onInputKeyup);
@@ -151,19 +152,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'disconnectedCallback',
       value: function disconnectedCallback() {}
-    }, {
-      key: 'calculateTimes',
-      value: function calculateTimes(increments) {
-        var endTime = moment().add(24, 'h'),
-            timeStops = [],
-            startTime = moment().add(increments - moment().minute() % increments, 'm');
-
-        while (startTime < endTime) {
-          timeStops.push(new moment(startTime));
-          startTime.add(increments, 'm').format('LLL');
-        }
-        return timeStops;
-      }
     }, {
       key: 'onInputClick',
       value: function onInputClick() {}
