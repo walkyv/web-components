@@ -1,11 +1,12 @@
 /* VARIABLES */
-
-$pe-color-strawberry-red: #db0020;
 $pe-color-charcoal: #252525;
 $pe-color-concrete: #c7c7c7;
 $pe-color-medium-gray: #6a7070;
 $pe-color-moonlight: #e9e9e9;
 $pe-focus-color: #0b73da;
+
+$pe-color-strawberry-red: #db0020;
+$pe-digital-grass-green: #038238;
 
 /* RESETS */
 
@@ -38,6 +39,11 @@ ul {
   max-width: 400px;
   font: 14px/18px 'Open Sans', Calibri, Tahoma, sans-serif;
   color: $pe-color-charcoal;
+}
+
+.pe-icon-wrapper,
+.pe-icon-wrapper > * {
+  pointer-events: none;
 }
 
 .pe-icon-wrapper {
@@ -73,9 +79,6 @@ ul {
   border: 1px solid $pe-color-concrete;
   border-radius: 2px;
 }
-
-
-
 
 // .timepicker-container {
 //   min-width: 150px;
