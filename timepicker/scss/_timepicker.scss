@@ -35,6 +35,7 @@ ul {
 svg {
   fill: currentColor;
   vertical-align: top;
+  pointer-events: none;
 }
 
 :host,
@@ -52,8 +53,7 @@ svg {
   color: $pe-color-charcoal;
 }
 
-.pe-icon-wrapper,
-.pe-icon-wrapper > * {
+.pe-icon-wrapper {
   pointer-events: none;
 }
 
@@ -120,7 +120,7 @@ svg {
   border-radius: 2px;
   overflow-y: auto;
   visibility: hidden;
-  opacity: 0
+  opacity: 0;
 }
 
 .listbox-item {
