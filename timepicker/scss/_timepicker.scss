@@ -99,9 +99,14 @@ ul {
 }
 
 
+
 .listbox-item .pe-icon-wrapper {
+  display: none;
   left: 5px;
 }
+        .listbox-item[aria-selected="true"] .pe-icon-wrapper {
+          display: block;
+        }
 
 // .timepicker-container {
 //   min-width: 150px;
