@@ -11,15 +11,15 @@ $pe-digital-grass-green: #038238;
 /* RESETS */
 
 input {
-  font-family: inherit;
-  font-weight: inherit;
-  line-height: inherit;
   display: block;
   width: 100%;
   height: 36px;
   padding: 0 14px;
   border: 1px solid $pe-color-concrete;
   border-radius: 2px;
+}
+input:focus {
+  outline: 3px solid $pe-focus-color;
 }
 
 ul {
@@ -33,12 +33,12 @@ ul {
 :host *:after,
 :host *:before {
   box-sizing: border-box;
+  font: 14px/18px 'Open Sans', Calibri, Tahoma, sans-serif;
 }
 
 :host {
   display: inline-block;
   max-width: 400px;
-  font: 14px/18px 'Open Sans', Calibri, Tahoma, sans-serif;
   color: $pe-color-charcoal;
 }
 
@@ -90,7 +90,7 @@ ul {
 
 .listbox-item:hover,
 .listbox-item.pseudo-focus {
-  background-color:$pe-color-moonlight;
+  background-color: $pe-color-moonlight;
 }
 
 .listbox-item.pseudo-focus {
@@ -98,15 +98,13 @@ ul {
   box-shadow: inset 0 0 0 2px $pe-focus-color;
 }
 
-
-
 .listbox-item .pe-icon-wrapper {
   display: none;
   left: 5px;
 }
-        .listbox-item[aria-selected="true"] .pe-icon-wrapper {
-          display: block;
-        }
+.listbox-item[aria-selected='true'] .pe-icon-wrapper {
+  display: block;
+}
 
 // .timepicker-container {
 //   min-width: 150px;
