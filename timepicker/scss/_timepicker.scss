@@ -28,6 +28,10 @@ ul {
   margin: 0;
 }
 
+svg {
+  vertical-align: top;
+}
+
 :host,
 :host *,
 :host *:after,
@@ -67,8 +71,29 @@ ul {
   min-width: 150px;
 }
 
+.timepicker-input[aria-invalid="true"] {
+  border-color: $pe-color-strawberry-red;
+}
+
+.timepicker-input[aria-invalid="true"]:focus {
+  outline-color: $pe-color-strawberry-red;
+}
+
+.timepicker-input[aria-invalid="true"] ~ .pe-icon-wrapper {
+  top: calc(50% - 11px);
+}
+
+.timepicker-input[aria-invalid="true"] ~ .timepicker-error {
+  display: block;
+}
+
 .timepicker-error {
   display: none;
+  color: $pe-color-strawberry-red;
+  font-size: 12px;
+  line-height: 16px;
+  margin-top: 4px;
+  margin-bottom: 2px;
 }
 
 /* LISTBOX */
