@@ -20,7 +20,10 @@ input {
   margin-top: 6px;
 }
 input:focus {
-  outline: 3px solid $pe-focus-color;
+  position: relative;
+  outline: 0;
+  box-shadow: 0 0 0 2px $pe-focus-color;
+  z-index: 1;
 }
 
 ul {
@@ -68,6 +71,7 @@ svg {
 .timepicker .pe-icon-wrapper {
   right: 14px;
   top: 33px;
+  z-index: 2;
 }
 
 .timepicker-label {
