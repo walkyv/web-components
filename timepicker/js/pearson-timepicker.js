@@ -264,7 +264,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       const items = this.items;
       let activeIdx = this.activeIdx;
 
-      if (key === 'Escape') {
+      if (key === keys.ESC) {
         this.open = false;
         return;
       }

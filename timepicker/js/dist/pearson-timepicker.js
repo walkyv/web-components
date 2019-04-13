@@ -215,7 +215,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var items = this.items;
         var activeIdx = this.activeIdx;
 
-        if (key === 'Escape') {
+        if (key === keys.ESC) {
           this.open = false;
           return;
         }
