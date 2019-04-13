@@ -201,7 +201,11 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     set selectedItem(item) {
-      item.setAttribute('aria-selected', 'true');
+      if(item) {
+        this.open = false;
+        this.input.value = item.dataset.time;
+        item.setAttribute('aria-selected', 'true');
+      }
     }
 
     constructor() {
@@ -274,15 +278,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     checkSelection() {
       if (this.activeIdx < 0) return;
-      this.selectItem(this.activeItem);
-    }
-
-    selectItem(item) {
-      if(item) {
-        this.open = false;
-        this.input.value = item.dataset.time;
-        this.selectedItem = item;
-      }
+      this.selectedItem = this.activeItem;
     }
 
     onInputFocus() {
@@ -317,7 +313,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
           }
           break;
         case keys.ENTER:
-          this.selectItem(this.activeItem);
+          this.selectedItem = this.activeItem;
           return;
         case keys.TAB: 
           this.checkSelection();

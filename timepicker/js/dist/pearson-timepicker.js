@@ -141,7 +141,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
       },
       set: function set(item) {
-        item.setAttribute('aria-selected', 'true');
+        if (item) {
+          this.open = false;
+          this.input.value = item.dataset.time;
+          item.setAttribute('aria-selected', 'true');
+        }
       }
     }], [{
       key: 'observedAttributes',
@@ -228,16 +232,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'checkSelection',
       value: function checkSelection() {
         if (this.activeIdx < 0) return;
-        this.selectItem(this.activeItem);
-      }
-    }, {
-      key: 'selectItem',
-      value: function selectItem(item) {
-        if (item) {
-          this.open = false;
-          this.input.value = item.dataset.time;
-          this.selectedItem = item;
-        }
+        this.selectedItem = this.activeItem;
       }
     }, {
       key: 'onInputFocus',
@@ -274,7 +269,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
             break;
           case keys.ENTER:
-            this.selectItem(this.activeItem);
+            this.selectedItem = this.activeItem;
             return;
           case keys.TAB:
             this.checkSelection();
