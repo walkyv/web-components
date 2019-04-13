@@ -213,8 +213,13 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
         const classToRemove = isOpen ? 'animateOut' : 'animateIn';
         const classToAdd = isOpen ? 'animateIn' : 'animateOut';
+        let activeDescendant = '';
+        if (this.open && this.activeIdx) {
+          activeDescendant = this.items[this.activeIdx].id;
+        }
 
         this.input.setAttribute('aria-expanded', isOpen);
+        this.input.setAttribute('aria-activedescendant', activeDescendant);
 
         this.listbox.classList.remove(classToRemove);
         this.listbox.classList.add(classToAdd);

@@ -163,8 +163,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
           var classToRemove = isOpen ? 'animateOut' : 'animateIn';
           var classToAdd = isOpen ? 'animateIn' : 'animateOut';
+          var activeDescendant = '';
+          if (this.open && this.activeIdx) {
+            activeDescendant = this.items[this.activeIdx].id;
+          }
 
           this.input.setAttribute('aria-expanded', isOpen);
+          this.input.setAttribute('aria-activedescendant', activeDescendant);
 
           this.listbox.classList.remove(classToRemove);
           this.listbox.classList.add(classToAdd);
