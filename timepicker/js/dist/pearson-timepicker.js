@@ -96,7 +96,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Timepicker, [{
       key: 'open',
       get: function get() {
-        return this.getAttribute('open');
+        return this.hasAttribute('open');
       },
       set: function set(value) {
         var isOpen = Boolean(value);
