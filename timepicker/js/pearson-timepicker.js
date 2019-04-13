@@ -247,6 +247,8 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       this.input.addEventListener('keydown', this.onInputKeydown);
       this.input.addEventListener('keyup', this.onInputKeyup);
 
+      this.listbox.addEventListener('click', this.onListboxClick);
+
       doc.addEventListener(
         'click',
         e => {
@@ -329,7 +331,12 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       }
     }
     onInputBlur() {}
-    onListboxClick() {}
+
+    onListboxClick(e) {
+      if (e.target && e.target.nodeName === 'LI') {
+        this.selectedItem = e.target;
+      }
+    }
   }
 
   customElements.define('pearson-timepicker', Timepicker);

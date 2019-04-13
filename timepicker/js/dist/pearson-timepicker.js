@@ -201,6 +201,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.input.addEventListener('keydown', this.onInputKeydown);
         this.input.addEventListener('keyup', this.onInputKeyup);
 
+        this.listbox.addEventListener('click', this.onListboxClick);
+
         doc.addEventListener('click', function (e) {
           if (e.target === _this2) return;
           _this2.open = false;
@@ -289,7 +291,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function onInputBlur() {}
     }, {
       key: 'onListboxClick',
-      value: function onListboxClick() {}
+      value: function onListboxClick(e) {
+        if (e.target && e.target.nodeName === 'LI') {
+          this.selectedItem = e.target;
+        }
+      }
     }]);
 
     return Timepicker;
