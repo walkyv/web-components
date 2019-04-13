@@ -187,6 +187,13 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     get format() {
       return this.hours === '12' ? 'h:mm A' : 'HH:mm';
     }
+    /**
+     * The currently active listbox item
+     * @type {HTMLElement}
+     */
+    get activeItem() {
+      return this.items[this.activeIdx];
+    }
 
     constructor() {
       super();
@@ -258,9 +265,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     checkSelection() {
       if (this.activeIdx < 0) return;
-
-      const activeItem = this.items[this.activeIdx];
-      this.selectItem(activeItem);
+      this.selectItem(this.activeItem);
     }
 
     selectItem(item) {
@@ -284,8 +289,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         return;
       }
 
-      const prevActive = items[activeIdx];
-      let activeItem;
+      const prevActive = this.activeItem;
 
       switch (key) {
         case keys.UP:
@@ -303,20 +307,17 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
           }
           break;
         case keys.ENTER:
-          activeItem = this.items[activeIdx];
-          this.selectItem(activeItem);
+          this.selectItem(this.activeItem);
           return;
         case keys.TAB: 
           this.checkSelection();
           this.open = false;
-
           return;
         default:
           return;
       }
       e.preventDefault();
 
-      activeItem = this.items[activeIdx];
       this.activeIdx = activeIdx;
 
       if (prevActive) {
@@ -324,9 +325,9 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         prevActive.setAttribute('aria-selected', 'false');
       }
 
-      if (activeItem) {
+      if (this.activeItem) {
         this.input.setAttribute('aria-activedescendant', 'time-' + activeIdx);
-        activeItem.classList.add('pseudo-focus');
+        this.activeItem.classList.add('pseudo-focus');
       }
     }
     onInputKeyup(e) {

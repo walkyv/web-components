@@ -123,6 +123,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       get: function get() {
         return this.hours === '12' ? 'h:mm A' : 'HH:mm';
       }
+      /**
+       * The currently active listbox item
+       * @type {HTMLElement}
+       */
+
+    }, {
+      key: 'activeItem',
+      get: function get() {
+        return this.items[this.activeIdx];
+      }
     }], [{
       key: 'observedAttributes',
       get: function get() {
@@ -208,9 +218,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'checkSelection',
       value: function checkSelection() {
         if (this.activeIdx < 0) return;
-
-        var activeItem = this.items[this.activeIdx];
-        this.selectItem(activeItem);
+        this.selectItem(this.activeItem);
       }
     }, {
       key: 'selectItem',
@@ -237,8 +245,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return;
         }
 
-        var prevActive = items[activeIdx];
-        var activeItem = void 0;
+        var prevActive = this.activeItem;
 
         switch (key) {
           case keys.UP:
@@ -256,20 +263,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
             break;
           case keys.ENTER:
-            activeItem = this.items[activeIdx];
-            this.selectItem(activeItem);
+            this.selectItem(this.activeItem);
             return;
           case keys.TAB:
             this.checkSelection();
             this.open = false;
-
             return;
           default:
             return;
         }
         e.preventDefault();
 
-        activeItem = this.items[activeIdx];
         this.activeIdx = activeIdx;
 
         if (prevActive) {
@@ -277,9 +281,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           prevActive.setAttribute('aria-selected', 'false');
         }
 
-        if (activeItem) {
+        if (this.activeItem) {
           this.input.setAttribute('aria-activedescendant', 'time-' + activeIdx);
-          activeItem.classList.add('pseudo-focus');
+          this.activeItem.classList.add('pseudo-focus');
         }
       }
     }, {
