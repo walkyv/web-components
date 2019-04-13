@@ -256,6 +256,13 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     disconnectedCallback() {}
 
+    checkSelection() {
+      if (this.activeIdx < 0) return;
+
+      const activeItem = this.items[this.activeIdx];
+      this.selectItem(activeItem);
+    }
+
     selectItem(item) {
       if(item) {
         this.input.value = item.innerText;
@@ -296,13 +303,14 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
           }
           break;
         case keys.ENTER:
-          activeItem = items[activeIdx];
+          activeItem = this.items[activeIdx];
           this.selectItem(activeItem);
           return;
         case keys.TAB: 
-          // CHECK SELECTION
-          // CLOSE LIST
-          break;
+          this.checkSelection();
+          this.open = false;
+
+          return;
         default:
           return;
       }

@@ -205,6 +205,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'disconnectedCallback',
       value: function disconnectedCallback() {}
     }, {
+      key: 'checkSelection',
+      value: function checkSelection() {
+        if (this.activeIdx < 0) return;
+
+        var activeItem = this.items[this.activeIdx];
+        this.selectItem(activeItem);
+      }
+    }, {
       key: 'selectItem',
       value: function selectItem(item) {
         if (item) {
@@ -248,13 +256,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
             break;
           case keys.ENTER:
-            activeItem = items[activeIdx];
+            activeItem = this.items[activeIdx];
             this.selectItem(activeItem);
             return;
           case keys.TAB:
-            // CHECK SELECTION
-            // CLOSE LIST
-            break;
+            this.checkSelection();
+            this.open = false;
+
+            return;
           default:
             return;
         }
