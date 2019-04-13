@@ -10,6 +10,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
+  var keys = {
+    UP: 'ArrowUp',
+    DOWN: 'ArrowDown',
+    ENTER: 'Enter',
+    ESC: 'Escape'
+  };
+
   var template = doc.createElement('template'),
       timeItem = doc.createElement('template'),
       isIE11 = !!window.MSInputMethodContext && !!doc.docMode,
@@ -207,15 +214,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var activeItem = void 0;
 
         switch (key) {
-          case 'ArrowUp':
+          case keys.UP:
             if (activeIdx <= 0) {
-              activeIdx = this.items.length - 1;
+              activeIdx = items.length - 1;
             } else {
               activeIdx--;
             }
             break;
-          case 'ArrowDown':
-            if (activeIdx === -1 || activeIdx >= this.items.length) {
+          case keys.DOWN:
+            if (activeIdx === -1 || activeIdx >= items.length) {
               activeIdx = 0;
             } else {
               activeIdx++;
@@ -243,10 +250,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'onInputKeyup',
       value: function onInputKeyup(e) {
         switch (e.key) {
-          case 'ArrowUp':
-          case 'ArrowDown':
-          case 'Escape':
-          case 'Enter':
+          case keys.UP:
+          case keys.DOWN:
+          case keys.ESC:
+          case keys.ENTER:
             e.preventDefault();
             return;
         }

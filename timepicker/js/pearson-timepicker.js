@@ -1,6 +1,13 @@
 /* global moment */
 (function(w, doc) {
   'use strict';
+  const keys = {
+    UP: 'ArrowUp',
+    DOWN: 'ArrowDown',
+    ENTER: 'Enter',
+    ESC: 'Escape'
+  };
+
   const template = doc.createElement('template'),
     timeItem = doc.createElement('template'),
     isIE11 = !!window.MSInputMethodContext && !!doc.docMode,
@@ -255,15 +262,15 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       let activeItem;
 
       switch (key) {
-        case 'ArrowUp':
+        case keys.UP:
           if (activeIdx <= 0) {
-            activeIdx = this.items.length - 1;
+            activeIdx = items.length - 1;
           } else {
             activeIdx--;
           }
           break;
-        case 'ArrowDown':
-          if (activeIdx === -1 || activeIdx >= this.items.length) {
+        case keys.DOWN:
+          if (activeIdx === -1 || activeIdx >= items.length) {
             activeIdx = 0;
           } else {
             activeIdx++;
@@ -289,10 +296,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
     onInputKeyup(e) {
       switch (e.key) {
-        case 'ArrowUp':
-        case 'ArrowDown':
-        case 'Escape':
-        case 'Enter':
+        case keys.UP:
+        case keys.DOWN:
+        case keys.ESC:
+        case keys.ENTER:
           e.preventDefault();
           return;
       }
