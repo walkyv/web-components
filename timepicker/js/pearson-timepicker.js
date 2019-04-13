@@ -255,6 +255,13 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     disconnectedCallback() {}
 
+    selectItem(item) {
+      if(item) {
+        this.input.value = item.innerText;
+        this.open = false;
+      }
+    }
+
     onInputFocus() {
       this.open = true;
     }
@@ -287,6 +294,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
             activeIdx++;
           }
           break;
+        case keys.ENTER:
+          activeItem = items[activeIdx];
+          this.selectItem(activeItem);
+          return;
         default:
           return;
       }

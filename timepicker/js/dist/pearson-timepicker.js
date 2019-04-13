@@ -204,6 +204,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'disconnectedCallback',
       value: function disconnectedCallback() {}
     }, {
+      key: 'selectItem',
+      value: function selectItem(item) {
+        if (item) {
+          this.input.value = item.innerText;
+          this.open = false;
+        }
+      }
+    }, {
       key: 'onInputFocus',
       value: function onInputFocus() {
         this.open = true;
@@ -238,6 +246,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               activeIdx++;
             }
             break;
+          case keys.ENTER:
+            activeItem = items[activeIdx];
+            this.selectItem(activeItem);
+            return;
           default:
             return;
         }
