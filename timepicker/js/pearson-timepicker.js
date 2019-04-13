@@ -195,6 +195,15 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       return this.items[this.activeIdx];
     }
 
+    get selectedItem() {
+      return this.items.find(item => item.getAttribute('aria-selected') === 
+      'true');
+    }
+
+    set selectedItem(item) {
+      item.setAttribute('aria-selected', 'true');
+    }
+
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
@@ -270,8 +279,9 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     selectItem(item) {
       if(item) {
-        this.input.value = item.innerText;
         this.open = false;
+        this.input.value = item.dataset.time;
+        this.selectedItem = item;
       }
     }
 
@@ -322,7 +332,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       if (prevActive) {
         prevActive.classList.remove('pseudo-focus');
-        prevActive.setAttribute('aria-selected', 'false');
       }
 
       if (this.activeItem) {

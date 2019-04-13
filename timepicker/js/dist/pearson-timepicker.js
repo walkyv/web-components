@@ -133,6 +133,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       get: function get() {
         return this.items[this.activeIdx];
       }
+    }, {
+      key: 'selectedItem',
+      get: function get() {
+        return this.items.find(function (item) {
+          return item.getAttribute('aria-selected') === 'true';
+        });
+      },
+      set: function set(item) {
+        item.setAttribute('aria-selected', 'true');
+      }
     }], [{
       key: 'observedAttributes',
       get: function get() {
@@ -224,8 +234,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'selectItem',
       value: function selectItem(item) {
         if (item) {
-          this.input.value = item.innerText;
           this.open = false;
+          this.input.value = item.dataset.time;
+          this.selectedItem = item;
         }
       }
     }, {
@@ -278,7 +289,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         if (prevActive) {
           prevActive.classList.remove('pseudo-focus');
-          prevActive.setAttribute('aria-selected', 'false');
         }
 
         if (this.activeItem) {
