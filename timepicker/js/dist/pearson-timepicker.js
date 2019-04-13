@@ -156,8 +156,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Timepicker, [{
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
-        var _this2 = this;
-
         if (name === 'open') {
           var isOpen = newValue !== null;
           var activeDescendant = void 0,
@@ -179,20 +177,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
           this.listbox.classList.remove(classToRemove);
           this.listbox.classList.add(classToAdd);
-
-          doc.addEventListener('click', function (e) {
-            _this2.open = e.target === _this2;
-          }, true);
         }
       }
     }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var _this3 = this;
+        var _this2 = this;
 
         calculate(this.increments).forEach(function (time, index) {
-          var text = time.format(_this3.format);
-          _this3.listbox.appendChild(buildTimeEl(text, index));
+          var text = time.format(_this2.format);
+          _this2.listbox.appendChild(buildTimeEl(text, index));
         });
 
         this.items = this.listbox.children;
@@ -200,6 +194,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.input.addEventListener('focus', this.onInputFocus);
         this.input.addEventListener('keydown', this.onInputKeydown);
         this.input.addEventListener('keyup', this.onInputKeyup);
+
+        doc.addEventListener('click', function (e) {
+          if (e.target === _this2) return;
+          _this2.open = false;
+        }, true);
       }
     }, {
       key: 'disconnectedCallback',

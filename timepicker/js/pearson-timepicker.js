@@ -228,14 +228,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
         this.listbox.classList.remove(classToRemove);
         this.listbox.classList.add(classToAdd);
-
-        doc.addEventListener(
-          'click',
-          e => {
-            this.open = e.target === this;
-          },
-          true
-        );
       }
     }
 
@@ -250,6 +242,15 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       this.input.addEventListener('focus', this.onInputFocus);
       this.input.addEventListener('keydown', this.onInputKeydown);
       this.input.addEventListener('keyup', this.onInputKeyup);
+
+      doc.addEventListener(
+        'click',
+        e => {
+          if (e.target === this) return;
+          this.open = false;
+        },
+        true
+      );
     }
 
     disconnectedCallback() {}
