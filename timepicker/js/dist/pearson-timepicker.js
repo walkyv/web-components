@@ -14,7 +14,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     UP: 'ArrowUp',
     DOWN: 'ArrowDown',
     ENTER: 'Enter',
-    ESC: 'Escape'
+    ESC: 'Escape',
+    TAB: 'Tab'
   };
 
   var template = doc.createElement('template'),
@@ -250,6 +251,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             activeItem = items[activeIdx];
             this.selectItem(activeItem);
             return;
+          case keys.TAB:
+            // CHECK SELECTION
+            // CLOSE LIST
+            break;
           default:
             return;
         }

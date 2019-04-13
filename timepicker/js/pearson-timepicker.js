@@ -5,7 +5,8 @@
     UP: 'ArrowUp',
     DOWN: 'ArrowDown',
     ENTER: 'Enter',
-    ESC: 'Escape'
+    ESC: 'Escape',
+    TAB: 'Tab'
   };
 
   const template = doc.createElement('template'),
@@ -298,6 +299,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
           activeItem = items[activeIdx];
           this.selectItem(activeItem);
           return;
+        case keys.TAB: 
+          // CHECK SELECTION
+          // CLOSE LIST
+          break;
         default:
           return;
       }
