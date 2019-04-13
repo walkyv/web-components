@@ -196,11 +196,14 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     get selectedItem() {
-      return this.items.find(item => item.getAttribute('aria-selected') === 
+      const find = Array.prototype.find;
+
+      return find.call(this.items, item => item.getAttribute('aria-selected') === 
       'true');
     }
 
     set selectedItem(item) {
+      if (this.selectedItem) {this.selectedItem.setAttribute('aria-selected', 'false');}
       if(item) {
         this.open = false;
         this.input.value = item.dataset.time;

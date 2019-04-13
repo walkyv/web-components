@@ -136,11 +136,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'selectedItem',
       get: function get() {
-        return this.items.find(function (item) {
+        var find = Array.prototype.find;
+
+        return find.call(this.items, function (item) {
           return item.getAttribute('aria-selected') === 'true';
         });
       },
       set: function set(item) {
+        if (this.selectedItem) {
+          this.selectedItem.setAttribute('aria-selected', 'false');
+        }
         if (item) {
           this.open = false;
           this.input.value = item.dataset.time;
