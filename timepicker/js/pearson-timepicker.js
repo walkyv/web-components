@@ -87,30 +87,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
   </div>
 `;
 
-  function removeIcons(node) {
-    const icons = node.querySelectorAll('.pe-icon-wrapper');
-    return Array.prototype.forEach.call(icons, icon => {
-      icon.style.display = 'none';
-    });
-  }
-
-  function filterSelected(node, value) {
-    return node.querySelector(`[data-time^='${value}']`);
-  }
-
-  function setSelectedFalse(node) {
-    const items = node.querySelectorAll('#itemList li');
-    return Array.prototype.forEach.call(items, item => {
-      item.classList.remove('in-view');
-      item.removeAttribute('aria-activedescendant');
-      item.setAttribute('aria-selected', false);
-    });
-  }
-
-  function getFocusableElements(node) {
-    return node.querySelectorAll('[role^="option"]');
-  }
-
   function calculate(increments) {
     const endTime = moment().add(24, 'h'),
       timeStops = [],
@@ -157,6 +133,8 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     // Return true if any of its four corners are visible
   }
 
+  const find = Array.prototype.find;
+
   class Timepicker extends HTMLElement {
     static get observedAttributes() {
       return ['open'];
@@ -196,8 +174,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     get selectedItem() {
-      const find = Array.prototype.find;
-
       return find.call(
         this.items,
         item => item.getAttribute('aria-selected') === 'true'
