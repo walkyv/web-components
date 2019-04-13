@@ -210,12 +210,17 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'open') {
         const isOpen = newValue !== null;
+        let activeDescendant, classToAdd, classToRemove;
 
-        const classToRemove = isOpen ? 'animateOut' : 'animateIn';
-        const classToAdd = isOpen ? 'animateIn' : 'animateOut';
-        let activeDescendant = '';
-        if (this.open && this.activeIdx) {
-          activeDescendant = this.items[this.activeIdx].id;
+        if (isOpen) {
+          activeDescendant =
+            this.activeIdx > -1 ? this.items[this.activeIdx].id : '';
+          classToAdd = 'animateIn';
+          classToRemove = 'animateOut';
+        } else {
+          activeDescendant = '';
+          classToAdd = 'animateOut';
+          classToRemove = 'animateIn';
         }
 
         this.input.setAttribute('aria-expanded', isOpen);

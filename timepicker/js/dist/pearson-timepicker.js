@@ -160,12 +160,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         if (name === 'open') {
           var isOpen = newValue !== null;
+          var activeDescendant = void 0,
+              classToAdd = void 0,
+              classToRemove = void 0;
 
-          var classToRemove = isOpen ? 'animateOut' : 'animateIn';
-          var classToAdd = isOpen ? 'animateIn' : 'animateOut';
-          var activeDescendant = '';
-          if (this.open && this.activeIdx) {
-            activeDescendant = this.items[this.activeIdx].id;
+          if (isOpen) {
+            activeDescendant = this.activeIdx > -1 ? this.items[this.activeIdx].id : '';
+            classToAdd = 'animateIn';
+            classToRemove = 'animateOut';
+          } else {
+            activeDescendant = '';
+            classToAdd = 'animateOut';
+            classToRemove = 'animateIn';
           }
 
           this.input.setAttribute('aria-expanded', isOpen);
