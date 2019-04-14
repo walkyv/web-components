@@ -184,12 +184,12 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     set selectedItem(item) {
       if (this.selectedItem) {
-        this.selectedItem.setAttribute('aria-selected', 'false');
+        this.selectedItem.classList.remove('selected');
       }
       if (item) {
         this.open = false;
         this.input.value = item.dataset.time;
-        item.setAttribute('aria-selected', 'true');
+        item.classList.add('selected');
       }
     }
 

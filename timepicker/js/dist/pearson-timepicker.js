@@ -120,12 +120,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       },
       set: function set(item) {
         if (this.selectedItem) {
-          this.selectedItem.setAttribute('aria-selected', 'false');
+          this.selectedItem.classList.remove('selected');
         }
         if (item) {
           this.open = false;
           this.input.value = item.dataset.time;
-          item.setAttribute('aria-selected', 'true');
+          item.classList.add('selected');
         }
       }
     }], [{
