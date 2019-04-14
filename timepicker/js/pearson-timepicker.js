@@ -42,7 +42,7 @@
     </svg>`;
 
   timeItem.innerHTML = `
-    <li class="listbox-item" role="option" data-time="6:00 AM">
+    <li class="listbox-item" role="option" aria-selected="false" data-time="6:00 AM">
 				${checkIcon}
       <span class="time"></span>
     </li>
@@ -65,7 +65,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       id="timepicker-input"
       class="timepicker-input"
       role="combobox"
-      autocomplete="off"
+      aria-autocomplete="list"
       aria-haspopup="listbox"
       aria-expanded="false"
       aria-owns="listbox"
@@ -315,11 +315,13 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       if (prevActive) {
         prevActive.classList.remove('pseudo-focus');
+        prevActive.setAttribute('aria-selected', 'false');
       }
 
       if (this.activeItem) {
         this.input.setAttribute('aria-activedescendant', 'time-' + activeIdx);
         this.activeItem.classList.add('pseudo-focus');
+        this.activeItem.setAttribute('aria-selected', 'true');
       }
     }
     onInputKeyup(e) {
