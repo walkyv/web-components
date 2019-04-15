@@ -161,9 +161,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.input = clone.querySelector('#timepicker-input');
       _this.listbox = clone.querySelector('#listbox');
 
-      _this.activeIdx = -1;
-
       _this.shadowRoot.append(clone);
+
+      _this.activeIdx = -1;
 
       _this.onInputKeydown = _this.onInputKeydown.bind(_this);
       _this.onInputFocus = _this.onInputFocus.bind(_this);
@@ -247,7 +247,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return;
         }
 
-        if ((key === keys.UP || key === keys.DOWN) && !prevOpen) {
+        if (!prevOpen && (key === keys.UP || key === keys.DOWN)) {
           this.open = true;
         }
 
@@ -286,9 +286,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'onListboxClick',
       value: function onListboxClick(e) {
-        if (e.target && e.target.nodeName === 'LI') {
-          this.activeItem = e.target;
-          this.selectedItem = e.target;
+        var target = e.target;
+        if (target && target.nodeName === 'LI') {
+          this.activeItem = target;
+          this.selectedItem = target;
         }
       }
     }]);

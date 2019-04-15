@@ -223,9 +223,9 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       this.input = clone.querySelector('#timepicker-input');
       this.listbox = clone.querySelector('#listbox');
 
-      this.activeIdx = -1;
-
       this.shadowRoot.append(clone);
+
+      this.activeIdx = -1;
 
       this.onInputKeydown = this.onInputKeydown.bind(this);
       this.onInputFocus = this.onInputFocus.bind(this);
@@ -302,7 +302,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         return;
       }
 
-      if ((key === keys.UP || key === keys.DOWN) && !prevOpen) {
+      if (!prevOpen && (key === keys.UP || key === keys.DOWN)) {
         this.open = true;
       }
 
@@ -339,9 +339,11 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     onInputBlur() {}
 
     onListboxClick(e) {
-      if (e.target && e.target.nodeName === 'LI') {
-        this.activeItem = e.target;
-        this.selectedItem = e.target;
+      const target = e.target;
+      
+      if (target && target.nodeName === 'LI') {
+        this.activeItem = target;
+        this.selectedItem = target;
       }
     }
   }
