@@ -299,17 +299,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'onListboxClick',
       value: function onListboxClick(e) {
         if (e.target && e.target.nodeName === 'LI') {
-          if (this.activeItem) {
-            this.activeItem.classList.remove('focused');
-            this.activeItem.setAttribute('aria-selected', 'false');
+          var prevActive = this.activeItem;
+          this.activeIdx = Number(e.target.dataset.idx);
+
+          if (prevActive) {
+            prevActive.classList.remove('focused');
+            prevActive.setAttribute('aria-selected', 'false');
           }
 
           if (e.target) {
-            this.input.setAttribute('aria-activedescendant', 'time-' + Array.prototype.indexOf.call(this.items, e.target));
+            this.input.setAttribute('aria-activedescendant', 'time-' + this.activeIdx);
             e.target.classList.add('focused');
             e.target.setAttribute('aria-selected', 'true');
+
+            this.selectedItem = e.target;
           }
-          this.selectedItem = e.target;
         }
       }
     }]);

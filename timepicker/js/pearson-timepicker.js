@@ -345,20 +345,24 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     onListboxClick(e) {
       if (e.target && e.target.nodeName === 'LI') {
-        if (this.activeItem) {
-          this.activeItem.classList.remove('focused');
-          this.activeItem.setAttribute('aria-selected', 'false');
+        const prevActive = this.activeItem;
+        this.activeIdx = Number(e.target.dataset.idx);
+
+        if (prevActive) {
+          prevActive.classList.remove('focused');
+          prevActive.setAttribute('aria-selected', 'false');
         }
 
         if (e.target) {
           this.input.setAttribute(
             'aria-activedescendant',
-            'time-' + Array.prototype.indexOf.call(this.items, e.target)
+            'time-' + this.activeIdx
           );
           e.target.classList.add('focused');
           e.target.setAttribute('aria-selected', 'true');
+
+          this.selectedItem = e.target;
         }
-        this.selectedItem = e.target;
       }
     }
   }
