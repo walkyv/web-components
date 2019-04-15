@@ -196,7 +196,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         next.setAttribute('aria-selected', 'true');
 
         this.activeIdx = Number(next.dataset.idx);
-
       }
     }
 
@@ -228,7 +227,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       this.shadowRoot.append(clone);
 
-      this.onInputKeyup = this.onInputKeyup.bind(this);
       this.onInputKeydown = this.onInputKeydown.bind(this);
       this.onInputFocus = this.onInputFocus.bind(this);
       this.onInputBlur = this.onInputBlur.bind(this);
@@ -269,9 +267,8 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       this.input.addEventListener('focus', this.onInputFocus);
       this.input.addEventListener('keydown', this.onInputKeydown);
-      this.input.addEventListener('keyup', this.onInputKeyup);
 
-      this.listbox.addEventListener('click', this.onListboxClick);
+      this.listbox.addEventListener('click', this.onListboxClick, true);
 
       doc.addEventListener(
         'click',
@@ -336,18 +333,9 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       }
       e.preventDefault();
 
-  this.activeItem = this.items[activeIdx]
+      this.activeItem = this.items[activeIdx];
     }
-    onInputKeyup(e) {
-      switch (e.key) {
-        case keys.UP:
-        case keys.DOWN:
-        case keys.ESC:
-        case keys.ENTER:
-          e.preventDefault();
-          return;
-      }
-    }
+
     onInputBlur() {}
 
     onListboxClick(e) {

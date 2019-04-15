@@ -165,7 +165,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.shadowRoot.append(clone);
 
-      _this.onInputKeyup = _this.onInputKeyup.bind(_this);
       _this.onInputKeydown = _this.onInputKeydown.bind(_this);
       _this.onInputFocus = _this.onInputFocus.bind(_this);
       _this.onInputBlur = _this.onInputBlur.bind(_this);
@@ -213,9 +212,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.input.addEventListener('focus', this.onInputFocus);
         this.input.addEventListener('keydown', this.onInputKeydown);
-        this.input.addEventListener('keyup', this.onInputKeyup);
 
-        this.listbox.addEventListener('click', this.onListboxClick);
+        this.listbox.addEventListener('click', this.onListboxClick, true);
 
         doc.addEventListener('click', function (e) {
           if (e.target === _this2) return;
@@ -281,18 +279,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         e.preventDefault();
 
         this.activeItem = this.items[activeIdx];
-      }
-    }, {
-      key: 'onInputKeyup',
-      value: function onInputKeyup(e) {
-        switch (e.key) {
-          case keys.UP:
-          case keys.DOWN:
-          case keys.ESC:
-          case keys.ENTER:
-            e.preventDefault();
-            return;
-        }
       }
     }, {
       key: 'onInputBlur',
