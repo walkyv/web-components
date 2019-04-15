@@ -32,6 +32,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     });
   }
 
+  function renderInnerPages(number, node) {
+    var count = number;
+    node.parentNode.setAttribute('data-page', count - 1);
+    node.innerHTML = count - 1;
+    if (number === 6) {
+      node.parentNode.setAttribute('aria-current', 'page');
+    }
+  }
+
   var Pagination = function (_HTMLElement) {
     _inherits(Pagination, _HTMLElement);
 
@@ -52,6 +61,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             currentPage.removeAttribute('aria-current');
           }
         }
+        this.dispatchEvent(new Event(type + "Page", {
+          bubbles: true
+        }));
       }
     }, {
       key: 'firstPage',
@@ -71,10 +83,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       set: function set(value) {
         this.setAttribute('currentpage', value);
       }
+    }, {
+      key: 'ellipsisAt',
+      get: function get() {
+        return parseInt(this.getAttribute('ellipsisat'));
+      }
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['firstpage', 'lastpage', 'currentpage'];
+        return ['firstpage', 'lastpage', 'currentpage', 'ellipsisat'];
       }
     }]);
 
@@ -87,7 +104,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       var clone = template.content.cloneNode(true);
       _this.pageTarget = clone.querySelector('#pages');
       _this.shadowRoot.appendChild(clone);
-
       _this.changePage = _this.changePage.bind(_this);
       return _this;
     }
@@ -97,19 +113,45 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this2 = this;
 
-        /** Any changes to what the component renders should be done here. */
-        // Get the attributes set by the consumer
         this.pageRange = range(this.firstPage, this.lastPage, 1);
-        this.pageRange.forEach(function (number) {
+
+        this.pageRange.forEach(function (number, index) {
+          var total = index + 1,
+              placeLastNumber = _this2.ellipsisAt + 2,
+              placeEllipsis = _this2.ellipsisAt + 1;
+
           var numberTemplateClone = numberTemplate.content.cloneNode(true),
               numberTemplateContent = numberTemplateClone.querySelector('span');
           numberTemplateContent.parentNode.setAttribute('data-page', number);
           numberTemplateContent.innerHTML = number;
 
-          if (number === _this2.currentPage) {
-            numberTemplateContent.parentNode.setAttribute('aria-current', 'page');
+          // if lastpage is greater than divider
+          if (_this2.lastPage > _this2.ellipsisAt) {
+            // render 1- through divide
+            if (total <= placeLastNumber) {
+              if (number === _this2.currentPage) {
+                numberTemplateContent.parentNode.setAttribute('aria-current', 'page');
+              }
+              // show ellipsis
+              if (total === placeEllipsis) {
+                numberTemplateContent.parentNode.setAttribute('data-page', _this2.ellipsisAt + 1);
+                numberTemplateContent.parentNode.setAttribute('data-ellipsis', true);
+                numberTemplateContent.innerHTML = '...';
+              }
+              // show last page number
+              if (total === placeLastNumber) {
+                numberTemplateContent.parentNode.setAttribute('data-page', _this2.lastPage);
+                numberTemplateContent.innerHTML = _this2.lastPage;
+              }
+              _this2.pageTarget.appendChild(numberTemplateClone);
+            }
+          } else {
+            if (number === _this2.currentPage) {
+              numberTemplateContent.parentNode.setAttribute('aria-current', 'page');
+            }
+            _this2.pageTarget.appendChild(numberTemplateClone);
           }
-          _this2.pageTarget.appendChild(numberTemplateClone);
+          // else render all pages no divide
         });
 
         var pageBtns = this.shadowRoot.querySelectorAll('nav button, #pages > a');
@@ -119,6 +161,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               _this2.changePage(button.id);
             } else if (button.tagName === 'A') {
               _this2.currentPage = event.currentTarget.getAttribute('data-page');
+              _this2.dispatchEvent(new Event("newPage", {
+                bubbles: true
+              }));
             }
           });
         });
@@ -126,12 +171,62 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'currentpage') {
-          var newPage = this.shadowRoot.querySelector('[data-page="' + newValue + '"]');
-          var oldPage = this.shadowRoot.querySelector('[data-page="' + oldValue + '"]');
-          if (newPage !== null) {
-            oldPage.removeAttribute('aria-current');
-            newPage.setAttribute('aria-current', 'page');
+        var _this3 = this;
+
+        if (oldValue !== newValue || newValue === 'switch' && oldValue === 'switch') {
+          if (name === 'currentpage') {
+            var newPage = this.shadowRoot.querySelector('[data-page="' + newValue + '"]'),
+                oldPage = this.shadowRoot.querySelector('[data-page="' + oldValue + '"]'),
+                allpages = this.shadowRoot.querySelectorAll('#pages > a');
+
+            if (oldValue !== null && oldPage !== null) {
+              oldPage.removeAttribute('aria-current');
+              oldPage.removeAttribute('aria-label');
+              newPage.setAttribute('aria-current', 'page');
+              newPage.setAttribute('aria-label', 'page ' + newValue);
+            }
+
+            if (newValue === 'switch') {
+              allpages.forEach(function (page) {
+                page.remove();
+              });
+
+              this.pageRange.forEach(function (number) {
+                var firstPage = 1,
+                    secondPage = 2;
+
+                var numberTemplateClone = numberTemplate.content.cloneNode(true),
+                    numberTemplateContent = numberTemplateClone.querySelector('span');
+
+                // render 1 through divide
+                if (number === firstPage) {
+                  numberTemplateContent.parentNode.setAttribute('data-page', _this3.firstPage);
+                  numberTemplateContent.innerHTML = _this3.firstPage;
+
+                  // place ellipses and set starting number
+                } else if (number === secondPage) {
+                  numberTemplateContent.parentNode.setAttribute('data-page', 'switch');
+                  numberTemplateContent.innerHTML = '...';
+
+                  // render the numbers after ellipsis
+                } else if (number < _this3.lastPage - 1) {
+                  renderInnerPages(number, numberTemplateContent);
+
+                  // render ellipsis
+                } else if (number === _this3.lastPage - 1) {
+                  numberTemplateContent.parentNode.setAttribute('data-page', 'switch');
+                  numberTemplateContent.innerHTML = '...';
+
+                  // render last number
+                } else if (number === _this3.lastPage) {
+                  numberTemplateContent.parentNode.setAttribute('data-page', _this3.lastPage);
+                  numberTemplateContent.innerHTML = _this3.lastPage;
+                } else {
+                  return;
+                }
+                _this3.pageTarget.appendChild(numberTemplateClone);
+              });
+            }
           }
         }
       }

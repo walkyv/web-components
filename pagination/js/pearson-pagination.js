@@ -53,10 +53,18 @@
     return Array(len).fill().map((_, idx) => start + (idx * step))
   }
 
+  function renderInnerPages(number, node) {
+    let count = number;
+    node.parentNode.setAttribute('data-page', count -1);
+    node.innerHTML = count -1;
+    if (number === 6) {
+      node.parentNode.setAttribute('aria-current', 'page')
+    }
+  }
 
   class Pagination extends HTMLElement {
     static get observedAttributes() {
-      return ['firstpage', 'lastpage', 'currentpage'];
+      return ['firstpage', 'lastpage', 'currentpage', 'ellipsisat'];
     }
 
     get firstPage() {
@@ -69,6 +77,10 @@
 
     get currentPage() {
       return parseInt(this.getAttribute('currentpage'));
+    }
+
+    get ellipsisAt () {
+      return parseInt(this.getAttribute('ellipsisat'));
     }
 
     set currentPage(value) {
@@ -90,6 +102,11 @@
           currentPage.removeAttribute('aria-current');
         }
       }
+      this.dispatchEvent(
+        new Event(type + "Page", {
+          bubbles: true
+        })
+      );
     }
 
     constructor() {
@@ -98,24 +115,50 @@
       const clone = template.content.cloneNode(true);
       this.pageTarget = clone.querySelector('#pages');
       this.shadowRoot.appendChild(clone);
-
       this.changePage = this.changePage.bind(this)
     }
 
     connectedCallback() {
-      /** Any changes to what the component renders should be done here. */
-      // Get the attributes set by the consumer
       this.pageRange = range(this.firstPage, this.lastPage, 1);
-      this.pageRange.forEach(number => {
+
+      this.pageRange.forEach((number, index) => {
+        let total = index + 1,
+          placeLastNumber = this.ellipsisAt + 2,
+          placeEllipsis = this.ellipsisAt + 1;
+
         const numberTemplateClone = numberTemplate.content.cloneNode(true),
           numberTemplateContent = numberTemplateClone.querySelector('span');
-        numberTemplateContent.parentNode.setAttribute('data-page', number);
-        numberTemplateContent.innerHTML = number;
+          numberTemplateContent.parentNode.setAttribute('data-page', number);
+          numberTemplateContent.innerHTML = number;
 
-        if (number === this.currentPage) {
-          numberTemplateContent.parentNode.setAttribute('aria-current', 'page')
-        }
-        this.pageTarget.appendChild(numberTemplateClone)
+          // if lastpage is greater than divider
+          if (this.lastPage > this.ellipsisAt) {
+            // render 1- through divide
+            if (total <= placeLastNumber) {
+              if (number === this.currentPage) {
+                numberTemplateContent.parentNode.setAttribute('aria-current', 'page')
+              }
+              // show ellipsis
+              if (total === placeEllipsis) {
+                numberTemplateContent.parentNode.setAttribute('data-page', this.ellipsisAt + 1);
+                numberTemplateContent.parentNode.setAttribute('data-ellipsis', true);
+                numberTemplateContent.innerHTML = '...';
+              }
+              // show last page number
+              if (total === placeLastNumber) {
+                numberTemplateContent.parentNode.setAttribute('data-page', this.lastPage);
+                numberTemplateContent.innerHTML = this.lastPage;
+              }
+              this.pageTarget.appendChild(numberTemplateClone)
+            }
+
+          } else {
+            if (number === this.currentPage) {
+              numberTemplateContent.parentNode.setAttribute('aria-current', 'page')
+            }
+            this.pageTarget.appendChild(numberTemplateClone)
+          }
+          // else render all pages no divide
       });
 
       const pageBtns = this.shadowRoot.querySelectorAll('nav button, #pages > a');
@@ -125,18 +168,71 @@
             this.changePage(button.id);
           } else if (button.tagName === 'A') {
             this.currentPage = event.currentTarget.getAttribute('data-page');
+            this.dispatchEvent(
+              new Event("newPage", {
+                bubbles: true
+              })
+            );
           }
         });
       });
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      if (name === 'currentpage') {
-        const newPage =  this.shadowRoot.querySelector(`[data-page="${newValue}"]`);
-        const oldPage = this.shadowRoot.querySelector(`[data-page="${oldValue}"]`);
-        if (newPage !== null) {
-          oldPage.removeAttribute('aria-current');
-          newPage.setAttribute('aria-current', 'page');
+      if (oldValue !== newValue || newValue === 'switch' && oldValue === 'switch') {
+        if (name === 'currentpage') {
+          const newPage =  this.shadowRoot.querySelector(`[data-page="${newValue}"]`),
+                oldPage = this.shadowRoot.querySelector(`[data-page="${oldValue}"]`),
+            allpages = this.shadowRoot.querySelectorAll('#pages > a');
+
+          if (oldValue !== null && oldPage !== null) {
+            oldPage.removeAttribute('aria-current');
+            oldPage.removeAttribute('aria-label');
+            newPage.setAttribute('aria-current', 'page');
+            newPage.setAttribute('aria-label', 'page ' + newValue)
+          }
+
+          if (newValue === 'switch') {
+              allpages.forEach(page => {
+                page.remove();
+            });
+
+            this.pageRange.forEach((number) => {
+              const firstPage = 1,
+                    secondPage = 2;
+
+              const numberTemplateClone = numberTemplate.content.cloneNode(true),
+                    numberTemplateContent = numberTemplateClone.querySelector('span');
+
+                // render 1 through divide
+                if (number === firstPage) {
+                  numberTemplateContent.parentNode.setAttribute('data-page', this.firstPage);
+                  numberTemplateContent.innerHTML = this.firstPage;
+
+                  // place ellipses and set starting number
+                } else if (number === secondPage){
+                  numberTemplateContent.parentNode.setAttribute('data-page', 'switch');
+                  numberTemplateContent.innerHTML = '...';
+
+                  // render the numbers after ellipsis
+                } else if (number < this.lastPage - 1){
+                  renderInnerPages(number,numberTemplateContent)
+
+                  // render ellipsis
+                } else if (number === this.lastPage - 1) {
+                  numberTemplateContent.parentNode.setAttribute('data-page', 'switch');
+                  numberTemplateContent.innerHTML = '...';
+
+                  // render last number
+                } else if (number === this.lastPage) {
+                  numberTemplateContent.parentNode.setAttribute('data-page', this.lastPage);
+                  numberTemplateContent.innerHTML = this.lastPage;
+                } else {
+                  return
+                }
+                this.pageTarget.appendChild(numberTemplateClone)
+              });
+          }
         }
       }
     }
