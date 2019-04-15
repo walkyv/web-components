@@ -181,6 +181,25 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       return this.items[this.activeIdx];
     }
 
+    set activeItem(next) {
+      if (this.activeItem) {
+        this.activeItem.classList.remove('focused');
+        this.activeItem.setAttribute('aria-selected', 'false');
+      }
+
+      if (next) {
+        this.input.setAttribute(
+          'aria-activedescendant',
+          'time-' + next.dataset.idx
+        );
+        next.classList.add('focused');
+        next.setAttribute('aria-selected', 'true');
+
+        this.activeIdx = Number(next.dataset.idx);
+
+      }
+    }
+
     get selectedItem() {
       return find.call(this.items, item => item.classList.contains('selected'));
     }
@@ -278,7 +297,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     onInputKeydown(e) {
       const key = e.key;
       const items = this.items;
-      const prevActive = this.activeItem;
       let activeIdx = this.activeIdx;
       let prevOpen = this.open;
 
@@ -318,18 +336,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       }
       e.preventDefault();
 
-      this.activeIdx = activeIdx;
-
-      if (prevActive) {
-        prevActive.classList.remove('focused');
-        prevActive.setAttribute('aria-selected', 'false');
-      }
-
-      if (this.activeItem) {
-        this.input.setAttribute('aria-activedescendant', 'time-' + activeIdx);
-        this.activeItem.classList.add('focused');
-        this.activeItem.setAttribute('aria-selected', 'true');
-      }
+  this.activeItem = this.items[activeIdx]
     }
     onInputKeyup(e) {
       switch (e.key) {
@@ -345,24 +352,8 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     onListboxClick(e) {
       if (e.target && e.target.nodeName === 'LI') {
-        const prevActive = this.activeItem;
-        this.activeIdx = Number(e.target.dataset.idx);
-
-        if (prevActive) {
-          prevActive.classList.remove('focused');
-          prevActive.setAttribute('aria-selected', 'false');
-        }
-
-        if (e.target) {
-          this.input.setAttribute(
-            'aria-activedescendant',
-            'time-' + this.activeIdx
-          );
-          e.target.classList.add('focused');
-          e.target.setAttribute('aria-selected', 'true');
-
-          this.selectedItem = e.target;
-        }
+        this.activeItem = e.target;
+        this.selectedItem = e.target;
       }
     }
   }

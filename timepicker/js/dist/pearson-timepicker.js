@@ -110,6 +110,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'activeItem',
       get: function get() {
         return this.items[this.activeIdx];
+      },
+      set: function set(next) {
+        if (this.activeItem) {
+          this.activeItem.classList.remove('focused');
+          this.activeItem.setAttribute('aria-selected', 'false');
+        }
+
+        if (next) {
+          this.input.setAttribute('aria-activedescendant', 'time-' + next.dataset.idx);
+          next.classList.add('focused');
+          next.setAttribute('aria-selected', 'true');
+
+          this.activeIdx = Number(next.dataset.idx);
+        }
       }
     }, {
       key: 'selectedItem',
@@ -227,7 +241,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function onInputKeydown(e) {
         var key = e.key;
         var items = this.items;
-        var prevActive = this.activeItem;
         var activeIdx = this.activeIdx;
         var prevOpen = this.open;
 
@@ -267,18 +280,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
         e.preventDefault();
 
-        this.activeIdx = activeIdx;
-
-        if (prevActive) {
-          prevActive.classList.remove('focused');
-          prevActive.setAttribute('aria-selected', 'false');
-        }
-
-        if (this.activeItem) {
-          this.input.setAttribute('aria-activedescendant', 'time-' + activeIdx);
-          this.activeItem.classList.add('focused');
-          this.activeItem.setAttribute('aria-selected', 'true');
-        }
+        this.activeItem = this.items[activeIdx];
       }
     }, {
       key: 'onInputKeyup',
@@ -299,21 +301,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'onListboxClick',
       value: function onListboxClick(e) {
         if (e.target && e.target.nodeName === 'LI') {
-          var prevActive = this.activeItem;
-          this.activeIdx = Number(e.target.dataset.idx);
-
-          if (prevActive) {
-            prevActive.classList.remove('focused');
-            prevActive.setAttribute('aria-selected', 'false');
-          }
-
-          if (e.target) {
-            this.input.setAttribute('aria-activedescendant', 'time-' + this.activeIdx);
-            e.target.classList.add('focused');
-            e.target.setAttribute('aria-selected', 'true');
-
-            this.selectedItem = e.target;
-          }
+          this.activeItem = e.target;
+          this.selectedItem = e.target;
         }
       }
     }]);
