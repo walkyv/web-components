@@ -42,7 +42,13 @@
     </svg>`;
 
   timeItem.innerHTML = `
-    <li class="listbox-item" role="option" aria-selected="false" data-time="6:00 AM">
+    <li
+      class="listbox-item"
+      role="option"
+      aria-selected="false"
+      data-time=""
+      data-idx=""
+    >
 				${checkIcon}
       <span class="time"></span>
     </li>
@@ -113,7 +119,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       item = li.querySelector('li'),
       timeEl = li.querySelector('.time');
     item.setAttribute('data-time', time);
-    item.setAttribute('data-index', index);
+    item.setAttribute('data-idx', index);
     item.id = 'time-' + index;
     timeEl.innerHTML = time;
     return li;
