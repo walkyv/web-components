@@ -299,6 +299,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'onListboxClick',
       value: function onListboxClick(e) {
         if (e.target && e.target.nodeName === 'LI') {
+          if (this.activeItem) {
+            this.activeItem.classList.remove('focused');
+            this.activeItem.setAttribute('aria-selected', 'false');
+          }
+
+          if (e.target) {
+            this.input.setAttribute('aria-activedescendant', 'time-' + Array.prototype.indexOf.call(this.items, e.target));
+            e.target.classList.add('focused');
+            e.target.setAttribute('aria-selected', 'true');
+          }
           this.selectedItem = e.target;
         }
       }

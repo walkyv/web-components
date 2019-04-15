@@ -285,7 +285,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         this.open = true;
       }
 
-
       switch (key) {
         case keys.UP:
           if (activeIdx <= 0) {
@@ -340,6 +339,19 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     onListboxClick(e) {
       if (e.target && e.target.nodeName === 'LI') {
+        if (this.activeItem) {
+          this.activeItem.classList.remove('focused');
+          this.activeItem.setAttribute('aria-selected', 'false');
+        }
+
+        if (e.target) {
+          this.input.setAttribute(
+            'aria-activedescendant',
+            'time-' + Array.prototype.indexOf.call(this.items, e.target)
+          );
+          e.target.classList.add('focused');
+          e.target.setAttribute('aria-selected', 'true');
+        }
         this.selectedItem = e.target;
       }
     }
