@@ -176,10 +176,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     get selectedItem() {
-      return find.call(
-        this.items,
-        item => item.classList.contains('selected')
-      );
+      return find.call(this.items, item => item.classList.contains('selected'));
     }
 
     set selectedItem(item) {
@@ -275,27 +272,32 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     onInputKeydown(e) {
       const key = e.key;
       const items = this.items;
+      const prevActive = this.activeItem;
       let activeIdx = this.activeIdx;
+      let prevOpen = this.open;
 
       if (key === keys.ESC) {
         this.open = false;
         return;
       }
 
-      const prevActive = this.activeItem;
+      if ((key === keys.UP || key === keys.DOWN) && !prevOpen) {
+        this.open = true;
+      }
+
 
       switch (key) {
         case keys.UP:
           if (activeIdx <= 0) {
             activeIdx = items.length - 1;
-          } else {
+          } else if (prevOpen) {
             activeIdx--;
           }
           break;
         case keys.DOWN:
-          if (activeIdx === -1 || activeIdx >= items.length) {
+          if (activeIdx === -1 || activeIdx >= items.length - 1) {
             activeIdx = 0;
-          } else {
+          } else if (prevOpen) {
             activeIdx++;
           }
           break;

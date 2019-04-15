@@ -227,27 +227,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function onInputKeydown(e) {
         var key = e.key;
         var items = this.items;
+        var prevActive = this.activeItem;
         var activeIdx = this.activeIdx;
+        var prevOpen = this.open;
 
         if (key === keys.ESC) {
           this.open = false;
           return;
         }
 
-        var prevActive = this.activeItem;
+        if ((key === keys.UP || key === keys.DOWN) && !prevOpen) {
+          this.open = true;
+        }
 
         switch (key) {
           case keys.UP:
             if (activeIdx <= 0) {
               activeIdx = items.length - 1;
-            } else {
+            } else if (prevOpen) {
               activeIdx--;
             }
             break;
           case keys.DOWN:
-            if (activeIdx === -1 || activeIdx >= items.length) {
+            if (activeIdx === -1 || activeIdx >= items.length - 1) {
               activeIdx = 0;
-            } else {
+            } else if (prevOpen) {
               activeIdx++;
             }
             break;
