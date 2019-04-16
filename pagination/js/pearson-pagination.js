@@ -193,8 +193,7 @@
 
           if (newPage !== null) {
             const previousEllipsis = this.shadowRoot.querySelector('#pages > a:nth-child(2)');
-
-            if (newPage.getAttribute('data-next-ellipsis') === 'true') {
+            if (newPage.nextElementSibling !== null && newPage.nextElementSibling.getAttribute('data-next-ellipsis') === 'true') {
               previousEllipsis.setAttribute('data-ellipsis', true);
               previousEllipsis.setAttribute('aria-label', 'additional pages');
               previousEllipsis.innerHTML = '...';
@@ -215,7 +214,6 @@
 
               // render the numbers in between starting with the start number
               while (startNumber < nextEllipsisNumber) {
-
                 const numberTemplateClone = numberTemplate.content.cloneNode(true),
                   numberTemplateContent = numberTemplateClone.querySelector('span');
 
@@ -223,7 +221,7 @@
                 numberTemplateContent.innerHTML = startNumber;
 
                 // set current page to the number before the ellipsis
-                if (startNumber === nextEllipsisNumber - 1) {
+                if (startNumber === nextEllipsisNumber - 2) {
                   nextEllipsis.setAttribute('data-page', nextEllipsisNumber);
                   nextEllipsis.removeAttribute('aria-current');
                   numberTemplateContent.parentNode.setAttribute('aria-current', 'page')
@@ -231,7 +229,7 @@
 
                 }
 
-                this.pageTarget.insertBefore(numberTemplateClone, nextEllipsis)
+                this.pageTarget.insertBefore(numberTemplateClone, nextEllipsis);
 
                 if (startNumber === this.lastPage -2) {
                   nextEllipsis.innerHTML = nextEllipsisNumber
