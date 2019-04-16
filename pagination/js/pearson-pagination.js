@@ -53,6 +53,10 @@
     return Array(len).fill().map((_, idx) => start + (idx * step))
   }
 
+  function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  }
+
 
   class Pagination extends HTMLElement {
     static get observedAttributes() {
@@ -193,6 +197,7 @@
 
           if (newPage !== null) {
             const previousEllipsis = this.shadowRoot.querySelector('#pages > a:nth-child(2)');
+            console.log(newPage.nextElementSibling);
             if (newPage.nextElementSibling !== null && newPage.nextElementSibling.getAttribute('data-next-ellipsis') === 'true') {
               previousEllipsis.setAttribute('data-ellipsis', true);
               previousEllipsis.setAttribute('aria-label', 'additional pages');
@@ -226,7 +231,6 @@
                   nextEllipsis.removeAttribute('aria-current');
                   numberTemplateContent.parentNode.setAttribute('aria-current', 'page')
                   numberTemplateContent.parentNode.setAttribute('aria-label', 'page ' + newValue)
-
                 }
 
                 this.pageTarget.insertBefore(numberTemplateClone, nextEllipsis);
@@ -238,12 +242,51 @@
 
                 startNumber ++
               }
-            } else if (newPage.getAttribute('data-ellipsis') === 'true') {
+            } else if (newPage.previousElementSibling !== null && newPage.previousElementSibling.getAttribute('data-ellipsis') === 'true') {
+
+              const previousEllipsis = this.shadowRoot.querySelector('[data-ellipsis="true"]'),
+                previousNode = previousEllipsis.nextElementSibling,
+                nextEllipsis = this.shadowRoot.querySelector('[data-next-ellipsis="true"]'),
+                nextEllipsisNumber = parseInt(nextEllipsis.getAttribute('data-page'), 10),
+                previousEllipsisNumber = parseInt(previousEllipsis.getAttribute('data-page'), 10);
+
+              let startNumber = parseInt(previousNode.getAttribute('data-page'));
+
               while (a < allPages) {
                 const nextNode = previousEllipsis.nextElementSibling;
                 nextNode.remove();
                 a++;
               }
+
+              // generate new numbers
+              // find the starting number
+              // render the numbers in between starting with the start number
+              while (startNumber < nextEllipsisNumber) {
+                const numberTemplateClone = numberTemplate.content.cloneNode(true),
+                  numberTemplateContent = numberTemplateClone.querySelector('span');
+
+                numberTemplateContent.parentNode.setAttribute('data-page', startNumber - 1);
+                numberTemplateContent.innerHTML = startNumber - 1;
+
+                if (startNumber === previousEllipsisNumber + 3) {
+                  numberTemplateContent.parentNode.setAttribute('aria-current', 'page')
+                  numberTemplateContent.parentNode.setAttribute('aria-label', 'page ' + (previousEllipsisNumber + 1))
+                }
+
+                // insertAfter(numberTemplateClone, previousEllipsis)
+                this.pageTarget.insertBefore(numberTemplateClone, nextEllipsis);
+
+                if (startNumber === this.firstPage + 3) {
+                  previousEllipsis.innerHTML = previousEllipsisNumber
+                  previousEllipsis.removeAttribute('data-ellipsis');
+                  previousEllipsis.removeAttribute('aria-label');
+                }
+
+                startNumber++
+              }
+
+
+              // set current page to the number before the ellipsis
             }
           }
         }
