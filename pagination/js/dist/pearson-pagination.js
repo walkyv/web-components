@@ -184,10 +184,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             if (newPage !== null) {
               var previousEllipsis = this.shadowRoot.querySelector('#pages > a:nth-child(2)');
+
               if (newPage.getAttribute('data-next-ellipsis') === 'true') {
                 previousEllipsis.setAttribute('data-ellipsis', true);
                 previousEllipsis.setAttribute('aria-label', 'additional pages');
                 previousEllipsis.innerHTML = '...';
+
                 // remove items between ellipsis
                 while (a < allPages) {
                   var nextNode = previousEllipsis.nextElementSibling;
@@ -204,6 +206,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // render the numbers in between starting with the start number
                 while (startNumber < nextEllipsisNumber) {
+
                   var numberTemplateClone = numberTemplate.content.cloneNode(true),
                       numberTemplateContent = numberTemplateClone.querySelector('span');
 
@@ -226,6 +229,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                   }
 
                   startNumber++;
+                }
+              } else if (newPage.getAttribute('data-ellipsis') === 'true') {
+                while (a < allPages) {
+                  var _nextNode = previousEllipsis.nextElementSibling;
+                  _nextNode.remove();
+                  a++;
                 }
               }
             }
