@@ -42,7 +42,6 @@
       <a href="#" class="ellipsis" disabled="" aria-label="additional pages">...</a>
     `;
 
-
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-pagination');
 
   /** Any helper functions that do not need to be part of the class
@@ -53,10 +52,8 @@
     return Array(len).fill().map((_, idx) => start + (idx * step))
   }
 
-  function renderItems (options, type) {
-    const nextEllipsisNumber = parseInt(options.referenceNode.getAttribute('data-page')),
-      previousEllipsisNumber = parseInt(options.reference.getAttribute('data-page'));
-
+  function renderItems (options, callback) {
+    const nextEllipsisNumber = parseInt(options.referenceNode.getAttribute('data-page'));
 
     while (options.start <= options.end && options.end < nextEllipsisNumber) {
       const nextNode = options.reference.nextElementSibling,
@@ -80,15 +77,22 @@
         options.referenceNode.setAttribute('data-ellipsis', true)
       }
 
+      renderContent.parentNode.addEventListener('mouseup', event => {
+        options.this.currentPage = event.currentTarget.getAttribute('data-page');
+        options.this.dispatchEvent(
+          new Event("newPage", {
+            bubbles: true
+          })
+        );
+        callback(options.this.currentPage)
+      });
+
       options.parentNode.insertBefore(renderTemplate, options.referenceNode);
       options.start++;
-
-
     }
 
 
   }
-
 
   class Pagination extends HTMLElement {
     static get observedAttributes() {
@@ -195,6 +199,7 @@
 
       pageBtns.forEach(button => {
         button.addEventListener('click', event => {
+          event.stopPropagation();
           if (button.tagName === 'BUTTON') {
             this.changePage(button.id);
           } else if (button.tagName === 'A') {
@@ -207,16 +212,14 @@
           }
         });
       });
+
+      this.addEventListener('newPage', event => {
+        this.shadowRoot.querySelector(`[data-page="${this.currentPage}"]`).focus();
+      })
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      const oldNumber = parseInt(oldValue),
-        newNumber = parseInt(newValue),
-        futureNumber = newNumber + 1;
-
-      let startNumber = oldNumber;
-
-      let a = 0;
+      const newNumber = parseInt(newValue);
       if (oldValue !== newValue) {
         if (name === 'currentpage') {
           const newPage =  this.shadowRoot.querySelector(`[data-page="${newValue}"]`),
@@ -247,19 +250,29 @@
                 reference: previousEllipsisNode,
                 newNode: numberTemplate,
                 parentNode: this.pageTarget,
-                referenceNode: nextEllipsisNode
+                referenceNode: nextEllipsisNode,
+                this: this,
+                newPage: newPage
               };
 
             if (nextEllipsis) {
               firstPage.nextElementSibling.innerHTML = '...';
               firstPage.nextElementSibling.setAttribute('data-ellipsis', true);
               options.end = options.end + 1;
-              renderItems(options);
+              renderItems(options, event => {
+                setTimeout(function () {
+                  options.this.shadowRoot.querySelector(`[data-page="${event}"]`).focus()
+                }, 100)
+              });
+
             } else if (previousEllipsis){
               options.start = options.start - 1;
               options.end = options.end - 1;
-              renderItems(options);
-              console.log(options)
+              renderItems(options, event => {
+                setTimeout(function () {
+                  options.this.shadowRoot.querySelector(`[data-page="${event}"]`).focus()
+                }, 100)
+              });
               if (options.newNumber - 2 === parseInt(previousEllipsisNode.getAttribute('data-page'))) {
                 firstPage.nextElementSibling.innerHTML = parseInt(previousEllipsisNode.getAttribute('data-page'));
                 firstPage.nextElementSibling.removeAttribute('data-ellipsis');
