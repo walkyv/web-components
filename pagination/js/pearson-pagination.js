@@ -53,10 +53,23 @@
     return Array(len).fill().map((_, idx) => start + (idx * step))
   }
 
-  function insertAfter(newNode, referenceNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  function returnEllipsis (node) {
+    const shadowNode = node.querySelector('[data-next-ellipsis="true"]');
+    if (shadowNode) {
+      return shadowNode
+    } else {
+      const nextButton = node.querySelector('#next');
+      return nextButton.previousElementSibling.lastElementChild.previousElementSibling;
+    }
   }
 
+  function returnStartNumber (oldValue, newValue, number ) {
+    if (parseInt(oldValue) < parseInt(newValue)) {
+      return number + 1
+    } else {
+      return number - 1
+    }
+  }
 
   class Pagination extends HTMLElement {
     static get observedAttributes() {
@@ -125,8 +138,8 @@
         const numberTemplateClone = numberTemplate.content.cloneNode(true),
           numberTemplateContent = numberTemplateClone.querySelector('span');
 
-          numberTemplateContent.parentNode.setAttribute('data-page', number);
-          numberTemplateContent.innerHTML = number;
+        numberTemplateContent.parentNode.setAttribute('data-page', number);
+        numberTemplateContent.innerHTML = number;
 
         // if lastpage is greater than divider
         if (this.lastPage > this.ellipsisAt) {
@@ -178,6 +191,8 @@
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
+     let test;
+
       let a = 0;
       if (oldValue !== newValue) {
         if (name === 'currentpage') {
@@ -188,8 +203,7 @@
           if (oldValue !== null && oldPage !== null) {
             oldPage.removeAttribute('aria-current');
             oldPage.removeAttribute('aria-label');
-
-            if (!newPage.hasAttribute('data-next-ellipsis')) {
+            if (!newPage.hasAttribute('data-next-ellipsis') || !newPage.hasAttribute('data-ellipsis')) {
               newPage.setAttribute('aria-current', 'page');
               newPage.setAttribute('aria-label', 'page ' + newValue)
             }
@@ -197,26 +211,23 @@
 
           if (newPage !== null) {
             const previousEllipsis = this.shadowRoot.querySelector('#pages > a:nth-child(2)');
-            console.log(newPage.nextElementSibling);
             if (newPage.nextElementSibling !== null && newPage.nextElementSibling.getAttribute('data-next-ellipsis') === 'true') {
               previousEllipsis.setAttribute('data-ellipsis', true);
               previousEllipsis.setAttribute('aria-label', 'additional pages');
               previousEllipsis.innerHTML = '...';
-
               // remove items between ellipsis
               while (a < allPages) {
                 const nextNode = previousEllipsis.nextElementSibling;
                 nextNode.remove();
                 a++;
               }
-
               // generate new numbers
               // find the starting number
               const nextEllipsis = this.shadowRoot.querySelector('[data-next-ellipsis="true"]'),
-                    nextEllipsisNumber = parseInt(nextEllipsis.getAttribute('data-page'), 10) + 1;
+                nextEllipsisNumber = parseInt(nextEllipsis.getAttribute('data-page'), 10) + 1;
 
               let startNumber = nextEllipsisNumber - allPages;
-
+              console.log(oldValue, newValue)
               // render the numbers in between starting with the start number
               while (startNumber < nextEllipsisNumber) {
                 const numberTemplateClone = numberTemplate.content.cloneNode(true),
@@ -239,15 +250,21 @@
                   nextEllipsis.innerHTML = nextEllipsisNumber
                   nextEllipsis.removeAttribute('data-next-ellipsis');
                 }
+                startNumber++
+                console.log('next', startNumber)
 
-                startNumber ++
               }
-            } else if (newPage.previousElementSibling !== null && newPage.previousElementSibling.getAttribute('data-ellipsis') === 'true') {
 
+
+
+
+
+
+            } else if (newPage.previousElementSibling !== null && newPage.previousElementSibling.getAttribute('data-ellipsis') === 'true') {
               const previousEllipsis = this.shadowRoot.querySelector('[data-ellipsis="true"]'),
                 previousNode = previousEllipsis.nextElementSibling,
                 nextEllipsis = this.shadowRoot.querySelector('[data-next-ellipsis="true"]'),
-                nextEllipsisNumber = parseInt(nextEllipsis.getAttribute('data-page'), 10),
+                nextEllipsisNumber = parseInt(returnEllipsis(this.shadowRoot).getAttribute('data-page'), 10),
                 previousEllipsisNumber = parseInt(previousEllipsis.getAttribute('data-page'), 10);
 
               let startNumber = parseInt(previousNode.getAttribute('data-page'));
@@ -257,10 +274,6 @@
                 nextNode.remove();
                 a++;
               }
-
-              // generate new numbers
-              // find the starting number
-              // render the numbers in between starting with the start number
               while (startNumber < nextEllipsisNumber) {
                 const numberTemplateClone = numberTemplate.content.cloneNode(true),
                   numberTemplateContent = numberTemplateClone.querySelector('span');
@@ -273,19 +286,16 @@
                   numberTemplateContent.parentNode.setAttribute('aria-label', 'page ' + (previousEllipsisNumber + 1))
                 }
 
-                // insertAfter(numberTemplateClone, previousEllipsis)
-                this.pageTarget.insertBefore(numberTemplateClone, nextEllipsis);
+                this.pageTarget.insertBefore(numberTemplateClone, returnEllipsis(this.shadowRoot));
 
                 if (startNumber === this.firstPage + 3) {
                   previousEllipsis.innerHTML = previousEllipsisNumber
                   previousEllipsis.removeAttribute('data-ellipsis');
                   previousEllipsis.removeAttribute('aria-label');
                 }
-
                 startNumber++
+                console.log('prev', startNumber)
               }
-
-
               // set current page to the number before the ellipsis
             }
           }

@@ -32,8 +32,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     });
   }
 
-  function insertAfter(newNode, referenceNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  function returnEllipsis(node) {
+    var shadowNode = node.querySelector('[data-next-ellipsis="true"]');
+    if (shadowNode) {
+      return shadowNode;
+    } else {
+      var nextButton = node.querySelector('#next');
+      return nextButton.previousElementSibling.lastElementChild.previousElementSibling;
+    }
+  }
+
+  function returnStartNumber(oldValue, newValue, number) {
+    if (parseInt(oldValue) < parseInt(newValue)) {
+      return number + 1;
+    } else {
+      return number - 1;
+    }
   }
 
   var Pagination = function (_HTMLElement) {
@@ -169,6 +183,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
+        var test = void 0;
+
         var a = 0;
         if (oldValue !== newValue) {
           if (name === 'currentpage') {
@@ -179,8 +195,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             if (oldValue !== null && oldPage !== null) {
               oldPage.removeAttribute('aria-current');
               oldPage.removeAttribute('aria-label');
-
-              if (!newPage.hasAttribute('data-next-ellipsis')) {
+              if (!newPage.hasAttribute('data-next-ellipsis') || !newPage.hasAttribute('data-ellipsis')) {
                 newPage.setAttribute('aria-current', 'page');
                 newPage.setAttribute('aria-label', 'page ' + newValue);
               }
@@ -188,26 +203,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             if (newPage !== null) {
               var previousEllipsis = this.shadowRoot.querySelector('#pages > a:nth-child(2)');
-              console.log(newPage.nextElementSibling);
               if (newPage.nextElementSibling !== null && newPage.nextElementSibling.getAttribute('data-next-ellipsis') === 'true') {
                 previousEllipsis.setAttribute('data-ellipsis', true);
                 previousEllipsis.setAttribute('aria-label', 'additional pages');
                 previousEllipsis.innerHTML = '...';
-
                 // remove items between ellipsis
                 while (a < allPages) {
                   var nextNode = previousEllipsis.nextElementSibling;
                   nextNode.remove();
                   a++;
                 }
-
                 // generate new numbers
                 // find the starting number
                 var nextEllipsis = this.shadowRoot.querySelector('[data-next-ellipsis="true"]'),
                     nextEllipsisNumber = parseInt(nextEllipsis.getAttribute('data-page'), 10) + 1;
 
                 var startNumber = nextEllipsisNumber - allPages;
-
+                console.log(oldValue, newValue);
                 // render the numbers in between starting with the start number
                 while (startNumber < nextEllipsisNumber) {
                   var numberTemplateClone = numberTemplate.content.cloneNode(true),
@@ -230,15 +242,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     nextEllipsis.innerHTML = nextEllipsisNumber;
                     nextEllipsis.removeAttribute('data-next-ellipsis');
                   }
-
                   startNumber++;
+                  console.log('next', startNumber);
                 }
               } else if (newPage.previousElementSibling !== null && newPage.previousElementSibling.getAttribute('data-ellipsis') === 'true') {
-
                 var _previousEllipsis = this.shadowRoot.querySelector('[data-ellipsis="true"]'),
                     previousNode = _previousEllipsis.nextElementSibling,
                     _nextEllipsis = this.shadowRoot.querySelector('[data-next-ellipsis="true"]'),
-                    _nextEllipsisNumber = parseInt(_nextEllipsis.getAttribute('data-page'), 10),
+                    _nextEllipsisNumber = parseInt(returnEllipsis(this.shadowRoot).getAttribute('data-page'), 10),
                     previousEllipsisNumber = parseInt(_previousEllipsis.getAttribute('data-page'), 10);
 
                 var _startNumber = parseInt(previousNode.getAttribute('data-page'));
@@ -248,10 +259,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                   _nextNode.remove();
                   a++;
                 }
-
-                // generate new numbers
-                // find the starting number
-                // render the numbers in between starting with the start number
                 while (_startNumber < _nextEllipsisNumber) {
                   var _numberTemplateClone = numberTemplate.content.cloneNode(true),
                       _numberTemplateContent = _numberTemplateClone.querySelector('span');
@@ -264,18 +271,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     _numberTemplateContent.parentNode.setAttribute('aria-label', 'page ' + (previousEllipsisNumber + 1));
                   }
 
-                  // insertAfter(numberTemplateClone, previousEllipsis)
-                  this.pageTarget.insertBefore(_numberTemplateClone, _nextEllipsis);
+                  this.pageTarget.insertBefore(_numberTemplateClone, returnEllipsis(this.shadowRoot));
 
                   if (_startNumber === this.firstPage + 3) {
                     _previousEllipsis.innerHTML = previousEllipsisNumber;
                     _previousEllipsis.removeAttribute('data-ellipsis');
                     _previousEllipsis.removeAttribute('aria-label');
                   }
-
                   _startNumber++;
+                  console.log('prev', _startNumber);
                 }
-
                 // set current page to the number before the ellipsis
               }
             }
