@@ -80,14 +80,6 @@
         options.referenceNode.setAttribute('data-ellipsis', true)
       }
 
-
-      if (options.start - 1  === previousEllipsisNumber) {
-        console.log(options.reference)
-        options.reference.innerHTML = previousEllipsisNumber;
-        options.reference.removeAttribute('data-ellipsis')
-      }
-
-
       options.parentNode.insertBefore(renderTemplate, options.referenceNode);
       options.start++;
 
@@ -241,7 +233,7 @@
             }
           }
 
-          if (newPage !== null) {
+          if (newPage !== null && newPage.nextElementSibling !== null && newPage.previousElementSibling !== null ) {
             const nextEllipsis = newPage.nextElementSibling.getAttribute('data-ellipsis'),
               previousEllipsis = newPage.previousElementSibling.getAttribute('data-ellipsis'),
               previousEllipsisNode = firstPage.nextElementSibling,
@@ -267,6 +259,11 @@
               options.start = options.start - 1;
               options.end = options.end - 1;
               renderItems(options);
+              console.log(options)
+              if (options.newNumber - 2 === parseInt(previousEllipsisNode.getAttribute('data-page'))) {
+                firstPage.nextElementSibling.innerHTML = parseInt(previousEllipsisNode.getAttribute('data-page'));
+                firstPage.nextElementSibling.removeAttribute('data-ellipsis');
+              }
             }
           }
         }
