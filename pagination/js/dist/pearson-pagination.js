@@ -32,7 +32,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     });
   }
 
-  function renderItems(options, callback) {
+  function renderItems(options) {
     var nextEllipsisNumber = parseInt(options.referenceNode.getAttribute('data-page'));
 
     while (options.start <= options.end && options.end < nextEllipsisNumber) {
@@ -57,12 +57,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         options.referenceNode.setAttribute('data-ellipsis', true);
       }
 
-      renderContent.parentNode.addEventListener('mouseup', function (event) {
-        options.this.currentPage = event.currentTarget.getAttribute('data-page');
-        options.this.dispatchEvent(new Event("newPage", {
-          bubbles: true
-        }));
-        callback(options.this.currentPage);
+      renderContent.parentNode.addEventListener('click', function (event) {
+        options.this.addListener(event, options);
       });
 
       options.parentNode.insertBefore(renderTemplate, options.referenceNode);
@@ -74,6 +70,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _inherits(Pagination, _HTMLElement);
 
     _createClass(Pagination, [{
+      key: 'addListener',
+      value: function addListener(event) {
+        this.currentPage = event.currentTarget.getAttribute('data-page');
+        this.dispatchEvent(new Event("newPage", {
+          bubbles: true
+        }));
+      }
+    }, {
       key: 'changePage',
       value: function changePage(type) {
         var currentPage = this.shadowRoot.querySelector('#pages a[aria-current]'),
@@ -132,8 +136,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.attachShadow({ mode: 'open' });
       var clone = template.content.cloneNode(true);
       _this.pageTarget = clone.querySelector('#pages');
-      _this.shadowRoot.appendChild(clone);
       _this.changePage = _this.changePage.bind(_this);
+      _this.addListener = _this.addListener.bind(_this);
+      _this.shadowRoot.appendChild(clone);
       return _this;
     }
 
@@ -143,60 +148,56 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var _this2 = this;
 
         this.pageRange = range(this.firstPage, this.lastPage, 1);
-
         this.pageRange.forEach(function (number, index) {
+          var numberTemplateContainer = numberTemplate.content.cloneNode(true),
+              numberTemplateSpan = numberTemplateContainer.querySelector('span'),
+              numberTemplateParent = numberTemplateSpan.parentNode;
+
           var total = index + 1,
               placeLastNumber = _this2.ellipsisAt + 2,
               placeEllipsis = _this2.ellipsisAt + 1;
 
-          var numberTemplateClone = numberTemplate.content.cloneNode(true),
-              numberTemplateContent = numberTemplateClone.querySelector('span');
+          _this2.template = numberTemplateContainer;
+          _this2.span = numberTemplateSpan;
+          _this2.parent = numberTemplateParent;
 
-          numberTemplateContent.parentNode.setAttribute('data-page', number);
-          numberTemplateContent.innerHTML = number;
+          _this2.parent.setAttribute('data-page', number);
+          _this2.span.innerHTML = number;
 
-          // if lastpage is greater than divider
           if (_this2.lastPage > _this2.ellipsisAt) {
-            // render 1- through divide
             if (total <= placeLastNumber) {
               if (number === _this2.currentPage) {
-                numberTemplateContent.parentNode.setAttribute('aria-current', 'page');
+                _this2.parent.setAttribute('aria-current', 'page');
               }
-              // show ellipsis
+
               if (total === placeEllipsis) {
-                numberTemplateContent.parentNode.setAttribute('data-page', _this2.lastPage - 1);
-                numberTemplateContent.parentNode.setAttribute('data-ellipsis', true);
-                numberTemplateContent.parentNode.setAttribute('aria-label', 'additional pages');
-                numberTemplateContent.innerHTML = '...';
+                _this2.parent.setAttribute('data-page', _this2.lastPage - 1);
+                _this2.parent.setAttribute('data-ellipsis', true);
+                _this2.parent.setAttribute('aria-label', 'additional pages');
+                _this2.span.innerHTML = '...';
               }
-              // show last page number
+
               if (total === placeLastNumber) {
-                numberTemplateContent.parentNode.setAttribute('data-page', _this2.lastPage);
-                numberTemplateContent.innerHTML = _this2.lastPage;
+                _this2.parent.setAttribute('data-page', _this2.lastPage);
+                _this2.span.innerHTML = _this2.lastPage;
               }
-              _this2.pageTarget.appendChild(numberTemplateClone);
+              _this2.pageTarget.appendChild(_this2.template);
             }
           } else {
             if (number === _this2.currentPage) {
-              numberTemplateContent.parentNode.setAttribute('aria-current', 'page');
+              _this2.parent.setAttribute('aria-current', 'page');
             }
-            _this2.pageTarget.appendChild(numberTemplateClone);
+            _this2.pageTarget.appendChild(_this2.template);
           }
-          // else render all pages no divide
         });
 
         var pageBtns = this.shadowRoot.querySelectorAll('nav button, #pages > a');
-
         pageBtns.forEach(function (button) {
           button.addEventListener('click', function (event) {
-            event.stopPropagation();
             if (button.tagName === 'BUTTON') {
               _this2.changePage(button.id);
             } else if (button.tagName === 'A') {
-              _this2.currentPage = event.currentTarget.getAttribute('data-page');
-              _this2.dispatchEvent(new Event("newPage", {
-                bubbles: true
-              }));
+              _this2.addListener(event);
             }
           });
         });
@@ -248,19 +249,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 firstPage.nextElementSibling.innerHTML = '...';
                 firstPage.nextElementSibling.setAttribute('data-ellipsis', true);
                 options.end = options.end + 1;
-                renderItems(options, function (event) {
-                  setTimeout(function () {
-                    options.this.shadowRoot.querySelector('[data-page="' + event + '"]').focus();
-                  }, 100);
-                });
+                renderItems(options);
               } else if (previousEllipsis) {
                 options.start = options.start - 1;
                 options.end = options.end - 1;
-                renderItems(options, function (event) {
-                  setTimeout(function () {
-                    options.this.shadowRoot.querySelector('[data-page="' + event + '"]').focus();
-                  }, 100);
-                });
+                renderItems(options);
+
                 if (options.newNumber - 2 === parseInt(previousEllipsisNode.getAttribute('data-page'))) {
                   firstPage.nextElementSibling.innerHTML = parseInt(previousEllipsisNode.getAttribute('data-page'));
                   firstPage.nextElementSibling.removeAttribute('data-ellipsis');

@@ -52,7 +52,7 @@
     return Array(len).fill().map((_, idx) => start + (idx * step))
   }
 
-  function renderItems (options, callback) {
+  function renderItems (options) {
     const nextEllipsisNumber = parseInt(options.referenceNode.getAttribute('data-page'));
 
     while (options.start <= options.end && options.end < nextEllipsisNumber) {
@@ -77,21 +77,13 @@
         options.referenceNode.setAttribute('data-ellipsis', true)
       }
 
-      renderContent.parentNode.addEventListener('mouseup', event => {
-        options.this.currentPage = event.currentTarget.getAttribute('data-page');
-        options.this.dispatchEvent(
-          new Event("newPage", {
-            bubbles: true
-          })
-        );
-        callback(options.this.currentPage)
+      renderContent.parentNode.addEventListener('click', event => {
+        options.this.addListener(event, options)
       });
 
       options.parentNode.insertBefore(renderTemplate, options.referenceNode);
       options.start++;
     }
-
-
   }
 
   class Pagination extends HTMLElement {
@@ -117,6 +109,15 @@
 
     set currentPage(value) {
       this.setAttribute('currentpage', value);
+    }
+
+   addListener (event) {
+      this.currentPage = event.currentTarget.getAttribute('data-page');
+      this.dispatchEvent(
+        new Event("newPage", {
+          bubbles: true
+        })
+      );
     }
 
     changePage(type) {
@@ -146,69 +147,64 @@
       this.attachShadow({ mode: 'open' });
       const clone = template.content.cloneNode(true);
       this.pageTarget = clone.querySelector('#pages');
+      this.changePage = this.changePage.bind(this);
+      this.addListener = this.addListener.bind(this);
       this.shadowRoot.appendChild(clone);
-      this.changePage = this.changePage.bind(this)
     }
 
     connectedCallback() {
       this.pageRange = range(this.firstPage, this.lastPage, 1);
-
       this.pageRange.forEach((number, index) => {
+        const numberTemplateContainer = numberTemplate.content.cloneNode(true),
+          numberTemplateSpan = numberTemplateContainer.querySelector('span'),
+          numberTemplateParent = numberTemplateSpan.parentNode;
+
         let total = index + 1,
           placeLastNumber = this.ellipsisAt + 2,
           placeEllipsis = this.ellipsisAt + 1;
 
-        const numberTemplateClone = numberTemplate.content.cloneNode(true),
-          numberTemplateContent = numberTemplateClone.querySelector('span');
+        this.template = numberTemplateContainer;
+        this.span = numberTemplateSpan;
+        this.parent = numberTemplateParent;
 
-        numberTemplateContent.parentNode.setAttribute('data-page', number);
-        numberTemplateContent.innerHTML = number;
+        this.parent.setAttribute('data-page', number);
+        this.span.innerHTML = number;
 
-        // if lastpage is greater than divider
         if (this.lastPage > this.ellipsisAt) {
-          // render 1- through divide
           if (total <= placeLastNumber) {
             if (number === this.currentPage) {
-              numberTemplateContent.parentNode.setAttribute('aria-current', 'page')
+              this.parent.setAttribute('aria-current', 'page')
             }
-            // show ellipsis
+
             if (total === placeEllipsis) {
-              numberTemplateContent.parentNode.setAttribute('data-page', this.lastPage - 1);
-              numberTemplateContent.parentNode.setAttribute('data-ellipsis', true);
-              numberTemplateContent.parentNode.setAttribute('aria-label', 'additional pages');
-              numberTemplateContent.innerHTML = '...';
+              this.parent.setAttribute('data-page', this.lastPage - 1);
+              this.parent.setAttribute('data-ellipsis', true);
+              this.parent.setAttribute('aria-label', 'additional pages');
+              this.span.innerHTML = '...';
             }
-            // show last page number
+
             if (total === placeLastNumber) {
-              numberTemplateContent.parentNode.setAttribute('data-page', this.lastPage);
-              numberTemplateContent.innerHTML = this.lastPage;
+              this.parent.setAttribute('data-page', this.lastPage);
+              this.span.innerHTML = this.lastPage;
             }
-            this.pageTarget.appendChild(numberTemplateClone)
+            this.pageTarget.appendChild(this.template)
           }
 
         } else {
           if (number === this.currentPage) {
-            numberTemplateContent.parentNode.setAttribute('aria-current', 'page')
+            this.parent.setAttribute('aria-current', 'page')
           }
-          this.pageTarget.appendChild(numberTemplateClone)
+          this.pageTarget.appendChild(this.template)
         }
-        // else render all pages no divide
       });
 
       const pageBtns = this.shadowRoot.querySelectorAll('nav button, #pages > a');
-
       pageBtns.forEach(button => {
         button.addEventListener('click', event => {
-          event.stopPropagation();
           if (button.tagName === 'BUTTON') {
             this.changePage(button.id);
           } else if (button.tagName === 'A') {
-            this.currentPage = event.currentTarget.getAttribute('data-page');
-            this.dispatchEvent(
-              new Event("newPage", {
-                bubbles: true
-              })
-            );
+            this.addListener(event)
           }
         });
       });
@@ -259,20 +255,13 @@
               firstPage.nextElementSibling.innerHTML = '...';
               firstPage.nextElementSibling.setAttribute('data-ellipsis', true);
               options.end = options.end + 1;
-              renderItems(options, event => {
-                setTimeout(function () {
-                  options.this.shadowRoot.querySelector(`[data-page="${event}"]`).focus()
-                }, 100)
-              });
+              renderItems(options);
 
             } else if (previousEllipsis){
               options.start = options.start - 1;
               options.end = options.end - 1;
-              renderItems(options, event => {
-                setTimeout(function () {
-                  options.this.shadowRoot.querySelector(`[data-page="${event}"]`).focus()
-                }, 100)
-              });
+              renderItems(options);
+
               if (options.newNumber - 2 === parseInt(previousEllipsisNode.getAttribute('data-page'))) {
                 firstPage.nextElementSibling.innerHTML = parseInt(previousEllipsisNode.getAttribute('data-page'));
                 firstPage.nextElementSibling.removeAttribute('data-ellipsis');
