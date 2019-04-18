@@ -35,6 +35,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   function renderItems(options) {
     var nextEllipsisNumber = parseInt(options.referenceNode.getAttribute('data-page'));
 
+    console.log('go');
     while (options.start <= options.end && options.end < nextEllipsisNumber) {
       var nextNode = options.reference.nextElementSibling,
           renderTemplate = options.newNode.content.cloneNode(true),
@@ -201,7 +202,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
           });
         });
-
         this.addEventListener('newPage', function (event) {
           _this2.shadowRoot.querySelector('[data-page="' + _this2.currentPage + '"]').focus();
         });
@@ -209,55 +209,83 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
-        var newNumber = parseInt(newValue);
-        if (oldValue !== newValue) {
-          if (name === 'currentpage') {
-            var newPage = this.shadowRoot.querySelector('[data-page="' + newValue + '"]'),
-                oldPage = this.shadowRoot.querySelector('[data-page="' + oldValue + '"]'),
-                firstPage = this.shadowRoot.querySelector('[data-page="' + this.firstPage + '"]'),
-                lastPage = this.shadowRoot.querySelector('[data-page="' + this.lastPage + '"]');
+        var _this3 = this;
 
-            if (oldValue !== null && oldPage !== null) {
-              oldPage.removeAttribute('aria-current');
-              oldPage.removeAttribute('aria-label');
-              if (!newPage.hasAttribute('data-ellipsis')) {
-                newPage.setAttribute('aria-current', 'page');
-                newPage.setAttribute('aria-label', 'page ' + newValue);
+        if (oldValue !== null) {
+          var newNumber = parseInt(newValue);
+
+          if (oldValue !== newValue) {
+            if (name === 'currentpage') {
+              var newPage = this.shadowRoot.querySelector('[data-page="' + newValue + '"]'),
+                  oldPage = this.shadowRoot.querySelector('[data-page="' + oldValue + '"]'),
+                  firstPage = this.shadowRoot.querySelector('[data-page="' + this.firstPage + '"]'),
+                  lastPage = this.shadowRoot.querySelector('[data-page="' + this.lastPage + '"]'),
+                  allLinks = this.shadowRoot.querySelectorAll('#pages > a');
+
+              if (oldValue !== null && oldPage !== null) {
+                oldPage.removeAttribute('aria-current');
+                oldPage.removeAttribute('aria-label');
+                if (!newPage.hasAttribute('data-ellipsis')) {
+                  newPage.setAttribute('aria-current', 'page');
+                  newPage.setAttribute('aria-label', 'page ' + newValue);
+                }
               }
-            }
 
-            if (newPage !== null && newPage.nextElementSibling !== null && newPage.previousElementSibling !== null) {
-              var nextEllipsis = newPage.nextElementSibling.getAttribute('data-ellipsis'),
-                  previousEllipsis = newPage.previousElementSibling.getAttribute('data-ellipsis'),
-                  previousEllipsisNode = firstPage.nextElementSibling,
-                  nextEllipsisNode = lastPage.previousElementSibling,
-                  endRange = nextEllipsisNode.previousElementSibling.getAttribute('data-page'),
-                  startRange = previousEllipsisNode.nextElementSibling.getAttribute('data-page'),
-                  options = {
-                start: parseInt(startRange),
-                newNumber: newNumber,
-                end: parseInt(endRange),
-                reference: previousEllipsisNode,
-                newNode: numberTemplate,
-                parentNode: this.pageTarget,
-                referenceNode: nextEllipsisNode,
-                this: this,
-                newPage: newPage
-              };
+              if (newNumber === this.firstPage) {
+                allLinks.forEach(function (link, index) {
+                  var value = index + 1;
+                  link.innerHTML = value;
+                  link.removeAttribute('data-ellipsis');
+                  link.setAttribute('data-page', value);
+                  if (value === _this3.ellipsisAt + 1) {
+                    link.setAttribute('data-ellipsis', true);
+                    link.innerHTML = '...';
+                    link.setAttribute('data-page', _this3.lastPage - 1);
+                  }
+                  if (value === _this3.ellipsisAt + 2) {
+                    link.innerHTML = _this3.lastPage;
+                    link.setAttribute('data-page', _this3.lastPage);
+                  }
+                });
+              }
 
-              if (nextEllipsis) {
-                firstPage.nextElementSibling.innerHTML = '...';
-                firstPage.nextElementSibling.setAttribute('data-ellipsis', true);
-                options.end = options.end + 1;
-                renderItems(options);
-              } else if (previousEllipsis) {
-                options.start = options.start - 1;
-                options.end = options.end - 1;
-                renderItems(options);
+              if (newNumber === this.lastPage) {
+                console.log('render last');
+              }
 
-                if (options.newNumber - 2 === parseInt(previousEllipsisNode.getAttribute('data-page'))) {
-                  firstPage.nextElementSibling.innerHTML = parseInt(previousEllipsisNode.getAttribute('data-page'));
-                  firstPage.nextElementSibling.removeAttribute('data-ellipsis');
+              if (newPage !== null && newPage.nextElementSibling !== null && newPage.previousElementSibling !== null) {
+                var nextEllipsis = newPage.nextElementSibling.getAttribute('data-ellipsis'),
+                    previousEllipsis = newPage.previousElementSibling.getAttribute('data-ellipsis'),
+                    previousEllipsisNode = firstPage.nextElementSibling,
+                    nextEllipsisNode = lastPage.previousElementSibling,
+                    endRange = nextEllipsisNode.previousElementSibling.getAttribute('data-page'),
+                    startRange = previousEllipsisNode.nextElementSibling.getAttribute('data-page'),
+                    options = {
+                  start: parseInt(startRange),
+                  newNumber: newNumber,
+                  end: parseInt(endRange),
+                  reference: previousEllipsisNode,
+                  newNode: numberTemplate,
+                  parentNode: this.pageTarget,
+                  referenceNode: nextEllipsisNode,
+                  this: this,
+                  newPage: newPage
+                };
+
+                if (nextEllipsis) {
+                  firstPage.nextElementSibling.innerHTML = '...';
+                  firstPage.nextElementSibling.setAttribute('data-ellipsis', true);
+                  options.end = options.end + 1;
+                  renderItems(options);
+                } else if (previousEllipsis) {
+                  options.start = options.start - 1;
+                  options.end = options.end - 1;
+                  renderItems(options);
+
+                  if (options.newNumber - 2 === parseInt(previousEllipsisNode.getAttribute('data-page'))) {
+                    firstPage.nextElementSibling.innerHTML = parseInt(previousEllipsisNode.getAttribute('data-page'));
+                    firstPage.nextElementSibling.removeAttribute('data-ellipsis');
+                  }
                 }
               }
             }
