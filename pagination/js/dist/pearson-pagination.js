@@ -236,6 +236,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.page = _clone.querySelector('.current-page');
           this.pageTarget = _clone.querySelector('#pages');
           this.nextPageBtn = _clone.querySelector('#next');
+          this.prevPageBtn = _clone.querySelector('#prev');
           this.shadowRoot.appendChild(_clone);
 
           var _pageBtns = this.shadowRoot.querySelectorAll('nav button');
@@ -268,6 +269,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           } else {
             this.page.innerHTML = this.lastPage;
           }
+          console.log(this.currentPage, this.firstPage);
           if (this.currentPage === this.firstPage) {
             this.prevPageBtn.setAttribute('disabled', true);
           }

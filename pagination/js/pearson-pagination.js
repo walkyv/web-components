@@ -260,6 +260,7 @@
         this.page = clone.querySelector('.current-page');
         this.pageTarget = clone.querySelector('#pages');
         this.nextPageBtn = clone.querySelector('#next');
+        this.prevPageBtn = clone.querySelector('#prev');
         this.shadowRoot.appendChild(clone);
 
         const pageBtns = this.shadowRoot.querySelectorAll('nav button');
@@ -296,6 +297,7 @@
         } else {
           this.page.innerHTML = this.lastPage
         }
+        console.log(this.currentPage, this.firstPage)
         if (this.currentPage === this.firstPage) {
           this.prevPageBtn.setAttribute('disabled', true);
         }
