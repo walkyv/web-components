@@ -21,7 +21,7 @@
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}html{-webkit-box-sizing:border-box;box-sizing:border-box;font-size:16px}*,:after,:before{-webkit-box-sizing:inherit;box-sizing:inherit}body{font-size:16px;font-family:Open Sans,Arial,Helvetica,sans-serif}body,p{line-height:1.5;font-weight:400}p{font-size:.875em}strong{font-weight:600}a{color:#047a9c}a:hover{color:#03536a;text-decoration:none}a:focus{outline:2px solid #0b73da;outline-offset:4px}button{cursor:pointer}@-webkit-keyframes shift{to{background-position:9px 9px}}@keyframes shift{to{background-position:9px 9px}}@-webkit-keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@-webkit-keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@-webkit-keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@-webkit-keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}.fadeIn,.slideInDown{opacity:1!important;visibility:visible!important}.fadeOut,.slideOutDown{opacity:0;visibility:hidden}.slideInDown{-webkit-animation:slideInDown .3s ease-in-out 0s;animation:slideInDown .3s ease-in-out 0s}.slideOutDown{-webkit-animation:slideOutDown .2s ease-in 0s;animation:slideOutDown .2s ease-in 0s}.fadeIn{-webkit-animation:fadeIn .3s linear 0s;animation:fadeIn .3s linear 0s}.fadeOut{-webkit-animation:fadeOut .2s linear 0s;animation:fadeOut .2s linear 0s}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (prefers-reduced-motion){.animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}html[data-prefers-reduced-motion] .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}.no-border{border:0}.icon-18{width:18px;height:18px}.icon-24{width:24px;height:24px}.hidden{display:none}.gr-h1{font-size:1.5em;line-height:1.75em}.gr-h1,.gr-h2{font-weight:400;margin-top:0}.gr-h2{font-size:1.25em;line-height:1.625em}.gr-h3{font-size:1.125em;line-height:1.5em;font-weight:400;margin-top:0}.gr-label{display:block;margin-bottom:4px}.gr-label,.gr-meta{font-size:.75em;line-height:1em;color:#6a7070}.gr-semi-bold{font-weight:600}.gr-font-large{font-size:1em;line-height:1.5em}.gr-font-normal{font-size:.875em;line-height:1.5}.gr-btn{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:1em;cursor:pointer;border-radius:22px;position:relative;margin:12px}.gr-btn:hover{color:#252525;border:1px solid #252525}.gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}.gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}.gr-btn.primary:hover{color:#fff;background-color:#035f79}.gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}.gr-btn.attention:hover{background-color:#f7aa00}.gr-btn.small{min-width:128px;padding:7px 20px;font-size:.875em}.gr-btn.small:focus:after{padding:18px 21px}.gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:1em}.gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}.gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}.gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}.gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}.gr-btn.no-border{border:0}.gr-btn.no-border:hover{border:0}.gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}.gr-pagination{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center}.gr-pagination button{margin:0;min-width:44px;border:0!important;padding:0!important}.gr-pagination button span{height:28px;width:28px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #c7c7c7;border-radius:50%}.gr-pagination button:focus:after{min-height:36px;min-width:36px;padding:0;top:4px;left:8px}.gr-pagination button:hover span{background-color:#e9e9e9}.gr-pagination button:disabled{background:none!important}.gr-pagination button:disabled span{border:1px solid #d9d9d9}.gr-pagination button:disabled span svg{fill:#d9d9d9}.gr-pagination button:disabled:hover span{background:#fff}.gr-pagination a{min-width:44px;color:#6a7070;text-decoration:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;font-size:14px}.gr-pagination a:hover{text-decoration:underline;color:#6a7070;font-weight:700}.gr-pagination a:focus{outline-offset:0}.gr-pagination a[aria-current]{text-decoration:underline;color:#252525;font-weight:700}.gr-pagination .compact-text{font-size:.875em;margin:0 1em}.gr-pagination a svg{width:18px;height:18px;display:inline-block;vertical-align:top;fill:currentColor}a.disabled{cursor:default;text-decoration:none}a.disabled:focus{outline:0}a.disabled:hover{text-decoration:none}
       </style>
           <nav data-id="pagination" aria-label="pagination" class="gr-pagination" data-type="standard" data-pages-total="10" data-max-buttons="5" data-active-page="1" data-label="page" data-label-plural="pages">
-          <button id="previous" class="gr-btn icon-btn-18" aria-label="Previous page">
+          <button id="prev" class="gr-btn icon-btn-18" aria-label="Previous page">
             <span>
               ${previousIcon}
             </span>
@@ -170,19 +170,14 @@
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
-      console.log(this)
-      if (!this.compact) {
-
-      } else {
-
-      }
-
     }
 
     connectedCallback() {
       if (!this.compact) {
         const clone = template.content.cloneNode(true);
         this.pageTarget = clone.querySelector('#pages');
+        this.nextPageBtn = clone.querySelector('#next');
+        this.prevPageBtn = clone.querySelector('#prev');
         this.changePage = this.changePage.bind(this);
         this.addListener = this.addListener.bind(this);
         this.shadowRoot.appendChild(clone);
@@ -203,6 +198,15 @@
 
           this.parent.setAttribute('data-page', number);
           this.span.innerHTML = number;
+
+          if (this.currentPage === this.firstPage) {
+            const button = this.shadowRoot.querySelector('#prev');
+            button.setAttribute('disabled', true);
+          }
+          if (this.currentPage === this.lastPage) {
+            const button = this.shadowRoot.querySelector('#next');
+            button.setAttribute('disabled', true);
+          }
 
           if (this.lastPage > this.ellipsisAt) {
             if (total <= placeLastNumber) {
@@ -235,7 +239,12 @@
         const pageBtns = this.shadowRoot.querySelectorAll('nav button, #pages > a');
         pageBtns.forEach(button => {
           button.addEventListener('click', event => {
+            button.removeAttribute('disabled')
             if (button.tagName === 'BUTTON') {
+              if (this.currentPage >= this.firstPage) {
+                this.prevPageBtn.removeAttribute('disabled');
+              }
+
               this.changePage(button.id);
             } else if (button.tagName === 'A') {
               this.addListener(event)
@@ -249,6 +258,8 @@
         const clone = compactTemplate.content.cloneNode(true);
         this.total = clone.querySelector('.total-pages');
         this.page = clone.querySelector('.current-page');
+        this.pageTarget = clone.querySelector('#pages');
+        this.nextPageBtn = clone.querySelector('#next');
         this.shadowRoot.appendChild(clone);
 
         const pageBtns = this.shadowRoot.querySelectorAll('nav button');
@@ -285,7 +296,12 @@
         } else {
           this.page.innerHTML = this.lastPage
         }
-
+        if (this.currentPage === this.firstPage) {
+          this.prevPageBtn.setAttribute('disabled', true);
+        }
+        if (this.currentPage === this.lastPage) {
+          this.nextPageBtn.setAttribute('disabled', true);
+        }
         this.total.innerHTML = this.lastPage;
 
       }
@@ -353,7 +369,17 @@
                   startNumber++
                 })
               }
-
+              console.log(this.currentPage)
+              if (this.currentPage === this.firstPage) {
+                this.prevPageBtn.setAttribute('disabled', true)
+              } else {
+                this.prevPageBtn.removeAttribute('disabled');
+              }
+              if (this.currentPage === this.lastPage) {
+                this.nextPageBtn.setAttribute('disabled', true)
+              } else {
+                this.nextPageBtn.removeAttribute('disabled');
+              }
               if (newPage !== null && newPage.nextElementSibling !== null && newPage.previousElementSibling !== null ) {
                 const nextEllipsis = newPage.nextElementSibling.getAttribute('data-ellipsis'),
                   previousEllipsis = newPage.previousElementSibling.getAttribute('data-ellipsis'),
@@ -379,11 +405,14 @@
                   firstPage.nextElementSibling.setAttribute('data-ellipsis', true);
                   options.end = options.end + 1;
                   renderItems(options);
+                  if (newValue > this.firstPage) {
+                    const button = this.shadowRoot.querySelector('#next');
+                    button.removeAttribute('disabled');
+                  }
                 } else if (previousEllipsis){
                   options.start = options.start - 1;
                   options.end = options.end - 1;
                   renderItems(options);
-
                   if (options.newNumber - 2 === parseInt(previousEllipsisNode.getAttribute('data-page'))) {
                     firstPage.nextElementSibling.innerHTML = parseInt(previousEllipsisNode.getAttribute('data-page'));
                     firstPage.nextElementSibling.removeAttribute('data-ellipsis');
@@ -397,6 +426,20 @@
       } else {
         if (oldValue !== null) {
           if (oldValue !== newValue) {
+            if (newValue > this.firstPage) {
+              const button = this.shadowRoot.querySelector('#prev');
+              button.removeAttribute('disabled')
+            } else {
+              const button = this.shadowRoot.querySelector('#prev');
+              button.setAttribute('disabled', true)
+            }
+            if (newValue < this.lastPage) {
+              const button = this.shadowRoot.querySelector('#next');
+              button.removeAttribute('disabled')
+            } else {
+              const button = this.shadowRoot.querySelector('#next');
+              button.setAttribute('disabled', true)
+            }
             this.page.innerHTML = this.currentPage
           }
         }
