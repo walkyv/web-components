@@ -13,3 +13,14 @@
 
 @import '../node_modules/@pearson-ux/gravity-css/markup-kits/pagination';
 
+a.disabled {
+  cursor:default;
+  text-decoration: none;
+  &:focus {
+    outline:0;
+  }
+  &:hover {
+    text-decoration:none;
+  }
+}
+
