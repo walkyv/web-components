@@ -159,6 +159,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.addListener = this.addListener.bind(this);
           this.shadowRoot.appendChild(clone);
 
+          this.currentPage = 1;
           this.pageRange = range(this.firstPage, this.lastPage, 1);
           this.pageRange.forEach(function (number, index) {
             var numberTemplateContainer = numberTemplate.content.cloneNode(true),
@@ -238,7 +239,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.nextPageBtn = _clone.querySelector('#next');
           this.prevPageBtn = _clone.querySelector('#prev');
           this.shadowRoot.appendChild(_clone);
-
+          this.currentPage = 1;
           var _pageBtns = this.shadowRoot.querySelectorAll('nav button');
           _pageBtns.forEach(function (button) {
             button.addEventListener('click', function (event) {

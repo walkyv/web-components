@@ -182,6 +182,7 @@
         this.addListener = this.addListener.bind(this);
         this.shadowRoot.appendChild(clone);
 
+        this.currentPage = 1
         this.pageRange = range(this.firstPage, this.lastPage, 1);
         this.pageRange.forEach((number, index) => {
           const numberTemplateContainer = numberTemplate.content.cloneNode(true),
@@ -262,7 +263,7 @@
         this.nextPageBtn = clone.querySelector('#next');
         this.prevPageBtn = clone.querySelector('#prev');
         this.shadowRoot.appendChild(clone);
-
+        this.currentPage = 1
         const pageBtns = this.shadowRoot.querySelectorAll('nav button');
         pageBtns.forEach(button => {
           button.addEventListener('click', event => {
