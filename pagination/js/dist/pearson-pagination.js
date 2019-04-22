@@ -53,6 +53,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       if (options.end + 1 === nextEllipsisNumber) {
         options.referenceNode.innerHTML = nextEllipsisNumber;
         options.referenceNode.removeAttribute('data-ellipsis');
+        options.referenceNode.classList.remove('disabled');
       } else {
         options.referenceNode.innerHTML = '...';
         options.referenceNode.classList.add('disabled');
@@ -239,6 +240,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                   link.innerHTML = value;
                   link.removeAttribute('data-ellipsis');
                   link.setAttribute('data-page', value);
+
                   if (value === _this3.ellipsisAt + 1) {
                     link.setAttribute('data-ellipsis', true);
                     link.innerHTML = '...';
@@ -259,6 +261,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                   link.innerHTML = startNumber;
                   link.removeAttribute('data-ellipsis');
                   link.setAttribute('data-page', startNumber);
+                  link.classList.remove('disabled');
                   if (index === 0) {
                     link.innerHTML = 1;
                     link.setAttribute('data-page', 1);
@@ -306,6 +309,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                   if (options.newNumber - 2 === parseInt(previousEllipsisNode.getAttribute('data-page'))) {
                     firstPage.nextElementSibling.innerHTML = parseInt(previousEllipsisNode.getAttribute('data-page'));
                     firstPage.nextElementSibling.removeAttribute('data-ellipsis');
+                    firstPage.nextElementSibling.classList.remove('disabled');
                   }
                 }
               }

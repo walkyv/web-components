@@ -73,6 +73,7 @@
       if (options.end + 1 === nextEllipsisNumber) {
         options.referenceNode.innerHTML = nextEllipsisNumber;
         options.referenceNode.removeAttribute('data-ellipsis')
+        options.referenceNode.classList.remove('disabled');
       } else {
         options.referenceNode.innerHTML = '...';
         options.referenceNode.classList.add('disabled');
@@ -242,11 +243,12 @@
                 let value = index + 1
                 link.innerHTML = value;
                 link.removeAttribute('data-ellipsis');
-                link.setAttribute('data-page', value)
+                link.setAttribute('data-page', value);
+
                 if (value === this.ellipsisAt + 1) {
-                  link.setAttribute('data-ellipsis', true)
-                  link.innerHTML = '...'
-                  link.setAttribute('data-page', this.lastPage - 1)
+                  link.setAttribute('data-ellipsis', true);
+                  link.innerHTML = '...';
+                  link.setAttribute('data-page', this.lastPage - 1);
                   link.classList.add('disabled');
                 }
                 if (value === this.ellipsisAt + 2) {
@@ -263,6 +265,7 @@
                 link.innerHTML = startNumber
                 link.removeAttribute('data-ellipsis');
                 link.setAttribute('data-page', startNumber)
+                link.classList.remove('disabled')
                 if (index === 0) {
                   link.innerHTML = 1
                   link.setAttribute('data-page', 1)
@@ -302,7 +305,6 @@
                 firstPage.nextElementSibling.setAttribute('data-ellipsis', true);
                 options.end = options.end + 1;
                 renderItems(options);
-
               } else if (previousEllipsis){
                 options.start = options.start - 1;
                 options.end = options.end - 1;
@@ -311,6 +313,7 @@
                 if (options.newNumber - 2 === parseInt(previousEllipsisNode.getAttribute('data-page'))) {
                   firstPage.nextElementSibling.innerHTML = parseInt(previousEllipsisNode.getAttribute('data-page'));
                   firstPage.nextElementSibling.removeAttribute('data-ellipsis');
+                  firstPage.nextElementSibling.classList.remove('disabled');
                 }
               }
             }
