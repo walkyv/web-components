@@ -321,7 +321,6 @@
         } else {
           this.page.innerHTML = this.lastPage;
         }
-        console.log(this.currentPage, this.firstPage);
         if (this.currentPage === this.firstPage) {
           this.prevPageBtn.setAttribute('disabled', true);
         }
@@ -403,7 +402,6 @@
                   startNumber++;
                 });
               }
-              console.log(this.currentPage);
               if (this.currentPage === this.firstPage) {
                 this.prevPageBtn.setAttribute('disabled', true);
               } else {
