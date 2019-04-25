@@ -78,7 +78,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'addListener',
       value: function addListener(event) {
         this.currentPage = event.currentTarget.getAttribute('data-page');
-        this.dispatchEvent(new Event("newPage", {
+        this.dispatchEvent(new Event('newPage', {
           bubbles: true
         }));
       }
@@ -99,7 +99,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             currentPage.removeAttribute('aria-current');
           }
         }
-        this.dispatchEvent(new Event(type + "Page", {
+        this.dispatchEvent(new Event(type + 'Page', {
           bubbles: true
         }));
       }
