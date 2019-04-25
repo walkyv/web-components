@@ -287,6 +287,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'onListboxClick',
       value: function onListboxClick(e) {
         var target = e.target;
+
         if (target && target.nodeName === 'LI') {
           this.activeItem = target;
           this.selectedItem = target;

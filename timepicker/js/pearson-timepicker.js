@@ -340,7 +340,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     onListboxClick(e) {
       const target = e.target;
-      
+
       if (target && target.nodeName === 'LI') {
         this.activeItem = target;
         this.selectedItem = target;
