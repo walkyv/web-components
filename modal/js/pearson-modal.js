@@ -209,7 +209,10 @@
         title.innerHTML = 'Modal Title';
       }
 
-      this.triggerBtn.addEventListener('click', this.openModal);
+      if (this.triggerBtn !== null) {
+        this.triggerBtn.addEventListener('click', this.openModal);
+      }
+
       const eventBtns = clone.querySelectorAll('[data-event]');
 
       eventBtns.forEach(btn => {
