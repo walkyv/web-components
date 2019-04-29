@@ -1,4 +1,3 @@
-
 # Pearson Pagination Web Component
 
 ## Table of Contents
