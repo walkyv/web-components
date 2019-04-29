@@ -1,3 +1,4 @@
+
 # Pearson Pagination Web Component
 
 ## Table of Contents
@@ -106,31 +107,11 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
 
 HTML:
 
-```html
-<pearson-alert
-  level="global"
-  returnNode="foo"
-  type="error"
-  animated
->
-  <h2 id="alertTitle" class="pe-label alert-title">
-    <strong>Heads up!</strong>
-  </h2>
-  <p id="alertText" class="pe-paragraph alert-text">
-    <a href="#">Something has happened!</a>
-  </p>
-</pearson-alert>
-```
-
-JS:
-
-Because alerts are temporary, it usually makes the most sense for add a listener to the `window` object and capture `dismiss` events there.
-
 ```js
 window.addEventListener('nextPage', event => {
  // do something when the next page button is clicked
 });
-
+ ```
 <a name="react"></a>
 
 ### React

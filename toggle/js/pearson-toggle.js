@@ -183,13 +183,17 @@
 
       // If the external label does not have an ID, we must
       // ensure that it has one
-      if (!this.labelNode.id) this.labelNode.id = this.id + 'label';
 
-      // This toggle must be labelled by the external label node
-      this.setAttribute('aria-labelledby', this.labelNode.id);
+      if (this.id !== null && this.labelNode !== null) {
+        if (!this.labelNode.id) this.labelNode.id = this.id + 'label';
+      }
 
-      // We listen for the external label to be clicked
-      this.labelNode.addEventListener('click', this.onLabelClick);
+      if (this.labelNode !== null) {
+        // This toggle must be labelled by the external label node
+        this.setAttribute('aria-labelledby', this.labelNode.id);
+        // We listen for the external label to be clicked
+        this.labelNode.addEventListener('click', this.onLabelClick);
+      }
     }
 
     upgradeProperty(prop) {

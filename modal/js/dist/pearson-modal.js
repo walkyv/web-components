@@ -179,7 +179,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           title.innerHTML = 'Modal Title';
         }
 
-        this.triggerBtn.addEventListener('click', this.openModal);
+        if (this.triggerBtn !== null) {
+          this.triggerBtn.addEventListener('click', this.openModal);
+        }
+
         var eventBtns = clone.querySelectorAll('[data-event]');
 
         eventBtns.forEach(function (btn) {
