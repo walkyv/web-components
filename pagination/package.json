@@ -5,6 +5,9 @@
   "version": "0.1.0",
   "description": "Pagination web component",
   "main": "./js/dist/pearson-pagination.js",
+  "files": [
+    "./js/dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
