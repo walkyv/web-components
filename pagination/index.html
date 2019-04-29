@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Pearson Web Component</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" href="https://unpkg.com/@pearson-ux/gravity-css" />
+
+    <script type="text/javascript">
+      if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
+      } else {
+        document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+        document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+      }
+    </script>
+
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    <script src="js/dist/pearson-pagination.js"></script>
+    <style>
+      pearson-pagination {
+        display:block;
+        margin:1em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <pearson-pagination firstpage="1" lastpage="10" ellipsisat="5"></pearson-pagination>
+    <pearson-pagination firstpage="1" lastpage="10" ellipsisat="5" compact></pearson-pagination>
+  <script>
+    const element = document.querySelector('pearson-pagination');
+    element.addEventListener('nextPage', event => {
+      console.log('next')
+    });
+
+    element.addEventListener('prevPage', event => {
+      console.log('previous')
+    });
+
+    element.addEventListener('newPage', event => {
+      console.log('new')
+    });
+
+  </script>
+  </body>
+</html>
