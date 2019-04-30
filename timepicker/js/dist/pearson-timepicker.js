@@ -113,18 +113,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       get: function get() {
         return this.items[this.activeIdx];
       },
-      set: function set(next) {
+      set: function set(nextItem) {
         if (this.activeItem) {
           this.activeItem.classList.remove('focused');
           this.activeItem.setAttribute('aria-selected', 'false');
         }
 
-        if (next) {
-          this.input.setAttribute('aria-activedescendant', 'time-' + next.dataset.idx);
-          next.classList.add('focused');
-          next.setAttribute('aria-selected', 'true');
+        if (nextItem) {
+          this.input.setAttribute('aria-activedescendant', 'time-' + nextItem.dataset.idx);
+          nextItem.classList.add('focused');
+          nextItem.setAttribute('aria-selected', 'true');
 
-          this.activeIdx = Number(next.dataset.idx);
+          this.activeIdx = Number(nextItem.dataset.idx);
         }
       }
     }, {
@@ -134,14 +134,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return item.classList.contains('selected');
         });
       },
-      set: function set(item) {
+      set: function set(nextItem) {
         if (this.selectedItem) {
           this.selectedItem.classList.remove('selected');
         }
-        if (item) {
+        if (nextItem) {
           this.open = false;
-          this.input.value = item.dataset.time;
-          item.classList.add('selected');
+          this.input.value = nextItem.dataset.time;
+          nextItem.classList.add('selected');
         }
       }
     }], [{

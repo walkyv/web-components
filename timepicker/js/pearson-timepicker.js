@@ -183,21 +183,21 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       return this.items[this.activeIdx];
     }
 
-    set activeItem(next) {
+    set activeItem(nextItem) {
       if (this.activeItem) {
         this.activeItem.classList.remove('focused');
         this.activeItem.setAttribute('aria-selected', 'false');
       }
 
-      if (next) {
+      if (nextItem) {
         this.input.setAttribute(
           'aria-activedescendant',
-          'time-' + next.dataset.idx
+          'time-' + nextItem.dataset.idx
         );
-        next.classList.add('focused');
-        next.setAttribute('aria-selected', 'true');
+        nextItem.classList.add('focused');
+        nextItem.setAttribute('aria-selected', 'true');
 
-        this.activeIdx = Number(next.dataset.idx);
+        this.activeIdx = Number(nextItem.dataset.idx);
       }
     }
 
@@ -205,14 +205,14 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       return find.call(this.items, item => item.classList.contains('selected'));
     }
 
-    set selectedItem(item) {
+    set selectedItem(nextItem) {
       if (this.selectedItem) {
         this.selectedItem.classList.remove('selected');
       }
-      if (item) {
+      if (nextItem) {
         this.open = false;
-        this.input.value = item.dataset.time;
-        item.classList.add('selected');
+        this.input.value = nextItem.dataset.time;
+        nextItem.classList.add('selected');
       }
     }
 
