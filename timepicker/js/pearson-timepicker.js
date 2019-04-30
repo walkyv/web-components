@@ -150,6 +150,8 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
   }
 
   const find = Array.prototype.find;
+  
+  w.ShadyCSS && w.ShadyCSS.prepareTemplate(template, 'pearson-timepicker');
 
   class Timepicker extends HTMLElement {
     static get observedAttributes() {

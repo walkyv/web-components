@@ -78,6 +78,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   var find = Array.prototype.find;
 
+  w.ShadyCSS && w.ShadyCSS.prepareTemplate(template, 'pearson-timepicker');
+
   var Timepicker = function (_HTMLElement) {
     _inherits(Timepicker, _HTMLElement);
 
