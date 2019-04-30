@@ -6,9 +6,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /* global moment */
 (function (w, doc) {
   'use strict';
+
+  var _ALIGNMENT_OPTS;
 
   var keys = {
     UP: 'ArrowUp',
@@ -17,6 +21,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     ESC: 'Escape',
     TAB: 'Tab'
   };
+  /**
+   * Determine if the next active item should align to top,
+   * based on keyboard direction.
+   * @type {Object.<string, boolean>}
+   */
+  var ALIGNMENT_OPTS = (_ALIGNMENT_OPTS = {}, _defineProperty(_ALIGNMENT_OPTS, keys.DOWN, false), _defineProperty(_ALIGNMENT_OPTS, keys.UP, true), _ALIGNMENT_OPTS);
 
   var template = doc.createElement('template'),
       timeItem = doc.createElement('template'),
@@ -125,10 +135,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           nextItem.setAttribute('aria-selected', 'true');
 
           this.activeIdx = Number(nextItem.dataset.idx);
-          console.log(isElementVisible(this.activeItem));
-          if (!isElementVisible(this.activeItem)) {
-            this.activeItem.scrollIntoView(false);
-          }
         }
       }
     }, {
@@ -243,8 +249,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'onInputKeydown',
       value: function onInputKeydown(e) {
-        var key = e.key;
         var items = this.items;
+        var key = e.key;
+        var isDirectionalKey = key in ALIGNMENT_OPTS;
+
         var activeIdx = this.activeIdx;
         var prevOpen = this.open;
 
@@ -253,7 +261,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return;
         }
 
-        if (!prevOpen && (key === keys.UP || key === keys.DOWN)) {
+        if (!prevOpen && isDirectionalKey) {
           this.open = true;
         }
 
@@ -285,6 +293,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         e.preventDefault();
 
         this.activeItem = this.items[activeIdx];
+
+        if (isDirectionalKey && !isElementVisible(this.activeItem)) {
+          this.activeItem.scrollIntoView(ALIGNMENT_OPTS[key]);
+        }
       }
     }, {
       key: 'onInputBlur',

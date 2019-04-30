@@ -8,6 +8,16 @@
     ESC: 'Escape',
     TAB: 'Tab'
   };
+  /**
+   * Determine if the next active item should align to top,
+   * based on keyboard direction.
+   * @type {Object.<string, boolean>}
+   */
+  const ALIGNMENT_OPTS = {
+    [keys.DOWN]: false,
+    [keys.UP]: true
+  };
+
 
   const template = doc.createElement('template'),
     timeItem = doc.createElement('template'),
@@ -198,10 +208,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         nextItem.setAttribute('aria-selected', 'true');
 
         this.activeIdx = Number(nextItem.dataset.idx);
-        console.log(isElementVisible(this.activeItem))
-        if (!isElementVisible(this.activeItem)) {
-          this.activeItem.scrollIntoView(false)
-        }
       }
     }
 
@@ -298,8 +304,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     onInputKeydown(e) {
-      const key = e.key;
       const items = this.items;
+      const key = e.key;
+      const isDirectionalKey = key in ALIGNMENT_OPTS;
+
       let activeIdx = this.activeIdx;
       let prevOpen = this.open;
 
@@ -308,7 +316,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         return;
       }
 
-      if (!prevOpen && (key === keys.UP || key === keys.DOWN)) {
+      if (!prevOpen && isDirectionalKey) {
         this.open = true;
       }
 
@@ -340,6 +348,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       e.preventDefault();
 
       this.activeItem = this.items[activeIdx];
+
+      if (isDirectionalKey && !isElementVisible(this.activeItem)) {
+        this.activeItem.scrollIntoView(ALIGNMENT_OPTS[key]);
+      }
     }
 
     onInputBlur() {}
