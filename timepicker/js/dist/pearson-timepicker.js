@@ -172,7 +172,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _this.input = clone.querySelector('#timepicker-input');
       _this.listbox = clone.querySelector('#listbox');
 
-      _this.shadowRoot.append(clone);
+      _this.shadowRoot.appendChild(clone);
 
       _this.activeIdx = -1;
 
@@ -250,7 +250,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       value: function onInputKeydown(e) {
         var items = this.items;
         var key = e.key;
-        var isDirectionalKey = key in ALIGNMENT_MAP;
+        var isDirectionalKey = key === keys.UP || key === keys.DOWN;
 
         var activeIdx = this.activeIdx;
         var prevOpen = this.open;

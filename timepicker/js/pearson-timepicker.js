@@ -233,7 +233,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       this.input = clone.querySelector('#timepicker-input');
       this.listbox = clone.querySelector('#listbox');
 
-      this.shadowRoot.append(clone);
+      this.shadowRoot.appendChild(clone);
 
       this.activeIdx = -1;
 
@@ -300,7 +300,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     onInputKeydown(e) {
       const items = this.items;
       const key = e.key;
-      const isDirectionalKey = key in ALIGNMENT_MAP;
+      const isDirectionalKey = key === keys.UP || key === keys.DOWN;
 
       let activeIdx = this.activeIdx;
       let prevOpen = this.open;
