@@ -65,13 +65,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return li;
   }
 
-  function elementIsVisible(el) {
+  function isVisible(el) {
     var rect = el.getBoundingClientRect(),
         parentRect = el.parentElement.getBoundingClientRect();
 
+    console.dir(parentRect);
+
     // evaluate if the element is out of bounds
     // of its parent
-    return rect.top < parentRect.y + parentRect.height && rect.top + rect.height > parentRect.y && rect.bottom < parentRect.bottom && rect.top > parentRect.top;
+    return rect.top < parentRect.top + parentRect.height && rect.top + rect.height > parentRect.top && rect.bottom < parentRect.bottom && rect.top > parentRect.top;
 
     // Return true if any of its four corners are visible
   }
@@ -294,7 +296,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         this.activeItem = this.items[activeIdx];
 
-        if (isDirectionalKey && !elementIsVisible(this.activeItem)) {
+        if (isDirectionalKey && !isVisible(this.activeItem)) {
           this.activeItem.scrollIntoView(ALIGNMENT_MAP[key]);
         }
       }
