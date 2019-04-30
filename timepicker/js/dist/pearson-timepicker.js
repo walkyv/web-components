@@ -81,6 +81,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var isOpen = Boolean(value);
 
         if (isOpen) {
+          if (this.selectedItem) this.selectedItem.scrollIntoView(true);
+
           this.setAttribute('open', '');
         } else {
           this.removeAttribute('open');

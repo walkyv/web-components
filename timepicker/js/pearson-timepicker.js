@@ -156,6 +156,8 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       const isOpen = Boolean(value);
 
       if (isOpen) {
+        if (this.selectedItem) this.selectedItem .scrollIntoView(true);
+
         this.setAttribute('open', '');
       } else {
         this.removeAttribute('open');
