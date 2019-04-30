@@ -76,8 +76,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // Return true if any of its four corners are visible
   }
 
-  var find = Array.prototype.find;
-
   w.ShadyCSS && w.ShadyCSS.prepareTemplate(template, 'pearson-timepicker');
 
   var Timepicker = function (_HTMLElement) {
@@ -141,9 +139,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }, {
       key: 'selectedItem',
       get: function get() {
-        return find.call(this.items, function (item) {
-          return item.classList.contains('selected');
-        });
+        return this.items[this.selectedIdx];
       },
       set: function set(nextItem) {
         if (this.selectedItem) {
@@ -153,6 +149,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.open = false;
           this.input.value = nextItem.dataset.time;
           nextItem.classList.add('selected');
+
+          this.selectedIdx = Number(nextItem.dataset.idx);
         }
       }
     }], [{
@@ -177,6 +175,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _this.shadowRoot.appendChild(clone);
 
       _this.activeIdx = -1;
+      _this.selectedIdx = -1;
 
       _this.onInputKeydown = _this.onInputKeydown.bind(_this);
       _this.onInputFocus = _this.onInputFocus.bind(_this);

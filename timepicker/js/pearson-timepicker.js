@@ -148,8 +148,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     // Return true if any of its four corners are visible
   }
-
-  const find = Array.prototype.find;
   
   w.ShadyCSS && w.ShadyCSS.prepareTemplate(template, 'pearson-timepicker');
 
@@ -212,7 +210,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     get selectedItem() {
-      return find.call(this.items, item => item.classList.contains('selected'));
+      return this.items[this.selectedIdx];
     }
 
     set selectedItem(nextItem) {
@@ -223,6 +221,8 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         this.open = false;
         this.input.value = nextItem.dataset.time;
         nextItem.classList.add('selected');
+
+        this.selectedIdx = Number(nextItem.dataset.idx);
       }
     }
 
@@ -238,6 +238,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       this.shadowRoot.appendChild(clone);
 
       this.activeIdx = -1;
+      this.selectedIdx = -1;
 
       this.onInputKeydown = this.onInputKeydown.bind(this);
       this.onInputFocus = this.onInputFocus.bind(this);
