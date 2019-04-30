@@ -12,7 +12,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 (function (w, doc) {
   'use strict';
 
-  var _ALIGNMENT_OPTS;
+  var _ALIGNMENT_MAP;
 
   var keys = {
     UP: 'ArrowUp',
@@ -26,7 +26,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
    * based on keyboard direction.
    * @type {Object.<string, boolean>}
    */
-  var ALIGNMENT_OPTS = (_ALIGNMENT_OPTS = {}, _defineProperty(_ALIGNMENT_OPTS, keys.DOWN, false), _defineProperty(_ALIGNMENT_OPTS, keys.UP, true), _ALIGNMENT_OPTS);
+  var ALIGNMENT_MAP = (_ALIGNMENT_MAP = {}, _defineProperty(_ALIGNMENT_MAP, keys.DOWN, false), _defineProperty(_ALIGNMENT_MAP, keys.UP, true), _ALIGNMENT_MAP);
 
   var template = doc.createElement('template'),
       timeItem = doc.createElement('template'),
@@ -66,7 +66,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return li;
   }
 
-  function isElementVisible(el) {
+  function elementIsVisible(el) {
     var rect = el.getBoundingClientRect(),
         parentRect = el.parentElement.getBoundingClientRect();
 
@@ -194,7 +194,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               classToRemove = void 0;
 
           if (isOpen) {
-            activeDescendant = this.activeIdx > -1 ? this.items[this.activeIdx].id : '';
+            activeDescendant = this.activeIdx > -1 ? this.activeItem.id : '';
             classToAdd = 'animateIn';
             classToRemove = 'animateOut';
           } else {
@@ -251,7 +251,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       value: function onInputKeydown(e) {
         var items = this.items;
         var key = e.key;
-        var isDirectionalKey = key in ALIGNMENT_OPTS;
+        var isDirectionalKey = key in ALIGNMENT_MAP;
 
         var activeIdx = this.activeIdx;
         var prevOpen = this.open;
@@ -294,8 +294,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         this.activeItem = this.items[activeIdx];
 
-        if (isDirectionalKey && !isElementVisible(this.activeItem)) {
-          this.activeItem.scrollIntoView(ALIGNMENT_OPTS[key]);
+        if (isDirectionalKey && !elementIsVisible(this.activeItem)) {
+          this.activeItem.scrollIntoView(ALIGNMENT_MAP[key]);
         }
       }
     }, {

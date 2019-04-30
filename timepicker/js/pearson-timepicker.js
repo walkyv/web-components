@@ -13,11 +13,10 @@
    * based on keyboard direction.
    * @type {Object.<string, boolean>}
    */
-  const ALIGNMENT_OPTS = {
+  const ALIGNMENT_MAP = {
     [keys.DOWN]: false,
     [keys.UP]: true
   };
-
 
   const template = doc.createElement('template'),
     timeItem = doc.createElement('template'),
@@ -135,7 +134,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     return li;
   }
 
-  function isElementVisible(el) {
+  function elementIsVisible(el) {
     const rect = el.getBoundingClientRect(),
       parentRect = el.parentElement.getBoundingClientRect();
 
@@ -166,7 +165,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       const isOpen = Boolean(value);
 
       if (isOpen) {
-        if (this.selectedItem) this.selectedItem .scrollIntoView(true);
+        if (this.selectedItem) this.selectedItem.scrollIntoView(true);
 
         this.setAttribute('open', '');
       } else {
@@ -251,8 +250,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         let activeDescendant, classToAdd, classToRemove;
 
         if (isOpen) {
-          activeDescendant =
-            this.activeIdx > -1 ? this.items[this.activeIdx].id : '';
+          activeDescendant = this.activeIdx > -1 ? this.activeItem.id : '';
           classToAdd = 'animateIn';
           classToRemove = 'animateOut';
         } else {
@@ -306,7 +304,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     onInputKeydown(e) {
       const items = this.items;
       const key = e.key;
-      const isDirectionalKey = key in ALIGNMENT_OPTS;
+      const isDirectionalKey = key in ALIGNMENT_MAP;
 
       let activeIdx = this.activeIdx;
       let prevOpen = this.open;
@@ -349,8 +347,8 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       this.activeItem = this.items[activeIdx];
 
-      if (isDirectionalKey && !isElementVisible(this.activeItem)) {
-        this.activeItem.scrollIntoView(ALIGNMENT_OPTS[key]);
+      if (isDirectionalKey && !elementIsVisible(this.activeItem)) {
+        this.activeItem.scrollIntoView(ALIGNMENT_MAP[key]);
       }
     }
 
