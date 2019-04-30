@@ -6,13 +6,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 /* global moment */
 (function (w, doc) {
   'use strict';
-
-  var _ALIGNMENT_MAP;
 
   var isIE11 = !!window.MSInputMethodContext && !!doc.documentMode;
   var keys = {
@@ -22,11 +18,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ESC: isIE11 ? 'Esc' : 'Escape',
     TAB: 'Tab'
   };
-  /**
-   * Determine if the next active item should align to top,
-   * based on keyboard direction.
-   */
-  var ALIGNMENT_MAP = (_ALIGNMENT_MAP = {}, _defineProperty(_ALIGNMENT_MAP, keys.DOWN, false), _defineProperty(_ALIGNMENT_MAP, keys.UP, true), _ALIGNMENT_MAP);
 
   var template = doc.createElement('template'),
       timeItem = doc.createElement('template'),
@@ -68,8 +59,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   function isVisible(el) {
     var rect = el.getBoundingClientRect(),
         parentRect = el.parentElement.getBoundingClientRect();
-
-    console.dir(parentRect);
 
     // evaluate if the element is out of bounds
     // of its parent
@@ -297,7 +286,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.activeItem = this.items[activeIdx];
 
         if (isDirectionalKey && !isVisible(this.activeItem)) {
-          this.activeItem.scrollIntoView(ALIGNMENT_MAP[key]);
+          this.activeItem.scrollIntoView(key === keys.UP);
         }
       }
     }, {

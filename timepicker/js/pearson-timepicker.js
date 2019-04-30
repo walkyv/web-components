@@ -9,14 +9,6 @@
     ESC: isIE11 ? 'Esc' : 'Escape',
     TAB: 'Tab'
   };
-  /**
-   * Determine if the next active item should align to top,
-   * based on keyboard direction.
-   */
-  const ALIGNMENT_MAP = {
-    [keys.DOWN]: false,
-    [keys.UP]: true
-  };
 
   const template = doc.createElement('template'),
     timeItem = doc.createElement('template'),
@@ -136,8 +128,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
   function isVisible(el) {
     const rect = el.getBoundingClientRect(),
       parentRect = el.parentElement.getBoundingClientRect();
-
-      console.dir(parentRect)
 
     // evaluate if the element is out of bounds
     // of its parent
@@ -349,7 +339,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       this.activeItem = this.items[activeIdx];
 
       if (isDirectionalKey && !isVisible(this.activeItem)) {
-        this.activeItem.scrollIntoView(ALIGNMENT_MAP[key]);
+        this.activeItem.scrollIntoView(key === keys.UP);
       }
     }
 
