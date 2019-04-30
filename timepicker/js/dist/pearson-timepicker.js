@@ -24,7 +24,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   /**
    * Determine if the next active item should align to top,
    * based on keyboard direction.
-   * @type {Object.<string, boolean>}
    */
   var ALIGNMENT_MAP = (_ALIGNMENT_MAP = {}, _defineProperty(_ALIGNMENT_MAP, keys.DOWN, false), _defineProperty(_ALIGNMENT_MAP, keys.UP, true), _ALIGNMENT_MAP);
 

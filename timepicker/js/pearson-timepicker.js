@@ -11,7 +11,6 @@
   /**
    * Determine if the next active item should align to top,
    * based on keyboard direction.
-   * @type {Object.<string, boolean>}
    */
   const ALIGNMENT_MAP = {
     [keys.DOWN]: false,
