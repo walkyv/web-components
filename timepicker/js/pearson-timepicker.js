@@ -242,6 +242,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       this.onInputFocus = this.onInputFocus.bind(this);
       this.onInputBlur = this.onInputBlur.bind(this);
       this.onListboxClick = this.onListboxClick.bind(this);
+      this.onDocumentClick = this.onDocumentClick.bind(this);
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -280,17 +281,13 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       this.listbox.addEventListener('click', this.onListboxClick, true);
 
-      doc.addEventListener(
-        'click',
-        e => {
-          if (e.target === this) return;
-          this.open = false;
-        },
-        true
-      );
+      doc.addEventListener('click', this.onDocumentClick, true);
     }
 
-    disconnectedCallback() {}
+    disconnectedCallback() {
+      doc.removeEventListener('click', this.onDocumentClick, true);
+
+    }
 
     checkSelection() {
       if (this.activeIdx < 0) return;
@@ -361,6 +358,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         this.activeItem = target;
         this.selectedItem = target;
       }
+    }
+    onDocumentClick(e) {
+      if (e.target === this) return;
+      this.open = false;
     }
   }
 

@@ -181,6 +181,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _this.onInputFocus = _this.onInputFocus.bind(_this);
       _this.onInputBlur = _this.onInputBlur.bind(_this);
       _this.onListboxClick = _this.onListboxClick.bind(_this);
+      _this.onDocumentClick = _this.onDocumentClick.bind(_this);
       return _this;
     }
 
@@ -227,14 +228,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         this.listbox.addEventListener('click', this.onListboxClick, true);
 
-        doc.addEventListener('click', function (e) {
-          if (e.target === _this2) return;
-          _this2.open = false;
-        }, true);
+        doc.addEventListener('click', this.onDocumentClick, true);
       }
     }, {
       key: 'disconnectedCallback',
-      value: function disconnectedCallback() {}
+      value: function disconnectedCallback() {
+        doc.removeEventListener('click', this.onDocumentClick, true);
+      }
     }, {
       key: 'checkSelection',
       value: function checkSelection() {
@@ -310,6 +310,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.activeItem = target;
           this.selectedItem = target;
         }
+      }
+    }, {
+      key: 'onDocumentClick',
+      value: function onDocumentClick(e) {
+        if (e.target === this) return;
+        this.open = false;
       }
     }]);
 
