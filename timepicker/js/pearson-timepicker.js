@@ -125,9 +125,9 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     return li;
   }
 
-  function isElementVisible(el, parent) {
+  function isElementVisible(el) {
     const rect = el.getBoundingClientRect(),
-      parentRect = parent.getBoundingClientRect();
+      parentRect = el.parentElement.getBoundingClientRect();
 
     // evaluate if the element is out of bounds
     // of its parent
@@ -198,6 +198,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         nextItem.setAttribute('aria-selected', 'true');
 
         this.activeIdx = Number(nextItem.dataset.idx);
+        console.log(isElementVisible(this.activeItem))
+        if (!isElementVisible(this.activeItem)) {
+          this.activeItem.scrollIntoView(false)
+        }
       }
     }
 

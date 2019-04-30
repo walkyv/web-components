@@ -56,9 +56,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     return li;
   }
 
-  function isElementVisible(el, parent) {
+  function isElementVisible(el) {
     var rect = el.getBoundingClientRect(),
-        parentRect = parent.getBoundingClientRect();
+        parentRect = el.parentElement.getBoundingClientRect();
 
     // evaluate if the element is out of bounds
     // of its parent
@@ -125,6 +125,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           nextItem.setAttribute('aria-selected', 'true');
 
           this.activeIdx = Number(nextItem.dataset.idx);
+          console.log(isElementVisible(this.activeItem));
+          if (!isElementVisible(this.activeItem)) {
+            this.activeItem.scrollIntoView(false);
+          }
         }
       }
     }, {
