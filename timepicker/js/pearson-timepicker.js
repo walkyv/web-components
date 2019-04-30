@@ -1,11 +1,12 @@
 /* global moment */
 (function(w, doc) {
   'use strict';
+  const isIE11 = !!window.MSInputMethodContext && !!doc.documentMode;
   const keys = {
-    UP: 'ArrowUp',
-    DOWN: 'ArrowDown',
+    UP: isIE11 ? 'Up' : 'ArrowUp',
+    DOWN: isIE11 ? 'Down' : 'ArrowDown',
     ENTER: 'Enter',
-    ESC: 'Escape',
+    ESC: isIE11 ? 'Esc' : 'Escape',
     TAB: 'Tab'
   };
   /**
@@ -19,7 +20,6 @@
 
   const template = doc.createElement('template'),
     timeItem = doc.createElement('template'),
-    isIE11 = !!window.MSInputMethodContext && !!doc.docMode,
     checkIcon = `
       <svg
         class="pe-icon"
