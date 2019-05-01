@@ -114,7 +114,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.label.textContent = text + ' (' + (this.hours === '12' ? 'HH:MM AM/PM' : 'HH:MM') + ')';
       }
     }, {
-      key: 'validation',
+      key: 'pattern',
       get: function get() {
         return TIME_FORMATS[this.hours];
       }
@@ -223,11 +223,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this2 = this;
 
-        // Set user-provided initial value if 
+        var initialValue = this.getAttribute('initialValue');
+
+        this.labelText = this.getAttribute('label') || '';
+
+        // The pattern attribute only works with expressions 
+        // that do not have slashes around them
+        this.input.pattern = this.pattern.toString().slice(1, -1);
+
+        // Set user-provided initial value if
         // it passes validation
-        var val = this.getAttribute('initialValue');
-        if (this.validation.test(val)) {
-          this.input.value = val;
+        if (this.pattern.test(initialValue)) {
+          this.input.value = initialValue;
         }
 
         calculate(this.increments).forEach(function (time, index) {
@@ -236,7 +243,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
 
         this.items = this.listbox.children;
-        this.labelText = this.getAttribute('label') || '';
 
         this.input.addEventListener('focus', this.onInputFocus);
         this.input.addEventListener('keydown', this.onInputKeydown);

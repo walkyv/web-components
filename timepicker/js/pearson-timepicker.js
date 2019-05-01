@@ -185,7 +185,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       })`;
     }
 
-    get validation() {
+    get pattern() {
       return TIME_FORMATS[this.hours];
     }
     /**
@@ -277,20 +277,26 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     connectedCallback() {
-      // Set user-provided initial value if 
+      const initialValue = this.getAttribute('initialValue');
+      
+      this.labelText = this.getAttribute('label') || '';
+      
+      // The pattern attribute only works with expressions 
+      // that do not have slashes around them
+      this.input.pattern = this.pattern.toString().slice(1, -1);
+
+      // Set user-provided initial value if
       // it passes validation
-      const val = this.getAttribute('initialValue');
-      if (this.validation.test(val)) {
-        this.input.value = val;
+      if (this.pattern.test(initialValue)) {
+        this.input.value = initialValue;
       }
 
       calculate(this.increments).forEach((time, index) => {
         const text = time.format(this.format);
         this.listbox.appendChild(buildTimeEl(text, index));
       });
-      
+
       this.items = this.listbox.children;
-      this.labelText = this.getAttribute('label') || '';
 
       this.input.addEventListener('focus', this.onInputFocus);
       this.input.addEventListener('keydown', this.onInputKeydown);
