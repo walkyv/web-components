@@ -184,6 +184,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         this.hours === '12' ? 'HH:MM AM/PM' : 'HH:MM'
       })`;
     }
+
+    get validation() {
+      return TIME_FORMATS[this.hours];
+    }
     /**
      * The currently active listbox item
      * @type {HTMLElement}
@@ -273,6 +277,13 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     connectedCallback() {
+      // Set user-provided initial value if 
+      // it passes validation
+      const val = this.getAttribute('initialValue');
+      if (this.validation.test(val)) {
+        this.input.value = val;
+      }
+
       calculate(this.increments).forEach((time, index) => {
         const text = time.format(this.format);
         this.listbox.appendChild(buildTimeEl(text, index));

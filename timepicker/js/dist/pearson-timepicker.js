@@ -113,6 +113,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       set: function set(text) {
         this.label.textContent = text + ' (' + (this.hours === '12' ? 'HH:MM AM/PM' : 'HH:MM') + ')';
       }
+    }, {
+      key: 'validation',
+      get: function get() {
+        return TIME_FORMATS[this.hours];
+      }
       /**
        * The currently active listbox item
        * @type {HTMLElement}
@@ -217,6 +222,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'connectedCallback',
       value: function connectedCallback() {
         var _this2 = this;
+
+        // Set user-provided initial value if 
+        // it passes validation
+        var val = this.getAttribute('initialValue');
+        if (this.validation.test(val)) {
+          this.input.value = val;
+        }
 
         calculate(this.increments).forEach(function (time, index) {
           var text = time.format(_this2.format);
