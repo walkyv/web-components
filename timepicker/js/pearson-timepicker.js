@@ -140,7 +140,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     // Return true if any of its four corners are visible
   }
-  
+
   w.ShadyCSS && w.ShadyCSS.prepareTemplate(template, 'pearson-timepicker');
 
   class Timepicker extends HTMLElement {
@@ -280,7 +280,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     disconnectedCallback() {
       doc.removeEventListener('click', this.onDocumentClick, true);
-
     }
 
     checkSelection() {
@@ -297,8 +296,9 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       const key = e.key;
       const isDirectionalKey = key === keys.UP || key === keys.DOWN;
 
-      let activeIdx = this.activeIdx;
       let prevOpen = this.open;
+      let activeIdx =
+        !prevOpen && this.selectedIdx > -1 ? this.selectedIdx : this.activeIdx;
 
       if (key === keys.ESC) {
         this.open = false;

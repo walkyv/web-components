@@ -244,8 +244,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var key = e.key;
         var isDirectionalKey = key === keys.UP || key === keys.DOWN;
 
-        var activeIdx = this.activeIdx;
         var prevOpen = this.open;
+        var activeIdx = !prevOpen && this.selectedIdx > -1 ? this.selectedIdx : this.activeIdx;
 
         if (key === keys.ESC) {
           this.open = false;
