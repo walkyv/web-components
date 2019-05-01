@@ -40,7 +40,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     return timeStops;
   }
 
-  var TIME_FORMAT_REGEX = {
+  var TIME_FORMATS = {
     '12': /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/,
     '24': /^([01]\d|2[0-3]):?([0-5]\d)$/
   };
@@ -104,6 +104,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return this.hours === '12' ? 'h:mm A' : 'HH:mm';
       }
       /**
+       * Set the label eleement's text content with the user-provided
+       * label, followed by format instructions
+       */
+
+    }, {
+      key: 'labelText',
+      set: function set(text) {
+        this.label.textContent = text + ' (' + (this.hours === '12' ? 'HH:MM AM/PM' : 'HH:MM') + ')';
+      }
+      /**
        * The currently active listbox item
        * @type {HTMLElement}
        */
@@ -160,6 +170,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       var clone = template.content.cloneNode(true);
 
+      _this.label = clone.querySelector('#timepicker-label');
       _this.input = clone.querySelector('#timepicker-input');
       _this.listbox = clone.querySelector('#listbox');
 
@@ -213,6 +224,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
 
         this.items = this.listbox.children;
+        this.labelText = this.getAttribute('label') || '';
 
         this.input.addEventListener('focus', this.onInputFocus);
         this.input.addEventListener('keydown', this.onInputKeydown);

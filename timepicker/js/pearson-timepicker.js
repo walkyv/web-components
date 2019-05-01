@@ -109,7 +109,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     return timeStops;
   }
 
-  const TIME_FORMAT_REGEX = {
+  const TIME_FORMATS = {
     '12': /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/,
     '24': /^([01]\d|2[0-3]):?([0-5]\d)$/
   };
@@ -176,6 +176,15 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       return this.hours === '12' ? 'h:mm A' : 'HH:mm';
     }
     /**
+     * Set the label eleement's text content with the user-provided
+     * label, followed by format instructions
+     */
+    set labelText(text) {
+      this.label.textContent = `${text} (${
+        this.hours === '12' ? 'HH:MM AM/PM' : 'HH:MM'
+      })`;
+    }
+    /**
      * The currently active listbox item
      * @type {HTMLElement}
      */
@@ -224,6 +233,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       const clone = template.content.cloneNode(true);
 
+      this.label = clone.querySelector('#timepicker-label');
       this.input = clone.querySelector('#timepicker-input');
       this.listbox = clone.querySelector('#listbox');
 
@@ -267,8 +277,9 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         const text = time.format(this.format);
         this.listbox.appendChild(buildTimeEl(text, index));
       });
-
+      
       this.items = this.listbox.children;
+      this.labelText = this.getAttribute('label') || '';
 
       this.input.addEventListener('focus', this.onInputFocus);
       this.input.addEventListener('keydown', this.onInputKeydown);
