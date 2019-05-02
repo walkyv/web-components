@@ -260,7 +260,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       this.selectedIdx = -1;
       this.onInputKeydown = this.onInputKeydown.bind(this);
       this.onInputFocus = this.onInputFocus.bind(this);
-      this.onInput = this.onInput.bind(this);
+      this.onInputBlur = this.onInputBlur.bind(this);
       this.onListboxClick = this.onListboxClick.bind(this);
       this.onDocumentClick = this.onDocumentClick.bind(this);
     }
@@ -315,7 +315,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       this.input.addEventListener('focus', this.onInputFocus);
       this.input.addEventListener('keydown', this.onInputKeydown);
-      this.input.addEventListener('input', this.onInput);
+      this.input.addEventListener('blur', this.onInputBlur);
 
       this.listbox.addEventListener('click', this.onListboxClick, true);
 
@@ -388,7 +388,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       }
     }
 
-    onInput(e) {
+    onInputBlur(e) {
       const value = e.target.value;
       if (value === '') return;
       const isValid = e.target.checkValidity();

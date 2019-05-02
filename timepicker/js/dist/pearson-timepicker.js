@@ -202,7 +202,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.selectedIdx = -1;
       _this.onInputKeydown = _this.onInputKeydown.bind(_this);
       _this.onInputFocus = _this.onInputFocus.bind(_this);
-      _this.onInput = _this.onInput.bind(_this);
+      _this.onInputBlur = _this.onInputBlur.bind(_this);
       _this.onListboxClick = _this.onListboxClick.bind(_this);
       _this.onDocumentClick = _this.onDocumentClick.bind(_this);
       return _this;
@@ -265,7 +265,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.input.addEventListener('focus', this.onInputFocus);
         this.input.addEventListener('keydown', this.onInputKeydown);
-        this.input.addEventListener('input', this.onInput);
+        this.input.addEventListener('blur', this.onInputBlur);
 
         this.listbox.addEventListener('click', this.onListboxClick, true);
 
@@ -341,8 +341,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
       }
     }, {
-      key: 'onInput',
-      value: function onInput(e) {
+      key: 'onInputBlur',
+      value: function onInputBlur(e) {
         var value = e.target.value;
         if (value === '') return;
         var isValid = e.target.checkValidity();
