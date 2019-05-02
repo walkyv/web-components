@@ -190,7 +190,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     // TODO: Ensure validation only happens
-    // if format matches AND time exists in list 
+    // if format matches AND time exists in list
     set validity(isValid) {
       const { input } = this;
       if (isValid) {
@@ -290,19 +290,19 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     connectedCallback() {
       const initialValue = this.getAttribute('initialValue');
-      
+
       this.labelText = this.getAttribute('label') || '';
-      
+
       // The pattern attribute only works with expressions
       // that do not have slashes around them
       this.input.pattern = this.pattern.toString().slice(1, -1);
-      
+
       // Set user-provided initial value if
       // it passes validation
       if (this.pattern.test(initialValue)) {
         this.input.value = initialValue;
       }
-      
+
       // TODO: repeat this every time listbox opens
       // TODO: filter items in list
       this.times = calculate(this.increments);
@@ -327,8 +327,20 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     checkSelection() {
-      if (this.activeIdx < 0) return;
-      this.selectedItem = this.activeItem;
+      let {activeItem, selectedItem} = this;
+      let time = selectedItem ? selectedItem.dataset.time : '';
+
+      // if the string is different than the selectedItem, use it
+      if (this.input.value !== time ) activeItem = Array.prototype.find.call(
+        this.items,
+        i => i.dataset.time.startsWith(this.input.value)
+      );
+    
+      this.activeItem = activeItem;
+      this.selectedItem = activeItem;
+      time = this.selectedItem ? this.selectedItem.dataset.time : '';
+
+      this.validity = this.input.checkValidity() && this.input.value === time;
     }
 
     onInputFocus() {
@@ -373,7 +385,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
           this.open = false;
           return;
         case keys.TAB:
-          this.checkSelection();
           this.open = false;
           return;
         default:
@@ -389,20 +400,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     onInputBlur(e) {
-      const value = e.target.value;
-      if (value === '') return;
-      const isValid = e.target.checkValidity();
-      this.validity = isValid;
-
-      if (isValid) {
-        // TODO: Extract into more reusable search fn
-        const nextItem = Array.prototype.find.call(
-          this.items,
-          i => ~i.dataset.time.indexOf(e.target.value)
-        );
-        this.activeItem = nextItem;
-        this.selectedItem = nextItem;
-      }
+      this.checkSelection();
     }
 
     onListboxClick(e) {

@@ -120,7 +120,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       }
 
       // TODO: Ensure validation only happens
-      // if format matches AND time exists in list 
+      // if format matches AND time exists in list
 
     }, {
       key: 'validity',
@@ -279,8 +279,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'checkSelection',
       value: function checkSelection() {
-        if (this.activeIdx < 0) return;
-        this.selectedItem = this.activeItem;
+        var _this3 = this;
+
+        var activeItem = this.activeItem,
+            selectedItem = this.selectedItem;
+
+        var time = selectedItem ? selectedItem.dataset.time : '';
+
+        // if the string is different than the selectedItem, use it
+        if (this.input.value !== time) activeItem = Array.prototype.find.call(this.items, function (i) {
+          return i.dataset.time.startsWith(_this3.input.value);
+        });
+
+        this.activeItem = activeItem;
+        this.selectedItem = activeItem;
+        time = this.selectedItem ? this.selectedItem.dataset.time : '';
+
+        this.validity = this.input.checkValidity() && this.input.value === time;
       }
     }, {
       key: 'onInputFocus',
@@ -326,7 +341,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             this.open = false;
             return;
           case keys.TAB:
-            this.checkSelection();
             this.open = false;
             return;
           default:
@@ -343,19 +357,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'onInputBlur',
       value: function onInputBlur(e) {
-        var value = e.target.value;
-        if (value === '') return;
-        var isValid = e.target.checkValidity();
-        this.validity = isValid;
-
-        if (isValid) {
-          // TODO: Extract into more reusable search fn
-          var nextItem = Array.prototype.find.call(this.items, function (i) {
-            return ~i.dataset.time.indexOf(e.target.value);
-          });
-          this.activeItem = nextItem;
-          this.selectedItem = nextItem;
-        }
+        this.checkSelection();
       }
     }, {
       key: 'onListboxClick',
