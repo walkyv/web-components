@@ -257,6 +257,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       this.activeIdx = -1;
       this.selectedIdx = -1;
+      this.times = calculate(this.increments);
 
       this.onInputKeydown = this.onInputKeydown.bind(this);
       this.onInputFocus = this.onInputFocus.bind(this);
@@ -303,7 +304,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         this.input.value = initialValue;
       }
 
-      calculate(this.increments).forEach((time, index) => {
+      this.times.forEach((time, index) => {
         const text = time.format(this.format);
         this.listbox.appendChild(buildTimeEl(text, index));
       });

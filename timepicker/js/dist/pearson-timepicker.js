@@ -196,6 +196,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.activeIdx = -1;
       _this.selectedIdx = -1;
+      _this.times = calculate(_this.increments);
 
       _this.onInputKeydown = _this.onInputKeydown.bind(_this);
       _this.onInputFocus = _this.onInputFocus.bind(_this);
@@ -250,7 +251,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.input.value = initialValue;
         }
 
-        calculate(this.increments).forEach(function (time, index) {
+        this.times.forEach(function (time, index) {
           var text = time.format(_this2.format);
           _this2.listbox.appendChild(buildTimeEl(text, index));
         });
