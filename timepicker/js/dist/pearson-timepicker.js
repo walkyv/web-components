@@ -118,15 +118,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       get: function get() {
         return TIME_FORMATS[this.hours];
       }
+
+      // TODO: Ensure validation only happens
+      // if format matches AND time exists in list 
+
     }, {
       key: 'validity',
       set: function set(isValid) {
+        var input = this.input;
+
         if (isValid) {
-          this.input.removeAttribute('aria-invalid');
-          this.input.removeAttribute('aria-describedby');
+          input.removeAttribute('aria-invalid');
+          input.removeAttribute('aria-describedby');
         } else {
-          this.input.setAttribute('aria-invalid', 'true');
-          this.input.setAttribute('aria-describedby', 'timepicker-error');
+          input.setAttribute('aria-invalid', 'true');
+          input.setAttribute('aria-describedby', 'timepicker-error');
         }
       }
       /**
@@ -194,8 +200,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.activeIdx = -1;
       _this.selectedIdx = -1;
-      _this.times = calculate(_this.increments);
-
       _this.onInputKeydown = _this.onInputKeydown.bind(_this);
       _this.onInputFocus = _this.onInputFocus.bind(_this);
       _this.onInput = _this.onInput.bind(_this);
@@ -249,6 +253,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.input.value = initialValue;
         }
 
+        // TODO: repeat this every time listbox opens
+        // TODO: filter items in list
+        this.times = calculate(this.increments);
         this.times.forEach(function (time, index) {
           var text = time.format(_this2.format);
           _this2.listbox.appendChild(buildTimeEl(text, index));
@@ -342,9 +349,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.validity = isValid;
 
         if (isValid) {
-          // find time and click
+          // TODO: Extract into more reusable search fn
           var nextItem = Array.prototype.find.call(this.items, function (i) {
-            return i.dataset.time === e.target.value;
+            return ~i.dataset.time.indexOf(e.target.value);
           });
           this.activeItem = nextItem;
           this.selectedItem = nextItem;

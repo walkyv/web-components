@@ -189,13 +189,16 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       return TIME_FORMATS[this.hours];
     }
 
+    // TODO: Ensure validation only happens
+    // if format matches AND time exists in list 
     set validity(isValid) {
+      const { input } = this;
       if (isValid) {
-        this.input.removeAttribute('aria-invalid');
-        this.input.removeAttribute('aria-describedby');
+        input.removeAttribute('aria-invalid');
+        input.removeAttribute('aria-describedby');
       } else {
-        this.input.setAttribute('aria-invalid', 'true');
-        this.input.setAttribute('aria-describedby', 'timepicker-error');
+        input.setAttribute('aria-invalid', 'true');
+        input.setAttribute('aria-describedby', 'timepicker-error');
       }
     }
     /**
@@ -255,8 +258,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       this.activeIdx = -1;
       this.selectedIdx = -1;
-      this.times = calculate(this.increments);
-
       this.onInputKeydown = this.onInputKeydown.bind(this);
       this.onInputFocus = this.onInputFocus.bind(this);
       this.onInput = this.onInput.bind(this);
@@ -289,19 +290,22 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     connectedCallback() {
       const initialValue = this.getAttribute('initialValue');
-
+      
       this.labelText = this.getAttribute('label') || '';
-
+      
       // The pattern attribute only works with expressions
       // that do not have slashes around them
       this.input.pattern = this.pattern.toString().slice(1, -1);
-
+      
       // Set user-provided initial value if
       // it passes validation
       if (this.pattern.test(initialValue)) {
         this.input.value = initialValue;
       }
-
+      
+      // TODO: repeat this every time listbox opens
+      // TODO: filter items in list
+      this.times = calculate(this.increments);
       this.times.forEach((time, index) => {
         const text = time.format(this.format);
         this.listbox.appendChild(buildTimeEl(text, index));
@@ -391,10 +395,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       this.validity = isValid;
 
       if (isValid) {
-        // find time and click
+        // TODO: Extract into more reusable search fn
         const nextItem = Array.prototype.find.call(
           this.items,
-          i => i.dataset.time === e.target.value
+          i => ~i.dataset.time.indexOf(e.target.value)
         );
         this.activeItem = nextItem;
         this.selectedItem = nextItem;
