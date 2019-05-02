@@ -67,6 +67,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     // Return true if any of its four corners are visible
   }
 
+  var find = Array.prototype.find;
+
   w.ShadyCSS && w.ShadyCSS.prepareTemplate(template, 'pearson-timepicker');
 
   var Timepicker = function (_HTMLElement) {
@@ -290,7 +292,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         // if the string is different than the selectedItem, use it
 
-        if (this.input.value !== this.selectedTime) activeItem = Array.prototype.find.call(this.items, function (i) {
+        if (this.input.value !== this.selectedTime) activeItem = find.call(this.items, function (i) {
           return i.dataset.time.startsWith(_this3.input.value);
         });
 

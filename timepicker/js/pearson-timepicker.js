@@ -141,6 +141,8 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     // Return true if any of its four corners are visible
   }
 
+  const find = Array.prototype.find;
+
   w.ShadyCSS && w.ShadyCSS.prepareTemplate(template, 'pearson-timepicker');
 
   class Timepicker extends HTMLElement {
@@ -334,15 +336,16 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       let { activeItem } = this;
 
       // if the string is different than the selectedItem, use it
-      if (this.input.value !== this.selectedTime ) activeItem = Array.prototype.find.call(
-        this.items,
-        i => i.dataset.time.startsWith(this.input.value)
-      );
-    
+      if (this.input.value !== this.selectedTime)
+        activeItem = find.call(this.items, i =>
+          i.dataset.time.startsWith(this.input.value)
+        );
+
       this.activeItem = activeItem;
       this.selectedItem = activeItem;
 
-      this.validity = this.input.checkValidity() && this.input.value === this.selectedTime;
+      this.validity =
+        this.input.checkValidity() && this.input.value === this.selectedTime;
     }
 
     onInputFocus() {
