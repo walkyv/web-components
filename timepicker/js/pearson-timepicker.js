@@ -233,8 +233,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         this.selectedItem.classList.remove('selected');
       }
       if (nextItem) {
-        this.open = false;
-
         this.input.value = nextItem.dataset.time;
         this.validity = true;
         nextItem.classList.add('selected');
@@ -261,7 +259,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       this.onInputKeydown = this.onInputKeydown.bind(this);
       this.onInputFocus = this.onInputFocus.bind(this);
-      this.onInputBlur = this.onInputBlur.bind(this);
+      this.onInput = this.onInput.bind(this);
       this.onListboxClick = this.onListboxClick.bind(this);
       this.onDocumentClick = this.onDocumentClick.bind(this);
     }
@@ -291,10 +289,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     connectedCallback() {
       const initialValue = this.getAttribute('initialValue');
-      
+
       this.labelText = this.getAttribute('label') || '';
 
-      // The pattern attribute only works with expressions 
+      // The pattern attribute only works with expressions
       // that do not have slashes around them
       this.input.pattern = this.pattern.toString().slice(1, -1);
 
@@ -313,7 +311,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       this.input.addEventListener('focus', this.onInputFocus);
       this.input.addEventListener('keydown', this.onInputKeydown);
-      this.input.addEventListener('blur', this.onInputBlur);
+      this.input.addEventListener('input', this.onInput);
 
       this.listbox.addEventListener('click', this.onListboxClick, true);
 
@@ -368,6 +366,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
           break;
         case keys.ENTER:
           this.selectedItem = this.activeItem;
+          this.open = false;
           return;
         case keys.TAB:
           this.checkSelection();
@@ -385,9 +384,21 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       }
     }
 
-    onInputBlur(e) {
+    onInput(e) {
+      const value = e.target.value;
+      if (value === '') return;
       const isValid = e.target.checkValidity();
       this.validity = isValid;
+
+      if (isValid) {
+        // find time and click
+        const nextItem = Array.prototype.find.call(
+          this.items,
+          i => i.dataset.time === e.target.value
+        );
+        this.activeItem = nextItem;
+        this.selectedItem = nextItem;
+      }
     }
 
     onListboxClick(e) {
@@ -396,6 +407,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       if (target && target.nodeName === 'LI') {
         this.activeItem = target;
         this.selectedItem = target;
+        this.open = false;
       }
     }
     onDocumentClick(e) {

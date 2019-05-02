@@ -163,8 +163,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.selectedItem.classList.remove('selected');
         }
         if (nextItem) {
-          this.open = false;
-
           this.input.value = nextItem.dataset.time;
           this.validity = true;
           nextItem.classList.add('selected');
@@ -200,7 +198,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.onInputKeydown = _this.onInputKeydown.bind(_this);
       _this.onInputFocus = _this.onInputFocus.bind(_this);
-      _this.onInputBlur = _this.onInputBlur.bind(_this);
+      _this.onInput = _this.onInput.bind(_this);
       _this.onListboxClick = _this.onListboxClick.bind(_this);
       _this.onDocumentClick = _this.onDocumentClick.bind(_this);
       return _this;
@@ -241,7 +239,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.labelText = this.getAttribute('label') || '';
 
-        // The pattern attribute only works with expressions 
+        // The pattern attribute only works with expressions
         // that do not have slashes around them
         this.input.pattern = this.pattern.toString().slice(1, -1);
 
@@ -260,7 +258,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.input.addEventListener('focus', this.onInputFocus);
         this.input.addEventListener('keydown', this.onInputKeydown);
-        this.input.addEventListener('blur', this.onInputBlur);
+        this.input.addEventListener('input', this.onInput);
 
         this.listbox.addEventListener('click', this.onListboxClick, true);
 
@@ -318,6 +316,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             break;
           case keys.ENTER:
             this.selectedItem = this.activeItem;
+            this.open = false;
             return;
           case keys.TAB:
             this.checkSelection();
@@ -335,10 +334,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
       }
     }, {
-      key: 'onInputBlur',
-      value: function onInputBlur(e) {
+      key: 'onInput',
+      value: function onInput(e) {
+        var value = e.target.value;
+        if (value === '') return;
         var isValid = e.target.checkValidity();
         this.validity = isValid;
+
+        if (isValid) {
+          // find time and click
+          var nextItem = Array.prototype.find.call(this.items, function (i) {
+            return i.dataset.time === e.target.value;
+          });
+          this.activeItem = nextItem;
+          this.selectedItem = nextItem;
+        }
       }
     }, {
       key: 'onListboxClick',
@@ -348,6 +358,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (target && target.nodeName === 'LI') {
           this.activeItem = target;
           this.selectedItem = target;
+          this.open = false;
         }
       }
     }, {
