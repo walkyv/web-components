@@ -118,6 +118,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       get: function get() {
         return TIME_FORMATS[this.hours];
       }
+    }, {
+      key: 'validity',
+      set: function set(isValid) {
+        if (isValid) {
+          this.input.removeAttribute('aria-invalid');
+          this.input.removeAttribute('aria-describedby');
+        } else {
+          this.input.setAttribute('aria-invalid', 'true');
+          this.input.setAttribute('aria-describedby', 'timepicker-error');
+        }
+      }
       /**
        * The currently active listbox item
        * @type {HTMLElement}
@@ -153,7 +164,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
         if (nextItem) {
           this.open = false;
+
           this.input.value = nextItem.dataset.time;
+          this.validity = true;
           nextItem.classList.add('selected');
 
           this.selectedIdx = Number(nextItem.dataset.idx);
@@ -246,6 +259,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.input.addEventListener('focus', this.onInputFocus);
         this.input.addEventListener('keydown', this.onInputKeydown);
+        this.input.addEventListener('blur', this.onInputBlur);
 
         this.listbox.addEventListener('click', this.onListboxClick, true);
 
@@ -321,7 +335,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       }
     }, {
       key: 'onInputBlur',
-      value: function onInputBlur() {}
+      value: function onInputBlur(e) {
+        var isValid = e.target.checkValidity();
+        this.validity = isValid;
+      }
     }, {
       key: 'onListboxClick',
       value: function onListboxClick(e) {

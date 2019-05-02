@@ -188,6 +188,16 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     get pattern() {
       return TIME_FORMATS[this.hours];
     }
+
+    set validity(isValid) {
+      if (isValid) {
+        this.input.removeAttribute('aria-invalid');
+        this.input.removeAttribute('aria-describedby');
+      } else {
+        this.input.setAttribute('aria-invalid', 'true');
+        this.input.setAttribute('aria-describedby', 'timepicker-error');
+      }
+    }
     /**
      * The currently active listbox item
      * @type {HTMLElement}
@@ -224,7 +234,9 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       }
       if (nextItem) {
         this.open = false;
+
         this.input.value = nextItem.dataset.time;
+        this.validity = true;
         nextItem.classList.add('selected');
 
         this.selectedIdx = Number(nextItem.dataset.idx);
@@ -280,7 +292,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       const initialValue = this.getAttribute('initialValue');
       
       this.labelText = this.getAttribute('label') || '';
-      
+
       // The pattern attribute only works with expressions 
       // that do not have slashes around them
       this.input.pattern = this.pattern.toString().slice(1, -1);
@@ -300,6 +312,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       this.input.addEventListener('focus', this.onInputFocus);
       this.input.addEventListener('keydown', this.onInputKeydown);
+      this.input.addEventListener('blur', this.onInputBlur);
 
       this.listbox.addEventListener('click', this.onListboxClick, true);
 
@@ -371,7 +384,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       }
     }
 
-    onInputBlur() {}
+    onInputBlur(e) {
+      const isValid = e.target.checkValidity();
+      this.validity = isValid;
+    }
 
     onListboxClick(e) {
       const target = e.target;
