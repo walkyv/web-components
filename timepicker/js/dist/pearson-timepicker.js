@@ -176,6 +176,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.selectedIdx = Number(nextItem.dataset.idx);
         }
       }
+    }, {
+      key: 'selectedTime',
+      get: function get() {
+        return this.selectedItem ? this.selectedItem.dataset.time : '';
+      }
     }], [{
       key: 'observedAttributes',
       get: function get() {
@@ -281,21 +286,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function checkSelection() {
         var _this3 = this;
 
-        var activeItem = this.activeItem,
-            selectedItem = this.selectedItem;
-
-        var time = selectedItem ? selectedItem.dataset.time : '';
+        var activeItem = this.activeItem;
 
         // if the string is different than the selectedItem, use it
-        if (this.input.value !== time) activeItem = Array.prototype.find.call(this.items, function (i) {
+
+        if (this.input.value !== this.selectedTime) activeItem = Array.prototype.find.call(this.items, function (i) {
           return i.dataset.time.startsWith(_this3.input.value);
         });
 
         this.activeItem = activeItem;
         this.selectedItem = activeItem;
-        time = this.selectedItem ? this.selectedItem.dataset.time : '';
 
-        this.validity = this.input.checkValidity() && this.input.value === time;
+        this.validity = this.input.checkValidity() && this.input.value === this.selectedTime;
       }
     }, {
       key: 'onInputFocus',

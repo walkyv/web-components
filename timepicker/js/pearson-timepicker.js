@@ -244,6 +244,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       }
     }
 
+    get selectedTime() {
+      return this.selectedItem ? this.selectedItem.dataset.time : '';
+    }
+
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
@@ -327,20 +331,18 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     checkSelection() {
-      let {activeItem, selectedItem} = this;
-      let time = selectedItem ? selectedItem.dataset.time : '';
+      let { activeItem } = this;
 
       // if the string is different than the selectedItem, use it
-      if (this.input.value !== time ) activeItem = Array.prototype.find.call(
+      if (this.input.value !== this.selectedTime ) activeItem = Array.prototype.find.call(
         this.items,
         i => i.dataset.time.startsWith(this.input.value)
       );
     
       this.activeItem = activeItem;
       this.selectedItem = activeItem;
-      time = this.selectedItem ? this.selectedItem.dataset.time : '';
 
-      this.validity = this.input.checkValidity() && this.input.value === time;
+      this.validity = this.input.checkValidity() && this.input.value === this.selectedTime;
     }
 
     onInputFocus() {
