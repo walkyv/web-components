@@ -80,9 +80,9 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     <p 
       id="timepicker-error"
       class="timepicker-error"
+      role="alert"
+      aria-live="assertive"
     >
-        ${warningIcon}
-        Enter a valid time.
     </p>
   </div>
   <div class="listbox-wrapper" role="presentation">
@@ -194,13 +194,17 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     // TODO: Ensure validation only happens
     // if format matches AND time exists in list
     set validity(isValid) {
-      const { input } = this;
+      const {errorMsg, input } = this;
       if (isValid) {
         input.removeAttribute('aria-invalid');
         input.removeAttribute('aria-describedby');
+        errorMsg.innerHTML = '';
       } else {
         input.setAttribute('aria-invalid', 'true');
         input.setAttribute('aria-describedby', 'timepicker-error');
+        errorMsg.innerHTML = `${warningIcon}
+        Enter a valid time.`;
+
       }
     }
     /**
@@ -262,6 +266,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       this.label = clone.querySelector('#timepicker-label');
       this.input = clone.querySelector('#timepicker-input');
+      this.errorMsg = clone.querySelector('#timepicker-error');
       this.listbox = clone.querySelector('#listbox');
 
       this.shadowRoot.appendChild(clone);
