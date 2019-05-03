@@ -107,7 +107,7 @@ svg {
 .listbox-wrapper {
   position: absolute;
   width: 100%;
-  background-color: #fff;
+  z-index: 999;
 }
 
 .listbox {
@@ -117,6 +117,7 @@ svg {
   border: 1px solid $pe-color-concrete;
   border-radius: 2px;
   overflow-y: auto;
+  background-color: #fff;
   visibility: hidden;
 }
 
