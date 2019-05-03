@@ -108,6 +108,11 @@ svg {
   position: absolute;
   width: 100%;
   z-index: 999;
+  visibility: hidden;
+}
+
+:host([open]) .listbox-wrapper {
+  visibility: visible;
 }
 
 .listbox {
