@@ -91,12 +91,15 @@ svg {
 }
 
 .timepicker-error {
-  display: none;
   font-size: 12px;
   line-height: 16px;
   color: $pe-color-strawberry-red;
   margin-top: 4px;
   margin-bottom: 2px;
+}
+
+.timepicker-error:empty {
+  display: none;
 }
 
 /* LISTBOX */
