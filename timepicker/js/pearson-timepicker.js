@@ -243,11 +243,15 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         nextItem.classList.add('selected');
 
         this.selectedIdx = Number(nextItem.dataset.idx);
+
+        if (this.activeItem !== nextItem) {
+          this.activeItem = nextItem;
+        }
       }
     }
 
     get selectedTime() {
-      return this.selectedItem ? this.selectedItem.dataset.time : '';
+      return this.selectedItem ? this.selectedItem.dataset.time : null;
     }
 
     constructor() {
@@ -322,8 +326,8 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         this.pattern.test(initialValue) &&
         this.plainTextTimes.indexOf(initialValue)
       ) {
-        this.input.value = initialValue;
-        this.checkSelection();
+        const idx = this.plainTextTimes.indexOf(initialValue);
+        this.selectedItem = this.items[idx];
       }
 
       this.input.addEventListener('focus', this.onInputFocus);
@@ -343,12 +347,12 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       let { activeItem } = this;
 
       // if the string is different than the selectedItem, use it
-      if (this.input.value !== this.selectedTime)
+      if (this.input.value !== this.selectedTime || !this.activeItem) {
         activeItem = find.call(this.items, i =>
           i.dataset.time.startsWith(this.input.value)
         );
+      }
 
-      this.activeItem = activeItem;
       this.selectedItem = activeItem;
 
       this.validity =
@@ -419,7 +423,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       const target = e.target;
 
       if (target && target.nodeName === 'LI') {
-        this.activeItem = target;
         this.selectedItem = target;
         this.open = false;
       }

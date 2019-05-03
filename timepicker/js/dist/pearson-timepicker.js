@@ -176,12 +176,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           nextItem.classList.add('selected');
 
           this.selectedIdx = Number(nextItem.dataset.idx);
+
+          if (this.activeItem !== nextItem) {
+            this.activeItem = nextItem;
+          }
         }
       }
     }, {
       key: 'selectedTime',
       get: function get() {
-        return this.selectedItem ? this.selectedItem.dataset.time : '';
+        return this.selectedItem ? this.selectedItem.dataset.time : null;
       }
     }], [{
       key: 'observedAttributes',
@@ -270,8 +274,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         // Set user-provided initial value if
         // it passes validation
         if (this.pattern.test(initialValue) && this.plainTextTimes.indexOf(initialValue)) {
-          this.input.value = initialValue;
-          this.checkSelection();
+          var idx = this.plainTextTimes.indexOf(initialValue);
+          this.selectedItem = this.items[idx];
         }
 
         this.input.addEventListener('focus', this.onInputFocus);
@@ -296,11 +300,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         // if the string is different than the selectedItem, use it
 
-        if (this.input.value !== this.selectedTime) activeItem = find.call(this.items, function (i) {
-          return i.dataset.time.startsWith(_this3.input.value);
-        });
+        if (this.input.value !== this.selectedTime || !this.activeItem) {
+          activeItem = find.call(this.items, function (i) {
+            return i.dataset.time.startsWith(_this3.input.value);
+          });
+        }
 
-        this.activeItem = activeItem;
         this.selectedItem = activeItem;
 
         this.validity = this.input.checkValidity() && this.input.value === this.selectedTime;
@@ -373,7 +378,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var target = e.target;
 
         if (target && target.nodeName === 'LI') {
-          this.activeItem = target;
           this.selectedItem = target;
           this.open = false;
         }
