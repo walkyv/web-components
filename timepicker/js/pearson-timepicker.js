@@ -306,7 +306,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     connectedCallback() {
-      const initialValue = this.getAttribute('initialValue');
+      const defaultValue = this.getAttribute('defaultValue');
 
       this.labelText = this.getAttribute('label') || '';
 
@@ -328,10 +328,10 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       // Set user-provided initial value if
       // it passes validation
       if (
-        this.pattern.test(initialValue) &&
-        this.plainTextTimes.indexOf(initialValue)
+        this.pattern.test(defaultValue) &&
+        this.plainTextTimes.indexOf(defaultValue)
       ) {
-        const idx = this.plainTextTimes.indexOf(initialValue);
+        const idx = this.plainTextTimes.indexOf(defaultValue);
         this.selectedItem = this.items[idx];
       }
 

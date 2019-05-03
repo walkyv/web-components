@@ -256,7 +256,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this2 = this;
 
-        var initialValue = this.getAttribute('initialValue');
+        var defaultValue = this.getAttribute('defaultValue');
 
         this.labelText = this.getAttribute('label') || '';
 
@@ -277,8 +277,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         // Set user-provided initial value if
         // it passes validation
-        if (this.pattern.test(initialValue) && this.plainTextTimes.indexOf(initialValue)) {
-          var idx = this.plainTextTimes.indexOf(initialValue);
+        if (this.pattern.test(defaultValue) && this.plainTextTimes.indexOf(defaultValue)) {
+          var idx = this.plainTextTimes.indexOf(defaultValue);
           this.selectedItem = this.items[idx];
         }
 
