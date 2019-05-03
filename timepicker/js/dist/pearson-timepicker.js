@@ -302,8 +302,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         var activeItem = this.activeItem;
 
-        // if the string is different than the selectedItem, use it
+        if (this.activeIdx === -1 && this.input.value === '') {
+          return;
+        }
 
+        // if the string is different than the selectedItem, use it
         if (this.input.value !== this.selectedTime || !this.activeItem) {
           activeItem = find.call(this.items, function (i) {
             return i.dataset.time.startsWith(_this3.input.value);

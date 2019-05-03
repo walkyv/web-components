@@ -350,6 +350,9 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     checkSelection() {
       let { activeItem } = this;
+      if (this.activeIdx === -1 && this.input.value === '') {
+        return;
+      }
 
       // if the string is different than the selectedItem, use it
       if (this.input.value !== this.selectedTime || !this.activeItem) {
