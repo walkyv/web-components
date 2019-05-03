@@ -10,10 +10,13 @@
       rel="stylesheet"
     />
 
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=String.prototype.startsWith%2CArray.prototype.find" crossorigin="anonymous"></script>
+    <script
+      src="https://polyfill.io/v3/polyfill.min.js?features=String.prototype.startsWith%2CArray.prototype.find"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
-    
+
     <script src="https://unpkg.com/moment@^2/min/moment.min.js"></script>
     <script src="js/dist/pearson-timepicker.js"></script>
     <style>
@@ -29,25 +32,11 @@
       label="When is the assignment due?"
       hours="12"
       increments="60"
-      defaultValue="2:00 AM"
     ></pearson-timepicker>
     <pearson-timepicker
-    label="When is the assignment due?"
+      label="Start time"
       hours="24"
       increments="30"
-    ></pearson-timepicker>
-    <pearson-timepicker hours="24" increments="60" valid="true">
-    </pearson-timepicker>
-    <pearson-timepicker
-    label="When is the assignment due?"
-      hours="12"
-      increments="60"
-      value="2:15 PM"
-    ></pearson-timepicker>
-    <pearson-timepicker
-    label="When is the assignment due?"
-      hours="12"
-      increments="60"
     ></pearson-timepicker>
   </body>
 </html>
