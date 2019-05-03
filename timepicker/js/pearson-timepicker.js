@@ -137,7 +137,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       rect.bottom < parentRect.bottom &&
       rect.top > parentRect.top
     );
-
   }
 
   const find = Array.prototype.find;
@@ -193,7 +192,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     // TODO: Ensure validation only happens
     // if format matches AND time exists in list
     set validity(isValid) {
-      const {errorMsg, input } = this;
+      const { errorMsg, input } = this;
       if (isValid) {
         input.removeAttribute('aria-invalid');
         input.removeAttribute('aria-describedby');
@@ -203,7 +202,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         input.setAttribute('aria-describedby', 'timepicker-error');
         errorMsg.innerHTML = `${warningIcon}
         Enter a valid time.`;
-
       }
     }
     /**
