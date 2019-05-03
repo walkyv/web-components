@@ -82,8 +82,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       class="timepicker-error"
       role="alert"
       aria-live="assertive"
-    >
-    </p>
+    ></p>
   </div>
   <div class="listbox-wrapper" role="presentation">
     <ul
