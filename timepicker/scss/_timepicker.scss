@@ -83,7 +83,8 @@ svg {
 }
 
 .timepicker-input[aria-invalid='true']:focus {
-  outline-color: $pe-color-strawberry-red;
+  box-shadow: 0 0 0 2px $pe-color-strawberry-red;
+
 }
 
 .timepicker-input[aria-invalid='true'] ~ .timepicker-error {
