@@ -63,8 +63,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     // evaluate if the element is out of bounds
     // of its parent
     return rect.top < parentRect.top + parentRect.height && rect.top + rect.height > parentRect.top && rect.bottom < parentRect.bottom && rect.top > parentRect.top;
-
-    // Return true if any of its four corners are visible
   }
 
   var find = Array.prototype.find;
