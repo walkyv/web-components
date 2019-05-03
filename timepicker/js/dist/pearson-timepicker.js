@@ -191,7 +191,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['open'];
+        return ['open', 'readonly', 'disabled'];
       }
     }]);
 
@@ -247,6 +247,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
           this.listbox.classList.remove(classToRemove);
           this.listbox.classList.add(classToAdd);
+        }
+
+        if (name === 'readonly' || name === 'disabled') {
+          var isTruthy = newValue !== null;
+
+          if (isTruthy) {
+            this.input.setAttribute(name, name);
+          } else {
+            this.input.removeAttribute(name);
+          }
         }
       }
     }, {

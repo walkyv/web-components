@@ -144,7 +144,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
   class Timepicker extends HTMLElement {
     static get observedAttributes() {
-      return ['open'];
+      return ['open', 'readonly', 'disabled'];
     }
 
     get open() {
@@ -299,6 +299,17 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         this.listbox.classList.remove(classToRemove);
         this.listbox.classList.add(classToAdd);
       }
+
+      if (name === 'readonly' || name === 'disabled') {
+        const isTruthy = newValue !== null;
+
+        if (isTruthy) {
+          this.input.setAttribute(name, name);
+        } else {
+          this.input.removeAttribute(name);
+        }
+      }
+
     }
 
     connectedCallback() {
