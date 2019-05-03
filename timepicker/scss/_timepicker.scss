@@ -21,7 +21,7 @@ input {
 input:focus {
   position: relative;
   outline: 0;
-  box-shadow: 0 0 0 2px $pe-focus-color;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px $pe-focus-color;
   z-index: 1;
 }
 
@@ -76,15 +76,16 @@ svg {
 
 .timepicker-input {
   min-width: 150px;
+  margin-bottom: 4px;
 }
 
 .timepicker-input[aria-invalid='true'] {
   border-color: $pe-color-strawberry-red;
+  margin-bottom: 0;
 }
 
 .timepicker-input[aria-invalid='true']:focus {
-  box-shadow: 0 0 0 2px $pe-color-strawberry-red;
-
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px $pe-color-strawberry-red;
 }
 
 .timepicker-input[aria-invalid='true'] ~ .timepicker-error {
@@ -109,7 +110,6 @@ svg {
   position: absolute;
   width: 100%;
   z-index: 999;
-  margin-top: 2px;
   visibility: hidden;
 }
 
