@@ -1,10 +1,10 @@
 {
-  "name": "@pearson-ux/example",
-  "author": "Your Name | your.email@pearson.com",
+  "name": "@pearson-ux/timepicker",
+  "author": "EJ Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "version": "0.1.0",
-  "description": "Example web component",
-  "main": "index.html",
+  "description": "Timepicker web component",
+  "main": "js/dist/pearson-timepicker.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
