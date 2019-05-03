@@ -208,7 +208,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
      * @type {HTMLElement}
      */
     get activeItem() {
-      return this.items[this.activeIdx];
+      return this.activeIdx > -1 ? this.items[this.activeIdx] : null;
     }
 
     set activeItem(nextItem) {
@@ -230,7 +230,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     get selectedItem() {
-      return this.items[this.selectedIdx];
+      return this.selectedIdx > -1 ? this.items[this.selectedIdx] : null;
     }
 
     set selectedItem(nextItem) {
@@ -264,6 +264,8 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
       this.activeIdx = -1;
       this.selectedIdx = -1;
+      this.plainTextTimes = [];
+
       this.onInputKeydown = this.onInputKeydown.bind(this);
       this.onInputFocus = this.onInputFocus.bind(this);
       this.onInputBlur = this.onInputBlur.bind(this);
@@ -303,21 +305,26 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       // that do not have slashes around them
       this.input.pattern = this.pattern.toString().slice(1, -1);
 
-      // Set user-provided initial value if
-      // it passes validation
-      if (this.pattern.test(initialValue)) {
-        this.input.value = initialValue;
-      }
-
       // TODO: repeat this every time listbox opens
       // TODO: filter items in list
       this.times = calculate(this.increments);
       this.times.forEach((time, index) => {
         const text = time.format(this.format);
+        this.plainTextTimes[index] = text;
         this.listbox.appendChild(buildTimeEl(text, index));
       });
 
       this.items = this.listbox.children;
+
+      // Set user-provided initial value if
+      // it passes validation
+      if (
+        this.pattern.test(initialValue) &&
+        this.plainTextTimes.indexOf(initialValue)
+      ) {
+        this.input.value = initialValue;
+        this.checkSelection();
+      }
 
       this.input.addEventListener('focus', this.onInputFocus);
       this.input.addEventListener('keydown', this.onInputKeydown);

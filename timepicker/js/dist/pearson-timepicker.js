@@ -145,7 +145,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'activeItem',
       get: function get() {
-        return this.items[this.activeIdx];
+        return this.activeIdx > -1 ? this.items[this.activeIdx] : null;
       },
       set: function set(nextItem) {
         if (this.activeItem) {
@@ -164,7 +164,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'selectedItem',
       get: function get() {
-        return this.items[this.selectedIdx];
+        return this.selectedIdx > -1 ? this.items[this.selectedIdx] : null;
       },
       set: function set(nextItem) {
         if (this.selectedItem) {
@@ -207,6 +207,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.activeIdx = -1;
       _this.selectedIdx = -1;
+      _this.plainTextTimes = [];
+
       _this.onInputKeydown = _this.onInputKeydown.bind(_this);
       _this.onInputFocus = _this.onInputFocus.bind(_this);
       _this.onInputBlur = _this.onInputBlur.bind(_this);
@@ -254,21 +256,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         // that do not have slashes around them
         this.input.pattern = this.pattern.toString().slice(1, -1);
 
-        // Set user-provided initial value if
-        // it passes validation
-        if (this.pattern.test(initialValue)) {
-          this.input.value = initialValue;
-        }
-
         // TODO: repeat this every time listbox opens
         // TODO: filter items in list
         this.times = calculate(this.increments);
         this.times.forEach(function (time, index) {
           var text = time.format(_this2.format);
+          _this2.plainTextTimes[index] = text;
           _this2.listbox.appendChild(buildTimeEl(text, index));
         });
 
         this.items = this.listbox.children;
+
+        // Set user-provided initial value if
+        // it passes validation
+        if (this.pattern.test(initialValue) && this.plainTextTimes.indexOf(initialValue)) {
+          this.input.value = initialValue;
+          this.checkSelection();
+        }
 
         this.input.addEventListener('focus', this.onInputFocus);
         this.input.addEventListener('keydown', this.onInputKeydown);
