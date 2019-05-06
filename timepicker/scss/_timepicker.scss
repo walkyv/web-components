@@ -167,3 +167,8 @@ svg {
 .hidden {
   display: none;
 }
+
+::-ms-clear{
+  width: 0;
+  height: 0;
+}
