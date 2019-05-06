@@ -103,16 +103,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       get: function get() {
         return this.hours === '12' ? 'h:mm A' : 'HH:mm';
       }
-      /**
-       * Set the label eleement's text content with the user-provided
-       * label, followed by format instructions
-       */
-
-    }, {
-      key: 'labelText',
-      set: function set(text) {
-        this.label.textContent = text + ' (' + (this.hours === '12' ? 'HH:MM AM/PM' : 'HH:MM') + ')';
-      }
     }, {
       key: 'pattern',
       get: function get() {
@@ -265,8 +255,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var _this2 = this;
 
         var defaultValue = this.getAttribute('defaultValue');
+        var labelText = this.getAttribute('label') || '';
 
-        this.labelText = this.getAttribute('label') || '';
+        // Emsure that IDs are unique since IE does not properly encapsulate them.
+        var inputId = this.input.id + '-' + encodeURIComponent(labelText);
+
+        this.input.id = inputId;
+
+        this.label.setAttribute('for', inputId);
+        this.label.textContent = labelText + ' (' + (this.hours === '12' ? 'HH:MM AM/PM' : 'HH:MM') + ')';
 
         // The pattern attribute only works with expressions
         // that do not have slashes around them

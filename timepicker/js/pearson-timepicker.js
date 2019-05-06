@@ -174,15 +174,6 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     get format() {
       return this.hours === '12' ? 'h:mm A' : 'HH:mm';
     }
-    /**
-     * Set the label eleement's text content with the user-provided
-     * label, followed by format instructions
-     */
-    set labelText(text) {
-      this.label.textContent = `${text} (${
-        this.hours === '12' ? 'HH:MM AM/PM' : 'HH:MM'
-      })`;
-    }
 
     get pattern() {
       return TIME_FORMATS[this.hours];
@@ -314,8 +305,17 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
 
     connectedCallback() {
       const defaultValue = this.getAttribute('defaultValue');
+      const labelText = this.getAttribute('label') || '';
+      
+      // Emsure that IDs are unique since IE does not properly encapsulate them.
+      const inputId = this.input.id + '-' + encodeURIComponent(labelText);
 
-      this.labelText = this.getAttribute('label') || '';
+      this.input.id = inputId;
+      
+      this.label.setAttribute('for', inputId);
+      this.label.textContent = `${labelText} (${
+        this.hours === '12' ? 'HH:MM AM/PM' : 'HH:MM'
+      })`;
 
       // The pattern attribute only works with expressions
       // that do not have slashes around them
