@@ -25,6 +25,7 @@ function scripts(done) {
       './modal/js/dist/pearson-modal.js',
       './progress-bar/js/dist/progress-bar.js',
       './tab-navigation/js/dist/pearson-tabs.js',
+      './timepicker/js/dist/pearson-timepicker.js',
       './toggle/js/dist/pearson-toggle.js',
       './pagination/js/dist/pearson-pagination.js'
     ])

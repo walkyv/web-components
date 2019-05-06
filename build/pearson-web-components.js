@@ -4205,7 +4205,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         // The pattern attribute only works with expressions
         // that do not have slashes around them
-        this.input.pattern = this.pattern.toString().slice(1, -1);
+        if (this.pattern !== undefined) {
+          this.input.pattern = this.pattern.toString().slice(1, -1);
+        }
 
         // TODO: repeat this every time listbox opens
         // TODO: filter items in list
@@ -4220,7 +4222,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         // Set user-provided initial value if
         // it passes validation
-        if (this.pattern.test(defaultValue) && this.plainTextTimes.indexOf(defaultValue)) {
+        if (this.pattern !== undefined && this.pattern.test(defaultValue) && this.plainTextTimes.indexOf(defaultValue)) {
           var idx = this.plainTextTimes.indexOf(defaultValue);
           this.selectedItem = this.items[idx];
         }

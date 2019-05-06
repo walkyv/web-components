@@ -2,7 +2,7 @@
   "name": "@pearson-ux/example",
   "author": "Your Name | your.email@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Example web component",
   "main": "index.html",
   "scripts": {
