@@ -156,6 +156,10 @@ svg {
   box-shadow: inset 0 0 0 2px $pe-focus-color;
 }
 
+.listbox-item > * {
+  pointer-events: none;
+}
+
 .listbox-item .pe-icon {
   display: none;
   left: 5px;
