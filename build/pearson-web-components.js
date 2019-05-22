@@ -3396,7 +3396,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name) {
         if (name === 'footer' && !this.modal) return;
-        if (!this.footer) {
+        if (!this.footer && this.modal !== undefined) {
           var actions = this.modal.querySelector('.actions');
           actions.remove();
         }
