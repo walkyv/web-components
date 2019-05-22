@@ -246,7 +246,7 @@
 
     attributeChangedCallback(name) {
       if (name === 'footer' && !this.modal) return;
-      if (!this.footer) {
+      if (!this.footer && this.modal !== undefined) {
         const actions = this.modal.querySelector('.actions');
         actions.remove();
       }
