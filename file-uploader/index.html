@@ -38,7 +38,10 @@
 	</section>
 </main>
 <pearson-uploader
+	apiUrl="https://pearson-file-upload.s3.amazonaws.com/"
 	triggerid="trigger-modal"
+	maxByteFileSize="10000000"
+	maxNumberOfFiles="5"
 >
 </pearson-uploader>
 
@@ -49,8 +52,11 @@
 	const uploader = document.querySelector('pearson-uploader');
 	const modal = uploader.shadowRoot.querySelector('upload-modal');
 
-	modal.addEventListener('success', function() {
-	  console.log('SUCCESS')
+	modal.addEventListener('load', function(event) {
+	  console.log(event)
+	})
+	modal.addEventListener('success', function(event) {
+	  console.log('SUCCESS', event.detail)
 	})
 
     modal.addEventListener('cancel', function() {

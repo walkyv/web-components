@@ -4,6 +4,7 @@
   const template = doc.createElement('template');
   const progressInfo = doc.createElement('template');
   const check = doc.createElement('template');
+  const response = [];
 
   template.innerHTML = `
   <style>
@@ -106,16 +107,21 @@
     } progress)`;
   }
 
+
   function dispatchEvent(element, name) {
     const modal = element.querySelector('upload-modal');
-    modal.dispatchEvent(
-      new CustomEvent(name, {
-        detail: {
-          done: status.done,
-          progress: status.progress
-        }
-      })
-    );
+    if (modal !== null) {
+      modal.dispatchEvent(
+        new CustomEvent(name, {
+          detail: {
+            done: status.done,
+            progress: status.progress,
+            response: response
+          }
+        })
+      );
+    }
+
   }
 
   function updateStatus(opr, statusType, element) {
@@ -179,7 +185,6 @@
       });
 
       const clone = template.content.cloneNode(true);
-
       this.uploadInfo = clone.querySelector('#info');
       this.realUploadInput = clone.querySelector('input[type="file"]');
       this.attachBtn = clone.querySelector('#attachFiles');
@@ -197,6 +202,7 @@
       this.unhighlight = this.unhighlight.bind(this);
       this.handleDrop = this.handleDrop.bind(this);
       this.deleteFile = this.deleteFile.bind(this);
+
 
       this.shadowRoot.appendChild(clone);
     }
@@ -223,7 +229,6 @@
       modal.addEventListener('click', event => {
         event.stopImmediatePropagation();
         let target = event.target;
-        console.log(target);
         // do {
         //   if (target.tagName === 'BUTTON') {
         //     return;
@@ -284,7 +289,7 @@
       xhr.open('DELETE', url, true);
 
       xhr.addEventListener('load', () => {
-        if (xhr.readyState === 4 && xhr.status === 204) {
+        if (xhr.readyState === 4 && xhr.status === 204 || xhr.readyState === 4 && xhr.status === 200 ) {
           domNode.remove();
           updateStatus('minus', 'done', this.shadowRoot);
         } else {
@@ -345,7 +350,15 @@
         this.renderProgressItems(file, xhr);
         formData.append('key', file.name);
         formData.append('file', file);
+
+        // Put the object into storage
         xhr.send(formData);
+
+        xhr.onreadystatechange = function(event) {
+          if (this.readyState === 4 && this.status === 204 || this.readyState === 4 && this.status === 200 ) {
+            response.push(this);
+          }
+        };
 
         const cancelButton = this.shadowRoot
           .querySelector('upload-modal')

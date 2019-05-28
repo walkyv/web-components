@@ -16,6 +16,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var overlayButtonTemplate = doc.createElement('template');
     var actionsTemplate = doc.createElement('template');
     var minimizedTemplate = doc.createElement('template');
+    var response = '';
 
     styles.innerHTML = '\n  ' +
       '<style>' +
@@ -191,8 +192,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     this.renderFull();
                 }
                 this.addEventListener('xhrLoading', function (event) {
+                    console.log(event.detail)
                     _this3.minimizeDetail = event.detail;
+                    response = event.detail.response
                 });
+
             }
         }, {
             key: 'disconnectedCallback',
@@ -274,6 +278,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.shadowRoot.appendChild(this.clone);
                 doc.addEventListener('keydown', this.bindKeyPress);
                 doc.body.addEventListener('focus', this.maintainFocus, true);
+
             }
         }, {
             key: 'renderMinimized',
@@ -337,7 +342,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }, 400);
 
                 setTimeout(function () {
-                    _this7.dispatchEvent(new Event(eventName, { bubbles: true, composed: true }));
+                    _this7.dispatchEvent(new CustomEvent(eventName, {
+                        bubbles: true,
+                        composed: true,
+                        detail: {
+                            response: response
+                        }
+                    }));
                 }, 500);
 
                 setTimeout(function () {
