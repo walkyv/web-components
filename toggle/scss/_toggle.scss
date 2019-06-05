@@ -32,7 +32,7 @@ $pe-focus-outline-distance: 8px;
   background: $pe-color-digital-pearson-blue;
 }
 
-:host([disabled]) {
+:host([disabled]:not([disabled='false'])) {
   color: $pe-color-concrete;
   background-color: $pe-color-moonlight;
   cursor: not-allowed;
@@ -56,7 +56,7 @@ $pe-focus-outline-distance: 8px;
   left: 27px;
 }
 
-:host([disabled])::before {
+:host([disabled]:not([disabled='false']))::before {
   background-color: $pe-color-concrete;
 }
 
