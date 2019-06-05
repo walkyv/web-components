@@ -20,7 +20,7 @@
   "homepage": "https://github.com/pearson-ux/web-components#readme",
   "dependencies": {},
   "devDependencies": {
-    "gulp": "^4.0.1",
+    "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-minify": "^3.1.0"
   }
