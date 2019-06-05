@@ -57,7 +57,7 @@
     }
 
     get disabled() {
-      return this.hasAttribute('disabled');
+      return this.hasAttribute('disabled') && this.getAttribute('disabled') === 'true';
     }
 
     set disabled(value) {
@@ -95,7 +95,7 @@
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      const isTruthy = newValue !== null;
+      const isTruthy = newValue !== 'false';
       if (name === 'on') {
         this.setAttribute('aria-checked', isTruthy);
       }

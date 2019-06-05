@@ -38,7 +38,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'disabled',
       get: function get() {
-        return this.hasAttribute('disabled');
+        return this.hasAttribute('disabled') && this.getAttribute('disabled') === 'true';
       },
       set: function set(value) {
         var isDisabled = Boolean(value);
@@ -88,7 +88,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Toggle, [{
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
-        var isTruthy = newValue !== null;
+        var isTruthy = newValue !== 'false';
         if (name === 'on') {
           this.setAttribute('aria-checked', isTruthy);
         }
