@@ -28,7 +28,7 @@ $pe-focus-outline-distance: 8px;
   min-width: 50px;
 }
 
-:host([on]) {
+:host([on]:not([on='false'])) {
   background: $pe-color-digital-pearson-blue;
 }
 
@@ -52,7 +52,7 @@ $pe-focus-outline-distance: 8px;
   border-radius: 100%;
 }
 
-:host([on])::before {
+:host([on]:not([on='false']))::before {
   left: 27px;
 }
 
@@ -96,7 +96,7 @@ svg[class*="remove"] {
 }
 
 :host(:not([on])) svg[class*="check"],
-:host([on]) svg[class*="remove"] {
+:host([on]:not([on='false'])) svg[class*="remove"] {
   display: none;
 }
 
