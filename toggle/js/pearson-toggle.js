@@ -58,7 +58,7 @@
     }
 
     get disabled() {
-      return this.hasAttribute('disabled') && this.getAttribute('disabled') === 'true';
+      return this.hasAttribute('disabled') && this.getAttribute('disabled') !== 'false';
     }
 
     set disabled(value) {

@@ -38,7 +38,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'disabled',
       get: function get() {
-        return this.hasAttribute('disabled') && this.getAttribute('disabled') === 'true';
+        return this.hasAttribute('disabled') && this.getAttribute('disabled') !== 'false';
       },
       set: function set(value) {
         var isDisabled = Boolean(value);
