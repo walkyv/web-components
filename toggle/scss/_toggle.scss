@@ -28,11 +28,12 @@ $pe-focus-outline-distance: 8px;
   min-width: 50px;
 }
 
-:host([on]) {
+:host([on]:not([on='false'])) {
   background: $pe-color-digital-pearson-blue;
 }
 
-:host([disabled]) {
+:host([disabled]:not([disabled='false'])) {
+  pointer-events: none;
   color: $pe-color-concrete;
   background-color: $pe-color-moonlight;
   cursor: not-allowed;
@@ -52,11 +53,11 @@ $pe-focus-outline-distance: 8px;
   border-radius: 100%;
 }
 
-:host([on])::before {
+:host([on]:not([on='false']))::before {
   left: 27px;
 }
 
-:host([disabled])::before {
+:host([disabled]:not([disabled='false']))::before {
   background-color: $pe-color-concrete;
 }
 
@@ -96,7 +97,7 @@ svg[class*="remove"] {
 }
 
 :host(:not([on])) svg[class*="check"],
-:host([on]) svg[class*="remove"] {
+:host([on]:not([on='false'])) svg[class*="remove"] {
   display: none;
 }
 
