@@ -33,6 +33,7 @@ $pe-focus-outline-distance: 8px;
 }
 
 :host([disabled]:not([disabled='false'])) {
+  pointer-events: none;
   color: $pe-color-concrete;
   background-color: $pe-color-moonlight;
   cursor: not-allowed;
