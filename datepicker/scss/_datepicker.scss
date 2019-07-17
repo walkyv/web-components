@@ -74,7 +74,7 @@ $box-shadow: rgba(0, 0, 0, .25);
 .datepicker-container {
   position:relative;
   min-width:150px;
-  width: 322px;
+  max-width:400px;
   font-family: 'Open Sans', Calibri, Tahoma, sans-serif;
   @media all and (-ms-high-contrast:none) {
     max-width:350px;
@@ -82,9 +82,6 @@ $box-shadow: rgba(0, 0, 0, .25);
 
   .datepicker {
     position:relative;
-    input {
-      border: 1px solid #252525
-    }
     button {
       bottom: -6px;
       color: #6a7070;
@@ -93,11 +90,23 @@ $box-shadow: rgba(0, 0, 0, .25);
       margin: 0;
     }
     input:focus {
-      :focus {
-        outline: 0;
-        box-shadow: 0 0 0 2px white, 0 0 0 4px #0b73da
-      }
+      position: relative;
+      outline: 0;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 4px $pe-focus-color;
+      z-index: 1;
     }
+
+    input[disabled] {
+      color: $pe-color-concrete;
+      background-color: $pe-color-moonlight;
+      cursor: not-allowed;
+    }
+
+    input[readonly] {
+      border-color: transparent;
+      background-color: transparent;
+    }
+
     svg {
       fill: #6A7070
     }
@@ -137,7 +146,7 @@ $box-shadow: rgba(0, 0, 0, .25);
   padding: 0 12px;
   height:36px;
   color: $neutral-high-one;
-  border:1px solid $neutral-high-two;
+  border:1px solid $neutral-med-two;
   background:$white;
   border-radius:4px;
   font-size:em(14);

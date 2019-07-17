@@ -1,7 +1,7 @@
 @import "../node_modules/@pearson-components/elements-sdk/src/styles/base/variables";
 @import "../node_modules/@pearson-components/elements-sdk/src/styles/base/mixins";
 
-.pe-calendar {
+.gr-calendar-container {
   box-sizing: content-box;
   width: 280px;
   min-height: 284px;
@@ -10,95 +10,123 @@
   z-index: 1;
   border: 1px solid $pe-color-concrete;
   background-color: $pe-color-white;
-  //position: absolute; //better to have absolute positioning in datepicker?
+  border-radius:5px;
+
   @media all and (-ms-high-contrast:none) {
-    width: 308px;
+    width: 320px;
   }
 
   fieldset {
     margin:0;
     border:0;
     padding:0;
+
+    legend {
+      padding: 8px;
+      text-align: left;
+      margin-bottom: 8px;
+      width: -webkit-calc(100% - 84px);
+      width: calc(100% - 84px);
+      display: inline-block;
+      float: left;
+      font-size: 18px;
+    }
   }
-  .pe-cal-actions {
+  .actions {
     display:inline-flex;
     width:80px;
-  }
-  .pe-cal-title {
-    padding: 8px;
-    text-align:left;
-    margin-bottom: 8px;
-    width: calc(100% - 84px);
-    display:inline-block;
-    float:left;
-  }
 
-  .pe-arrowIcons {
-    cursor: pointer;
-    height: 40px;
-    color: $pe-color-medium-gray;
-    text-align: center;
-    width: 40px;
-    display:inline;
+    .gr-btn {
+      margin:0;
+      padding:0;
+      height: 40px;
+      width: 40px;
+      color: $pe-color-medium-gray;
 
-    &:hover {
-      color: $pe-color-charcoal;
-    }
-    &:focus {
-      color: $pe-color-charcoal;
-      outline:none;
-      @include focusPseudoOutline(0px, -4px, -4px, 0px, 0px);
+      &:hover {
+        color: $pe-color-charcoal;
+      }
+      &:focus {
+        color: $pe-color-charcoal;
+        outline: 2px solid #1977D4;
+        outline-offset: 2px;
+        //box-shadow: 0 0 0 0px white, 0 0 0 2px #1977D4;
+        //border-radius: 4px;
+
+      }
+
+
+
     }
   }
-  .pe-cal-weekdays div {
+
+  .weekdays div {
     height: 40px;
     color: $pe-color-medium-gray;
     line-height: 40px;
+    font-size:12px;
   }
-  .pe-cal-row {
+  .row {
     display:grid;
     grid-template-columns: repeat(7, 40px);
     clear:both;
   }
 
-  .pe-cal-cell {
+  abbr {
+    text-decoration:none;
+  }
+
+  .cell {
     display: inline-block;
     vertical-align: top;
     text-align: center;
     width: 40px;
+    height: 40px;
 
-    button {
+    &.currentDate-box {
+      width: 36px;
+      height: 36px;
+      margin: 1px;
+      line-height: 36px;
+      border-radius: 0;
       padding:0;
-      border:0;
-      position:relative;
-      cursor:pointer;
-      display:block;
+      border: 1px solid $pe-color-concrete;
+      background:transparent;
 
-      &.currentDate-box {
-        width: 36px;
-        height: 36px;
-        margin: 1px;
-        line-height: 36px;
-        border-radius: 0;
-        padding:0;
-        border: 1px solid $pe-color-concrete;
-        background:transparent;
-
-        .pe-cal-cell-square {
-          margin: 2px;
-        }
-
+      .date-selector {
+        margin: 2px;
       }
 
-      &.pe-cal-selected .pe-cal-cell-square {
+    }
+
+    button {
+      background: none;
+      padding: 0;
+      border: 0;
+      position: relative;
+      cursor: pointer;
+      display: block;
+      height: 32px;
+      width: 32px;
+      margin: 4px;
+      line-height: 32px;
+      border-radius: 50%;
+      font-size: 14px;
+
+      &.selected {
         font-weight: 600;
         color: $pe-color-white;
         background-color: $pe-color-medium-gray;
       }
 
+      &:focus {
+        outline: 2px solid #1977D4;
+        outline-offset: 2px;
+      }
+
     }
   }
-  .pe-cal-cell-square {
+  .date-selector {
     height: 32px;
     width: 32px;
     margin: 4px;
@@ -106,11 +134,11 @@
     border-radius: 16px;
 
   }
-  .pe-cal-date.pe-cal-past {
+  .date.past {
     height: 40px;
     line-height: 38px;
   }
-  .pe-cal-past .pe-cal-cell-square {
+  .past .date-selector {
     color: $pe-color-concrete;
     cursor: not-allowed;
   }
@@ -123,23 +151,24 @@
     background-color: $pe-color-ink-blue;
     border: 1px solid $pe-color-ink-blue;
 
-    .pe-cal-title,
-    .pe-arrowIcons,
-    .pe-cal-weekdays div,
-    .pe-cal-cell-square {
+    .title,
+    .actions button,
+    .weekdays div,
+    .cell,
+    .date-selector {
       color: $pe-color-white;
     }
-    .pe-arrowIcons:hover, .pe-arrowIcons:focus {
+    .actions button:hover, .actions button:focus {
       color: $pe-color-concrete;
     }
 
-    .pe-cal-date .pe-cal-selected .pe-cal-cell-square {
+    .date .selected {
       color: $pe-color-charcoal;
       background-color: $pe-color-white;
     }
 
 
-    .pe-cal-past .pe-cal-cell-square {
+    .past .date-selector {
       color: $pe-color-digital-pearson-blue;
       cursor: not-allowed;
     }
@@ -147,21 +176,13 @@
   }
 }
 
-.pe-icon--btn {
+.gr-btn {
   padding:0;
   background-color: transparent;
   border:0;
   position:relative;
 }
-.pe-icon-wrapper {
-  button {
-    color:$pe-color-medium-gray;
-    cursor:pointer;
-  }
-  @media all and (-ms-high-contrast:none) {
-   bottom: calc(50% - 12px) !important
-  }
-}
+
 .date-selector {
   background:none;
   &:hover {
