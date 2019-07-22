@@ -1,3 +1,4 @@
+
 # Pearson Tab Navigation Web Component
 
 ## Table of Contents
@@ -8,7 +9,8 @@
 4. [Structure](#usage-structure)
 5. [API](#api)
    1. [Attributes](#api-attributes)
-   2. [Example](#api-example)
+   2. [Events](#api-events)
+   3. [Example](#api-example)
 6. [React](#react)
 
 A shareable, accessible tab-navigation with calendar.
@@ -140,6 +142,14 @@ All attributes in this API are optional.
 
 **Important Note:** The `activeIdx` attrubute is managed by the component, and will change as the user selects tabs.
 
+  <a name="api-events"></a>
+
+### Emitted Events
+
+| Event    | Description                                                  |
+| -------- | ------------------------------------------------------------ |
+| `tabChange` | Will fire when the tab navigation is triggered via mouse or keyboard |
+
 <a name="api-example"></a>
 
 ### Example
@@ -172,10 +182,10 @@ Then use the markup in your JSX code.  You can pass props in to available API at
 
 ```js
 render () {
-	return (
-		<div>
-			<pearson-tabs></pearson-tabs>
-		</div>
-	)
+   return (
+      <div>
+         <pearson-tabs></pearson-tabs>
+      </div>
+   )
 }
 ```

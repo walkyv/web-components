@@ -211,8 +211,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'onShadowRootClick',
       value: function onShadowRootClick(e) {
         if (!e.target.matches('button[id^="tab"]')) return;
-
         this.activeIdx = indexOf.call(this.tabs, e.target);
+        this.dispatchEvent(new CustomEvent('tabChange', {
+          detail: {
+            on: this.on
+          },
+          bubbles: true
+        }));
       }
     }, {
       key: 'onShadowRootKeydown',
@@ -230,6 +235,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           e.preventDefault();
           this.activeIdx = nextIdx;
         }
+        this.dispatchEvent(new CustomEvent('tabChange', {
+          detail: {
+            on: this.on
+          },
+          bubbles: true
+        }));
       }
     }]);
 
