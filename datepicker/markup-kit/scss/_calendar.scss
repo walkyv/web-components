@@ -1,9 +1,6 @@
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/variables";
-@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/mixins";
 
 .gr-calendar-container {
   box-sizing: content-box;
-  width: 280px;
   min-height: 284px;
   color: $pe-color-charcoal;
   padding: 16px 20px 20px;
