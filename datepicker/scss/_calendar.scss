@@ -199,3 +199,13 @@
 }
 
 
+@media all and (-ms-high-contrast:none) {
+ .dates > .row {
+   display:flex;
+ }
+}
+@media all and (-ms-high-contrast:none) {
+  .gr-calendar-container .row {
+    display:flex;
+  }
+}

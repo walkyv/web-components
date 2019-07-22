@@ -28,7 +28,7 @@
     "moment-range": "^4.0.1"
   },
   "devDependencies": {
-    "autoprefixer": "^9.4.3",
+    "autoprefixer": "^9.6.1",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.26.3",
