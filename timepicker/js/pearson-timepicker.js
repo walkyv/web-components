@@ -14,7 +14,7 @@
     timeItem = doc.createElement('template'),
     checkIcon = `
       <svg
-        class="pe-icon"
+        class="gr-icon"
         aria-hidden="true"
         focusable="false"
         style="width:18px;height:18px;"
@@ -24,7 +24,7 @@
     `,
     clockIcon = `
       <svg
-        class="pe-icon"
+        class="gr-icon"
         aria-hidden="true"
         focusable="false"
         style="width:18px;height:18px;" 
@@ -56,12 +56,12 @@
 
   template.innerHTML = `
 <style>
-input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7c7;border-radius:4px;margin-top:6px}input:focus{position:relative;outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #0b73da;box-shadow:0 0 0 2px #fff,0 0 0 4px #0b73da;z-index:1}input[disabled]{color:#c7c7c7;background-color:#e9e9e9;cursor:not-allowed}input[readonly]{border-color:transparent;background-color:transparent}ul{list-style-type:none;padding:0;margin:0}svg{fill:currentColor;vertical-align:top}:host,:host *,:host :after,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box;font:14px/18px Open Sans,Calibri,Tahoma,sans-serif}:host{position:relative;display:inline-block;max-width:400px;color:#252525}.pe-icon{position:absolute;color:#6a7070;pointer-events:none}.timepicker{position:relative}.timepicker .pe-icon{right:14px;top:33px;z-index:2}.timepicker-label{font-size:12px;line-height:16px;color:#6a7070}.timepicker-input{min-width:150px;margin-bottom:4px}.timepicker-input[aria-invalid=true]{border-color:#db0020;margin-bottom:0}.timepicker-input[aria-invalid=true]:focus{-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020;box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020}.timepicker-input[aria-invalid=true]~.timepicker-error{display:block}.timepicker-error{font-size:12px;line-height:16px;color:#db0020;margin-top:4px;margin-bottom:2px}.timepicker-error:empty{display:none}.listbox-wrapper{position:absolute;width:100%;z-index:999;visibility:hidden}:host([open]) .listbox-wrapper{visibility:visible}.listbox{min-width:220px;width:100%;max-height:300px;border:1px solid #c7c7c7;border-radius:2px;overflow-y:auto;background-color:#fff;visibility:hidden}.listbox-item{cursor:pointer;position:relative;padding:4px 24px}.listbox-item.focused,.listbox-item:hover{background-color:#e9e9e9}.listbox-item.focused{border-radius:4px;-webkit-box-shadow:inset 0 0 0 2px #0b73da;box-shadow:inset 0 0 0 2px #0b73da}.listbox-item>*{pointer-events:none}.listbox-item .pe-icon{display:none;left:5px}.listbox-item.selected .pe-icon{display:block}.hidden{display:none}::-ms-clear{width:0;height:0}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);visibility:visible}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);visibility:visible}}@-webkit-keyframes fadeOutUp{0%{visibility:visible}to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{visibility:visible}to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{visibility:hidden;opacity:0}to{opacity:1;visibility:visible}}@keyframes fadeIn{0%{visibility:hidden;opacity:0}to{opacity:1;visibility:visible}}@-webkit-keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s;visibility:visible}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s;visibility:hidden}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}
+:host,:host *,:host *:after,:host *:before{box-sizing:border-box;font:14px/18px "Open Sans",Calibri,Tahoma,sans-serif}:host{position:relative;display:inline-block;max-width:400px;color:#252525}.pe-icon{position:absolute;color:#6a7070;pointer-events:none}*{font-family:"Open Sans"}html{box-sizing:border-box;font-size:14px}*{box-sizing:border-box}abbr{text-decoration:none}html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}svg{fill:currentColor}.gr-h1{font-size:24px;line-height:28px;font-weight:normal;margin-top:0}.gr-h2{font-size:20px;line-height:26px;font-weight:normal;margin-top:0}.gr-h3{font-size:18px;line-height:24px;font-weight:normal;margin-top:0}.gr-label{font-size:12px;line-height:16px;color:#6a7070;display:block;margin-bottom:4px}.gr-meta{font-size:12px;line-height:12px;color:#6a7070}.gr-semi-bold{font-weight:600}.gr-font-large{font-size:16px;line-height:24px}.gr-font-normal{font-size:14px;line-height:20px}.gr-btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:16px;cursor:pointer;border-radius:22px;position:relative;margin:12px}.gr-btn:hover{color:#252525;border:1px solid #252525}.gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}.gr-btn.primary:hover{color:#fff;background-color:#035f79}.gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}.gr-btn.attention:hover{background-color:#f7aa00}.gr-btn.small{min-width:128px;padding:7px 20px;font-size:14px}.gr-btn.small:focus:after{padding:18px 21px}.gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:16px}.gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}.gr-btn:disabled{background-color:#e9e9e9 !important;color:#6a7070 !important;border:0 !important;cursor:default !important}.gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}.gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}.gr-btn.no-border{border:0}.gr-btn.no-border:hover{border:0}.gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}.gr-input{display:block;margin:4px 0;padding:0 12px;height:36px;color:#252525;border:1px solid #c7c7c7;background:#fff;border-radius:4px;font-size:14px;width:100%;max-width:100%}.gr-input.error{border-color:#db0020}.gr-input[aria-invalid=true]{border-color:#db0020;margin-bottom:0}.gr-input[aria-invalid=true]:focus{box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020}.gr-input:focus{outline:0;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}.gr-input:disabled{color:#c7c7c7;background-color:#e9e9e9}.gr-input:read-only{border:0}.gr-label{font-size:12px;line-height:16px;color:#6a7070;display:block;margin-bottom:4px}.no-border{border:0}.icon-18{width:18px;height:18px}.icon-24{width:24px;height:24px}button:focus{outline:2px solid #1977d4;outline-offset:2px}input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7c7;border-radius:4px;margin-top:6px}input:focus{position:relative;outline:0;box-shadow:0 0 0 2px #fff,0 0 0 4px #0b73da;z-index:1}input[disabled]{color:#c7c7c7;background-color:#e9e9e9;cursor:not-allowed}input[readonly]{border-color:transparent;background-color:transparent}ul{list-style-type:none;padding:0;margin:0}svg{fill:currentColor;vertical-align:top}.timepicker{position:relative}.timepicker .gr-icon{right:14px;top:33px;z-index:2}.timepicker .gr-input{min-width:150px;margin-bottom:4px}.timepicker .gr-input[aria-invalid=true]~.error-msg{display:block}.error-msg:empty{display:none}.listbox-wrapper{position:absolute;width:100%;z-index:999;visibility:hidden}:host([open]) .listbox-wrapper{visibility:visible}.listbox{min-width:220px;width:100%;max-height:300px;border:1px solid #c7c7c7;border-radius:2px;overflow-y:auto;background-color:#fff;visibility:hidden}.listbox-item{cursor:pointer;position:relative;padding:4px 24px}.listbox-item:hover,.listbox-item.focused{background-color:#e9e9e9}.listbox-item.focused{border-radius:4px;box-shadow:inset 0 0 0 2px #0b73da}.listbox-item>*{pointer-events:none}.listbox-item .pe-icon{display:none;left:5px}.listbox-item.selected .pe-icon{display:block}.hidden{display:none}::-ms-clear{width:0;height:0}@keyframes slideInUp{from{transform:translate3d(0, 100%, 0);visibility:hidden}to{transform:translate3d(0, 0, 0);visibility:visible}}@keyframes fadeOutUp{from{visibility:visible}to{visibility:hidden;transform:translate3d(0, -100%, 0)}}@keyframes fadeIn{0%{visibility:hidden;opacity:0}100%{opacity:1;visibility:visible}}@keyframes fadeOut{0%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}.animated{animation-duration:1s;animation-fill-mode:forwards}@media screen and (prefers-reduced-motion: reduce){.animated{animation:unset !important}}.animateIn{animation-name:fadeIn;animation-duration:.5s;visibility:visible}@media(max-width: 480px){.animateIn{animation-name:slideInUp}}.animateOut{animation-name:fadeOut;animation-duration:.2s;visibility:hidden}@media(max-width: 480px){.animateOut{animation-name:fadeOutUp}}
 </style>
   <div class="timepicker">
     <label
       id="timepicker-label"
-      class="timepicker-label"
+      class="gr-label"
       for="timepicker-input"
     >
       Select time (HH:MM AM/PM)
@@ -69,7 +69,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     <input 
       type="text" 
       id="timepicker-input"
-      class="timepicker-input"
+      class="gr-input"
       role="combobox"
       aria-autocomplete="list"
       aria-haspopup="listbox"
@@ -79,7 +79,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       ${clockIcon} 
     <p 
       id="timepicker-error"
-      class="timepicker-error"
+      class="error-msg"
       role="alert"
       aria-live="assertive"
     ></p>
@@ -306,12 +306,12 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     connectedCallback() {
       const defaultValue = this.getAttribute('defaultValue');
       const labelText = this.getAttribute('label') || '';
-      
+
       // Emsure that IDs are unique since IE does not properly encapsulate them.
       const inputId = this.input.id + '-' + encodeURIComponent(labelText);
 
       this.input.id = inputId;
-      
+
       this.label.setAttribute('for', inputId);
       this.label.textContent = `${labelText} (${
         this.hours === '12' ? 'HH:MM AM/PM' : 'HH:MM'

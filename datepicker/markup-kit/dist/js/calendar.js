@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var calendars = document.querySelectorAll(".pe-calendar");
+  var calendars = document.querySelectorAll(".calendar");
 
   function unfocusAll(node) {
     var dates = node.querySelectorAll(".date-selector:not(:disabled)");
@@ -11,7 +11,7 @@
   }
 
   calendars.forEach(function (calendar) {
-    var grid = calendar.querySelector(".pe-cal-dates"),
+    var grid = calendar.querySelector(".dates"),
         dates = calendar.querySelectorAll(".date-selector:not(:disabled)"),
         activeDescendant = grid.getAttribute("aria-activedescendant");
 
@@ -22,12 +22,12 @@
         var oldLabel = date.getAttribute("aria-label"),
             newLabel = oldLabel.replace(" (Selected)", "");
         date.setAttribute("aria-pressed", "false");
-        if (date.classList.contains("pe-cal-selected")) {
-          date.classList.remove("pe-cal-selected");
+        if (date.classList.contains("selected")) {
+          date.classList.remove("selected");
           date.setAttribute("aria-label", newLabel);
         }
       });
-      date.classList.add("pe-cal-selected");
+      date.classList.add("selected");
       date.setAttribute("aria-pressed", "true");
       date.setAttribute("aria-label", currentLabel + " (Selected)");
     }

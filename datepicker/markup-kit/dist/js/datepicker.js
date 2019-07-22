@@ -1,7 +1,7 @@
 (function (win, doc) {
   'use strict';
 
-  var datepickers = document.querySelectorAll('.datepicker-container');
+  var datepickers = document.querySelectorAll('.gr-datepicker-container');
 
   function closeCalendar(node, input, btn) {
     node.style.display = 'none';
@@ -43,8 +43,8 @@
   Array.prototype.forEach.call(datepickers, function (datepicker) {
     var input = datepicker.querySelector('input'),
         openCalendarBtn = datepicker.querySelector('.open-calendar'),
-        calendar = datepicker.querySelector('.calendar-container'),
-        dates = calendar.querySelectorAll(".pe-cal-dates button:not(:disabled)"),
+        calendar = datepicker.querySelector('.gr-calendar-container'),
+        dates = calendar.querySelectorAll(".dates button:not(:disabled)"),
         focusableElements = dates;
 
     Array.prototype.forEach.call(focusableElements, function (el, index) {
@@ -70,8 +70,8 @@
     });
 
     calendar.addEventListener('animationend', function (event) {
-      var calendar = datepicker.querySelector('.calendar-container'),
-          dates = calendar.querySelectorAll(".pe-cal-dates button:not(:disabled)"),
+      var calendar = datepicker.querySelector('.gr-calendar-container'),
+          dates = calendar.querySelectorAll(".dates button:not(:disabled)"),
           focusableElements = dates,
           firstFocusableElement = focusableElements[0],
           lastFocusableElement = focusableElements[focusableElements.length - 1];

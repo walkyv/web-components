@@ -9,15 +9,6 @@ $pe-color-strawberry-red: #db0020;
 
 /* RESETS */
 
-input {
-  display: block;
-  width: 100%;
-  height: 36px;
-  padding: 0 14px;
-  border: 1px solid $pe-color-concrete;
-  border-radius: 4px;
-  margin-top: 6px;
-}
 input:focus {
   position: relative;
   outline: 0;
@@ -62,8 +53,8 @@ svg {
   color: $pe-color-charcoal;
 }
 
-.pe-icon {
-  position: absolute;
+.gr-icon {
+  position:absolute;
   color: $pe-color-medium-gray;
   pointer-events: none;
 }
@@ -74,45 +65,23 @@ svg {
   position: relative;
 }
 
-.timepicker .pe-icon {
+.timepicker .gr-icon {
   right: 14px;
-  top: 33px;
+  top: 29px;
   z-index: 2;
+  position: absolute;
 }
 
-.timepicker-label {
-  font-size: 12px;
-  line-height: 16px;
-  color: $pe-color-medium-gray;
-}
-
-.timepicker-input {
+.timepicker .gr-input {
   min-width: 150px;
   margin-bottom: 4px;
 }
 
-.timepicker-input[aria-invalid='true'] {
-  border-color: $pe-color-strawberry-red;
-  margin-bottom: 0;
-}
-
-.timepicker-input[aria-invalid='true']:focus {
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px $pe-color-strawberry-red;
-}
-
-.timepicker-input[aria-invalid='true'] ~ .timepicker-error {
+.timepicker .gr-input[aria-invalid='true'] ~ .error-msg {
   display: block;
 }
 
-.timepicker-error {
-  font-size: 12px;
-  line-height: 16px;
-  color: $pe-color-strawberry-red;
-  margin-top: 4px;
-  margin-bottom: 2px;
-}
-
-.timepicker-error:empty {
+.error-msg:empty {
   display: none;
 }
 
@@ -160,11 +129,11 @@ svg {
   pointer-events: none;
 }
 
-.listbox-item .pe-icon {
+.listbox-item .gr-icon {
   display: none;
   left: 5px;
 }
-.listbox-item.selected .pe-icon {
+.listbox-item.selected .gr-icon {
   display: block;
 }
 
