@@ -1,2 +1,11 @@
-@import "./_elements.scss";
-@import "./_example.scss";
+:host {
+  @import '../node_modules/@pearson-ux/gravity-css/variables';
+  @import '../node_modules/@pearson-ux/gravity-css/reset';
+  @import '../node_modules/@pearson-ux/gravity-css/global';
+  @import '../node_modules/@pearson-ux/gravity-css/helpers';
+  @import '../node_modules/@pearson-ux/gravity-css/buttons';
+  @import '../node_modules/@pearson-ux/gravity-css/markup-kits/dropdown';
+  @import './animation';
+  @import './dropdown';
+}
+

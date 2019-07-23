@@ -23,7 +23,7 @@
   "homepage": "https://github.com/pearson-ux/web-components/blob/master/example/README.md",
   "dependencies": {
     "@pearson-components/elements-sdk": "git+https://github.com/Pearson-Higher-Ed/elements-sdk.git#unstable-2.0-GLP",
-    "@pearson-ux/gravity-css": "^0.2.1"
+    "@pearson-ux/gravity-css": "^0.2.2"
   },
   "devDependencies": {
     "autoprefixer": "^9.4.3",
