@@ -71,7 +71,12 @@
   /** Any helper functions that do not need to be part of the class
    * can be declared here, before the class is defined.
    */
-  function buildListItems (content) {
+
+  function getFocusableElements(node) {
+    return node.querySelectorAll('[role^="menuitem"]');
+  }
+
+  function buildListItems (content, multiSelect) {
     const li = item.content.cloneNode(true),
       text = li.querySelector('.option-text'),
       button = li.querySelector('button');
@@ -82,15 +87,24 @@
       button.parentNode.classList.add('seperator');
     }
 
-    console.log(li)
 
     button.addEventListener('click', event => {
-      const ariaChecked = event.target.getAttribute('aria-checked');
-      if (ariaChecked === 'false') {
-        event.target.setAttribute('aria-checked', true)
+      // unless multi select, only select one item at a time.
+      if (multiSelect) {
+        const ariaChecked = event.target.getAttribute('aria-checked');
+        if (ariaChecked === 'false') {
+          event.target.setAttribute('aria-checked', true)
+        } else {
+          event.target.setAttribute('aria-checked', false)
+        }
       } else {
-        event.target.setAttribute('aria-checked', false)
+        const focusItems = getFocusableElements(event.target.parentNode.parentNode);
+        focusItems.forEach(item => {
+          item.setAttribute('aria-checked', false)
+        })
+        event.target.setAttribute('aria-checked', true)
       }
+
     });
 
     return li;
@@ -98,7 +112,7 @@
 
   class Dropdown extends HTMLElement {
     static get observedAttributes() {
-      return ['buttonText', 'textOnly', 'open'];
+      return ['buttonText', 'textOnly', 'open', 'value', 'multiSelect'];
     }
 
     get buttonText() {
@@ -107,6 +121,10 @@
 
     get textOnly() {
       return this.hasAttribute('textOnly');
+    }
+
+    get multiSelect() {
+      return this.hasAttribute('multiSelect');
     }
 
     get open() {
@@ -188,9 +206,10 @@
 
           // render list items based on items in slot
           itemContent.forEach(content => {
-            console.log(content)
-            dropdownMenuTemplate.appendChild(buildListItems(content));
+            dropdownMenuTemplate.appendChild(buildListItems(content, this.multiSelect));
           })
+
+
 
       } else if (name === 'open' && newValue === null) {
         const dropdownMenu = this.shadowRoot.querySelector('.dropdown-menu');

@@ -32,7 +32,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   /** Any helper functions that do not need to be part of the class
    * can be declared here, before the class is defined.
    */
-  function buildListItems(content) {
+
+  function getFocusableElements(node) {
+    return node.querySelectorAll('[role^="menuitem"]');
+  }
+
+  function buildListItems(content, multiSelect) {
     var li = item.content.cloneNode(true),
         text = li.querySelector('.option-text'),
         button = li.querySelector('button');
@@ -43,14 +48,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       button.parentNode.classList.add('seperator');
     }
 
-    console.log(li);
-
     button.addEventListener('click', function (event) {
-      var ariaChecked = event.target.getAttribute('aria-checked');
-      if (ariaChecked === 'false') {
-        event.target.setAttribute('aria-checked', true);
+      // unless multi select, only select one item at a time.
+      if (multiSelect) {
+        var ariaChecked = event.target.getAttribute('aria-checked');
+        if (ariaChecked === 'false') {
+          event.target.setAttribute('aria-checked', true);
+        } else {
+          event.target.setAttribute('aria-checked', false);
+        }
       } else {
-        event.target.setAttribute('aria-checked', false);
+        var focusItems = getFocusableElements(event.target.parentNode.parentNode);
+        focusItems.forEach(function (item) {
+          item.setAttribute('aria-checked', false);
+        });
+        event.target.setAttribute('aria-checked', true);
       }
     });
 
@@ -71,6 +83,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return this.hasAttribute('textOnly');
       }
     }, {
+      key: 'multiSelect',
+      get: function get() {
+        return this.hasAttribute('multiSelect');
+      }
+    }, {
       key: 'open',
       get: function get() {
         return this.getAttribute('open');
@@ -81,7 +98,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['buttonText', 'textOnly', 'open'];
+        return ['buttonText', 'textOnly', 'open', 'value', 'multiSelect'];
       }
     }]);
 
@@ -142,6 +159,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
+        var _this2 = this;
+
         if (name === 'open' && newValue === 'true') {
           var dropdownMenu = menu.content.cloneNode(true),
               dropdownItem = item.content.cloneNode(true),
@@ -161,8 +180,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
           // render list items based on items in slot
           itemContent.forEach(function (content) {
-            console.log(content);
-            dropdownMenuTemplate.appendChild(buildListItems(content));
+            dropdownMenuTemplate.appendChild(buildListItems(content, _this2.multiSelect));
           });
         } else if (name === 'open' && newValue === null) {
           var _dropdownMenu = this.shadowRoot.querySelector('.dropdown-menu');
