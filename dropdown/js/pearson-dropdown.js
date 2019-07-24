@@ -76,13 +76,12 @@
     return node.querySelectorAll('[role^="menuitemradio"]');
   }
 
-  function buildListItems (content, component, menu, index) {
+  function buildListItems (content, component, menu, index, checked) {
     const li = item.content.cloneNode(true),
       text = li.querySelector('.option-text'),
       button = li.querySelector('button'),
-      dropdownButton = component.shadowRoot.querySelector('button'),
-      firstFocusableElement = getFocusableElements(menu)[0],
-      lastFocusableElement = getFocusableElements(menu)[getFocusableElements(menu).length - 1];
+      dropdownButton = component.shadowRoot.querySelector('button');
+
 
     text.innerHTML = content.text;
     if (content.value) {
@@ -92,6 +91,14 @@
     }
     if (content.divider === true) {
       button.parentNode.classList.add('seperator');
+    }
+
+    if (checked !== undefined && checked.length > 0) {
+      checked.forEach(item => {
+        if (parseInt(item.getAttribute('data-index')) === index) {
+          button.setAttribute('aria-checked', true);
+        }
+      })
     }
 
     button.setAttribute('data-index', index);
@@ -113,7 +120,6 @@
         event.target.setAttribute('aria-checked', true);
         component.setAttribute('value', content.id);
         component.removeAttribute('open');
-        menu.remove();
         dropdownButton.focus();
       }
     });
@@ -182,29 +188,36 @@
       super();
       this.attachShadow({ mode: 'open' });
       const clone = template.content.cloneNode(true);
-
-      /** If we need references to the children of the component,
-       * we can create them here. If they are created elsewhere,
-       * they will not be available our lifecycle methods.
-       */
-
-      /** After all this, we can append our clone to the shadowRoot */
       this.shadowRoot.appendChild(clone);
-      /** We should also bind any event listeners to `this` so their
-       * references do not get lost.
-       */
-      // this.handleClick = this.handleClick.bind(this);
-      this.openDropdown = this.openDropdown.bind(this)
+
+      this.openDropdown = this.openDropdown.bind(this);
+      this.closeDropdown = this.closeDropdown.bind(this);
+      this.returnChecked = this.returnChecked.bind(this);
     }
 
     openDropdown () {
       if (this.open === null) {
         this.open = true;
         this.button.setAttribute('aria-expanded', true);
+
       } else if (this.open) {
-        this.removeAttribute('open');
-        this.button.setAttribute('aria-expanded', false);
+        this.closeDropdown();
       }
+    }
+
+    closeDropdown () {
+      this.checked = this.returnChecked();
+      this.removeAttribute('open');
+      this.button.setAttribute('aria-expanded', false);
+      this.button.focus();
+    }
+
+    returnChecked () {
+      let checked = [];
+      if (this.multiSelect) {
+        checked = this.shadowRoot.querySelectorAll('[aria-checked="true"]');
+      }
+      return checked
     }
 
     connectedCallback() {
@@ -214,6 +227,7 @@
         dropdownTemplate.appendChild(dropdownTrigger);
 
       this.button = dropdownTemplate.querySelector('button');
+
       const buttonText = dropdownTemplate.querySelector('button .dropdown-text');
       buttonText.innerHTML = this.buttonText;
 
@@ -234,15 +248,14 @@
            }
            target = target.parentNode;
          } while (target);
-         this.removeAttribute('open')
-         this.button.focus();
+         this.closeDropdown();
+
        }
       })
 
       doc.addEventListener('keydown', event => {
         if (this.open === 'true' && event.key === 'Escape') {
-          this.removeAttribute('open');
-          this.button.focus();
+          this.closeDropdown();
         }
       })
 
@@ -252,7 +265,6 @@
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'open' && newValue === 'true') {
         const dropdownMenu = menu.content.cloneNode(true),
-          dropdownItem = item.content.cloneNode(true),
           dropdownTemplate = this.shadowRoot.querySelector('.gr-dropdown-container');
 
           dropdownTemplate.appendChild(dropdownMenu);
@@ -264,12 +276,17 @@
           // get items from slot to render new list for dropdown
           items.forEach(item => {
             item.style.display = 'none';
-            itemContent.push({divider: item.classList.contains('divider'), text: item.innerHTML, id: item.id, multiSelect: this.multiSelect, value: this.value});
+            itemContent.push({
+              divider: item.classList.contains('divider'),
+              text: item.innerHTML,
+              id: item.id,
+              multiSelect: this.multiSelect,
+              value: this.value});
           });
 
           // render list items based on items in slot
           itemContent.forEach((content,index) => {
-            dropdownMenuTemplate.appendChild(buildListItems(content, this, dropdownMenuTemplate, index));
+            dropdownMenuTemplate.appendChild(buildListItems(content, this, dropdownMenuTemplate, index, this.checked));
           })
 
       } else if (name === 'open' && newValue === null) {

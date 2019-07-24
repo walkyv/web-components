@@ -37,13 +37,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     return node.querySelectorAll('[role^="menuitemradio"]');
   }
 
-  function buildListItems(content, component, menu, index) {
+  function buildListItems(content, component, menu, index, checked) {
     var li = item.content.cloneNode(true),
         text = li.querySelector('.option-text'),
         button = li.querySelector('button'),
-        dropdownButton = component.shadowRoot.querySelector('button'),
-        firstFocusableElement = getFocusableElements(menu)[0],
-        lastFocusableElement = getFocusableElements(menu)[getFocusableElements(menu).length - 1];
+        dropdownButton = component.shadowRoot.querySelector('button');
 
     text.innerHTML = content.text;
     if (content.value) {
@@ -53,6 +51,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }
     if (content.divider === true) {
       button.parentNode.classList.add('seperator');
+    }
+
+    if (checked !== undefined && checked.length > 0) {
+      checked.forEach(function (item) {
+        if (parseInt(item.getAttribute('data-index')) === index) {
+          button.setAttribute('aria-checked', true);
+        }
+      });
     }
 
     button.setAttribute('data-index', index);
@@ -74,7 +80,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         event.target.setAttribute('aria-checked', true);
         component.setAttribute('value', content.id);
         component.removeAttribute('open');
-        menu.remove();
         dropdownButton.focus();
       }
     });
@@ -155,19 +160,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.attachShadow({ mode: 'open' });
       var clone = template.content.cloneNode(true);
-
-      /** If we need references to the children of the component,
-       * we can create them here. If they are created elsewhere,
-       * they will not be available our lifecycle methods.
-       */
-
-      /** After all this, we can append our clone to the shadowRoot */
       _this.shadowRoot.appendChild(clone);
-      /** We should also bind any event listeners to `this` so their
-       * references do not get lost.
-       */
-      // this.handleClick = this.handleClick.bind(this);
+
       _this.openDropdown = _this.openDropdown.bind(_this);
+      _this.closeDropdown = _this.closeDropdown.bind(_this);
+      _this.returnChecked = _this.returnChecked.bind(_this);
       return _this;
     }
 
@@ -178,9 +175,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.open = true;
           this.button.setAttribute('aria-expanded', true);
         } else if (this.open) {
-          this.removeAttribute('open');
-          this.button.setAttribute('aria-expanded', false);
+          this.closeDropdown();
         }
+      }
+    }, {
+      key: 'closeDropdown',
+      value: function closeDropdown() {
+        this.checked = this.returnChecked();
+        this.removeAttribute('open');
+        this.button.setAttribute('aria-expanded', false);
+        this.button.focus();
+      }
+    }, {
+      key: 'returnChecked',
+      value: function returnChecked() {
+        var checked = [];
+        if (this.multiSelect) {
+          checked = this.shadowRoot.querySelectorAll('[aria-checked="true"]');
+        }
+        return checked;
       }
     }, {
       key: 'connectedCallback',
@@ -193,6 +206,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         dropdownTemplate.appendChild(dropdownTrigger);
 
         this.button = dropdownTemplate.querySelector('button');
+
         var buttonText = dropdownTemplate.querySelector('button .dropdown-text');
         buttonText.innerHTML = this.buttonText;
 
@@ -213,15 +227,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               }
               target = target.parentNode;
             } while (target);
-            _this2.removeAttribute('open');
-            _this2.button.focus();
+            _this2.closeDropdown();
           }
         });
 
         doc.addEventListener('keydown', function (event) {
           if (_this2.open === 'true' && event.key === 'Escape') {
-            _this2.removeAttribute('open');
-            _this2.button.focus();
+            _this2.closeDropdown();
           }
         });
       }
@@ -232,7 +244,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         if (name === 'open' && newValue === 'true') {
           var dropdownMenu = menu.content.cloneNode(true),
-              dropdownItem = item.content.cloneNode(true),
               dropdownTemplate = this.shadowRoot.querySelector('.gr-dropdown-container');
 
           dropdownTemplate.appendChild(dropdownMenu);
@@ -244,12 +255,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           // get items from slot to render new list for dropdown
           items.forEach(function (item) {
             item.style.display = 'none';
-            itemContent.push({ divider: item.classList.contains('divider'), text: item.innerHTML, id: item.id, multiSelect: _this3.multiSelect, value: _this3.value });
+            itemContent.push({
+              divider: item.classList.contains('divider'),
+              text: item.innerHTML,
+              id: item.id,
+              multiSelect: _this3.multiSelect,
+              value: _this3.value });
           });
 
           // render list items based on items in slot
           itemContent.forEach(function (content, index) {
-            dropdownMenuTemplate.appendChild(buildListItems(content, _this3, dropdownMenuTemplate, index));
+            dropdownMenuTemplate.appendChild(buildListItems(content, _this3, dropdownMenuTemplate, index, _this3.checked));
           });
         } else if (name === 'open' && newValue === null) {
           var _dropdownMenu = this.shadowRoot.querySelector('.dropdown-menu');
