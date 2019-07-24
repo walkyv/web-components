@@ -37,7 +37,7 @@
 `;
 
   button.innerHTML = `
-  <button data-action="trigger" aria-haspopup="true" aria-expanded="true" class="gr-btn">
+  <button data-action="trigger" aria-haspopup="true" aria-expanded="false" class="gr-btn">
      <span class="dropdown-text"></span>
       ${expand}
   </button>
@@ -76,21 +76,27 @@
     return node.querySelectorAll('[role^="menuitem"]');
   }
 
-  function buildListItems (content, multiSelect) {
+  function buildListItems (content, component, menu, index) {
     const li = item.content.cloneNode(true),
       text = li.querySelector('.option-text'),
-      button = li.querySelector('button');
+      button = li.querySelector('button'),
+      dropdownButton = component.shadowRoot.querySelector('button'),
+      focusableElements = getFocusableElements(component);
 
     text.innerHTML = content.text;
-
+    if (content.value) {
+      if (content.id === content.value) {
+        button.setAttribute('aria-checked', true);
+      }
+    }
     if (content.divider === true) {
       button.parentNode.classList.add('seperator');
     }
 
-
+    button.setAttribute('data-index', index);
     button.addEventListener('click', event => {
       // unless multi select, only select one item at a time.
-      if (multiSelect) {
+      if (content.multiSelect) {
         const ariaChecked = event.target.getAttribute('aria-checked');
         if (ariaChecked === 'false') {
           event.target.setAttribute('aria-checked', true)
@@ -101,11 +107,30 @@
         const focusItems = getFocusableElements(event.target.parentNode.parentNode);
         focusItems.forEach(item => {
           item.setAttribute('aria-checked', false)
-        })
-        event.target.setAttribute('aria-checked', true)
+        });
+        event.target.setAttribute('aria-checked', true);
+        component.setAttribute('value', content.id);
+        component.removeAttribute('open');
+        menu.remove();
+        dropdownButton.focus();
+        console.log(focusableElements)
       }
-
     });
+
+    button.addEventListener('keydown', event => {
+      var nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
+        prevButton = parseInt(event.target.getAttribute('data-index')) - 1;
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (document.activeElement === firstFocusableElement) {
+          lastFocusableElement.focus();
+        } else {
+          focusableElements[prevButton].focus();
+        }
+      }
+      console.log(nextButton)
+    })
 
     return li;
   }
@@ -125,6 +150,10 @@
 
     get multiSelect() {
       return this.hasAttribute('multiSelect');
+    }
+
+    get value() {
+      return this.getAttribute('value');
     }
 
     get open() {
@@ -181,6 +210,28 @@
 
       this.button.addEventListener('click', this.openDropdown);
       /** Event listeners should also be bound here. */
+      doc.addEventListener('click', event => {
+       if (this.open === 'true') {
+        var target = event.target;
+        const dropdownMenu = this.shadowRoot.querySelector('.menu');
+         do {
+           if (target === dropdownMenu || target === this) {
+             return;
+           }
+           target = target.parentNode;
+         } while (target);
+         this.removeAttribute('open')
+         this.button.focus();
+       }
+      })
+
+      doc.addEventListener('keydown', event => {
+        console.log(event.key, this.open)
+        if (this.open === 'true' && event.key === 'Escape') {
+          this.removeAttribute('open');
+          this.button.focus();
+        }
+      })
 
     }
 
@@ -200,20 +251,18 @@
           // get items from slot to render new list for dropdown
           items.forEach(item => {
             item.style.display = 'none';
-            itemContent.push({divider: item.classList.contains('divider'), text: item.innerHTML});
+            itemContent.push({divider: item.classList.contains('divider'), text: item.innerHTML, id: item.id, multiSelect: this.multiSelect, value: this.value});
           });
 
-
           // render list items based on items in slot
-          itemContent.forEach(content => {
-            dropdownMenuTemplate.appendChild(buildListItems(content, this.multiSelect));
+          itemContent.forEach((content,index) => {
+            dropdownMenuTemplate.appendChild(buildListItems(content, this, dropdownMenuTemplate, index));
           })
-
-
 
       } else if (name === 'open' && newValue === null) {
         const dropdownMenu = this.shadowRoot.querySelector('.dropdown-menu');
         dropdownMenu.remove();
+        this.button.setAttribute('aria-expanded', false)
       }
     }
   }

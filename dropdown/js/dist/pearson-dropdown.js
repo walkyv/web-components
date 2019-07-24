@@ -21,7 +21,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   template.innerHTML = ' \n  <style> \n\n@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}\n.gr-dropdown-container .menu button:focus:after{top:-2px}.gr-btn,button{font-family:Open Sans,Arial,Helvetica,sans-serif;font-weight:400;font-size:14px}.gr-btn.text{border:0}pearson-dropdown:slotted{display:none}\n@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");:host{\n  /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */}:host html{line-height:1.15;-webkit-text-size-adjust:100%}:host body{margin:0}:host main{display:block}:host h1{font-size:2em;margin:.67em 0}:host hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}:host pre{font-family:monospace,monospace;font-size:1em}:host a{background-color:transparent}:host abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}:host b,:host strong{font-weight:bolder}:host code,:host kbd,:host samp{font-family:monospace,monospace;font-size:1em}:host small{font-size:80%}:host sub,:host sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}:host sub{bottom:-.25em}:host sup{top:-.5em}:host img{border-style:none}:host button,:host input,:host optgroup,:host select,:host textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}:host button,:host input{overflow:visible}:host button,:host select{text-transform:none}:host [type=button],:host [type=reset],:host [type=submit],:host button{-webkit-appearance:button}:host [type=button]::-moz-focus-inner,:host [type=reset]::-moz-focus-inner,:host [type=submit]::-moz-focus-inner,:host button::-moz-focus-inner{border-style:none;padding:0}:host [type=button]:-moz-focusring,:host [type=reset]:-moz-focusring,:host [type=submit]:-moz-focusring,:host button:-moz-focusring{outline:1px dotted ButtonText}:host fieldset{padding:.35em .75em .625em}:host legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}:host progress{vertical-align:baseline}:host textarea{overflow:auto}:host [type=checkbox],:host [type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}:host [type=number]::-webkit-inner-spin-button,:host [type=number]::-webkit-outer-spin-button{height:auto}:host [type=search]{-webkit-appearance:textfield;outline-offset:-2px}:host [type=search]::-webkit-search-decoration{-webkit-appearance:none}:host ::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}:host details{display:block}:host summary{display:list-item}:host template{display:none}:host [hidden]{display:none}:host html{-webkit-box-sizing:border-box;box-sizing:border-box;font-size:16px}:host *,:host :after,:host :before{-webkit-box-sizing:inherit;box-sizing:inherit}:host body{font-size:16px;font-family:Open Sans,Arial,Helvetica,sans-serif}:host body,:host p{line-height:1.5;font-weight:400}:host p{font-size:em(14)}:host strong{font-weight:600}:host a{color:#047a9c}:host a:hover{color:#03536a;text-decoration:none}:host a:focus{outline:2px solid #0b73da;outline-offset:4px}:host button{cursor:pointer}:host .no-border{border:0}:host .icon-18{width:18px;height:18px}:host .icon-24{width:24px;height:24px}:host .hidden{display:none}:host .gr-btn{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:em(16);cursor:pointer;border-radius:22px;position:relative;margin:12px}:host .gr-btn:hover{color:#252525;border:1px solid #252525}:host .gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}:host .gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}:host .gr-btn.primary:hover{color:#fff;background-color:#035f79}:host .gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}:host .gr-btn.attention:hover{background-color:#f7aa00}:host .gr-btn.small{min-width:128px;padding:7px 20px;font-size:em(14)}:host .gr-btn.small:focus:after{padding:18px 21px}:host .gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:em(16)}:host .gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}:host .gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}:host .gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}:host .gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}:host .gr-btn.no-border{border:0}:host .gr-btn.no-border:hover{border:0}:host .gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}:host .gr-dropdown-container .gr-btn{margin:0;font-size:em(14);font-weight:700}:host .gr-dropdown-container .gr-btn svg{margin-left:1em}:host .gr-dropdown-container .dropdown-menu{position:absolute;z-index:10;margin-top:-9px;-ms-overflow-style:none}:host .gr-dropdown-container .mobile-group{background:#f5f5f5;border-bottom:1px solid #e9e9e9;display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;width:100%;padding:24px;position:relative;top:-27px;z-index:10;overflow:hidden}:host .gr-dropdown-container .mobile-group span{width:100%;text-align:center}:host .gr-dropdown-container .mobile-group button{margin:0 0 0 12px}:host .gr-dropdown-container .menu{background-color:#fff;position:absolute}:host .gr-dropdown-container .menu button{background:none;border:0;font-size:em(14)}:host .gr-dropdown-container .menu button>*{pointer-events:none}:host .gr-dropdown-container .menu button:focus{outline:none}:host .gr-dropdown-container .menu button:focus:after{border:2px solid #1977d4;content:"";position:absolute;border-radius:4px;width:-webkit-calc(100% + -10px);width:calc(100% + -10px);height:100%;top:0;left:5px;z-index:1}:host .gr-dropdown-container .menu{list-style-type:none;padding:1em 0;border:1px solid #d9d9d9;border-radius:2px;width:220px;margin-top:0;top:16px;position:relative}:host .gr-dropdown-container [aria-checked=false] svg{display:none}:host .gr-dropdown-container [aria-checked=true] svg{display:inline-block}:host .gr-dropdown-container .seperator{padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid #d9d9d9}:host .gr-dropdown-container li button{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;text-decoration:none;width:100%;color:#252525;text-align:left;padding:0}:host .gr-dropdown-container li button:hover{background-color:#e9e9e9}:host .gr-dropdown-container li button svg{position:absolute;left:12px}:host .gr-dropdown-container .option-text{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;margin:5px 24px 5px 34px;width:100%}:host .gr-dropdown-container .divider{border-bottom:1px solid #c7c7c7;padding-bottom:8px;margin:0 25px}:host .gr-dropdown-container .divider+li{margin-top:8px}:host .gr-dropdown-container .truncate{max-width:100%;width:250px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}@media (max-width:480px){:host .gr-dropdown-container .dropdown-menu{width:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}:host .gr-dropdown-container .option-text{font-size:16px;margin:12px 42px}:host .gr-dropdown-container .menu{max-height:300px;overflow:scroll;width:100%;top:44px;border:0;height:100vh}}@media (-ms-high-contrast:active),(-ms-high-contrast:none){:host .gr-dropdown-container .menu li button[aria-checked=true] svg{top:4px}}@media (min-width:480px){:host .gr-dropdown-container .dropdown-menu .mobile-group{display:none}}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}:host .animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){:host .animated{-webkit-animation:unset!important;animation:unset!important}}:host .animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){:host .animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}:host .animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){:host .animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}:host .gr-dropdown-container .menu button:focus:after{top:-2px}:host .gr-btn,:host button{font-family:Open Sans,Arial,Helvetica,sans-serif;font-weight:400;font-size:14px}:host .gr-btn.text{border:0}:host pearson-dropdown:slotted{display:none}\n\n   </style>\n  <div class="gr-dropdown-container">\n  \n  </div>\n';
 
-  button.innerHTML = '\n  <button data-action="trigger" aria-haspopup="true" aria-expanded="true" class="gr-btn">\n     <span class="dropdown-text"></span>\n      ' + expand + '\n  </button>\n  ';
+  button.innerHTML = '\n  <button data-action="trigger" aria-haspopup="true" aria-expanded="false" class="gr-btn">\n     <span class="dropdown-text"></span>\n      ' + expand + '\n  </button>\n  ';
 
   menu.innerHTML = '\n  <div class="dropdown-menu" data-action="menu">\n\t\t\t<div class="mobile-group">\n\t\t\t\t<span>Single Select Dropdown</span>\n\t\t\t\t<button  id="mobileClose" class="gr-btn icon-btn-24 no-border" aria-label="close dropdown">\n\t\t\t     ' + close + '\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<ul role="menu" class="menu">\n\t\t\t  <slot></slot>\n\t\t\t</ul>\n\t</div>\n  ';
 
@@ -37,20 +37,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     return node.querySelectorAll('[role^="menuitem"]');
   }
 
-  function buildListItems(content, multiSelect) {
+  function buildListItems(content, component, menu, index) {
     var li = item.content.cloneNode(true),
         text = li.querySelector('.option-text'),
-        button = li.querySelector('button');
+        button = li.querySelector('button'),
+        dropdownButton = component.shadowRoot.querySelector('button'),
+        focusableElements = getFocusableElements(component);
 
     text.innerHTML = content.text;
-
+    if (content.value) {
+      if (content.id === content.value) {
+        button.setAttribute('aria-checked', true);
+      }
+    }
     if (content.divider === true) {
       button.parentNode.classList.add('seperator');
     }
 
+    button.setAttribute('data-index', index);
     button.addEventListener('click', function (event) {
       // unless multi select, only select one item at a time.
-      if (multiSelect) {
+      if (content.multiSelect) {
         var ariaChecked = event.target.getAttribute('aria-checked');
         if (ariaChecked === 'false') {
           event.target.setAttribute('aria-checked', true);
@@ -63,7 +70,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           item.setAttribute('aria-checked', false);
         });
         event.target.setAttribute('aria-checked', true);
+        component.setAttribute('value', content.id);
+        component.removeAttribute('open');
+        menu.remove();
+        dropdownButton.focus();
+        console.log(focusableElements);
       }
+    });
+
+    button.addEventListener('keydown', function (event) {
+      var nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
+          prevButton = parseInt(event.target.getAttribute('data-index')) - 1;
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (document.activeElement === firstFocusableElement) {
+          lastFocusableElement.focus();
+        } else {
+          focusableElements[prevButton].focus();
+        }
+      }
+      console.log(nextButton);
     });
 
     return li;
@@ -86,6 +113,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'multiSelect',
       get: function get() {
         return this.hasAttribute('multiSelect');
+      }
+    }, {
+      key: 'value',
+      get: function get() {
+        return this.getAttribute('value');
       }
     }, {
       key: 'open',
@@ -139,6 +171,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
+        var _this2 = this;
+
         /** Any changes to what the component renders should be done here. */
         var dropdownTrigger = button.content.cloneNode(true),
             dropdownTemplate = this.shadowRoot.querySelector('.gr-dropdown-container');
@@ -155,11 +189,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.button.addEventListener('click', this.openDropdown);
         /** Event listeners should also be bound here. */
+        doc.addEventListener('click', function (event) {
+          if (_this2.open === 'true') {
+            var target = event.target;
+            var dropdownMenu = _this2.shadowRoot.querySelector('.menu');
+            do {
+              if (target === dropdownMenu || target === _this2) {
+                return;
+              }
+              target = target.parentNode;
+            } while (target);
+            _this2.removeAttribute('open');
+            _this2.button.focus();
+          }
+        });
+
+        doc.addEventListener('keydown', function (event) {
+          console.log(event.key, _this2.open);
+          if (_this2.open === 'true' && event.key === 'Escape') {
+            _this2.removeAttribute('open');
+            _this2.button.focus();
+          }
+        });
       }
     }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
-        var _this2 = this;
+        var _this3 = this;
 
         if (name === 'open' && newValue === 'true') {
           var dropdownMenu = menu.content.cloneNode(true),
@@ -175,16 +231,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           // get items from slot to render new list for dropdown
           items.forEach(function (item) {
             item.style.display = 'none';
-            itemContent.push({ divider: item.classList.contains('divider'), text: item.innerHTML });
+            itemContent.push({ divider: item.classList.contains('divider'), text: item.innerHTML, id: item.id, multiSelect: _this3.multiSelect, value: _this3.value });
           });
 
           // render list items based on items in slot
-          itemContent.forEach(function (content) {
-            dropdownMenuTemplate.appendChild(buildListItems(content, _this2.multiSelect));
+          itemContent.forEach(function (content, index) {
+            dropdownMenuTemplate.appendChild(buildListItems(content, _this3, dropdownMenuTemplate, index));
           });
         } else if (name === 'open' && newValue === null) {
           var _dropdownMenu = this.shadowRoot.querySelector('.dropdown-menu');
           _dropdownMenu.remove();
+          this.button.setAttribute('aria-expanded', false);
         }
       }
     }]);
