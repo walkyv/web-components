@@ -34,7 +34,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
    */
 
   function getFocusableElements(node) {
-    return node.querySelectorAll('[role^="menuitem"]');
+    return node.querySelectorAll('[role^="menuitemradio"]');
   }
 
   function buildListItems(content, component, menu, index) {
@@ -42,7 +42,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         text = li.querySelector('.option-text'),
         button = li.querySelector('button'),
         dropdownButton = component.shadowRoot.querySelector('button'),
-        focusableElements = getFocusableElements(component);
+        firstFocusableElement = getFocusableElements(menu)[0],
+        lastFocusableElement = getFocusableElements(menu)[getFocusableElements(menu).length - 1];
 
     text.innerHTML = content.text;
     if (content.value) {
@@ -57,6 +58,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     button.setAttribute('data-index', index);
     button.addEventListener('click', function (event) {
       // unless multi select, only select one item at a time.
+
       if (content.multiSelect) {
         var ariaChecked = event.target.getAttribute('aria-checked');
         if (ariaChecked === 'false') {
@@ -74,7 +76,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         component.removeAttribute('open');
         menu.remove();
         dropdownButton.focus();
-        console.log(focusableElements);
       }
     });
 
@@ -84,15 +85,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       if (event.key === 'ArrowUp') {
         event.preventDefault();
-        if (document.activeElement === firstFocusableElement) {
-          lastFocusableElement.focus();
+        if (component.shadowRoot.activeElement === getFocusableElements(menu)[0]) {
+          getFocusableElements(menu)[getFocusableElements(menu).length - 1].focus();
         } else {
-          focusableElements[prevButton].focus();
+          getFocusableElements(menu)[prevButton].focus();
         }
       }
-      console.log(nextButton);
-    });
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        if (component.shadowRoot.activeElement === getFocusableElements(menu)[getFocusableElements(menu).length - 1]) {
+          getFocusableElements(menu)[0].focus();
+        } else {
+          getFocusableElements(menu)[nextButton].focus();
+        }
+      }
+      if (event.key === 'Home') {
+        getFocusableElements(menu)[0].focus();
+      }
 
+      if (event.key === 'End') {
+        getFocusableElements(menu)[getFocusableElements(menu).length - 1].focus();
+      }
+    });
     return li;
   }
 
@@ -205,7 +219,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
 
         doc.addEventListener('keydown', function (event) {
-          console.log(event.key, _this2.open);
           if (_this2.open === 'true' && event.key === 'Escape') {
             _this2.removeAttribute('open');
             _this2.button.focus();

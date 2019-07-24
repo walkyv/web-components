@@ -73,7 +73,7 @@
    */
 
   function getFocusableElements(node) {
-    return node.querySelectorAll('[role^="menuitem"]');
+    return node.querySelectorAll('[role^="menuitemradio"]');
   }
 
   function buildListItems (content, component, menu, index) {
@@ -81,7 +81,8 @@
       text = li.querySelector('.option-text'),
       button = li.querySelector('button'),
       dropdownButton = component.shadowRoot.querySelector('button'),
-      focusableElements = getFocusableElements(component);
+      firstFocusableElement = getFocusableElements(menu)[0],
+      lastFocusableElement = getFocusableElements(menu)[getFocusableElements(menu).length - 1];
 
     text.innerHTML = content.text;
     if (content.value) {
@@ -96,6 +97,7 @@
     button.setAttribute('data-index', index);
     button.addEventListener('click', event => {
       // unless multi select, only select one item at a time.
+
       if (content.multiSelect) {
         const ariaChecked = event.target.getAttribute('aria-checked');
         if (ariaChecked === 'false') {
@@ -113,7 +115,6 @@
         component.removeAttribute('open');
         menu.remove();
         dropdownButton.focus();
-        console.log(focusableElements)
       }
     });
 
@@ -123,15 +124,28 @@
 
       if (event.key === 'ArrowUp') {
         event.preventDefault();
-        if (document.activeElement === firstFocusableElement) {
-          lastFocusableElement.focus();
+        if (component.shadowRoot.activeElement === getFocusableElements(menu)[0]) {
+          getFocusableElements(menu)[getFocusableElements(menu).length - 1].focus();
         } else {
-          focusableElements[prevButton].focus();
+          getFocusableElements(menu)[prevButton].focus();
         }
       }
-      console.log(nextButton)
-    })
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        if (component.shadowRoot.activeElement === getFocusableElements(menu)[getFocusableElements(menu).length - 1]) {
+          getFocusableElements(menu)[0].focus();
+        } else {
+          getFocusableElements(menu)[nextButton].focus();
+        }
+      }
+      if (event.key === 'Home') {
+        getFocusableElements(menu)[0].focus();
+      }
 
+      if (event.key === 'End') {
+        getFocusableElements(menu)[getFocusableElements(menu).length - 1].focus();
+      }
+    });
     return li;
   }
 
@@ -226,7 +240,6 @@
       })
 
       doc.addEventListener('keydown', event => {
-        console.log(event.key, this.open)
         if (this.open === 'true' && event.key === 'Escape') {
           this.removeAttribute('open');
           this.button.focus();
