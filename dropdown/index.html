@@ -16,19 +16,38 @@
 
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
     <script src="js/dist/pearson-dropdown.js"></script>
+    <style>
+      pearson-dropdown {
+        display:inline-flex;
+      }
+    </style>
   </head>
 
   <body>
-    <pearson-dropdown buttonText="Please Select" multiSelect>
+
+    <pearson-dropdown buttonText="Please Select">
       <li id="optionOne">first option</li>
       <li id="optionTwo" class="divider">second option</li>
       <li id="optionThree">third option</li>
     </pearson-dropdown>
+
+    <pearson-dropdown buttonText="Please Select Multiple" multiSelect>
+      <li id="optionFour">first option</li>
+      <li id="optionFive" class="divider">second option</li>
+      <li id="optionSix">third option</li>
+    </pearson-dropdown>
+
+    <pearson-dropdown buttonText="Text Button Select" textOnly>
+      <li id="optionSeven">first option</li>
+      <li id="optionEight" class="divider">second option</li>
+      <li id="optionNine">third option</li>
+    </pearson-dropdown>
+
   <script>
     const dropdown = document.querySelector('pearson-dropdown');
-    dropdown.addEventListener('change', event => {
-      console.log(event.detail)
-    })
+      dropdown.addEventListener('change', event => {
+        console.log(event.detail)
+      })
   </script>
   </body>
 </html>
