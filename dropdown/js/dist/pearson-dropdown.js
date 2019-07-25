@@ -61,6 +61,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       });
     }
 
+    button.setAttribute('data-id', content.id);
     button.setAttribute('data-index', index);
     button.addEventListener('click', function (event) {
       // unless multi select, only select one item at a time.
@@ -79,8 +80,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
         event.target.setAttribute('aria-checked', true);
         component.setAttribute('value', content.id);
-        component.removeAttribute('open');
-        dropdownButton.focus();
+        component.closeDropdown();
       }
     });
 
@@ -185,6 +185,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.removeAttribute('open');
         this.button.setAttribute('aria-expanded', false);
         this.button.focus();
+        if (this.multiSelect) {
+          var arr = [];
+          this.checked.forEach(function (item) {
+            arr.push(item.getAttribute('data-id'));
+          });
+          this.dispatchEvent(new CustomEvent('change', {
+            bubbles: true,
+            detail: {
+              selected: arr
+            }
+          }));
+        } else {
+          this.dispatchEvent(new CustomEvent('change', {
+            bubbles: true,
+            detail: {
+              selected: this.checked.getAttribute('data-id')
+            }
+          }));
+        }
       }
     }, {
       key: 'returnChecked',
@@ -192,6 +211,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var checked = [];
         if (this.multiSelect) {
           checked = this.shadowRoot.querySelectorAll('[aria-checked="true"]');
+        } else {
+          checked = this.shadowRoot.querySelector('[aria-checked="true"]');
         }
         return checked;
       }

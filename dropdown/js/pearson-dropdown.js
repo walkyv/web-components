@@ -82,11 +82,11 @@
       button = li.querySelector('button'),
       dropdownButton = component.shadowRoot.querySelector('button');
 
-
     text.innerHTML = content.text;
     if (content.value) {
       if (content.id === content.value) {
         button.setAttribute('aria-checked', true);
+
       }
     }
     if (content.divider === true) {
@@ -101,6 +101,7 @@
       })
     }
 
+    button.setAttribute('data-id', content.id);
     button.setAttribute('data-index', index);
     button.addEventListener('click', event => {
       // unless multi select, only select one item at a time.
@@ -119,8 +120,7 @@
         });
         event.target.setAttribute('aria-checked', true);
         component.setAttribute('value', content.id);
-        component.removeAttribute('open');
-        dropdownButton.focus();
+        component.closeDropdown();
       }
     });
 
@@ -199,7 +199,6 @@
       if (this.open === null) {
         this.open = true;
         this.button.setAttribute('aria-expanded', true);
-
       } else if (this.open) {
         this.closeDropdown();
       }
@@ -210,12 +209,37 @@
       this.removeAttribute('open');
       this.button.setAttribute('aria-expanded', false);
       this.button.focus();
+      if (this.multiSelect) {
+        let arr = [];
+        this.checked.forEach(item => {
+          arr.push(item.getAttribute('data-id'));
+        })
+        this.dispatchEvent(
+          new CustomEvent('change', {
+            bubbles: true,
+            detail: {
+              selected: arr
+            }
+          })
+        );
+      } else {
+        this.dispatchEvent(
+          new CustomEvent('change', {
+            bubbles: true,
+            detail: {
+              selected: this.checked.getAttribute('data-id')
+            }
+          })
+        );
+      }
     }
 
     returnChecked () {
       let checked = [];
       if (this.multiSelect) {
         checked = this.shadowRoot.querySelectorAll('[aria-checked="true"]');
+      } else {
+        checked = this.shadowRoot.querySelector('[aria-checked="true"]');
       }
       return checked
     }

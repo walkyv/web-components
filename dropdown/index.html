@@ -19,10 +19,16 @@
   </head>
 
   <body>
-    <pearson-dropdown buttonText="Please Select">
+    <pearson-dropdown buttonText="Please Select" multiSelect>
       <li id="optionOne">first option</li>
       <li id="optionTwo" class="divider">second option</li>
       <li id="optionThree">third option</li>
     </pearson-dropdown>
+  <script>
+    const dropdown = document.querySelector('pearson-dropdown');
+    dropdown.addEventListener('change', event => {
+      console.log(event.detail)
+    })
+  </script>
   </body>
 </html>
