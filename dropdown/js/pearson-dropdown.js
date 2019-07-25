@@ -44,7 +44,7 @@
   `;
 
   menu.innerHTML = `
-  <div class="dropdown-menu" data-action="menu">
+  <div class="dropdown-menu animateIn" data-action="menu">
 			<div class="mobile-group">
 				<span>Single Select Dropdown</span>
 				<button  id="mobileClose" class="gr-btn icon-btn-24 no-border" aria-label="close dropdown">
@@ -213,7 +213,7 @@
         let arr = [];
         this.checked.forEach(item => {
           arr.push(item.getAttribute('data-id'));
-        })
+        });
         this.dispatchEvent(
           new CustomEvent('change', {
             bubbles: true,

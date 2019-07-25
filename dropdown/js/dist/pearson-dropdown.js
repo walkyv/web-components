@@ -23,7 +23,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   button.innerHTML = '\n  <button data-action="trigger" aria-haspopup="true" aria-expanded="false" class="gr-btn">\n     <span class="dropdown-text"></span>\n      ' + expand + '\n  </button>\n  ';
 
-  menu.innerHTML = '\n  <div class="dropdown-menu" data-action="menu">\n\t\t\t<div class="mobile-group">\n\t\t\t\t<span>Single Select Dropdown</span>\n\t\t\t\t<button  id="mobileClose" class="gr-btn icon-btn-24 no-border" aria-label="close dropdown">\n\t\t\t     ' + close + '\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<ul role="menu" class="menu">\n\t\t\t  <slot></slot>\n\t\t\t</ul>\n\t</div>\n  ';
+  menu.innerHTML = '\n  <div class="dropdown-menu animateIn" data-action="menu">\n\t\t\t<div class="mobile-group">\n\t\t\t\t<span>Single Select Dropdown</span>\n\t\t\t\t<button  id="mobileClose" class="gr-btn icon-btn-24 no-border" aria-label="close dropdown">\n\t\t\t     ' + close + '\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<ul role="menu" class="menu">\n\t\t\t  <slot></slot>\n\t\t\t</ul>\n\t</div>\n  ';
 
   item.innerHTML = '\n  <li role="none" >\n    <button role="menuitemradio" aria-checked="false">\n         ' + check + '\n      <span class="option-text">Option One</span>\n    </button>\n  </li>\n  ';
 
