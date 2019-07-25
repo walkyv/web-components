@@ -1,10 +1,10 @@
 {
   "name": "@pearson-ux/dropdown",
-  "author": "Your Name | your.email@pearson.com",
+  "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "version": "0.1.0",
-  "description": "Example web component",
-  "main": "index.html",
+  "description": "Dropdown web component",
+  "main": "./js/dist/pearson-dropdown.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,7 +13,8 @@
     "url": "git+https://github.com/pearson-ux/web-components.git"
   },
   "keywords": [
-    "example",
+    "dropdown",
+    "dropdown menu",
     "pearson-components",
     "web components"
   ],
