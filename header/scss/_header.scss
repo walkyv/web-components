@@ -1,0 +1,23 @@
+// Styles for your component live here!
+// Rename this file to match the name of the component!
+#main {
+  position:relative
+}
+.actions button {
+  background:none;
+  border:0;
+}
+
+.gr-header.open button .avatar {
+  position: relative;
+  background: #fff;
+  color: #047a9c;
+}
+
+.header-menu {
+  width: 360px;
+  z-index: 10000000;
+  background: white;
+  position: absolute;
+  right:0;
+}
