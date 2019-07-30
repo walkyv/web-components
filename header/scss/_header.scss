@@ -69,3 +69,13 @@
 .gr-header .logo {
   background-position:5px !important;
 }
+
+#loginToPearson {border: 1px solid #6a7070; padding:8px 24px !important}
+.transparent #loginToPearson {border: 1px solid white; padding:8px 24px !important}
+#loginToPearson:hover {
+  border:1px solid #252525;
+}
+.transparent #loginToPearson:hover {
+  border:1px solid #cdcdcd;
+}
+#loginToPearson:focus {  outline: 0;box-shadow: 0 0 0 2px white, 0 0 0 4px $focus}
