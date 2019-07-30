@@ -54,3 +54,18 @@
   position: absolute;
   right:0;
 }
+
+.console-link:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px $focus;
+  border-radius:5px;
+}
+
+.gr-header .logo {
+  width: 49px;
+  height: 56px;
+}
+
+.gr-header .logo {
+  background-position:5px !important;
+}
