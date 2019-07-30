@@ -13,7 +13,7 @@
 
 .animateInLight {
   animation-name: fadeInLight;
-  animation-duration: 2s;
+  animation-duration: 4s;
 }
 
 @keyframes slideInDown {
@@ -53,6 +53,16 @@
   background: white;
   position: absolute;
   right:0;
+  li {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid $border;
+    &:last-child {
+      border-bottom: 0;
+      margin:0;
+      padding:0;
+    }
+  }
 }
 
 .console-link:focus {
@@ -79,3 +89,7 @@
   border:1px solid #cdcdcd;
 }
 #loginToPearson:focus {  outline: 0;box-shadow: 0 0 0 2px white, 0 0 0 4px $focus}
+
+.gr-header .initials {
+  text-transform: uppercase;
+}
