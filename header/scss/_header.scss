@@ -1,5 +1,38 @@
 // Styles for your component live here!
 // Rename this file to match the name of the component!
+@keyframes fadeInLight {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: .4;
+    visibility: visible;
+  }
+}
+
+.animateInLight {
+  animation-name: fadeInLight;
+  animation-duration: 2s;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translate3d(0, -15%, 0);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+.slideInDown {
+  animation: 0.3s ease-in-out 0s slideInDown;
+}
+
 #main {
   position:relative
 }
