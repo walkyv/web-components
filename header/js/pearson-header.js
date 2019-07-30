@@ -345,6 +345,7 @@
           main.appendChild(menu);
 
           doc.addEventListener('click', event => {
+            if (this.open) {
               let target = event.target;
               do {
                 if (target === this) {
@@ -355,6 +356,8 @@
               this.removeAttribute('open');
               mainContent.setAttribute('aria-hidden', false);
               this.button.focus();
+            }
+
           }, true);
 
           const logoutButton = this.shadowRoot.querySelector('#logout');

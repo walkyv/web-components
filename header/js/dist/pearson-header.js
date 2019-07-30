@@ -285,16 +285,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             main.appendChild(menu);
 
             doc.addEventListener('click', function (event) {
-              var target = event.target;
-              do {
-                if (target === _this3) {
-                  return;
-                }
-                target = target.parentNode;
-              } while (target);
-              _this3.removeAttribute('open');
-              mainContent.setAttribute('aria-hidden', false);
-              _this3.button.focus();
+              if (_this3.open) {
+                var target = event.target;
+                do {
+                  if (target === _this3) {
+                    return;
+                  }
+                  target = target.parentNode;
+                } while (target);
+                _this3.removeAttribute('open');
+                mainContent.setAttribute('aria-hidden', false);
+                _this3.button.focus();
+              }
             }, true);
 
             var logoutButton = this.shadowRoot.querySelector('#logout');
