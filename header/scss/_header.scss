@@ -93,3 +93,9 @@
 .gr-header .initials {
   text-transform: uppercase;
 }
+
+.gr-btn:focus-visible {
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 2px #fff,0 0 0 4px #1977d4;
+  box-shadow: 0 0 0 2px #fff,0 0 0 4px #1977d4;
+}
