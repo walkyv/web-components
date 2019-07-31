@@ -142,7 +142,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             _this2.open = true;
             // add keyboard accessibility for buttons
-            _this2.button.setAttribute('aria-expanded', true);
+
             var headerMenu = _this2.shadowRoot.querySelector('.header-menu'),
                 focusableItems = headerMenu.querySelectorAll('button'),
                 firstFocusableItem = focusableItems[0],
@@ -191,7 +191,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               });
             });
           } else {
-            _this2.button.setAttribute('aria-expanded', false);
             _this2.removeAttribute('open');
             console.log(_this2.button);
           }
@@ -282,16 +281,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 icon = this.shadowRoot.querySelector('.gr-header .actions button svg'),
                 collapseIcon = collapseIconTemplate.content.cloneNode(true),
                 overlay = overlayTemplate.content.cloneNode(true),
-                main = this.shadowRoot.querySelector('#main'),
-                menu = menuTemplate.content.cloneNode(true);
+                _main = this.shadowRoot.querySelector('#main'),
+                menu = menuTemplate.content.cloneNode(true),
+                headerLink = header.querySelector('.console-link');
 
+            this.button.setAttribute('tabindex', -1);
+            headerLink.setAttribute('tabindex', -1);
+            _main.setAttribute('tabindex', -1);
+            this.button.setAttribute('aria-expanded', true);
             console.log('open');
             header.classList.add('open');
             header.setAttribute('aria-hidden', true);
             icon.remove();
             this.button.appendChild(collapseIcon);
             doc.body.appendChild(overlay);
-            main.appendChild(menu);
+            _main.appendChild(menu);
             mainContent.setAttribute('aria-hidden', true);
             doc.addEventListener('click', function (event) {
               if (_this3.open) {
@@ -303,7 +307,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                   target = target.parentNode;
                 } while (target);
                 _this3.removeAttribute('open');
-                _this3.button.setAttribute('aria-expanded', false);
                 _this3.button.focus();
               }
             }, true);
@@ -321,8 +324,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 _icon = this.shadowRoot.querySelector('.gr-header .actions button svg'),
                 expandIcon = expandIconTemplate.content.cloneNode(true),
                 _overlay = doc.querySelector('#headerOverlay'),
-                menuNode = this.shadowRoot.querySelector('.header-menu');
+                menuNode = this.shadowRoot.querySelector('.header-menu'),
+                _headerLink = _header.querySelector('.console-link');
 
+            this.button.removeAttribute('tabindex', -1);
+            _headerLink.removeAttribute('tabindex', -1);
+            main.setAttribute('tabindex', -1);
+
+            this.button.setAttribute('aria-expanded', false);
             mainContent.setAttribute('aria-hidden', false);
             _header.setAttribute('aria-hidden', false);
             _header.classList.remove('open');

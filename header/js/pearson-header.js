@@ -224,7 +224,7 @@ outline: 1px solid transparent !important;
 
           this.open = true;
           // add keyboard accessibility for buttons
-          this.button.setAttribute('aria-expanded', true);
+
           const headerMenu = this.shadowRoot.querySelector('.header-menu'),
             focusableItems = headerMenu.querySelectorAll('button'),
             firstFocusableItem = focusableItems[0],
@@ -275,7 +275,6 @@ outline: 1px solid transparent !important;
               })
             })
         } else {
-          this.button.setAttribute('aria-expanded', false);
           this.removeAttribute('open');
           console.log(this.button)
         }
@@ -363,8 +362,14 @@ outline: 1px solid transparent !important;
             collapseIcon = collapseIconTemplate.content.cloneNode(true),
             overlay = overlayTemplate.content.cloneNode(true),
             main = this.shadowRoot.querySelector('#main'),
-            menu = menuTemplate.content.cloneNode(true);
+            menu = menuTemplate.content.cloneNode(true),
+            headerLink = header.querySelector('.console-link');
 
+
+          this.button.setAttribute('tabindex', -1);
+          headerLink.setAttribute('tabindex', -1);
+          main.setAttribute('tabindex', -1);
+          this.button.setAttribute('aria-expanded', true);
           console.log('open')
           header.classList.add('open');
           header.setAttribute('aria-hidden', true)
@@ -383,7 +388,6 @@ outline: 1px solid transparent !important;
                 target = target.parentNode;
               } while (target);
               this.removeAttribute('open');
-              this.button.setAttribute('aria-expanded', false);
               this.button.focus();
             }
 
@@ -404,8 +408,15 @@ outline: 1px solid transparent !important;
             icon = this.shadowRoot.querySelector('.gr-header .actions button svg'),
             expandIcon = expandIconTemplate.content.cloneNode(true),
             overlay = doc.querySelector('#headerOverlay'),
-            menuNode = this.shadowRoot.querySelector('.header-menu');
+            menuNode = this.shadowRoot.querySelector('.header-menu'),
+            headerLink = header.querySelector('.console-link');
 
+
+          this.button.removeAttribute('tabindex', -1);
+          headerLink.removeAttribute('tabindex', -1);
+          main.setAttribute('tabindex', -1);
+
+          this.button.setAttribute('aria-expanded', false);
           mainContent.setAttribute('aria-hidden', false);
           header.setAttribute('aria-hidden', false)
           header.classList.remove('open');
