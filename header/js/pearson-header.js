@@ -399,7 +399,8 @@ outline: 1px solid transparent !important;
             expandIcon = expandIconTemplate.content.cloneNode(true),
             overlay = doc.querySelector('#headerOverlay'),
             menuNode = this.shadowRoot.querySelector('.header-menu'),
-            headerLink = header.querySelector('.console-link');
+            headerLink = header.querySelector('.console-link'),
+            main = this.shadowRoot.querySelector('#main');
 
 
           if (this.theme === 'light') {
@@ -409,8 +410,8 @@ outline: 1px solid transparent !important;
           this.button.style.zIndex = '0';
 
           headerLink.removeAttribute('tabindex', -1);
-          main.setAttribute('tabindex', -1);
-
+          main.removeAttribute('tabindex', -1);
+          console.log(main);
           this.button.setAttribute('aria-expanded', false);
           mainContent.setAttribute('aria-hidden', false);
           header.setAttribute('aria-hidden', false)

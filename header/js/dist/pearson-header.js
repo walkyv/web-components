@@ -280,13 +280,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 icon = this.shadowRoot.querySelector('.gr-header .actions button svg'),
                 collapseIcon = collapseIconTemplate.content.cloneNode(true),
                 overlay = overlayTemplate.content.cloneNode(true),
-                _main = this.shadowRoot.querySelector('#main'),
+                main = this.shadowRoot.querySelector('#main'),
                 menu = menuTemplate.content.cloneNode(true),
                 headerLink = header.querySelector('.console-link');
 
             this.button.style.zIndex = '10';
             headerLink.setAttribute('tabindex', -1);
-            _main.setAttribute('tabindex', -1);
+            main.setAttribute('tabindex', -1);
             this.button.setAttribute('aria-expanded', true);
             console.log('open');
             header.classList.add('open');
@@ -294,7 +294,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             icon.remove();
             this.button.appendChild(collapseIcon);
             doc.body.appendChild(overlay);
-            _main.appendChild(menu);
+            main.appendChild(menu);
             mainContent.setAttribute('aria-hidden', true);
             doc.addEventListener('click', function (event) {
               if (_this3.open) {
@@ -329,7 +329,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 expandIcon = expandIconTemplate.content.cloneNode(true),
                 _overlay = doc.querySelector('#headerOverlay'),
                 menuNode = this.shadowRoot.querySelector('.header-menu'),
-                _headerLink = _header.querySelector('.console-link');
+                _headerLink = _header.querySelector('.console-link'),
+                _main = this.shadowRoot.querySelector('#main');
 
             if (this.theme === 'light') {
               this.avatar.style.background = 'transparent';
@@ -338,8 +339,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             this.button.style.zIndex = '0';
 
             _headerLink.removeAttribute('tabindex', -1);
-            main.setAttribute('tabindex', -1);
-
+            _main.removeAttribute('tabindex', -1);
+            console.log(_main);
             this.button.setAttribute('aria-expanded', false);
             mainContent.setAttribute('aria-hidden', false);
             _header.setAttribute('aria-hidden', false);
