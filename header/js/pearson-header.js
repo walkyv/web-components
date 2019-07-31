@@ -38,11 +38,11 @@
 `;
 
   whiteLogoTemplate.innerHTML = `
-       <img src="https://pearsonux.sfo2.digitaloceanspaces.com/PearsonIconWhite.svg" alt="pearson logo"/>
+       <img src="https://pearsonux.sfo2.digitaloceanspaces.com/PearsonIconWhite.svg" alt="Pearson"/>
   `;
 
   colorLogoTemplate.innerHTML = `
-         <img src="https://pearsonux.sfo2.digitaloceanspaces.com/PearsonIcon.svg" alt="pearson logo" />
+         <img src="https://pearsonux.sfo2.digitaloceanspaces.com/PearsonIcon.svg" alt="Pearson" />
   `
 
   expandIconTemplate.innerHTML = `
