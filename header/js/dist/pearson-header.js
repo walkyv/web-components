@@ -248,6 +248,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         } else {
           this.renderLoggedOut();
         }
+        var notificationClone = notificationTemplate.content.cloneNode(true);
+        if (parseInt(this.notifications, 10) > 0) {
+          var avatar = this.shadowRoot.querySelector('.avatar');
+          avatar.appendChild(notificationClone);
+        }
       }
     }, {
       key: 'attributeChangedCallback',
@@ -260,12 +265,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             this.renderLoggedIn();
           } else {
             this.renderLoggedOut();
-          }
-        }
-        if (name === 'notifications') {
-          var notificationClone = notificationTemplate.content.cloneNode(true);
-          if (parseInt(this.notifications, 10) > 0) {
-            this.avatar.appendChild(notificationClone);
           }
         }
         if (name === 'theme' && newValue === 'light') {
@@ -339,6 +338,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             _overlay.remove();
             this.button.appendChild(expandIcon);
             menuNode.remove();
+          }
+        }
+        if (name === 'notifications') {
+          var notificationClone = notificationTemplate.content.cloneNode(true);
+          if (parseInt(this.notifications, 10) > 0) {
+            var avatar = this.shadowRoot.querySelector('.avatar');
+            if (avatar !== null) {
+              avatar.appendChild(notificationClone);
+            }
           }
         }
       }

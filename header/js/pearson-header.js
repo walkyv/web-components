@@ -342,6 +342,11 @@ outline: 1px solid transparent !important;
       } else {
         this.renderLoggedOut();
       }
+      const notificationClone = notificationTemplate.content.cloneNode(true);
+      if (parseInt(this.notifications,10) > 0) {
+        const avatar = this.shadowRoot.querySelector('.avatar');
+        avatar.appendChild(notificationClone)
+      }
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -351,12 +356,6 @@ outline: 1px solid transparent !important;
           this.renderLoggedIn();
         } else {
           this.renderLoggedOut();
-        }
-      }
-      if (name === 'notifications') {
-        const notificationClone = notificationTemplate.content.cloneNode(true);
-        if (parseInt(this.notifications,10) > 0) {
-          this.avatar.appendChild(notificationClone)
         }
       }
       if (name === 'theme' && newValue === 'light') {
@@ -435,6 +434,16 @@ outline: 1px solid transparent !important;
           overlay.remove();
           this.button.appendChild(expandIcon);
           menuNode.remove();
+        }
+      }
+      if (name === 'notifications') {
+        const notificationClone = notificationTemplate.content.cloneNode(true);
+        if (parseInt(this.notifications,10) > 0) {
+          const avatar = this.shadowRoot.querySelector('.avatar');
+          if (avatar !== null) {
+            avatar.appendChild(notificationClone)
+          }
+
         }
       }
     }
