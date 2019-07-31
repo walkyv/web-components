@@ -31,6 +31,7 @@
  .gr-header .group a {
  margin-right:16px;
  }
+
 </style>
      <div id="main">
          <header class="gr-header transparent">
@@ -350,7 +351,7 @@ outline: 1px solid transparent !important;
             headerLink = header.querySelector('.console-link');
 
 
-          this.button.setAttribute('tabindex', -1);
+          this.button.style.zIndex = '10';
           headerLink.setAttribute('tabindex', -1);
           main.setAttribute('tabindex', -1);
           this.button.setAttribute('aria-expanded', true);
@@ -387,6 +388,11 @@ outline: 1px solid transparent !important;
               })
             );
           })
+
+          if (this.theme === 'light') {
+            this.avatar.style.background = '#252525';
+            this.avatar.style.color = 'white';
+          }
         } else if (newValue === null) {
           const header = this.shadowRoot.querySelector('.gr-header'),
             icon = this.shadowRoot.querySelector('.gr-header .actions button svg'),
@@ -396,7 +402,12 @@ outline: 1px solid transparent !important;
             headerLink = header.querySelector('.console-link');
 
 
-          this.button.removeAttribute('tabindex', -1);
+          if (this.theme === 'light') {
+            this.avatar.style.background = 'transparent';
+            this.avatar.style.color = '#252525';
+          }
+          this.button.style.zIndex = '0';
+
           headerLink.removeAttribute('tabindex', -1);
           main.setAttribute('tabindex', -1);
 
