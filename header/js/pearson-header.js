@@ -127,7 +127,7 @@
 outline: 1px solid transparent !important;
 }
 </style>
-  <button class="gr-btn icon-btn-24">
+  <button class="gr-btn icon-btn-24" aria-expanded="false" aria-haspopup="true">
     <div class="avatar">
       <span class="initials">DO</span>
     </div>
