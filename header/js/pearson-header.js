@@ -24,12 +24,23 @@
      height: 50px;
     margin-top: 5px;
  }
+ .gr-header .group {
+ display:flex;
+ align-items: center;
+ }
+ .gr-header .group a {
+ margin-right:16px;
+ }
 </style>
      <div id="main">
          <header class="gr-header transparent">
-           <a class="console-link" href="https://console.pearson.com/console/home"> 
+         <div class="group">
+                    <a class="console-link" href="https://console.pearson.com/console/home"> 
 
            </a>
+           <slot></slot>
+        </div>
+
             <div class="actions">
   
             </div>
