@@ -112,6 +112,12 @@
 .gr-btn:focus {
 outline: 1px solid transparent !important;
 }
+.gr-header.open button .avatar {
+    color:#252525 !important;
+}
+ .gr-header button:focus .avatar {
+    color:#252525 !important;
+}
 </style>
   <button class="gr-btn icon-btn-24" aria-expanded="false" aria-haspopup="true">
     <div class="avatar">
