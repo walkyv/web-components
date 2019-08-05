@@ -1,10 +1,10 @@
 {
-  "name": "@pearson-ux/example",
-  "author": "Your Name | your.email@pearson.com",
+  "name": "@pearson-ux/card",
+  "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "version": "0.1.0",
-  "description": "Example web component",
-  "main": "index.html",
+  "description": "card web component",
+  "main": "./js/dist/pearson-card.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/pearson-ux/web-components.git"
   },
   "keywords": [
-    "example",
+    "card",
     "pearson-components",
     "web components"
   ],
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/pearson-ux/web-components/blob/master/example/README.md",
   "dependencies": {
-    "@pearson-ux/gravity-css": "^2.2.0"
+    "@pearson-ux/gravity-css": "^2.2.1"
   },
   "devDependencies": {
     "autoprefixer": "^9.6.1",

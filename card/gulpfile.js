@@ -22,7 +22,7 @@ function styles(done) {
     .src(paths.styles)
     .pipe(sass())
     .on('error', sass.logError)
-    .pipe(postcss([autoprefixer({ cascade: false }), cssnano()]))
+    .pipe(postcss([autoprefixer({ cascade: false, grid: true }), cssnano()]))
     .pipe(concat('style.css'))
     .pipe(gulp.dest('./css'))
     .pipe(server.stream());
