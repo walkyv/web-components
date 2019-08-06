@@ -17,6 +17,7 @@ function scripts(done) {
     .src([
       './datepicker/js/dist/pearson-datepicker.js',
       './alert/js/dist/pearson-alert.js',
+      './card/js/dist/pearson-card.js',
       './coachmark/js/dist/pearson-coachmark.js',
       './drawer/js/dist/pearson-drawer.js',
       './file-uploader/js/dist/pearson-file-upload.js',
