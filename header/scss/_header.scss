@@ -37,6 +37,8 @@
   position:relative
 }
 .actions button {
+  font-family: Open Sans, Arial, Helvetica, sans-serif;
+  font-weight:400 !important;
   background:none;
   border:0;
 }
@@ -48,6 +50,7 @@
 }
 
 .header-menu {
+  font-family: Open Sans, Arial, Helvetica, sans-serif;
   width: 360px;
   z-index: 10000000;
   background: white;
@@ -92,10 +95,52 @@
 
 .gr-header .initials {
   text-transform: uppercase;
+  font-weight:700;
 }
 
 .gr-btn:focus-visible {
   outline: 0;
   -webkit-box-shadow: 0 0 0 2px #fff,0 0 0 4px #1977d4;
   box-shadow: 0 0 0 2px #fff,0 0 0 4px #1977d4;
+}
+.gr-header .logo {
+  background-image:none !important;
+}
+.gr-header img {
+  height: 50px;
+  margin-top: 5px;
+}
+.gr-header .group {
+  display:flex;
+  align-items: center;
+}
+.gr-header .group a {
+  margin-right:16px;
+}
+.gr-btn.icon-btn-24 svg {
+  margin-right:4px;
+}
+.gr-btn:focus {
+  outline: 1px solid transparent !important;
+}
+.gr-header .avatar {
+  border:1px solid;
+}
+.gr-header.open button .avatar {
+  color:#252525;
+}
+
+.gr-header button:focus .avatar {
+  color:#252525;
+}
+.gr-header.light .avatar {
+  border:1px solid #252525;
+}
+.gr-header.light button .notification {
+  border:1px solid #252525;
+}
+.gr-header button .notification {
+  border: 1px solid white;
+  right:0;
+  bottom:-2px;
 }
