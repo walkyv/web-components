@@ -44,7 +44,7 @@
       return ['stacked'];
     }
 
-    get isStacked () {
+    get isStacked() {
       return this.hasAttribute('stacked');
     }
 
@@ -59,20 +59,19 @@
     connectedCallback() {
       if (!this.isStacked) {
         const modularLayout = modular.content.cloneNode(true);
-        this.shadowRoot.appendChild(modularLayout)
+        this.shadowRoot.appendChild(modularLayout);
       }
     }
 
     attributeChangedCallback() {
       if (this.isStacked) {
         const stackedLayout = stacked.content.cloneNode(true);
-        this.shadowRoot.appendChild(stackedLayout)
+        this.shadowRoot.appendChild(stackedLayout);
       } else {
         const modularLayout = modular.content.cloneNode(true);
-        this.shadowRoot.appendChild(modularLayout)
+        this.shadowRoot.appendChild(modularLayout);
       }
     }
-
   }
   customElements.define('pearson-card', Card);
 })(window, document);
