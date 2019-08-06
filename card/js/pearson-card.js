@@ -45,7 +45,9 @@
     }
 
     get isStacked() {
-      return this.hasAttribute('stacked');
+      return (
+        this.hasAttribute('stacked') && this.getAttribute('stacked') !== 'false'
+      );
     }
 
     constructor() {

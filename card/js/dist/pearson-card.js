@@ -28,7 +28,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Card, [{
       key: 'isStacked',
       get: function get() {
-        return this.hasAttribute('stacked');
+        return this.hasAttribute('stacked') && this.getAttribute('stacked') !== 'false';
       }
     }], [{
       key: 'observedAttributes',
