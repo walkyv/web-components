@@ -40,7 +40,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   menuButtonTemplate.innerHTML = '\n  <button class="gr-btn icon-btn-24" aria-expanded="false" aria-haspopup="true">\n    <div class="avatar">\n      <span class="initials">DO</span>\n    </div>\n  </button>\n  ';
 
-  loginButtonTemplate.innerHTML = '\n    <button id="loginToPearson" class="gr-btn">Login</button>\n  ';
+  loginButtonTemplate.innerHTML = '\n    <button id="loginToPearson" class="gr-btn">Sign in</button>\n  ';
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-header');
 

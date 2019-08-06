@@ -100,7 +100,7 @@
   `;
 
   loginButtonTemplate.innerHTML = `
-    <button id="loginToPearson" class="gr-btn">Login</button>
+    <button id="loginToPearson" class="gr-btn">Sign in</button>
   `
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-header');
