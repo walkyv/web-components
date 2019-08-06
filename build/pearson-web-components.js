@@ -9,611 +9,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
-  w['moment-range'].extendMoment(moment);
-  // Create a template element
-  var datepicker = doc.createElement('template'),
-      calendar = doc.createElement('template'),
-      row = doc.createElement('template'),
-      dateTemplate = doc.createElement('template'),
-      dateIcon = '\n\n  \n                  <svg focusable="false" class="icon-18" aria-hidden="false" title="close coachmark" role="img" >\n\t<path d="M14.4146471,2 L14.875,2 C16.0486051,2 17,2.95139491 17,4.125 L17,14.875 C17,16.0486051 16.0486051,17 14.875,17 L3.125,17 C1.95139491,17 1,16.0486051 1,14.875 L1,4.125 C1,2.95139491 1.95139491,2 3.125,2 L3.58535285,2 C3.79127106,1.41740381 4.34689059,1 5,1 C5.65310941,1 6.20872894,1.41740381 6.41464715,2 L11.5853529,2 C11.7912711,1.41740381 12.3468906,1 13,1 C13.6531094,1 14.2087289,1.41740381 14.4146471,2 Z M15.25,6.25 L15.25,4.125 C15.25,3.91789322 15.0821068,3.75 14.875,3.75 L3.125,3.75 C2.91789322,3.75 2.75,3.91789322 2.75,4.125 L2.75,6.25 L15.25,6.25 Z M15.25,8 L2.75,8 L2.75,14.875 C2.75,15.0821068 2.91789322,15.25 3.125,15.25 L14.875,15.25 C15.0821068,15.25 15.25,15.0821068 15.25,14.875 L15.25,8 Z"></path>\n    <path d="M12.5,12 L13.5,12 C13.7761424,12 14,12.2238576 14,12.5 L14,13.5 C14,13.7761424 13.7761424,14 13.5,14 L12.5,14 C12.2238576,14 12,13.7761424 12,13.5 L12,12.5 C12,12.2238576 12.2238576,12 12.5,12 Z"></path>\n    <path d="M12.5,9 L13.5,9 C13.7761424,9 14,9.22385763 14,9.5 L14,10.5 C14,10.7761424 13.7761424,11 13.5,11 L12.5,11 C12.2238576,11 12,10.7761424 12,10.5 L12,9.5 C12,9.22385763 12.2238576,9 12.5,9 Z"></path>\n    <path d="M9.5,12 L10.5,12 C10.7761424,12 11,12.2238576 11,12.5 L11,13.5 C11,13.7761424 10.7761424,14 10.5,14 L9.5,14 C9.22385763,14 9,13.7761424 9,13.5 L9,12.5 C9,12.2238576 9.22385763,12 9.5,12 Z"></path>\n    <path d="M9.5,9 L10.5,9 C10.7761424,9 11,9.22385763 11,9.5 L11,10.5 C11,10.7761424 10.7761424,11 10.5,11 L9.5,11 C9.22385763,11 9,10.7761424 9,10.5 L9,9.5 C9,9.22385763 9.22385763,9 9.5,9 Z"></path>\n    <path d="M6.5,12 L7.5,12 C7.77614237,12 8,12.2238576 8,12.5 L8,13.5 C8,13.7761424 7.77614237,14 7.5,14 L6.5,14 C6.22385763,14 6,13.7761424 6,13.5 L6,12.5 C6,12.2238576 6.22385763,12 6.5,12 Z"></path>\n       </svg>\n    ',
-      calendarIcon = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\' width=\'18\' height=\'18\' fill=\'%236a7070\'%3e%3cpath d=\'M4 3L5 3 5 1 4 1 4 3zM13 3L14 3 14 1 13 1 13 3zM18 5L18 1.5C18 1.224 17.776 1 17.5 1L15 1 15 .5C15 .224 14.776 0 14.5 0L12.5 0C12.224 0 12 .224 12 .5L12 1 6 1 6 .5C6 .224 5.776 0 5.5 0L3.5 0C3.224 0 3 .224 3 .5L3 1 .5 1C.224 1 0 1.224 0 1.5L0 5 18 5zM14.0762 15L10.8262 15C10.5502 15 10.3262 14.776 10.3262 14.5 10.3262 14.224 10.5502 14 10.8262 14L12.0002 14 12.0002 9.707 11.3752 10.331C11.1802 10.526 10.8632 10.526 10.6682 10.331 10.4722 10.136 10.4722 9.819 10.6682 9.624L12.1462 8.146C12.2892 8.003 12.5062 7.96 12.6912 8.038 12.8782 8.116 13.0002 8.298 13.0002 8.5L13.0002 14 14.0762 14C14.3522 14 14.5762 14.224 14.5762 14.5 14.5762 14.776 14.3522 15 14.0762 15L14.0762 15zM9.0002 14.5C9.0002 14.776 8.7762 15 8.5002 15L4.5002 15C4.2232 15 4.0002 14.776 4.0002 14.5L4.0002 13.5C4.0002 13.224 4.2232 13 4.5002 13 4.7762 13 5.0002 13.224 5.0002 13.5L5.0002 14 8.0002 14 8.0002 12 5.6992 12C5.4232 12 5.1992 11.776 5.1992 11.5 5.1992 11.224 5.4232 11 5.6992 11L8.0002 11 8.0002 9 5.0002 9 5.0002 9.5C5.0002 9.776 4.7762 10 4.5002 10 4.2232 10 4.0002 9.776 4.0002 9.5L4.0002 8.5C4.0002 8.224 4.2232 8 4.5002 8L8.5002 8C8.7762 8 9.0002 8.224 9.0002 8.5L9.0002 14.5zM.0002 6L.0002 17.5C.0002 17.776.2232 18 .5002 18L17.5002 18C17.7762 18 18.0002 17.776 18.0002 17.5L18.0002 6 .0002 6z\'/%3e%3c/svg%3e',
-      prevArrowIcon = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\' width=\'18\' height=\'18\' fill=\'%236a7070\'%3e%3cpath d=\'M13.749,17.6606035 C14.112,17.2486035 14.076,16.6116035 13.662,16.2436035 L5.509,8.9996035 L13.662,1.7566035 C14.077,1.3896035 14.113,0.752603504 13.749,0.339603504 C13.383,-0.0763964961 12.751,-0.115396496 12.338,0.252603504 L3.338,8.2476035 C3.123,8.4376035 3,8.7126035 3,8.9996035 C3,9.2876035 3.123,9.5616035 3.338,9.7526035 L12.338,17.7476035 C12.751,18.1156035 13.383,18.0766035 13.749,17.6606035\'%3e%3c/path%3e%3c/svg%3e',
-      nextArrowIcon = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\' width=\'18\' height=\'18\' fill=\'%236a7070\'%3e%3cpath d=\'M4.2506,17.6606035 C3.8876,17.2486035 3.9236,16.6116035 4.3376,16.2436035 L12.4906,8.9996035 L4.3376,1.7566035 C3.9226,1.3896035 3.8866,0.752603504 4.2506,0.339603504 C4.6166,-0.0763964961 5.2486,-0.115396496 5.6616,0.252603504 L14.6616,8.2476035 C14.8766,8.4376035 14.9996,8.7126035 14.9996,8.9996035 C14.9996,9.2876035 14.8766,9.5616035 14.6616,9.7526035 L5.6616,17.7476035 C5.2486,18.1156035 4.6166,18.0766035 4.2506,17.6606035\'%3e%3c/path%3e%3c/svg%3e',
-      warningIcon = '   \n  <svg     \n    aria-hidden="true"\n    focusable="false" \n    style="width:18px;height:18px;fill:currentColor"  \n  >  \n    <path d="M9.99994044,10.5 C9.99994044,10.776 9.77594044,11 9.49994044,11 L8.49994044,11 C8.22394044,11 7.99994044,10.776 7.99994044,10.5 L7.99994044,7.5 C7.99994044,7.224 8.22394044,7 8.49994044,7 L9.49994044,7 C9.77594044,7 9.99994044,7.224 9.99994044,7.5 L9.99994044,10.5 Z M9.99994044,13.5 C9.99994044,13.776 9.77594044,14 9.49994044,14 L8.49994044,14 C8.22394044,14 7.99994044,13.776 7.99994044,13.5 L7.99994044,12.5 C7.99994044,12.224 8.22394044,12 8.49994044,12 L9.49994044,12 C9.77594044,12 9.99994044,12.224 9.99994044,12.5 L9.99994044,13.5 Z M15.9460591,15.275 L9.44500379,2.276 C9.26100222,1.908 8.73899778,1.908 8.55499621,2.276 L2.05394089,15.275 C1.88693947,15.607 2.12794152,16 2.49894468,16 L15.5010553,16 C15.8720585,16 16.1130605,15.607 15.9460591,15.275 Z"/>\n</svg>';
-
-  datepicker.innerHTML = ' \n<style>\n\n@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}\n:host,:host *,:host :after,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box;font-family:Open Sans,Calibri,Tahoma,sans-serif}:host{position:relative;display:inline-block;max-width:400px;width:100%;color:#252525}input[disabled]{color:#c7c7c7;background-color:#e9e9e9;cursor:not-allowed}input[readonly]{border-color:transparent;background-color:transparent}ul{list-style-type:none;padding:0;margin:0}svg{vertical-align:top}.gr-icon{position:absolute;color:#6a7070;pointer-events:none}.gr-datepicker-container{position:relative;min-width:150px;max-width:322px}@media (-ms-high-contrast:none){.gr-datepicker-container{max-width:362px}}.gr-datepicker-container .datepicker{position:relative;margin-bottom:6px}.gr-datepicker-container .datepicker .gr-btn{bottom:-webkit-calc(50% - 17px);bottom:calc(50% - 17px);color:#6a7070;position:absolute;right:0;margin:0;border-radius:4px}@media (-ms-high-contrast:none){.gr-datepicker-container .datepicker .gr-btn{bottom:-webkit-calc(50% - 12px)!important;bottom:calc(50% - 12px)!important}}.gr-datepicker-container .datepicker .gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 0 #fff,0 0 0 2px #1977d4;box-shadow:0 0 0 0 #fff,0 0 0 2px #1977d4}.gr-datepicker-container .datepicker svg{fill:#6a7070}.gr-datepicker-container .gr-calendar-container{position:absolute}.gr-datepicker-container.error .gr-label{color:#db0020}.gr-datepicker-container.error .gr-input{border-color:#db0020}#inputAriaId{display:none}.error #inputAriaId{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.gr-calendar-container{-webkit-box-sizing:content-box;box-sizing:content-box;min-height:284px;color:#252525;padding:16px 20px 20px;z-index:1;border:1px solid #c7c7c7;background-color:#fff;border-radius:5px}@media (-ms-high-contrast:none){.gr-calendar-container{width:320px}}.gr-calendar-container fieldset{margin:0;border:0;padding:0}.gr-calendar-container fieldset legend{padding:8px;text-align:left;margin-bottom:8px;width:-webkit-calc(100% - 84px);width:calc(100% - 84px);display:inline-block;float:left;font-size:18px}.gr-calendar-container .actions{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;width:80px}.gr-calendar-container .actions .gr-btn{margin:0;padding:0;height:40px;width:40px;color:#6a7070}.gr-calendar-container .actions .gr-btn:hover{color:#252525}.gr-calendar-container .actions .gr-btn:focus{color:#252525;outline:2px solid #1977d4;outline-offset:2px}.gr-calendar-container .weekdays div{height:40px;color:#6a7070;line-height:40px;font-size:12px}.gr-calendar-container .row{display:-ms-grid;display:grid;-ms-grid-columns:(40px)[7];grid-template-columns:repeat(7,40px);clear:both}.gr-calendar-container abbr{text-decoration:none}.gr-calendar-container .cell{display:inline-block;vertical-align:top;text-align:center;width:40px;height:40px}.gr-calendar-container .cell.currentDate-box{width:36px;height:36px;margin:1px;line-height:36px;border-radius:0;padding:0;border:1px solid #c7c7c7;background:transparent}.gr-calendar-container .cell.currentDate-box .date-selector{margin:2px}.gr-calendar-container .cell button{background:none;padding:0;border:0;position:relative;cursor:pointer;display:block;height:32px;width:32px;margin:4px;line-height:32px;border-radius:50%;font-size:14px}.gr-calendar-container .cell button.selected{font-weight:600;color:#fff;background-color:#6a7070}.gr-calendar-container .cell button:focus{outline:2px solid #1977d4;outline-offset:2px}.gr-calendar-container .date-selector{height:32px;width:32px;margin:4px;line-height:32px;border-radius:16px}.gr-calendar-container .date.past{height:40px;line-height:38px}.gr-calendar-container .past .date-selector{color:#c7c7c7;cursor:not-allowed}.gr-calendar-container .secondary-date{border:1px solid #c7c7c7}.gr-calendar-container.inverse{color:#fff;background-color:#005a70;border:1px solid #005a70}.gr-calendar-container.inverse .actions button,.gr-calendar-container.inverse .cell,.gr-calendar-container.inverse .date-selector,.gr-calendar-container.inverse .title,.gr-calendar-container.inverse .weekdays div{color:#fff}.gr-calendar-container.inverse .actions button:focus,.gr-calendar-container.inverse .actions button:hover{color:#c7c7c7}.gr-calendar-container.inverse .date .selected{color:#252525;background-color:#fff}.gr-calendar-container.inverse .past .date-selector{color:#047a9c;cursor:not-allowed}.gr-btn{padding:0;background-color:transparent;border:0}.date-selector{background:none}.date-selector:hover{background-color:#e9e9e9;color:#252525;cursor:pointer}.date-selector.selected{background-color:#6a7070;color:#fff}.currentDate-box{border:1px solid #c7c7c7}@media (-ms-high-contrast:none){.dates>.row{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}}@media (-ms-high-contrast:none){.gr-calendar-container .row{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}}*{font-family:Open Sans}html{font-size:14px}*,html{-webkit-box-sizing:border-box;box-sizing:border-box}abbr{text-decoration:none}html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}svg{fill:currentColor}.gr-h1{font-size:24px;line-height:28px}.gr-h1,.gr-h2{font-weight:400;margin-top:0}.gr-h2{font-size:20px;line-height:26px}.gr-h3{font-size:18px;line-height:24px;font-weight:400;margin-top:0}.gr-meta{font-size:12px;line-height:12px;color:#6a7070}.gr-semi-bold{font-weight:600}.gr-font-large{font-size:16px;line-height:24px}.gr-font-normal{font-size:14px;line-height:20px}.gr-btn{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:16px;cursor:pointer;border-radius:22px;position:relative;margin:12px}.gr-btn:hover{color:#252525;border:1px solid #252525}.gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}.gr-btn.primary:hover{color:#fff;background-color:#035f79}.gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}.gr-btn.attention:hover{background-color:#f7aa00}.gr-btn.small{min-width:128px;padding:7px 20px;font-size:14px}.gr-btn.small:focus:after{padding:18px 21px}.gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:16px}.gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}.gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}.gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}.gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}.gr-btn.no-border{border:0}.gr-btn.no-border:hover{border:0}.gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}.gr-input{display:block;margin:4px 0;padding:0 12px;height:36px;color:#252525;border:1px solid #c7c7c7;background:#fff;border-radius:4px;font-size:14px;width:100%;max-width:100%}.gr-input.error{border-color:#db0020}.gr-input[aria-invalid=true]{border-color:#db0020;margin-bottom:0}.gr-input[aria-invalid=true]:focus{-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020;box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020}.gr-input:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}.gr-input:disabled{color:#c7c7c7;background-color:#e9e9e9}.gr-input:-moz-read-only{border:0}.gr-input:read-only{border:0}.gr-label{font-size:12px;line-height:16px;color:#6a7070;display:block;margin-bottom:4px}.no-border{border:0}.icon-18{width:18px;height:18px}.icon-24{width:24px;height:24px}button:focus{outline:2px solid #1977d4;outline-offset:2px}.error-msg,.gr-meta.error{color:#db0020;padding-top:3px;font-size:12px;line-height:16px;margin-bottom:0;margin-top:0}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}\n</style>      \n    <div class="gr-datepicker-container">\n        <label class="gr-label" for="datepicker" id="datepicker-label">Select date (mm/dd/yyyy)</label> \n        <div class="datepicker">\n            <input type="text" class="gr-input" id="datepicker" aria-expanded="false">\n              <button class="gr-btn icon-btn-18 open-calendar" aria-label="open calendar">\n                             ' + dateIcon + '\n              </button>\n        </div> \n        <p id="inputAriaId" class="error-msg">' + warningIcon + ' Enter a valid date.</p>\n    </div>\n';
-
-  calendar.innerHTML = '\n        <section class="gr-calendar-container animated animateIn">\n            <div class="calendar">\n                <fieldset class="pe-inner">\n                    <legend class="gr-h3" id="month"></legend>\n                    <div class="actions">\n                        <button class="gr-btn icon-btn-24 previous" aria-label="Previous month">\n                           <img src="' + prevArrowIcon + '" aria-hidden="true"/>\n                        </button>\n                        <button class="gr-btn icon-btn-24 next" aria-label="Next month">\n                            <img src="' + nextArrowIcon + '" aria-hidden="true"/>\n                        </button>\n                    </div>\n                    <div class="row weekdays">\n                        <div class="cell dayNames">\n                            <abbr title="Sunday">S</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Monday">M</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Tuesday">T</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Wednesday">W</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Thursday">T</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Friday">F</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Saturday">S</abbr>\n                        </div>\n                    </div>\n                    <div class="dates"></div>\n                </fieldset>\n            </div>\n        </section>\n';
-
-  row.innerHTML = '\n<div class="row"></div>\n';
-
-  dateTemplate.innerHTML = '\n <div class="cell date">\n      <button class="date-selector" data-date="11/01/2018" aria-label="" aria-pressed="false">1</button>\n  </div>\n  ';
-
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(datepicker, 'pearson-datepicker');
-
-  function getFocusableElements(node) {
-    var buttons = node.querySelectorAll('button:not(:disabled)'),
-        data = {};
-    data.elements = buttons;
-    data.firstElement = data.elements[0];
-    data.lastElement = data.elements[data.elements.length - 1];
-    return data;
-  }
-
-  function validateDate(testdate) {
-    var date_regex = /^\d{2}\/\d{2}\/\d{4}$/;
-    return date_regex.test(testdate);
-  }
-
-  // helpers
-
-  var Datepicker = function (_HTMLElement) {
-    _inherits(Datepicker, _HTMLElement);
-
-    _createClass(Datepicker, [{
-      key: 'returnDateData',
-
-
-      // this data is fed to the calendar data function and is used to build the calendar object
-      value: function returnDateData(date, type) {
-        // return the year to populate calendar
-        if (this.year !== null && type === undefined) {
-          date.year = parseInt(this.year, 10);
-        } else if (type !== undefined) {
-          date.year = date.year;
-        } else {
-          date.year = parseInt(moment().format('Y'), 10);
-        }
-
-        // return the month to populate calendar
-        if (this.month !== null && type === undefined) {
-          date.month = parseInt(this.month - 1, 10);
-        } else if (type !== undefined) {
-          if (type === 'add') {
-            date.month = date.month + 1;
-            if (date.month === 12) {
-              date.month = 0;
-              date.year = date.year + 1;
-            }
-          } else if (type === 'subtract') {
-            // date.month = moment().subtract(date.month, 'month').month();
-            date.month = date.month - 1;
-            if (date.month === -1) {
-              date.month = 11;
-              date.year = date.year - 1;
-            }
-          }
-        } else {
-          date.month = moment().month();
-        }
-
-        // return the day to populate calendar
-        if (this.day !== null) {
-          date.day = this.day;
-        } else {
-          date.day = moment().format('D');
-        }
-        return date;
-      }
-
-      // builds the calendar object to power the UI
-
-    }, {
-      key: 'returnCalendarData',
-      value: function returnCalendarData(returnData) {
-        var data = returnData,
-            date = moment([data.year, data.month]),
-            firstDay = moment(date).startOf('M').day('Sunday'),
-            endDay = moment(date).endOf('M').day('Saturday'),
-            monthRange = moment.range(firstDay, endDay),
-            weeks = [],
-            calendar = [],
-            build = [],
-            calendarData = {};
-
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = monthRange.by('days')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var day = _step.value;
-
-            var number = void 0;
-            if (weeks.indexOf(day.week()) === -1 && weeks.indexOf(53) === -1) {
-              if (data.month === 11 && day.week() === 1) {
-                number = 53;
-              } else {
-                number = day.week();
-              }
-              weeks.push(number);
-            }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        weeks.forEach(function (week, index) {
-          var weeknumber = weeks[index];
-          var firstWeekDay = moment(firstDay).week(weeknumber).day('Sunday');
-          if (firstWeekDay.isBefore(firstDay)) {
-            firstWeekDay = firstDay;
-          }
-          var lastWeekDay = moment(endDay).year(data.year).week(weeknumber).day('Saturday');
-          if (lastWeekDay.isAfter(endDay)) {
-            lastWeekDay = endDay;
-          }
-          var weekRange = moment.range(firstWeekDay, lastWeekDay);
-          calendar.push(weekRange);
-        });
-
-        calendar.forEach(function (range) {
-          var weeks = [];
-          var _iteratorNormalCompletion2 = true;
-          var _didIteratorError2 = false;
-          var _iteratorError2 = undefined;
-
-          try {
-            for (var _iterator2 = range.by('days')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-              var _day = _step2.value;
-
-              weeks.push(_day);
-            }
-          } catch (err) {
-            _didIteratorError2 = true;
-            _iteratorError2 = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                _iterator2.return();
-              }
-            } finally {
-              if (_didIteratorError2) {
-                throw _iteratorError2;
-              }
-            }
-          }
-
-          build.push(weeks);
-        });
-        calendarData.month = moment(date).startOf('M').format("MMMM");
-        calendarData.year = data.year;
-        calendarData.weeks = build;
-        return calendarData;
-      }
-
-      // builds and renders next month
-
-    }, {
-      key: 'nextMonth',
-      value: function nextMonth() {
-        this.data = this.returnDateData(this.data, 'add');
-        this.renderCalendar(this.data);
-      }
-
-      // builds and renders previous month
-
-    }, {
-      key: 'prevMonth',
-      value: function prevMonth() {
-        this.data = this.returnDateData(this.data, 'subtract');
-        this.renderCalendar(this.data);
-      }
-
-      // opens the calendar
-
-    }, {
-      key: 'openCalendar',
-      value: function openCalendar() {
-        this.openState = 'true';
-        this.renderCalendar(this.data);
-        this.focusOnOpen();
-      }
-
-      // closes the calendar
-
-    }, {
-      key: 'closeCalendar',
-      value: function closeCalendar() {
-        this.openState = 'false';
-        this.openBtn.focus();
-      }
-
-      // builds the calendar template
-
-    }, {
-      key: 'buildCalendarContainer',
-      value: function buildCalendarContainer() {
-        var calendarTemplate = calendar.content.cloneNode(true),
-            nextBtn = calendarTemplate.querySelector('.next'),
-            prevBtn = calendarTemplate.querySelector('.previous');
-
-        nextBtn.addEventListener('click', this.nextMonth, false);
-        prevBtn.addEventListener('click', this.prevMonth, false);
-
-        return calendarTemplate;
-      }
-
-      // populates and renders the calendar
-
-    }, {
-      key: 'renderCalendar',
-      value: function renderCalendar(dateData) {
-        var _this2 = this;
-
-        var data = this.returnCalendarData(dateData),
-            rowTarget = this.shadowRoot.querySelector('.dates');
-
-        rowTarget.innerHTML = '';
-
-        data.weeks.forEach(function (week, index2) {
-          var rowTemplate = row.content.cloneNode(true),
-              rows = rowTemplate.querySelector('.row');
-
-          week.forEach(function (days, index) {
-            var cellTemplate = dateTemplate.content.cloneNode(true),
-                button = cellTemplate.querySelector('button');
-            if (days.format('MMMM') === data.month) {
-              button.innerHTML = days.format('D');
-              button.setAttribute('aria-label', days.format('dddd, MMMM Do YYYY'));
-              button.setAttribute('data-date', days.format('L'));
-              button.setAttribute('data-index', days.format('D'));
-              button.addEventListener('click', function (event) {
-                var prevSelected = rowTarget.getElementsByClassName('selected')[0];
-                if (prevSelected !== undefined) {
-                  prevSelected.classList.remove('selected');
-                  prevSelected.setAttribute('aria-pressed', false);
-                }
-                _this2.selectedState = event.target.getAttribute('data-date');
-                event.target.setAttribute('aria-pressed', true);
-                event.target.classList.add('selected');
-                _this2.invalid = validateDate(_this2.input.value);
-                _this2.closeCalendar();
-              });
-            } else {
-              button.remove();
-            }
-
-            if (days.format('MMMM') === moment().format('MMMM') && moment().format('D') === days.format('D') && days.format('YYYY') === moment().format('YYYY')) {
-              button.parentNode.classList.add('currentDate-box');
-              button.setAttribute('aria-label', 'Today ' + days.format('dddd, MMMM Do YYYY'));
-            }
-            rows.appendChild(cellTemplate);
-          });
-          rowTarget.appendChild(rowTemplate);
-        });
-        this.monthYearState = data.month + ' ' + data.year;
-        var selectedNode = this.shadowRoot.querySelector('[data-date="' + this.selected + '"]');
-        if (selectedNode !== null) {
-          selectedNode.classList.add('selected');
-        }
-      }
-
-      // focus management when calendar is opened
-
-    }, {
-      key: 'focusOnOpen',
-      value: function focusOnOpen() {
-        if (this.selected === null) {
-          var currentNode = this.shadowRoot.querySelector('.currentDate-box button');
-          if (currentNode !== null) {
-            currentNode.focus();
-            currentNode.setAttribute('aria-pressed', true);
-          }
-        } else {
-          var selectedNode = this.shadowRoot.querySelector('[data-date="' + this.selected + '"]');
-          if (selectedNode !== null) {
-            selectedNode.classList.add('selected');
-            selectedNode.focus();
-            selectedNode.setAttribute('aria-pressed', true);
-          }
-        }
-      }
-    }, {
-      key: 'open',
-      get: function get() {
-        return this.getAttribute('open');
-      }
-    }, {
-      key: 'year',
-      get: function get() {
-        return this.getAttribute('year');
-      }
-    }, {
-      key: 'month',
-      get: function get() {
-        return this.getAttribute('month');
-      }
-    }, {
-      key: 'day',
-      get: function get() {
-        return this.getAttribute('day');
-      }
-    }, {
-      key: 'selected',
-      get: function get() {
-        return this.getAttribute('value');
-      }
-    }, {
-      key: 'monthYearState',
-      set: function set(str) {
-        this.shadowRoot.querySelector('legend').innerHTML = str;
-      }
-    }, {
-      key: 'openState',
-      set: function set(bool) {
-        this.setAttribute('open', bool);
-      }
-    }, {
-      key: 'invalid',
-      set: function set(bool) {
-        var datepicker = this.shadowRoot.querySelector('.gr-datepicker-container'),
-            input = datepicker.querySelector('input');
-        if (bool === false) {
-          datepicker.classList.add('error');
-        } else {
-          this.selectedState = input.value;
-          this.data.month = parseInt(input.value.substring(0, 2) - 1, 10);
-          this.data.year = parseInt(input.value.substring(6, 10), 10);
-          this.data.day = input.value.substring(3, 5);
-          console.log(this.data);
-          datepicker.classList.remove('error');
-        }
-      }
-    }, {
-      key: 'selectedState',
-      set: function set(selected) {
-        if (selected !== null) {
-          var input = this.shadowRoot.querySelector('input');
-          this.setAttribute('value', selected);
-          input.value = this.selected;
-          this.data.month = parseInt(this.selected.substring(0, 2) - 1, 10);
-          this.data.year = parseInt(this.selected.substring(6, 10), 10);
-          this.data.day = this.selected.substring(3, 5);
-        }
-      }
-    }], [{
-      key: 'observedAttributes',
-      get: function get() {
-        return ['open', 'year', 'month', 'day', 'value'];
-      }
-    }]);
-
-    function Datepicker() {
-      _classCallCheck(this, Datepicker);
-
-      var _this = _possibleConstructorReturn(this, (Datepicker.__proto__ || Object.getPrototypeOf(Datepicker)).call(this));
-
-      _this.attachShadow({
-        mode: 'open'
-      });
-      var clone = datepicker.content.cloneNode(true);
-      _this.openBtn = clone.querySelector('.open-calendar');
-      _this.datepicker = clone.querySelector('.gr-datepicker-container');
-      _this.input = clone.querySelector('input');
-      _this.label = clone.querySelector('#datepicker-label');
-      _this.data = {};
-      /** After all this, we can append our clone to the shadowRoot */
-      _this.shadowRoot.appendChild(clone);
-
-      _this.returnDateData = _this.returnDateData.bind(_this);
-      _this.buildCalendarContainer = _this.buildCalendarContainer.bind(_this);
-      _this.returnCalendarData = _this.returnCalendarData.bind(_this);
-      _this.nextMonth = _this.nextMonth.bind(_this);
-      _this.prevMonth = _this.prevMonth.bind(_this);
-      _this.renderCalendar = _this.renderCalendar.bind(_this);
-      _this.closeCalendar = _this.closeCalendar.bind(_this);
-      _this.openCalendar = _this.openCalendar.bind(_this);
-      _this.focusOnOpen = _this.focusOnOpen.bind(_this);
-      return _this;
-    }
-
-    _createClass(Datepicker, [{
-      key: 'connectedCallback',
-      value: function connectedCallback() {
-        var _this3 = this;
-
-        var labelText = this.getAttribute('label') || 'Select date (mm/dd/yyyy)';
-
-        this.label.textContent = '' + labelText;
-
-        this.setAttribute('open', false);
-        this.data = this.returnDateData(this.data);
-
-        this.selectedState = this.selected;
-        // opens calendar when down arrow is pushed
-        this.input.addEventListener('keydown', function (event) {
-          switch (event.keyCode) {
-            case 40:
-              if (_this3.open === 'false') {
-                _this3.openCalendar();
-              }
-              break;
-          }
-        });
-
-        this.input.addEventListener('blur', function (event) {
-          if (_this3.input.value.length > 0) {
-            _this3.invalid = validateDate(_this3.input.value);
-          }
-        });
-
-        // opens calendar when button is pressed
-        this.openBtn.addEventListener('click', function (event) {
-          if (_this3.open === 'false') {
-            _this3.openCalendar();
-          } else {
-            _this3.closeCalendar();
-          }
-        });
-
-        doc.body.addEventListener('click', function (event) {
-          console.log(event.target);
-        });
-      }
-    }, {
-      key: 'attributeChangedCallback',
-      value: function attributeChangedCallback(name, oldValue, newValue) {
-        var _this4 = this;
-
-        var calendarContainer = this.datepicker.querySelector('.gr-calendar-container'),
-            input = this.datepicker.querySelector('input');
-        if (name === 'open') {
-          if (oldValue !== newValue) {
-            if (newValue === 'true') {
-              input.setAttribute('aria-expanded', true);
-              var calendarTemplate = this.buildCalendarContainer();
-              var dates = calendarTemplate.querySelector('.dates');
-              this.datepicker.appendChild(calendarTemplate);
-              this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year;
-
-              // closes the calendar if outside the calendar target
-              doc.addEventListener('click', function (event) {
-                if (_this4.open === 'true') {
-                  var target = event.target;
-                  do {
-                    if (target === _this4) {
-                      return;
-                    }
-                    target = target.parentNode;
-                  } while (target);
-                  _this4.closeCalendar();
-                } else {
-                  return false;
-                }
-              }, true);
-
-              // closes the calendar on escape
-              doc.addEventListener('keydown', function (event) {
-                switch (event.keyCode) {
-                  case 27:
-                    _this4.closeCalendar();
-                    break;
-                }
-              });
-
-              // keyboard navigation for accessibility
-              dates.addEventListener('keydown', function (event) {
-                var nextItem = parseInt(event.target.getAttribute('data-index')),
-                    prevItem = parseInt(event.target.getAttribute('data-index')) - 2,
-                    nextWeek = parseInt(event.target.getAttribute('data-index')) + 6,
-                    prevWeek = parseInt(event.target.getAttribute('data-index')) - 8,
-                    previousMonth = _this4.datepicker.querySelector('.previous');
-
-                event.preventDefault();
-                event.stopImmediatePropagation();
-                switch (event.keyCode) {
-                  case 39:
-                    // right arrow
-                    if (_this4.shadowRoot.activeElement === getFocusableElements(dates).lastElement) {
-                      _this4.nextMonth();
-                      getFocusableElements(dates).firstElement.focus();
-                    } else {
-                      if (getFocusableElements(dates).elements[nextItem] !== undefined) {
-                        getFocusableElements(dates).elements[nextItem].focus();
-                      } else {
-                        return;
-                      }
-                    }
-                    break;
-                  case 37:
-                    // left arrow
-                    if (_this4.shadowRoot.activeElement === getFocusableElements(dates).firstElement) {
-                      _this4.prevMonth();
-                      getFocusableElements(dates).lastElement.focus();
-                    } else {
-                      if (getFocusableElements(dates).elements[prevItem] !== undefined) {
-                        getFocusableElements(dates).elements[prevItem].focus();
-                      } else {
-                        return;
-                      }
-                    }
-                    break;
-                  case 40:
-                    //arrow down
-                    if (getFocusableElements(dates).elements[nextWeek] !== undefined) {
-                      getFocusableElements(dates).elements[nextWeek].focus();
-                    } else {
-                      _this4.nextMonth();
-                      getFocusableElements(dates).firstElement.focus();
-                    }
-                    break;
-                  case 38:
-                    // arrow up
-                    if (getFocusableElements(dates).elements[prevWeek] !== undefined) {
-                      getFocusableElements(dates).elements[prevWeek].focus();
-                    } else {
-                      _this4.prevMonth();
-                      getFocusableElements(dates).lastElement.focus();
-                    }
-                    break;
-                  case 13:
-                    // enter
-                    event.target.click();
-                    break;
-                  case 32:
-                    // space
-                    event.target.click();
-                    break;
-                  case 33:
-                    _this4.prevMonth();
-                    getFocusableElements(dates).lastElement.focus();
-                    break;
-                  case 34:
-                    _this4.nextMonth();
-                    getFocusableElements(dates).firstElement.focus();
-                    break;
-                  case 35:
-                    getFocusableElements(dates).lastElement.focus();
-                    break;
-                  case 36:
-                    getFocusableElements(dates).firstElement.focus();
-                    break;
-                  case 27:
-                    _this4.closeCalendar();
-                    break;
-                  case 9:
-                    previousMonth.focus();
-                    break;
-                }
-              });
-            }
-            if (newValue === 'false' && calendarContainer !== null) {
-              calendarContainer.remove();
-              input.setAttribute('aria-expanded', false);
-            }
-          }
-        }
-      }
-    }]);
-
-    return Datepicker;
-  }(HTMLElement);
-
-  customElements.define('pearson-datepicker', Datepicker);
-})(window, document);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-(function (w, doc) {
-  'use strict';
-
   var template = doc.createElement('template');
 
   var ICON_CLOSE_24 = '\n  <svg\n    xmlns="http://www.w3.org/2000/svg"\n    xmlns:xlink="http://www.w3.org/1999/xlink"\n    version="1.1"\n    id="close-24" viewBox="0 0 24 24"\n    class="pe-icon-close-24"\n    aria-hidden="true"\n    focusable="false"\n    style="width:24px;height:24px;"\n  >\n    <path\n      d="M12,10.5857864 L17.2928932,5.29289322 C17.6834175,4.90236893 18.3165825,4.90236893 18.7071068,5.29289322 C19.0976311,5.68341751 19.0976311,6.31658249 18.7071068,6.70710678 L13.4142136,12 L18.7071068,17.2928932 C19.0976311,17.6834175 19.0976311,18.3165825 18.7071068,18.7071068 C18.3165825,19.0976311 17.6834175,19.0976311 17.2928932,18.7071068 L12,13.4142136 L6.70710678,18.7071068 C6.31658249,19.0976311 5.68341751,19.0976311 5.29289322,18.7071068 C4.90236893,18.3165825 4.90236893,17.6834175 5.29289322,17.2928932 L10.5857864,12 L5.29289322,6.70710678 C4.90236893,6.31658249 4.90236893,5.68341751 5.29289322,5.29289322 C5.68341751,4.90236893 6.31658249,4.90236893 6.70710678,5.29289322 L12,10.5857864 Z"\n    ></path>\n  </svg>\n  ';
@@ -1590,6 +985,611 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   }(HTMLElement);
 
   customElements.define('pearson-coachmark', Coachmark);
+})(window, document);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (w, doc) {
+  'use strict';
+
+  w['moment-range'].extendMoment(moment);
+  // Create a template element
+  var datepicker = doc.createElement('template'),
+      calendar = doc.createElement('template'),
+      row = doc.createElement('template'),
+      dateTemplate = doc.createElement('template'),
+      dateIcon = '\n\n  \n                  <svg focusable="false" class="icon-18" aria-hidden="false" title="close coachmark" role="img" >\n\t<path d="M14.4146471,2 L14.875,2 C16.0486051,2 17,2.95139491 17,4.125 L17,14.875 C17,16.0486051 16.0486051,17 14.875,17 L3.125,17 C1.95139491,17 1,16.0486051 1,14.875 L1,4.125 C1,2.95139491 1.95139491,2 3.125,2 L3.58535285,2 C3.79127106,1.41740381 4.34689059,1 5,1 C5.65310941,1 6.20872894,1.41740381 6.41464715,2 L11.5853529,2 C11.7912711,1.41740381 12.3468906,1 13,1 C13.6531094,1 14.2087289,1.41740381 14.4146471,2 Z M15.25,6.25 L15.25,4.125 C15.25,3.91789322 15.0821068,3.75 14.875,3.75 L3.125,3.75 C2.91789322,3.75 2.75,3.91789322 2.75,4.125 L2.75,6.25 L15.25,6.25 Z M15.25,8 L2.75,8 L2.75,14.875 C2.75,15.0821068 2.91789322,15.25 3.125,15.25 L14.875,15.25 C15.0821068,15.25 15.25,15.0821068 15.25,14.875 L15.25,8 Z"></path>\n    <path d="M12.5,12 L13.5,12 C13.7761424,12 14,12.2238576 14,12.5 L14,13.5 C14,13.7761424 13.7761424,14 13.5,14 L12.5,14 C12.2238576,14 12,13.7761424 12,13.5 L12,12.5 C12,12.2238576 12.2238576,12 12.5,12 Z"></path>\n    <path d="M12.5,9 L13.5,9 C13.7761424,9 14,9.22385763 14,9.5 L14,10.5 C14,10.7761424 13.7761424,11 13.5,11 L12.5,11 C12.2238576,11 12,10.7761424 12,10.5 L12,9.5 C12,9.22385763 12.2238576,9 12.5,9 Z"></path>\n    <path d="M9.5,12 L10.5,12 C10.7761424,12 11,12.2238576 11,12.5 L11,13.5 C11,13.7761424 10.7761424,14 10.5,14 L9.5,14 C9.22385763,14 9,13.7761424 9,13.5 L9,12.5 C9,12.2238576 9.22385763,12 9.5,12 Z"></path>\n    <path d="M9.5,9 L10.5,9 C10.7761424,9 11,9.22385763 11,9.5 L11,10.5 C11,10.7761424 10.7761424,11 10.5,11 L9.5,11 C9.22385763,11 9,10.7761424 9,10.5 L9,9.5 C9,9.22385763 9.22385763,9 9.5,9 Z"></path>\n    <path d="M6.5,12 L7.5,12 C7.77614237,12 8,12.2238576 8,12.5 L8,13.5 C8,13.7761424 7.77614237,14 7.5,14 L6.5,14 C6.22385763,14 6,13.7761424 6,13.5 L6,12.5 C6,12.2238576 6.22385763,12 6.5,12 Z"></path>\n       </svg>\n    ',
+      calendarIcon = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\' width=\'18\' height=\'18\' fill=\'%236a7070\'%3e%3cpath d=\'M4 3L5 3 5 1 4 1 4 3zM13 3L14 3 14 1 13 1 13 3zM18 5L18 1.5C18 1.224 17.776 1 17.5 1L15 1 15 .5C15 .224 14.776 0 14.5 0L12.5 0C12.224 0 12 .224 12 .5L12 1 6 1 6 .5C6 .224 5.776 0 5.5 0L3.5 0C3.224 0 3 .224 3 .5L3 1 .5 1C.224 1 0 1.224 0 1.5L0 5 18 5zM14.0762 15L10.8262 15C10.5502 15 10.3262 14.776 10.3262 14.5 10.3262 14.224 10.5502 14 10.8262 14L12.0002 14 12.0002 9.707 11.3752 10.331C11.1802 10.526 10.8632 10.526 10.6682 10.331 10.4722 10.136 10.4722 9.819 10.6682 9.624L12.1462 8.146C12.2892 8.003 12.5062 7.96 12.6912 8.038 12.8782 8.116 13.0002 8.298 13.0002 8.5L13.0002 14 14.0762 14C14.3522 14 14.5762 14.224 14.5762 14.5 14.5762 14.776 14.3522 15 14.0762 15L14.0762 15zM9.0002 14.5C9.0002 14.776 8.7762 15 8.5002 15L4.5002 15C4.2232 15 4.0002 14.776 4.0002 14.5L4.0002 13.5C4.0002 13.224 4.2232 13 4.5002 13 4.7762 13 5.0002 13.224 5.0002 13.5L5.0002 14 8.0002 14 8.0002 12 5.6992 12C5.4232 12 5.1992 11.776 5.1992 11.5 5.1992 11.224 5.4232 11 5.6992 11L8.0002 11 8.0002 9 5.0002 9 5.0002 9.5C5.0002 9.776 4.7762 10 4.5002 10 4.2232 10 4.0002 9.776 4.0002 9.5L4.0002 8.5C4.0002 8.224 4.2232 8 4.5002 8L8.5002 8C8.7762 8 9.0002 8.224 9.0002 8.5L9.0002 14.5zM.0002 6L.0002 17.5C.0002 17.776.2232 18 .5002 18L17.5002 18C17.7762 18 18.0002 17.776 18.0002 17.5L18.0002 6 .0002 6z\'/%3e%3c/svg%3e',
+      prevArrowIcon = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\' width=\'18\' height=\'18\' fill=\'%236a7070\'%3e%3cpath d=\'M13.749,17.6606035 C14.112,17.2486035 14.076,16.6116035 13.662,16.2436035 L5.509,8.9996035 L13.662,1.7566035 C14.077,1.3896035 14.113,0.752603504 13.749,0.339603504 C13.383,-0.0763964961 12.751,-0.115396496 12.338,0.252603504 L3.338,8.2476035 C3.123,8.4376035 3,8.7126035 3,8.9996035 C3,9.2876035 3.123,9.5616035 3.338,9.7526035 L12.338,17.7476035 C12.751,18.1156035 13.383,18.0766035 13.749,17.6606035\'%3e%3c/path%3e%3c/svg%3e',
+      nextArrowIcon = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\' width=\'18\' height=\'18\' fill=\'%236a7070\'%3e%3cpath d=\'M4.2506,17.6606035 C3.8876,17.2486035 3.9236,16.6116035 4.3376,16.2436035 L12.4906,8.9996035 L4.3376,1.7566035 C3.9226,1.3896035 3.8866,0.752603504 4.2506,0.339603504 C4.6166,-0.0763964961 5.2486,-0.115396496 5.6616,0.252603504 L14.6616,8.2476035 C14.8766,8.4376035 14.9996,8.7126035 14.9996,8.9996035 C14.9996,9.2876035 14.8766,9.5616035 14.6616,9.7526035 L5.6616,17.7476035 C5.2486,18.1156035 4.6166,18.0766035 4.2506,17.6606035\'%3e%3c/path%3e%3c/svg%3e',
+      warningIcon = '   \n  <svg     \n    aria-hidden="true"\n    focusable="false" \n    style="width:18px;height:18px;fill:currentColor"  \n  >  \n    <path d="M9.99994044,10.5 C9.99994044,10.776 9.77594044,11 9.49994044,11 L8.49994044,11 C8.22394044,11 7.99994044,10.776 7.99994044,10.5 L7.99994044,7.5 C7.99994044,7.224 8.22394044,7 8.49994044,7 L9.49994044,7 C9.77594044,7 9.99994044,7.224 9.99994044,7.5 L9.99994044,10.5 Z M9.99994044,13.5 C9.99994044,13.776 9.77594044,14 9.49994044,14 L8.49994044,14 C8.22394044,14 7.99994044,13.776 7.99994044,13.5 L7.99994044,12.5 C7.99994044,12.224 8.22394044,12 8.49994044,12 L9.49994044,12 C9.77594044,12 9.99994044,12.224 9.99994044,12.5 L9.99994044,13.5 Z M15.9460591,15.275 L9.44500379,2.276 C9.26100222,1.908 8.73899778,1.908 8.55499621,2.276 L2.05394089,15.275 C1.88693947,15.607 2.12794152,16 2.49894468,16 L15.5010553,16 C15.8720585,16 16.1130605,15.607 15.9460591,15.275 Z"/>\n</svg>';
+
+  datepicker.innerHTML = ' \n<style>\n\n@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}\n:host,:host *,:host :after,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box;font-family:Open Sans,Calibri,Tahoma,sans-serif}:host{position:relative;display:inline-block;max-width:400px;width:100%;color:#252525}input[disabled]{color:#c7c7c7;background-color:#e9e9e9;cursor:not-allowed}input[readonly]{border-color:transparent;background-color:transparent}ul{list-style-type:none;padding:0;margin:0}svg{vertical-align:top}.gr-icon{position:absolute;color:#6a7070;pointer-events:none}.gr-datepicker-container{position:relative;min-width:150px;max-width:322px}@media (-ms-high-contrast:none){.gr-datepicker-container{max-width:362px}}.gr-datepicker-container .datepicker{position:relative;margin-bottom:6px}.gr-datepicker-container .datepicker .gr-btn{bottom:-webkit-calc(50% - 17px);bottom:calc(50% - 17px);color:#6a7070;position:absolute;right:0;margin:0;border-radius:4px}@media (-ms-high-contrast:none){.gr-datepicker-container .datepicker .gr-btn{bottom:-webkit-calc(50% - 12px)!important;bottom:calc(50% - 12px)!important}}.gr-datepicker-container .datepicker .gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 0 #fff,0 0 0 2px #1977d4;box-shadow:0 0 0 0 #fff,0 0 0 2px #1977d4}.gr-datepicker-container .datepicker svg{fill:#6a7070}.gr-datepicker-container .gr-calendar-container{position:absolute}.gr-datepicker-container.error .gr-label{color:#db0020}.gr-datepicker-container.error .gr-input{border-color:#db0020}#inputAriaId{display:none}.error #inputAriaId{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.gr-calendar-container{-webkit-box-sizing:content-box;box-sizing:content-box;min-height:284px;color:#252525;padding:16px 20px 20px;z-index:1;border:1px solid #c7c7c7;background-color:#fff;border-radius:5px}@media (-ms-high-contrast:none){.gr-calendar-container{width:320px}}.gr-calendar-container fieldset{margin:0;border:0;padding:0}.gr-calendar-container fieldset legend{padding:8px;text-align:left;margin-bottom:8px;width:-webkit-calc(100% - 84px);width:calc(100% - 84px);display:inline-block;float:left;font-size:18px}.gr-calendar-container .actions{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;width:80px}.gr-calendar-container .actions .gr-btn{margin:0;padding:0;height:40px;width:40px;color:#6a7070}.gr-calendar-container .actions .gr-btn:hover{color:#252525}.gr-calendar-container .actions .gr-btn:focus{color:#252525;outline:2px solid #1977d4;outline-offset:2px}.gr-calendar-container .weekdays div{height:40px;color:#6a7070;line-height:40px;font-size:12px}.gr-calendar-container .row{display:-ms-grid;display:grid;-ms-grid-columns:(40px)[7];grid-template-columns:repeat(7,40px);clear:both}.gr-calendar-container abbr{text-decoration:none}.gr-calendar-container .cell{display:inline-block;vertical-align:top;text-align:center;width:40px;height:40px}.gr-calendar-container .cell.currentDate-box{width:36px;height:36px;margin:1px;line-height:36px;border-radius:0;padding:0;border:1px solid #c7c7c7;background:transparent}.gr-calendar-container .cell.currentDate-box .date-selector{margin:2px}.gr-calendar-container .cell button{background:none;padding:0;border:0;position:relative;cursor:pointer;display:block;height:32px;width:32px;margin:4px;line-height:32px;border-radius:50%;font-size:14px}.gr-calendar-container .cell button.selected{font-weight:600;color:#fff;background-color:#6a7070}.gr-calendar-container .cell button:focus{outline:2px solid #1977d4;outline-offset:2px}.gr-calendar-container .date-selector{height:32px;width:32px;margin:4px;line-height:32px;border-radius:16px}.gr-calendar-container .date.past{height:40px;line-height:38px}.gr-calendar-container .past .date-selector{color:#c7c7c7;cursor:not-allowed}.gr-calendar-container .secondary-date{border:1px solid #c7c7c7}.gr-calendar-container.inverse{color:#fff;background-color:#005a70;border:1px solid #005a70}.gr-calendar-container.inverse .actions button,.gr-calendar-container.inverse .cell,.gr-calendar-container.inverse .date-selector,.gr-calendar-container.inverse .title,.gr-calendar-container.inverse .weekdays div{color:#fff}.gr-calendar-container.inverse .actions button:focus,.gr-calendar-container.inverse .actions button:hover{color:#c7c7c7}.gr-calendar-container.inverse .date .selected{color:#252525;background-color:#fff}.gr-calendar-container.inverse .past .date-selector{color:#047a9c;cursor:not-allowed}.gr-btn{padding:0;background-color:transparent;border:0}.date-selector{background:none}.date-selector:hover{background-color:#e9e9e9;color:#252525;cursor:pointer}.date-selector.selected{background-color:#6a7070;color:#fff}.currentDate-box{border:1px solid #c7c7c7}@media (-ms-high-contrast:none){.dates>.row{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}}@media (-ms-high-contrast:none){.gr-calendar-container .row{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}}*{font-family:Open Sans}html{font-size:14px}*,html{-webkit-box-sizing:border-box;box-sizing:border-box}abbr{text-decoration:none}html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}svg{fill:currentColor}.gr-h1{font-size:24px;line-height:28px}.gr-h1,.gr-h2{font-weight:400;margin-top:0}.gr-h2{font-size:20px;line-height:26px}.gr-h3{font-size:18px;line-height:24px;font-weight:400;margin-top:0}.gr-meta{font-size:12px;line-height:12px;color:#6a7070}.gr-semi-bold{font-weight:600}.gr-font-large{font-size:16px;line-height:24px}.gr-font-normal{font-size:14px;line-height:20px}.gr-btn{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:16px;cursor:pointer;border-radius:22px;position:relative;margin:12px}.gr-btn:hover{color:#252525;border:1px solid #252525}.gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}.gr-btn.primary:hover{color:#fff;background-color:#035f79}.gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}.gr-btn.attention:hover{background-color:#f7aa00}.gr-btn.small{min-width:128px;padding:7px 20px;font-size:14px}.gr-btn.small:focus:after{padding:18px 21px}.gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:16px}.gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}.gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}.gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}.gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}.gr-btn.no-border{border:0}.gr-btn.no-border:hover{border:0}.gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}.gr-input{display:block;margin:4px 0;padding:0 12px;height:36px;color:#252525;border:1px solid #c7c7c7;background:#fff;border-radius:4px;font-size:14px;width:100%;max-width:100%}.gr-input.error{border-color:#db0020}.gr-input[aria-invalid=true]{border-color:#db0020;margin-bottom:0}.gr-input[aria-invalid=true]:focus{-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020;box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020}.gr-input:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}.gr-input:disabled{color:#c7c7c7;background-color:#e9e9e9}.gr-input:-moz-read-only{border:0}.gr-input:read-only{border:0}.gr-label{font-size:12px;line-height:16px;color:#6a7070;display:block;margin-bottom:4px}.no-border{border:0}.icon-18{width:18px;height:18px}.icon-24{width:24px;height:24px}button:focus{outline:2px solid #1977d4;outline-offset:2px}.error-msg,.gr-meta.error{color:#db0020;padding-top:3px;font-size:12px;line-height:16px;margin-bottom:0;margin-top:0}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}\n</style>      \n    <div class="gr-datepicker-container">\n        <label class="gr-label" for="datepicker" id="datepicker-label">Select date (mm/dd/yyyy)</label> \n        <div class="datepicker">\n            <input type="text" class="gr-input" id="datepicker" aria-expanded="false">\n              <button class="gr-btn icon-btn-18 open-calendar" aria-label="open calendar">\n                             ' + dateIcon + '\n              </button>\n        </div> \n        <p id="inputAriaId" class="error-msg">' + warningIcon + ' Enter a valid date.</p>\n    </div>\n';
+
+  calendar.innerHTML = '\n        <section class="gr-calendar-container animated animateIn">\n            <div class="calendar">\n                <fieldset class="pe-inner">\n                    <legend class="gr-h3" id="month"></legend>\n                    <div class="actions">\n                        <button class="gr-btn icon-btn-24 previous" aria-label="Previous month">\n                           <img src="' + prevArrowIcon + '" aria-hidden="true"/>\n                        </button>\n                        <button class="gr-btn icon-btn-24 next" aria-label="Next month">\n                            <img src="' + nextArrowIcon + '" aria-hidden="true"/>\n                        </button>\n                    </div>\n                    <div class="row weekdays">\n                        <div class="cell dayNames">\n                            <abbr title="Sunday">S</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Monday">M</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Tuesday">T</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Wednesday">W</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Thursday">T</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Friday">F</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Saturday">S</abbr>\n                        </div>\n                    </div>\n                    <div class="dates"></div>\n                </fieldset>\n            </div>\n        </section>\n';
+
+  row.innerHTML = '\n<div class="row"></div>\n';
+
+  dateTemplate.innerHTML = '\n <div class="cell date">\n      <button class="date-selector" data-date="11/01/2018" aria-label="" aria-pressed="false">1</button>\n  </div>\n  ';
+
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(datepicker, 'pearson-datepicker');
+
+  function getFocusableElements(node) {
+    var buttons = node.querySelectorAll('button:not(:disabled)'),
+        data = {};
+    data.elements = buttons;
+    data.firstElement = data.elements[0];
+    data.lastElement = data.elements[data.elements.length - 1];
+    return data;
+  }
+
+  function validateDate(testdate) {
+    var date_regex = /^\d{2}\/\d{2}\/\d{4}$/;
+    return date_regex.test(testdate);
+  }
+
+  // helpers
+
+  var Datepicker = function (_HTMLElement) {
+    _inherits(Datepicker, _HTMLElement);
+
+    _createClass(Datepicker, [{
+      key: 'returnDateData',
+
+
+      // this data is fed to the calendar data function and is used to build the calendar object
+      value: function returnDateData(date, type) {
+        // return the year to populate calendar
+        if (this.year !== null && type === undefined) {
+          date.year = parseInt(this.year, 10);
+        } else if (type !== undefined) {
+          date.year = date.year;
+        } else {
+          date.year = parseInt(moment().format('Y'), 10);
+        }
+
+        // return the month to populate calendar
+        if (this.month !== null && type === undefined) {
+          date.month = parseInt(this.month - 1, 10);
+        } else if (type !== undefined) {
+          if (type === 'add') {
+            date.month = date.month + 1;
+            if (date.month === 12) {
+              date.month = 0;
+              date.year = date.year + 1;
+            }
+          } else if (type === 'subtract') {
+            // date.month = moment().subtract(date.month, 'month').month();
+            date.month = date.month - 1;
+            if (date.month === -1) {
+              date.month = 11;
+              date.year = date.year - 1;
+            }
+          }
+        } else {
+          date.month = moment().month();
+        }
+
+        // return the day to populate calendar
+        if (this.day !== null) {
+          date.day = this.day;
+        } else {
+          date.day = moment().format('D');
+        }
+        return date;
+      }
+
+      // builds the calendar object to power the UI
+
+    }, {
+      key: 'returnCalendarData',
+      value: function returnCalendarData(returnData) {
+        var data = returnData,
+            date = moment([data.year, data.month]),
+            firstDay = moment(date).startOf('M').day('Sunday'),
+            endDay = moment(date).endOf('M').day('Saturday'),
+            monthRange = moment.range(firstDay, endDay),
+            weeks = [],
+            calendar = [],
+            build = [],
+            calendarData = {};
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = monthRange.by('days')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var day = _step.value;
+
+            var number = void 0;
+            if (weeks.indexOf(day.week()) === -1 && weeks.indexOf(53) === -1) {
+              if (data.month === 11 && day.week() === 1) {
+                number = 53;
+              } else {
+                number = day.week();
+              }
+              weeks.push(number);
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        weeks.forEach(function (week, index) {
+          var weeknumber = weeks[index];
+          var firstWeekDay = moment(firstDay).week(weeknumber).day('Sunday');
+          if (firstWeekDay.isBefore(firstDay)) {
+            firstWeekDay = firstDay;
+          }
+          var lastWeekDay = moment(endDay).year(data.year).week(weeknumber).day('Saturday');
+          if (lastWeekDay.isAfter(endDay)) {
+            lastWeekDay = endDay;
+          }
+          var weekRange = moment.range(firstWeekDay, lastWeekDay);
+          calendar.push(weekRange);
+        });
+
+        calendar.forEach(function (range) {
+          var weeks = [];
+          var _iteratorNormalCompletion2 = true;
+          var _didIteratorError2 = false;
+          var _iteratorError2 = undefined;
+
+          try {
+            for (var _iterator2 = range.by('days')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              var _day = _step2.value;
+
+              weeks.push(_day);
+            }
+          } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+              }
+            } finally {
+              if (_didIteratorError2) {
+                throw _iteratorError2;
+              }
+            }
+          }
+
+          build.push(weeks);
+        });
+        calendarData.month = moment(date).startOf('M').format("MMMM");
+        calendarData.year = data.year;
+        calendarData.weeks = build;
+        return calendarData;
+      }
+
+      // builds and renders next month
+
+    }, {
+      key: 'nextMonth',
+      value: function nextMonth() {
+        this.data = this.returnDateData(this.data, 'add');
+        this.renderCalendar(this.data);
+      }
+
+      // builds and renders previous month
+
+    }, {
+      key: 'prevMonth',
+      value: function prevMonth() {
+        this.data = this.returnDateData(this.data, 'subtract');
+        this.renderCalendar(this.data);
+      }
+
+      // opens the calendar
+
+    }, {
+      key: 'openCalendar',
+      value: function openCalendar() {
+        this.openState = 'true';
+        this.renderCalendar(this.data);
+        this.focusOnOpen();
+      }
+
+      // closes the calendar
+
+    }, {
+      key: 'closeCalendar',
+      value: function closeCalendar() {
+        this.openState = 'false';
+        this.openBtn.focus();
+      }
+
+      // builds the calendar template
+
+    }, {
+      key: 'buildCalendarContainer',
+      value: function buildCalendarContainer() {
+        var calendarTemplate = calendar.content.cloneNode(true),
+            nextBtn = calendarTemplate.querySelector('.next'),
+            prevBtn = calendarTemplate.querySelector('.previous');
+
+        nextBtn.addEventListener('click', this.nextMonth, false);
+        prevBtn.addEventListener('click', this.prevMonth, false);
+
+        return calendarTemplate;
+      }
+
+      // populates and renders the calendar
+
+    }, {
+      key: 'renderCalendar',
+      value: function renderCalendar(dateData) {
+        var _this2 = this;
+
+        var data = this.returnCalendarData(dateData),
+            rowTarget = this.shadowRoot.querySelector('.dates');
+
+        rowTarget.innerHTML = '';
+
+        data.weeks.forEach(function (week, index2) {
+          var rowTemplate = row.content.cloneNode(true),
+              rows = rowTemplate.querySelector('.row');
+
+          week.forEach(function (days, index) {
+            var cellTemplate = dateTemplate.content.cloneNode(true),
+                button = cellTemplate.querySelector('button');
+            if (days.format('MMMM') === data.month) {
+              button.innerHTML = days.format('D');
+              button.setAttribute('aria-label', days.format('dddd, MMMM Do YYYY'));
+              button.setAttribute('data-date', days.format('L'));
+              button.setAttribute('data-index', days.format('D'));
+              button.addEventListener('click', function (event) {
+                var prevSelected = rowTarget.getElementsByClassName('selected')[0];
+                if (prevSelected !== undefined) {
+                  prevSelected.classList.remove('selected');
+                  prevSelected.setAttribute('aria-pressed', false);
+                }
+                _this2.selectedState = event.target.getAttribute('data-date');
+                event.target.setAttribute('aria-pressed', true);
+                event.target.classList.add('selected');
+                _this2.invalid = validateDate(_this2.input.value);
+                _this2.closeCalendar();
+              });
+            } else {
+              button.remove();
+            }
+
+            if (days.format('MMMM') === moment().format('MMMM') && moment().format('D') === days.format('D') && days.format('YYYY') === moment().format('YYYY')) {
+              button.parentNode.classList.add('currentDate-box');
+              button.setAttribute('aria-label', 'Today ' + days.format('dddd, MMMM Do YYYY'));
+            }
+            rows.appendChild(cellTemplate);
+          });
+          rowTarget.appendChild(rowTemplate);
+        });
+        this.monthYearState = data.month + ' ' + data.year;
+        var selectedNode = this.shadowRoot.querySelector('[data-date="' + this.selected + '"]');
+        if (selectedNode !== null) {
+          selectedNode.classList.add('selected');
+        }
+      }
+
+      // focus management when calendar is opened
+
+    }, {
+      key: 'focusOnOpen',
+      value: function focusOnOpen() {
+        if (this.selected === null) {
+          var currentNode = this.shadowRoot.querySelector('.currentDate-box button');
+          if (currentNode !== null) {
+            currentNode.focus();
+            currentNode.setAttribute('aria-pressed', true);
+          }
+        } else {
+          var selectedNode = this.shadowRoot.querySelector('[data-date="' + this.selected + '"]');
+          if (selectedNode !== null) {
+            selectedNode.classList.add('selected');
+            selectedNode.focus();
+            selectedNode.setAttribute('aria-pressed', true);
+          }
+        }
+      }
+    }, {
+      key: 'open',
+      get: function get() {
+        return this.getAttribute('open');
+      }
+    }, {
+      key: 'year',
+      get: function get() {
+        return this.getAttribute('year');
+      }
+    }, {
+      key: 'month',
+      get: function get() {
+        return this.getAttribute('month');
+      }
+    }, {
+      key: 'day',
+      get: function get() {
+        return this.getAttribute('day');
+      }
+    }, {
+      key: 'selected',
+      get: function get() {
+        return this.getAttribute('value');
+      }
+    }, {
+      key: 'monthYearState',
+      set: function set(str) {
+        this.shadowRoot.querySelector('legend').innerHTML = str;
+      }
+    }, {
+      key: 'openState',
+      set: function set(bool) {
+        this.setAttribute('open', bool);
+      }
+    }, {
+      key: 'invalid',
+      set: function set(bool) {
+        var datepicker = this.shadowRoot.querySelector('.gr-datepicker-container'),
+            input = datepicker.querySelector('input');
+        if (bool === false) {
+          datepicker.classList.add('error');
+        } else {
+          this.selectedState = input.value;
+          this.data.month = parseInt(input.value.substring(0, 2) - 1, 10);
+          this.data.year = parseInt(input.value.substring(6, 10), 10);
+          this.data.day = input.value.substring(3, 5);
+          console.log(this.data);
+          datepicker.classList.remove('error');
+        }
+      }
+    }, {
+      key: 'selectedState',
+      set: function set(selected) {
+        if (selected !== null) {
+          var input = this.shadowRoot.querySelector('input');
+          this.setAttribute('value', selected);
+          input.value = this.selected;
+          this.data.month = parseInt(this.selected.substring(0, 2) - 1, 10);
+          this.data.year = parseInt(this.selected.substring(6, 10), 10);
+          this.data.day = this.selected.substring(3, 5);
+        }
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['open', 'year', 'month', 'day', 'value'];
+      }
+    }]);
+
+    function Datepicker() {
+      _classCallCheck(this, Datepicker);
+
+      var _this = _possibleConstructorReturn(this, (Datepicker.__proto__ || Object.getPrototypeOf(Datepicker)).call(this));
+
+      _this.attachShadow({
+        mode: 'open'
+      });
+      var clone = datepicker.content.cloneNode(true);
+      _this.openBtn = clone.querySelector('.open-calendar');
+      _this.datepicker = clone.querySelector('.gr-datepicker-container');
+      _this.input = clone.querySelector('input');
+      _this.label = clone.querySelector('#datepicker-label');
+      _this.data = {};
+      /** After all this, we can append our clone to the shadowRoot */
+      _this.shadowRoot.appendChild(clone);
+
+      _this.returnDateData = _this.returnDateData.bind(_this);
+      _this.buildCalendarContainer = _this.buildCalendarContainer.bind(_this);
+      _this.returnCalendarData = _this.returnCalendarData.bind(_this);
+      _this.nextMonth = _this.nextMonth.bind(_this);
+      _this.prevMonth = _this.prevMonth.bind(_this);
+      _this.renderCalendar = _this.renderCalendar.bind(_this);
+      _this.closeCalendar = _this.closeCalendar.bind(_this);
+      _this.openCalendar = _this.openCalendar.bind(_this);
+      _this.focusOnOpen = _this.focusOnOpen.bind(_this);
+      return _this;
+    }
+
+    _createClass(Datepicker, [{
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        var _this3 = this;
+
+        var labelText = this.getAttribute('label') || 'Select date (mm/dd/yyyy)';
+
+        this.label.textContent = '' + labelText;
+
+        this.setAttribute('open', false);
+        this.data = this.returnDateData(this.data);
+
+        this.selectedState = this.selected;
+        // opens calendar when down arrow is pushed
+        this.input.addEventListener('keydown', function (event) {
+          switch (event.keyCode) {
+            case 40:
+              if (_this3.open === 'false') {
+                _this3.openCalendar();
+              }
+              break;
+          }
+        });
+
+        this.input.addEventListener('blur', function (event) {
+          if (_this3.input.value.length > 0) {
+            _this3.invalid = validateDate(_this3.input.value);
+          }
+        });
+
+        // opens calendar when button is pressed
+        this.openBtn.addEventListener('click', function (event) {
+          if (_this3.open === 'false') {
+            _this3.openCalendar();
+          } else {
+            _this3.closeCalendar();
+          }
+        });
+
+        doc.body.addEventListener('click', function (event) {
+          console.log(event.target);
+        });
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        var _this4 = this;
+
+        var calendarContainer = this.datepicker.querySelector('.gr-calendar-container'),
+            input = this.datepicker.querySelector('input');
+        if (name === 'open') {
+          if (oldValue !== newValue) {
+            if (newValue === 'true') {
+              input.setAttribute('aria-expanded', true);
+              var calendarTemplate = this.buildCalendarContainer();
+              var dates = calendarTemplate.querySelector('.dates');
+              this.datepicker.appendChild(calendarTemplate);
+              this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year;
+
+              // closes the calendar if outside the calendar target
+              doc.addEventListener('click', function (event) {
+                if (_this4.open === 'true') {
+                  var target = event.target;
+                  do {
+                    if (target === _this4) {
+                      return;
+                    }
+                    target = target.parentNode;
+                  } while (target);
+                  _this4.closeCalendar();
+                } else {
+                  return false;
+                }
+              }, true);
+
+              // closes the calendar on escape
+              doc.addEventListener('keydown', function (event) {
+                switch (event.keyCode) {
+                  case 27:
+                    _this4.closeCalendar();
+                    break;
+                }
+              });
+
+              // keyboard navigation for accessibility
+              dates.addEventListener('keydown', function (event) {
+                var nextItem = parseInt(event.target.getAttribute('data-index')),
+                    prevItem = parseInt(event.target.getAttribute('data-index')) - 2,
+                    nextWeek = parseInt(event.target.getAttribute('data-index')) + 6,
+                    prevWeek = parseInt(event.target.getAttribute('data-index')) - 8,
+                    previousMonth = _this4.datepicker.querySelector('.previous');
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                switch (event.keyCode) {
+                  case 39:
+                    // right arrow
+                    if (_this4.shadowRoot.activeElement === getFocusableElements(dates).lastElement) {
+                      _this4.nextMonth();
+                      getFocusableElements(dates).firstElement.focus();
+                    } else {
+                      if (getFocusableElements(dates).elements[nextItem] !== undefined) {
+                        getFocusableElements(dates).elements[nextItem].focus();
+                      } else {
+                        return;
+                      }
+                    }
+                    break;
+                  case 37:
+                    // left arrow
+                    if (_this4.shadowRoot.activeElement === getFocusableElements(dates).firstElement) {
+                      _this4.prevMonth();
+                      getFocusableElements(dates).lastElement.focus();
+                    } else {
+                      if (getFocusableElements(dates).elements[prevItem] !== undefined) {
+                        getFocusableElements(dates).elements[prevItem].focus();
+                      } else {
+                        return;
+                      }
+                    }
+                    break;
+                  case 40:
+                    //arrow down
+                    if (getFocusableElements(dates).elements[nextWeek] !== undefined) {
+                      getFocusableElements(dates).elements[nextWeek].focus();
+                    } else {
+                      _this4.nextMonth();
+                      getFocusableElements(dates).firstElement.focus();
+                    }
+                    break;
+                  case 38:
+                    // arrow up
+                    if (getFocusableElements(dates).elements[prevWeek] !== undefined) {
+                      getFocusableElements(dates).elements[prevWeek].focus();
+                    } else {
+                      _this4.prevMonth();
+                      getFocusableElements(dates).lastElement.focus();
+                    }
+                    break;
+                  case 13:
+                    // enter
+                    event.target.click();
+                    break;
+                  case 32:
+                    // space
+                    event.target.click();
+                    break;
+                  case 33:
+                    _this4.prevMonth();
+                    getFocusableElements(dates).lastElement.focus();
+                    break;
+                  case 34:
+                    _this4.nextMonth();
+                    getFocusableElements(dates).firstElement.focus();
+                    break;
+                  case 35:
+                    getFocusableElements(dates).lastElement.focus();
+                    break;
+                  case 36:
+                    getFocusableElements(dates).firstElement.focus();
+                    break;
+                  case 27:
+                    _this4.closeCalendar();
+                    break;
+                  case 9:
+                    previousMonth.focus();
+                    break;
+                }
+              });
+            }
+            if (newValue === 'false' && calendarContainer !== null) {
+              calendarContainer.remove();
+              input.setAttribute('aria-expanded', false);
+            }
+          }
+        }
+      }
+    }]);
+
+    return Datepicker;
+  }(HTMLElement);
+
+  customElements.define('pearson-datepicker', Datepicker);
 })(window, document);
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -3147,6 +3147,376 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
+  // Create a template element
+
+  var template = doc.createElement('template'),
+      expandIconTemplate = doc.createElement('template'),
+      collapseIconTemplate = doc.createElement('template'),
+      notificationTemplate = doc.createElement('template'),
+      overlayTemplate = doc.createElement('template'),
+      menuTemplate = doc.createElement('template'),
+      menuButtonTemplate = doc.createElement('template'),
+      loginButtonTemplate = doc.createElement('template'),
+      whiteLogoTemplate = doc.createElement('template'),
+      colorLogoTemplate = doc.createElement('template');
+
+  template.innerHTML = ' \n <style>\n@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");:host{\n  /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */}:host html{line-height:1.15;-webkit-text-size-adjust:100%}:host body{margin:0}:host main{display:block}:host h1{font-size:2em;margin:.67em 0}:host hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}:host pre{font-family:monospace,monospace;font-size:1em}:host a{background-color:transparent}:host abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}:host b,:host strong{font-weight:bolder}:host code,:host kbd,:host samp{font-family:monospace,monospace;font-size:1em}:host small{font-size:80%}:host sub,:host sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}:host sub{bottom:-.25em}:host sup{top:-.5em}:host img{border-style:none}:host button,:host input,:host optgroup,:host select,:host textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}:host button,:host input{overflow:visible}:host button,:host select{text-transform:none}:host [type=button],:host [type=reset],:host [type=submit],:host button{-webkit-appearance:button}:host [type=button]::-moz-focus-inner,:host [type=reset]::-moz-focus-inner,:host [type=submit]::-moz-focus-inner,:host button::-moz-focus-inner{border-style:none;padding:0}:host [type=button]:-moz-focusring,:host [type=reset]:-moz-focusring,:host [type=submit]:-moz-focusring,:host button:-moz-focusring{outline:1px dotted ButtonText}:host fieldset{padding:.35em .75em .625em}:host legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}:host progress{vertical-align:baseline}:host textarea{overflow:auto}:host [type=checkbox],:host [type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}:host [type=number]::-webkit-inner-spin-button,:host [type=number]::-webkit-outer-spin-button{height:auto}:host [type=search]{-webkit-appearance:textfield;outline-offset:-2px}:host [type=search]::-webkit-search-decoration{-webkit-appearance:none}:host ::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}:host details{display:block}:host summary{display:list-item}:host [hidden],:host template{display:none}@-webkit-keyframes shift{to{background-position:9px 9px}}@keyframes shift{to{background-position:9px 9px}}@-webkit-keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@-webkit-keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@-webkit-keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@-webkit-keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}:host .fadeIn,:host .slideInDown{opacity:1!important;visibility:visible!important}:host .fadeOut,:host .slideOutDown{opacity:0;visibility:hidden}:host .slideOutDown{-webkit-animation:slideOutDown .2s ease-in 0s;animation:slideOutDown .2s ease-in 0s}:host .fadeIn{-webkit-animation:fadeIn .3s linear 0s;animation:fadeIn .3s linear 0s}:host .fadeOut{-webkit-animation:fadeOut .2s linear 0s;animation:fadeOut .2s linear 0s}:host .animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}:host .animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (prefers-reduced-motion){:host .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}:host html[data-prefers-reduced-motion] .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}:host html{font-size:14px}:host *,:host html{-webkit-box-sizing:border-box;box-sizing:border-box}:host body{font-family:Open Sans,Arial,Helvetica,sans-serif}:host body,:host p{font-size:14px;line-height:1.5;font-weight:400}:host strong{font-weight:600}:host a{font-size:14px;color:#047a9c}:host a:hover{color:#03536a;text-decoration:none}:host a:focus{outline:2px solid #0b73da;outline-offset:4px}:host button{cursor:pointer}:host li,:host ul{font-size:14px}:host #main{max-width:1280px;margin:0 auto}@media (-ms-high-contrast:active),(-ms-high-contrast:none){:host iframe .gr-grid-container{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}}:host .gr-grid-container{display:grid;display:-ms-grid;grid-template-columns:repeat(4,1fr);grid-column-gap:16px;grid-row-gap:16px;margin:0 39.5px}@media (min-width:351px){:host .gr-grid-container{margin:0 31.5px}}@media (min-width:399px){:host .gr-grid-container{margin:0 39.5px}}@media (min-width:447px){:host .gr-grid-container{margin:0 79.5px}}@media (min-width:591px){:host .gr-grid-container{grid-template-columns:repeat(8,1fr);margin:0 83.5px}}@media (min-width:727px){:host .gr-grid-container{margin:0 103.5px;grid-column-gap:24px;grid-row-gap:24px}}@media (min-width:887px){:host .gr-grid-container{grid-template-columns:repeat(12,1fr);margin:0 71.5px}}@media (min-width:887px) and (-ms-high-contrast:active),(min-width:887px) and (-ms-high-contrast:none){:host .gr-grid-container>*{margin-right:12px;margin-left:12px;margin-bottom:24px}}@media (min-width:983px){:host .gr-grid-container{margin:0 71.5px}}@media (min-width:1079px){:host .gr-grid-container{margin:0 71.5px}}@media (min-width:1175px){:host .gr-grid-container{margin:0 76px}}:host .gr-grid-container .gr-col-two{grid-column-start:2}:host .gr-grid-container .gr-col-three{grid-column-start:3}:host .gr-grid-container .gr-col-four{grid-column-start:4}:host .gr-grid-container .gr-col-five{display:none}@media (min-width:591px){:host .gr-grid-container .gr-col-five{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:5}}:host .gr-grid-container .gr-col-six{display:none}@media (min-width:591px){:host .gr-grid-container .gr-col-six{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:6}}:host .gr-grid-container .gr-col-seven{display:none}@media (min-width:591px){:host .gr-grid-container .gr-col-seven{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:7}}:host .gr-grid-container .gr-col-eight{display:none}@media (min-width:591px){:host .gr-grid-container .gr-col-eight{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:8}}:host .gr-grid-container .gr-col-nine{display:none}@media (min-width:887px){:host .gr-grid-container .gr-col-nine{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:9}}:host .gr-grid-container .gr-col-ten{display:none}@media (min-width:887px){:host .gr-grid-container .gr-col-ten{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:10}}:host .gr-grid-container .gr-col-eleven{display:none}@media (min-width:887px){:host .gr-grid-container .gr-col-eleven{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:11}}:host .gr-grid-container .gr-col-twelve{display:none}@media (min-width:887px){:host .gr-grid-container .gr-col-twelve{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:12}}:host .gr-col-span-one{grid-column-end:span 1}:host .gr-col-span-two{grid-column-end:span 2}:host .gr-col-span-three{grid-column-end:span 3}:host .gr-col-span-four{grid-column-end:span 4}@media (min-width:591px){:host .gr-col-span-five{grid-column-end:span 5}}@media (min-width:591px){:host .gr-col-span-six{grid-column-end:span 6}}@media (min-width:591px){:host .gr-col-span-seven{grid-column-end:span 7}}@media (min-width:591px){:host .gr-col-span-eight{grid-column-end:span 8}}@media (min-width:887px){:host .gr-col-span-nine{grid-column-end:span 9}}@media (min-width:887px){:host .gr-col-span-ten{grid-column-end:span 10}}@media (min-width:887px){:host .gr-col-span-eleven{grid-column-end:span 11}}@media (min-width:887px){:host .gr-col-span-twelve{grid-column-end:span 12}}:host .gr-row-one{grid-row-start:1}:host .gr-row-two{grid-row-start:2}:host .gr-row-three{grid-row-start:3}:host .gr-row-four{grid-row-start:4}:host .gr-row-five{grid-row-start:5}:host .gr-row-six{grid-row-start:6}:host .gr-row-seven{grid-row-start:7}:host .gr-row-eight{grid-row-start:8}:host .gr-row-nine{grid-row-start:9}:host .gr-row-ten{grid-row-start:10}:host .gr-row-eleven{grid-row-start:11}:host .gr-row-twelve{grid-row-start:12}:host .gr-row-thirteen{grid-row-start:13}:host .gr-row-fourteen{grid-row-start:14}:host .gr-row-fifteen{grid-row-start:15}:host .gr-row-span-two{grid-row-end:span 2}:host .gr-row-span-three{grid-row-end:span 3}:host .gr-row-span-four{grid-row-end:span 4}:host .gr-row-span-five{grid-row-end:span 5}:host .gr-row-span-six{grid-row-end:span 6}:host .gr-row-span-seven{grid-row-end:span 7}:host .gr-row-span-eight{grid-row-end:span 8}:host .gr-row-span-nine{grid-row-end:span 9}:host .gr-row-span-ten{grid-row-end:span 10}:host .gr-row-span-eleven{grid-row-end:span 11}:host .gr-row-span-twelve{grid-row-end:span 12}:host .no-border{border:0}:host .icon-18{width:18px;height:18px}:host .icon-24{width:24px;height:24px}:host .hidden{display:none!important}:host .gr-h1{font-size:24px;line-height:28px}:host .gr-h1,:host .gr-h2{font-weight:400;margin-top:0}:host .gr-h2{font-size:20px;line-height:26px}:host .gr-h3{font-size:18px;line-height:24px;font-weight:400;margin-top:0}:host .gr-label{font-size:12px;line-height:16px;color:#6a7070;display:block;margin-bottom:4px}:host .gr-meta{font-size:12px;line-height:12px;color:#6a7070}:host .gr-semi-bold{font-weight:600}:host .gr-font-large{font-size:16px;line-height:24px}:host .gr-font-normal{font-size:14px;line-height:20px}:host .gr-btn{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:16px;cursor:pointer;border-radius:22px;position:relative;margin:12px}:host .gr-btn:hover{color:#252525;border:1px solid #252525}:host .gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}:host .gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}:host .gr-btn.primary:hover{color:#fff;background-color:#035f79}:host .gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}:host .gr-btn.attention:hover{background-color:#f7aa00}:host .gr-btn.small{min-width:128px;padding:7px 20px;font-size:14px}:host .gr-btn.small:focus:after{padding:18px 21px}:host .gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:16px}:host .gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}:host .gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}:host .gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}:host .gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}:host .gr-btn.no-border,:host .gr-btn.no-border:hover{border:0}:host .gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}:host .gr-header{height:70px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;color:#6a7070;padding:0 1em;background:transparent;grid-column:1/5}@media (min-width:591px){:host .gr-header{grid-column:1/9}}@media (min-width:887px){:host .gr-header{grid-column:1/13}}:host .gr-header.light{background:#f5f5f5}:host .gr-header.light .logo{background-image:url(https://pearsonux.sfo2.digitaloceanspaces.com/PearsonIcon.svg)}:host .gr-header.light .logo,:host .gr-header .logo{background-position:0;background-size:40px;background-repeat:no-repeat}:host .gr-header .logo{background-image:url(https://pearsonux.sfo2.digitaloceanspaces.com/PearsonIconWhite.svg);width:48px;height:64px}:host .gr-header .actions{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}:host .gr-header.light button,:host .gr-header.light button:hover{color:#252525}:host .gr-header.light button:focus .avatar{background:#252525;color:#f5f5f5}:host .gr-header.light button .notification{border-color:#252525}:host #collapse{display:none}:host .gr-header button{color:#fff;margin:0;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;padding:0!important}:host .gr-header button:hover{color:#fff}:host .gr-header button:hover svg{fill:currentColor}:host .gr-header button .notification{width:15px;height:15px;background:#da0474;border-radius:50%;border:3px solid #fff;position:absolute;right:-3px;bottom:-3px}:host .gr-header button:focus{-webkit-box-shadow:none;box-shadow:none}:host .gr-header button:focus .avatar{position:relative;background:#fff;color:#047a9c}:host .gr-header button:focus .avatar+svg{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;border-radius:5px}:host .gr-header button:focus #expand{display:none}:host .gr-header button:focus #collapse{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex}:host .gr-header svg{fill:currentColor}:host .gr-header .notification{color:#da0474}:host .gr-header .notification>svg{right:-37px;position:relative;top:-5px;fill:currentColor;border-radius:50%;border:1px solid #fff}@media (max-width:640px){:host .gr-header .notification>svg{right:-33px}}:host .gr-header .username{margin-left:1em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;font-size:14px}@media (max-width:640px){:host .gr-header .name{display:none}}@media (min-width:640px){:host .gr-header .nameicon{display:none}}:host .gr-header .avatar{margin-right:.5em;position:relative;width:45px;height:45px;border:3px solid #fff;border-radius:50%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center}:host .gr-header .avatar span{font-weight:700}:host .gr-header.light .avatar{border:3px solid #252525}:host .gr-header .avatar img{height:25px;width:25px;border-radius:50%}:host .gr-header .avatar+.name+.nameicon{display:none}:host .header-menu{border:1px solid #efefef;border-radius:8px;width:320px;padding:24px}@media (min-width:591px){:host .header-menu{width:360px}}:host .header-menu ul{margin:0;padding:0;list-style-type:none}:host .header-btn{width:100%;background:none;border:0;margin:0;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;padding:0;border-radius:0}:host .header-btn:hover{border:0}:host .header-btn:focus{outline:0;-webkit-box-shadow:0 0 0 11px #fff,0 0 0 13px #1977d4;box-shadow:0 0 0 11px #fff,0 0 0 13px #1977d4;border-radius:5px}:host .header-btn .icon svg{fill:#6a7070}:host .header-btn .text{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:start;-webkit-align-items:flex-start;-ms-flex-align:start;align-items:flex-start}@-webkit-keyframes fadeInLight{0%{opacity:0;visibility:hidden}to{opacity:.4;visibility:visible}}@keyframes fadeInLight{0%{opacity:0;visibility:hidden}to{opacity:.4;visibility:visible}}:host .animateInLight{-webkit-animation-name:fadeInLight;animation-name:fadeInLight;-webkit-animation-duration:4s;animation-duration:4s}@keyframes slideInDown{0%{-webkit-transform:translate3d(0,-15%,0);transform:translate3d(0,-15%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}:host .slideInDown{-webkit-animation:slideInDown .3s ease-in-out 0s;animation:slideInDown .3s ease-in-out 0s}:host #main{position:relative}:host .actions button{font-family:Open Sans,Arial,Helvetica,sans-serif;font-weight:400!important;background:none;border:0}:host .gr-header.open button .avatar{position:relative;background:#fff;color:#047a9c}:host .header-menu{font-family:Open Sans,Arial,Helvetica,sans-serif;width:360px;z-index:10000000;background:#fff;position:absolute;right:0}:host .header-menu li{padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid #c7c7c7}:host .header-menu li:last-child{border-bottom:0;margin:0;padding:0}:host .console-link:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;border-radius:5px}:host .gr-header .logo{width:49px;height:56px;background-position:5px!important}:host #loginToPearson{border:1px solid #6a7070;padding:8px 24px!important}:host .transparent #loginToPearson{border:1px solid #fff;padding:8px 24px!important}:host #loginToPearson:hover{border:1px solid #252525}:host .transparent #loginToPearson:hover{border:1px solid #cdcdcd}:host #loginToPearson:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}:host .gr-header .initials{text-transform:uppercase;font-weight:700}:host .gr-btn:focus-visible{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}:host .gr-header .logo{background-image:none!important}:host .gr-header img{height:50px;margin-top:5px}:host .gr-header .group{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}:host .gr-header .group a{margin-right:16px}:host .gr-btn.icon-btn-24 svg{margin-right:4px}:host .gr-btn:focus{outline:1px solid transparent!important}:host .gr-header .avatar{border:1px solid}:host .gr-header.open button .avatar,:host .gr-header button:focus .avatar{color:#252525}:host .gr-header.light .avatar,:host .gr-header.light button .notification{border:1px solid #252525}:host .gr-header button .notification{height:12px;width:12px;border:1px solid #fff;right:0;bottom:0}\n\n\n</style>\n     <div id="main">\n         <header class="gr-header transparent">\n         <div class="group">\n                    <a class="console-link" href="https://console.pearson.com/console/home"> \n\n           </a>\n           <slot></slot>\n        </div>\n\n            <div class="actions">\n  \n            </div>\n          </header>\n      </div>\n';
+
+  whiteLogoTemplate.innerHTML = '\n       <img src="https://pearsonux.sfo2.digitaloceanspaces.com/PearsonIconWhite.svg" alt="Pearson"/>\n  ';
+
+  colorLogoTemplate.innerHTML = '\n         <img src="https://pearsonux.sfo2.digitaloceanspaces.com/PearsonIcon.svg" alt="Pearson" />\n  ';
+
+  expandIconTemplate.innerHTML = '\n  \t<svg focusable="false" class="icon-24" aria-hidden="true">\n  \t    <path d="M8.09674611,10 L15.8979188,10 C16.5051081,10 16.9973323,10.4907428 16.9973323,11.0961048 C16.9973323,11.390812 16.8782997,11.6731038 16.6670916,11.8792872 L12.7665053,15.6870775 C12.3391074,16.1043075 11.6555575,16.1043075 11.2281596,15.6870775 L7.32757328,11.8792872 C6.89372798,11.4557632 6.88639729,10.7617864 7.31119972,10.3292468 C7.51800543,10.1186744 7.80114936,10 8.09674611,10 Z"></path>\n\t\t</svg>\n  ';
+
+  collapseIconTemplate.innerHTML = '\n  \t\t<svg focusable="false" class="icon-24" aria-hidden="true">\n  \t    <path d="M8.09674611,15 C7.80114936,15 7.51800543,14.8813256 7.31119972,14.6707532 C6.88639729,14.2382136 6.89372798,13.5442368 7.32757328,13.1207128 L11.2281596,9.31292251 C11.6555575,8.8956925 12.3391074,8.8956925 12.7665053,9.31292251 L16.6670916,13.1207128 C16.8782997,13.3268962 16.9973323,13.609188 16.9973323,13.9038952 C16.9973323,14.5092572 16.5051081,15 15.8979188,15 L8.09674611,15 Z"></path>\n      </svg>\n  ';
+
+  notificationTemplate.innerHTML = '\n       <span class="notification"></span> \n  ';
+
+  overlayTemplate.innerHTML = ' \n    <div id="headerOverlay" aria-hidden="true" class="overlay animateInLight" style="\n        position:fixed;\n        height:100%;\n        width:100%;\n        background-color: #252525;\n        top:0;       \n        opacity:.4;\n     "></div>\n  ';
+
+  menuTemplate.innerHTML = '\n  <div class="header-menu slideInDown">\n    <ul>\n      <li>\n        <button id="logout" class="gr-btn header-btn">\n          <div class="text">\n            <span class="gr-font-large">Log out</span>\n            <span class="gr-meta">Sign out of all Pearson products</span>\n          </div>\n          <div class="icon">\n          <svg focusable="false" class="icon-24" aria-hidden="true">\n        <path d="M16.7357409,12.6772865 L16.735721,12.6772745 C16.7265641,12.6872407 16.7170283,12.6971852 16.7071068,12.7071068 L9.70710678,19.7071068 C9.31658249,20.0976311 8.68341751,20.0976311 8.29289322,19.7071068 C7.90236893,19.3165825 7.90236893,18.6834175 8.29289322,18.2928932 L14.5857864,12 L8.29289322,5.70710678 C7.90236893,5.31658249 7.90236893,4.68341751 8.29289322,4.29289322 C8.68341751,3.90236893 9.31658249,3.90236893 9.70710678,4.29289322 L16.7071068,11.2928932 C17.0878409,11.6736274 17.0973856,12.2849891 16.7357409,12.6772865 Z"  fill-rule="nonzero"></path>\n      </svg>\n          </div>\n        </button>\n      </li> \n    </ul>\n  </div>\n  ';
+
+  menuButtonTemplate.innerHTML = '\n  <button class="gr-btn icon-btn-24" aria-expanded="false" aria-haspopup="true">\n    <div class="avatar">\n      <span class="initials">DO</span>\n    </div>\n  </button>\n  ';
+
+  loginButtonTemplate.innerHTML = '\n    <button id="loginToPearson" class="gr-btn">Sign in</button>\n  ';
+
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-header');
+
+  /** Any helper functions that do not need to be part of the class
+   * can be declared here, before the class is defined.
+   */
+
+  function getInitials(string) {
+    if (string !== null && string !== undefined) {
+      return string.match(/\b(\w)/g).join('');
+    } else {
+      return;
+    }
+  }
+
+  var Header = function (_HTMLElement) {
+    _inherits(Header, _HTMLElement);
+
+    _createClass(Header, [{
+      key: 'loggedIn',
+      get: function get() {
+        return this.hasAttribute('loggedin');
+      }
+    }, {
+      key: 'name',
+      get: function get() {
+        return this.getAttribute('name');
+      }
+    }, {
+      key: 'theme',
+      get: function get() {
+        return this.getAttribute('theme');
+      },
+      set: function set(color) {
+        this.setAttribute('theme', color);
+      }
+    }, {
+      key: 'notifications',
+      get: function get() {
+        return this.getAttribute('notifications');
+      },
+      set: function set(number) {
+        this.setAttribute('notifications', number);
+      }
+    }, {
+      key: 'open',
+      get: function get() {
+        return this.hasAttribute('open');
+      },
+      set: function set(bool) {
+        this.setAttribute('open', bool);
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['open', 'notifications', 'theme', 'name', 'loggedin'];
+      }
+    }]);
+
+    function Header() {
+      _classCallCheck(this, Header);
+
+      var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this));
+
+      _this.attachShadow({ mode: 'open' });
+      var clone = template.content.cloneNode(true);
+
+      _this.header = clone.querySelector('.gr-header');
+      _this.button = clone.querySelector('.gr-header button');
+
+      /** After all this, we can append our clone to the shadowRoot */
+      _this.shadowRoot.appendChild(clone);
+
+      _this.renderMenu = _this.renderMenu.bind(_this);
+      _this.renderLoggedIn = _this.renderLoggedIn.bind(_this);
+      _this.renderLoggedOut = _this.renderLoggedOut.bind(_this);
+      return _this;
+    }
+
+    _createClass(Header, [{
+      key: 'renderMenu',
+      value: function renderMenu() {
+        var _this2 = this;
+
+        var expandClone = expandIconTemplate.content.cloneNode(true);
+        this.avatar = this.shadowRoot.querySelector('.gr-header button .avatar');
+        this.button = this.shadowRoot.querySelector('.gr-header button');
+        this.initalNode = this.avatar.querySelector('.initials');
+        this.initials = getInitials(this.name);
+        this.initalNode.innerHTML = this.initials;
+
+        if (!this.open) {
+          this.button.appendChild(expandClone);
+        }
+
+        this.button.addEventListener('click', function (event) {
+
+          if (!_this2.open) {
+
+            _this2.open = true;
+            // add keyboard accessibility for buttons
+
+            var headerMenu = _this2.shadowRoot.querySelector('.header-menu'),
+                focusableItems = headerMenu.querySelectorAll('button'),
+                firstFocusableItem = focusableItems[0],
+                lastFocusableItem = focusableItems[focusableItems.length - 1];
+
+            headerMenu.addEventListener('animationend', function (event) {
+              firstFocusableItem.focus();
+            });
+
+            focusableItems.forEach(function (button, index) {
+              button.setAttribute('data-index', index);
+              button.addEventListener('keydown', function (event) {
+                var nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
+                    prevButton = parseInt(event.target.getAttribute('data-index')) - 1;
+
+                if (event.key === 'ArrowUp') {
+                  event.preventDefault();
+                  if (_this2.shadowRoot.activeElement === firstFocusableItem) {
+                    lastFocusableItem.focus();
+                  } else {
+                    focusableItems[prevButton].focus();
+                  }
+                }
+
+                if (event.key === 'ArrowDown') {
+                  event.preventDefault();
+                  if (_this2.shadowRoot.activeElement === lastFocusableItem) {
+                    firstFocusableItem.focus();
+                  } else {
+                    focusableItems[nextButton].focus();
+                  }
+                }
+
+                if (event.key === 'Home') {
+                  firstFocusableItem.focus();
+                }
+
+                if (event.key === 'End') {
+                  lastFocusableItem.focus();
+                }
+
+                if (event.key === 'Escape') {
+                  _this2.removeAttribute('open');
+                  _this2.button.focus();
+                }
+              });
+            });
+          } else {
+            _this2.removeAttribute('open');
+            console.log(_this2.button);
+          }
+        });
+      }
+    }, {
+      key: 'renderLoggedIn',
+      value: function renderLoggedIn() {
+        var loginButton = this.shadowRoot.querySelector('.gr-header .actions button'),
+            menuButtonClone = menuButtonTemplate.content.cloneNode(true),
+            menuButtonTarget = this.shadowRoot.querySelector('.gr-header .actions');
+
+        if (loginButton) {
+          loginButton.remove();
+        }
+
+        menuButtonTarget.appendChild(menuButtonClone);
+        this.renderMenu();
+      }
+    }, {
+      key: 'renderLoggedOut',
+      value: function renderLoggedOut() {
+        var loginButtonClone = loginButtonTemplate.content.cloneNode(true),
+            loginButtonTarget = this.shadowRoot.querySelector('.gr-header .actions'),
+            menuButton = this.shadowRoot.querySelector('.gr-header .actions button');
+
+        if (menuButton) {
+          menuButton.remove();
+        }
+
+        loginButtonTarget.appendChild(loginButtonClone);
+        var loginButton = this.shadowRoot.querySelector('.gr-header .actions button');
+
+        loginButton.addEventListener('click', function (event) {
+          location.href = "https://console.pearson.com/console/home";
+        });
+      }
+    }, {
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        var whiteLogo = whiteLogoTemplate.content.cloneNode(true),
+            colorLogo = colorLogoTemplate.content.cloneNode(true);
+        this.link = this.shadowRoot.querySelector('.gr-header .console-link');
+
+        if (this.theme === 'light') {
+          this.link.appendChild(colorLogo);
+          this.header.classList.remove('transparent');
+          this.header.classList.add('light');
+        } else {
+          this.link.appendChild(whiteLogo);
+        }
+
+        if (this.loggedIn) {
+          this.renderLoggedIn();
+        } else {
+          this.renderLoggedOut();
+        }
+        var notificationClone = notificationTemplate.content.cloneNode(true);
+        if (parseInt(this.notifications, 10) > 0) {
+          var avatar = this.shadowRoot.querySelector('.avatar');
+          avatar.appendChild(notificationClone);
+        }
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        var _this3 = this;
+
+        var mainContent = document.querySelector('#main');
+        if (name === 'loggedin') {
+          if (oldValue !== newValue && oldValue === null) {
+            this.renderLoggedIn();
+          } else {
+            this.renderLoggedOut();
+          }
+        }
+        if (name === 'theme' && newValue === 'light') {
+          this.header.classList.remove('transparent');
+          this.header.classList.add('light');
+        } else if (name === 'theme' && newValue === 'dark') {
+          this.header.classList.remove('light');
+          this.header.classList.add('transparent');
+        }
+        if (name === 'open') {
+          if (newValue === 'true') {
+            var header = this.shadowRoot.querySelector('.gr-header'),
+                icon = this.shadowRoot.querySelector('.gr-header .actions button svg'),
+                collapseIcon = collapseIconTemplate.content.cloneNode(true),
+                overlay = overlayTemplate.content.cloneNode(true),
+                main = this.shadowRoot.querySelector('#main'),
+                menu = menuTemplate.content.cloneNode(true),
+                headerLink = header.querySelector('.console-link');
+
+            this.button.style.zIndex = '10';
+            headerLink.setAttribute('tabindex', -1);
+            main.setAttribute('tabindex', -1);
+            this.button.setAttribute('aria-expanded', true);
+            console.log('open');
+            header.classList.add('open');
+            header.setAttribute('aria-hidden', true);
+            icon.remove();
+            this.button.appendChild(collapseIcon);
+            doc.body.appendChild(overlay);
+            main.appendChild(menu);
+            mainContent.setAttribute('aria-hidden', true);
+            doc.addEventListener('click', function (event) {
+              if (_this3.open) {
+                var target = event.target;
+                do {
+                  if (target === _this3) {
+                    return;
+                  }
+                  target = target.parentNode;
+                } while (target);
+                _this3.removeAttribute('open');
+                _this3.button.focus();
+              }
+            }, true);
+
+            var logoutButton = this.shadowRoot.querySelector('#logout');
+            logoutButton.addEventListener('click', function (event) {
+              _this3.removeAttribute('open');
+              _this3.removeAttribute('loggedin');
+              _this3.dispatchEvent(new CustomEvent('logout', {
+                bubbles: true
+              }));
+            });
+
+            if (this.theme === 'light') {
+              this.avatar.style.background = '#252525';
+              this.avatar.style.color = 'white';
+            }
+          } else if (newValue === null) {
+            var _header = this.shadowRoot.querySelector('.gr-header'),
+                _icon = this.shadowRoot.querySelector('.gr-header .actions button svg'),
+                expandIcon = expandIconTemplate.content.cloneNode(true),
+                _overlay = doc.querySelector('#headerOverlay'),
+                menuNode = this.shadowRoot.querySelector('.header-menu'),
+                _headerLink = _header.querySelector('.console-link'),
+                _main = this.shadowRoot.querySelector('#main');
+
+            if (this.theme === 'light') {
+              this.avatar.style.background = 'transparent';
+              this.avatar.style.color = '#252525';
+            }
+            this.button.style.zIndex = '0';
+
+            _headerLink.removeAttribute('tabindex', -1);
+            _main.removeAttribute('tabindex', -1);
+            console.log(_main);
+            this.button.setAttribute('aria-expanded', false);
+            mainContent.setAttribute('aria-hidden', false);
+            _header.setAttribute('aria-hidden', false);
+            _header.classList.remove('open');
+            _icon.remove();
+            _overlay.remove();
+            this.button.appendChild(expandIcon);
+            menuNode.remove();
+          }
+        }
+        if (name === 'notifications') {
+          var notificationClone = notificationTemplate.content.cloneNode(true);
+          if (parseInt(this.notifications, 10) > 0) {
+            var avatar = this.shadowRoot.querySelector('.avatar');
+            if (avatar !== null) {
+              avatar.appendChild(notificationClone);
+            }
+          }
+        }
+      }
+    }]);
+
+    return Header;
+  }(HTMLElement);
+
+  customElements.define('pearson-header', Header);
+})(window, document);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (w, doc) {
+  'use strict';
+
   var template = doc.createElement('template');
 
   template.innerHTML = ' \n    <style>\n\n@-webkit-keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@-webkit-keyframes fadein{0%{opacity:0}to{opacity:1}}@keyframes fadein{0%{opacity:0}to{opacity:1}}.pe-loadingSpinner{width:25px;height:25px;position:relative}.pe-loadingSpinner-container1>div,.pe-loadingSpinner-container2>div{width:4px;height:4px;background-color:#19a6a4;border-radius:100%;position:absolute;-webkit-animation:bouncedelay 1.6s ease-in-out infinite;animation:bouncedelay 1.6s ease-in-out infinite;-webkit-animation-fill-mode:both;animation-fill-mode:both}.pe-loadingSpinner .pe-loadingSpinner-container{position:absolute;width:100%;height:100%}.pe-loadingSpinner-container2{-webkit-transform:rotate(45deg);transform:rotate(45deg)}.circle1{top:0;left:0}.circle2{top:0;right:0}.circle3{right:0;bottom:0}.circle4{left:0;bottom:0}.pe-loadingSpinner-container2 .circle1{-webkit-animation-delay:-1.4s;animation-delay:-1.4s}.pe-loadingSpinner-container1 .circle2{-webkit-animation-delay:-1.2s;animation-delay:-1.2s}.pe-loadingSpinner-container2 .circle2{-webkit-animation-delay:-1s;animation-delay:-1s}.pe-loadingSpinner-container1 .circle3{-webkit-animation-delay:-.8s;animation-delay:-.8s}.pe-loadingSpinner-container2 .circle3{-webkit-animation-delay:-.6s;animation-delay:-.6s}.pe-loadingSpinner-container1 .circle4{-webkit-animation-delay:-.4s;animation-delay:-.4s}.pe-loadingSpinner-container2 .circle4{-webkit-animation-delay:-.2s;animation-delay:-.2s}:host,:host *{-webkit-box-sizing:border-box;box-sizing:border-box}:host:before{content:"";display:inline-block;height:100%;vertical-align:middle}:host{width:200px;height:70px;padding:0 20px;margin:auto;background:#252525;color:#fff;border-radius:5px;font:14px/18px Open Sans,Calibri,Tahoma,sans-serif}:host,:host .loading-indicator{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center}:host .label{margin-left:12px}#loaded-content main{-webkit-animation:fadein 2s;animation:fadein 2s}\n</style>\n    <div class="loading-indicator">\n      <div class="pe-loadingSpinner">\n        <div class="pe-loadingSpinner-container pe-loadingSpinner-container1">\n          <div class="circle1"></div>\n          <div class="circle2"></div>\n          <div class="circle3"></div>\n          <div class="circle4"></div>\n        </div>\n        <div class="pe-loadingSpinner-container pe-loadingSpinner-container2">\n          <div class="circle1"></div>\n          <div class="circle2"></div>\n          <div class="circle3"></div>\n          <div class="circle4"></div>\n        </div>\n      </div>\n      <span class="label" id="label"></span>\n\t\t</div>\n';
@@ -3635,6 +4005,441 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   }(HTMLElement);
 
   customElements.define('pearson-modal', Modal);
+})(window, document);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (w, doc) {
+  'use strict';
+
+  // Create a template element
+
+  var template = doc.createElement('template'),
+      numberTemplate = doc.createElement('template'),
+      ellipsisTemplate = doc.createElement('template'),
+      compactTemplate = doc.createElement('template'),
+      previousIcon = '\n      <svg focusable="false" class="icon-18" aria-hidden="true">\n\t      <path d="M5.2383866,9.62193909 C4.90819314,9.25409223 4.92101724,8.69027111 5.27685892,8.33764681 L10.386348,3.27435567 C10.7554932,2.90854811 11.3539959,2.90854811 11.7231411,3.27435567 C12.0922863,3.64016324 12.0922863,4.23325448 11.7231411,4.59906205 L7.28204859,9 L11.7231411,13.400938 C12.0922863,13.7667455 12.0922863,14.3598368 11.7231411,14.7256443 C11.3539959,15.0914519 10.7554932,15.0914519 10.386348,14.7256443 L5.27685892,9.66235319 C5.26334967,9.64896608 5.25054567,9.63548354 5.23843148,9.62191255 L5.2383866,9.62193909 Z"  fill-rule="nonzero"></path>\n      </svg>\n  ',
+      nextIcon = '\n      <svg focusable="false" class="icon-18" aria-hidden="true">\n           <path d="M12.7616134,9.62193909 L12.7615685,9.62191255 C12.7494543,9.63548354 12.7366503,9.64896608 12.7231411,9.66235319 L7.61365203,14.7256443 C7.24450681,15.0914519 6.64600414,15.0914519 6.27685892,14.7256443 C5.90771369,14.3598368 5.90771369,13.7667455 6.27685892,13.400938 L10.7179514,9 L6.27685892,4.59906205 C5.90771369,4.23325448 5.90771369,3.64016324 6.27685892,3.27435567 C6.64600414,2.90854811 7.24450681,2.90854811 7.61365203,3.27435567 L12.7231411,8.33764681 C13.0789828,8.69027111 13.0918069,9.25409223 12.7616134,9.62193909 Z"  fill-rule="nonzero"></path>\n      </svg>\n  ';
+  template.innerHTML = ' \n      <style>\n/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}html{-webkit-box-sizing:border-box;box-sizing:border-box;font-size:16px}*,:after,:before{-webkit-box-sizing:inherit;box-sizing:inherit}body{font-size:16px;font-family:Open Sans,Arial,Helvetica,sans-serif}body,p{line-height:1.5;font-weight:400}p{font-size:.875em}strong{font-weight:600}a{color:#047a9c}a:hover{color:#03536a;text-decoration:none}a:focus{outline:2px solid #0b73da;outline-offset:4px}button{cursor:pointer}.no-border{border:0}.icon-18{width:18px;height:18px}.icon-24{width:24px;height:24px}.hidden{display:none}.gr-h1{font-size:1.5em;line-height:1.75em}.gr-h1,.gr-h2{font-weight:400;margin-top:0}.gr-h2{font-size:1.25em;line-height:1.625em}.gr-h3{font-size:1.125em;line-height:1.5em;font-weight:400;margin-top:0}.gr-label{display:block;margin-bottom:4px}.gr-label,.gr-meta{font-size:.75em;line-height:1em;color:#6a7070}.gr-semi-bold{font-weight:600}.gr-font-large{font-size:1em;line-height:1.5em}.gr-font-normal{font-size:.875em;line-height:1.5}.gr-btn{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:1em;cursor:pointer;border-radius:22px;position:relative;margin:12px}.gr-btn:hover{color:#252525;border:1px solid #252525}.gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}.gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}.gr-btn.primary:hover{color:#fff;background-color:#035f79}.gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}.gr-btn.attention:hover{background-color:#f7aa00}.gr-btn.small{min-width:128px;padding:7px 20px;font-size:.875em}.gr-btn.small:focus:after{padding:18px 21px}.gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:1em}.gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}.gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}.gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}.gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}.gr-btn.no-border{border:0}.gr-btn.no-border:hover{border:0}.gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}.gr-pagination{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center}.gr-pagination button{margin:0;min-width:44px;border:0!important;padding:0!important}.gr-pagination button span{height:28px;width:28px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #c7c7c7;border-radius:50%}.gr-pagination button:focus:after{min-height:36px;min-width:36px;padding:0;top:4px;left:8px}.gr-pagination button:hover span{background-color:#e9e9e9}.gr-pagination button:disabled{background:none!important}.gr-pagination button:disabled span{border:1px solid #d9d9d9}.gr-pagination button:disabled span svg{fill:#d9d9d9}.gr-pagination button:disabled:hover span{background:#fff}.gr-pagination a{min-width:44px;color:#6a7070;text-decoration:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;font-size:14px}.gr-pagination a:hover{text-decoration:underline;color:#6a7070;font-weight:700}.gr-pagination a:focus{outline-offset:0}.gr-pagination a[aria-current]{text-decoration:underline;color:#252525;font-weight:700}.gr-pagination .compact-text{font-size:.875em;margin:0 1em}.gr-pagination a svg{width:18px;height:18px;display:inline-block;vertical-align:top;fill:currentColor}a.disabled{cursor:default;text-decoration:none}a.disabled:focus{outline:0}a.disabled:hover{text-decoration:none}\n      </style>\n          <nav role="navigation" data-id="pagination" aria-label="Pagination Navigation" class="gr-pagination" data-type="standard" data-pages-total="10" data-max-buttons="5" data-active-page="1" data-label="page" data-label-plural="pages">\n          <button id="prev" class="gr-btn icon-btn-18" aria-label="Previous page">\n            <span>\n              ' + previousIcon + '\n            </span>\n          </button>\n          <div id="pages" style="display:flex;">\n\n          </div>\n          <button id="next" class="gr-btn icon-btn-18" aria-label="Next page">\n            <span>\n              ' + nextIcon + '\n            </span>\n          </button>\n        </nav>\n  ', compactTemplate.innerHTML = '\n      <style>\n        /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}html{-webkit-box-sizing:border-box;box-sizing:border-box;font-size:16px}*,:after,:before{-webkit-box-sizing:inherit;box-sizing:inherit}body{font-size:16px;font-family:Open Sans,Arial,Helvetica,sans-serif}body,p{line-height:1.5;font-weight:400}p{font-size:.875em}strong{font-weight:600}a{color:#047a9c}a:hover{color:#03536a;text-decoration:none}a:focus{outline:2px solid #0b73da;outline-offset:4px}button{cursor:pointer}@-webkit-keyframes shift{to{background-position:9px 9px}}@keyframes shift{to{background-position:9px 9px}}@-webkit-keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@-webkit-keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@-webkit-keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@-webkit-keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}.fadeIn,.slideInDown{opacity:1!important;visibility:visible!important}.fadeOut,.slideOutDown{opacity:0;visibility:hidden}.slideInDown{-webkit-animation:slideInDown .3s ease-in-out 0s;animation:slideInDown .3s ease-in-out 0s}.slideOutDown{-webkit-animation:slideOutDown .2s ease-in 0s;animation:slideOutDown .2s ease-in 0s}.fadeIn{-webkit-animation:fadeIn .3s linear 0s;animation:fadeIn .3s linear 0s}.fadeOut{-webkit-animation:fadeOut .2s linear 0s;animation:fadeOut .2s linear 0s}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (prefers-reduced-motion){.animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}html[data-prefers-reduced-motion] .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}.no-border{border:0}.icon-18{width:18px;height:18px}.icon-24{width:24px;height:24px}.hidden{display:none}.gr-h1{font-size:1.5em;line-height:1.75em}.gr-h1,.gr-h2{font-weight:400;margin-top:0}.gr-h2{font-size:1.25em;line-height:1.625em}.gr-h3{font-size:1.125em;line-height:1.5em;font-weight:400;margin-top:0}.gr-label{display:block;margin-bottom:4px}.gr-label,.gr-meta{font-size:.75em;line-height:1em;color:#6a7070}.gr-semi-bold{font-weight:600}.gr-font-large{font-size:1em;line-height:1.5em}.gr-font-normal{font-size:.875em;line-height:1.5}.gr-btn{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:1em;cursor:pointer;border-radius:22px;position:relative;margin:12px}.gr-btn:hover{color:#252525;border:1px solid #252525}.gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}.gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}.gr-btn.primary:hover{color:#fff;background-color:#035f79}.gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}.gr-btn.attention:hover{background-color:#f7aa00}.gr-btn.small{min-width:128px;padding:7px 20px;font-size:.875em}.gr-btn.small:focus:after{padding:18px 21px}.gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:1em}.gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}.gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}.gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}.gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}.gr-btn.no-border{border:0}.gr-btn.no-border:hover{border:0}.gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}.gr-pagination{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center}.gr-pagination button{margin:0;min-width:44px;border:0!important;padding:0!important}.gr-pagination button span{height:28px;width:28px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #c7c7c7;border-radius:50%}.gr-pagination button:focus:after{min-height:36px;min-width:36px;padding:0;top:4px;left:8px}.gr-pagination button:hover span{background-color:#e9e9e9}.gr-pagination button:disabled{background:none!important}.gr-pagination button:disabled span{border:1px solid #d9d9d9}.gr-pagination button:disabled span svg{fill:#d9d9d9}.gr-pagination button:disabled:hover span{background:#fff}.gr-pagination a{min-width:44px;color:#6a7070;text-decoration:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;font-size:14px}.gr-pagination a:hover{text-decoration:underline;color:#6a7070;font-weight:700}.gr-pagination a:focus{outline-offset:0}.gr-pagination a[aria-current]{text-decoration:underline;color:#252525;font-weight:700}.gr-pagination .compact-text{font-size:.875em;margin:0 1em}.gr-pagination a svg{width:18px;height:18px;display:inline-block;vertical-align:top;fill:currentColor}a.disabled{cursor:default;text-decoration:none}a.disabled:focus{outline:0}a.disabled:hover{text-decoration:none}\n      </style>\n    \t\t<nav role="navigation" data-id="compactPagination" aria-label="Pagination Navigation" class="gr-pagination" data-pages-total="10" data-type="compact" data-active-page="1" data-label="page" data-label-plural="pages">\n\t\t\t\t<button id="prev" class="gr-btn icon-btn-18" aria-label="Previous page">\n           <span>\n              ' + previousIcon + '\n            </span>\n\t\t\t\t</button>\n\t\t\t\t<span class="compact-text">Page <span class="current-page">1</span> of <span class="total-pages">20</span>\n\t\t\t</span>\n\t\t\t\t<button id="next" class="gr-btn icon-btn-18" aria-label="Next page">\n\t\t\t\t\t<span>\n\t             ' + nextIcon + '\n\t\t\t\t\t</span>\n\t\t\t\t</button>\n\t\t\t</nav>\n    ', numberTemplate.innerHTML = '\n      <a href="#"><span></span></a>\n    ', ellipsisTemplate.innerHTML = '\n      <a href="#" class="ellipsis" class="disabled" aria-label="additional pages">...</a>\n    ';
+
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-pagination');
+
+  /** Any helper functions that do not need to be part of the class
+   * can be declared here, before the class is defined.
+   */
+  function range(start, end) {
+    var step = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+
+    var len = Math.floor((end - start) / step) + 1;
+    return Array(len).fill().map(function (_, idx) {
+      return start + idx * step;
+    });
+  }
+
+  function renderItems(options) {
+    var nextEllipsisNumber = parseInt(options.referenceNode.getAttribute('data-page'));
+
+    while (options.start <= options.end && options.end < nextEllipsisNumber) {
+      var nextNode = options.reference.nextElementSibling,
+          renderTemplate = options.newNode.content.cloneNode(true),
+          renderContent = renderTemplate.querySelector('span');
+
+      nextNode.remove();
+      renderContent.parentNode.setAttribute('aria-label', 'page ' + options.start);
+      renderContent.parentNode.setAttribute('data-page', options.start);
+      renderContent.innerHTML = options.start;
+
+      if (options.start === options.newNumber) {
+        renderContent.parentNode.setAttribute('aria-current', 'page');
+      }
+
+      if (options.end + 1 === nextEllipsisNumber) {
+        options.referenceNode.innerHTML = nextEllipsisNumber;
+        options.referenceNode.removeAttribute('data-ellipsis');
+        options.referenceNode.classList.remove('disabled');
+        options.referenceNode.setAttribute('aria-label', 'page ' + nextEllipsisNumber);
+      } else {
+        options.referenceNode.innerHTML = '...';
+        options.referenceNode.classList.add('disabled');
+        options.referenceNode.setAttribute('data-ellipsis', true);
+        options.referenceNode.setAttribute('aria-label', 'additional pages');
+      }
+
+      renderContent.parentNode.addEventListener('click', function (event) {
+        options.this.addListener(event, options);
+      });
+
+      options.parentNode.insertBefore(renderTemplate, options.referenceNode);
+      options.start++;
+    }
+  }
+
+  var Pagination = function (_HTMLElement) {
+    _inherits(Pagination, _HTMLElement);
+
+    _createClass(Pagination, [{
+      key: 'addListener',
+      value: function addListener(event) {
+        this.currentPage = event.currentTarget.getAttribute('data-page');
+        this.dispatchEvent(new Event('newPage', {
+          bubbles: true
+        }));
+      }
+    }, {
+      key: 'changePage',
+      value: function changePage(type) {
+        var currentPage = this.shadowRoot.querySelector('#pages a[aria-current]'),
+            nextPage = currentPage.nextElementSibling,
+            previousPage = currentPage.previousElementSibling;
+        if (type === 'next') {
+          if (currentPage.getAttribute('data-page') < this.lastPage) {
+            this.currentPage = nextPage.getAttribute('data-page');
+            currentPage.removeAttribute('aria-current');
+          }
+        } else {
+          if (currentPage.getAttribute('data-page') > this.firstPage) {
+            this.currentPage = previousPage.getAttribute('data-page');
+            currentPage.removeAttribute('aria-current');
+          }
+        }
+        this.dispatchEvent(new Event(type + 'Page', {
+          bubbles: true
+        }));
+      }
+    }, {
+      key: 'compact',
+      get: function get() {
+        return this.hasAttribute('compact');
+      }
+    }, {
+      key: 'firstPage',
+      get: function get() {
+        return parseInt(this.getAttribute('firstpage'));
+      }
+    }, {
+      key: 'lastPage',
+      get: function get() {
+        return parseInt(this.getAttribute('lastpage'));
+      }
+    }, {
+      key: 'currentPage',
+      get: function get() {
+        return parseInt(this.getAttribute('currentpage'));
+      },
+      set: function set(value) {
+        this.setAttribute('currentpage', value);
+      }
+    }, {
+      key: 'ellipsisAt',
+      get: function get() {
+        return parseInt(this.getAttribute('ellipsisat'));
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['firstpage', 'lastpage', 'currentpage', 'ellipsisat', 'compact'];
+      }
+    }]);
+
+    function Pagination() {
+      _classCallCheck(this, Pagination);
+
+      var _this = _possibleConstructorReturn(this, (Pagination.__proto__ || Object.getPrototypeOf(Pagination)).call(this));
+
+      _this.attachShadow({ mode: 'open' });
+      return _this;
+    }
+
+    _createClass(Pagination, [{
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        var _this2 = this;
+
+        if (!this.compact) {
+          var clone = template.content.cloneNode(true);
+          this.pageTarget = clone.querySelector('#pages');
+          this.nextPageBtn = clone.querySelector('#next');
+          this.prevPageBtn = clone.querySelector('#prev');
+          this.changePage = this.changePage.bind(this);
+          this.addListener = this.addListener.bind(this);
+          this.shadowRoot.appendChild(clone);
+
+          this.currentPage = 1;
+          this.pageRange = range(this.firstPage, this.lastPage, 1);
+          this.pageRange.forEach(function (number, index) {
+            var numberTemplateContainer = numberTemplate.content.cloneNode(true),
+                numberTemplateSpan = numberTemplateContainer.querySelector('span'),
+                numberTemplateParent = numberTemplateSpan.parentNode;
+
+            var total = index + 1,
+                placeLastNumber = _this2.ellipsisAt + 2,
+                placeEllipsis = _this2.ellipsisAt + 1;
+
+            _this2.template = numberTemplateContainer;
+            _this2.span = numberTemplateSpan;
+            _this2.parent = numberTemplateParent;
+
+            _this2.parent.setAttribute('aria-label', 'page ' + number);
+            _this2.parent.setAttribute('data-page', number);
+            _this2.span.innerHTML = number;
+
+            if (_this2.currentPage === _this2.firstPage) {
+              var button = _this2.shadowRoot.querySelector('#prev');
+              button.setAttribute('disabled', true);
+            }
+            if (_this2.currentPage === _this2.lastPage) {
+              var _button = _this2.shadowRoot.querySelector('#next');
+              _button.setAttribute('disabled', true);
+            }
+
+            if (_this2.lastPage > _this2.ellipsisAt) {
+              if (total <= placeLastNumber) {
+                if (number === _this2.currentPage) {
+                  _this2.parent.setAttribute('aria-current', 'page');
+                }
+
+                if (total === placeEllipsis) {
+                  _this2.parent.setAttribute('data-page', _this2.lastPage - 1);
+                  _this2.parent.setAttribute('data-ellipsis', true);
+                  _this2.parent.setAttribute('aria-label', 'additional pages');
+                  _this2.span.innerHTML = '...';
+                  _this2.parent.classList.add('disabled');
+                }
+
+                if (total === placeLastNumber) {
+                  _this2.parent.setAttribute('data-page', _this2.lastPage);
+                  _this2.span.innerHTML = _this2.lastPage;
+                }
+                _this2.pageTarget.appendChild(_this2.template);
+              }
+            } else {
+              if (number === _this2.currentPage) {
+                _this2.parent.setAttribute('aria-current', 'page');
+              }
+              _this2.pageTarget.appendChild(_this2.template);
+            }
+          });
+          var pageBtns = this.shadowRoot.querySelectorAll('nav button, #pages > a');
+          pageBtns.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+              button.removeAttribute('disabled');
+              if (button.tagName === 'BUTTON') {
+                button.setAttribute('aria-label', 'Page ' + _this2.currentPage + ', Next Page');
+                if (_this2.currentPage >= _this2.firstPage) {
+                  _this2.prevPageBtn.removeAttribute('disabled');
+                }
+                _this2.changePage(button.id);
+              } else if (button.tagName === 'A') {
+                _this2.addListener(event);
+              }
+            });
+          });
+          this.addEventListener('newPage', function (event) {
+            _this2.shadowRoot.querySelector('[data-page="' + _this2.currentPage + '"]').focus();
+          });
+        } else {
+          var _clone = compactTemplate.content.cloneNode(true);
+          this.total = _clone.querySelector('.total-pages');
+          this.page = _clone.querySelector('.current-page');
+          this.pageTarget = _clone.querySelector('#pages');
+          this.nextPageBtn = _clone.querySelector('#next');
+          this.prevPageBtn = _clone.querySelector('#prev');
+          this.shadowRoot.appendChild(_clone);
+          this.currentPage = 1;
+          var _pageBtns = this.shadowRoot.querySelectorAll('nav button');
+          _pageBtns.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+              var target = event.currentTarget.id;
+              if (target === 'next') {
+                if (_this2.currentPage < _this2.lastPage) {
+                  _this2.currentPage = _this2.currentPage + 1;
+                  _this2.dispatchEvent(new Event('nextPage', {
+                    bubbles: true
+                  }));
+                }
+              }
+              if (target === 'prev') {
+                if (_this2.currentPage > 1) {
+                  _this2.currentPage = _this2.currentPage - 1;
+                  _this2.dispatchEvent(new Event('previousPage', {
+                    bubbles: true
+                  }));
+                } else {
+                  return false;
+                }
+              }
+            });
+          });
+
+          if (this.currentPage < this.lastPage) {
+            this.page.innerHTML = this.currentPage;
+          } else {
+            this.page.innerHTML = this.lastPage;
+          }
+          if (this.currentPage === this.firstPage) {
+            this.prevPageBtn.setAttribute('disabled', true);
+          }
+          if (this.currentPage === this.lastPage) {
+            this.nextPageBtn.setAttribute('disabled', true);
+          }
+          this.total.innerHTML = this.lastPage;
+        }
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        var _this3 = this;
+
+        if (!this.compact) {
+          if (oldValue !== null) {
+            var newNumber = parseInt(newValue);
+            if (oldValue !== newValue) {
+              if (name === 'currentpage') {
+                var newPage = this.shadowRoot.querySelector('[data-page="' + newValue + '"]'),
+                    oldPage = this.shadowRoot.querySelector('[data-page="' + oldValue + '"]'),
+                    firstPage = this.shadowRoot.querySelector('[data-page="' + this.firstPage + '"]'),
+                    lastPage = this.shadowRoot.querySelector('[data-page="' + this.lastPage + '"]'),
+                    allLinks = this.shadowRoot.querySelectorAll('#pages > a');
+
+                if (oldValue !== null && oldPage !== null) {
+                  oldPage.removeAttribute('aria-current');
+                  if (!newPage.hasAttribute('data-ellipsis')) {
+                    newPage.setAttribute('aria-current', 'page');
+                    newPage.setAttribute('aria-label', 'page ' + newValue);
+                  }
+                }
+
+                if (newNumber === this.firstPage) {
+                  allLinks.forEach(function (link, index) {
+                    var value = index + 1;
+                    link.innerHTML = value;
+                    link.removeAttribute('data-ellipsis');
+                    link.setAttribute('data-page', value);
+
+                    if (value === _this3.ellipsisAt + 1) {
+                      link.setAttribute('data-ellipsis', true);
+                      link.innerHTML = '...';
+                      link.setAttribute('data-page', _this3.lastPage - 1);
+                      link.setAttribute('aria-label', 'additional pages');
+                      link.classList.add('disabled');
+                    }
+                    if (value === _this3.ellipsisAt + 2) {
+                      link.innerHTML = _this3.lastPage;
+                      link.setAttribute('data-page', _this3.lastPage);
+                    }
+                  });
+                }
+
+                if (newNumber === this.lastPage) {
+                  var totalPages = allLinks.length;
+                  var startNumber = this.lastPage - totalPages + 1;
+                  allLinks.forEach(function (link, index) {
+                    link.innerHTML = startNumber;
+                    link.removeAttribute('data-ellipsis');
+                    link.setAttribute('data-page', startNumber);
+                    link.classList.remove('disabled');
+                    if (index === 0) {
+                      link.innerHTML = 1;
+                      link.setAttribute('data-page', 1);
+                    }
+                    if (index === 1) {
+                      link.setAttribute('data-ellipsis', true);
+                      link.setAttribute('aria-label', 'additional pages');
+                      link.innerHTML = '...';
+                      link.setAttribute('data-page', _this3.firstPage + 1);
+                      link.classList.add('disabled');
+                    }
+                    startNumber++;
+                  });
+                }
+                if (this.currentPage === this.firstPage) {
+                  this.prevPageBtn.setAttribute('disabled', true);
+                } else {
+                  this.prevPageBtn.removeAttribute('disabled');
+                }
+                if (this.currentPage === this.lastPage) {
+                  this.nextPageBtn.setAttribute('disabled', true);
+                } else {
+                  this.nextPageBtn.removeAttribute('disabled');
+                }
+                if (newPage !== null && newPage.nextElementSibling !== null && newPage.previousElementSibling !== null) {
+                  var nextEllipsis = newPage.nextElementSibling.getAttribute('data-ellipsis'),
+                      previousEllipsis = newPage.previousElementSibling.getAttribute('data-ellipsis'),
+                      previousEllipsisNode = firstPage.nextElementSibling,
+                      nextEllipsisNode = lastPage.previousElementSibling,
+                      endRange = nextEllipsisNode.previousElementSibling.getAttribute('data-page'),
+                      startRange = previousEllipsisNode.nextElementSibling.getAttribute('data-page'),
+                      options = {
+                    start: parseInt(startRange),
+                    newNumber: newNumber,
+                    end: parseInt(endRange),
+                    reference: previousEllipsisNode,
+                    newNode: numberTemplate,
+                    parentNode: this.pageTarget,
+                    referenceNode: nextEllipsisNode,
+                    this: this,
+                    newPage: newPage
+                  };
+
+                  if (nextEllipsis) {
+                    firstPage.nextElementSibling.innerHTML = '...';
+                    firstPage.nextElementSibling.classList.add('disabled');
+                    firstPage.nextElementSibling.setAttribute('data-ellipsis', true);
+                    firstPage.nextElementSibling.setAttribute('aria-label', 'additional pages');
+                    options.end = options.end + 1;
+                    renderItems(options);
+                    if (newValue > this.firstPage) {
+                      var button = this.shadowRoot.querySelector('#next');
+                      button.removeAttribute('disabled');
+                    }
+                  } else if (previousEllipsis) {
+                    options.start = options.start - 1;
+                    options.end = options.end - 1;
+                    renderItems(options);
+                    if (options.newNumber - 2 === parseInt(previousEllipsisNode.getAttribute('data-page'))) {
+                      firstPage.nextElementSibling.innerHTML = parseInt(previousEllipsisNode.getAttribute('data-page'));
+                      firstPage.nextElementSibling.removeAttribute('data-ellipsis');
+                      firstPage.nextElementSibling.classList.remove('disabled');
+                      firstPage.nextElementSibling.setAttribute('aria-label', 'page ' + parseInt(previousEllipsisNode.getAttribute('data-page')));
+                    }
+                  }
+                }
+              }
+            }
+          }
+        } else {
+          if (oldValue !== null) {
+            if (oldValue !== newValue) {
+              if (newValue > this.firstPage) {
+                var _button2 = this.shadowRoot.querySelector('#prev');
+                _button2.removeAttribute('disabled');
+              } else {
+                var _button3 = this.shadowRoot.querySelector('#prev');
+                _button3.setAttribute('disabled', true);
+              }
+              if (newValue < this.lastPage) {
+                var _button4 = this.shadowRoot.querySelector('#next');
+                _button4.removeAttribute('disabled');
+              } else {
+                var _button5 = this.shadowRoot.querySelector('#next');
+                _button5.setAttribute('disabled', true);
+              }
+              this.page.innerHTML = this.currentPage;
+            }
+          }
+        }
+      }
+    }]);
+
+    return Pagination;
+  }(HTMLElement);
+
+  customElements.define('pearson-pagination', Pagination);
 })(window, document);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -4686,439 +5491,4 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   }(HTMLElement);
 
   customElements.define('pearson-toggle', Toggle);
-})(window, document);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-(function (w, doc) {
-  'use strict';
-
-  // Create a template element
-
-  var template = doc.createElement('template'),
-      numberTemplate = doc.createElement('template'),
-      ellipsisTemplate = doc.createElement('template'),
-      compactTemplate = doc.createElement('template'),
-      previousIcon = '\n      <svg focusable="false" class="icon-18" aria-hidden="true">\n\t      <path d="M5.2383866,9.62193909 C4.90819314,9.25409223 4.92101724,8.69027111 5.27685892,8.33764681 L10.386348,3.27435567 C10.7554932,2.90854811 11.3539959,2.90854811 11.7231411,3.27435567 C12.0922863,3.64016324 12.0922863,4.23325448 11.7231411,4.59906205 L7.28204859,9 L11.7231411,13.400938 C12.0922863,13.7667455 12.0922863,14.3598368 11.7231411,14.7256443 C11.3539959,15.0914519 10.7554932,15.0914519 10.386348,14.7256443 L5.27685892,9.66235319 C5.26334967,9.64896608 5.25054567,9.63548354 5.23843148,9.62191255 L5.2383866,9.62193909 Z"  fill-rule="nonzero"></path>\n      </svg>\n  ',
-      nextIcon = '\n      <svg focusable="false" class="icon-18" aria-hidden="true">\n           <path d="M12.7616134,9.62193909 L12.7615685,9.62191255 C12.7494543,9.63548354 12.7366503,9.64896608 12.7231411,9.66235319 L7.61365203,14.7256443 C7.24450681,15.0914519 6.64600414,15.0914519 6.27685892,14.7256443 C5.90771369,14.3598368 5.90771369,13.7667455 6.27685892,13.400938 L10.7179514,9 L6.27685892,4.59906205 C5.90771369,4.23325448 5.90771369,3.64016324 6.27685892,3.27435567 C6.64600414,2.90854811 7.24450681,2.90854811 7.61365203,3.27435567 L12.7231411,8.33764681 C13.0789828,8.69027111 13.0918069,9.25409223 12.7616134,9.62193909 Z"  fill-rule="nonzero"></path>\n      </svg>\n  ';
-  template.innerHTML = ' \n      <style>\n/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}html{-webkit-box-sizing:border-box;box-sizing:border-box;font-size:16px}*,:after,:before{-webkit-box-sizing:inherit;box-sizing:inherit}body{font-size:16px;font-family:Open Sans,Arial,Helvetica,sans-serif}body,p{line-height:1.5;font-weight:400}p{font-size:.875em}strong{font-weight:600}a{color:#047a9c}a:hover{color:#03536a;text-decoration:none}a:focus{outline:2px solid #0b73da;outline-offset:4px}button{cursor:pointer}.no-border{border:0}.icon-18{width:18px;height:18px}.icon-24{width:24px;height:24px}.hidden{display:none}.gr-h1{font-size:1.5em;line-height:1.75em}.gr-h1,.gr-h2{font-weight:400;margin-top:0}.gr-h2{font-size:1.25em;line-height:1.625em}.gr-h3{font-size:1.125em;line-height:1.5em;font-weight:400;margin-top:0}.gr-label{display:block;margin-bottom:4px}.gr-label,.gr-meta{font-size:.75em;line-height:1em;color:#6a7070}.gr-semi-bold{font-weight:600}.gr-font-large{font-size:1em;line-height:1.5em}.gr-font-normal{font-size:.875em;line-height:1.5}.gr-btn{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:1em;cursor:pointer;border-radius:22px;position:relative;margin:12px}.gr-btn:hover{color:#252525;border:1px solid #252525}.gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}.gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}.gr-btn.primary:hover{color:#fff;background-color:#035f79}.gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}.gr-btn.attention:hover{background-color:#f7aa00}.gr-btn.small{min-width:128px;padding:7px 20px;font-size:.875em}.gr-btn.small:focus:after{padding:18px 21px}.gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:1em}.gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}.gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}.gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}.gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}.gr-btn.no-border{border:0}.gr-btn.no-border:hover{border:0}.gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}.gr-pagination{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center}.gr-pagination button{margin:0;min-width:44px;border:0!important;padding:0!important}.gr-pagination button span{height:28px;width:28px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #c7c7c7;border-radius:50%}.gr-pagination button:focus:after{min-height:36px;min-width:36px;padding:0;top:4px;left:8px}.gr-pagination button:hover span{background-color:#e9e9e9}.gr-pagination button:disabled{background:none!important}.gr-pagination button:disabled span{border:1px solid #d9d9d9}.gr-pagination button:disabled span svg{fill:#d9d9d9}.gr-pagination button:disabled:hover span{background:#fff}.gr-pagination a{min-width:44px;color:#6a7070;text-decoration:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;font-size:14px}.gr-pagination a:hover{text-decoration:underline;color:#6a7070;font-weight:700}.gr-pagination a:focus{outline-offset:0}.gr-pagination a[aria-current]{text-decoration:underline;color:#252525;font-weight:700}.gr-pagination .compact-text{font-size:.875em;margin:0 1em}.gr-pagination a svg{width:18px;height:18px;display:inline-block;vertical-align:top;fill:currentColor}a.disabled{cursor:default;text-decoration:none}a.disabled:focus{outline:0}a.disabled:hover{text-decoration:none}\n      </style>\n          <nav role="navigation" data-id="pagination" aria-label="Pagination Navigation" class="gr-pagination" data-type="standard" data-pages-total="10" data-max-buttons="5" data-active-page="1" data-label="page" data-label-plural="pages">\n          <button id="prev" class="gr-btn icon-btn-18" aria-label="Previous page">\n            <span>\n              ' + previousIcon + '\n            </span>\n          </button>\n          <div id="pages" style="display:flex;">\n\n          </div>\n          <button id="next" class="gr-btn icon-btn-18" aria-label="Next page">\n            <span>\n              ' + nextIcon + '\n            </span>\n          </button>\n        </nav>\n  ', compactTemplate.innerHTML = '\n      <style>\n        /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}html{-webkit-box-sizing:border-box;box-sizing:border-box;font-size:16px}*,:after,:before{-webkit-box-sizing:inherit;box-sizing:inherit}body{font-size:16px;font-family:Open Sans,Arial,Helvetica,sans-serif}body,p{line-height:1.5;font-weight:400}p{font-size:.875em}strong{font-weight:600}a{color:#047a9c}a:hover{color:#03536a;text-decoration:none}a:focus{outline:2px solid #0b73da;outline-offset:4px}button{cursor:pointer}@-webkit-keyframes shift{to{background-position:9px 9px}}@keyframes shift{to{background-position:9px 9px}}@-webkit-keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@-webkit-keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@-webkit-keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@-webkit-keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}.fadeIn,.slideInDown{opacity:1!important;visibility:visible!important}.fadeOut,.slideOutDown{opacity:0;visibility:hidden}.slideInDown{-webkit-animation:slideInDown .3s ease-in-out 0s;animation:slideInDown .3s ease-in-out 0s}.slideOutDown{-webkit-animation:slideOutDown .2s ease-in 0s;animation:slideOutDown .2s ease-in 0s}.fadeIn{-webkit-animation:fadeIn .3s linear 0s;animation:fadeIn .3s linear 0s}.fadeOut{-webkit-animation:fadeOut .2s linear 0s;animation:fadeOut .2s linear 0s}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (prefers-reduced-motion){.animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}html[data-prefers-reduced-motion] .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}.no-border{border:0}.icon-18{width:18px;height:18px}.icon-24{width:24px;height:24px}.hidden{display:none}.gr-h1{font-size:1.5em;line-height:1.75em}.gr-h1,.gr-h2{font-weight:400;margin-top:0}.gr-h2{font-size:1.25em;line-height:1.625em}.gr-h3{font-size:1.125em;line-height:1.5em;font-weight:400;margin-top:0}.gr-label{display:block;margin-bottom:4px}.gr-label,.gr-meta{font-size:.75em;line-height:1em;color:#6a7070}.gr-semi-bold{font-weight:600}.gr-font-large{font-size:1em;line-height:1.5em}.gr-font-normal{font-size:.875em;line-height:1.5}.gr-btn{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:1em;cursor:pointer;border-radius:22px;position:relative;margin:12px}.gr-btn:hover{color:#252525;border:1px solid #252525}.gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}.gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}.gr-btn.primary:hover{color:#fff;background-color:#035f79}.gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}.gr-btn.attention:hover{background-color:#f7aa00}.gr-btn.small{min-width:128px;padding:7px 20px;font-size:.875em}.gr-btn.small:focus:after{padding:18px 21px}.gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:1em}.gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}.gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}.gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}.gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}.gr-btn.no-border{border:0}.gr-btn.no-border:hover{border:0}.gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}.gr-pagination{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center}.gr-pagination button{margin:0;min-width:44px;border:0!important;padding:0!important}.gr-pagination button span{height:28px;width:28px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #c7c7c7;border-radius:50%}.gr-pagination button:focus:after{min-height:36px;min-width:36px;padding:0;top:4px;left:8px}.gr-pagination button:hover span{background-color:#e9e9e9}.gr-pagination button:disabled{background:none!important}.gr-pagination button:disabled span{border:1px solid #d9d9d9}.gr-pagination button:disabled span svg{fill:#d9d9d9}.gr-pagination button:disabled:hover span{background:#fff}.gr-pagination a{min-width:44px;color:#6a7070;text-decoration:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;font-size:14px}.gr-pagination a:hover{text-decoration:underline;color:#6a7070;font-weight:700}.gr-pagination a:focus{outline-offset:0}.gr-pagination a[aria-current]{text-decoration:underline;color:#252525;font-weight:700}.gr-pagination .compact-text{font-size:.875em;margin:0 1em}.gr-pagination a svg{width:18px;height:18px;display:inline-block;vertical-align:top;fill:currentColor}a.disabled{cursor:default;text-decoration:none}a.disabled:focus{outline:0}a.disabled:hover{text-decoration:none}\n      </style>\n    \t\t<nav role="navigation" data-id="compactPagination" aria-label="Pagination Navigation" class="gr-pagination" data-pages-total="10" data-type="compact" data-active-page="1" data-label="page" data-label-plural="pages">\n\t\t\t\t<button id="prev" class="gr-btn icon-btn-18" aria-label="Previous page">\n           <span>\n              ' + previousIcon + '\n            </span>\n\t\t\t\t</button>\n\t\t\t\t<span class="compact-text">Page <span class="current-page">1</span> of <span class="total-pages">20</span>\n\t\t\t</span>\n\t\t\t\t<button id="next" class="gr-btn icon-btn-18" aria-label="Next page">\n\t\t\t\t\t<span>\n\t             ' + nextIcon + '\n\t\t\t\t\t</span>\n\t\t\t\t</button>\n\t\t\t</nav>\n    ', numberTemplate.innerHTML = '\n      <a href="#"><span></span></a>\n    ', ellipsisTemplate.innerHTML = '\n      <a href="#" class="ellipsis" class="disabled" aria-label="additional pages">...</a>\n    ';
-
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-pagination');
-
-  /** Any helper functions that do not need to be part of the class
-   * can be declared here, before the class is defined.
-   */
-  function range(start, end) {
-    var step = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
-
-    var len = Math.floor((end - start) / step) + 1;
-    return Array(len).fill().map(function (_, idx) {
-      return start + idx * step;
-    });
-  }
-
-  function renderItems(options) {
-    var nextEllipsisNumber = parseInt(options.referenceNode.getAttribute('data-page'));
-
-    while (options.start <= options.end && options.end < nextEllipsisNumber) {
-      var nextNode = options.reference.nextElementSibling,
-          renderTemplate = options.newNode.content.cloneNode(true),
-          renderContent = renderTemplate.querySelector('span');
-
-      nextNode.remove();
-      renderContent.parentNode.setAttribute('aria-label', 'page ' + options.start);
-      renderContent.parentNode.setAttribute('data-page', options.start);
-      renderContent.innerHTML = options.start;
-
-      if (options.start === options.newNumber) {
-        renderContent.parentNode.setAttribute('aria-current', 'page');
-      }
-
-      if (options.end + 1 === nextEllipsisNumber) {
-        options.referenceNode.innerHTML = nextEllipsisNumber;
-        options.referenceNode.removeAttribute('data-ellipsis');
-        options.referenceNode.classList.remove('disabled');
-        options.referenceNode.setAttribute('aria-label', 'page ' + nextEllipsisNumber);
-      } else {
-        options.referenceNode.innerHTML = '...';
-        options.referenceNode.classList.add('disabled');
-        options.referenceNode.setAttribute('data-ellipsis', true);
-        options.referenceNode.setAttribute('aria-label', 'additional pages');
-      }
-
-      renderContent.parentNode.addEventListener('click', function (event) {
-        options.this.addListener(event, options);
-      });
-
-      options.parentNode.insertBefore(renderTemplate, options.referenceNode);
-      options.start++;
-    }
-  }
-
-  var Pagination = function (_HTMLElement) {
-    _inherits(Pagination, _HTMLElement);
-
-    _createClass(Pagination, [{
-      key: 'addListener',
-      value: function addListener(event) {
-        this.currentPage = event.currentTarget.getAttribute('data-page');
-        this.dispatchEvent(new Event('newPage', {
-          bubbles: true
-        }));
-      }
-    }, {
-      key: 'changePage',
-      value: function changePage(type) {
-        var currentPage = this.shadowRoot.querySelector('#pages a[aria-current]'),
-            nextPage = currentPage.nextElementSibling,
-            previousPage = currentPage.previousElementSibling;
-        if (type === 'next') {
-          if (currentPage.getAttribute('data-page') < this.lastPage) {
-            this.currentPage = nextPage.getAttribute('data-page');
-            currentPage.removeAttribute('aria-current');
-          }
-        } else {
-          if (currentPage.getAttribute('data-page') > this.firstPage) {
-            this.currentPage = previousPage.getAttribute('data-page');
-            currentPage.removeAttribute('aria-current');
-          }
-        }
-        this.dispatchEvent(new Event(type + 'Page', {
-          bubbles: true
-        }));
-      }
-    }, {
-      key: 'compact',
-      get: function get() {
-        return this.hasAttribute('compact');
-      }
-    }, {
-      key: 'firstPage',
-      get: function get() {
-        return parseInt(this.getAttribute('firstpage'));
-      }
-    }, {
-      key: 'lastPage',
-      get: function get() {
-        return parseInt(this.getAttribute('lastpage'));
-      }
-    }, {
-      key: 'currentPage',
-      get: function get() {
-        return parseInt(this.getAttribute('currentpage'));
-      },
-      set: function set(value) {
-        this.setAttribute('currentpage', value);
-      }
-    }, {
-      key: 'ellipsisAt',
-      get: function get() {
-        return parseInt(this.getAttribute('ellipsisat'));
-      }
-    }], [{
-      key: 'observedAttributes',
-      get: function get() {
-        return ['firstpage', 'lastpage', 'currentpage', 'ellipsisat', 'compact'];
-      }
-    }]);
-
-    function Pagination() {
-      _classCallCheck(this, Pagination);
-
-      var _this = _possibleConstructorReturn(this, (Pagination.__proto__ || Object.getPrototypeOf(Pagination)).call(this));
-
-      _this.attachShadow({ mode: 'open' });
-      return _this;
-    }
-
-    _createClass(Pagination, [{
-      key: 'connectedCallback',
-      value: function connectedCallback() {
-        var _this2 = this;
-
-        if (!this.compact) {
-          var clone = template.content.cloneNode(true);
-          this.pageTarget = clone.querySelector('#pages');
-          this.nextPageBtn = clone.querySelector('#next');
-          this.prevPageBtn = clone.querySelector('#prev');
-          this.changePage = this.changePage.bind(this);
-          this.addListener = this.addListener.bind(this);
-          this.shadowRoot.appendChild(clone);
-
-          this.currentPage = 1;
-          this.pageRange = range(this.firstPage, this.lastPage, 1);
-          this.pageRange.forEach(function (number, index) {
-            var numberTemplateContainer = numberTemplate.content.cloneNode(true),
-                numberTemplateSpan = numberTemplateContainer.querySelector('span'),
-                numberTemplateParent = numberTemplateSpan.parentNode;
-
-            var total = index + 1,
-                placeLastNumber = _this2.ellipsisAt + 2,
-                placeEllipsis = _this2.ellipsisAt + 1;
-
-            _this2.template = numberTemplateContainer;
-            _this2.span = numberTemplateSpan;
-            _this2.parent = numberTemplateParent;
-
-            _this2.parent.setAttribute('aria-label', 'page ' + number);
-            _this2.parent.setAttribute('data-page', number);
-            _this2.span.innerHTML = number;
-
-            if (_this2.currentPage === _this2.firstPage) {
-              var button = _this2.shadowRoot.querySelector('#prev');
-              button.setAttribute('disabled', true);
-            }
-            if (_this2.currentPage === _this2.lastPage) {
-              var _button = _this2.shadowRoot.querySelector('#next');
-              _button.setAttribute('disabled', true);
-            }
-
-            if (_this2.lastPage > _this2.ellipsisAt) {
-              if (total <= placeLastNumber) {
-                if (number === _this2.currentPage) {
-                  _this2.parent.setAttribute('aria-current', 'page');
-                }
-
-                if (total === placeEllipsis) {
-                  _this2.parent.setAttribute('data-page', _this2.lastPage - 1);
-                  _this2.parent.setAttribute('data-ellipsis', true);
-                  _this2.parent.setAttribute('aria-label', 'additional pages');
-                  _this2.span.innerHTML = '...';
-                  _this2.parent.classList.add('disabled');
-                }
-
-                if (total === placeLastNumber) {
-                  _this2.parent.setAttribute('data-page', _this2.lastPage);
-                  _this2.span.innerHTML = _this2.lastPage;
-                }
-                _this2.pageTarget.appendChild(_this2.template);
-              }
-            } else {
-              if (number === _this2.currentPage) {
-                _this2.parent.setAttribute('aria-current', 'page');
-              }
-              _this2.pageTarget.appendChild(_this2.template);
-            }
-          });
-          var pageBtns = this.shadowRoot.querySelectorAll('nav button, #pages > a');
-          pageBtns.forEach(function (button) {
-            button.addEventListener('click', function (event) {
-              button.removeAttribute('disabled');
-              if (button.tagName === 'BUTTON') {
-                button.setAttribute('aria-label', 'Page ' + _this2.currentPage + ', Next Page');
-                if (_this2.currentPage >= _this2.firstPage) {
-                  _this2.prevPageBtn.removeAttribute('disabled');
-                }
-                _this2.changePage(button.id);
-              } else if (button.tagName === 'A') {
-                _this2.addListener(event);
-              }
-            });
-          });
-          this.addEventListener('newPage', function (event) {
-            _this2.shadowRoot.querySelector('[data-page="' + _this2.currentPage + '"]').focus();
-          });
-        } else {
-          var _clone = compactTemplate.content.cloneNode(true);
-          this.total = _clone.querySelector('.total-pages');
-          this.page = _clone.querySelector('.current-page');
-          this.pageTarget = _clone.querySelector('#pages');
-          this.nextPageBtn = _clone.querySelector('#next');
-          this.prevPageBtn = _clone.querySelector('#prev');
-          this.shadowRoot.appendChild(_clone);
-          this.currentPage = 1;
-          var _pageBtns = this.shadowRoot.querySelectorAll('nav button');
-          _pageBtns.forEach(function (button) {
-            button.addEventListener('click', function (event) {
-              var target = event.currentTarget.id;
-              if (target === 'next') {
-                if (_this2.currentPage < _this2.lastPage) {
-                  _this2.currentPage = _this2.currentPage + 1;
-                  _this2.dispatchEvent(new Event('nextPage', {
-                    bubbles: true
-                  }));
-                }
-              }
-              if (target === 'prev') {
-                if (_this2.currentPage > 1) {
-                  _this2.currentPage = _this2.currentPage - 1;
-                  _this2.dispatchEvent(new Event('previousPage', {
-                    bubbles: true
-                  }));
-                } else {
-                  return false;
-                }
-              }
-            });
-          });
-
-          if (this.currentPage < this.lastPage) {
-            this.page.innerHTML = this.currentPage;
-          } else {
-            this.page.innerHTML = this.lastPage;
-          }
-          if (this.currentPage === this.firstPage) {
-            this.prevPageBtn.setAttribute('disabled', true);
-          }
-          if (this.currentPage === this.lastPage) {
-            this.nextPageBtn.setAttribute('disabled', true);
-          }
-          this.total.innerHTML = this.lastPage;
-        }
-      }
-    }, {
-      key: 'attributeChangedCallback',
-      value: function attributeChangedCallback(name, oldValue, newValue) {
-        var _this3 = this;
-
-        if (!this.compact) {
-          if (oldValue !== null) {
-            var newNumber = parseInt(newValue);
-            if (oldValue !== newValue) {
-              if (name === 'currentpage') {
-                var newPage = this.shadowRoot.querySelector('[data-page="' + newValue + '"]'),
-                    oldPage = this.shadowRoot.querySelector('[data-page="' + oldValue + '"]'),
-                    firstPage = this.shadowRoot.querySelector('[data-page="' + this.firstPage + '"]'),
-                    lastPage = this.shadowRoot.querySelector('[data-page="' + this.lastPage + '"]'),
-                    allLinks = this.shadowRoot.querySelectorAll('#pages > a');
-
-                if (oldValue !== null && oldPage !== null) {
-                  oldPage.removeAttribute('aria-current');
-                  if (!newPage.hasAttribute('data-ellipsis')) {
-                    newPage.setAttribute('aria-current', 'page');
-                    newPage.setAttribute('aria-label', 'page ' + newValue);
-                  }
-                }
-
-                if (newNumber === this.firstPage) {
-                  allLinks.forEach(function (link, index) {
-                    var value = index + 1;
-                    link.innerHTML = value;
-                    link.removeAttribute('data-ellipsis');
-                    link.setAttribute('data-page', value);
-
-                    if (value === _this3.ellipsisAt + 1) {
-                      link.setAttribute('data-ellipsis', true);
-                      link.innerHTML = '...';
-                      link.setAttribute('data-page', _this3.lastPage - 1);
-                      link.setAttribute('aria-label', 'additional pages');
-                      link.classList.add('disabled');
-                    }
-                    if (value === _this3.ellipsisAt + 2) {
-                      link.innerHTML = _this3.lastPage;
-                      link.setAttribute('data-page', _this3.lastPage);
-                    }
-                  });
-                }
-
-                if (newNumber === this.lastPage) {
-                  var totalPages = allLinks.length;
-                  var startNumber = this.lastPage - totalPages + 1;
-                  allLinks.forEach(function (link, index) {
-                    link.innerHTML = startNumber;
-                    link.removeAttribute('data-ellipsis');
-                    link.setAttribute('data-page', startNumber);
-                    link.classList.remove('disabled');
-                    if (index === 0) {
-                      link.innerHTML = 1;
-                      link.setAttribute('data-page', 1);
-                    }
-                    if (index === 1) {
-                      link.setAttribute('data-ellipsis', true);
-                      link.setAttribute('aria-label', 'additional pages');
-                      link.innerHTML = '...';
-                      link.setAttribute('data-page', _this3.firstPage + 1);
-                      link.classList.add('disabled');
-                    }
-                    startNumber++;
-                  });
-                }
-                if (this.currentPage === this.firstPage) {
-                  this.prevPageBtn.setAttribute('disabled', true);
-                } else {
-                  this.prevPageBtn.removeAttribute('disabled');
-                }
-                if (this.currentPage === this.lastPage) {
-                  this.nextPageBtn.setAttribute('disabled', true);
-                } else {
-                  this.nextPageBtn.removeAttribute('disabled');
-                }
-                if (newPage !== null && newPage.nextElementSibling !== null && newPage.previousElementSibling !== null) {
-                  var nextEllipsis = newPage.nextElementSibling.getAttribute('data-ellipsis'),
-                      previousEllipsis = newPage.previousElementSibling.getAttribute('data-ellipsis'),
-                      previousEllipsisNode = firstPage.nextElementSibling,
-                      nextEllipsisNode = lastPage.previousElementSibling,
-                      endRange = nextEllipsisNode.previousElementSibling.getAttribute('data-page'),
-                      startRange = previousEllipsisNode.nextElementSibling.getAttribute('data-page'),
-                      options = {
-                    start: parseInt(startRange),
-                    newNumber: newNumber,
-                    end: parseInt(endRange),
-                    reference: previousEllipsisNode,
-                    newNode: numberTemplate,
-                    parentNode: this.pageTarget,
-                    referenceNode: nextEllipsisNode,
-                    this: this,
-                    newPage: newPage
-                  };
-
-                  if (nextEllipsis) {
-                    firstPage.nextElementSibling.innerHTML = '...';
-                    firstPage.nextElementSibling.classList.add('disabled');
-                    firstPage.nextElementSibling.setAttribute('data-ellipsis', true);
-                    firstPage.nextElementSibling.setAttribute('aria-label', 'additional pages');
-                    options.end = options.end + 1;
-                    renderItems(options);
-                    if (newValue > this.firstPage) {
-                      var button = this.shadowRoot.querySelector('#next');
-                      button.removeAttribute('disabled');
-                    }
-                  } else if (previousEllipsis) {
-                    options.start = options.start - 1;
-                    options.end = options.end - 1;
-                    renderItems(options);
-                    if (options.newNumber - 2 === parseInt(previousEllipsisNode.getAttribute('data-page'))) {
-                      firstPage.nextElementSibling.innerHTML = parseInt(previousEllipsisNode.getAttribute('data-page'));
-                      firstPage.nextElementSibling.removeAttribute('data-ellipsis');
-                      firstPage.nextElementSibling.classList.remove('disabled');
-                      firstPage.nextElementSibling.setAttribute('aria-label', 'page ' + parseInt(previousEllipsisNode.getAttribute('data-page')));
-                    }
-                  }
-                }
-              }
-            }
-          }
-        } else {
-          if (oldValue !== null) {
-            if (oldValue !== newValue) {
-              if (newValue > this.firstPage) {
-                var _button2 = this.shadowRoot.querySelector('#prev');
-                _button2.removeAttribute('disabled');
-              } else {
-                var _button3 = this.shadowRoot.querySelector('#prev');
-                _button3.setAttribute('disabled', true);
-              }
-              if (newValue < this.lastPage) {
-                var _button4 = this.shadowRoot.querySelector('#next');
-                _button4.removeAttribute('disabled');
-              } else {
-                var _button5 = this.shadowRoot.querySelector('#next');
-                _button5.setAttribute('disabled', true);
-              }
-              this.page.innerHTML = this.currentPage;
-            }
-          }
-        }
-      }
-    }]);
-
-    return Pagination;
-  }(HTMLElement);
-
-  customElements.define('pearson-pagination', Pagination);
 })(window, document);
