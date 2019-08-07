@@ -204,7 +204,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.dispatchEvent(new CustomEvent('change', {
             bubbles: true,
             detail: {
-              selected: this.checked.getAttribute('data-id')
+              selected: this.checked !== false ? this.checked.getAttribute('data-id') : 'no selection'
             }
           }));
         }

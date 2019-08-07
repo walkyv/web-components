@@ -229,7 +229,7 @@
           new CustomEvent('change', {
             bubbles: true,
             detail: {
-              selected: this.checked.getAttribute('data-id')
+              selected: this.checked !== false ? this.checked.getAttribute('data-id') :'no selection'
             }
           })
         );
