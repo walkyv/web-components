@@ -40,8 +40,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   function buildListItems(content, component, menu, index, checked) {
     var li = item.content.cloneNode(true),
         text = li.querySelector('.option-text'),
-        button = li.querySelector('button'),
-        dropdownButton = component.shadowRoot.querySelector('button');
+        button = li.querySelector('button');
 
     text.innerHTML = content.text;
     if (content.value) {
@@ -171,9 +170,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Dropdown, [{
       key: 'openDropdown',
       value: function openDropdown() {
+        var _this2 = this;
+
         if (this.open === null) {
           this.open = true;
           this.button.setAttribute('aria-expanded', true);
+          this.shadowRoot.addEventListener('animationend', function (event) {
+            getFocusableElements(_this2.shadowRoot)[0].focus();
+          });
         } else if (this.open) {
           this.closeDropdown();
         }
@@ -184,7 +188,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.checked = this.returnChecked();
         this.removeAttribute('open');
         this.button.setAttribute('aria-expanded', false);
-        this.button.focus();
+
         if (this.multiSelect) {
           var arr = [];
           this.checked.forEach(function (item) {
@@ -204,6 +208,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
           }));
         }
+
+        this.button.focus();
       }
     }, {
       key: 'returnChecked',
@@ -214,12 +220,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         } else {
           checked = this.shadowRoot.querySelector('[aria-checked="true"]');
         }
-        return checked;
+        if (checked !== null) {
+          return checked;
+        } else {
+          return false;
+        }
       }
     }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var _this2 = this;
+        var _this3 = this;
 
         /** Any changes to what the component renders should be done here. */
         var dropdownTrigger = button.content.cloneNode(true),
@@ -239,29 +249,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.button.addEventListener('click', this.openDropdown);
         /** Event listeners should also be bound here. */
         doc.addEventListener('click', function (event) {
-          if (_this2.open === 'true') {
+          if (_this3.open === 'true') {
             var target = event.target;
-            var dropdownMenu = _this2.shadowRoot.querySelector('.menu');
+            var dropdownMenu = _this3.shadowRoot.querySelector('.menu');
             do {
-              if (target === dropdownMenu || target === _this2) {
+              if (target === dropdownMenu || target === _this3) {
                 return;
               }
               target = target.parentNode;
             } while (target);
-            _this2.closeDropdown();
+            _this3.closeDropdown();
           }
         });
 
         doc.addEventListener('keydown', function (event) {
-          if (_this2.open === 'true' && event.key === 'Escape') {
-            _this2.closeDropdown();
+          if (_this3.open === 'true' && event.key === 'Escape') {
+            _this3.closeDropdown();
           }
         });
       }
     }, {
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name, oldValue, newValue) {
-        var _this3 = this;
+        var _this4 = this;
 
         if (name === 'open' && newValue === 'true') {
           var dropdownMenu = menu.content.cloneNode(true),
@@ -280,13 +290,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               divider: item.classList.contains('divider'),
               text: item.innerHTML,
               id: item.id,
-              multiSelect: _this3.multiSelect,
-              value: _this3.value });
+              multiSelect: _this4.multiSelect,
+              value: _this4.value });
           });
 
           // render list items based on items in slot
           itemContent.forEach(function (content, index) {
-            dropdownMenuTemplate.appendChild(buildListItems(content, _this3, dropdownMenuTemplate, index, _this3.checked));
+            dropdownMenuTemplate.appendChild(buildListItems(content, _this4, dropdownMenuTemplate, index, _this4.checked));
           });
         } else if (name === 'open' && newValue === null) {
           var _dropdownMenu = this.shadowRoot.querySelector('.dropdown-menu');

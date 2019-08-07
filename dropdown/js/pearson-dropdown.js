@@ -79,8 +79,7 @@
   function buildListItems (content, component, menu, index, checked) {
     const li = item.content.cloneNode(true),
       text = li.querySelector('.option-text'),
-      button = li.querySelector('button'),
-      dropdownButton = component.shadowRoot.querySelector('button');
+      button = li.querySelector('button');
 
     text.innerHTML = content.text;
     if (content.value) {
@@ -199,6 +198,9 @@
       if (this.open === null) {
         this.open = true;
         this.button.setAttribute('aria-expanded', true);
+        this.shadowRoot.addEventListener('animationend', event => {
+          getFocusableElements(this.shadowRoot)[0].focus();
+        })
       } else if (this.open) {
         this.closeDropdown();
       }
@@ -208,7 +210,7 @@
       this.checked = this.returnChecked();
       this.removeAttribute('open');
       this.button.setAttribute('aria-expanded', false);
-      this.button.focus();
+
       if (this.multiSelect) {
         let arr = [];
         this.checked.forEach(item => {
@@ -232,6 +234,8 @@
           })
         );
       }
+
+      this.button.focus();
     }
 
     returnChecked () {
@@ -241,7 +245,12 @@
       } else {
         checked = this.shadowRoot.querySelector('[aria-checked="true"]');
       }
-      return checked
+      if (checked !== null) {
+        return checked
+      } else {
+        return false;
+      }
+
     }
 
     connectedCallback() {

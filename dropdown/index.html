@@ -44,9 +44,8 @@
     </pearson-dropdown>
 
   <script>
-    const dropdown = document.querySelector('pearson-dropdown');
-      dropdown.addEventListener('change', event => {
-        console.log(event.detail)
+      document.addEventListener('change', event => {
+        console.log('event fired', event.detail)
       })
   </script>
   </body>
