@@ -1,0 +1,9 @@
+:host {
+  @import "../node_modules/@pearson-ux/gravity-css/reset";
+  @import "../node_modules/@pearson-ux/gravity-css/functions";
+  @import "../node_modules/@pearson-ux/gravity-css/components";
+  @import "../node_modules/@pearson-ux/gravity-css/markup-kits/cards";
+  @import "./card";
+}
+
+
