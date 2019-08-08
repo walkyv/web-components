@@ -1,4 +1,5 @@
 
+
 # Pearson Dropdown Menu Web Component
 
 ## Table of Contents
@@ -43,19 +44,19 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
 ```html
 <head>
   <!-- Polyfills -->
-	<script type="text/javascript">
-	  if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
-	    document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
-	    document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
-	  } else {
-	    document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
-	    document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
-	  }
-	</script>
-	<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+   <script type="text/javascript">
+     if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+       document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+       document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
+     } else {
+       document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+       document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+     }
+   </script>
+   <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
   <!-- Web component script -->
-	<script src="path/to/pearson-dropdown.js"></script>
+   <script src="path/to/pearson-dropdown.js"></script>
 
 </head>
 ```
@@ -100,7 +101,7 @@ All attributes in this API are optional.
 | `textOnly` | Bool | unset   | Setting to true, makes the button a text button without the button border.                    |
 | `buttonText`      | String | unset   | This is the text that goes into the dropdown button |
 | `multiSelect`      | Bool | unset   | Setting to true, makes the dropdown allow multiple selections |
-
+  | type     | string | default   | Set type to 'primary', 'attention' to change the button style. |
 
   <a name="api-events"></a>
 
@@ -133,7 +134,7 @@ render () {
       <div>
          <pearson-dropdown>
            <li id="optionOne">first option</li>
-		 </pearson-dropdown>
+       </pearson-dropdown>
       </div>
    )
 }
