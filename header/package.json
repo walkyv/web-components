@@ -2,7 +2,7 @@
   "name": "@pearson-ux/header",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "pearson header web component",
   "main": "./js/dist/pearson-header.js",
   "scripts": {

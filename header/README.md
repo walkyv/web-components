@@ -1,4 +1,5 @@
 
+
 # Pearson Header Web Component
 
 ## Table of Contents
@@ -7,7 +8,8 @@
 2. [Install](#install)
 3. [Usage](#usage)
 4. [API](#api)
-5. [React](#react)
+5. [Accessibility](#accessibility)
+6. [React](#react)
 
 A shareable, accessible company header.
 
@@ -40,26 +42,26 @@ Import the web component onto the page, in between the `<head>` tags, like so:
 ```html
 <head>
   <!-- polyfills and other stuff... -->
-	<script type="text/javascript">
-	  if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
-	    document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
-	    document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
-	  } else {
-	    document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
-	    document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
-	  }
-	</script>
+   <script type="text/javascript">
+     if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+       document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+       document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
+     } else {
+       document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+       document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+     }
+   </script>
 
-	<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+   <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
   <!-- import web components -->
-	 <script src="https://unpkg.com/@pearson-ux/header"></script>
+    <script src="https://unpkg.com/@pearson-ux/header"></script>
 </head>
 ```
 
 **Important Note:**
 
-> If you are loading the component into your project, the import path will be in the **node_modules** folder, which is usually held outside the application source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
+> If you are loading the component into your project and not using the CDN, the import path will be in the **node_modules** folder, which is usually held outside the application source. If you publish your application to a **./public** or **./dist** folder you will want to write a script to copy this dependency to a desired location.
 
 Add the `<pearson-header> </pearson-header>` tags to the page.
 
@@ -87,10 +89,10 @@ HTML:
 
 ```html
 <pearson-header
-	notifications="0"
-	theme="dark"
-	name="aaa bbb"
-	loggedin>
+   notifications="0"
+   theme="dark"
+   name="aaa bbb"
+   loggedin>
 </pearson-header>
 ```
 
@@ -116,6 +118,19 @@ JS:
   })
 </script>
 ```
+
+<a name="accessibility"></a>
+
+### Accessibility
+To enable accessibility features,  you must place the header outside of a main container with an id of main.  Example:
+
+```html
+<pearson-header theme="light"></pearson-header>
+<main id="main">
+	Content of your app is here
+</main>
+```
+
 <a name="react"></a>
 
 ### React
