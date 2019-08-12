@@ -65,6 +65,14 @@ Import the web component onto the page, in between the `<head>` tags, like so:
 
 Add the `<pearson-header> </pearson-header>` tags to the page.
 
+This header also accepts custom markup.  You can add an image or text by including it between the ```<pearson-header>``` tags.
+
+```
+<pearson-header theme="light>
+	<img src='./partner-logo.png' />
+</pearson-header>
+```
+
   <a name="api"></a>
 
 ## API
