@@ -1,4 +1,4 @@
-:host {
+
   @import '../node_modules/@pearson-ux/gravity-css/variables';
   @import '../node_modules/@pearson-ux/gravity-css/functions';
   @import '../node_modules/@pearson-ux/gravity-css/reset';
@@ -11,7 +11,6 @@
   @import '../node_modules/@pearson-ux/gravity-css/markup-kits/dropdown';
   @import '../node_modules/@pearson-ux/gravity-css/markup-kits/button-bar';
 
-  @import './button-bar';
-}
+
 
 
