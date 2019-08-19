@@ -22,6 +22,7 @@
   </head>
 
   <body>
+  <div style="display:flex; justify-content: flex-end">
     <pearson-buttonbar>
       <li data-text="Delete" slot="list">
         <button class="gr-btn icon-btn-18 ">
@@ -56,5 +57,12 @@
         </button>
       </li>
     </pearson-buttonbar>
+  </div>
+    <script>
+      const buttonBar = document.querySelector('pearson-buttonbar');
+      buttonBar.addEventListener('click', event => {
+        console.log(event.currentTarget)
+      })
+    </script>
   </body>
 </html>
