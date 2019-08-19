@@ -233,7 +233,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           var buttons = slot.assignedNodes();
           var count = 0;
           buttons.forEach(function (button) {
+            var buttonNode = button.querySelector('button'),
+                text = button.getAttribute('data-text');
             button.removeAttribute('slot');
+            buttonNode.setAttribute('aria-label', text);
             if (count === 0) {
               button.classList.add('first-button');
             } else if (count === 1) {

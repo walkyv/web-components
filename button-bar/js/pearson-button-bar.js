@@ -263,7 +263,10 @@
         const buttons = slot.assignedNodes();
         let count = 0;
         buttons.forEach(button => {
+          const buttonNode = button.querySelector('button'),
+              text = button.getAttribute('data-text');
           button.removeAttribute('slot');
+          buttonNode.setAttribute('aria-label', text);
           if (count === 0) {
             button.classList.add('first-button');
           } else if (count === 1) {
