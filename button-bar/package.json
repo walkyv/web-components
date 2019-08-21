@@ -1,10 +1,10 @@
 {
-  "name": "@pearson-ux/example",
-  "author": "Your Name | your.email@pearson.com",
+  "name": "@pearson-ux/button-bar",
+  "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "version": "0.1.0",
-  "description": "Example web component",
-  "main": "index.html",
+  "description": "Button bar web component",
+  "main": "./js/dist/pearson-button-bar.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

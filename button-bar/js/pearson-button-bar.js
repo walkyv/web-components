@@ -217,7 +217,7 @@
         textTemplateClone.classList.add('option-text');
         textTemplateClone.innerHTML = itemText;
 
-        button.appendChild(textTemplateClone)
+        button.appendChild(textTemplateClone);
         button.classList.remove('gr-btn');
         menuItemTarget.appendChild(clone);
 
@@ -247,11 +247,13 @@
       const menu = this.shadowRoot.querySelector('.dropdown-menu'),
         dropdownButton = this.shadowRoot.querySelector('#openMenu');
       dropdownButton.disabled = false;
+      dropdownButton.setAttribute('aria-expanded', false)
       dropdownButton.focus();
       if (menu) {
         menu.remove();
       }
       document.removeEventListener('click', this.closeOnBodyClick);
+
     }
 
     connectedCallback() {
@@ -288,6 +290,7 @@
           event.stopImmediatePropagation();
           this.open = true;
           dropdownButton.disabled = true
+          dropdownButton.setAttribute('aria-expanded', true);
         })
 
 

@@ -214,6 +214,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var menu = this.shadowRoot.querySelector('.dropdown-menu'),
             dropdownButton = this.shadowRoot.querySelector('#openMenu');
         dropdownButton.disabled = false;
+        dropdownButton.setAttribute('aria-expanded', false);
         dropdownButton.focus();
         if (menu) {
           menu.remove();
@@ -258,6 +259,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             event.stopImmediatePropagation();
             _this3.open = true;
             dropdownButton.disabled = true;
+            dropdownButton.setAttribute('aria-expanded', true);
           });
         });
       }
