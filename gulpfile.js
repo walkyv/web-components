@@ -20,6 +20,7 @@ function scripts(done) {
       './coachmark/js/dist/pearson-coachmark.js',
       './datepicker/js/dist/pearson-datepicker.js',
       './drawer/js/dist/pearson-drawer.js',
+      './dropdown/js/dist/pearson-dropdown.js',
       './file-uploader/js/dist/pearson-file-upload.js',
       './footer/js/dist/pearson-footer.js',
       './header/js/dist/pearson-header.js',
