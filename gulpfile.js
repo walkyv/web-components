@@ -16,6 +16,7 @@ function scripts(done) {
   gulp
     .src([
       './alert/js/dist/pearson-alert.js',
+      './button-bar/js/dist/pearson-button-bar.js',
       './card/js/dist/pearson-card.js',
       './coachmark/js/dist/pearson-coachmark.js',
       './datepicker/js/dist/pearson-datepicker.js',
