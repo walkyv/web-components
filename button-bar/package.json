@@ -2,7 +2,7 @@
   "name": "@pearson-ux/button-bar",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Button bar web component",
   "main": "./js/dist/pearson-button-bar.js",
   "scripts": {
