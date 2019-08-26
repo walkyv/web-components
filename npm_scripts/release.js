@@ -52,7 +52,7 @@ stdin.question(`Next version (current is ${currentVersion})? `, (nextVersion) =>
   exec(`gulp build`);
   exec(`npm version ${nextVersion}`);
   exec(`cd ./build && npm version ${nextVersion}`);
-  exec(`cd ../ git add .`);
+  exec(`git add . && cd ../`);
   exec(`git commit -m "releasing ${nextVersion}"`);
   exec(`cd ./build && npm publish`);
   exec('gulp publish')
