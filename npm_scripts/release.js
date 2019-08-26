@@ -61,9 +61,8 @@ stdin.question(`Please enter the folder name of the component you want to releas
       exec(`git commit -m "releasing WC ${nextVersion}"`);
 
       exec(`cd ./${component} && npm publish`);
+      exec(`cd ./${component} && gulp publish`);
       exec(`cd ./build && npm publish`);
-
-
 
       syncRemote(branchName, nextVersion, component);
       // exec('gulp publish')
