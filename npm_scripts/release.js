@@ -51,13 +51,14 @@ stdin.question(`Please enter the folder name of the component you want to releas
 
       exec(`cd ./${component} && gulp build`);
       exec(`cd ./${component} && npm version ${nextVersion}`);
-
-      exec(`npm version ${nextMainVersion}`);
-      exec(`cd ./build && gulp build`);
-      exec(`cd ./build && npm version ${nextMainVersion}`);
-
       exec(`git add .`);
       exec(`git commit -m "releasing ${component} ${nextVersion}"`);
+
+      exec(`cd ./build && gulp build`);
+      exec(`npm version ${nextMainVersion}`);
+      exec(`cd ./build && npm version ${nextMainVersion}`);
+      exec(`git add .`);
+      exec(`git commit -m "releasing WC ${nextVersion}"`);
 
       exec(`cd ./${component} && npm publish`);
       exec(`cd ./build && npm publish`);
