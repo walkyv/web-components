@@ -67,7 +67,7 @@ gulp.task("publish", function() {
 
   return (
     gulp
-    .src("./build/pearson-web-components-min.js")
+    .src("./build/*.js")
 
     .pipe(awspublish.gzip({ ext: ".gz" }))
     .pipe(publisher.publish(headers))
