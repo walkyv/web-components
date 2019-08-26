@@ -37,34 +37,32 @@ stdin.question(`Please enter the folder name of the component you want to releas
   const parentPkg = require(`../${component}/package.json`),
     currentVersion = parentPkg.version;
 
-  stdin.question(`Next version (current is ${currentVersion})? `, (nextVersion) => {
-
-    if (!semver.valid(nextVersion)) {
-      exitFailure(`Version '${nextVersion}' is not valid: requires a semver-compliant version. See http://semver.org/`);
-    }
-    if (!semver.gt(nextVersion, currentVersion)) {
-      exitFailure(`Version '${nextVersion}' is not valid: it must be greater than the current version.`);
-    }
-    if (nextVersion.startsWith('v')) {
-      nextVersion = nextVersion.slice(1);
-    }
-
-
-    exec(`cd ./${component} && gulp build`);
-    exec(`cd ./${component} && npm version ${nextVersion}`);
-    exec(`git add .`);
-    exec(`git commit -m "releasing ${nextVersion}"`);
-    exec(`cd ./${component} && npm publish`);
-    // exec('gulp publish')
+  stdin.question(`Next ${component} version (current is ${currentVersion})? `, (nextVersion) => {
     stdin.question(`Ready to build the main WC file.  Please enter the new version you would like published: (current is ${mainCurrentVersion})? `, (nextMainVersion) => {
-      exec(`gulp build`);
-      exec(`npm version ${nextMainVersion}`);
-      exec(`cd ./build npm version ${nextMainVersion}`);
-      exec(`cd ./build npm publish`);
-      syncRemote(branchName, nextVersion, component);
-      stdin.close();
-    });
+      if (!semver.valid(nextVersion)) {
+        exitFailure(`Version '${nextVersion}' is not valid: requires a semver-compliant version. See http://semver.org/`);
+      }
+      if (!semver.gt(nextVersion, currentVersion)) {
+        exitFailure(`Version '${nextVersion}' is not valid: it must be greater than the current version.`);
+      }
+      if (nextVersion.startsWith('v')) {
+        nextVersion = nextVersion.slice(1);
+      }
 
+      exec(`cd ./${component} && gulp build`);
+      exec(`cd ./${component} && npm version ${nextVersion}`);
+      exec(`cd ./${component} && npm publish`);
+
+      exec(`cd ./build && gulp build`);
+      exec(`cd ./build && npm version ${nextMainVersion}`);
+      exec(`cd ./build && npm publish`);
+
+      exec(`git add .`);
+      exec(`git commit -m "releasing ${nextVersion}"`);
+
+      syncRemote(branchName, nextVersion, component);
+      // exec('gulp publish')
+    });
   });
 });
 // *** Releaser provides the target SEMVER-compliant version ***
