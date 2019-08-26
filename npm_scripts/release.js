@@ -53,6 +53,7 @@ stdin.question(`Please enter the folder name of the component you want to releas
       exec(`cd ./${component} && npm version ${nextVersion}`);
       exec(`cd ./${component} && npm publish`);
 
+      exec(`npm version ${nextMainVersion}`);
       exec(`cd ./build && gulp build`);
       exec(`cd ./build && npm version ${nextMainVersion}`);
       exec(`cd ./build && npm publish`);
@@ -62,6 +63,7 @@ stdin.question(`Please enter the folder name of the component you want to releas
 
       syncRemote(branchName, nextVersion, component);
       // exec('gulp publish')
+      stdin.close();
     });
   });
 });
