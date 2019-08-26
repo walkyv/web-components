@@ -12,7 +12,7 @@ const stdin = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-
+require('dotenv').config();
 const syncRemote = (branchName, nextVersion) => {
   exec(`git push origin ${branchName}`);
 

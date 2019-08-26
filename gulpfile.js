@@ -43,11 +43,6 @@ function scripts(done) {
   done();
 }
 
-
-const build = gulp.series(scripts);
-exports.build = build;
-exports.default = gulp.series(build);
-
 gulp.task("publish", function() {
   var publisher = awspublish.create(
     {
@@ -67,7 +62,7 @@ gulp.task("publish", function() {
 
   return (
     gulp
-    .src("./build/*.js")
+    .src("./build/pearson-web-components-min.js")
 
     .pipe(awspublish.gzip({ ext: ".gz" }))
     .pipe(publisher.publish(headers))
@@ -75,4 +70,10 @@ gulp.task("publish", function() {
     .pipe(awspublish.reporter())
   );
 });
+
+const build = gulp.series(scripts);
+exports.build = build;
+exports.default = gulp.series(build);
+
+
 
