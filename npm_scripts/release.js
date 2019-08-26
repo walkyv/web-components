@@ -56,7 +56,7 @@ stdin.question(`Please enter the folder name of the component you want to releas
 
   // push commit and tag on target release branch
 
-    syncRemote(branchName, nextVersion, component);
+    // syncRemote(branchName, nextVersion, component);
     stdin.close();
   });
 });
