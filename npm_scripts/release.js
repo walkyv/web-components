@@ -5,7 +5,8 @@ const exec = require('./exec');
 const path = require('path');
 const readline = require('readline');
 const semver = require('semver');
-
+const mainParentPkg = require('./package.json');
+const mainCurrentVersion = mainParentPkg.version;
 const branchName = exec('git rev-parse --abbrev-ref HEAD', true);
 
 const stdin = readline.createInterface({
@@ -35,8 +36,6 @@ if (branchName !== 'master' && branchName.toLowerCase().charAt(0) !== 'v') {
 stdin.question(`Please enter the folder name of the component you want to release `, (component) => {
   const parentPkg = require(`../${component}/package.json`),
     currentVersion = parentPkg.version;
-  const mainParentPkg = require('./package.json');
-  const mainCurrentVersion = mainParentPkg.version;
 
   stdin.question(`Next version (current is ${currentVersion})? `, (nextVersion) => {
 
