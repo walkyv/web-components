@@ -48,15 +48,13 @@ stdin.question(`Please enter the folder name of the component you want to releas
 
 
     exec(`cd ./${component} && gulp build`);
-    exec(`npm version ${nextVersion}`);
-    // exec(`cd ../ && git add .`);
-    // exec(`git commit -m "releasing ${nextVersion}"`);
-    // exec(`cd ././${component} && npm publish`);
+    exec(`cd ./${component} && npm version ${nextVersion}`);
+    exec(`cd ../ && git add .`);
+    exec(`git commit -m "releasing ${nextVersion}"`);
+    exec(`cd ././${component} && npm publish`);
     // exec('gulp publish')
 
-  // push commit and tag on target release branch
-
-    // syncRemote(branchName, nextVersion, component);
+    syncRemote(branchName, nextVersion, component);
     stdin.close();
   });
 });
