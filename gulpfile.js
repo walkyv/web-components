@@ -5,6 +5,7 @@ const concat = require('gulp-concat'),
   path   = require('path'),
   rename = require('gulp-rename'),
   NEW_S3_DIRECTORY = 'components';
+require('dotenv').config();
 
 // Make a collection of paths used by the various
 // build steps
@@ -43,6 +44,11 @@ function scripts(done) {
   done();
 }
 
+
+const build = gulp.series(scripts);
+exports.build = build;
+exports.default = gulp.series(build);
+
 gulp.task("publish", function() {
   var publisher = awspublish.create(
     {
@@ -63,17 +69,13 @@ gulp.task("publish", function() {
   return (
     gulp
     .src("./build/pearson-web-components-min.js")
-
+    .pipe(rename(function(filePath) {
+      filePath.dirname = path.join(NEW_S3_DIRECTORY, filePath.dirname);
+    }))
     .pipe(awspublish.gzip({ ext: ".gz" }))
     .pipe(publisher.publish(headers))
     .pipe(publisher.cache())
     .pipe(awspublish.reporter())
   );
 });
-
-const build = gulp.series(scripts);
-exports.build = build;
-exports.default = gulp.series(build);
-
-
 
