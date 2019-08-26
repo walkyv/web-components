@@ -2,7 +2,7 @@
   "name": "@pearson-ux/card",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "card web component",
   "main": "./js/dist/pearson-card.js",
   "scripts": {
