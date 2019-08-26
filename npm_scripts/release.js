@@ -34,8 +34,8 @@ if (branchName !== 'master' && branchName.toLowerCase().charAt(0) !== 'v') {
 stdin.question(`Please enter the folder name of the component you want to release `, (component) => {
   const parentPkg = require(`../${component}/package.json`),
     currentVersion = parentPkg.version;
-
   stdin.question(`Next version (current is ${currentVersion})? `, (nextVersion) => {
+
     if (!semver.valid(nextVersion)) {
       exitFailure(`Version '${nextVersion}' is not valid: requires a semver-compliant version. See http://semver.org/`);
     }
@@ -55,6 +55,7 @@ stdin.question(`Please enter the folder name of the component you want to releas
     // exec('gulp publish')
 
   // push commit and tag on target release branch
+    console.log(component+nextVersion);
     syncRemote(branchName, nextVersion);
     stdin.close();
   });
