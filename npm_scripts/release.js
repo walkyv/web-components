@@ -17,6 +17,7 @@ const syncRemote = (branchName, nextVersion, component) => {
   exec(`git push origin ${branchName}`);
 
   if (nextVersion) {
+    exec(`git tag ${component}${nextVersion}-lw`);
     exec(`git push origin ${component}${nextVersion}`);
     log.secondary(`TravisCI will now release to npm on the tagged commit ${nextVersion} for the pearson-ux account.`);
   }
