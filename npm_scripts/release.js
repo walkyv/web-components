@@ -5,7 +5,7 @@ const exec = require('./exec');
 const path = require('path');
 const readline = require('readline');
 const semver = require('semver');
-const mainParentPkg = require('./package.json');
+const mainParentPkg = require('../package.json');
 const mainCurrentVersion = mainParentPkg.version;
 const branchName = exec('git rev-parse --abbrev-ref HEAD', true);
 
