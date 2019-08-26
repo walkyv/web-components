@@ -17,8 +17,8 @@ const syncRemote = (branchName, nextVersion, component) => {
   exec(`git push origin ${branchName}`);
 
   if (nextVersion) {
-    exec(`git tag ${component}${nextVersion}`);
-    exec(`git push origin ${component}${nextVersion}`);
+    exec(`git tag ${component}-${nextVersion}`);
+    exec(`git push origin ${component}-${nextVersion}`);
     log.secondary(`TravisCI will now release to npm on the tagged commit ${nextVersion} for the pearson-ux account.`);
   }
 };
@@ -35,6 +35,9 @@ if (branchName !== 'master' && branchName.toLowerCase().charAt(0) !== 'v') {
 stdin.question(`Please enter the folder name of the component you want to release `, (component) => {
   const parentPkg = require(`../${component}/package.json`),
     currentVersion = parentPkg.version;
+  const mainParentPkg = require('./package.json');
+  const mainCurrentVersion = mainParentPkg.version;
+
   stdin.question(`Next version (current is ${currentVersion})? `, (nextVersion) => {
 
     if (!semver.valid(nextVersion)) {
@@ -52,11 +55,14 @@ stdin.question(`Please enter the folder name of the component you want to releas
     exec(`cd ./${component} && npm version ${nextVersion}`);
     exec(`git add .`);
     exec(`git commit -m "releasing ${nextVersion}"`);
-    exec(`cd ././${component} && npm publish`);
+    exec(`cd ./${component} && npm publish`);
     // exec('gulp publish')
+    stdin.question(`Ready to build the main WC file.  Please enter the new version you would like published: (current is ${mainCurrentVersion})? `, (nextMainVersion) => {
+      exec(`gulp build`);
+      syncRemote(branchName, nextVersion, component);
+      stdin.close();
+    });
 
-    syncRemote(branchName, nextVersion, component);
-    stdin.close();
   });
 });
 // *** Releaser provides the target SEMVER-compliant version ***
