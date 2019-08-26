@@ -36,7 +36,6 @@ function scripts(done) {
       './tab-navigation/js/dist/pearson-tabs.js',
       './timepicker/js/dist/pearson-timepicker.js',
       './toggle/js/dist/pearson-toggle.js',
-
     ])
     .pipe(concat('pearson-web-components.js'))
     .pipe(minify())
