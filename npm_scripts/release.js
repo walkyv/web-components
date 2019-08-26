@@ -13,11 +13,11 @@ const stdin = readline.createInterface({
   output: process.stdout
 });
 require('dotenv').config();
-const syncRemote = (branchName, nextVersion) => {
+const syncRemote = (branchName, nextVersion, component) => {
   exec(`git push origin ${branchName}`);
 
   if (nextVersion) {
-    exec(`git push --tags`);
+    exec(`git push origin ${component}${nextVersion}`);
     log.secondary(`TravisCI will now release to npm on the tagged commit ${nextVersion} for the pearson-ux account.`);
   }
 };
@@ -55,8 +55,8 @@ stdin.question(`Please enter the folder name of the component you want to releas
     // exec('gulp publish')
 
   // push commit and tag on target release branch
-    console.log(component+nextVersion);
-    syncRemote(branchName, component+nextVersion);
+
+    syncRemote(branchName, nextVersion, component);
     stdin.close();
   });
 });
