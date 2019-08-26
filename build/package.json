@@ -1,6 +1,6 @@
 {
   "name": "@pearson-ux/pearson-web-components",
-  "version": "2.2.6",
+  "version": "1.0.10",
   "description": "Full library of pearson web components",
   "main": "pearson-web-components-min.js",
   "scripts": {

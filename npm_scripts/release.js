@@ -58,8 +58,8 @@ stdin.question(`Please enter the folder name of the component you want to releas
     // exec('gulp publish')
     stdin.question(`Ready to build the main WC file.  Please enter the new version you would like published: (current is ${mainCurrentVersion})? `, (nextMainVersion) => {
       exec(`gulp build`);
-      exec(`npm version ${nextVersion}`);
-      exec(`cd ./build && npm version ${nextVersion}`);
+      exec(`npm version ${nextMainVersion}`);
+      exec(`cd ./build && npm version ${nextMainVersion}`);
       exec(`cd ./build && npm publish`);
       syncRemote(branchName, nextVersion, component);
       stdin.close();
