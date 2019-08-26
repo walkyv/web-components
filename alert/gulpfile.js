@@ -9,7 +9,7 @@ const autoprefixer = require('autoprefixer'),
   awspublish = require("gulp-awspublish"),
   path   = require('path'),
   rename = require('gulp-rename'),
-  NEW_S3_DIRECTORY = 'css';
+  NEW_S3_DIRECTORY = 'components';
 
 // Make a collection of paths used by the various
 // build steps
