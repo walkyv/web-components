@@ -10,7 +10,7 @@ const autoprefixer = require('autoprefixer'),
   path   = require('path'),
   rename = require('gulp-rename'),
   NEW_S3_DIRECTORY = 'components';
-
+require('dotenv').config();
 // Make a collection of paths used by the various
 // build steps
 const paths = {
