@@ -49,7 +49,7 @@ stdin.question(`Please enter the folder name of the component you want to releas
         nextVersion = nextVersion.slice(1);
       }
 
-      exec(`cd ${component} && gulp build`);
+      exec(`cd ${component} && gulp scripts`);
       exec(`cd ${component} && npm version ${nextVersion}`);
       exec(`git add .`);
       exec(`git commit -m "releasing ${component} ${nextVersion}"`);
