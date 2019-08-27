@@ -70,11 +70,7 @@ function watch() {
 
 const build = gulp.series(styles, scripts);
 
-exports.build = build;
-exports.serve = serve;
-exports.watch = watch;
 
-exports.default = gulp.series(build, serve, watch);
 
 gulp.task("publish", function() {
   var publisher = awspublish.create(
@@ -105,3 +101,8 @@ gulp.task("publish", function() {
     .pipe(awspublish.reporter())
   );
 });
+exports.build = build;
+exports.serve = serve;
+exports.watch = watch;
+
+exports.default = gulp.series(build, serve, watch);
