@@ -10,7 +10,7 @@ const autoprefixer = require('autoprefixer'),
   path   = require('path'),
   rename = require('gulp-rename'),
   NEW_S3_DIRECTORY = 'components';
-
+require('dotenv').config();
 // Make a collection of paths used by the various
 // build steps
 const paths = {
@@ -22,26 +22,26 @@ const paths = {
 };
 
 function styles(done) {
-   gulp
-    .src(paths.styles)
-    .pipe(sass())
-    .on('error', sass.logError)
-    .pipe(postcss([autoprefixer({ cascade: false }), cssnano()]))
-    .pipe(concat('style.css'))
-    .pipe(gulp.dest('./css'))
-    .pipe(server.stream());
+  gulp
+  .src(paths.styles)
+  .pipe(sass())
+  .on('error', sass.logError)
+  .pipe(postcss([autoprefixer({ cascade: false }), cssnano()]))
+  .pipe(concat('style.css'))
+  .pipe(gulp.dest('./css'))
+  .pipe(server.stream());
   done();
 }
 
 function scripts(done) {
   gulp
-    .src(paths.scripts)
-    .pipe(
-      babel({
-        presets: [['env', { modules: false }]]
-      })
-    )
-    .pipe(gulp.dest(paths.dist));
+  .src(paths.scripts)
+  .pipe(
+    babel({
+      presets: [['env', { modules: false }]]
+    })
+  )
+  .pipe(gulp.dest(paths.dist));
   done();
 }
 
@@ -73,7 +73,7 @@ const build = gulp.series(styles, scripts);
 exports.build = build;
 exports.serve = serve;
 exports.watch = watch;
-
+exports.scripts = scripts;
 exports.default = gulp.series(build, serve, watch);
 
 gulp.task("publish", function() {
