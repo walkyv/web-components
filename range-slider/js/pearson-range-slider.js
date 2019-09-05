@@ -2,7 +2,23 @@
   'use strict';
 
   const template = doc.createElement('template'),
-    numberTemplate = doc.createElement('template');
+    numberTemplate = doc.createElement('template'),
+    inputTemplate = doc.createElement('template');
+
+  inputTemplate.innerHTML = `
+  		<div class="range-input-container">
+			<div class="groups">
+				<div class="input-group">
+					<div class="gr-form-element">
+						<label id="rangeInputOne" class="gr-label" for="inputId">Range Slider</label>
+						<input aria-describedby="rangeInputOne rangeInputTwo rangeInputThree" class="gr-input" id="inputId" type="text" value=""  />
+					</div>
+					<span id="rangeInputTwo" class="gr-meta">lb</span>
+				</div>
+				<span id="rangeInputThree" class="gr-meta">max 2lbs</span>
+			</div>
+		</div>
+  `;
 
   template.innerHTML = ` 
     <style>
