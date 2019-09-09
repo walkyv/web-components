@@ -177,6 +177,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
 
         this.attachBtn.addEventListener('click', function () {
+          console.log('click');
           _this2.realUploadInput.click();
         });
 

@@ -173,6 +173,7 @@
     }
 
     onTabSlotChange(e) {
+
       this.tabList = e.target.assignedNodes()[0];
       if (!this.tabList) return;
 
@@ -197,8 +198,15 @@
 
     onShadowRootClick(e) {
       if (!e.target.matches('button[id^="tab"]')) return;
-
       this.activeIdx = indexOf.call(this.tabs, e.target);
+      this.dispatchEvent(
+        new CustomEvent('tabChange', {
+          detail: {
+            on: this.on
+          },
+          bubbles: true
+        })
+      );
     }
 
     onShadowRootKeydown(e) {
@@ -215,6 +223,14 @@
         e.preventDefault();
         this.activeIdx = nextIdx;
       }
+      this.dispatchEvent(
+        new CustomEvent('tabChange', {
+          detail: {
+            on: this.on
+          },
+          bubbles: true
+        })
+      );
     }
   }
   customElements.define('pearson-tabs', Tabs);

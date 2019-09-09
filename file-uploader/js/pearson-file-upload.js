@@ -218,6 +218,7 @@
       });
 
       this.attachBtn.addEventListener('click', () => {
+        console.log('click')
         this.realUploadInput.click();
       });
 
