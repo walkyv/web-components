@@ -150,6 +150,14 @@
         input.addEventListener('change', event => {
           this.input.value = input.value;
           this.Value = input.value;
+          this.dispatchEvent(
+            new CustomEvent('change', {
+              bubbles: true,
+              detail: {
+                value: input.value
+              }
+            })
+          );
         });
 
         this.input.addEventListener('input', () => {
@@ -181,6 +189,14 @@
         this.input.addEventListener('input', () => {
           this.input.value =  parseFloat(this.input.value,10).toFixed(2);
           this.Value = this.input.value;
+          this.dispatchEvent(
+            new CustomEvent('change', {
+              bubbles: true,
+              detail: {
+                value: this.input.value
+              }
+            })
+          );
         });
       }
     }
