@@ -2,7 +2,7 @@
   "name": "@pearson-ux/timepicker",
   "author": "EJ Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Timepicker web component",
   "main": "js/dist/pearson-timepicker.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "autoprefixer": "^9.4.3",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
-    "browser-sync": "^2.26.3",
+    "browser-sync": "^2.26.7",
     "cssnano": "^4.1.8",
     "gulp": "^4.0.0",
     "gulp-babel": "^7.0.1",

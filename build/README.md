@@ -59,3 +59,4 @@ Here is a list of all the included components along with links to documentation 
  9. [Progress bar](https://www.npmjs.com/package/@pearson-ux/progress-bar)
  10. [Tab navigation](https://www.npmjs.com/package/@pearson-ux/tabs)
  11. [Toggle](https://www.npmjs.com/package/@pearson-ux/toggle)
+ 12. [Card](https://www.npmjs.com/package/@pearson-ux/card)

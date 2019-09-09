@@ -96,8 +96,8 @@ $pe-focus-color: #0B73DA;
 .pe-icon--btn {
   position: absolute;
   padding: 4px 4px;
-  width: 55px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   background: none;
   border: none;
   color: inherit;
@@ -114,8 +114,7 @@ $pe-focus-color: #0B73DA;
 .pe-icon--btn:focus {
   outline: 0;
   border: 2px solid $pe-focus-color;
-  border-radius: 22px;
-  min-width:55px;
+  border-radius: 4px;
 }
 
 .pe-icon--btn::-moz-focus-inner {

@@ -34,12 +34,12 @@
 <body>
 <main id="main">
 	<section class="container target">
-		<button id="trigger-modal" class="pe-btn pe-btn--btn_large">Attach files</button>
+		<button id="trigger-file" class="pe-btn pe-btn--btn_large">Attach files</button>
 	</section>
 </main>
 <pearson-uploader
 	apiUrl="https://pearson-file-upload.s3.amazonaws.com/"
-	triggerid="trigger-modal"
+	triggerid="trigger-file"
 	maxByteFileSize="10000000"
 	maxNumberOfFiles="5"
 >
@@ -47,7 +47,8 @@
 
 <!-- Import componnet modules -->
 <script src="js/dist/pearson-file-upload.js"></script>
-
+<script src="./components/upload-modal/js/dist/uploadModal.js"></script>
+<script src="./components/alert/js/dist/pearson-alert.js"></script>
 <script>
 	const uploader = document.querySelector('pearson-uploader');
 	const modal = uploader.shadowRoot.querySelector('upload-modal');

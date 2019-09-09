@@ -9,611 +9,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
-  w['moment-range'].extendMoment(moment);
-  // Create a template element
-  var datepicker = doc.createElement('template'),
-      calendar = doc.createElement('template'),
-      row = doc.createElement('template'),
-      dateTemplate = doc.createElement('template'),
-      dateIcon = '\n\n  \n                  <svg focusable="false" class="icon-18" aria-hidden="false" title="close coachmark" role="img" >\n\t<path d="M14.4146471,2 L14.875,2 C16.0486051,2 17,2.95139491 17,4.125 L17,14.875 C17,16.0486051 16.0486051,17 14.875,17 L3.125,17 C1.95139491,17 1,16.0486051 1,14.875 L1,4.125 C1,2.95139491 1.95139491,2 3.125,2 L3.58535285,2 C3.79127106,1.41740381 4.34689059,1 5,1 C5.65310941,1 6.20872894,1.41740381 6.41464715,2 L11.5853529,2 C11.7912711,1.41740381 12.3468906,1 13,1 C13.6531094,1 14.2087289,1.41740381 14.4146471,2 Z M15.25,6.25 L15.25,4.125 C15.25,3.91789322 15.0821068,3.75 14.875,3.75 L3.125,3.75 C2.91789322,3.75 2.75,3.91789322 2.75,4.125 L2.75,6.25 L15.25,6.25 Z M15.25,8 L2.75,8 L2.75,14.875 C2.75,15.0821068 2.91789322,15.25 3.125,15.25 L14.875,15.25 C15.0821068,15.25 15.25,15.0821068 15.25,14.875 L15.25,8 Z"></path>\n    <path d="M12.5,12 L13.5,12 C13.7761424,12 14,12.2238576 14,12.5 L14,13.5 C14,13.7761424 13.7761424,14 13.5,14 L12.5,14 C12.2238576,14 12,13.7761424 12,13.5 L12,12.5 C12,12.2238576 12.2238576,12 12.5,12 Z"></path>\n    <path d="M12.5,9 L13.5,9 C13.7761424,9 14,9.22385763 14,9.5 L14,10.5 C14,10.7761424 13.7761424,11 13.5,11 L12.5,11 C12.2238576,11 12,10.7761424 12,10.5 L12,9.5 C12,9.22385763 12.2238576,9 12.5,9 Z"></path>\n    <path d="M9.5,12 L10.5,12 C10.7761424,12 11,12.2238576 11,12.5 L11,13.5 C11,13.7761424 10.7761424,14 10.5,14 L9.5,14 C9.22385763,14 9,13.7761424 9,13.5 L9,12.5 C9,12.2238576 9.22385763,12 9.5,12 Z"></path>\n    <path d="M9.5,9 L10.5,9 C10.7761424,9 11,9.22385763 11,9.5 L11,10.5 C11,10.7761424 10.7761424,11 10.5,11 L9.5,11 C9.22385763,11 9,10.7761424 9,10.5 L9,9.5 C9,9.22385763 9.22385763,9 9.5,9 Z"></path>\n    <path d="M6.5,12 L7.5,12 C7.77614237,12 8,12.2238576 8,12.5 L8,13.5 C8,13.7761424 7.77614237,14 7.5,14 L6.5,14 C6.22385763,14 6,13.7761424 6,13.5 L6,12.5 C6,12.2238576 6.22385763,12 6.5,12 Z"></path>\n       </svg>\n    ',
-      calendarIcon = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\' width=\'18\' height=\'18\' fill=\'%236a7070\'%3e%3cpath d=\'M4 3L5 3 5 1 4 1 4 3zM13 3L14 3 14 1 13 1 13 3zM18 5L18 1.5C18 1.224 17.776 1 17.5 1L15 1 15 .5C15 .224 14.776 0 14.5 0L12.5 0C12.224 0 12 .224 12 .5L12 1 6 1 6 .5C6 .224 5.776 0 5.5 0L3.5 0C3.224 0 3 .224 3 .5L3 1 .5 1C.224 1 0 1.224 0 1.5L0 5 18 5zM14.0762 15L10.8262 15C10.5502 15 10.3262 14.776 10.3262 14.5 10.3262 14.224 10.5502 14 10.8262 14L12.0002 14 12.0002 9.707 11.3752 10.331C11.1802 10.526 10.8632 10.526 10.6682 10.331 10.4722 10.136 10.4722 9.819 10.6682 9.624L12.1462 8.146C12.2892 8.003 12.5062 7.96 12.6912 8.038 12.8782 8.116 13.0002 8.298 13.0002 8.5L13.0002 14 14.0762 14C14.3522 14 14.5762 14.224 14.5762 14.5 14.5762 14.776 14.3522 15 14.0762 15L14.0762 15zM9.0002 14.5C9.0002 14.776 8.7762 15 8.5002 15L4.5002 15C4.2232 15 4.0002 14.776 4.0002 14.5L4.0002 13.5C4.0002 13.224 4.2232 13 4.5002 13 4.7762 13 5.0002 13.224 5.0002 13.5L5.0002 14 8.0002 14 8.0002 12 5.6992 12C5.4232 12 5.1992 11.776 5.1992 11.5 5.1992 11.224 5.4232 11 5.6992 11L8.0002 11 8.0002 9 5.0002 9 5.0002 9.5C5.0002 9.776 4.7762 10 4.5002 10 4.2232 10 4.0002 9.776 4.0002 9.5L4.0002 8.5C4.0002 8.224 4.2232 8 4.5002 8L8.5002 8C8.7762 8 9.0002 8.224 9.0002 8.5L9.0002 14.5zM.0002 6L.0002 17.5C.0002 17.776.2232 18 .5002 18L17.5002 18C17.7762 18 18.0002 17.776 18.0002 17.5L18.0002 6 .0002 6z\'/%3e%3c/svg%3e',
-      prevArrowIcon = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\' width=\'18\' height=\'18\' fill=\'%236a7070\'%3e%3cpath d=\'M13.749,17.6606035 C14.112,17.2486035 14.076,16.6116035 13.662,16.2436035 L5.509,8.9996035 L13.662,1.7566035 C14.077,1.3896035 14.113,0.752603504 13.749,0.339603504 C13.383,-0.0763964961 12.751,-0.115396496 12.338,0.252603504 L3.338,8.2476035 C3.123,8.4376035 3,8.7126035 3,8.9996035 C3,9.2876035 3.123,9.5616035 3.338,9.7526035 L12.338,17.7476035 C12.751,18.1156035 13.383,18.0766035 13.749,17.6606035\'%3e%3c/path%3e%3c/svg%3e',
-      nextArrowIcon = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\' width=\'18\' height=\'18\' fill=\'%236a7070\'%3e%3cpath d=\'M4.2506,17.6606035 C3.8876,17.2486035 3.9236,16.6116035 4.3376,16.2436035 L12.4906,8.9996035 L4.3376,1.7566035 C3.9226,1.3896035 3.8866,0.752603504 4.2506,0.339603504 C4.6166,-0.0763964961 5.2486,-0.115396496 5.6616,0.252603504 L14.6616,8.2476035 C14.8766,8.4376035 14.9996,8.7126035 14.9996,8.9996035 C14.9996,9.2876035 14.8766,9.5616035 14.6616,9.7526035 L5.6616,17.7476035 C5.2486,18.1156035 4.6166,18.0766035 4.2506,17.6606035\'%3e%3c/path%3e%3c/svg%3e',
-      warningIcon = '   \n  <svg     \n    aria-hidden="true"\n    focusable="false" \n    style="width:18px;height:18px;fill:currentColor"  \n  >  \n    <path d="M9.99994044,10.5 C9.99994044,10.776 9.77594044,11 9.49994044,11 L8.49994044,11 C8.22394044,11 7.99994044,10.776 7.99994044,10.5 L7.99994044,7.5 C7.99994044,7.224 8.22394044,7 8.49994044,7 L9.49994044,7 C9.77594044,7 9.99994044,7.224 9.99994044,7.5 L9.99994044,10.5 Z M9.99994044,13.5 C9.99994044,13.776 9.77594044,14 9.49994044,14 L8.49994044,14 C8.22394044,14 7.99994044,13.776 7.99994044,13.5 L7.99994044,12.5 C7.99994044,12.224 8.22394044,12 8.49994044,12 L9.49994044,12 C9.77594044,12 9.99994044,12.224 9.99994044,12.5 L9.99994044,13.5 Z M15.9460591,15.275 L9.44500379,2.276 C9.26100222,1.908 8.73899778,1.908 8.55499621,2.276 L2.05394089,15.275 C1.88693947,15.607 2.12794152,16 2.49894468,16 L15.5010553,16 C15.8720585,16 16.1130605,15.607 15.9460591,15.275 Z"/>\n</svg>';
-
-  datepicker.innerHTML = ' \n<style>\n\n@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}\n:host,:host *,:host :after,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box;font-family:Open Sans,Calibri,Tahoma,sans-serif}:host{position:relative;display:inline-block;max-width:400px;width:100%;color:#252525}input[disabled]{color:#c7c7c7;background-color:#e9e9e9;cursor:not-allowed}input[readonly]{border-color:transparent;background-color:transparent}ul{list-style-type:none;padding:0;margin:0}svg{vertical-align:top}.gr-icon{position:absolute;color:#6a7070;pointer-events:none}.gr-datepicker-container{position:relative;min-width:150px;max-width:322px}@media (-ms-high-contrast:none){.gr-datepicker-container{max-width:362px}}.gr-datepicker-container .datepicker{position:relative;margin-bottom:6px}.gr-datepicker-container .datepicker .gr-btn{bottom:-webkit-calc(50% - 17px);bottom:calc(50% - 17px);color:#6a7070;position:absolute;right:0;margin:0;border-radius:4px}@media (-ms-high-contrast:none){.gr-datepicker-container .datepicker .gr-btn{bottom:-webkit-calc(50% - 12px)!important;bottom:calc(50% - 12px)!important}}.gr-datepicker-container .datepicker .gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 0 #fff,0 0 0 2px #1977d4;box-shadow:0 0 0 0 #fff,0 0 0 2px #1977d4}.gr-datepicker-container .datepicker svg{fill:#6a7070}.gr-datepicker-container .gr-calendar-container{position:absolute}.gr-datepicker-container.error .gr-label{color:#db0020}.gr-datepicker-container.error .gr-input{border-color:#db0020}#inputAriaId{display:none}.error #inputAriaId{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.gr-calendar-container{-webkit-box-sizing:content-box;box-sizing:content-box;min-height:284px;color:#252525;padding:16px 20px 20px;z-index:1;border:1px solid #c7c7c7;background-color:#fff;border-radius:5px}@media (-ms-high-contrast:none){.gr-calendar-container{width:320px}}.gr-calendar-container fieldset{margin:0;border:0;padding:0}.gr-calendar-container fieldset legend{padding:8px;text-align:left;margin-bottom:8px;width:-webkit-calc(100% - 84px);width:calc(100% - 84px);display:inline-block;float:left;font-size:18px}.gr-calendar-container .actions{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;width:80px}.gr-calendar-container .actions .gr-btn{margin:0;padding:0;height:40px;width:40px;color:#6a7070}.gr-calendar-container .actions .gr-btn:hover{color:#252525}.gr-calendar-container .actions .gr-btn:focus{color:#252525;outline:2px solid #1977d4;outline-offset:2px}.gr-calendar-container .weekdays div{height:40px;color:#6a7070;line-height:40px;font-size:12px}.gr-calendar-container .row{display:-ms-grid;display:grid;-ms-grid-columns:(40px)[7];grid-template-columns:repeat(7,40px);clear:both}.gr-calendar-container abbr{text-decoration:none}.gr-calendar-container .cell{display:inline-block;vertical-align:top;text-align:center;width:40px;height:40px}.gr-calendar-container .cell.currentDate-box{width:36px;height:36px;margin:1px;line-height:36px;border-radius:0;padding:0;border:1px solid #c7c7c7;background:transparent}.gr-calendar-container .cell.currentDate-box .date-selector{margin:2px}.gr-calendar-container .cell button{background:none;padding:0;border:0;position:relative;cursor:pointer;display:block;height:32px;width:32px;margin:4px;line-height:32px;border-radius:50%;font-size:14px}.gr-calendar-container .cell button.selected{font-weight:600;color:#fff;background-color:#6a7070}.gr-calendar-container .cell button:focus{outline:2px solid #1977d4;outline-offset:2px}.gr-calendar-container .date-selector{height:32px;width:32px;margin:4px;line-height:32px;border-radius:16px}.gr-calendar-container .date.past{height:40px;line-height:38px}.gr-calendar-container .past .date-selector{color:#c7c7c7;cursor:not-allowed}.gr-calendar-container .secondary-date{border:1px solid #c7c7c7}.gr-calendar-container.inverse{color:#fff;background-color:#005a70;border:1px solid #005a70}.gr-calendar-container.inverse .actions button,.gr-calendar-container.inverse .cell,.gr-calendar-container.inverse .date-selector,.gr-calendar-container.inverse .title,.gr-calendar-container.inverse .weekdays div{color:#fff}.gr-calendar-container.inverse .actions button:focus,.gr-calendar-container.inverse .actions button:hover{color:#c7c7c7}.gr-calendar-container.inverse .date .selected{color:#252525;background-color:#fff}.gr-calendar-container.inverse .past .date-selector{color:#047a9c;cursor:not-allowed}.gr-btn{padding:0;background-color:transparent;border:0}.date-selector{background:none}.date-selector:hover{background-color:#e9e9e9;color:#252525;cursor:pointer}.date-selector.selected{background-color:#6a7070;color:#fff}.currentDate-box{border:1px solid #c7c7c7}@media (-ms-high-contrast:none){.dates>.row{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}}@media (-ms-high-contrast:none){.gr-calendar-container .row{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}}*{font-family:Open Sans}html{font-size:14px}*,html{-webkit-box-sizing:border-box;box-sizing:border-box}abbr{text-decoration:none}html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}svg{fill:currentColor}.gr-h1{font-size:24px;line-height:28px}.gr-h1,.gr-h2{font-weight:400;margin-top:0}.gr-h2{font-size:20px;line-height:26px}.gr-h3{font-size:18px;line-height:24px;font-weight:400;margin-top:0}.gr-meta{font-size:12px;line-height:12px;color:#6a7070}.gr-semi-bold{font-weight:600}.gr-font-large{font-size:16px;line-height:24px}.gr-font-normal{font-size:14px;line-height:20px}.gr-btn{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:16px;cursor:pointer;border-radius:22px;position:relative;margin:12px}.gr-btn:hover{color:#252525;border:1px solid #252525}.gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}.gr-btn.primary:hover{color:#fff;background-color:#035f79}.gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}.gr-btn.attention:hover{background-color:#f7aa00}.gr-btn.small{min-width:128px;padding:7px 20px;font-size:14px}.gr-btn.small:focus:after{padding:18px 21px}.gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:16px}.gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}.gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}.gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}.gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}.gr-btn.no-border{border:0}.gr-btn.no-border:hover{border:0}.gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}.gr-input{display:block;margin:4px 0;padding:0 12px;height:36px;color:#252525;border:1px solid #c7c7c7;background:#fff;border-radius:4px;font-size:14px;width:100%;max-width:100%}.gr-input.error{border-color:#db0020}.gr-input[aria-invalid=true]{border-color:#db0020;margin-bottom:0}.gr-input[aria-invalid=true]:focus{-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020;box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020}.gr-input:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}.gr-input:disabled{color:#c7c7c7;background-color:#e9e9e9}.gr-input:-moz-read-only{border:0}.gr-input:read-only{border:0}.gr-label{font-size:12px;line-height:16px;color:#6a7070;display:block;margin-bottom:4px}.no-border{border:0}.icon-18{width:18px;height:18px}.icon-24{width:24px;height:24px}button:focus{outline:2px solid #1977d4;outline-offset:2px}.error-msg,.gr-meta.error{color:#db0020;padding-top:3px;font-size:12px;line-height:16px;margin-bottom:0;margin-top:0}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}\n</style>      \n    <div class="gr-datepicker-container">\n        <label class="gr-label" for="datepicker" id="datepicker-label">Select date (mm/dd/yyyy)</label> \n        <div class="datepicker">\n            <input type="text" class="gr-input" id="datepicker" aria-expanded="false">\n              <button class="gr-btn icon-btn-18 open-calendar" aria-label="open calendar">\n                             ' + dateIcon + '\n              </button>\n        </div> \n        <p id="inputAriaId" class="error-msg">' + warningIcon + ' Enter a valid date.</p>\n    </div>\n';
-
-  calendar.innerHTML = '\n        <section class="gr-calendar-container animated animateIn">\n            <div class="calendar">\n                <fieldset class="pe-inner">\n                    <legend class="gr-h3" id="month"></legend>\n                    <div class="actions">\n                        <button class="gr-btn icon-btn-24 previous" aria-label="Previous month">\n                           <img src="' + prevArrowIcon + '" aria-hidden="true"/>\n                        </button>\n                        <button class="gr-btn icon-btn-24 next" aria-label="Next month">\n                            <img src="' + nextArrowIcon + '" aria-hidden="true"/>\n                        </button>\n                    </div>\n                    <div class="row weekdays">\n                        <div class="cell dayNames">\n                            <abbr title="Sunday">S</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Monday">M</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Tuesday">T</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Wednesday">W</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Thursday">T</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Friday">F</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Saturday">S</abbr>\n                        </div>\n                    </div>\n                    <div class="dates"></div>\n                </fieldset>\n            </div>\n        </section>\n';
-
-  row.innerHTML = '\n<div class="row"></div>\n';
-
-  dateTemplate.innerHTML = '\n <div class="cell date">\n      <button class="date-selector" data-date="11/01/2018" aria-label="" aria-pressed="false">1</button>\n  </div>\n  ';
-
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(datepicker, 'pearson-datepicker');
-
-  function getFocusableElements(node) {
-    var buttons = node.querySelectorAll('button:not(:disabled)'),
-        data = {};
-    data.elements = buttons;
-    data.firstElement = data.elements[0];
-    data.lastElement = data.elements[data.elements.length - 1];
-    return data;
-  }
-
-  function validateDate(testdate) {
-    var date_regex = /^\d{2}\/\d{2}\/\d{4}$/;
-    return date_regex.test(testdate);
-  }
-
-  // helpers
-
-  var Datepicker = function (_HTMLElement) {
-    _inherits(Datepicker, _HTMLElement);
-
-    _createClass(Datepicker, [{
-      key: 'returnDateData',
-
-
-      // this data is fed to the calendar data function and is used to build the calendar object
-      value: function returnDateData(date, type) {
-        // return the year to populate calendar
-        if (this.year !== null && type === undefined) {
-          date.year = parseInt(this.year, 10);
-        } else if (type !== undefined) {
-          date.year = date.year;
-        } else {
-          date.year = parseInt(moment().format('Y'), 10);
-        }
-
-        // return the month to populate calendar
-        if (this.month !== null && type === undefined) {
-          date.month = parseInt(this.month - 1, 10);
-        } else if (type !== undefined) {
-          if (type === 'add') {
-            date.month = date.month + 1;
-            if (date.month === 12) {
-              date.month = 0;
-              date.year = date.year + 1;
-            }
-          } else if (type === 'subtract') {
-            // date.month = moment().subtract(date.month, 'month').month();
-            date.month = date.month - 1;
-            if (date.month === -1) {
-              date.month = 11;
-              date.year = date.year - 1;
-            }
-          }
-        } else {
-          date.month = moment().month();
-        }
-
-        // return the day to populate calendar
-        if (this.day !== null) {
-          date.day = this.day;
-        } else {
-          date.day = moment().format('D');
-        }
-        return date;
-      }
-
-      // builds the calendar object to power the UI
-
-    }, {
-      key: 'returnCalendarData',
-      value: function returnCalendarData(returnData) {
-        var data = returnData,
-            date = moment([data.year, data.month]),
-            firstDay = moment(date).startOf('M').day('Sunday'),
-            endDay = moment(date).endOf('M').day('Saturday'),
-            monthRange = moment.range(firstDay, endDay),
-            weeks = [],
-            calendar = [],
-            build = [],
-            calendarData = {};
-
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = monthRange.by('days')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var day = _step.value;
-
-            var number = void 0;
-            if (weeks.indexOf(day.week()) === -1 && weeks.indexOf(53) === -1) {
-              if (data.month === 11 && day.week() === 1) {
-                number = 53;
-              } else {
-                number = day.week();
-              }
-              weeks.push(number);
-            }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        weeks.forEach(function (week, index) {
-          var weeknumber = weeks[index];
-          var firstWeekDay = moment(firstDay).week(weeknumber).day('Sunday');
-          if (firstWeekDay.isBefore(firstDay)) {
-            firstWeekDay = firstDay;
-          }
-          var lastWeekDay = moment(endDay).year(data.year).week(weeknumber).day('Saturday');
-          if (lastWeekDay.isAfter(endDay)) {
-            lastWeekDay = endDay;
-          }
-          var weekRange = moment.range(firstWeekDay, lastWeekDay);
-          calendar.push(weekRange);
-        });
-
-        calendar.forEach(function (range) {
-          var weeks = [];
-          var _iteratorNormalCompletion2 = true;
-          var _didIteratorError2 = false;
-          var _iteratorError2 = undefined;
-
-          try {
-            for (var _iterator2 = range.by('days')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-              var _day = _step2.value;
-
-              weeks.push(_day);
-            }
-          } catch (err) {
-            _didIteratorError2 = true;
-            _iteratorError2 = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                _iterator2.return();
-              }
-            } finally {
-              if (_didIteratorError2) {
-                throw _iteratorError2;
-              }
-            }
-          }
-
-          build.push(weeks);
-        });
-        calendarData.month = moment(date).startOf('M').format("MMMM");
-        calendarData.year = data.year;
-        calendarData.weeks = build;
-        return calendarData;
-      }
-
-      // builds and renders next month
-
-    }, {
-      key: 'nextMonth',
-      value: function nextMonth() {
-        this.data = this.returnDateData(this.data, 'add');
-        this.renderCalendar(this.data);
-      }
-
-      // builds and renders previous month
-
-    }, {
-      key: 'prevMonth',
-      value: function prevMonth() {
-        this.data = this.returnDateData(this.data, 'subtract');
-        this.renderCalendar(this.data);
-      }
-
-      // opens the calendar
-
-    }, {
-      key: 'openCalendar',
-      value: function openCalendar() {
-        this.openState = 'true';
-        this.renderCalendar(this.data);
-        this.focusOnOpen();
-      }
-
-      // closes the calendar
-
-    }, {
-      key: 'closeCalendar',
-      value: function closeCalendar() {
-        this.openState = 'false';
-        this.openBtn.focus();
-      }
-
-      // builds the calendar template
-
-    }, {
-      key: 'buildCalendarContainer',
-      value: function buildCalendarContainer() {
-        var calendarTemplate = calendar.content.cloneNode(true),
-            nextBtn = calendarTemplate.querySelector('.next'),
-            prevBtn = calendarTemplate.querySelector('.previous');
-
-        nextBtn.addEventListener('click', this.nextMonth, false);
-        prevBtn.addEventListener('click', this.prevMonth, false);
-
-        return calendarTemplate;
-      }
-
-      // populates and renders the calendar
-
-    }, {
-      key: 'renderCalendar',
-      value: function renderCalendar(dateData) {
-        var _this2 = this;
-
-        var data = this.returnCalendarData(dateData),
-            rowTarget = this.shadowRoot.querySelector('.dates');
-
-        rowTarget.innerHTML = '';
-
-        data.weeks.forEach(function (week, index2) {
-          var rowTemplate = row.content.cloneNode(true),
-              rows = rowTemplate.querySelector('.row');
-
-          week.forEach(function (days, index) {
-            var cellTemplate = dateTemplate.content.cloneNode(true),
-                button = cellTemplate.querySelector('button');
-            if (days.format('MMMM') === data.month) {
-              button.innerHTML = days.format('D');
-              button.setAttribute('aria-label', days.format('dddd, MMMM Do YYYY'));
-              button.setAttribute('data-date', days.format('L'));
-              button.setAttribute('data-index', days.format('D'));
-              button.addEventListener('click', function (event) {
-                var prevSelected = rowTarget.getElementsByClassName('selected')[0];
-                if (prevSelected !== undefined) {
-                  prevSelected.classList.remove('selected');
-                  prevSelected.setAttribute('aria-pressed', false);
-                }
-                _this2.selectedState = event.target.getAttribute('data-date');
-                event.target.setAttribute('aria-pressed', true);
-                event.target.classList.add('selected');
-                _this2.invalid = validateDate(_this2.input.value);
-                _this2.closeCalendar();
-              });
-            } else {
-              button.remove();
-            }
-
-            if (days.format('MMMM') === moment().format('MMMM') && moment().format('D') === days.format('D') && days.format('YYYY') === moment().format('YYYY')) {
-              button.parentNode.classList.add('currentDate-box');
-              button.setAttribute('aria-label', 'Today ' + days.format('dddd, MMMM Do YYYY'));
-            }
-            rows.appendChild(cellTemplate);
-          });
-          rowTarget.appendChild(rowTemplate);
-        });
-        this.monthYearState = data.month + ' ' + data.year;
-        var selectedNode = this.shadowRoot.querySelector('[data-date="' + this.selected + '"]');
-        if (selectedNode !== null) {
-          selectedNode.classList.add('selected');
-        }
-      }
-
-      // focus management when calendar is opened
-
-    }, {
-      key: 'focusOnOpen',
-      value: function focusOnOpen() {
-        if (this.selected === null) {
-          var currentNode = this.shadowRoot.querySelector('.currentDate-box button');
-          if (currentNode !== null) {
-            currentNode.focus();
-            currentNode.setAttribute('aria-pressed', true);
-          }
-        } else {
-          var selectedNode = this.shadowRoot.querySelector('[data-date="' + this.selected + '"]');
-          if (selectedNode !== null) {
-            selectedNode.classList.add('selected');
-            selectedNode.focus();
-            selectedNode.setAttribute('aria-pressed', true);
-          }
-        }
-      }
-    }, {
-      key: 'open',
-      get: function get() {
-        return this.getAttribute('open');
-      }
-    }, {
-      key: 'year',
-      get: function get() {
-        return this.getAttribute('year');
-      }
-    }, {
-      key: 'month',
-      get: function get() {
-        return this.getAttribute('month');
-      }
-    }, {
-      key: 'day',
-      get: function get() {
-        return this.getAttribute('day');
-      }
-    }, {
-      key: 'selected',
-      get: function get() {
-        return this.getAttribute('value');
-      }
-    }, {
-      key: 'monthYearState',
-      set: function set(str) {
-        this.shadowRoot.querySelector('legend').innerHTML = str;
-      }
-    }, {
-      key: 'openState',
-      set: function set(bool) {
-        this.setAttribute('open', bool);
-      }
-    }, {
-      key: 'invalid',
-      set: function set(bool) {
-        var datepicker = this.shadowRoot.querySelector('.gr-datepicker-container'),
-            input = datepicker.querySelector('input');
-        if (bool === false) {
-          datepicker.classList.add('error');
-        } else {
-          this.selectedState = input.value;
-          this.data.month = parseInt(input.value.substring(0, 2) - 1, 10);
-          this.data.year = parseInt(input.value.substring(6, 10), 10);
-          this.data.day = input.value.substring(3, 5);
-          console.log(this.data);
-          datepicker.classList.remove('error');
-        }
-      }
-    }, {
-      key: 'selectedState',
-      set: function set(selected) {
-        if (selected !== null) {
-          var input = this.shadowRoot.querySelector('input');
-          this.setAttribute('value', selected);
-          input.value = this.selected;
-          this.data.month = parseInt(this.selected.substring(0, 2) - 1, 10);
-          this.data.year = parseInt(this.selected.substring(6, 10), 10);
-          this.data.day = this.selected.substring(3, 5);
-        }
-      }
-    }], [{
-      key: 'observedAttributes',
-      get: function get() {
-        return ['open', 'year', 'month', 'day', 'value'];
-      }
-    }]);
-
-    function Datepicker() {
-      _classCallCheck(this, Datepicker);
-
-      var _this = _possibleConstructorReturn(this, (Datepicker.__proto__ || Object.getPrototypeOf(Datepicker)).call(this));
-
-      _this.attachShadow({
-        mode: 'open'
-      });
-      var clone = datepicker.content.cloneNode(true);
-      _this.openBtn = clone.querySelector('.open-calendar');
-      _this.datepicker = clone.querySelector('.gr-datepicker-container');
-      _this.input = clone.querySelector('input');
-      _this.label = clone.querySelector('#datepicker-label');
-      _this.data = {};
-      /** After all this, we can append our clone to the shadowRoot */
-      _this.shadowRoot.appendChild(clone);
-
-      _this.returnDateData = _this.returnDateData.bind(_this);
-      _this.buildCalendarContainer = _this.buildCalendarContainer.bind(_this);
-      _this.returnCalendarData = _this.returnCalendarData.bind(_this);
-      _this.nextMonth = _this.nextMonth.bind(_this);
-      _this.prevMonth = _this.prevMonth.bind(_this);
-      _this.renderCalendar = _this.renderCalendar.bind(_this);
-      _this.closeCalendar = _this.closeCalendar.bind(_this);
-      _this.openCalendar = _this.openCalendar.bind(_this);
-      _this.focusOnOpen = _this.focusOnOpen.bind(_this);
-      return _this;
-    }
-
-    _createClass(Datepicker, [{
-      key: 'connectedCallback',
-      value: function connectedCallback() {
-        var _this3 = this;
-
-        var labelText = this.getAttribute('label') || 'Select date (mm/dd/yyyy)';
-
-        this.label.textContent = '' + labelText;
-
-        this.setAttribute('open', false);
-        this.data = this.returnDateData(this.data);
-
-        this.selectedState = this.selected;
-        // opens calendar when down arrow is pushed
-        this.input.addEventListener('keydown', function (event) {
-          switch (event.keyCode) {
-            case 40:
-              if (_this3.open === 'false') {
-                _this3.openCalendar();
-              }
-              break;
-          }
-        });
-
-        this.input.addEventListener('blur', function (event) {
-          if (_this3.input.value.length > 0) {
-            _this3.invalid = validateDate(_this3.input.value);
-          }
-        });
-
-        // opens calendar when button is pressed
-        this.openBtn.addEventListener('click', function (event) {
-          if (_this3.open === 'false') {
-            _this3.openCalendar();
-          } else {
-            _this3.closeCalendar();
-          }
-        });
-
-        doc.body.addEventListener('click', function (event) {
-          console.log(event.target);
-        });
-      }
-    }, {
-      key: 'attributeChangedCallback',
-      value: function attributeChangedCallback(name, oldValue, newValue) {
-        var _this4 = this;
-
-        var calendarContainer = this.datepicker.querySelector('.gr-calendar-container'),
-            input = this.datepicker.querySelector('input');
-        if (name === 'open') {
-          if (oldValue !== newValue) {
-            if (newValue === 'true') {
-              input.setAttribute('aria-expanded', true);
-              var calendarTemplate = this.buildCalendarContainer();
-              var dates = calendarTemplate.querySelector('.dates');
-              this.datepicker.appendChild(calendarTemplate);
-              this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year;
-
-              // closes the calendar if outside the calendar target
-              doc.addEventListener('click', function (event) {
-                if (_this4.open === 'true') {
-                  var target = event.target;
-                  do {
-                    if (target === _this4) {
-                      return;
-                    }
-                    target = target.parentNode;
-                  } while (target);
-                  _this4.closeCalendar();
-                } else {
-                  return false;
-                }
-              }, true);
-
-              // closes the calendar on escape
-              doc.addEventListener('keydown', function (event) {
-                switch (event.keyCode) {
-                  case 27:
-                    _this4.closeCalendar();
-                    break;
-                }
-              });
-
-              // keyboard navigation for accessibility
-              dates.addEventListener('keydown', function (event) {
-                var nextItem = parseInt(event.target.getAttribute('data-index')),
-                    prevItem = parseInt(event.target.getAttribute('data-index')) - 2,
-                    nextWeek = parseInt(event.target.getAttribute('data-index')) + 6,
-                    prevWeek = parseInt(event.target.getAttribute('data-index')) - 8,
-                    previousMonth = _this4.datepicker.querySelector('.previous');
-
-                event.preventDefault();
-                event.stopImmediatePropagation();
-                switch (event.keyCode) {
-                  case 39:
-                    // right arrow
-                    if (_this4.shadowRoot.activeElement === getFocusableElements(dates).lastElement) {
-                      _this4.nextMonth();
-                      getFocusableElements(dates).firstElement.focus();
-                    } else {
-                      if (getFocusableElements(dates).elements[nextItem] !== undefined) {
-                        getFocusableElements(dates).elements[nextItem].focus();
-                      } else {
-                        return;
-                      }
-                    }
-                    break;
-                  case 37:
-                    // left arrow
-                    if (_this4.shadowRoot.activeElement === getFocusableElements(dates).firstElement) {
-                      _this4.prevMonth();
-                      getFocusableElements(dates).lastElement.focus();
-                    } else {
-                      if (getFocusableElements(dates).elements[prevItem] !== undefined) {
-                        getFocusableElements(dates).elements[prevItem].focus();
-                      } else {
-                        return;
-                      }
-                    }
-                    break;
-                  case 40:
-                    //arrow down
-                    if (getFocusableElements(dates).elements[nextWeek] !== undefined) {
-                      getFocusableElements(dates).elements[nextWeek].focus();
-                    } else {
-                      _this4.nextMonth();
-                      getFocusableElements(dates).firstElement.focus();
-                    }
-                    break;
-                  case 38:
-                    // arrow up
-                    if (getFocusableElements(dates).elements[prevWeek] !== undefined) {
-                      getFocusableElements(dates).elements[prevWeek].focus();
-                    } else {
-                      _this4.prevMonth();
-                      getFocusableElements(dates).lastElement.focus();
-                    }
-                    break;
-                  case 13:
-                    // enter
-                    event.target.click();
-                    break;
-                  case 32:
-                    // space
-                    event.target.click();
-                    break;
-                  case 33:
-                    _this4.prevMonth();
-                    getFocusableElements(dates).lastElement.focus();
-                    break;
-                  case 34:
-                    _this4.nextMonth();
-                    getFocusableElements(dates).firstElement.focus();
-                    break;
-                  case 35:
-                    getFocusableElements(dates).lastElement.focus();
-                    break;
-                  case 36:
-                    getFocusableElements(dates).firstElement.focus();
-                    break;
-                  case 27:
-                    _this4.closeCalendar();
-                    break;
-                  case 9:
-                    previousMonth.focus();
-                    break;
-                }
-              });
-            }
-            if (newValue === 'false' && calendarContainer !== null) {
-              calendarContainer.remove();
-              input.setAttribute('aria-expanded', false);
-            }
-          }
-        }
-      }
-    }]);
-
-    return Datepicker;
-  }(HTMLElement);
-
-  customElements.define('pearson-datepicker', Datepicker);
-})(window, document);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-(function (w, doc) {
-  'use strict';
-
   var template = doc.createElement('template');
 
   var ICON_CLOSE_24 = '\n  <svg\n    xmlns="http://www.w3.org/2000/svg"\n    xmlns:xlink="http://www.w3.org/1999/xlink"\n    version="1.1"\n    id="close-24" viewBox="0 0 24 24"\n    class="pe-icon-close-24"\n    aria-hidden="true"\n    focusable="false"\n    style="width:24px;height:24px;"\n  >\n    <path\n      d="M12,10.5857864 L17.2928932,5.29289322 C17.6834175,4.90236893 18.3165825,4.90236893 18.7071068,5.29289322 C19.0976311,5.68341751 19.0976311,6.31658249 18.7071068,6.70710678 L13.4142136,12 L18.7071068,17.2928932 C19.0976311,17.6834175 19.0976311,18.3165825 18.7071068,18.7071068 C18.3165825,19.0976311 17.6834175,19.0976311 17.2928932,18.7071068 L12,13.4142136 L6.70710678,18.7071068 C6.31658249,19.0976311 5.68341751,19.0976311 5.29289322,18.7071068 C4.90236893,18.3165825 4.90236893,17.6834175 5.29289322,17.2928932 L10.5857864,12 L5.29289322,6.70710678 C4.90236893,6.31658249 4.90236893,5.68341751 5.29289322,5.29289322 C5.68341751,4.90236893 6.31658249,4.90236893 6.70710678,5.29289322 L12,10.5857864 Z"\n    ></path>\n  </svg>\n  ';
@@ -622,7 +17,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   var ICON_WARNING_18 = '\n  <svg\n    xmlns="http://www.w3.org/2000/svg"\n    xmlns:xlink="http://www.w3.org/1999/xlink"\n    version="1.1"\n    id="error-icon" viewBox="0 0 18 18"\n    class="pe-variant-icon pe-icon-warning-18\n    aria-hidden="true"\n    focusable="false"\n    style="width:18px;height:18px;"\n  >\n    <path\n      d="M9.9999375,12.4775 C9.9999375,12.7525 9.7749375,12.9775 9.4999375,12.9775 L8.4999375,12.9775 C8.2249375,12.9775 7.9999375,12.7525 7.9999375,12.4775 L7.9999375,7.4775 C7.9999375,7.2025 8.2249375,6.9775 8.4999375,6.9775 L9.4999375,6.9775 C9.7749375,6.9775 9.9999375,7.2025 9.9999375,7.4775 L9.9999375,12.4775 Z M9.9999375,15.4775 C9.9999375,15.7525 9.7749375,15.9775 9.4999375,15.9775 L8.4999375,15.9775 C8.2249375,15.9775 7.9999375,15.7525 7.9999375,15.4775 L7.9999375,14.4775 C7.9999375,14.2025 8.2249375,13.9775 8.4999375,13.9775 L9.4999375,13.9775 C9.7749375,13.9775 9.9999375,14.2025 9.9999375,14.4775 L9.9999375,15.4775 Z M17.9469375,17.2535 L9.4469375,0.2535 C9.2769375,-0.0845 8.7229375,-0.0845 8.5529375,0.2535 L0.0529375,17.2535 C-0.0240625,17.4095 -0.0170625,17.5925 0.0739375,17.7405 C0.1659375,17.8875 0.3269375,17.9775 0.4999375,17.9775 L17.4999375,17.9775 C17.6729375,17.9775 17.8339375,17.8875 17.9259375,17.7405 C18.0169375,17.5925 18.0239375,17.4095 17.9469375,17.2535 L17.9469375,17.2535 Z"\n    ></path>\n  </svg>\n  ';
 
-  template.innerHTML = '\n<style>\n:host{display:block;position:fixed;top:0;left:0;max-width:580px;z-index:1000;padding:20px 28px;margin:36px 24px;font:14px/22px Open Sans,Calibri,Tahoma,sans-serif;background-color:#fff;color:#252525;border:1px solid #c7c7c7;border-left:3px solid transparent;-webkit-box-shadow:0 1px 1px 0 rgba(0,0,0,.16);box-shadow:0 1px 1px 0 rgba(0,0,0,.16);visibility:hidden;opacity:0}:host([type=error]){border-left-color:#db0020}:host([type=info]),:host([type=success]){border-left-color:#19a6a4}:host([level=inline]){position:absolute;top:unset;left:unset;max-width:100vw;margin:0}*{-webkit-box-sizing:inherit;box-sizing:inherit}.content-container{-webkit-box-sizing:border-box;box-sizing:border-box;position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:start;-webkit-align-items:flex-start;-ms-flex-align:start;align-items:flex-start;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row}::slotted(h2),::slotted(h3),::slotted(p){display:inline;font:14px/22px Open Sans,Calibri,Tahoma,sans-serif;margin:0;font-weight:600}::slotted(h2){margin-right:4px}::slotted(p){font-weight:400}::slotted(a){color:#047a9c;text-decoration:none}::slotted(a:focus),::slotted(a:hover){color:#005a70}::slotted(a:focus){outline:2px solid #0b73da;outline-offset:4px}.pe-icon--btn{position:absolute;width:55px;height:44px;background:none;border:none;color:inherit;cursor:pointer;padding:0;top:5px;right:5px}.pe-icon--btn svg{height:24px;width:24px}.pe-icon--btn:focus{outline:0;border:2px solid #0b73da;border-radius:22px;min-width:55px}.pe-icon--btn::-moz-focus-inner{border:none;padding:0}svg{vertical-align:top;fill:#6a7070;pointer-events:none}svg[class*=check]{fill:#19a6a4}svg[class*=warning]{fill:#db0020}:host([type=error]) svg[class*=warning],:host([type=success]) svg[class*=check]{display:block}.pe-variant-icon{-webkit-box-flex:0;-webkit-flex:0 0 18px;-ms-flex:0 0 18px;flex:0 0 18px;margin-right:12px;display:none}.content{display:inline-block}@media (min-width:480px){:host([level=global]){width:440px}}@media (min-width:768px){:host{margin:32px;padding:24px 36px 24px 28px}:host([level=global]){width:580px}:host([level=inline]){min-width:440px}.pe-icon--btn{padding:8px}}@-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@-webkit-keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@-webkit-keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@-webkit-keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}:host(.fadeIn),:host(.slideInDown){opacity:1;visibility:visible}:host(.fadeOut),:host(.slideOutDown){opacity:0;visibility:hidden}:host([animated].slideInDown){-webkit-animation:slideInDown .3s ease-in-out 0s;animation:slideInDown .3s ease-in-out 0s}:host([animated].slideOutDown){-webkit-animation:slideOutDown .2s ease-in 0s;animation:slideOutDown .2s ease-in 0s}:host([animated].fadeIn){-webkit-animation:fadeIn .3s linear 0s;animation:fadeIn .3s linear 0s}:host([animated].fadeOut){-webkit-animation:fadeOut .2s linear 0s;animation:fadeOut .2s linear 0s}@media (prefers-reduced-motion){:host([animated]){-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}html[data-prefers-reduced-motion] :host(.animated){-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}\n</style>\n    <div class="content-container">\n    ' + ICON_CHECK_18 + ' ' + ICON_WARNING_18 + '\n      <div class="content">\n        <slot></slot>\n      </div>\n    </div>\n    <button\n      data-action="close-alert"\n      class="pe-icon--btn"\n      aria-label="Close Lorem ipsum dolor sit amet."\n    >\n      ' + ICON_CLOSE_24 + '\n    </button>\n  ';
+  template.innerHTML = '\n<style>\n:host{display:block;position:fixed;top:0;left:0;max-width:580px;z-index:1000;padding:20px 28px;margin:36px 24px;font:14px/22px Open Sans,Calibri,Tahoma,sans-serif;background-color:#fff;color:#252525;border:1px solid #c7c7c7;border-left:3px solid transparent;-webkit-box-shadow:0 1px 1px 0 rgba(0,0,0,.16);box-shadow:0 1px 1px 0 rgba(0,0,0,.16);visibility:hidden;opacity:0}:host([type=error]){border-left-color:#db0020}:host([type=info]),:host([type=success]){border-left-color:#19a6a4}:host([level=inline]){position:absolute;top:unset;left:unset;max-width:100vw;margin:0}*{-webkit-box-sizing:inherit;box-sizing:inherit}.content-container{-webkit-box-sizing:border-box;box-sizing:border-box;position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:start;-webkit-align-items:flex-start;-ms-flex-align:start;align-items:flex-start;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row}::slotted(h2),::slotted(h3),::slotted(p){display:inline;font:14px/22px Open Sans,Calibri,Tahoma,sans-serif;margin:0;font-weight:600}::slotted(h2){margin-right:4px}::slotted(p){font-weight:400}::slotted(a){color:#047a9c;text-decoration:none}::slotted(a:focus),::slotted(a:hover){color:#005a70}::slotted(a:focus){outline:2px solid #0b73da;outline-offset:4px}.pe-icon--btn{position:absolute;width:48px;height:48px;background:none;border:none;color:inherit;cursor:pointer;padding:0;top:5px;right:5px}.pe-icon--btn svg{height:24px;width:24px}.pe-icon--btn:focus{outline:0;border:2px solid #0b73da;border-radius:4px}.pe-icon--btn::-moz-focus-inner{border:none;padding:0}svg{vertical-align:top;fill:#6a7070;pointer-events:none}svg[class*=check]{fill:#19a6a4}svg[class*=warning]{fill:#db0020}:host([type=error]) svg[class*=warning],:host([type=success]) svg[class*=check]{display:block}.pe-variant-icon{-webkit-box-flex:0;-webkit-flex:0 0 18px;-ms-flex:0 0 18px;flex:0 0 18px;margin-right:12px;display:none}.content{display:inline-block}@media (min-width:480px){:host([level=global]){width:440px}}@media (min-width:768px){:host{margin:32px;padding:24px 36px 24px 28px}:host([level=global]){width:580px}:host([level=inline]){min-width:440px}.pe-icon--btn{padding:8px}}@-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@-webkit-keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@-webkit-keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@-webkit-keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}:host(.fadeIn),:host(.slideInDown){opacity:1;visibility:visible}:host(.fadeOut),:host(.slideOutDown){opacity:0;visibility:hidden}:host([animated].slideInDown){-webkit-animation:slideInDown .3s ease-in-out 0s;animation:slideInDown .3s ease-in-out 0s}:host([animated].slideOutDown){-webkit-animation:slideOutDown .2s ease-in 0s;animation:slideOutDown .2s ease-in 0s}:host([animated].fadeIn){-webkit-animation:fadeIn .3s linear 0s;animation:fadeIn .3s linear 0s}:host([animated].fadeOut){-webkit-animation:fadeOut .2s linear 0s;animation:fadeOut .2s linear 0s}@media (prefers-reduced-motion){:host([animated]){-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}html[data-prefers-reduced-motion] :host(.animated){-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}</style>\n    <div class="content-container">\n    ' + ICON_CHECK_18 + ' ' + ICON_WARNING_18 + '\n      <div class="content">\n        <slot></slot>\n      </div>\n    </div>\n    <button\n      data-action="close-alert"\n      class="pe-icon--btn"\n      aria-label="Close Lorem ipsum dolor sit amet."\n    >\n      ' + ICON_CLOSE_24 + '\n    </button>\n  ';
 
   if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
 
@@ -825,6 +220,363 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   }(HTMLElement);
 
   customElements.define('pearson-alert', Alert);
+})(window, document);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (w, doc) {
+  'use strict';
+
+  // Create a template element
+
+  var template = doc.createElement('template'),
+      dropdownTemplate = doc.createElement('template'),
+      slotTemplate = doc.createElement('template'),
+      menuTemplate = doc.createElement('template'),
+      textTemplate = doc.createElement('template'),
+      FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert]),\n    [tabindex]:not([tabindex^="-"]):not([inert])';
+
+  //Styles must be copied from the css file
+  // and pasted between the style tags below
+
+  // Other markup should be written after the closing tag.
+  slotTemplate.innerHTML = '\n    <slot name="list"></slot>\n  ';
+
+  template.innerHTML = ' \n    <style>\n@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");:host{\n  /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */}:host html{line-height:1.15;-webkit-text-size-adjust:100%}:host body{margin:0}:host main{display:block}:host h1{font-size:2em;margin:.67em 0}:host hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}:host pre{font-family:monospace,monospace;font-size:1em}:host a{background-color:transparent}:host abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}:host b,:host strong{font-weight:bolder}:host code,:host kbd,:host samp{font-family:monospace,monospace;font-size:1em}:host small{font-size:80%}:host sub,:host sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}:host sub{bottom:-.25em}:host sup{top:-.5em}:host img{border-style:none}:host button,:host input,:host optgroup,:host select,:host textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}:host button,:host input{overflow:visible}:host button,:host select{text-transform:none}:host [type=button],:host [type=reset],:host [type=submit],:host button{-webkit-appearance:button}:host [type=button]::-moz-focus-inner,:host [type=reset]::-moz-focus-inner,:host [type=submit]::-moz-focus-inner,:host button::-moz-focus-inner{border-style:none;padding:0}:host [type=button]:-moz-focusring,:host [type=reset]:-moz-focusring,:host [type=submit]:-moz-focusring,:host button:-moz-focusring{outline:1px dotted ButtonText}:host fieldset{padding:.35em .75em .625em}:host legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}:host progress{vertical-align:baseline}:host textarea{overflow:auto}:host [type=checkbox],:host [type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}:host [type=number]::-webkit-inner-spin-button,:host [type=number]::-webkit-outer-spin-button{height:auto}:host [type=search]{-webkit-appearance:textfield;outline-offset:-2px}:host [type=search]::-webkit-search-decoration{-webkit-appearance:none}:host ::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}:host details{display:block}:host summary{display:list-item}:host template{display:none}:host [hidden]{display:none}:host html{font-size:14px}:host *,:host html{-webkit-box-sizing:border-box;box-sizing:border-box}:host body{font-family:Open Sans,Arial,Helvetica,sans-serif}:host body,:host p{font-size:14px;line-height:1.5;font-weight:400}:host strong{font-weight:600}:host a{font-size:14px;color:#047a9c}:host a:hover{color:#03536a;text-decoration:none}:host a:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}:host button{cursor:pointer}:host li,:host ul{font-size:14px}:host svg{fill:#252525}@-webkit-keyframes shift{to{background-position:9px 9px}}@keyframes shift{to{background-position:9px 9px}}@-webkit-keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@-webkit-keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@-webkit-keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@-webkit-keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}:host .fadeIn,:host .slideInDown{opacity:1!important;visibility:visible!important}:host .fadeOut,:host .slideOutDown{opacity:0;visibility:hidden}:host .slideInDown{-webkit-animation:slideInDown .3s ease-in-out 0s;animation:slideInDown .3s ease-in-out 0s}:host .slideOutDown{-webkit-animation:slideOutDown .2s ease-in 0s;animation:slideOutDown .2s ease-in 0s}:host .fadeIn{-webkit-animation:fadeIn .3s linear 0s;animation:fadeIn .3s linear 0s}:host .fadeOut{-webkit-animation:fadeOut .2s linear 0s;animation:fadeOut .2s linear 0s}:host .animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}:host .animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (prefers-reduced-motion){:host .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}:host html[data-prefers-reduced-motion] .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}:host .no-border{border:0}:host .icon-18{width:18px;height:18px}:host .icon-24{width:24px;height:24px}:host .hidden{display:none!important}:host .gr-h1{font-size:24px;line-height:28px}:host .gr-h1,:host .gr-h2{font-weight:400;margin-top:0}:host .gr-h2{font-size:20px;line-height:26px}:host .gr-h3{font-size:18px;line-height:24px;font-weight:400;margin-top:0}:host .gr-label{font-size:12px;line-height:16px;color:#6a7070;display:block;margin-bottom:4px}:host .gr-meta{font-size:12px;line-height:12px;color:#6a7070}:host .gr-semi-bold{font-weight:600}:host .gr-font-large{font-size:16px;line-height:24px}:host .gr-font-normal{font-size:14px;line-height:20px}:host .gr-btn{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:16px;cursor:pointer;border-radius:22px;position:relative;margin:12px}:host .gr-btn:hover{color:#252525;border:1px solid #252525}:host .gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}:host .gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}:host .gr-btn.primary:hover{color:#fff;background-color:#035f79}:host .gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}:host .gr-btn.attention:hover{background-color:#f7aa00}:host .gr-btn.small{min-width:128px;padding:7px 20px;font-size:14px}:host .gr-btn.small:focus:after{padding:18px 21px}:host .gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:16px}:host .gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}:host .gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}:host .gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}:host .gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}:host .gr-btn.no-border{border:0}:host .gr-btn.no-border:hover{border:0}:host .gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}:host .gr-dropdown-container .gr-btn{margin:0;font-size:14px;font-weight:700}:host .gr-dropdown-container .gr-btn svg{margin-left:1em}:host .gr-dropdown-container .dropdown-menu{position:absolute;z-index:10;margin-top:-9px;-ms-overflow-style:none}:host .gr-dropdown-container .mobile-group{background:#f5f5f5;border-bottom:1px solid #e9e9e9;display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;width:100%;padding:24px;position:relative;top:-27px;z-index:10;overflow:hidden}:host .gr-dropdown-container .mobile-group span{width:100%;text-align:center}:host .gr-dropdown-container .mobile-group button{margin:0 0 0 12px}:host .gr-dropdown-container .menu{background-color:#fff;position:absolute}:host .gr-dropdown-container .menu button{background:none;border:0;font-size:14px}:host .gr-dropdown-container .menu button>*{pointer-events:none}:host .gr-dropdown-container .menu button:focus{outline:none}:host .gr-dropdown-container .menu button:focus:after{border:2px solid #1977d4;content:"";position:absolute;border-radius:4px;width:-webkit-calc(100% + -10px);width:calc(100% + -10px);height:100%;top:0;left:5px;z-index:1}:host .gr-dropdown-container .menu{list-style-type:none;padding:1em 0;border:1px solid #d9d9d9;border-radius:2px;width:220px;margin-top:0;top:16px;position:relative}:host .gr-dropdown-container [aria-checked=false] svg{display:none}:host .gr-dropdown-container [aria-checked=true] svg{display:inline-block}:host .gr-dropdown-container .seperator{padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid #d9d9d9}:host .gr-dropdown-container li button{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;text-decoration:none;width:100%;color:#252525;text-align:left;padding:0}:host .gr-dropdown-container li button:hover{background-color:#e9e9e9}:host .gr-dropdown-container li button svg{position:absolute;left:12px}:host .gr-dropdown-container .option-text{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;margin:5px 24px 5px 34px;width:100%}:host .gr-dropdown-container .divider{border-bottom:1px solid #c7c7c7;padding-bottom:8px;margin:0 25px}:host .gr-dropdown-container .divider+li{margin-top:8px}:host .gr-dropdown-container .truncate{max-width:100%;width:250px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}@media (max-width:480px){:host .gr-dropdown-container .dropdown-menu{width:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}:host .gr-dropdown-container .option-text{font-size:16px;margin:12px 42px}:host .gr-dropdown-container .menu{max-height:300px;overflow:scroll;width:100%;top:44px;border:0;height:100vh}}@media (-ms-high-contrast:active),(-ms-high-contrast:none){:host .gr-dropdown-container .menu li button[aria-checked=true] svg{top:4px}}@media (min-width:480px){:host .gr-dropdown-container .dropdown-menu .mobile-group{display:none}}:host .button-bar ul{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;list-style:none;padding:0;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}@media (-ms-high-contrast:active),(-ms-high-contrast:none){:host .button-bar .dropdown-menu button svg{top:5px}}:host .button-bar .more-buttons,:host .button-bar .third-button{display:none}@media (min-width:887px){:host .button-bar .more-buttons,:host .button-bar .third-button{display:block}}:host .button-bar .second-button{display:none}@media (min-width:640px){:host .button-bar .second-button{display:block}}:host .button-bar .first-button{display:none}@media (min-width:591px){:host .button-bar .first-button{display:block}}:host .button-bar #moreDropdown{display:block}@media (min-width:887px){:host .button-bar #moreDropdown{display:none}}:host .button-bar #moreDropdown ul{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column}:host .button-bar #moreDropdown li{width:100%}:host .button-bar #moreDropdown li svg{margin:0!important}:host .button-bar #moreDropdown .first-button{display:block}@media (min-width:591px){:host .button-bar #moreDropdown .first-button{display:none}}:host .button-bar #moreDropdown .second-button{display:block}@media (min-width:640px){:host .button-bar #moreDropdown .second-button{display:none}}:host .button-bar #moreDropdown .more-buttons,:host .button-bar #moreDropdown .third-button{display:block}@media (max-width:480px){:host .button-bar .gr-dropdown-container .menu{border:1px solid #c7c7c7;height:auto;width:220px;top:16px}}:host #buttonBar{margin:0}:host #buttonBar #openMenu{margin:12px}\n    </style>\n    <div class="button-bar">\n       <ul id="buttonBar">\n           \n       </ul>\n    </div>\n';
+
+  dropdownTemplate.innerHTML = '\n  <li id="moreDropdown">\n    <div class="gr-dropdown-container">\n      <button id="openMenu" class="gr-btn icon-btn-18" aria-haspopup="true" aria-expanded="false" >\n        <svg focusable="false" class="icon-18" aria-hidden="true" style="margin:0;">\n          <path d="M7.5,3.5 C7.5,2.67157288 8.17157288,2 9,2 C9.82842712,2 10.5,2.67157288 10.5,3.5 C10.5,4.32842712 9.82842712,5 9,5 C8.17157288,5 7.5,4.32842712 7.5,3.5 Z" ></path>\n          <path d="M7.5,9 C7.5,8.17157288 8.17157288,7.5 9,7.5 C9.82842712,7.5 10.5,8.17157288 10.5,9 C10.5,9.82842712 9.82842712,10.5 9,10.5 C8.17157288,10.5 7.5,9.82842712 7.5,9 Z" ></path>\n          <path d="M7.5,14.5 C7.5,13.6715729 8.17157288,13 9,13 C9.82842712,13 10.5,13.6715729 10.5,14.5 C10.5,15.3284271 9.82842712,16 9,16 C8.17157288,16 7.5,15.3284271 7.5,14.5 Z" ></path>\n        </svg>\n      </button>\n    </div>\n  </li>\n  ';
+
+  menuTemplate.innerHTML = '\n  <div class="dropdown-menu animateIn">\n    <ul role="menu" class="menu">\n\n    </ul>\n  </div>\n  ';
+
+  textTemplate.innerHTML = '\n    <span class="option-text"></span>\n  ';
+
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-buttonbar');
+  function getWidth() {
+    return Math.max(document.body.scrollWidth, document.documentElement.scrollWidth, document.body.offsetWidth, document.documentElement.offsetWidth, document.documentElement.clientWidth);
+  }
+
+  function getFocusableChildren(event) {
+    if (event.target !== undefined) {
+      var filter = Array.prototype.filter,
+          focusableChildren = event.target.querySelectorAll(FOCUSABLE_ELEMENTS);
+
+      return filter.call(focusableChildren, function (child) {
+        return !!(child.offsetWidth || child.offsetHeight || child.getClientRects().length);
+      });
+    } else {
+      var _filter = Array.prototype.filter,
+          _focusableChildren = event.querySelectorAll(FOCUSABLE_ELEMENTS);
+
+      return _filter.call(_focusableChildren, function (child) {
+        return !!(child.offsetWidth || child.offsetHeight || child.getClientRects().length);
+      });
+    }
+  }
+
+  function accessibility(node) {
+    console.log(node);
+    var focusableElements = getFocusableChildren(node),
+        firstFocusableElement = focusableElements[0];
+
+    firstFocusableElement.focus();
+    console.log(firstFocusableElement);
+    focusableElements.forEach(function (el, index) {
+      el.setAttribute('data-index', index);
+      el.addEventListener('keydown', keyboardEvents, true);
+    });
+  }
+
+  function getDeepActiveElement() {
+    var a = doc.activeElement;
+    while (a && a.shadowRoot && a.shadowRoot.activeElement) {
+      a = a.shadowRoot.activeElement;
+    }
+    return a;
+  }
+
+  function keyboardEvents(event) {
+    var nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
+        prevButton = parseInt(event.target.getAttribute('data-index')) - 1,
+        focusableElements = getFocusableChildren(event.target.parentNode.parentNode),
+        firstFocusableElement = focusableElements[0],
+        lastFocusableElement = focusableElements[focusableElements.length - 1];
+    console.log(event.key);
+    if (event.key === 'ArrowUp' || event.key === 'Up') {
+      event.preventDefault();
+
+      if (getDeepActiveElement() === firstFocusableElement) {
+        lastFocusableElement.focus();
+      } else {
+        focusableElements[prevButton].focus();
+      }
+    }
+
+    if (event.key === 'ArrowDown' || event.key === 'Down') {
+      event.preventDefault();
+
+      if (getDeepActiveElement() === lastFocusableElement) {
+        firstFocusableElement.focus();
+      } else {
+        focusableElements[nextButton].focus();
+      }
+    }
+    if (event.key === 'Home') {
+      firstFocusableElement.focus();
+    }
+
+    if (event.key === 'End') {
+      lastFocusableElement.focus();
+    }
+  }
+
+  var ButtonBar = function (_HTMLElement) {
+    _inherits(ButtonBar, _HTMLElement);
+
+    _createClass(ButtonBar, [{
+      key: 'open',
+      get: function get() {
+        return this.hasAttribute('open');
+      },
+      set: function set(bool) {
+        this.setAttribute('open', bool);
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['open'];
+      }
+    }]);
+
+    function ButtonBar() {
+      _classCallCheck(this, ButtonBar);
+
+      var _this = _possibleConstructorReturn(this, (ButtonBar.__proto__ || Object.getPrototypeOf(ButtonBar)).call(this));
+
+      _this.attachShadow({ mode: 'open' });
+      var clone = template.content.cloneNode(true),
+          slotClone = slotTemplate.content.cloneNode(true),
+          slotCloneTarget = clone.querySelector('#buttonBar');
+
+      _this.shadowRoot.appendChild(clone);
+      slotCloneTarget.appendChild(slotClone);
+      _this.buildDropdown = _this.buildDropdown.bind(_this);
+      _this.removeDropdown = _this.removeDropdown.bind(_this);
+      _this.closeOnBodyClick = _this.closeOnBodyClick.bind(_this);
+      return _this;
+    }
+
+    _createClass(ButtonBar, [{
+      key: 'closeOnBodyClick',
+      value: function closeOnBodyClick(event) {
+        var target = event.target;
+        do {
+          if (target === this || target.tagName === 'BUTTON') {
+            return;
+          }
+          target = target.parentNode;
+        } while (target);
+        this.open = false;
+      }
+    }, {
+      key: 'buildDropdown',
+      value: function buildDropdown() {
+        var _this2 = this;
+
+        var menuTemplateClone = menuTemplate.content.cloneNode(true),
+            menuTemplateTarget = this.shadowRoot.querySelector('.gr-dropdown-container'),
+            menuItems = this.shadowRoot.querySelectorAll('#buttonBar li:not(#moreDropdown)');
+
+        menuTemplateTarget.appendChild(menuTemplateClone);
+
+        var menuItemTarget = this.shadowRoot.querySelector('.menu');
+
+        menuItems.forEach(function (item) {
+          var clone = item.cloneNode(true),
+              button = clone.querySelector('button'),
+              textTemplateClone = doc.createElement('span'),
+              itemText = clone.getAttribute('data-text');
+
+          textTemplateClone.classList.add('option-text');
+          textTemplateClone.innerHTML = itemText;
+
+          button.appendChild(textTemplateClone);
+          button.classList.remove('gr-btn');
+          menuItemTarget.appendChild(clone);
+
+          button.addEventListener('click', function () {
+            _this2.open = false;
+          });
+        });
+
+        document.addEventListener('click', this.closeOnBodyClick);
+        var menuLinks = this.shadowRoot.querySelector('.gr-dropdown-container .dropdown-menu');
+        menuLinks.addEventListener('animationend', accessibility, true);
+        doc.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape' || event.key === 'Esc') {
+            _this2.open = false;
+          }
+        });
+
+        var browserWidth = getWidth(),
+            dropdownMenu = this.shadowRoot.querySelector('#buttonBar .dropdown-menu'),
+            menuWidth = dropdownMenu.getBoundingClientRect().right;
+        if (browserWidth === menuWidth) {
+          dropdownMenu.style.right = 0;
+        } else {
+          return;
+        }
+      }
+    }, {
+      key: 'removeDropdown',
+      value: function removeDropdown() {
+        var menu = this.shadowRoot.querySelector('.dropdown-menu'),
+            dropdownButton = this.shadowRoot.querySelector('#openMenu');
+        dropdownButton.disabled = false;
+        dropdownButton.setAttribute('aria-expanded', false);
+        dropdownButton.focus();
+        if (menu) {
+          menu.remove();
+        }
+        document.removeEventListener('click', this.closeOnBodyClick);
+      }
+    }, {
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        var _this3 = this;
+
+        var slot = this.shadowRoot.querySelector('slot'),
+            shadowTarget = this.shadowRoot.querySelector('#buttonBar'),
+            dropdownTemplateClone = dropdownTemplate.content.cloneNode(true);
+
+        slot.addEventListener('slotchange', function (event) {
+          var buttons = slot.assignedNodes();
+          var count = 0;
+          buttons.forEach(function (button) {
+            var buttonNode = button.querySelector('button'),
+                text = button.getAttribute('data-text');
+            button.removeAttribute('slot');
+            buttonNode.setAttribute('aria-label', text);
+            if (count === 0) {
+              button.classList.add('first-button');
+            } else if (count === 1) {
+              button.classList.add('second-button');
+            } else if (count === 2) {
+              button.classList.add('third-button');
+            } else {
+              button.classList.add('more-buttons');
+            }
+            shadowTarget.appendChild(button);
+            slot.remove();
+            count++;
+          });
+          shadowTarget.appendChild(dropdownTemplateClone);
+
+          var dropdownButton = _this3.shadowRoot.querySelector('#openMenu');
+
+          dropdownButton.addEventListener('click', function (event) {
+            event.stopImmediatePropagation();
+            _this3.open = true;
+            dropdownButton.disabled = true;
+            dropdownButton.setAttribute('aria-expanded', true);
+          });
+        });
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'open' && newValue === 'true') {
+          this.buildDropdown();
+        } else if (name === 'open' && newValue === 'false') {
+          this.removeDropdown();
+        }
+      }
+    }]);
+
+    return ButtonBar;
+  }(HTMLElement);
+
+  customElements.define('pearson-buttonbar', ButtonBar);
+})(window, document);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (w, doc) {
+  'use strict';
+
+  // Create a template element
+
+  var template = doc.createElement('template'),
+      modular = doc.createElement('template'),
+      stacked = doc.createElement('template');
+
+  template.innerHTML = ' \n    <style>\n\n:host{-ms-grid-column:1;grid-column-start:1;-ms-grid-column-span:12;grid-column-end:13}\n:host{\n  /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */}:host html{line-height:1.15;-webkit-text-size-adjust:100%}:host body{margin:0}:host main{display:block}:host h1{font-size:2em;margin:.67em 0}:host hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}:host pre{font-family:monospace,monospace;font-size:1em}:host a{background-color:transparent}:host abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}:host b,:host strong{font-weight:bolder}:host code,:host kbd,:host samp{font-family:monospace,monospace;font-size:1em}:host small{font-size:80%}:host sub,:host sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}:host sub{bottom:-.25em}:host sup{top:-.5em}:host img{border-style:none}:host button,:host input,:host optgroup,:host select,:host textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}:host button,:host input{overflow:visible}:host button,:host select{text-transform:none}:host [type=button],:host [type=reset],:host [type=submit],:host button{-webkit-appearance:button}:host [type=button]::-moz-focus-inner,:host [type=reset]::-moz-focus-inner,:host [type=submit]::-moz-focus-inner,:host button::-moz-focus-inner{border-style:none;padding:0}:host [type=button]:-moz-focusring,:host [type=reset]:-moz-focusring,:host [type=submit]:-moz-focusring,:host button:-moz-focusring{outline:1px dotted ButtonText}:host fieldset{padding:.35em .75em .625em}:host legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}:host progress{vertical-align:baseline}:host textarea{overflow:auto}:host [type=checkbox],:host [type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}:host [type=number]::-webkit-inner-spin-button,:host [type=number]::-webkit-outer-spin-button{height:auto}:host [type=search]{-webkit-appearance:textfield;outline-offset:-2px}:host [type=search]::-webkit-search-decoration{-webkit-appearance:none}:host ::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}:host details{display:block}:host summary{display:list-item}:host template{display:none}:host [hidden]{display:none}:host pearson-alert{font-size:16px;max-width:580px}:host pearson-alert .alert-title{font-size:14px;margin:0;display:inline;top:0}:host pearson-uploader .alert-title{top:0!important}:host pearson-alert .alert-text{margin:0;display:inline}:host pearson-footer{left:50%;margin-left:-50%;right:50%;margin-right:-50%}:host pearson-tabs{font-size:14px}:host pearson-progress-bar{-ms-grid-column:1;-ms-grid-column-span:4;grid-column:1/5}@media (min-width:591px){:host pearson-progress-bar{-ms-grid-column:1;-ms-grid-column-span:8;grid-column:1/9}}@media (min-width:887px){:host pearson-progress-bar{-ms-grid-column:1;-ms-grid-column-span:12;grid-column:1/13}}:host pearson-tabs{-ms-grid-column:1;-ms-grid-column-span:4;grid-column:1/5}@media (min-width:591px){:host pearson-tabs{-ms-grid-column:1;-ms-grid-column-span:8;grid-column:1/9}}@media (min-width:887px){:host pearson-tabs{-ms-grid-column:1;-ms-grid-column-span:12;grid-column:1/13}}@media (-ms-high-contrast:active),(-ms-high-contrast:none){:host pearson-card{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;width:100%;-ms-grid-column-span:3}:host pearson-card[stacked]{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;width:100%;-ms-grid-column-span:12}}:host .card-container{width:100%;-webkit-box-shadow:0 1px 1px 0 rgba(0,0,0,.1);box-shadow:0 1px 1px 0 rgba(0,0,0,.1);-ms-grid-column-span:4;grid-column:span 4}@media (min-width:887px){:host .card-container{-ms-grid-column-span:3;grid-column:span 3}}:host .card-container.stacked{-ms-grid-column:1;grid-column-start:1;-ms-grid-column-span:12;grid-column-end:13}:host .card{border-radius:4px;-webkit-box-shadow:0 2px 4px 0 rgba(0,0,0,.16);box-shadow:0 2px 4px 0 rgba(0,0,0,.16);background:#fff;padding:16px}:host :host{-ms-grid-column:1;grid-column-start:1;-ms-grid-column-span:12;grid-column-end:13}\n\n\t\t</style>\n\t\t<div class="card-container">\n\t\t\t<div class="card">\n\t\t\t    <slot></slot>\n\t\t\t</div>\n\t\t</div>  \n';
+  modular.innerHTML = '\n    <style>\n        :host{grid-column:span 4}@media (min-width:887px){:host{grid-column:span 3}}\n        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {\n        :host {\n        display:flex;\n        }\n}\n    </style>\n  ';
+
+  stacked.innerHTML = '\n    <style>\n        :host{-ms-grid-column:1;grid-column-start:1;-ms-grid-column-span:12;grid-column-end:13}\n    </style>\n  ';
+
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-card');
+
+  var Card = function (_HTMLElement) {
+    _inherits(Card, _HTMLElement);
+
+    _createClass(Card, [{
+      key: 'isStacked',
+      get: function get() {
+        return this.hasAttribute('stacked') && this.getAttribute('stacked') !== 'false';
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['stacked'];
+      }
+    }]);
+
+    function Card() {
+      _classCallCheck(this, Card);
+
+      var _this = _possibleConstructorReturn(this, (Card.__proto__ || Object.getPrototypeOf(Card)).call(this));
+
+      _this.attachShadow({ mode: 'open' });
+      var clone = template.content.cloneNode(true);
+      _this.shadowRoot.appendChild(clone);
+      return _this;
+    }
+
+    _createClass(Card, [{
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        if (!this.isStacked) {
+          var modularLayout = modular.content.cloneNode(true);
+          this.shadowRoot.appendChild(modularLayout);
+        }
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback() {
+        if (this.isStacked) {
+          var stackedLayout = stacked.content.cloneNode(true);
+          this.shadowRoot.appendChild(stackedLayout);
+        } else {
+          var modularLayout = modular.content.cloneNode(true);
+          this.shadowRoot.appendChild(modularLayout);
+        }
+      }
+    }]);
+
+    return Card;
+  }(HTMLElement);
+
+  customElements.define('pearson-card', Card);
 })(window, document);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -1515,6 +1267,611 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   customElements.define('pearson-coachmark', Coachmark);
 })(window, document);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (w, doc) {
+  'use strict';
+
+  w['moment-range'].extendMoment(moment);
+  // Create a template element
+  var datepicker = doc.createElement('template'),
+      calendar = doc.createElement('template'),
+      row = doc.createElement('template'),
+      dateTemplate = doc.createElement('template'),
+      dateIcon = '\n\n  \n                  <svg focusable="false" class="icon-18" aria-hidden="false" title="close coachmark" role="img" >\n\t<path d="M14.4146471,2 L14.875,2 C16.0486051,2 17,2.95139491 17,4.125 L17,14.875 C17,16.0486051 16.0486051,17 14.875,17 L3.125,17 C1.95139491,17 1,16.0486051 1,14.875 L1,4.125 C1,2.95139491 1.95139491,2 3.125,2 L3.58535285,2 C3.79127106,1.41740381 4.34689059,1 5,1 C5.65310941,1 6.20872894,1.41740381 6.41464715,2 L11.5853529,2 C11.7912711,1.41740381 12.3468906,1 13,1 C13.6531094,1 14.2087289,1.41740381 14.4146471,2 Z M15.25,6.25 L15.25,4.125 C15.25,3.91789322 15.0821068,3.75 14.875,3.75 L3.125,3.75 C2.91789322,3.75 2.75,3.91789322 2.75,4.125 L2.75,6.25 L15.25,6.25 Z M15.25,8 L2.75,8 L2.75,14.875 C2.75,15.0821068 2.91789322,15.25 3.125,15.25 L14.875,15.25 C15.0821068,15.25 15.25,15.0821068 15.25,14.875 L15.25,8 Z"></path>\n    <path d="M12.5,12 L13.5,12 C13.7761424,12 14,12.2238576 14,12.5 L14,13.5 C14,13.7761424 13.7761424,14 13.5,14 L12.5,14 C12.2238576,14 12,13.7761424 12,13.5 L12,12.5 C12,12.2238576 12.2238576,12 12.5,12 Z"></path>\n    <path d="M12.5,9 L13.5,9 C13.7761424,9 14,9.22385763 14,9.5 L14,10.5 C14,10.7761424 13.7761424,11 13.5,11 L12.5,11 C12.2238576,11 12,10.7761424 12,10.5 L12,9.5 C12,9.22385763 12.2238576,9 12.5,9 Z"></path>\n    <path d="M9.5,12 L10.5,12 C10.7761424,12 11,12.2238576 11,12.5 L11,13.5 C11,13.7761424 10.7761424,14 10.5,14 L9.5,14 C9.22385763,14 9,13.7761424 9,13.5 L9,12.5 C9,12.2238576 9.22385763,12 9.5,12 Z"></path>\n    <path d="M9.5,9 L10.5,9 C10.7761424,9 11,9.22385763 11,9.5 L11,10.5 C11,10.7761424 10.7761424,11 10.5,11 L9.5,11 C9.22385763,11 9,10.7761424 9,10.5 L9,9.5 C9,9.22385763 9.22385763,9 9.5,9 Z"></path>\n    <path d="M6.5,12 L7.5,12 C7.77614237,12 8,12.2238576 8,12.5 L8,13.5 C8,13.7761424 7.77614237,14 7.5,14 L6.5,14 C6.22385763,14 6,13.7761424 6,13.5 L6,12.5 C6,12.2238576 6.22385763,12 6.5,12 Z"></path>\n       </svg>\n    ',
+      calendarIcon = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\' width=\'18\' height=\'18\' fill=\'%236a7070\'%3e%3cpath d=\'M4 3L5 3 5 1 4 1 4 3zM13 3L14 3 14 1 13 1 13 3zM18 5L18 1.5C18 1.224 17.776 1 17.5 1L15 1 15 .5C15 .224 14.776 0 14.5 0L12.5 0C12.224 0 12 .224 12 .5L12 1 6 1 6 .5C6 .224 5.776 0 5.5 0L3.5 0C3.224 0 3 .224 3 .5L3 1 .5 1C.224 1 0 1.224 0 1.5L0 5 18 5zM14.0762 15L10.8262 15C10.5502 15 10.3262 14.776 10.3262 14.5 10.3262 14.224 10.5502 14 10.8262 14L12.0002 14 12.0002 9.707 11.3752 10.331C11.1802 10.526 10.8632 10.526 10.6682 10.331 10.4722 10.136 10.4722 9.819 10.6682 9.624L12.1462 8.146C12.2892 8.003 12.5062 7.96 12.6912 8.038 12.8782 8.116 13.0002 8.298 13.0002 8.5L13.0002 14 14.0762 14C14.3522 14 14.5762 14.224 14.5762 14.5 14.5762 14.776 14.3522 15 14.0762 15L14.0762 15zM9.0002 14.5C9.0002 14.776 8.7762 15 8.5002 15L4.5002 15C4.2232 15 4.0002 14.776 4.0002 14.5L4.0002 13.5C4.0002 13.224 4.2232 13 4.5002 13 4.7762 13 5.0002 13.224 5.0002 13.5L5.0002 14 8.0002 14 8.0002 12 5.6992 12C5.4232 12 5.1992 11.776 5.1992 11.5 5.1992 11.224 5.4232 11 5.6992 11L8.0002 11 8.0002 9 5.0002 9 5.0002 9.5C5.0002 9.776 4.7762 10 4.5002 10 4.2232 10 4.0002 9.776 4.0002 9.5L4.0002 8.5C4.0002 8.224 4.2232 8 4.5002 8L8.5002 8C8.7762 8 9.0002 8.224 9.0002 8.5L9.0002 14.5zM.0002 6L.0002 17.5C.0002 17.776.2232 18 .5002 18L17.5002 18C17.7762 18 18.0002 17.776 18.0002 17.5L18.0002 6 .0002 6z\'/%3e%3c/svg%3e',
+      prevArrowIcon = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\' width=\'18\' height=\'18\' fill=\'%236a7070\'%3e%3cpath d=\'M13.749,17.6606035 C14.112,17.2486035 14.076,16.6116035 13.662,16.2436035 L5.509,8.9996035 L13.662,1.7566035 C14.077,1.3896035 14.113,0.752603504 13.749,0.339603504 C13.383,-0.0763964961 12.751,-0.115396496 12.338,0.252603504 L3.338,8.2476035 C3.123,8.4376035 3,8.7126035 3,8.9996035 C3,9.2876035 3.123,9.5616035 3.338,9.7526035 L12.338,17.7476035 C12.751,18.1156035 13.383,18.0766035 13.749,17.6606035\'%3e%3c/path%3e%3c/svg%3e',
+      nextArrowIcon = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\' width=\'18\' height=\'18\' fill=\'%236a7070\'%3e%3cpath d=\'M4.2506,17.6606035 C3.8876,17.2486035 3.9236,16.6116035 4.3376,16.2436035 L12.4906,8.9996035 L4.3376,1.7566035 C3.9226,1.3896035 3.8866,0.752603504 4.2506,0.339603504 C4.6166,-0.0763964961 5.2486,-0.115396496 5.6616,0.252603504 L14.6616,8.2476035 C14.8766,8.4376035 14.9996,8.7126035 14.9996,8.9996035 C14.9996,9.2876035 14.8766,9.5616035 14.6616,9.7526035 L5.6616,17.7476035 C5.2486,18.1156035 4.6166,18.0766035 4.2506,17.6606035\'%3e%3c/path%3e%3c/svg%3e',
+      warningIcon = '   \n  <svg     \n    aria-hidden="true"\n    focusable="false" \n    style="width:18px;height:18px;fill:currentColor"  \n  >  \n    <path d="M9.99994044,10.5 C9.99994044,10.776 9.77594044,11 9.49994044,11 L8.49994044,11 C8.22394044,11 7.99994044,10.776 7.99994044,10.5 L7.99994044,7.5 C7.99994044,7.224 8.22394044,7 8.49994044,7 L9.49994044,7 C9.77594044,7 9.99994044,7.224 9.99994044,7.5 L9.99994044,10.5 Z M9.99994044,13.5 C9.99994044,13.776 9.77594044,14 9.49994044,14 L8.49994044,14 C8.22394044,14 7.99994044,13.776 7.99994044,13.5 L7.99994044,12.5 C7.99994044,12.224 8.22394044,12 8.49994044,12 L9.49994044,12 C9.77594044,12 9.99994044,12.224 9.99994044,12.5 L9.99994044,13.5 Z M15.9460591,15.275 L9.44500379,2.276 C9.26100222,1.908 8.73899778,1.908 8.55499621,2.276 L2.05394089,15.275 C1.88693947,15.607 2.12794152,16 2.49894468,16 L15.5010553,16 C15.8720585,16 16.1130605,15.607 15.9460591,15.275 Z"/>\n</svg>';
+
+  datepicker.innerHTML = ' \n<style>\n\n@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}\n:host,:host *,:host :after,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box;font-family:Open Sans,Calibri,Tahoma,sans-serif}:host{position:relative;display:inline-block;max-width:400px;width:100%;color:#252525}input[disabled]{color:#c7c7c7;background-color:#e9e9e9;cursor:not-allowed}input[readonly]{border-color:transparent;background-color:transparent}ul{list-style-type:none;padding:0;margin:0}svg{vertical-align:top}.gr-icon{position:absolute;color:#6a7070;pointer-events:none}.gr-datepicker-container{position:relative;min-width:150px;max-width:322px}@media (-ms-high-contrast:none){.gr-datepicker-container{max-width:362px}}.gr-datepicker-container .datepicker{position:relative;margin-bottom:6px}.gr-datepicker-container .datepicker .gr-btn{bottom:-webkit-calc(50% - 17px);bottom:calc(50% - 17px);color:#6a7070;position:absolute;right:0;margin:0;border-radius:4px}@media (-ms-high-contrast:none){.gr-datepicker-container .datepicker .gr-btn{bottom:-webkit-calc(50% - 12px)!important;bottom:calc(50% - 12px)!important}}.gr-datepicker-container .datepicker .gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 0 #fff,0 0 0 2px #1977d4;box-shadow:0 0 0 0 #fff,0 0 0 2px #1977d4}.gr-datepicker-container .datepicker svg{fill:#6a7070}.gr-datepicker-container .gr-calendar-container{position:absolute}.gr-datepicker-container.error .gr-label{color:#db0020}.gr-datepicker-container.error .gr-input{border-color:#db0020}#inputAriaId{display:none}.error #inputAriaId{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.gr-calendar-container{-webkit-box-sizing:content-box;box-sizing:content-box;min-height:284px;color:#252525;padding:16px 20px 20px;z-index:1;border:1px solid #c7c7c7;background-color:#fff;border-radius:5px}@media (-ms-high-contrast:none){.gr-calendar-container{width:320px}}.gr-calendar-container fieldset{margin:0;border:0;padding:0}.gr-calendar-container fieldset legend{padding:8px;text-align:left;margin-bottom:8px;width:-webkit-calc(100% - 84px);width:calc(100% - 84px);display:inline-block;float:left;font-size:18px}.gr-calendar-container .actions{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;width:80px}.gr-calendar-container .actions .gr-btn{margin:0;padding:0;height:40px;width:40px;color:#6a7070}.gr-calendar-container .actions .gr-btn:hover{color:#252525}.gr-calendar-container .actions .gr-btn:focus{color:#252525;outline:2px solid #1977d4;outline-offset:2px}.gr-calendar-container .weekdays div{height:40px;color:#6a7070;line-height:40px;font-size:12px}.gr-calendar-container .row{display:-ms-grid;display:grid;-ms-grid-columns:(40px)[7];grid-template-columns:repeat(7,40px);clear:both}.gr-calendar-container abbr{text-decoration:none}.gr-calendar-container .cell{display:inline-block;vertical-align:top;text-align:center;width:40px;height:40px}.gr-calendar-container .cell.currentDate-box{width:36px;height:36px;margin:1px;line-height:36px;border-radius:0;padding:0;border:1px solid #c7c7c7;background:transparent}.gr-calendar-container .cell.currentDate-box .date-selector{margin:2px}.gr-calendar-container .cell button{background:none;padding:0;border:0;position:relative;cursor:pointer;display:block;height:32px;width:32px;margin:4px;line-height:32px;border-radius:50%;font-size:14px}.gr-calendar-container .cell button.selected{font-weight:600;color:#fff;background-color:#6a7070}.gr-calendar-container .cell button:focus{outline:2px solid #1977d4;outline-offset:2px}.gr-calendar-container .date-selector{height:32px;width:32px;margin:4px;line-height:32px;border-radius:16px}.gr-calendar-container .date.past{height:40px;line-height:38px}.gr-calendar-container .past .date-selector{color:#c7c7c7;cursor:not-allowed}.gr-calendar-container .secondary-date{border:1px solid #c7c7c7}.gr-calendar-container.inverse{color:#fff;background-color:#005a70;border:1px solid #005a70}.gr-calendar-container.inverse .actions button,.gr-calendar-container.inverse .cell,.gr-calendar-container.inverse .date-selector,.gr-calendar-container.inverse .title,.gr-calendar-container.inverse .weekdays div{color:#fff}.gr-calendar-container.inverse .actions button:focus,.gr-calendar-container.inverse .actions button:hover{color:#c7c7c7}.gr-calendar-container.inverse .date .selected{color:#252525;background-color:#fff}.gr-calendar-container.inverse .past .date-selector{color:#047a9c;cursor:not-allowed}.gr-btn{padding:0;background-color:transparent;border:0}.date-selector{background:none}.date-selector:hover{background-color:#e9e9e9;color:#252525;cursor:pointer}.date-selector.selected{background-color:#6a7070;color:#fff}.currentDate-box{border:1px solid #c7c7c7}@media (-ms-high-contrast:none){.dates>.row{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}}@media (-ms-high-contrast:none){.gr-calendar-container .row{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}}*{font-family:Open Sans}html{font-size:14px}*,html{-webkit-box-sizing:border-box;box-sizing:border-box}abbr{text-decoration:none}html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}svg{fill:currentColor}.gr-h1{font-size:24px;line-height:28px}.gr-h1,.gr-h2{font-weight:400;margin-top:0}.gr-h2{font-size:20px;line-height:26px}.gr-h3{font-size:18px;line-height:24px;font-weight:400;margin-top:0}.gr-meta{font-size:12px;line-height:12px;color:#6a7070}.gr-semi-bold{font-weight:600}.gr-font-large{font-size:16px;line-height:24px}.gr-font-normal{font-size:14px;line-height:20px}.gr-btn{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:16px;cursor:pointer;border-radius:22px;position:relative;margin:12px}.gr-btn:hover{color:#252525;border:1px solid #252525}.gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}.gr-btn.primary:hover{color:#fff;background-color:#035f79}.gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}.gr-btn.attention:hover{background-color:#f7aa00}.gr-btn.small{min-width:128px;padding:7px 20px;font-size:14px}.gr-btn.small:focus:after{padding:18px 21px}.gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:16px}.gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}.gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}.gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}.gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}.gr-btn.no-border{border:0}.gr-btn.no-border:hover{border:0}.gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}.gr-input{display:block;margin:4px 0;padding:0 12px;height:36px;color:#252525;border:1px solid #c7c7c7;background:#fff;border-radius:4px;font-size:14px;width:100%;max-width:100%}.gr-input.error{border-color:#db0020}.gr-input[aria-invalid=true]{border-color:#db0020;margin-bottom:0}.gr-input[aria-invalid=true]:focus{-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020;box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020}.gr-input:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}.gr-input:disabled{color:#c7c7c7;background-color:#e9e9e9}.gr-input:-moz-read-only{border:0}.gr-input:read-only{border:0}.gr-label{font-size:12px;line-height:16px;color:#6a7070;display:block;margin-bottom:4px}.no-border{border:0}.icon-18{width:18px;height:18px}.icon-24{width:24px;height:24px}button:focus{outline:2px solid #1977d4;outline-offset:2px}.error-msg,.gr-meta.error{color:#db0020;padding-top:3px;font-size:12px;line-height:16px;margin-bottom:0;margin-top:0}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}\n</style>      \n    <div class="gr-datepicker-container">\n        <label class="gr-label" for="datepicker" id="datepicker-label">Select date (mm/dd/yyyy)</label> \n        <div class="datepicker">\n            <input type="text" class="gr-input" id="datepicker" aria-expanded="false">\n              <button class="gr-btn icon-btn-18 open-calendar" aria-label="open calendar">\n                             ' + dateIcon + '\n              </button>\n        </div> \n        <p id="inputAriaId" class="error-msg">' + warningIcon + ' Enter a valid date.</p>\n    </div>\n';
+
+  calendar.innerHTML = '\n        <section class="gr-calendar-container animated animateIn">\n            <div class="calendar">\n                <fieldset class="pe-inner">\n                    <legend class="gr-h3" id="month"></legend>\n                    <div class="actions">\n                        <button class="gr-btn icon-btn-24 previous" aria-label="Previous month">\n                           <img src="' + prevArrowIcon + '" aria-hidden="true"/>\n                        </button>\n                        <button class="gr-btn icon-btn-24 next" aria-label="Next month">\n                            <img src="' + nextArrowIcon + '" aria-hidden="true"/>\n                        </button>\n                    </div>\n                    <div class="row weekdays">\n                        <div class="cell dayNames">\n                            <abbr title="Sunday">S</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Monday">M</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Tuesday">T</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Wednesday">W</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Thursday">T</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Friday">F</abbr>\n                        </div>\n                        <div class="cell dayNames">\n                            <abbr title="Saturday">S</abbr>\n                        </div>\n                    </div>\n                    <div class="dates"></div>\n                </fieldset>\n            </div>\n        </section>\n';
+
+  row.innerHTML = '\n<div class="row"></div>\n';
+
+  dateTemplate.innerHTML = '\n <div class="cell date">\n      <button class="date-selector" data-date="11/01/2018" aria-label="" aria-pressed="false">1</button>\n  </div>\n  ';
+
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(datepicker, 'pearson-datepicker');
+
+  function getFocusableElements(node) {
+    var buttons = node.querySelectorAll('button:not(:disabled)'),
+        data = {};
+    data.elements = buttons;
+    data.firstElement = data.elements[0];
+    data.lastElement = data.elements[data.elements.length - 1];
+    return data;
+  }
+
+  function validateDate(testdate) {
+    var date_regex = /^\d{2}\/\d{2}\/\d{4}$/;
+    return date_regex.test(testdate);
+  }
+
+  // helpers
+
+  var Datepicker = function (_HTMLElement) {
+    _inherits(Datepicker, _HTMLElement);
+
+    _createClass(Datepicker, [{
+      key: 'returnDateData',
+
+
+      // this data is fed to the calendar data function and is used to build the calendar object
+      value: function returnDateData(date, type) {
+        // return the year to populate calendar
+        if (this.year !== null && type === undefined) {
+          date.year = parseInt(this.year, 10);
+        } else if (type !== undefined) {
+          date.year = date.year;
+        } else {
+          date.year = parseInt(moment().format('Y'), 10);
+        }
+
+        // return the month to populate calendar
+        if (this.month !== null && type === undefined) {
+          date.month = parseInt(this.month - 1, 10);
+        } else if (type !== undefined) {
+          if (type === 'add') {
+            date.month = date.month + 1;
+            if (date.month === 12) {
+              date.month = 0;
+              date.year = date.year + 1;
+            }
+          } else if (type === 'subtract') {
+            // date.month = moment().subtract(date.month, 'month').month();
+            date.month = date.month - 1;
+            if (date.month === -1) {
+              date.month = 11;
+              date.year = date.year - 1;
+            }
+          }
+        } else {
+          date.month = moment().month();
+        }
+
+        // return the day to populate calendar
+        if (this.day !== null) {
+          date.day = this.day;
+        } else {
+          date.day = moment().format('D');
+        }
+        return date;
+      }
+
+      // builds the calendar object to power the UI
+
+    }, {
+      key: 'returnCalendarData',
+      value: function returnCalendarData(returnData) {
+        var data = returnData,
+            date = moment([data.year, data.month]),
+            firstDay = moment(date).startOf('M').day('Sunday'),
+            endDay = moment(date).endOf('M').day('Saturday'),
+            monthRange = moment.range(firstDay, endDay),
+            weeks = [],
+            calendar = [],
+            build = [],
+            calendarData = {};
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = monthRange.by('days')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var day = _step.value;
+
+            var number = void 0;
+            if (weeks.indexOf(day.week()) === -1 && weeks.indexOf(53) === -1) {
+              if (data.month === 11 && day.week() === 1) {
+                number = 53;
+              } else {
+                number = day.week();
+              }
+              weeks.push(number);
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        weeks.forEach(function (week, index) {
+          var weeknumber = weeks[index];
+          var firstWeekDay = moment(firstDay).week(weeknumber).day('Sunday');
+          if (firstWeekDay.isBefore(firstDay)) {
+            firstWeekDay = firstDay;
+          }
+          var lastWeekDay = moment(endDay).year(data.year).week(weeknumber).day('Saturday');
+          if (lastWeekDay.isAfter(endDay)) {
+            lastWeekDay = endDay;
+          }
+          var weekRange = moment.range(firstWeekDay, lastWeekDay);
+          calendar.push(weekRange);
+        });
+
+        calendar.forEach(function (range) {
+          var weeks = [];
+          var _iteratorNormalCompletion2 = true;
+          var _didIteratorError2 = false;
+          var _iteratorError2 = undefined;
+
+          try {
+            for (var _iterator2 = range.by('days')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              var _day = _step2.value;
+
+              weeks.push(_day);
+            }
+          } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+              }
+            } finally {
+              if (_didIteratorError2) {
+                throw _iteratorError2;
+              }
+            }
+          }
+
+          build.push(weeks);
+        });
+        calendarData.month = moment(date).startOf('M').format("MMMM");
+        calendarData.year = data.year;
+        calendarData.weeks = build;
+        return calendarData;
+      }
+
+      // builds and renders next month
+
+    }, {
+      key: 'nextMonth',
+      value: function nextMonth() {
+        this.data = this.returnDateData(this.data, 'add');
+        this.renderCalendar(this.data);
+      }
+
+      // builds and renders previous month
+
+    }, {
+      key: 'prevMonth',
+      value: function prevMonth() {
+        this.data = this.returnDateData(this.data, 'subtract');
+        this.renderCalendar(this.data);
+      }
+
+      // opens the calendar
+
+    }, {
+      key: 'openCalendar',
+      value: function openCalendar() {
+        this.openState = 'true';
+        this.renderCalendar(this.data);
+        this.focusOnOpen();
+      }
+
+      // closes the calendar
+
+    }, {
+      key: 'closeCalendar',
+      value: function closeCalendar() {
+        this.openState = 'false';
+        this.openBtn.focus();
+      }
+
+      // builds the calendar template
+
+    }, {
+      key: 'buildCalendarContainer',
+      value: function buildCalendarContainer() {
+        var calendarTemplate = calendar.content.cloneNode(true),
+            nextBtn = calendarTemplate.querySelector('.next'),
+            prevBtn = calendarTemplate.querySelector('.previous');
+
+        nextBtn.addEventListener('click', this.nextMonth, false);
+        prevBtn.addEventListener('click', this.prevMonth, false);
+
+        return calendarTemplate;
+      }
+
+      // populates and renders the calendar
+
+    }, {
+      key: 'renderCalendar',
+      value: function renderCalendar(dateData) {
+        var _this2 = this;
+
+        var data = this.returnCalendarData(dateData),
+            rowTarget = this.shadowRoot.querySelector('.dates');
+
+        rowTarget.innerHTML = '';
+
+        data.weeks.forEach(function (week, index2) {
+          var rowTemplate = row.content.cloneNode(true),
+              rows = rowTemplate.querySelector('.row');
+
+          week.forEach(function (days, index) {
+            var cellTemplate = dateTemplate.content.cloneNode(true),
+                button = cellTemplate.querySelector('button');
+            if (days.format('MMMM') === data.month) {
+              button.innerHTML = days.format('D');
+              button.setAttribute('aria-label', days.format('dddd, MMMM Do YYYY'));
+              button.setAttribute('data-date', days.format('L'));
+              button.setAttribute('data-index', days.format('D'));
+              button.addEventListener('click', function (event) {
+                var prevSelected = rowTarget.getElementsByClassName('selected')[0];
+                if (prevSelected !== undefined) {
+                  prevSelected.classList.remove('selected');
+                  prevSelected.setAttribute('aria-pressed', false);
+                }
+                _this2.selectedState = event.target.getAttribute('data-date');
+                event.target.setAttribute('aria-pressed', true);
+                event.target.classList.add('selected');
+                _this2.invalid = validateDate(_this2.input.value);
+                _this2.closeCalendar();
+              });
+            } else {
+              button.remove();
+            }
+
+            if (days.format('MMMM') === moment().format('MMMM') && moment().format('D') === days.format('D') && days.format('YYYY') === moment().format('YYYY')) {
+              button.parentNode.classList.add('currentDate-box');
+              button.setAttribute('aria-label', 'Today ' + days.format('dddd, MMMM Do YYYY'));
+            }
+            rows.appendChild(cellTemplate);
+          });
+          rowTarget.appendChild(rowTemplate);
+        });
+        this.monthYearState = data.month + ' ' + data.year;
+        var selectedNode = this.shadowRoot.querySelector('[data-date="' + this.selected + '"]');
+        if (selectedNode !== null) {
+          selectedNode.classList.add('selected');
+        }
+      }
+
+      // focus management when calendar is opened
+
+    }, {
+      key: 'focusOnOpen',
+      value: function focusOnOpen() {
+        if (this.selected === null) {
+          var currentNode = this.shadowRoot.querySelector('.currentDate-box button');
+          if (currentNode !== null) {
+            currentNode.focus();
+            currentNode.setAttribute('aria-pressed', true);
+          }
+        } else {
+          var selectedNode = this.shadowRoot.querySelector('[data-date="' + this.selected + '"]');
+          if (selectedNode !== null) {
+            selectedNode.classList.add('selected');
+            selectedNode.focus();
+            selectedNode.setAttribute('aria-pressed', true);
+          }
+        }
+      }
+    }, {
+      key: 'open',
+      get: function get() {
+        return this.getAttribute('open');
+      }
+    }, {
+      key: 'year',
+      get: function get() {
+        return this.getAttribute('year');
+      }
+    }, {
+      key: 'month',
+      get: function get() {
+        return this.getAttribute('month');
+      }
+    }, {
+      key: 'day',
+      get: function get() {
+        return this.getAttribute('day');
+      }
+    }, {
+      key: 'selected',
+      get: function get() {
+        return this.getAttribute('value');
+      }
+    }, {
+      key: 'monthYearState',
+      set: function set(str) {
+        this.shadowRoot.querySelector('legend').innerHTML = str;
+      }
+    }, {
+      key: 'openState',
+      set: function set(bool) {
+        this.setAttribute('open', bool);
+      }
+    }, {
+      key: 'invalid',
+      set: function set(bool) {
+        var datepicker = this.shadowRoot.querySelector('.gr-datepicker-container'),
+            input = datepicker.querySelector('input');
+        if (bool === false) {
+          datepicker.classList.add('error');
+        } else {
+          this.selectedState = input.value;
+          this.data.month = parseInt(input.value.substring(0, 2) - 1, 10);
+          this.data.year = parseInt(input.value.substring(6, 10), 10);
+          this.data.day = input.value.substring(3, 5);
+          console.log(this.data);
+          datepicker.classList.remove('error');
+        }
+      }
+    }, {
+      key: 'selectedState',
+      set: function set(selected) {
+        if (selected !== null) {
+          var input = this.shadowRoot.querySelector('input');
+          this.setAttribute('value', selected);
+          input.value = this.selected;
+          this.data.month = parseInt(this.selected.substring(0, 2) - 1, 10);
+          this.data.year = parseInt(this.selected.substring(6, 10), 10);
+          this.data.day = this.selected.substring(3, 5);
+        }
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['open', 'year', 'month', 'day', 'value'];
+      }
+    }]);
+
+    function Datepicker() {
+      _classCallCheck(this, Datepicker);
+
+      var _this = _possibleConstructorReturn(this, (Datepicker.__proto__ || Object.getPrototypeOf(Datepicker)).call(this));
+
+      _this.attachShadow({
+        mode: 'open'
+      });
+      var clone = datepicker.content.cloneNode(true);
+      _this.openBtn = clone.querySelector('.open-calendar');
+      _this.datepicker = clone.querySelector('.gr-datepicker-container');
+      _this.input = clone.querySelector('input');
+      _this.label = clone.querySelector('#datepicker-label');
+      _this.data = {};
+      /** After all this, we can append our clone to the shadowRoot */
+      _this.shadowRoot.appendChild(clone);
+
+      _this.returnDateData = _this.returnDateData.bind(_this);
+      _this.buildCalendarContainer = _this.buildCalendarContainer.bind(_this);
+      _this.returnCalendarData = _this.returnCalendarData.bind(_this);
+      _this.nextMonth = _this.nextMonth.bind(_this);
+      _this.prevMonth = _this.prevMonth.bind(_this);
+      _this.renderCalendar = _this.renderCalendar.bind(_this);
+      _this.closeCalendar = _this.closeCalendar.bind(_this);
+      _this.openCalendar = _this.openCalendar.bind(_this);
+      _this.focusOnOpen = _this.focusOnOpen.bind(_this);
+      return _this;
+    }
+
+    _createClass(Datepicker, [{
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        var _this3 = this;
+
+        var labelText = this.getAttribute('label') || 'Select date (mm/dd/yyyy)';
+
+        this.label.textContent = '' + labelText;
+
+        this.setAttribute('open', false);
+        this.data = this.returnDateData(this.data);
+
+        this.selectedState = this.selected;
+        // opens calendar when down arrow is pushed
+        this.input.addEventListener('keydown', function (event) {
+          switch (event.keyCode) {
+            case 40:
+              if (_this3.open === 'false') {
+                _this3.openCalendar();
+              }
+              break;
+          }
+        });
+
+        this.input.addEventListener('blur', function (event) {
+          if (_this3.input.value.length > 0) {
+            _this3.invalid = validateDate(_this3.input.value);
+          }
+        });
+
+        // opens calendar when button is pressed
+        this.openBtn.addEventListener('click', function (event) {
+          if (_this3.open === 'false') {
+            _this3.openCalendar();
+          } else {
+            _this3.closeCalendar();
+          }
+        });
+
+        doc.body.addEventListener('click', function (event) {
+          console.log(event.target);
+        });
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        var _this4 = this;
+
+        var calendarContainer = this.datepicker.querySelector('.gr-calendar-container'),
+            input = this.datepicker.querySelector('input');
+        if (name === 'open') {
+          if (oldValue !== newValue) {
+            if (newValue === 'true') {
+              input.setAttribute('aria-expanded', true);
+              var calendarTemplate = this.buildCalendarContainer();
+              var dates = calendarTemplate.querySelector('.dates');
+              this.datepicker.appendChild(calendarTemplate);
+              this.monthYearState = moment().month(this.data.month).format('MMMM') + ' ' + this.data.year;
+
+              // closes the calendar if outside the calendar target
+              doc.addEventListener('click', function (event) {
+                if (_this4.open === 'true') {
+                  var target = event.target;
+                  do {
+                    if (target === _this4) {
+                      return;
+                    }
+                    target = target.parentNode;
+                  } while (target);
+                  _this4.closeCalendar();
+                } else {
+                  return false;
+                }
+              }, true);
+
+              // closes the calendar on escape
+              doc.addEventListener('keydown', function (event) {
+                switch (event.keyCode) {
+                  case 27:
+                    _this4.closeCalendar();
+                    break;
+                }
+              });
+
+              // keyboard navigation for accessibility
+              dates.addEventListener('keydown', function (event) {
+                var nextItem = parseInt(event.target.getAttribute('data-index')),
+                    prevItem = parseInt(event.target.getAttribute('data-index')) - 2,
+                    nextWeek = parseInt(event.target.getAttribute('data-index')) + 6,
+                    prevWeek = parseInt(event.target.getAttribute('data-index')) - 8,
+                    previousMonth = _this4.datepicker.querySelector('.previous');
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                switch (event.keyCode) {
+                  case 39:
+                    // right arrow
+                    if (_this4.shadowRoot.activeElement === getFocusableElements(dates).lastElement) {
+                      _this4.nextMonth();
+                      getFocusableElements(dates).firstElement.focus();
+                    } else {
+                      if (getFocusableElements(dates).elements[nextItem] !== undefined) {
+                        getFocusableElements(dates).elements[nextItem].focus();
+                      } else {
+                        return;
+                      }
+                    }
+                    break;
+                  case 37:
+                    // left arrow
+                    if (_this4.shadowRoot.activeElement === getFocusableElements(dates).firstElement) {
+                      _this4.prevMonth();
+                      getFocusableElements(dates).lastElement.focus();
+                    } else {
+                      if (getFocusableElements(dates).elements[prevItem] !== undefined) {
+                        getFocusableElements(dates).elements[prevItem].focus();
+                      } else {
+                        return;
+                      }
+                    }
+                    break;
+                  case 40:
+                    //arrow down
+                    if (getFocusableElements(dates).elements[nextWeek] !== undefined) {
+                      getFocusableElements(dates).elements[nextWeek].focus();
+                    } else {
+                      _this4.nextMonth();
+                      getFocusableElements(dates).firstElement.focus();
+                    }
+                    break;
+                  case 38:
+                    // arrow up
+                    if (getFocusableElements(dates).elements[prevWeek] !== undefined) {
+                      getFocusableElements(dates).elements[prevWeek].focus();
+                    } else {
+                      _this4.prevMonth();
+                      getFocusableElements(dates).lastElement.focus();
+                    }
+                    break;
+                  case 13:
+                    // enter
+                    event.target.click();
+                    break;
+                  case 32:
+                    // space
+                    event.target.click();
+                    break;
+                  case 33:
+                    _this4.prevMonth();
+                    getFocusableElements(dates).lastElement.focus();
+                    break;
+                  case 34:
+                    _this4.nextMonth();
+                    getFocusableElements(dates).firstElement.focus();
+                    break;
+                  case 35:
+                    getFocusableElements(dates).lastElement.focus();
+                    break;
+                  case 36:
+                    getFocusableElements(dates).firstElement.focus();
+                    break;
+                  case 27:
+                    _this4.closeCalendar();
+                    break;
+                  case 9:
+                    previousMonth.focus();
+                    break;
+                }
+              });
+            }
+            if (newValue === 'false' && calendarContainer !== null) {
+              calendarContainer.remove();
+              input.setAttribute('aria-expanded', false);
+            }
+          }
+        }
+      }
+    }]);
+
+    return Datepicker;
+  }(HTMLElement);
+
+  customElements.define('pearson-datepicker', Datepicker);
+})(window, document);
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1875,623 +2232,330 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (w, doc) {
   'use strict';
 
-  var template = doc.createElement('template');
+  // Create a template element
 
-  template.innerHTML = '\n  <style>\n.pe-alert{visibility:hidden;opacity:0;color:#252525;z-index:2000}@media (max-width:480px){.pe-alert{max-width:440px;padding:4px}}.pe-alert.alert--info,.pe-alert.alert--success{border-left-color:#19a6a4}.pe-alert.alert--error .pe-alert-box{border-left-color:#db0020}.pe-alert.alert--error .pe-alert-box a{color:#db0020}.pe-alert.alert-inline{position:absolute}.pe-alert.alert-global{position:fixed;top:32px;left:0;margin:0 32px}@media (max-width:768px){.pe-alert.alert-global{top:36px;margin:0 24px}}.pe-alert-box{-webkit-box-shadow:0 1px 1px 0 rgba(0,0,0,.16);box-shadow:0 1px 1px 0 rgba(0,0,0,.16);padding:8px;margin-bottom:1em;max-width:580px;-webkit-transition:all .2s ease;transition:all .2s ease;z-index:10;background:#fff;border:1px solid #c7c7c7;border-left:3px solid #19a6a4}.pe-alert-box .close-title{float:right;color:#6a7070;cursor:pointer}.pe-alert-box .alert-content-container{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:start;-webkit-align-items:flex-start;-ms-flex-align:start;align-items:flex-start;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;padding:20px 4px 20px 20px}.pe-alert-box .alert-title{margin-right:4px;display:inline;font-size:14px;font-weight:400;top:-12px;position:relative}.pe-alert-box .alert-text{display:inline}.pe-alert button.pe-icon{background-color:transparent;border:0;padding:0;position:relative;overflow:visible}.pe-alert button.pe-icon:focus{outline:0}.pe-alert button.pe-icon::-moz-focus-inner{border:0}.pe-alert button.pe-icon:focus:after{display:block;border:2px solid #0b73da;border-radius:4px;content:"";height:-webkit-calc(100% + 8px);height:calc(100% + 8px);left:-6px;position:absolute;top:-6px;width:-webkit-calc(100% + 8px);width:calc(100% + 8px);z-index:1}.pe-alert img.pe-icon:not([src=""]){margin-right:12px;width:18px;height:18px}.pe-alert svg{width:24px;height:24px}@-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@-webkit-keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@-webkit-keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@-webkit-keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}.fadeIn,.slideInDown{opacity:1;visibility:visible}.fadeOut,.slideOutDown{opacity:0;visibility:hidden}.animated.slideInDown{-webkit-animation:slideInDown .3s ease-in-out 0s;animation:slideInDown .3s ease-in-out 0s}.animated.slideOutDown{-webkit-animation:slideOutDown .2s ease-in 0s;animation:slideOutDown .2s ease-in 0s}.animated.fadeIn{-webkit-animation:fadeIn .3s linear 0s;animation:fadeIn .3s linear 0s}.animated.fadeOut{-webkit-animation:fadeOut .2s linear 0s;animation:fadeOut .2s linear 0s}@media (prefers-reduced-motion){.animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}html[data-prefers-reduced-motion] .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}\t</style>\n\t<div id="peAlert" class="pe-alert" role="dialog" aria-labelledby="alertTitle" aria-describedby="alertText">\n\t\t<div class="pe-alert-box">\n\t\t\t<button data-action="close-alert" class="close-title pe-icon pe-icon--btn remove-sm-24" aria-label="Close Lorem ipsum dolor sit amet.">\n\t\t\t\t<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="remove-sm-24" class="pe-icon--remove-sm-24"\n\t\t\t\t viewBox="0 0 24 24" focusable="false" aria-hidden="true">\n\t\t\t\t\t<path d="M13.4092,11.9999 L17.7082,7.7009 C18.0972,7.3119 18.0972,6.6809 17.7082,6.2919 C17.3192,5.9029 16.6882,5.9029 16.2992,6.2919 L12.0002,10.5909 L7.7012,6.2919 C7.3122,5.9029 6.6812,5.9029 6.2922,6.2919 C5.9022,6.6809 5.9022,7.3119 6.2922,7.7009 L10.5912,11.9999 L6.2922,16.2989 C5.9022,16.6879 5.9022,17.3189 6.2922,17.7079 C6.4862,17.9029 6.7412,17.9999 6.9962,17.9999 C7.2512,17.9999 7.5062,17.9029 7.7012,17.7079 L12.0002,13.4089 L16.2992,17.7079 C16.4932,17.9029 16.7482,17.9999 17.0032,17.9999 C17.2582,17.9999 17.5132,17.9029 17.7082,17.7079 C18.0972,17.3189 18.0972,16.6879 17.7082,16.2989 L13.4092,11.9999 Z" />\n\t\t\t\t</svg>\n\t\t\t</button>\n\t\t\t<div id="contentContainer" class="alert-content-container">\n\t\t\t\t<img id="icon" class="pe-icon" src="" aria-hidden="true">\n\t\t\t\t<div id="content" class="alert-content" aria-hidden="true">\n\t\t\t\t\t<slot></slot>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n  ';
+  var template = doc.createElement('template'),
+      button = doc.createElement('template'),
+      menu = doc.createElement('template'),
+      item = doc.createElement('template'),
+      check = '\n            <svg id="correct-18" viewBox="0 0 18 18" style="width:18px; height:18px;">\n                <path d="M7.63703177,13.7249483 C7.2712246,14.0916839 6.67813399,14.0916839 6.31232681,13.7249483 C6.31087256,13.7235264 5.29821541,12.7082993 3.27435538,10.679267 C2.90854821,10.3125314 2.90854821,9.71793566 3.27435538,9.35120012 C3.64016255,8.98446458 4.23325316,8.98446458 4.59906034,9.35120012 L6.9290522,11.6871052 L13.3583348,4.3207061 C13.6989986,3.93038793 14.2907756,3.89083601 14.6801057,4.2323644 C15.0694358,4.57389279 15.1088876,5.16717165 14.7682238,5.55748981 L7.68563681,13.6724173 C7.67022431,13.6903888 7.65402263,13.7079144 7.63703177,13.7249483 Z"></path>\n            </svg>\n        ',
+      close = '\n            <svg id="close-24" viewBox="0 0 24 24" style="width:24px; height:24px;">\n                <path d="M12,10.5857864 L17.2928932,5.29289322 C17.6834175,4.90236893 18.3165825,4.90236893 18.7071068,5.29289322 C19.0976311,5.68341751 19.0976311,6.31658249 18.7071068,6.70710678 L13.4142136,12 L18.7071068,17.2928932 C19.0976311,17.6834175 19.0976311,18.3165825 18.7071068,18.7071068 C18.3165825,19.0976311 17.6834175,19.0976311 17.2928932,18.7071068 L12,13.4142136 L6.70710678,18.7071068 C6.31658249,19.0976311 5.68341751,19.0976311 5.29289322,18.7071068 C4.90236893,18.3165825 4.90236893,17.6834175 5.29289322,17.2928932 L10.5857864,12 L5.29289322,6.70710678 C4.90236893,6.31658249 4.90236893,5.68341751 5.29289322,5.29289322 C5.68341751,4.90236893 6.31658249,4.90236893 6.70710678,5.29289322 L12,10.5857864 Z"></path>\n            </svg>\n        ';
 
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-alert');
+  template.innerHTML = ' \n  <style> \n  \n@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}\n.gr-dropdown-container .menu button:focus:after{top:-2px}.gr-btn,button{font-family:Open Sans,Arial,Helvetica,sans-serif;font-weight:400;font-size:14px;font-weight:400!important}.gr-btn.text{border:0}pearson-dropdown:slotted{display:none}#collapse-18,#expand-18{position:relative;top:-2px}.collapse-icon{display:none}.primary svg{fill:#fff}.gr-dropdown-container .menu{border-radius:4px;width:220px;max-height:300px;-webkit-box-shadow:0 2px 4px 0 rgba(0,0,0,.16);box-shadow:0 2px 4px 0 rgba(0,0,0,.16);overflow:scroll}.gr-dropdown-container .gr-btn svg{margin-left:8px}\n@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");:host{\n  /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */}:host html{line-height:1.15;-webkit-text-size-adjust:100%}:host body{margin:0}:host main{display:block}:host h1{font-size:2em;margin:.67em 0}:host hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}:host pre{font-family:monospace,monospace;font-size:1em}:host a{background-color:transparent}:host abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}:host b,:host strong{font-weight:bolder}:host code,:host kbd,:host samp{font-family:monospace,monospace;font-size:1em}:host small{font-size:80%}:host sub,:host sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}:host sub{bottom:-.25em}:host sup{top:-.5em}:host img{border-style:none}:host button,:host input,:host optgroup,:host select,:host textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}:host button,:host input{overflow:visible}:host button,:host select{text-transform:none}:host [type=button],:host [type=reset],:host [type=submit],:host button{-webkit-appearance:button}:host [type=button]::-moz-focus-inner,:host [type=reset]::-moz-focus-inner,:host [type=submit]::-moz-focus-inner,:host button::-moz-focus-inner{border-style:none;padding:0}:host [type=button]:-moz-focusring,:host [type=reset]:-moz-focusring,:host [type=submit]:-moz-focusring,:host button:-moz-focusring{outline:1px dotted ButtonText}:host fieldset{padding:.35em .75em .625em}:host legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}:host progress{vertical-align:baseline}:host textarea{overflow:auto}:host [type=checkbox],:host [type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}:host [type=number]::-webkit-inner-spin-button,:host [type=number]::-webkit-outer-spin-button{height:auto}:host [type=search]{-webkit-appearance:textfield;outline-offset:-2px}:host [type=search]::-webkit-search-decoration{-webkit-appearance:none}:host ::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}:host details{display:block}:host summary{display:list-item}:host template{display:none}:host [hidden]{display:none}:host html{-webkit-box-sizing:border-box;box-sizing:border-box;font-size:16px}:host *,:host :after,:host :before{-webkit-box-sizing:inherit;box-sizing:inherit}:host body{font-size:16px;font-family:Open Sans,Arial,Helvetica,sans-serif}:host body,:host p{line-height:1.5;font-weight:400}:host p{font-size:em(14)}:host strong{font-weight:600}:host a{color:#047a9c}:host a:hover{color:#03536a;text-decoration:none}:host a:focus{outline:2px solid #0b73da;outline-offset:4px}:host button{cursor:pointer}:host .no-border{border:0}:host .icon-18{width:18px;height:18px}:host .icon-24{width:24px;height:24px}:host .hidden{display:none}:host .gr-btn{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:em(16);cursor:pointer;border-radius:22px;position:relative;margin:12px}:host .gr-btn:hover{color:#252525;border:1px solid #252525}:host .gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}:host .gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}:host .gr-btn.primary:hover{color:#fff;background-color:#035f79}:host .gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}:host .gr-btn.attention:hover{background-color:#f7aa00}:host .gr-btn.small{min-width:128px;padding:7px 20px;font-size:em(14)}:host .gr-btn.small:focus:after{padding:18px 21px}:host .gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:em(16)}:host .gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}:host .gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}:host .gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}:host .gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}:host .gr-btn.no-border{border:0}:host .gr-btn.no-border:hover{border:0}:host .gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}:host .gr-dropdown-container .gr-btn{margin:0;font-size:em(14);font-weight:700}:host .gr-dropdown-container .gr-btn svg{margin-left:1em}:host .gr-dropdown-container .dropdown-menu{position:absolute;z-index:10;margin-top:-9px;-ms-overflow-style:none}:host .gr-dropdown-container .mobile-group{background:#f5f5f5;border-bottom:1px solid #e9e9e9;display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;width:100%;padding:24px;position:relative;top:-27px;z-index:10;overflow:hidden}:host .gr-dropdown-container .mobile-group span{width:100%;text-align:center}:host .gr-dropdown-container .mobile-group button{margin:0 0 0 12px}:host .gr-dropdown-container .menu{background-color:#fff;position:absolute}:host .gr-dropdown-container .menu button{background:none;border:0;font-size:em(14)}:host .gr-dropdown-container .menu button>*{pointer-events:none}:host .gr-dropdown-container .menu button:focus{outline:none}:host .gr-dropdown-container .menu button:focus:after{border:2px solid #1977d4;content:"";position:absolute;border-radius:4px;width:-webkit-calc(100% + -10px);width:calc(100% + -10px);height:100%;top:0;left:5px;z-index:1}:host .gr-dropdown-container .menu{list-style-type:none;padding:1em 0;border:1px solid #d9d9d9;border-radius:2px;margin-top:0;top:16px;position:relative}:host .gr-dropdown-container [aria-checked=false] svg{display:none}:host .gr-dropdown-container [aria-checked=true] svg{display:inline-block}:host .gr-dropdown-container .seperator{padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid #d9d9d9}:host .gr-dropdown-container li button{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;text-decoration:none;width:100%;color:#252525;text-align:left;padding:0}:host .gr-dropdown-container li button:hover{background-color:#e9e9e9}:host .gr-dropdown-container li button svg{position:absolute;left:12px}:host .gr-dropdown-container .option-text{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;margin:5px 24px 5px 34px;width:100%}:host .gr-dropdown-container .divider{border-bottom:1px solid #c7c7c7;padding-bottom:8px;margin:0 25px}:host .gr-dropdown-container .divider+li{margin-top:8px}:host .gr-dropdown-container .truncate{max-width:100%;width:250px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}@media (max-width:480px){:host .gr-dropdown-container .dropdown-menu{width:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}:host .gr-dropdown-container .option-text{font-size:16px;margin:12px 42px}:host .gr-dropdown-container .menu{max-height:300px;overflow:scroll;width:100%;top:44px;border:0;height:100vh}}@media (-ms-high-contrast:active),(-ms-high-contrast:none){:host .gr-dropdown-container .menu li button[aria-checked=true] svg{top:4px}}@media (min-width:480px){:host .gr-dropdown-container .dropdown-menu .mobile-group{display:none}}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:1}}@keyframes fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}:host .animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){:host .animated{-webkit-animation:unset!important;animation:unset!important}}:host .animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}@media (max-width:480px){:host .animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}:host .animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (max-width:480px){:host .animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}:host .gr-dropdown-container .menu button:focus:after{top:-2px}:host .gr-btn,:host button{font-family:Open Sans,Arial,Helvetica,sans-serif;font-weight:400;font-size:14px;font-weight:400!important}:host .gr-btn.text{border:0}:host pearson-dropdown:slotted{display:none}:host #collapse-18,:host #expand-18{position:relative;top:-2px}:host .collapse-icon{display:none}:host .primary svg{fill:#fff}:host .gr-dropdown-container .menu{border-radius:4px;width:220px;max-height:300px;-webkit-box-shadow:0 2px 4px 0 rgba(0,0,0,.16);box-shadow:0 2px 4px 0 rgba(0,0,0,.16);overflow:scroll}:host .gr-dropdown-container .gr-btn svg{margin-left:8px}\n   </style>\n  <div class="gr-dropdown-container">\n  \n  </div>\n';
 
-  var SUCCESS_ICON_URI = "data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 18 18' %3E%3Cpath fill='%2319a6a4' d='M5.7176,18 C5.4406,18 5.1736,17.885 4.9846,17.68 L0.2666,12.589 C-0.1084,12.184 -0.0854,11.551 0.3206,11.176 C0.7246,10.799 1.3566,10.823 1.7336,11.229 L5.6126,15.415 L16.1826,0.424 C16.5016,-0.028 17.1246,-0.135 17.5756,0.183 C18.0276,0.501 18.1356,1.125 17.8176,1.576 L6.5346,17.576 C6.3616,17.823 6.0846,17.978 5.7836,17.998 C5.7616,17.999 5.7396,18 5.7176,18' /%3E%3C/svg%3E";
+  button.innerHTML = '\n  <button data-action="trigger" aria-haspopup="true" aria-expanded="false" class="gr-btn">\n     <span class="dropdown-text"></span>\n     <div class="expand-icon">\n        <svg id="expand-18" viewBox="0 0 18 18" style="width:18px; height:18px;">\n          <path d="M8.09674611,10 L15.8979188,10 C16.5051081,10 16.9973323,10.4907428 16.9973323,11.0961048 C16.9973323,11.390812 16.8782997,11.6731038 16.6670916,11.8792872 L12.7665053,15.6870775 C12.3391074,16.1043075 11.6555575,16.1043075 11.2281596,15.6870775 L7.32757328,11.8792872 C6.89372798,11.4557632 6.88639729,10.7617864 7.31119972,10.3292468 C7.51800543,10.1186744 7.80114936,10 8.09674611,10 Z"></path>            \n        </svg>\n    </div>\n    <div class="collapse-icon">\n          <svg id="collapse-18" viewBox="0 0 18 18" style="width:18px; height:18px;">\n              <path d="M8.09674611,15 C7.80114936,15 7.51800543,14.8813256 7.31119972,14.6707532 C6.88639729,14.2382136 6.89372798,13.5442368 7.32757328,13.1207128 L11.2281596,9.31292251 C11.6555575,8.8956925 12.3391074,8.8956925 12.7665053,9.31292251 L16.6670916,13.1207128 C16.8782997,13.3268962 16.9973323,13.609188 16.9973323,13.9038952 C16.9973323,14.5092572 16.5051081,15 15.8979188,15 L8.09674611,15 Z"></path>            \n          </svg>\n    </div>\n  </button>\n  ';
 
-  var ERROR_ICON_URI = "data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 18 18'%3E%3Cpath fill='%23db0020' d='M9.9999375,12.4775 C9.9999375,12.7525 9.7749375,12.9775 9.4999375,12.9775 L8.4999375,12.9775 C8.2249375,12.9775 7.9999375,12.7525 7.9999375,12.4775 L7.9999375,7.4775 C7.9999375,7.2025 8.2249375,6.9775 8.4999375,6.9775 L9.4999375,6.9775 C9.7749375,6.9775 9.9999375,7.2025 9.9999375,7.4775 L9.9999375,12.4775 Z M9.9999375,15.4775 C9.9999375,15.7525 9.7749375,15.9775 9.4999375,15.9775 L8.4999375,15.9775 C8.2249375,15.9775 7.9999375,15.7525 7.9999375,15.4775 L7.9999375,14.4775 C7.9999375,14.2025 8.2249375,13.9775 8.4999375,13.9775 L9.4999375,13.9775 C9.7749375,13.9775 9.9999375,14.2025 9.9999375,14.4775 L9.9999375,15.4775 Z M17.9469375,17.2535 L9.4469375,0.2535 C9.2769375,-0.0845 8.7229375,-0.0845 8.5529375,0.2535 L0.0529375,17.2535 C-0.0240625,17.4095 -0.0170625,17.5925 0.0739375,17.7405 C0.1659375,17.8875 0.3269375,17.9775 0.4999375,17.9775 L17.4999375,17.9775 C17.6729375,17.9775 17.8339375,17.8875 17.9259375,17.7405 C18.0169375,17.5925 18.0239375,17.4095 17.9469375,17.2535 L17.9469375,17.2535 Z' /%3E%3C/svg%3E";
+  menu.innerHTML = '\n  <div class="dropdown-menu animateIn" data-action="menu">\n\t\t\t<div class="mobile-group">\n\t\t\t\t<span>Single Select Dropdown</span>\n\t\t\t\t<button  id="mobileClose" class="gr-btn icon-btn-24 no-border" aria-label="close dropdown">\n\t\t\t     ' + close + '\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<ul role="menu" class="menu">\n\t\t\t  <slot></slot>\n\t\t\t</ul>\n\t</div>\n  ';
 
-  var Alert = function (_HTMLElement) {
-    _inherits(Alert, _HTMLElement);
+  item.innerHTML = '\n  <li role="none" >\n    <button role="menuitemradio" aria-checked="false">\n         ' + check + '\n      <span class="option-text">Option One</span>\n    </button>\n  </li>\n  ';
 
-    function Alert() {
-      _classCallCheck(this, Alert);
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-dropdown');
 
-      var _this = _possibleConstructorReturn(this, (Alert.__proto__ || Object.getPrototypeOf(Alert)).call(this));
+  /** Any helper functions that do not need to be part of the class
+   * can be declared here, before the class is defined.
+   */
 
-      _this.attachShadow({ mode: 'open' });
+  function getFocusableElements(node) {
+    return node.querySelectorAll('[role^="menuitemradio"]');
+  }
 
-      var clone = template.content.cloneNode(true);
+  function buildListItems(content, component, menu, index, checked) {
+    var li = item.content.cloneNode(true),
+        text = li.querySelector('.option-text'),
+        button = li.querySelector('button');
 
-      _this.alert = clone.querySelector('#peAlert');
-      _this.contentContainer = clone.querySelector('#contentContainer');
-      _this.icon = clone.querySelector('#icon');
-      _this.content = clone.querySelector('#content');
-      _this.closeBtn = clone.querySelector('button[data-action="close-alert"]');
-
-      _this.shadowRoot.appendChild(clone);
-
-      _this._onClose = _this._onClose.bind(_this);
-      _this._onAnimationEnd = _this._onAnimationEnd.bind(_this);
-      return _this;
+    text.innerHTML = content.text;
+    if (content.value) {
+      if (content.id === content.value) {
+        button.setAttribute('aria-checked', true);
+      }
+    }
+    if (content.divider === true) {
+      button.parentNode.classList.add('seperator');
     }
 
-    _createClass(Alert, [{
-      key: 'connectedCallback',
-      value: function connectedCallback() {
-        if (this.isAnimated) {
-          this.alert.classList.toggle('animated');
+    if (checked !== undefined && checked.length > 0) {
+      checked.forEach(function (item) {
+        if (parseInt(item.getAttribute('data-index')) === index) {
+          button.setAttribute('aria-checked', true);
         }
+      });
+    }
 
-        if (this.type === 'error') {
-          this.contentContainer.setAttribute('role', 'alert');
-          this.contentContainer.setAttribute('aria-live', 'assertive');
-          this.icon.src = ERROR_ICON_URI;
+    button.setAttribute('data-id', content.id);
+    button.setAttribute('data-index', index);
+    button.addEventListener('click', function (event) {
+      // unless multi select, only select one item at a time.
+
+      if (content.multiSelect) {
+        var ariaChecked = event.target.getAttribute('aria-checked');
+        if (ariaChecked === 'false') {
+          event.target.setAttribute('aria-checked', true);
         } else {
-          if (this.type === 'success') this.icon.src = SUCCESS_ICON_URI;
-
-          this.contentContainer.setAttribute('role', 'status');
-          this.contentContainer.setAttribute('aria-live', 'polite');
+          event.target.setAttribute('aria-checked', false);
         }
-
-        this.alert.classList.add('alert-' + this.level);
-        this.alert.classList.add('alert--' + this.type);
-
-        if (this.level === 'global') {
-          this.alert.classList.add('slideInDown');
-        }
-        if (this.level === 'inline') {
-          this.alert.classList.add('fadeIn');
-        }
-
-        this.content.setAttribute('aria-hidden', 'false');
-        this.closeBtn.addEventListener('click', this._onClose);
-
-        this.alert.addEventListener('animationend', this._onAnimationEnd);
+      } else {
+        var focusItems = getFocusableElements(event.target.parentNode.parentNode);
+        focusItems.forEach(function (item) {
+          item.setAttribute('aria-checked', false);
+        });
+        event.target.setAttribute('aria-checked', true);
+        component.setAttribute('value', content.id);
+        component.closeDropdown();
       }
-    }, {
-      key: 'disconnectedCallback',
-      value: function disconnectedCallback() {
+    });
 
-        this.alert.removeEventListener('animationend', this._onAnimationEnd);
-        this.closeBtn.removeEventListener('click', this._onClose);
+    button.addEventListener('keydown', function (event) {
+      var nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
+          prevButton = parseInt(event.target.getAttribute('data-index')) - 1;
 
-        document.querySelector('pearson-uploader').shadowRoot.querySelector('upload-modal #attachFiles').focus();
-      }
-    }, {
-      key: '_onClose',
-      value: function _onClose() {
-        if (this.level === 'global') {
-          this.alert.classList.add('slideOutDown');
-        }
-        if (this.level === 'inline') {
-          this.alert.classList.add('fadeOut');
-        }
-
-        this.dispatchEvent(new Event('dismiss', {
-          bubbles: true
-        }));
-      }
-    }, {
-      key: '_onAnimationEnd',
-      value: function _onAnimationEnd(e) {
-        var animationName = e.animationName;
-
-        if (animationName === 'fadeOut' || animationName === 'slideOutDown') {
-          this.remove();
-        }
-        if (animationName === 'fadeIn' || animationName === 'slideInDown') {
-          if (this.focusOnOpen) {
-            this.closeBtn.focus();
-          }
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (component.shadowRoot.activeElement === getFocusableElements(menu)[0]) {
+          getFocusableElements(menu)[getFocusableElements(menu).length - 1].focus();
+        } else {
+          getFocusableElements(menu)[prevButton].focus();
         }
       }
-    }, {
-      key: 'isAnimated',
-      get: function get() {
-        return this.hasAttribute('animated');
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        if (component.shadowRoot.activeElement === getFocusableElements(menu)[getFocusableElements(menu).length - 1]) {
+          getFocusableElements(menu)[0].focus();
+        } else {
+          getFocusableElements(menu)[nextButton].focus();
+        }
       }
-    }, {
-      key: 'focusOnOpen',
-      get: function get() {
-        return this.hasAttribute('focusOnOpen');
+      if (event.key === 'Home') {
+        getFocusableElements(menu)[0].focus();
       }
-    }, {
-      key: 'level',
-      get: function get() {
-        return this.getAttribute('level');
+
+      if (event.key === 'End') {
+        getFocusableElements(menu)[getFocusableElements(menu).length - 1].focus();
       }
-    }, {
+    });
+    return li;
+  }
+
+  var Dropdown = function (_HTMLElement) {
+    _inherits(Dropdown, _HTMLElement);
+
+    _createClass(Dropdown, [{
       key: 'type',
       get: function get() {
         return this.getAttribute('type');
       }
+    }, {
+      key: 'buttonText',
+      get: function get() {
+        return this.getAttribute('buttonText');
+      }
+    }, {
+      key: 'textOnly',
+      get: function get() {
+        return this.hasAttribute('textOnly');
+      }
+    }, {
+      key: 'multiSelect',
+      get: function get() {
+        return this.hasAttribute('multiSelect');
+      }
+    }, {
+      key: 'value',
+      get: function get() {
+        return this.getAttribute('value');
+      }
+    }, {
+      key: 'open',
+      get: function get() {
+        return this.getAttribute('open');
+      },
+      set: function set(value) {
+        this.setAttribute('open', value);
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['buttonText', 'textOnly', 'open', 'value', 'multiSelect', 'type'];
+      }
     }]);
 
-    return Alert;
+    function Dropdown() {
+      _classCallCheck(this, Dropdown);
+
+      var _this = _possibleConstructorReturn(this, (Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).call(this));
+
+      _this.attachShadow({ mode: 'open' });
+      var clone = template.content.cloneNode(true);
+      _this.shadowRoot.appendChild(clone);
+
+      _this.openDropdown = _this.openDropdown.bind(_this);
+      _this.closeDropdown = _this.closeDropdown.bind(_this);
+      _this.returnChecked = _this.returnChecked.bind(_this);
+      return _this;
+    }
+
+    _createClass(Dropdown, [{
+      key: 'openDropdown',
+      value: function openDropdown() {
+        var _this2 = this;
+
+        var expandIcon = this.button.querySelector('.expand-icon'),
+            collapseIcon = this.button.querySelector('.collapse-icon');
+
+        if (this.open === null) {
+          this.open = true;
+          this.button.setAttribute('aria-expanded', true);
+          this.shadowRoot.addEventListener('animationend', function (event) {
+            getFocusableElements(_this2.shadowRoot)[0].focus();
+          });
+          expandIcon.style.display = 'none';
+          collapseIcon.style.display = 'flex';
+        } else if (this.open) {
+          this.closeDropdown();
+        }
+      }
+    }, {
+      key: 'closeDropdown',
+      value: function closeDropdown() {
+        var expandIcon = this.button.querySelector('.expand-icon'),
+            collapseIcon = this.button.querySelector('.collapse-icon');
+
+        expandIcon.style.display = 'flex';
+        collapseIcon.style.display = 'none';
+
+        this.checked = this.returnChecked();
+        this.removeAttribute('open');
+        this.button.setAttribute('aria-expanded', false);
+
+        if (this.multiSelect) {
+          var arr = [];
+          this.checked.forEach(function (item) {
+            arr.push(item.getAttribute('data-id'));
+          });
+          this.dispatchEvent(new CustomEvent('change', {
+            bubbles: true,
+            detail: {
+              selected: arr
+            }
+          }));
+        } else {
+          this.dispatchEvent(new CustomEvent('change', {
+            bubbles: true,
+            detail: {
+              selected: this.checked !== false ? this.checked.getAttribute('data-id') : 'no selection'
+            }
+          }));
+        }
+
+        this.button.focus();
+      }
+    }, {
+      key: 'returnChecked',
+      value: function returnChecked() {
+        var checked = [];
+        if (this.multiSelect) {
+          checked = this.shadowRoot.querySelectorAll('[aria-checked="true"]');
+        } else {
+          checked = this.shadowRoot.querySelector('[aria-checked="true"]');
+        }
+        if (checked !== null) {
+          return checked;
+        } else {
+          return false;
+        }
+      }
+    }, {
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        var _this3 = this;
+
+        /** Any changes to what the component renders should be done here. */
+        var dropdownTrigger = button.content.cloneNode(true),
+            dropdownTemplate = this.shadowRoot.querySelector('.gr-dropdown-container');
+        dropdownTemplate.appendChild(dropdownTrigger);
+
+        this.button = dropdownTemplate.querySelector('button');
+
+        var buttonText = dropdownTemplate.querySelector('button .dropdown-text');
+        buttonText.innerHTML = this.buttonText;
+
+        // Get the attributes set by the consumer
+        if (this.textOnly) {
+          this.button.classList.add('text');
+        }
+
+        this.button.addEventListener('click', this.openDropdown);
+        /** Event listeners should also be bound here. */
+        doc.addEventListener('click', function (event) {
+          if (_this3.open === 'true') {
+            var target = event.target;
+            var dropdownMenu = _this3.shadowRoot.querySelector('.menu');
+            do {
+              if (target === dropdownMenu || target === _this3) {
+                return;
+              }
+              target = target.parentNode;
+            } while (target);
+            _this3.closeDropdown();
+          }
+        });
+
+        doc.addEventListener('keydown', function (event) {
+          if (_this3.open === 'true' && event.key === 'Escape') {
+            _this3.closeDropdown();
+          }
+        });
+
+        if (this.type === 'primary') {
+          this.button.classList.add('primary');
+        }
+
+        if (this.type === 'attention') {
+          this.button.classList.add('attention');
+        }
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        var _this4 = this;
+
+        if (name === 'open' && newValue === 'true') {
+          var dropdownMenu = menu.content.cloneNode(true),
+              dropdownTemplate = this.shadowRoot.querySelector('.gr-dropdown-container');
+
+          dropdownTemplate.appendChild(dropdownMenu);
+
+          var items = this.querySelectorAll('li'),
+              dropdownMenuTemplate = this.shadowRoot.querySelector('.menu'),
+              itemContent = [];
+
+          // get items from slot to render new list for dropdown
+          items.forEach(function (item) {
+            item.style.display = 'none';
+            itemContent.push({
+              divider: item.classList.contains('divider'),
+              text: item.innerHTML,
+              id: item.id,
+              multiSelect: _this4.multiSelect,
+              value: _this4.value });
+          });
+
+          // render list items based on items in slot
+          itemContent.forEach(function (content, index) {
+            dropdownMenuTemplate.appendChild(buildListItems(content, _this4, dropdownMenuTemplate, index, _this4.checked));
+          });
+        } else if (name === 'open' && newValue === null) {
+          var _dropdownMenu = this.shadowRoot.querySelector('.dropdown-menu');
+          _dropdownMenu.remove();
+          this.button.setAttribute('aria-expanded', false);
+        }
+      }
+    }]);
+
+    return Dropdown;
   }(HTMLElement);
 
-  customElements.define('pearson-upload-alert', Alert);
-})(window, document);
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}();
-
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
-
-function _possibleConstructorReturn(self, call) {
-    if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-(function (w, doc) {
-    'use strict';
-
-    var styles = doc.createElement('template');
-    var template = doc.createElement('template');
-    var overlayButtonTemplate = doc.createElement('template');
-    var actionsTemplate = doc.createElement('template');
-    var minimizedTemplate = doc.createElement('template');
-    var response = '';
-
-    styles.innerHTML = '\n  ' + '<style>' + '.deep-encapsulation { /*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */}.deep-encapsulation *,.deep-encapsulation :after,.deep-encapsulation :before{-webkit-box-sizing:inherit;box-sizing:inherit}.deep-encapsulation html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}.deep-encapsulation body{margin:0}.deep-encapsulation article,.deep-encapsulation aside,.deep-encapsulation footer,.deep-encapsulation header,.deep-encapsulation nav,.deep-encapsulation section{display:block}.deep-encapsulation h1{font-size:2em;margin:.67em 0}.deep-encapsulation figcaption,.deep-encapsulation figure,.deep-encapsulation main{display:block}.deep-encapsulation figure{margin:1em 40px}.deep-encapsulation hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}.deep-encapsulation pre{font-family:monospace,monospace;font-size:1em}.deep-encapsulation a{background-color:transparent;-webkit-text-decoration-skip:objects}.deep-encapsulation a:active,.deep-encapsulation a:hover{outline-width:0}.deep-encapsulation abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}.deep-encapsulation b,.deep-encapsulation strong{font-weight:inherit;font-weight:bolder}.deep-encapsulation code,.deep-encapsulation kbd,.deep-encapsulation samp{font-family:monospace,monospace;font-size:1em}.deep-encapsulation dfn{font-style:italic}.deep-encapsulation mark{background-color:#ff0;color:#000}.deep-encapsulation small{font-size:80%}.deep-encapsulation sub,.deep-encapsulation sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}.deep-encapsulation sub{bottom:-.25em}.deep-encapsulation sup{top:-.5em}.deep-encapsulation audio,.deep-encapsulation video{display:inline-block}.deep-encapsulation audio:not([controls]){display:none;height:0}.deep-encapsulation img{border-style:none}.deep-encapsulation svg:not(:root){overflow:hidden}.deep-encapsulation button,.deep-encapsulation input,.deep-encapsulation optgroup,.deep-encapsulation select,.deep-encapsulation textarea{font-family:Open Sans,Calibri,Tahoma,sans-serif;font-size:100%;line-height:1.15;margin:0}.deep-encapsulation button,.deep-encapsulation input{overflow:visible}.deep-encapsulation button,.deep-encapsulation select{text-transform:none}.deep-encapsulation [type=reset],.deep-encapsulation [type=submit],.deep-encapsulation button,.deep-encapsulation html [type=button]{-webkit-appearance:button}.deep-encapsulation [type=button]::-moz-focus-inner,.deep-encapsulation [type=reset]::-moz-focus-inner,.deep-encapsulation [type=submit]::-moz-focus-inner,.deep-encapsulation button::-moz-focus-inner{border-style:none;padding:0}.deep-encapsulation [type=button]:-moz-focusring,.deep-encapsulation [type=reset]:-moz-focusring,.deep-encapsulation [type=submit]:-moz-focusring,.deep-encapsulation button:-moz-focusring{outline:1px dotted ButtonText}.deep-encapsulation fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}.deep-encapsulation legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}.deep-encapsulation progress{display:inline-block;vertical-align:baseline}.deep-encapsulation textarea{overflow:auto}.deep-encapsulation [type=checkbox],.deep-encapsulation [type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}.deep-encapsulation [type=number]::-webkit-inner-spin-button,.deep-encapsulation [type=number]::-webkit-outer-spin-button{height:auto}.deep-encapsulation [type=search]{-webkit-appearance:textfield;outline-offset:-2px}.deep-encapsulation [type=search]::-webkit-search-cancel-button,.deep-encapsulation [type=search]::-webkit-search-decoration{-webkit-appearance:none}.deep-encapsulation ::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}.deep-encapsulation details,.deep-encapsulation menu{display:block}.deep-encapsulation summary{display:list-item}.deep-encapsulation canvas{display:inline-block}.deep-encapsulation [hidden],.deep-encapsulation template{display:none}.deep-encapsulation html{font-size:.875rem}.deep-encapsulation body{font-family:Open Sans,Calibri,Tahoma,sans-serif;color:#252525}.deep-encapsulation h1,.deep-encapsulation h2,.deep-encapsulation h3,.deep-encapsulation h4,.deep-encapsulation h5,.deep-encapsulation h6{margin-top:0;margin-bottom:0}.deep-encapsulation *+h1,.deep-encapsulation *+h2,.deep-encapsulation *+h3,.deep-encapsulation *+h4,.deep-encapsulation *+h5,.deep-encapsulation *+h6{margin-top:20px}.deep-encapsulation h1+h2{margin-top:40px}.deep-encapsulation h2+h3,.deep-encapsulation h3+h4,.deep-encapsulation h4+h5,.deep-encapsulation h5+h6{margin-top:6px}.deep-encapsulation header{margin-bottom:20px}.deep-encapsulation header h1+.subtitle{margin-top:34px}.deep-encapsulation aside h1{font-size:1.25rem}.deep-encapsulation aside h2{font-size:1.1rem}.deep-encapsulation aside h3{font-size:1rem}.deep-encapsulation aside h4,.deep-encapsulation aside h5,.deep-encapsulation aside h6{font-size:.8rem}.deep-encapsulation table{width:100%;max-width:100%;margin-bottom:35px;border-collapse:collapse}.deep-encapsulation table td,.deep-encapsulation table th{padding:8px;line-height:1.42857143;vertical-align:top;text-align:left}.deep-encapsulation table thead th{vertical-align:bottom;border-top:0}.deep-encapsulation a{color:#047a9c;text-decoration:underline}.deep-encapsulation a.active,.deep-encapsulation a:active,.deep-encapsulation a:focus,.deep-encapsulation a:hover{color:#005a70;text-decoration:none}.deep-encapsulation a:focus{-webkit-box-shadow:none;box-shadow:none;outline:2px solid #0b73da;outline-offset:4px}.deep-encapsulation abbr,.deep-encapsulation abbr[title]{text-decoration:none}.deep-encapsulation ins:after,.deep-encapsulation ins:before{content:"+"}.deep-encapsulation mark{background:#ffb81c}.deep-encapsulation small{font-size:.85714rem;line-height:1.14286rem}.deep-encapsulation sub,.deep-encapsulation sup{font-size:90%}.deep-encapsulation sub{top:.2rem}.deep-encapsulation sup{top:-.2rem}.deep-encapsulation pre{max-width:100%;overflow-x:auto}.deep-encapsulation code,.deep-encapsulation kbd,.deep-encapsulation pre{font-family:Monaco,Lucida Console,monospace}.deep-encapsulation :focus{-webkit-box-shadow:none;box-shadow:none;outline:2px solid #0b73da;outline-offset:4px}@font-face{.deep-encapsulation{font-family:Open Sans;src:url(https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-light.woff2) format("woff2"),url(https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-light.woff) format("woff");font-weight:100;font-style:normal;src:url(https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-lightitalic.woff2) format("woff2"),url(https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-lightitalic.woff) format("woff");font-style:italic;src:url(https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-regular.woff2) format("woff2"),url(https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-regular.woff) format("woff");font-weight:400;src:url(https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-italic.woff2) format("woff2"),url(https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-italic.woff) format("woff");src:url(https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-semibold.woff2) format("woff2"),url(https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-semibold.woff) format("woff");font-weight:600;src:url(https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-semibolditalic.woff2) format("woff2"),url(https://unpkg.com/@pearson-components/elements-sdk@1.6.1/build/fonts/opensans-semibolditalic.woff) format("woff")}}.deep-encapsulation .pe-base-fontsize{font-size:.875rem}.deep-encapsulation .pe-fontstack{font-family:Open Sans,Calibri,Tahoma,sans-serif}.deep-encapsulation .pe-copy{font-size:1rem;line-height:1.57143rem;color:#252525}.deep-encapsulation .pe-copy--secondary,.deep-encapsulation .pe-label--secondary{color:#6a7070}.deep-encapsulation .pe-copy--small{font-size:.85714rem;line-height:1.42857rem;color:#252525}.deep-encapsulation .pe-copy--large,.deep-encapsulation .pe-heading-level6,.deep-encapsulation h6,.deep-encapsulation header h5+.subtitle{font-size:1.14286rem;line-height:1.71429rem;color:#252525}.deep-encapsulation .pe-paragraph,.deep-encapsulation p{font-size:1rem;line-height:1.57143rem;margin-bottom:.85714rem;margin-top:0;color:#252525}.deep-encapsulation .pe-paragraph--last{margin-bottom:0;color:#252525}.deep-encapsulation .pe-lead{font-size:1.42857rem;line-height:2rem;font-weight:lighter;color:#252525}.deep-encapsulation .pe-page-title{font-size:2.71429rem;line-height:3.71429rem;font-weight:lighter;color:#252525}.deep-encapsulation .pe-heading-level1,.deep-encapsulation .pe-page-title--small,.deep-encapsulation h1{font-size:2rem;line-height:2.71429rem;font-weight:lighter;color:#252525}.deep-encapsulation .pe-heading-level3,.deep-encapsulation .pe-heading-level4,.deep-encapsulation .pe-title,.deep-encapsulation h3,.deep-encapsulation h4,.deep-encapsulation header h2+.subtitle,.deep-encapsulation header h3+.subtitle{font-size:1.42857rem;line-height:1.85714rem;font-weight:400;color:#252525}.deep-encapsulation .pe-heading-level5,.deep-encapsulation .pe-title--small,.deep-encapsulation h5,.deep-encapsulation header h4+.subtitle{font-size:1.28571rem;line-height:1.57143rem;font-weight:400;color:#252525}.deep-encapsulation .pe-heading-level2,.deep-encapsulation .pe-title--large,.deep-encapsulation h2,.deep-encapsulation header h1+.subtitle{font-size:1.71429rem;line-height:2rem;font-weight:400;color:#252525}.deep-encapsulation .pe-page-title--secondary,.deep-encapsulation .pe-title--secondary{color:#6a7070}.deep-encapsulation .pe-label{font-size:1rem;line-height:1.28571rem}.deep-encapsulation .pe-label.pe-label--inverse{color:#fff}.deep-encapsulation .pe-label--secondary.pe-label--inverse{color:#f5f5f5}.deep-encapsulation .pe-label--small{font-size:.85714rem;line-height:1.14286rem}.deep-encapsulation .pe-label--large{font-size:1.14286rem;line-height:1.42857rem}.deep-encapsulation .pe-bold,.deep-encapsulation .pe-label--bold{font-weight:600}.deep-encapsulation .pe-list{margin:12px 0;padding-left:1.85714rem}.deep-encapsulation .pe-list li{font-size:1rem;line-height:1.57143rem;margin-bottom:.42857rem}.deep-encapsulation .pe-list li>ol,.deep-encapsulation .pe-list li>ul{margin-top:.42857rem}.deep-encapsulation .pe-list.pe-styled-lists--ordered{list-style-type:decimal}.deep-encapsulation .pe-list.pe-styled-lists--ordered ol{list-style-type:lower-alpha;padding-left:1.85714rem}.deep-encapsulation .pe-list.pe-styled-lists--ordered ol ol{list-style-type:lower-roman}.deep-encapsulation .pe-list.pe-styled-lists--unordered{list-style-type:disc}.deep-encapsulation .pe-list.pe-styled-lists--unordered ul{list-style-type:circle;padding-left:1.85714rem}.deep-encapsulation .pe-list.pe-styled-lists--unordered ul ul{list-style-type:square}.deep-encapsulation .pe-list.pe-styled-lists-heading--ordered{list-style-type:decimal;margin-top:0}.deep-encapsulation .pe-list.pe-styled-lists-heading--ordered ol{list-style-type:lower-alpha;padding-left:1.85714rem}.deep-encapsulation .pe-list.pe-styled-lists-heading--ordered ol ol{list-style-type:lower-roman}.deep-encapsulation .pe-list.pe-styled-lists-heading--unordered{list-style-type:disc;margin-top:0}.deep-encapsulation .pe-list.pe-styled-lists-heading--unordered ul{list-style-type:circle;padding-left:1.85714rem}.deep-encapsulation .pe-list.pe-styled-lists-heading--unordered ul ul{list-style-type:square}.deep-encapsulation .pe-list--unstyled{list-style:none;padding-left:0}.deep-encapsulation .pe-list--unstyled ul{padding-left:1.85714rem}.deep-encapsulation .pe-heading-level1,.deep-encapsulation .pe-heading-level2,.deep-encapsulation h1,.deep-encapsulation h2,.deep-encapsulation header h1+.subtitle{margin-bottom:6px}.deep-encapsulation .pe-heading-level3,.deep-encapsulation h3,.deep-encapsulation header h2+.subtitle{font-weight:700;margin-bottom:6px}.deep-encapsulation .pe-heading-level4,.deep-encapsulation .pe-heading-level5,.deep-encapsulation .pe-heading-level6,.deep-encapsulation h4,.deep-encapsulation h5,.deep-encapsulation h6,.deep-encapsulation header h3+.subtitle,.deep-encapsulation header h4+.subtitle,.deep-encapsulation header h5+.subtitle{margin-bottom:6px}.deep-encapsulation *+[class^=pe-heading-level]{margin-top:20px}.deep-encapsulation .pe-code{font-family:Monaco,Lucida Console,monospace;color:#f5f5f5;font-size:1rem;line-height:1.42857rem;background:#005a70;padding:30px 50px}.deep-encapsulation .pe-code-inline,.deep-encapsulation .pe-kbd{font-family:Monaco,Lucida Console,monospace;background:#e9e9e9;padding:0 4px}.deep-encapsulation #pe-icons-sprite{display:none}.deep-encapsulation svg[class^=pe-icon--]{display:inline-block;vertical-align:top;fill:currentColor}.deep-encapsulation [class^=pe-btn] svg[class$="-18"],.deep-encapsulation [class^=pe-btn] svg[class$="-24"]{vertical-align:middle;margin-left:.5em;margin-bottom:.3em}.deep-encapsulation svg[class$="-18"]{width:18px;height:18px}.deep-encapsulation svg[class$="-24"]{width:24px;height:24px}.deep-encapsulation svg[class$=font-setting-18]{width:24px;height:18px}.deep-encapsulation svg[class$=font-setting-24]{width:32px;height:24px}.deep-encapsulation svg[class$=new-notification-9]{vertical-align:middle;width:10px;height:10px}.deep-encapsulation .pe-btn,.deep-encapsulation .pe-btn--btn_large,.deep-encapsulation .pe-btn--btn_small,.deep-encapsulation .pe-btn--btn_xlarge,.deep-encapsulation .pe-btn__cta,.deep-encapsulation .pe-btn__cta--btn_large,.deep-encapsulation .pe-btn__cta--btn_small,.deep-encapsulation .pe-btn__cta--btn_xlarge,.deep-encapsulation .pe-btn__primary,.deep-encapsulation .pe-btn__primary--btn_large,.deep-encapsulation .pe-btn__primary--btn_small,.deep-encapsulation .pe-btn__primary--btn_xlarge,.deep-encapsulation .pe-btn__tertiary,.deep-encapsulation .pe-btn__tertiary--btn_large,.deep-encapsulation .pe-btn__tertiary--btn_small,.deep-encapsulation .pe-btn__tertiary--btn_xlarge{-webkit-box-sizing:border-box;box-sizing:border-box;border:none;display:inline-block;vertical-align:middle;cursor:pointer;height:36px;padding:0 20px;border-radius:36px;font-size:14px;line-height:18px;font-weight:600}.deep-encapsulation .pe-btn--btn_small,.deep-encapsulation .pe-btn__cta--btn_small,.deep-encapsulation .pe-btn__primary--btn_small,.deep-encapsulation .pe-btn__tertiary--btn_small{height:32px;border-radius:32px;padding:0 12px;font-size:14px;line-height:18px}.deep-encapsulation .pe-btn--btn_xlarge,.deep-encapsulation .pe-btn__cta--btn_xlarge,.deep-encapsulation .pe-btn__primary--btn_xlarge,.deep-encapsulation .pe-btn__tertiary--btn_xlarge{height:40px;border-radius:40px;padding:0 20px;font-size:16px;line-height:20px}.deep-encapsulation .pe-icon--btn{padding:0;background-color:transparent;border:0;position:relative}.deep-encapsulation .pe-icon--btn:focus{outline:0}.deep-encapsulation .pe-icon--btn:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:4px;width:-webkit-calc(100% + 8px);width:calc(100% + 8px);height:-webkit-calc(100% + 8px);height:calc(100% + 8px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-link,.deep-encapsulation .pe-link--btn{text-decoration:underline;background-color:transparent;border:0;cursor:pointer;position:relative}.deep-encapsulation .pe-link{color:#047a9c;padding:0}.deep-encapsulation .pe-link:hover{color:#005a70;text-decoration:none}.deep-encapsulation .pe-link:focus{color:#005a70;text-decoration:none;outline:0}.deep-encapsulation .pe-link:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:4px;width:-webkit-calc(100% + 8px);width:calc(100% + 8px);height:-webkit-calc(100% + 8px);height:calc(100% + 8px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-link--btn{color:#047a9c;padding:4px;position:relative}.deep-encapsulation .pe-link--btn:hover{text-decoration:none}.deep-encapsulation .pe-link--btn:focus{text-decoration:none;outline:0}.deep-encapsulation .pe-link--btn:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:4px;width:-webkit-calc(100% + 8px);width:calc(100% + 8px);height:-webkit-calc(100% + 8px);height:calc(100% + 8px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-link--btn:disabled{color:#6a7070;text-decoration:none;cursor:default}.deep-encapsulation .pe-btn,.deep-encapsulation .pe-btn--btn_large{border-radius:22px;text-decoration:none;position:relative;z-index:1}.deep-encapsulation .pe-btn,.deep-encapsulation .pe-btn--btn_large,.deep-encapsulation .pe-btn--btn_large:active,.deep-encapsulation .pe-btn--btn_large:hover,.deep-encapsulation .pe-btn:active,.deep-encapsulation .pe-btn:hover{color:#505759;background-color:transparent;border:1px solid #c7c7c7}.deep-encapsulation .pe-btn--btn_large:focus,.deep-encapsulation .pe-btn:focus{color:#505759;background-color:transparent;border:1px solid #c7c7c7;outline:0}.deep-encapsulation .pe-btn--btn_large:focus:after,.deep-encapsulation .pe-btn:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:22px;width:-webkit-calc(100% + 12px);width:calc(100% + 12px);height:-webkit-calc(100% + 12px);height:calc(100% + 12px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-btn--btn_large.pe-btn--disabled,.deep-encapsulation .pe-btn--btn_large.pe-btn--disabled:hover,.deep-encapsulation .pe-btn--btn_large:disabled,.deep-encapsulation .pe-btn.pe-btn--disabled,.deep-encapsulation .pe-btn.pe-btn--disabled:hover,.deep-encapsulation .pe-btn:disabled{cursor:default;border:#e9e9e9;color:#c7c7c7;background-color:#e9e9e9;-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.deep-encapsulation .pe-btn--btn_large span.btn-overflow,.deep-encapsulation .pe-btn span.btn-overflow{display:inline-block;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align:middle}.deep-encapsulation .pe-btngroup button:first-child{border-top-right-radius:0!important;border-bottom-right-radius:0!important}.deep-encapsulation .pe-btngroup button:last-child{border-top-left-radius:0!important;border-bottom-left-radius:0!important}.deep-encapsulation .pe-btngroup button:not(:first-child):not(:last-child){border-radius:0!important}.deep-encapsulation .pe-btn--btn_small{border-radius:22px;text-decoration:none;position:relative;z-index:1}.deep-encapsulation .pe-btn--btn_small,.deep-encapsulation .pe-btn--btn_small:active,.deep-encapsulation .pe-btn--btn_small:focus,.deep-encapsulation .pe-btn--btn_small:hover{color:#505759;background-color:transparent;border:1px solid #c7c7c7}.deep-encapsulation .pe-btn--btn_small:focus{outline:0}.deep-encapsulation .pe-btn--btn_small:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:22px;width:-webkit-calc(100% + 12px);width:calc(100% + 12px);height:-webkit-calc(100% + 12px);height:calc(100% + 12px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-btn--btn_small.pe-btn--disabled,.deep-encapsulation .pe-btn--btn_small.pe-btn--disabled:hover,.deep-encapsulation .pe-btn--btn_small:disabled{cursor:default;border:#e9e9e9;color:#c7c7c7;background-color:#e9e9e9;-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.deep-encapsulation .pe-btn--btn_small span.btn-overflow{display:inline-block;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align:middle}.deep-encapsulation .pe-btn--btn_xlarge{border-radius:22px;text-decoration:none;position:relative;z-index:1}.deep-encapsulation .pe-btn--btn_xlarge,.deep-encapsulation .pe-btn--btn_xlarge:active,.deep-encapsulation .pe-btn--btn_xlarge:focus,.deep-encapsulation .pe-btn--btn_xlarge:hover{color:#505759;background-color:transparent;border:1px solid #c7c7c7}.deep-encapsulation .pe-btn--btn_xlarge:focus{outline:0}.deep-encapsulation .pe-btn--btn_xlarge:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:22px;width:-webkit-calc(100% + 12px);width:calc(100% + 12px);height:-webkit-calc(100% + 12px);height:calc(100% + 12px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-btn--btn_xlarge.pe-btn--disabled,.deep-encapsulation .pe-btn--btn_xlarge.pe-btn--disabled:hover,.deep-encapsulation .pe-btn--btn_xlarge:disabled{cursor:default;border:#e9e9e9;color:#c7c7c7;background-color:#e9e9e9;-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.deep-encapsulation .pe-btn--btn_xlarge span.btn-overflow{display:inline-block;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align:middle}.deep-encapsulation .pe-btn__primary,.deep-encapsulation .pe-btn__primary--btn_large{color:#fff;background-color:#047a9c;border-radius:22px;text-decoration:none;border:1px solid #047a9c;position:relative;z-index:1}.deep-encapsulation .pe-btn__primary--btn_large:active,.deep-encapsulation .pe-btn__primary--btn_large:hover,.deep-encapsulation .pe-btn__primary:active,.deep-encapsulation .pe-btn__primary:hover{color:#fff;background-color:#005a70;border:1px solid #005a70}.deep-encapsulation .pe-btn__primary--btn_large:focus,.deep-encapsulation .pe-btn__primary:focus{color:#fff;background-color:#005a70;border:1px solid #005a70;outline:0}.deep-encapsulation .pe-btn__primary--btn_large:focus:after,.deep-encapsulation .pe-btn__primary:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:22px;width:-webkit-calc(100% + 12px);width:calc(100% + 12px);height:-webkit-calc(100% + 12px);height:calc(100% + 12px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-btn__primary--btn_large.pe-btn--disabled,.deep-encapsulation .pe-btn__primary--btn_large.pe-btn--disabled:hover,.deep-encapsulation .pe-btn__primary--btn_large:disabled,.deep-encapsulation .pe-btn__primary.pe-btn--disabled,.deep-encapsulation .pe-btn__primary.pe-btn--disabled:hover,.deep-encapsulation .pe-btn__primary:disabled{cursor:default;-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.deep-encapsulation .pe-btn__primary--btn_large span.btn-overflow,.deep-encapsulation .pe-btn__primary span.btn-overflow{display:inline-block;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align:middle}.deep-encapsulation .pe-btn__primary--btn_small{color:#fff;background-color:#047a9c;border-radius:22px;text-decoration:none;border:1px solid #047a9c;position:relative;z-index:1}.deep-encapsulation .pe-btn__primary--btn_small:active,.deep-encapsulation .pe-btn__primary--btn_small:focus,.deep-encapsulation .pe-btn__primary--btn_small:hover{color:#fff;background-color:#005a70;border:1px solid #005a70}.deep-encapsulation .pe-btn__primary--btn_small:focus{outline:0}.deep-encapsulation .pe-btn__primary--btn_small:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:22px;width:-webkit-calc(100% + 12px);width:calc(100% + 12px);height:-webkit-calc(100% + 12px);height:calc(100% + 12px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-btn__primary--btn_small.pe-btn--disabled,.deep-encapsulation .pe-btn__primary--btn_small.pe-btn--disabled:hover,.deep-encapsulation .pe-btn__primary--btn_small:disabled{cursor:default;-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.deep-encapsulation .pe-btn__primary--btn_small span.btn-overflow{display:inline-block;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align:middle}.deep-encapsulation .pe-btn__primary--btn_xlarge{color:#fff;background-color:#047a9c;border-radius:22px;text-decoration:none;border:1px solid #047a9c;position:relative;z-index:1}.deep-encapsulation .pe-btn__primary--btn_xlarge:active,.deep-encapsulation .pe-btn__primary--btn_xlarge:focus,.deep-encapsulation .pe-btn__primary--btn_xlarge:hover{color:#fff;background-color:#005a70;border:1px solid #005a70}.deep-encapsulation .pe-btn__primary--btn_xlarge:focus{outline:0}.deep-encapsulation .pe-btn__primary--btn_xlarge:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:22px;width:-webkit-calc(100% + 12px);width:calc(100% + 12px);height:-webkit-calc(100% + 12px);height:calc(100% + 12px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-btn__primary--btn_xlarge.pe-btn--disabled,.deep-encapsulation .pe-btn__primary--btn_xlarge.pe-btn--disabled:hover,.deep-encapsulation .pe-btn__primary--btn_xlarge:disabled{cursor:default;-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.deep-encapsulation .pe-btn__primary--btn_xlarge span.btn-overflow{display:inline-block;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align:middle}.deep-encapsulation .pe-btn__cta,.deep-encapsulation .pe-btn__cta--btn_large{color:#252525;background-color:#ffb81c;border-radius:22px;text-decoration:none;border:1px solid #ffb81c;position:relative;z-index:1}.deep-encapsulation .pe-btn__cta--btn_large:active,.deep-encapsulation .pe-btn__cta--btn_large:hover,.deep-encapsulation .pe-btn__cta:active,.deep-encapsulation .pe-btn__cta:hover{color:#252525;background-color:#ff9a19;border:1px solid #ff9a19}.deep-encapsulation .pe-btn__cta--btn_large:focus,.deep-encapsulation .pe-btn__cta:focus{color:#252525;background-color:#ff9a19;border:1px solid #ff9a19;outline:0}.deep-encapsulation .pe-btn__cta--btn_large:focus:after,.deep-encapsulation .pe-btn__cta:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:22px;width:-webkit-calc(100% + 12px);width:calc(100% + 12px);height:-webkit-calc(100% + 12px);height:calc(100% + 12px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-btn__cta--btn_large.pe-btn--disabled,.deep-encapsulation .pe-btn__cta--btn_large.pe-btn--disabled:hover,.deep-encapsulation .pe-btn__cta--btn_large:disabled,.deep-encapsulation .pe-btn__cta.pe-btn--disabled,.deep-encapsulation .pe-btn__cta.pe-btn--disabled:hover,.deep-encapsulation .pe-btn__cta:disabled{cursor:default;-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.deep-encapsulation .pe-btn__cta--btn_large span.btn-overflow,.deep-encapsulation .pe-btn__cta span.btn-overflow{display:inline-block;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align:middle}.deep-encapsulation .pe-btn__cta--btn_small{color:#252525;background-color:#ffb81c;border-radius:22px;text-decoration:none;border:1px solid #ffb81c;position:relative;z-index:1}.deep-encapsulation .pe-btn__cta--btn_small:active,.deep-encapsulation .pe-btn__cta--btn_small:focus,.deep-encapsulation .pe-btn__cta--btn_small:hover{color:#252525;background-color:#ff9a19;border:1px solid #ff9a19}.deep-encapsulation .pe-btn__cta--btn_small:focus{outline:0}.deep-encapsulation .pe-btn__cta--btn_small:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:22px;width:-webkit-calc(100% + 12px);width:calc(100% + 12px);height:-webkit-calc(100% + 12px);height:calc(100% + 12px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-btn__cta--btn_small.pe-btn--disabled,.deep-encapsulation .pe-btn__cta--btn_small.pe-btn--disabled:hover,.deep-encapsulation .pe-btn__cta--btn_small:disabled{cursor:default;-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.deep-encapsulation .pe-btn__cta--btn_small span.btn-overflow{display:inline-block;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align:middle}.deep-encapsulation .pe-btn__cta--btn_xlarge{color:#252525;background-color:#ffb81c;border-radius:22px;text-decoration:none;border:1px solid #ffb81c;position:relative;z-index:1}.deep-encapsulation .pe-btn__cta--btn_xlarge:active,.deep-encapsulation .pe-btn__cta--btn_xlarge:focus,.deep-encapsulation .pe-btn__cta--btn_xlarge:hover{color:#252525;background-color:#ff9a19;border:1px solid #ff9a19}.deep-encapsulation .pe-btn__cta--btn_xlarge:focus{outline:0}.deep-encapsulation .pe-btn__cta--btn_xlarge:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:22px;width:-webkit-calc(100% + 12px);width:calc(100% + 12px);height:-webkit-calc(100% + 12px);height:calc(100% + 12px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-btn__cta--btn_xlarge.pe-btn--disabled,.deep-encapsulation .pe-btn__cta--btn_xlarge.pe-btn--disabled:hover,.deep-encapsulation .pe-btn__cta--btn_xlarge:disabled{cursor:default;-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.deep-encapsulation .pe-btn__cta--btn_xlarge span.btn-overflow{display:inline-block;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align:middle}.deep-encapsulation .pe-btn__tertiary,.deep-encapsulation .pe-btn__tertiary--btn_large{color:#505759;background-color:#e9e9e9;border-radius:22px;text-decoration:none;border:1px solid #e9e9e9;position:relative;z-index:1}.deep-encapsulation .pe-btn__tertiary--btn_large:active,.deep-encapsulation .pe-btn__tertiary--btn_large:hover,.deep-encapsulation .pe-btn__tertiary:active,.deep-encapsulation .pe-btn__tertiary:hover{color:#505759;background-color:#ededed;border:1px solid #ededed}.deep-encapsulation .pe-btn__tertiary--btn_large:focus,.deep-encapsulation .pe-btn__tertiary:focus{color:#505759;background-color:#ededed;border:1px solid #ededed;outline:0}.deep-encapsulation .pe-btn__tertiary--btn_large:focus:after,.deep-encapsulation .pe-btn__tertiary:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:22px;width:-webkit-calc(100% + 12px);width:calc(100% + 12px);height:-webkit-calc(100% + 12px);height:calc(100% + 12px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-btn__tertiary--btn_large.pe-btn--disabled,.deep-encapsulation .pe-btn__tertiary--btn_large.pe-btn--disabled:hover,.deep-encapsulation .pe-btn__tertiary--btn_large:disabled,.deep-encapsulation .pe-btn__tertiary.pe-btn--disabled,.deep-encapsulation .pe-btn__tertiary.pe-btn--disabled:hover,.deep-encapsulation .pe-btn__tertiary:disabled{cursor:default;-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.deep-encapsulation .pe-btn__tertiary--btn_large span.btn-overflow,.deep-encapsulation .pe-btn__tertiary span.btn-overflow{display:inline-block;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align:middle}.deep-encapsulation .pe-btn__tertiary--btn_small{color:#505759;background-color:#e9e9e9;border-radius:22px;text-decoration:none;border:1px solid #e9e9e9;position:relative;z-index:1}.deep-encapsulation .pe-btn__tertiary--btn_small:active,.deep-encapsulation .pe-btn__tertiary--btn_small:focus,.deep-encapsulation .pe-btn__tertiary--btn_small:hover{color:#505759;background-color:#ededed;border:1px solid #ededed}.deep-encapsulation .pe-btn__tertiary--btn_small:focus{outline:0}.deep-encapsulation .pe-btn__tertiary--btn_small:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:22px;width:-webkit-calc(100% + 12px);width:calc(100% + 12px);height:-webkit-calc(100% + 12px);height:calc(100% + 12px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-btn__tertiary--btn_small.pe-btn--disabled,.deep-encapsulation .pe-btn__tertiary--btn_small.pe-btn--disabled:hover,.deep-encapsulation .pe-btn__tertiary--btn_small:disabled{cursor:default;-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.deep-encapsulation .pe-btn__tertiary--btn_small span.btn-overflow{display:inline-block;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align:middle}.deep-encapsulation .pe-btn__tertiary--btn_xlarge{color:#505759;background-color:#e9e9e9;border-radius:22px;text-decoration:none;border:1px solid #e9e9e9;position:relative;z-index:1}.deep-encapsulation .pe-btn__tertiary--btn_xlarge:active,.deep-encapsulation .pe-btn__tertiary--btn_xlarge:focus,.deep-encapsulation .pe-btn__tertiary--btn_xlarge:hover{color:#505759;background-color:#ededed;border:1px solid #ededed}.deep-encapsulation .pe-btn__tertiary--btn_xlarge:focus{outline:0}.deep-encapsulation .pe-btn__tertiary--btn_xlarge:focus:after{border:2px solid #0b73da;content:"";position:absolute;border-radius:22px;width:-webkit-calc(100% + 12px);width:calc(100% + 12px);height:-webkit-calc(100% + 12px);height:calc(100% + 12px);top:-6px;left:-6px;z-index:1}.deep-encapsulation .pe-btn__tertiary--btn_xlarge.pe-btn--disabled,.deep-encapsulation .pe-btn__tertiary--btn_xlarge.pe-btn--disabled:hover,.deep-encapsulation .pe-btn__tertiary--btn_xlarge:disabled{cursor:default;-webkit-box-shadow:none;box-shadow:none;text-decoration:none}.deep-encapsulation .pe-btn__tertiary--btn_xlarge span.btn-overflow{display:inline-block;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;vertical-align:middle}.deep-encapsulation a[class$="--btn_xlarge"],.deep-encapsulation div[class$="--btn_xlarge"]{line-height:40px!important}.deep-encapsulation a[class$="--btn_large"],.deep-encapsulation a[class=pe-btn],.deep-encapsulation a[class=pe-btn__cta],.deep-encapsulation a[class=pe-btn__primary],.deep-encapsulation a[class=pe-btn__tertiary],.deep-encapsulation div[class$="--btn_large"],.deep-encapsulation div[class=pe-btn],.deep-encapsulation div[class=pe-btn__cta],.deep-encapsulation div[class=pe-btn__primary],.deep-encapsulation div[class=pe-btn__tertiary]{line-height:36px!important}.deep-encapsulation a[class$="--btn_small"],.deep-encapsulation div[class$="--btn_small"]{line-height:32px!important}.deep-encapsulation input[class^=pe-btn]:focus{-webkit-box-shadow:none;box-shadow:none;outline:2px solid #0b73da;outline-offset:4px}@-webkit-keyframes fadeIn{0%{opacity:0}to{opacity:.6}}@keyframes fadeIn{0%{opacity:0}to{opacity:.6}}@-webkit-keyframes fadeOut{0%{opacity:.6}to{opacity:0}}@keyframes fadeOut{0%{opacity:.6}to{opacity:0}}@-webkit-keyframes fadeInFast{0%{opacity:0}to{opacity:1}}@keyframes fadeInFast{0%{opacity:0}to{opacity:1}}@-webkit-keyframes fadeOutFast{0%{opacity:1}to{opacity:0}}@keyframes fadeOutFast{0%{opacity:1}to{opacity:0}}@-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(-50%,-100%,0);transform:translate3d(-50%,-100%,0);visibility:visible}to{-webkit-transform:translate3d(-50%,0,0);transform:translate3d(-50%,0,0)}}@keyframes slideInDown{0%{-webkit-transform:translate3d(-50%,-100%,0);transform:translate3d(-50%,-100%,0);visibility:visible}to{-webkit-transform:translate3d(-50%,0,0);transform:translate3d(-50%,0,0)}}@-webkit-keyframes slideOutDown{0%{opacity:1;-webkit-transform:translate3d(-50%,0,0);transform:translate3d(-50%,0,0)}to{opacity:0;visibility:hidden;-webkit-transform:translate3d(-50%,300%,0);transform:translate3d(-50%,300%,0)}}@keyframes slideOutDown{0%{opacity:1;-webkit-transform:translate3d(-50%,0,0);transform:translate3d(-50%,0,0)}to{opacity:0;visibility:hidden;-webkit-transform:translate3d(-50%,300%,0);transform:translate3d(-50%,300%,0)}}@-webkit-keyframes zoomOutRight{40%{opacity:1;-webkit-transform:scale3d(.475,.475,.475) translate3d(-42px,0,0);transform:scale3d(.475,.475,.475) translate3d(-42px,0,0)}to{opacity:0;-webkit-transform:scale(.1) translate3d(2000px,0,0);transform:scale(.1) translate3d(2000px,0,0);-webkit-transform-origin:right center;transform-origin:right center}}@keyframes zoomOutRight{40%{opacity:1;-webkit-transform:scale3d(.475,.475,.475) translate3d(-42px,0,0);transform:scale3d(.475,.475,.475) translate3d(-42px,0,0)}to{opacity:0;-webkit-transform:scale(.1) translate3d(2000px,0,0);transform:scale(.1) translate3d(2000px,0,0);-webkit-transform-origin:right center;transform-origin:right center}}@-webkit-keyframes zoomInLeft{0%{opacity:0;-webkit-transform:scale3d(.1,.1,.1) translate3d(-1000px,0,0);transform:scale3d(.1,.1,.1) translate3d(-1000px,0,0);-webkit-animation-timing-function:cubic-bezier(.55,.055,.675,.19);animation-timing-function:cubic-bezier(.55,.055,.675,.19)}60%{opacity:1;-webkit-transform:scale3d(.475,.475,.475) translate3d(10px,0,0);transform:scale3d(.475,.475,.475) translate3d(10px,0,0);-webkit-animation-timing-function:cubic-bezier(.175,.885,.32,1);animation-timing-function:cubic-bezier(.175,.885,.32,1)}}@keyframes zoomInLeft{0%{opacity:0;-webkit-transform:scale3d(.1,.1,.1) translate3d(-1000px,0,0);transform:scale3d(.1,.1,.1) translate3d(-1000px,0,0);-webkit-animation-timing-function:cubic-bezier(.55,.055,.675,.19);animation-timing-function:cubic-bezier(.55,.055,.675,.19)}60%{opacity:1;-webkit-transform:scale3d(.475,.475,.475) translate3d(10px,0,0);transform:scale3d(.475,.475,.475) translate3d(10px,0,0);-webkit-animation-timing-function:cubic-bezier(.175,.885,.32,1);animation-timing-function:cubic-bezier(.175,.885,.32,1)}}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}.deep-encapsulation .animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:backwards;animation-fill-mode:backwards}@media screen and (prefers-reduced-motion:reduce){.deep-encapsulation .animated{-webkit-animation:unset!important;animation:unset!important}}.deep-encapsulation .fadeIn{-webkit-animation-name:fadeIn;animation-name:fadeIn}.deep-encapsulation .fadeInFast{-webkit-animation-name:fadeInFast;animation-name:fadeInFast;-webkit-animation-duration:.3s;animation-duration:.3s;-webkit-transition-timing-function:ease-in;transition-timing-function:ease-in}.deep-encapsulation .fadeOutFast{-webkit-animation-name:fadeOutFast;animation-name:fadeOutFast;-webkit-animation-duration:.3s;animation-duration:.3s;-webkit-transition-timing-function:ease-out;transition-timing-function:ease-out}.deep-encapsulation .fadeOut{-webkit-animation-name:fadeOut;animation-name:fadeOut}.deep-encapsulation .slideInDown{-webkit-animation-name:slideInDown;animation-name:slideInDown;-webkit-animation-duration:.7s;animation-duration:.7s;-webkit-transition-timing-function:ease-in;transition-timing-function:ease-in}.deep-encapsulation .slideOutDown{-webkit-animation-name:slideOutDown;animation-name:slideOutDown;-webkit-animation-duration:.5s;animation-duration:.5s;-webkit-transition-timing-function:ease-out;transition-timing-function:ease-out}@media (-ms-high-contrast:none){.deep-encapsulation .fadeIn,.deep-encapsulation .fadeOut{-webkit-animation-name:fade;animation-name:fade;-webkit-animation-duration:.5s;animation-duration:.5s}}.deep-encapsulation .zoomInLeft{-webkit-animation-name:zoomInLeft;animation-name:zoomInLeft}.deep-encapsulation .zoomOutRight{-webkit-animation-name:zoomOutRight;animation-name:zoomOutRight}.deep-encapsulation .slideInUp{-webkit-animation-name:slideInUp;animation-name:slideInUp;-webkit-animation-duration:.5s;animation-duration:.5s}.deep-encapsulation *{-webkit-box-sizing:border-box;box-sizing:border-box}.deep-encapsulation .hidden,.deep-encapsulation [hidden]{display:none!important}.deep-encapsulation .hide-overflow{overflow:hidden}.deep-encapsulation .modal-scroll{height:100%;overflow:scroll;-webkit-overflow-scrolling:touch}.deep-encapsulation #modalOverlay{width:100%;height:100%;z-index:90000;background-color:#222;position:fixed;top:0;left:0;margin:0;padding:0;-webkit-transition:all .5s ease-in;transition:all .5s ease-in;opacity:.6}.deep-encapsulation [role=dialog]{border:thin solid #000;background-color:#fff;z-index:300000;position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.deep-encapsulation .scroll-frame{overflow:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;height:400px;width:100%}.deep-encapsulation .header-actions{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;position:absolute;padding:20px;top:0;right:0}.deep-encapsulation .header-actions button{top:0!important;background:none;border:0;cursor:pointer;padding:0;width:44px;text-align:center}.deep-encapsulation .header-actions button img{width:24px;height:24px;margin:0}.deep-encapsulation .pe-modal-container{min-width:474px;max-width:100%;outline:none;background-color:#fff;border-radius:2px;width:auto}.deep-encapsulation .pe-modal-container__minimized{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;position:fixed;bottom:0;right:0;width:507px;height:60px;padding:20px 17px 22px 27px;-webkit-box-shadow:0 2px 4px 0 rgba(0,0,0,.2);box-shadow:0 2px 4px 0 rgba(0,0,0,.2);border:1px solid #c7c7c7;border-bottom:0;border-radius:0;background-color:#fff}@media (min-width:1px) and (max-width:639px){.deep-encapsulation .pe-modal-container__minimized{width:100%}}.deep-encapsulation .header-actions__minimized{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;position:absolute;right:5px;top:-webkit-calc(50% - 12px);top:calc(50% - 12px)}.deep-encapsulation .header-actions__minimized button{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;top:0!important;background:none;border:0;cursor:pointer;padding:0;width:44px;height:24px;vertical-align:middle}.deep-encapsulation .header-actions__minimized button img{width:18px;height:18px;margin:0}.deep-encapsulation .upload-summary{max-width: calc(100% - 30px);font-size:18px;font-weight:400;font-style:normal;font-stretch:normal;line-height:1;letter-spacing:normal;color:#252525;display:inline-block;margin:0;padding:0;}@media (min-width:481px) and (max-width:767px){.deep-encapsulation .pe-modal-container{width:440px}}.deep-encapsulation p{font-size:1rem;line-height:1.57143rem;margin-bottom:.85714rem;margin-top:0;color:#252525}.deep-encapsulation h2,.deep-encapsulation p{font-family:Open Sans,Arial,Helvetica,sans-serif}.deep-encapsulation h2{font-weight:400;display:inline-block;margin:0 0 20px;font-size:24px;padding-left:40px;padding-top:40px;padding-right:40px}.deep-encapsulation .pe-modal-container h2:focus{outline:1px solid #da0474;outline-offset:2px}@media (min-width:1px) and (max-width:480px){.deep-encapsulation .pe-modal-container h2{font-size:20px}.deep-encapsulation .pe-modal-container h2.upload-summary{font-size:16px}}.deep-encapsulation .pe-modal-container .modal-body{margin-bottom:28px;padding:0 40px}.deep-encapsulation .pe-modal-container .actions{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:end;-webkit-justify-content:flex-end;-ms-flex-pack:end;justify-content:flex-end;padding-left:40px;padding-right:40px;padding-bottom:40px}@media (min-width:481px) and (max-width:767px){.deep-encapsulation .pe-modal-container .actions{-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between}}@media (min-width:1px) and (max-width:480px){.deep-encapsulation .pe-modal-container .actions{-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column}}.deep-encapsulation .pe-modal-container .actions button:first-child{-webkit-box-ordinal-group:2;-webkit-order:1;-ms-flex-order:1;order:1;margin-left:1em}@media (min-width:1px) and (max-width:480px){.deep-encapsulation .pe-modal-container .actions button:first-child{margin:.5em 0}}@media (min-width:481px) and (max-width:767px){.deep-encapsulation .pe-modal-container .actions button{width:100%}}.deep-encapsulation .pe-modal-container .actions button#modalOverlay:focus{outline:1px solid #da0474;outline-offset:2px}.deep-encapsulation .pe-btn--btn_large::-moz-focus-inner,.deep-encapsulation .pe-btn::-moz-focus-inner{border:0}.deep-encapsulation .style-scope{text-align:left}.deep-encapsulation button.style-scope{text-align:center}.deep-encapsulation .modal-minimize img{height:18px!important}.deep-encapsulation .pe-icon--btn::-moz-focus-inner{border:0}.deep-encapsulation .pe-icon--btn:focus:after{top:-4px!important;left:-4px!important}.deep-encapsulation .pe-modal-container{width:auto}.deep-encapsulation .pe-modal-container .modal-title{width:100%;padding:20px 40px;border-bottom:1px solid #c7c7c7;margin-bottom:0}.deep-encapsulation .pe-modal-container button.close[aria-label="Close Dialog"]{top:16px}.deep-encapsulation .pe-modal-container .actions{padding:30px 40px;border-top:1px solid #c7c7c7}.deep-encapsulation .pe-modal-container .modal-body{margin-bottom:0}@media (max-width:640px){.deep-encapsulation .pe-modal-container{min-width:auto}.deep-encapsulation button.close[aria-label="Close Dialog"]{right:15px}}:host(:not([footer])) #minimizeButton{display:none!important}\n\t</style>\n  ';
-
-    actionsTemplate.innerHTML = '\n  <div class="actions">\n  <button id="successButton" class="modal-success pe-btn pe-btn__primary--btn_large" data-event="success" disabled>Save</button>\n  <button id="cancelButton" class="modal-cancel pe-btn--btn_large" data-event="cancel" disabled>Cancel</button>\n</div>\n  ';
-
-    overlayButtonTemplate.innerHTML = '\n  <div class="hidden modal-close animated fadeIn" id="modalOverlay" data-event="cancel"></div>\n  ';
-
-    minimizedTemplate.innerHTML = '\n  <div class="deep-encapsulation">\n  <div div class="pe-modal-container pe-modal-container__minimized animated slideInUp" id="modal">\n    <h2 class="upload-summary">Uploading (<span id="done">0</span> done, <span id="progress">0</span> in progress)</h2>\n    <div class="header-actions__minimized">\n      <button id="expandButton" class="pe-icon--btn modal-expand" aria-label="Expand Upload Files" data-event="cancel">\n        <img src="data:image/svg+xml,\t%3Csvg version = \'1.1\' xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M3.5,1 L20.5,1 C21.8807119,1 23,2.11928813 23,3.5 L23,19.5 C23,20.8807119 21.8807119,22 20.5,22 L3.5,22 C2.11928813,22 1,20.8807119 1,19.5 L1,3.5 C1,2.11928813 2.11928813,1 3.5,1 Z M21,6 L21,3.5 C21,3.22385763 20.7761424,3 20.5,3 L3.5,3 C3.22385763,3 3,3.22385763 3,3.5 L3,6 L21,6 Z M21,8 L3,8 L3,19.5 C3,19.7761424 3.22385763,20 3.5,20 L20.5,20 C20.7761424,20 21,19.7761424 21,19.5 L21,8 Z\'/%3E%3C/svg%3E" />\n      </button>\n    </div>\n  </div>\n</div>\n  ';
-
-    template.innerHTML = '\n  <div class="deep-encapsulation">\n  <div class="hidden" id="modalPlaceholder"></div>\n  <div class="pe-modal-container hidden animated slideInDown" id="modal" role="dialog" aria-labelledby="dialogHeading"\n   aria-describedby="dialogDescription" aria-modal="true">\n    <h2 id="dialogHeading" class="modal-title pe-title"></h2>\n    <div class="modal-body" id="dialogDescription">\n      <slot></slot>\n    </div>\n    <div id="headerActions" class="header-actions">\n      <button id="minimizeButton" class="pe-icon--btn modal-minimize" aria-label="Minimize Upload Files" data-event="minimize">\n        <img src="data:image/svg+xml,\t%3Csvg version = \'1.1\' xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 18 18\'%3E%3Cpath d=\'M3,7.75 C2.86192881,7.75 2.75,7.86192881 2.75,8 L2.75,10 C2.75,10.1380712 2.86192881,10.25 3,10.25 L15,10.25 C15.1380712,10.25 15.25,10.1380712 15.25,10 L15.25,8 C15.25,7.86192881 15.1380712,7.75 15,7.75 L3,7.75 Z M3,6 L15,6 C16.1045695,6 17,6.8954305 17,8 L17,10 C17,11.1045695 16.1045695,12 15,12 L3,12 C1.8954305,12 1,11.1045695 1,10 L1,8 C1,6.8954305 1.8954305,6 3,6 Z\'%3E%3C/path%3E%3C/svg%3E\n          " />\n      </button>\n      <button id="closeButton" class="pe-icon--btn close modal-close" aria-label="Close Upload Files" data-event="cancel">\n        <img src="data:image/svg+xml,\t%3Csvg version = \'1.1\' xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M13.4092,11.9999 L17.7082,7.7009 C18.0972,7.3119 18.0972,6.6809 17.7082,6.2919 C17.3192,5.9029 16.6882,5.9029 16.2992,6.2919 L12.0002,10.5909 L7.7012,6.2919 C7.3122,5.9029 6.6812,5.9029 6.2922,6.2919 C5.9022,6.6809 5.9022,7.3119 6.2922,7.7009 L10.5912,11.9999 L6.2922,16.2989 C5.9022,16.6879 5.9022,17.3189 6.2922,17.7079 C6.4862,17.9029 6.7412,17.9999 6.9962,17.9999 C7.2512,17.9999 7.5062,17.9029 7.7012,17.7079 L12.0002,13.4089 L16.2992,17.7079 C16.4932,17.9029 16.7482,17.9999 17.0032,17.9999 C17.2582,17.9999 17.5132,17.9029 17.7082,17.7079 C18.0972,17.3189 18.0972,16.6879 17.7082,16.2989 L13.4092,11.9999 Z\'/%3E%3C/svg%3E\n        " />\n      </button>\n    </div>\n  </div>\n</div>\n  ';
-
-    var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
-
-    if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(styles, 'upload-modal');
-
-    var FOCUSABLE_ELEMENTS = '\n    a[href]:not([tabindex^="-"]):not([inert]),\n    area[href]:not([tabindex^="-"]):not([inert]),\n    input:not([disabled]):not([inert]),\n    select:not([disabled]):not([inert]),\n    textarea:not([disabled]):not([inert]),\n    button:not([disabled]):not([inert]),\n    iframe:not([tabindex^="-"]):not([inert]),\n    audio:not([tabindex^="-"]):not([inert]),\n    video:not([tabindex^="-"]):not([inert]),\n    [contenteditable]:not([tabindex^="-"]):not([inert]),\n    [tabindex]:not([tabindex^="-"]):not([inert])',
-        TAB_KEY = 9,
-        ESCAPE_KEY = 27;
-
-    function getDeepActiveElement() {
-        var a = doc.activeElement;
-        while (a && a.shadowRoot && a.shadowRoot.activeElement) {
-            a = a.shadowRoot.activeElement;
-        }
-        return a;
-    }
-
-    function getFocusableChildren(node) {
-        var filter = Array.prototype.filter,
-            focusableChildren = node.querySelectorAll(FOCUSABLE_ELEMENTS);
-        return filter.call(focusableChildren, function (child) {
-            return !!(child.offsetWidth || child.offsetHeight || child.getClientRects().length);
-        });
-    }
-
-    function setFocusToFirstChild(node) {
-        var focusableChildren = getFocusableChildren(node),
-            focusableChild = node.querySelector('[autofocus]') || focusableChildren[0];
-
-        if (focusableChild) {
-            focusableChild.focus();
-        }
-    }
-
-    function trapTabKey(e) {
-        for (var _len = arguments.length, nodes = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-            nodes[_key - 1] = arguments[_key];
-        }
-
-        var focusableChildren = nodes.reduce(function (acc, n) {
-            return acc.concat(getFocusableChildren(n));
-        }, []),
-            focusedItemIdx = focusableChildren.indexOf(getDeepActiveElement()),
-            lastFocusableIdx = focusableChildren.length - 1;
-
-        if (e.shiftKey && focusedItemIdx === 0) {
-            focusableChildren[lastFocusableIdx].focus();
-            e.preventDefault();
-        }
-
-        if (!e.shiftKey && focusedItemIdx === lastFocusableIdx) {
-            focusableChildren[0].focus();
-            e.preventDefault();
-        }
-    }
-
-    var Modal = function (_HTMLElement) {
-        _inherits(Modal, _HTMLElement);
-
-        _createClass(Modal, null, [{
-            key: 'observedAttributes',
-            get: function get() {
-                return ['footer', 'minimized'];
-            }
-        }]);
-
-        function Modal() {
-            _classCallCheck(this, Modal);
-
-            var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this));
-
-            _this.attachShadow({ mode: 'open' });
-
-            _this.clone = template.content.cloneNode(true);
-            _this.styles = styles.content.cloneNode(true);
-
-            _this.openModal = _this.openModal.bind(_this);
-            _this.closeModal = _this.closeModal.bind(_this);
-
-            _this.bindKeyPress = _this.bindKeyPress.bind(_this);
-            _this.maintainFocus = _this.maintainFocus.bind(_this);
-            _this.minimizeDetail = {};
-            return _this;
-        }
-
-        _createClass(Modal, [{
-            key: 'attributeChangedCallback',
-            value: function attributeChangedCallback(name, oldValue, newValue) {
-                var _this2 = this;
-
-                var minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized'),
-                    modalOverlay = this.shadowRoot.querySelector('#modalOverlay'),
-                    minimizeButton = this.shadowRoot.querySelector('#minimizeButton');
-
-                this.minimizedClone = minimizedTemplate.content.cloneNode(true);
-                // if `this.modal has not been defined yet,
-                // bail out.
-                if (!this.modal) return;
-                if (name === 'footer') {
-                    if (!this.footer) {
-                        var actions = this.modal.querySelector('.actions');
-                        actions.remove();
-                    } else {
-                        this.renderfooter(this.modal);
-                    }
-                }
-
-                if (name === 'minimized') {
-                    if (!this.minimized) {
-                        if (isIE11) {
-                            minimizedContainer.remove();
-                            this.modal.classList.remove('hidden');
-                            modalOverlay.classList.remove('hidden');
-                        } else {
-                            minimizedContainer.remove();
-                            this.modal.classList.remove('hidden');
-                            modalOverlay.classList.remove('hidden');
-                            this.modal.classList.remove('fadeOutFast');
-                            modalOverlay.classList.remove('fadeOutFast');
-                            this.modal.classList.add('fadeInFast');
-                        }
-
-                        setTimeout(function () {
-                            minimizeButton.focus();
-                        }, 250);
-                    } else {
-                        this.addEventListener('xhrLoading', function (event) {
-                            _this2.minimizeDetail = event.detail;
-                            _this2.updateProgress(_this2.minimizeDetail);
-                        });
-                        this.renderMinimized();
-                        if (isIE11) {
-                            modalOverlay.classList.add('hidden');
-                            this.modal.classList.add('hidden');
-                        } else {
-                            this.modal.classList.remove('slideInDown');
-                            this.modal.classList.add('fadeOutFast');
-                            modalOverlay.classList.add('fadeOutFast');
-                        }
-                        this.updateProgress(this.minimizeDetail);
-                    }
-
-                    modalOverlay.addEventListener('animationend', function (event) {
-                        if (event.animationName === 'fadeOutFast') {
-                            modalOverlay.classList.add('hidden');
-                            _this2.modal.classList.add('hidden');
-                        }
-                        event.stopImmediatePropagation();
-                    });
-                }
-            }
-        }, {
-            key: 'connectedCallback',
-            value: function connectedCallback() {
-                var _this3 = this;
-
-                this.shadowRoot.appendChild(this.styles);
-                if (this.minimized) {
-                    this.renderMinimized();
-                } else {
-                    this.renderFull();
-                }
-                this.addEventListener('xhrLoading', function (event) {
-                    console.log(event.detail);
-                    _this3.minimizeDetail = event.detail;
-                    response = event.detail.response;
-                });
-            }
-        }, {
-            key: 'disconnectedCallback',
-            value: function disconnectedCallback() {
-                doc.removeEventListener('keydown', this.bindKeyPress);
-                doc.body.removeEventListener('focus', this.maintainFocus);
-            }
-        }, {
-            key: 'updateProgress',
-            value: function updateProgress(data) {
-                var minimizedContainer = this.shadowRoot.querySelector('.pe-modal-container__minimized');
-                if (minimizedContainer !== null) {
-                    var done = minimizedContainer.querySelector('#done'),
-                        progress = minimizedContainer.querySelector('#progress');
-
-                    done.innerHTML = data.done;
-                    progress.innerHTML = data.progress;
-                }
-            }
-        }, {
-            key: 'renderFull',
-            value: function renderFull() {
-                var _this4 = this;
-
-                // Get component attributes
-                var titleText = this.getAttribute('titleText'),
-                    triggerId = this.getAttribute('triggerId'),
-                    footer = this.hasAttribute('footer');
-
-                // Create elements
-                // create the footer
-                if (footer) {
-                    this.renderfooter(this.clone);
-                }
-
-                var overlayButtonClone = overlayButtonTemplate.content,
-                    overlayEntryPoint = this.clone.querySelector('#modalPlaceholder');
-
-                overlayEntryPoint.parentNode.insertBefore(overlayButtonClone, overlayEntryPoint.nextElementSibling);
-                overlayEntryPoint.remove();
-
-                var title = this.clone.querySelector('#dialogHeading');
-                if (titleText !== null) {
-                    title.innerHTML = titleText;
-                } else {
-                    title.innerHTML = 'Modal Title';
-                }
-
-                // functionality
-                this.body = doc.querySelector('body');
-                this.main = doc.querySelector('main');
-                this.triggerBtn = doc.querySelector('#' + triggerId);
-
-                this.modal = this.clone.querySelector('#modal');
-                this.eventBtns = this.modal.querySelectorAll('[data-event]');
-                this.overlay = this.clone.querySelector('#modalOverlay');
-
-                // When the modal trigger is clicked, open modal
-                if (this.triggerBtn !== null) {
-                    this.triggerBtn.addEventListener('click', this.openModal);
-                }
-
-                this.eventBtns.forEach(function (btn) {
-                    btn.addEventListener('click', function (e) {
-                        var eventType = e.target.dataset.event;
-                        if (btn.id === 'closeButton') {
-                            _this4.closeModal(eventType);
-                        } else if (btn.id === 'minimizeButton') {
-                            _this4.minimized = true;
-                        } else if (btn.id === 'successButton') {
-                            console.log('success');
-                            _this4.closeModal(eventType);
-                        }
-                    });
-                });
-
-                // sets the positioning for modals that are programmatically created and have scrolling content
-                this.setPosition();
-                this.shadowRoot.appendChild(this.clone);
-                doc.addEventListener('keydown', this.bindKeyPress);
-                doc.body.addEventListener('focus', this.maintainFocus, true);
-            }
-        }, {
-            key: 'renderMinimized',
-            value: function renderMinimized() {
-                var _this5 = this;
-
-                this.shadowRoot.appendChild(this.minimizedClone);
-                var expandButton = this.shadowRoot.querySelector('#expandButton');
-                expandButton.addEventListener('click', function (event) {
-                    _this5.minimized = false;
-                });
-                setTimeout(function () {
-                    expandButton.focus();
-                }, 500);
-            }
-        }, {
-            key: 'openModal',
-            value: function openModal(e) {
-                var _this6 = this;
-
-                var thisButton = e.currentTarget,
-                    buttonDisabled = thisButton.getAttribute('disabled');
-                this.style.display = 'block';
-                if (buttonDisabled === null) {
-                    thisButton.setAttribute('disabled', true);
-                    this.main.setAttribute('aria-hidden', 'true');
-                    this.overlay.removeAttribute('disabled');
-                }
-
-                this.overlay.classList.remove('hidden');
-                this.overlay.classList.remove('fadeOut');
-                this.overlay.classList.add('fadeIn');
-
-                this.modal.classList.remove('hidden');
-                this.modal.classList.remove('slideOutDown');
-                this.modal.classList.add('slideInDown');
-                this.open = true;
-
-                setTimeout(function () {
-                    _this6.maintainFocus();
-                }, 250);
-            }
-        }, {
-            key: 'closeModal',
-            value: function closeModal(eventName) {
-                var _this7 = this;
-
-                this.triggerBtn.removeAttribute('disabled');
-                this.main.setAttribute('aria-hidden', 'false');
-                this.body.classList.remove('hide-overflow');
-
-                this.overlay.classList.remove('fadeIn');
-                this.overlay.classList.add('fadeOut');
-
-                this.modal.classList.remove('slideInDown');
-                this.modal.classList.add('slideOutDown');
-
-                setTimeout(function () {
-                    _this7.modal.classList.add('hidden');
-                    _this7.modal.classList.remove('slideOutDown');
-                }, 400);
-
-                setTimeout(function () {
-                    _this7.dispatchEvent(new CustomEvent(eventName, {
-                        bubbles: true,
-                        composed: true,
-                        detail: {
-                            response: response
-                        }
-                    }));
-                }, 500);
-
-                setTimeout(function () {
-                    _this7.overlay.classList.add('hidden');
-                    _this7.overlay.classList.remove('fadeOut');
-                }, 800);
-
-                setTimeout(function () {
-                    _this7.triggerBtn.focus();
-                }, 801);
-
-                this.open = false;
-            }
-        }, {
-            key: 'maintainFocus',
-            value: function maintainFocus() {
-                // if the modal is not open, stop the function
-                if (!this.open) return;
-
-                /**
-                 * The DOM we want to trap focus in. If the consumer passed in
-                 * focusable children, it's the Light DOM; else, it's the Shadow DOM.
-                 */
-                var targetDOM = getFocusableChildren(this).length > 0 ? this : this.modal;
-
-                // if neither the Light DOM nor the Shadow DOM within the modal contain
-                // the active element, set focus back into the targetDOM.
-                if (!this.contains(getDeepActiveElement()) && !this.modal.contains(getDeepActiveElement())) {
-                    setFocusToFirstChild(targetDOM);
-                }
-            }
-        }, {
-            key: 'bindKeyPress',
-            value: function bindKeyPress(e) {
-                if (this.open && e.which === ESCAPE_KEY) {
-                    this.closeModal('cancel');
-                }
-                if (this.open && e.which === TAB_KEY) {
-                    trapTabKey(e, this, this.modal);
-                }
-            }
-        }, {
-            key: 'setPosition',
-            value: function setPosition() {
-                var _this8 = this;
-
-                setTimeout(function () {
-                    var modalPosition = _this8.modal.getBoundingClientRect();
-                    w.scrollTo(0, 0);
-                    if (modalPosition.top <= 0) {
-                        _this8.modal.style.top = '50px';
-                        _this8.modal.style.transform = 'translate(-50%)';
-                        _this8.modal.style.marginBottom = '50px';
-                    }
-                }, 100);
-            }
-        }, {
-            key: 'renderfooter',
-            value: function renderfooter(parentNode) {
-                var _this9 = this;
-
-                var successBtnText = this.getAttribute('successBtnText'),
-                    cancelBtnText = this.getAttribute('cancelBtnText');
-
-                var actionsClone = actionsTemplate.content.cloneNode(true),
-                    cancelButton = actionsClone.querySelector('#cancelButton'),
-                    saveButton = actionsClone.querySelector('#successButton');
-
-                var modalBody = parentNode.querySelector('#dialogDescription');
-
-                if (cancelBtnText !== null) {
-                    cancelButton.innerHTML = cancelBtnText;
-                }
-
-                if (successBtnText !== null) {
-                    saveButton.innerHTML = successBtnText;
-                }
-                saveButton.addEventListener('click', function (event) {
-                    var eventType = event.target.dataset.event;
-                    _this9.closeModal(eventType);
-                });
-                modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
-            }
-        }, {
-            key: 'footer',
-            get: function get() {
-                return this.hasAttribute('footer');
-            },
-            set: function set(value) {
-                var isfooterShown = Boolean(value);
-
-                if (isfooterShown) {
-                    this.setAttribute('footer', '');
-                } else {
-                    this.removeAttribute('footer');
-                }
-            }
-        }, {
-            key: 'minimized',
-            get: function get() {
-                return this.hasAttribute('minimized');
-            },
-            set: function set(value) {
-                var isMinimized = Boolean(value);
-                if (isMinimized) {
-                    this.setAttribute('minimized', '');
-                } else {
-                    this.removeAttribute('minimized');
-                }
-            }
-        }]);
-
-        return Modal;
-    }(HTMLElement);
-
-    customElements.define('upload-modal', Modal);
+  customElements.define('pearson-dropdown', Dropdown);
 })(window, document);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -2672,6 +2736,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
 
         this.attachBtn.addEventListener('click', function () {
+          console.log('click');
           _this2.realUploadInput.click();
         });
 
@@ -3059,6 +3124,376 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   }(HTMLElement);
 
   customElements.define('pearson-footer', Footer);
+})(window, document);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (w, doc) {
+  'use strict';
+
+  // Create a template element
+
+  var template = doc.createElement('template'),
+      expandIconTemplate = doc.createElement('template'),
+      collapseIconTemplate = doc.createElement('template'),
+      notificationTemplate = doc.createElement('template'),
+      overlayTemplate = doc.createElement('template'),
+      menuTemplate = doc.createElement('template'),
+      menuButtonTemplate = doc.createElement('template'),
+      loginButtonTemplate = doc.createElement('template'),
+      whiteLogoTemplate = doc.createElement('template'),
+      colorLogoTemplate = doc.createElement('template');
+
+  template.innerHTML = ' \n <style>\n@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");:host{\n  /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */}:host html{line-height:1.15;-webkit-text-size-adjust:100%}:host body{margin:0}:host main{display:block}:host h1{font-size:2em;margin:.67em 0}:host hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}:host pre{font-family:monospace,monospace;font-size:1em}:host a{background-color:transparent}:host abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}:host b,:host strong{font-weight:bolder}:host code,:host kbd,:host samp{font-family:monospace,monospace;font-size:1em}:host small{font-size:80%}:host sub,:host sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}:host sub{bottom:-.25em}:host sup{top:-.5em}:host img{border-style:none}:host button,:host input,:host optgroup,:host select,:host textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}:host button,:host input{overflow:visible}:host button,:host select{text-transform:none}:host [type=button],:host [type=reset],:host [type=submit],:host button{-webkit-appearance:button}:host [type=button]::-moz-focus-inner,:host [type=reset]::-moz-focus-inner,:host [type=submit]::-moz-focus-inner,:host button::-moz-focus-inner{border-style:none;padding:0}:host [type=button]:-moz-focusring,:host [type=reset]:-moz-focusring,:host [type=submit]:-moz-focusring,:host button:-moz-focusring{outline:1px dotted ButtonText}:host fieldset{padding:.35em .75em .625em}:host legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}:host progress{vertical-align:baseline}:host textarea{overflow:auto}:host [type=checkbox],:host [type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}:host [type=number]::-webkit-inner-spin-button,:host [type=number]::-webkit-outer-spin-button{height:auto}:host [type=search]{-webkit-appearance:textfield;outline-offset:-2px}:host [type=search]::-webkit-search-decoration{-webkit-appearance:none}:host ::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}:host details{display:block}:host summary{display:list-item}:host [hidden],:host template{display:none}@-webkit-keyframes shift{to{background-position:9px 9px}}@keyframes shift{to{background-position:9px 9px}}@-webkit-keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@keyframes bouncedelay{0%,25%,to{transform:scale(1);-webkit-transform:scale(1)}12.5%{transform:scale(1.5);-webkit-transform:scale(1.5)}}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{opacity:1}to{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-150%,0);transform:translate3d(0,-150%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}@-webkit-keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@keyframes slideOutDown{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}to{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);opacity:0;visibility:hidden}}@-webkit-keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@keyframes fadeIn{0%{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}@-webkit-keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}:host .fadeIn,:host .slideInDown{opacity:1!important;visibility:visible!important}:host .fadeOut,:host .slideOutDown{opacity:0;visibility:hidden}:host .slideOutDown{-webkit-animation:slideOutDown .2s ease-in 0s;animation:slideOutDown .2s ease-in 0s}:host .fadeIn{-webkit-animation:fadeIn .3s linear 0s;animation:fadeIn .3s linear 0s}:host .fadeOut{-webkit-animation:fadeOut .2s linear 0s;animation:fadeOut .2s linear 0s}:host .animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}:host .animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s}@media (prefers-reduced-motion){:host .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}}:host html[data-prefers-reduced-motion] .animated{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:none!important;transition:none!important}:host html{font-size:14px}:host *,:host html{-webkit-box-sizing:border-box;box-sizing:border-box}:host body{font-family:Open Sans,Arial,Helvetica,sans-serif}:host body,:host p{font-size:14px;line-height:1.5;font-weight:400}:host strong{font-weight:600}:host a{font-size:14px;color:#047a9c}:host a:hover{color:#03536a;text-decoration:none}:host a:focus{outline:2px solid #0b73da;outline-offset:4px}:host button{cursor:pointer}:host li,:host ul{font-size:14px}:host #main{max-width:1280px;margin:0 auto}@media (-ms-high-contrast:active),(-ms-high-contrast:none){:host iframe .gr-grid-container{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}}:host .gr-grid-container{display:grid;display:-ms-grid;grid-template-columns:repeat(4,1fr);grid-column-gap:16px;grid-row-gap:16px;margin:0 39.5px}@media (min-width:351px){:host .gr-grid-container{margin:0 31.5px}}@media (min-width:399px){:host .gr-grid-container{margin:0 39.5px}}@media (min-width:447px){:host .gr-grid-container{margin:0 79.5px}}@media (min-width:591px){:host .gr-grid-container{grid-template-columns:repeat(8,1fr);margin:0 83.5px}}@media (min-width:727px){:host .gr-grid-container{margin:0 103.5px;grid-column-gap:24px;grid-row-gap:24px}}@media (min-width:887px){:host .gr-grid-container{grid-template-columns:repeat(12,1fr);margin:0 71.5px}}@media (min-width:887px) and (-ms-high-contrast:active),(min-width:887px) and (-ms-high-contrast:none){:host .gr-grid-container>*{margin-right:12px;margin-left:12px;margin-bottom:24px}}@media (min-width:983px){:host .gr-grid-container{margin:0 71.5px}}@media (min-width:1079px){:host .gr-grid-container{margin:0 71.5px}}@media (min-width:1175px){:host .gr-grid-container{margin:0 76px}}:host .gr-grid-container .gr-col-two{grid-column-start:2}:host .gr-grid-container .gr-col-three{grid-column-start:3}:host .gr-grid-container .gr-col-four{grid-column-start:4}:host .gr-grid-container .gr-col-five{display:none}@media (min-width:591px){:host .gr-grid-container .gr-col-five{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:5}}:host .gr-grid-container .gr-col-six{display:none}@media (min-width:591px){:host .gr-grid-container .gr-col-six{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:6}}:host .gr-grid-container .gr-col-seven{display:none}@media (min-width:591px){:host .gr-grid-container .gr-col-seven{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:7}}:host .gr-grid-container .gr-col-eight{display:none}@media (min-width:591px){:host .gr-grid-container .gr-col-eight{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:8}}:host .gr-grid-container .gr-col-nine{display:none}@media (min-width:887px){:host .gr-grid-container .gr-col-nine{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:9}}:host .gr-grid-container .gr-col-ten{display:none}@media (min-width:887px){:host .gr-grid-container .gr-col-ten{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:10}}:host .gr-grid-container .gr-col-eleven{display:none}@media (min-width:887px){:host .gr-grid-container .gr-col-eleven{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:11}}:host .gr-grid-container .gr-col-twelve{display:none}@media (min-width:887px){:host .gr-grid-container .gr-col-twelve{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;grid-column-start:12}}:host .gr-col-span-one{grid-column-end:span 1}:host .gr-col-span-two{grid-column-end:span 2}:host .gr-col-span-three{grid-column-end:span 3}:host .gr-col-span-four{grid-column-end:span 4}@media (min-width:591px){:host .gr-col-span-five{grid-column-end:span 5}}@media (min-width:591px){:host .gr-col-span-six{grid-column-end:span 6}}@media (min-width:591px){:host .gr-col-span-seven{grid-column-end:span 7}}@media (min-width:591px){:host .gr-col-span-eight{grid-column-end:span 8}}@media (min-width:887px){:host .gr-col-span-nine{grid-column-end:span 9}}@media (min-width:887px){:host .gr-col-span-ten{grid-column-end:span 10}}@media (min-width:887px){:host .gr-col-span-eleven{grid-column-end:span 11}}@media (min-width:887px){:host .gr-col-span-twelve{grid-column-end:span 12}}:host .gr-row-one{grid-row-start:1}:host .gr-row-two{grid-row-start:2}:host .gr-row-three{grid-row-start:3}:host .gr-row-four{grid-row-start:4}:host .gr-row-five{grid-row-start:5}:host .gr-row-six{grid-row-start:6}:host .gr-row-seven{grid-row-start:7}:host .gr-row-eight{grid-row-start:8}:host .gr-row-nine{grid-row-start:9}:host .gr-row-ten{grid-row-start:10}:host .gr-row-eleven{grid-row-start:11}:host .gr-row-twelve{grid-row-start:12}:host .gr-row-thirteen{grid-row-start:13}:host .gr-row-fourteen{grid-row-start:14}:host .gr-row-fifteen{grid-row-start:15}:host .gr-row-span-two{grid-row-end:span 2}:host .gr-row-span-three{grid-row-end:span 3}:host .gr-row-span-four{grid-row-end:span 4}:host .gr-row-span-five{grid-row-end:span 5}:host .gr-row-span-six{grid-row-end:span 6}:host .gr-row-span-seven{grid-row-end:span 7}:host .gr-row-span-eight{grid-row-end:span 8}:host .gr-row-span-nine{grid-row-end:span 9}:host .gr-row-span-ten{grid-row-end:span 10}:host .gr-row-span-eleven{grid-row-end:span 11}:host .gr-row-span-twelve{grid-row-end:span 12}:host .no-border{border:0}:host .icon-18{width:18px;height:18px}:host .icon-24{width:24px;height:24px}:host .hidden{display:none!important}:host .gr-h1{font-size:24px;line-height:28px}:host .gr-h1,:host .gr-h2{font-weight:400;margin-top:0}:host .gr-h2{font-size:20px;line-height:26px}:host .gr-h3{font-size:18px;line-height:24px;font-weight:400;margin-top:0}:host .gr-label{font-size:12px;line-height:16px;color:#6a7070;display:block;margin-bottom:4px}:host .gr-meta{font-size:12px;line-height:12px;color:#6a7070}:host .gr-semi-bold{font-weight:600}:host .gr-font-large{font-size:16px;line-height:24px}:host .gr-font-normal{font-size:14px;line-height:20px}:host .gr-btn{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:16px;cursor:pointer;border-radius:22px;position:relative;margin:12px}:host .gr-btn:hover{color:#252525;border:1px solid #252525}:host .gr-btn:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}:host .gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}:host .gr-btn.primary:hover{color:#fff;background-color:#035f79}:host .gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}:host .gr-btn.attention:hover{background-color:#f7aa00}:host .gr-btn.small{min-width:128px;padding:7px 20px;font-size:14px}:host .gr-btn.small:focus:after{padding:18px 21px}:host .gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:16px}:host .gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}:host .gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}:host .gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}:host .gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}:host .gr-btn.no-border,:host .gr-btn.no-border:hover{border:0}:host .gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}:host .gr-header{height:70px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;color:#6a7070;padding:0 1em;background:transparent;grid-column:1/5}@media (min-width:591px){:host .gr-header{grid-column:1/9}}@media (min-width:887px){:host .gr-header{grid-column:1/13}}:host .gr-header.light{background:#f5f5f5}:host .gr-header.light .logo{background-image:url(https://pearsonux.sfo2.digitaloceanspaces.com/PearsonIcon.svg)}:host .gr-header.light .logo,:host .gr-header .logo{background-position:0;background-size:40px;background-repeat:no-repeat}:host .gr-header .logo{background-image:url(https://pearsonux.sfo2.digitaloceanspaces.com/PearsonIconWhite.svg);width:48px;height:64px}:host .gr-header .actions{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}:host .gr-header.light button,:host .gr-header.light button:hover{color:#252525}:host .gr-header.light button:focus .avatar{background:#252525;color:#f5f5f5}:host .gr-header.light button .notification{border-color:#252525}:host #collapse{display:none}:host .gr-header button{color:#fff;margin:0;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;padding:0!important}:host .gr-header button:hover{color:#fff}:host .gr-header button:hover svg{fill:currentColor}:host .gr-header button .notification{width:15px;height:15px;background:#da0474;border-radius:50%;border:3px solid #fff;position:absolute;right:-3px;bottom:-3px}:host .gr-header button:focus{-webkit-box-shadow:none;box-shadow:none}:host .gr-header button:focus .avatar{position:relative;background:#fff;color:#047a9c}:host .gr-header button:focus .avatar+svg{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;border-radius:5px}:host .gr-header button:focus #expand{display:none}:host .gr-header button:focus #collapse{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex}:host .gr-header svg{fill:currentColor}:host .gr-header .notification{color:#da0474}:host .gr-header .notification>svg{right:-37px;position:relative;top:-5px;fill:currentColor;border-radius:50%;border:1px solid #fff}@media (max-width:640px){:host .gr-header .notification>svg{right:-33px}}:host .gr-header .username{margin-left:1em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;font-size:14px}@media (max-width:640px){:host .gr-header .name{display:none}}@media (min-width:640px){:host .gr-header .nameicon{display:none}}:host .gr-header .avatar{margin-right:.5em;position:relative;width:45px;height:45px;border:3px solid #fff;border-radius:50%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center}:host .gr-header .avatar span{font-weight:700}:host .gr-header.light .avatar{border:3px solid #252525}:host .gr-header .avatar img{height:25px;width:25px;border-radius:50%}:host .gr-header .avatar+.name+.nameicon{display:none}:host .header-menu{border:1px solid #efefef;border-radius:8px;width:320px;padding:24px}@media (min-width:591px){:host .header-menu{width:360px}}:host .header-menu ul{margin:0;padding:0;list-style-type:none}:host .header-btn{width:100%;background:none;border:0;margin:0;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;padding:0;border-radius:0}:host .header-btn:hover{border:0}:host .header-btn:focus{outline:0;-webkit-box-shadow:0 0 0 11px #fff,0 0 0 13px #1977d4;box-shadow:0 0 0 11px #fff,0 0 0 13px #1977d4;border-radius:5px}:host .header-btn .icon svg{fill:#6a7070}:host .header-btn .text{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:start;-webkit-align-items:flex-start;-ms-flex-align:start;align-items:flex-start}@-webkit-keyframes fadeInLight{0%{opacity:0;visibility:hidden}to{opacity:.4;visibility:visible}}@keyframes fadeInLight{0%{opacity:0;visibility:hidden}to{opacity:.4;visibility:visible}}:host .animateInLight{-webkit-animation-name:fadeInLight;animation-name:fadeInLight;-webkit-animation-duration:4s;animation-duration:4s}@keyframes slideInDown{0%{-webkit-transform:translate3d(0,-15%,0);transform:translate3d(0,-15%,0);opacity:0;visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1;visibility:visible}}:host .slideInDown{-webkit-animation:slideInDown .3s ease-in-out 0s;animation:slideInDown .3s ease-in-out 0s}:host #main{position:relative}:host .actions button{font-family:Open Sans,Arial,Helvetica,sans-serif;font-weight:400!important;background:none;border:0}:host .gr-header.open button .avatar{position:relative;background:#fff;color:#047a9c}:host .header-menu{font-family:Open Sans,Arial,Helvetica,sans-serif;width:360px;z-index:10000000;background:#fff;position:absolute;right:0}:host .header-menu li{padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid #c7c7c7}:host .header-menu li:last-child{border-bottom:0;margin:0;padding:0}:host .console-link:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;border-radius:5px}:host .gr-header .logo{width:49px;height:56px;background-position:5px!important}:host #loginToPearson{border:1px solid #6a7070;padding:8px 24px!important}:host .transparent #loginToPearson{border:1px solid #fff;padding:8px 24px!important}:host #loginToPearson:hover{border:1px solid #252525}:host .transparent #loginToPearson:hover{border:1px solid #cdcdcd}:host #loginToPearson:focus{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}:host .gr-header .initials{text-transform:uppercase;font-weight:700}:host .gr-btn:focus-visible{outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}:host .gr-header .logo{background-image:none!important}:host .gr-header img{height:50px;margin-top:5px}:host .gr-header .group{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}:host .gr-header .group a{margin-right:16px}:host .gr-btn.icon-btn-24 svg{margin-right:4px}:host .gr-btn:focus{outline:1px solid transparent!important}:host .gr-header .avatar{border:1px solid}:host .gr-header.open button .avatar,:host .gr-header button:focus .avatar{color:#252525}:host .gr-header.light .avatar,:host .gr-header.light button .notification{border:1px solid #252525}:host .gr-header button .notification{height:12px;width:12px;border:1px solid #fff;right:0;bottom:0}\n\n\n</style>\n     <div id="main">\n         <header class="gr-header transparent">\n         <div class="group">\n                    <a class="console-link" href="https://console.pearson.com/console/home"> \n\n           </a>\n           <slot></slot>\n        </div>\n\n            <div class="actions">\n  \n            </div>\n          </header>\n      </div>\n';
+
+  whiteLogoTemplate.innerHTML = '\n       <img src="https://pearsonux.sfo2.digitaloceanspaces.com/PearsonIconWhite.svg" alt="Pearson"/>\n  ';
+
+  colorLogoTemplate.innerHTML = '\n         <img src="https://pearsonux.sfo2.digitaloceanspaces.com/PearsonIcon.svg" alt="Pearson" />\n  ';
+
+  expandIconTemplate.innerHTML = '\n  \t<svg focusable="false" class="icon-24" aria-hidden="true">\n  \t    <path d="M8.09674611,10 L15.8979188,10 C16.5051081,10 16.9973323,10.4907428 16.9973323,11.0961048 C16.9973323,11.390812 16.8782997,11.6731038 16.6670916,11.8792872 L12.7665053,15.6870775 C12.3391074,16.1043075 11.6555575,16.1043075 11.2281596,15.6870775 L7.32757328,11.8792872 C6.89372798,11.4557632 6.88639729,10.7617864 7.31119972,10.3292468 C7.51800543,10.1186744 7.80114936,10 8.09674611,10 Z"></path>\n\t\t</svg>\n  ';
+
+  collapseIconTemplate.innerHTML = '\n  \t\t<svg focusable="false" class="icon-24" aria-hidden="true">\n  \t    <path d="M8.09674611,15 C7.80114936,15 7.51800543,14.8813256 7.31119972,14.6707532 C6.88639729,14.2382136 6.89372798,13.5442368 7.32757328,13.1207128 L11.2281596,9.31292251 C11.6555575,8.8956925 12.3391074,8.8956925 12.7665053,9.31292251 L16.6670916,13.1207128 C16.8782997,13.3268962 16.9973323,13.609188 16.9973323,13.9038952 C16.9973323,14.5092572 16.5051081,15 15.8979188,15 L8.09674611,15 Z"></path>\n      </svg>\n  ';
+
+  notificationTemplate.innerHTML = '\n       <span class="notification"></span> \n  ';
+
+  overlayTemplate.innerHTML = ' \n    <div id="headerOverlay" aria-hidden="true" class="overlay animateInLight" style="\n        position:fixed;\n        height:100%;\n        width:100%;\n        background-color: #252525;\n        top:0;       \n        opacity:.4;\n     "></div>\n  ';
+
+  menuTemplate.innerHTML = '\n  <div class="header-menu slideInDown">\n    <ul>\n      <li>\n        <button id="logout" class="gr-btn header-btn">\n          <div class="text">\n            <span class="gr-font-large">Log out</span>\n            <span class="gr-meta">Sign out of all Pearson products</span>\n          </div>\n          <div class="icon">\n          <svg focusable="false" class="icon-24" aria-hidden="true">\n        <path d="M16.7357409,12.6772865 L16.735721,12.6772745 C16.7265641,12.6872407 16.7170283,12.6971852 16.7071068,12.7071068 L9.70710678,19.7071068 C9.31658249,20.0976311 8.68341751,20.0976311 8.29289322,19.7071068 C7.90236893,19.3165825 7.90236893,18.6834175 8.29289322,18.2928932 L14.5857864,12 L8.29289322,5.70710678 C7.90236893,5.31658249 7.90236893,4.68341751 8.29289322,4.29289322 C8.68341751,3.90236893 9.31658249,3.90236893 9.70710678,4.29289322 L16.7071068,11.2928932 C17.0878409,11.6736274 17.0973856,12.2849891 16.7357409,12.6772865 Z"  fill-rule="nonzero"></path>\n      </svg>\n          </div>\n        </button>\n      </li> \n    </ul>\n  </div>\n  ';
+
+  menuButtonTemplate.innerHTML = '\n  <button class="gr-btn icon-btn-24" aria-expanded="false" aria-haspopup="true">\n    <div class="avatar">\n      <span class="initials">DO</span>\n    </div>\n  </button>\n  ';
+
+  loginButtonTemplate.innerHTML = '\n    <button id="loginToPearson" class="gr-btn">Sign in</button>\n  ';
+
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-header');
+
+  /** Any helper functions that do not need to be part of the class
+   * can be declared here, before the class is defined.
+   */
+
+  function getInitials(string) {
+    if (string !== null && string !== undefined) {
+      return string.match(/\b(\w)/g).join('');
+    } else {
+      return;
+    }
+  }
+
+  var Header = function (_HTMLElement) {
+    _inherits(Header, _HTMLElement);
+
+    _createClass(Header, [{
+      key: 'loggedIn',
+      get: function get() {
+        return this.hasAttribute('loggedin');
+      }
+    }, {
+      key: 'name',
+      get: function get() {
+        return this.getAttribute('name');
+      }
+    }, {
+      key: 'theme',
+      get: function get() {
+        return this.getAttribute('theme');
+      },
+      set: function set(color) {
+        this.setAttribute('theme', color);
+      }
+    }, {
+      key: 'notifications',
+      get: function get() {
+        return this.getAttribute('notifications');
+      },
+      set: function set(number) {
+        this.setAttribute('notifications', number);
+      }
+    }, {
+      key: 'open',
+      get: function get() {
+        return this.hasAttribute('open');
+      },
+      set: function set(bool) {
+        this.setAttribute('open', bool);
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['open', 'notifications', 'theme', 'name', 'loggedin'];
+      }
+    }]);
+
+    function Header() {
+      _classCallCheck(this, Header);
+
+      var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this));
+
+      _this.attachShadow({ mode: 'open' });
+      var clone = template.content.cloneNode(true);
+
+      _this.header = clone.querySelector('.gr-header');
+      _this.button = clone.querySelector('.gr-header button');
+
+      /** After all this, we can append our clone to the shadowRoot */
+      _this.shadowRoot.appendChild(clone);
+
+      _this.renderMenu = _this.renderMenu.bind(_this);
+      _this.renderLoggedIn = _this.renderLoggedIn.bind(_this);
+      _this.renderLoggedOut = _this.renderLoggedOut.bind(_this);
+      return _this;
+    }
+
+    _createClass(Header, [{
+      key: 'renderMenu',
+      value: function renderMenu() {
+        var _this2 = this;
+
+        var expandClone = expandIconTemplate.content.cloneNode(true);
+        this.avatar = this.shadowRoot.querySelector('.gr-header button .avatar');
+        this.button = this.shadowRoot.querySelector('.gr-header button');
+        this.initalNode = this.avatar.querySelector('.initials');
+        this.initials = getInitials(this.name);
+        this.initalNode.innerHTML = this.initials;
+
+        if (!this.open) {
+          this.button.appendChild(expandClone);
+        }
+
+        this.button.addEventListener('click', function (event) {
+
+          if (!_this2.open) {
+
+            _this2.open = true;
+            // add keyboard accessibility for buttons
+
+            var headerMenu = _this2.shadowRoot.querySelector('.header-menu'),
+                focusableItems = headerMenu.querySelectorAll('button'),
+                firstFocusableItem = focusableItems[0],
+                lastFocusableItem = focusableItems[focusableItems.length - 1];
+
+            headerMenu.addEventListener('animationend', function (event) {
+              firstFocusableItem.focus();
+            });
+
+            focusableItems.forEach(function (button, index) {
+              button.setAttribute('data-index', index);
+              button.addEventListener('keydown', function (event) {
+                var nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
+                    prevButton = parseInt(event.target.getAttribute('data-index')) - 1;
+
+                if (event.key === 'ArrowUp') {
+                  event.preventDefault();
+                  if (_this2.shadowRoot.activeElement === firstFocusableItem) {
+                    lastFocusableItem.focus();
+                  } else {
+                    focusableItems[prevButton].focus();
+                  }
+                }
+
+                if (event.key === 'ArrowDown') {
+                  event.preventDefault();
+                  if (_this2.shadowRoot.activeElement === lastFocusableItem) {
+                    firstFocusableItem.focus();
+                  } else {
+                    focusableItems[nextButton].focus();
+                  }
+                }
+
+                if (event.key === 'Home') {
+                  firstFocusableItem.focus();
+                }
+
+                if (event.key === 'End') {
+                  lastFocusableItem.focus();
+                }
+
+                if (event.key === 'Escape') {
+                  _this2.removeAttribute('open');
+                  _this2.button.focus();
+                }
+              });
+            });
+          } else {
+            _this2.removeAttribute('open');
+            console.log(_this2.button);
+          }
+        });
+      }
+    }, {
+      key: 'renderLoggedIn',
+      value: function renderLoggedIn() {
+        var loginButton = this.shadowRoot.querySelector('.gr-header .actions button'),
+            menuButtonClone = menuButtonTemplate.content.cloneNode(true),
+            menuButtonTarget = this.shadowRoot.querySelector('.gr-header .actions');
+
+        if (loginButton) {
+          loginButton.remove();
+        }
+
+        menuButtonTarget.appendChild(menuButtonClone);
+        this.renderMenu();
+      }
+    }, {
+      key: 'renderLoggedOut',
+      value: function renderLoggedOut() {
+        var loginButtonClone = loginButtonTemplate.content.cloneNode(true),
+            loginButtonTarget = this.shadowRoot.querySelector('.gr-header .actions'),
+            menuButton = this.shadowRoot.querySelector('.gr-header .actions button');
+
+        if (menuButton) {
+          menuButton.remove();
+        }
+
+        loginButtonTarget.appendChild(loginButtonClone);
+        var loginButton = this.shadowRoot.querySelector('.gr-header .actions button');
+
+        loginButton.addEventListener('click', function (event) {
+          location.href = "https://console.pearson.com/console/home";
+        });
+      }
+    }, {
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        var whiteLogo = whiteLogoTemplate.content.cloneNode(true),
+            colorLogo = colorLogoTemplate.content.cloneNode(true);
+        this.link = this.shadowRoot.querySelector('.gr-header .console-link');
+
+        if (this.theme === 'light') {
+          this.link.appendChild(colorLogo);
+          this.header.classList.remove('transparent');
+          this.header.classList.add('light');
+        } else {
+          this.link.appendChild(whiteLogo);
+        }
+
+        if (this.loggedIn) {
+          this.renderLoggedIn();
+        } else {
+          this.renderLoggedOut();
+        }
+        var notificationClone = notificationTemplate.content.cloneNode(true);
+        if (parseInt(this.notifications, 10) > 0) {
+          var avatar = this.shadowRoot.querySelector('.avatar');
+          avatar.appendChild(notificationClone);
+        }
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        var _this3 = this;
+
+        var mainContent = document.querySelector('#main');
+        if (name === 'loggedin') {
+          if (oldValue !== newValue && oldValue === null) {
+            this.renderLoggedIn();
+          } else {
+            this.renderLoggedOut();
+          }
+        }
+        if (name === 'theme' && newValue === 'light') {
+          this.header.classList.remove('transparent');
+          this.header.classList.add('light');
+        } else if (name === 'theme' && newValue === 'dark') {
+          this.header.classList.remove('light');
+          this.header.classList.add('transparent');
+        }
+        if (name === 'open') {
+          if (newValue === 'true') {
+            var header = this.shadowRoot.querySelector('.gr-header'),
+                icon = this.shadowRoot.querySelector('.gr-header .actions button svg'),
+                collapseIcon = collapseIconTemplate.content.cloneNode(true),
+                overlay = overlayTemplate.content.cloneNode(true),
+                main = this.shadowRoot.querySelector('#main'),
+                menu = menuTemplate.content.cloneNode(true),
+                headerLink = header.querySelector('.console-link');
+
+            this.button.style.zIndex = '10';
+            headerLink.setAttribute('tabindex', -1);
+            main.setAttribute('tabindex', -1);
+            this.button.setAttribute('aria-expanded', true);
+            console.log('open');
+            header.classList.add('open');
+            header.setAttribute('aria-hidden', true);
+            icon.remove();
+            this.button.appendChild(collapseIcon);
+            doc.body.appendChild(overlay);
+            main.appendChild(menu);
+            mainContent.setAttribute('aria-hidden', true);
+            doc.addEventListener('click', function (event) {
+              if (_this3.open) {
+                var target = event.target;
+                do {
+                  if (target === _this3) {
+                    return;
+                  }
+                  target = target.parentNode;
+                } while (target);
+                _this3.removeAttribute('open');
+                _this3.button.focus();
+              }
+            }, true);
+
+            var logoutButton = this.shadowRoot.querySelector('#logout');
+            logoutButton.addEventListener('click', function (event) {
+              _this3.removeAttribute('open');
+              _this3.removeAttribute('loggedin');
+              _this3.dispatchEvent(new CustomEvent('logout', {
+                bubbles: true
+              }));
+            });
+
+            if (this.theme === 'light') {
+              this.avatar.style.background = '#252525';
+              this.avatar.style.color = 'white';
+            }
+          } else if (newValue === null) {
+            var _header = this.shadowRoot.querySelector('.gr-header'),
+                _icon = this.shadowRoot.querySelector('.gr-header .actions button svg'),
+                expandIcon = expandIconTemplate.content.cloneNode(true),
+                _overlay = doc.querySelector('#headerOverlay'),
+                menuNode = this.shadowRoot.querySelector('.header-menu'),
+                _headerLink = _header.querySelector('.console-link'),
+                _main = this.shadowRoot.querySelector('#main');
+
+            if (this.theme === 'light') {
+              this.avatar.style.background = 'transparent';
+              this.avatar.style.color = '#252525';
+            }
+            this.button.style.zIndex = '0';
+
+            _headerLink.removeAttribute('tabindex', -1);
+            _main.removeAttribute('tabindex', -1);
+            console.log(_main);
+            this.button.setAttribute('aria-expanded', false);
+            mainContent.setAttribute('aria-hidden', false);
+            _header.setAttribute('aria-hidden', false);
+            _header.classList.remove('open');
+            _icon.remove();
+            _overlay.remove();
+            this.button.appendChild(expandIcon);
+            menuNode.remove();
+          }
+        }
+        if (name === 'notifications') {
+          var notificationClone = notificationTemplate.content.cloneNode(true);
+          if (parseInt(this.notifications, 10) > 0) {
+            var avatar = this.shadowRoot.querySelector('.avatar');
+            if (avatar !== null) {
+              avatar.appendChild(notificationClone);
+            }
+          }
+        }
+      }
+    }]);
+
+    return Header;
+  }(HTMLElement);
+
+  customElements.define('pearson-header', Header);
 })(window, document);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -3573,1057 +4008,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   // Create a template element
 
-  var component = doc.createElement('template'),
-      liveRegion = doc.createElement('template');
-
-  //Styles must be copied from the css file
-  // and pasted between the style tags below
-  liveRegion.innerHTML = '\n        <div role="alert" aria-live="polite" class="loading-bar-liveregion" id="liveRegion">\n          <!-- insert loaded confirmation message here, visually hidden region -->\n        </div>\n  ';
-
-  component.innerHTML = ' \n    <style>\n@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");.loading-bar-liveregion{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px)}:host .pe-progress-bar{position:relative;padding-bottom:16px}:host .pe-progress-bar .fullbar{width:100%;text-align:center;margin:0;line-height:18px;font-size:14px;font-family:Open Sans,Calibri,Tahoma,sans-serif}:host .pe-progress-bar .fullbar:after{content:"";height:4px;width:100%;position:absolute;bottom:4px;left:0;background-color:#c7c7c7}:host .pe-progress-bar.left-aligned .fullbar{text-align:left}:host .pe-progress-bar.right-aligned .fullbar{text-align:right}:host .pe-progress-bar div[role=progressbar]{height:12px;width:0;position:absolute;left:0;bottom:0;background-color:#19a6a4;-webkit-transition:.2s;transition:.2s;-webkit-animation:shift .2s linear infinite;animation:shift .2s linear infinite}:host .pe-progress-bar.loading div[role=progressbar]{background-image:-webkit-linear-gradient(315deg,#19a6a4 33.33%,#daf0ed 0,#daf0ed 50%,#19a6a4 0,#19a6a4 83.33%,#daf0ed 0,#daf0ed);background-image:linear-gradient(135deg,#19a6a4 33.33%,#daf0ed 0,#daf0ed 50%,#19a6a4 0,#19a6a4 83.33%,#daf0ed 0,#daf0ed);background-size:18px 18px}@-webkit-keyframes shift{to{background-position:9px 9px}}@keyframes shift{to{background-position:9px 9px}}@media screen and (prefers-reduced-motion:reduce){:host .pe-progress-bar div[role=progressbar]{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:unset!important;transition:unset!important}}\n    \n    </style>\n     <div class="pe-progress-bar">\n      <p class="fullbar" id="label">0%</p>\n      <div role="progressbar" aria-valuenow="0" aria-valuemax="100" aria-valuemin="0" id="progress"></div>\n  </div>\n';
-
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(component, 'pearson-progress-bar');
-
-  var ProgressBar = function (_HTMLElement) {
-    _inherits(ProgressBar, _HTMLElement);
-
-    _createClass(ProgressBar, [{
-      key: 'alignment',
-      get: function get() {
-        return this.getAttribute('alignment');
-      }
-    }, {
-      key: 'label',
-      get: function get() {
-        return this.getAttribute('label');
-      }
-    }, {
-      key: 'progress',
-      get: function get() {
-        return parseInt(this.getAttribute('progress'), 10);
-      },
-      set: function set(newValue) {
-        this.setAttribute('progress', newValue);
-      }
-    }, {
-      key: 'type',
-      get: function get() {
-        return this.getAttribute('type');
-      }
-    }, {
-      key: 'max',
-      get: function get() {
-        return parseInt(this.getAttribute('max'), 10);
-      }
-    }, {
-      key: 'titleAlignment',
-      set: function set(alignment) {
-        this.wrapperElement.classList.add(alignment);
-      }
-    }, {
-      key: 'progressBar',
-      set: function set(progress) {
-        this.loadingBar.setAttribute('aria-valuenow', progress);
-        this.loadingBar.setAttribute('style', 'width: ' + progress + '%;');
-        if (this.label === null && this.type !== 'static') {
-          this.labelElement.innerHTML = progress + '%';
-        } else {
-          this.labelElement.innerHTML = this.label;
-        }
-      }
-    }, {
-      key: 'loaderType',
-      set: function set(value) {
-        this.wrapperElement.classList.add(value);
-      }
-    }, {
-      key: 'maxValue',
-      set: function set(value) {
-        this.loadingBar.setAttribute('aria-valuemax', value);
-      }
-    }, {
-      key: 'alertMessage',
-      set: function set(message) {
-        this.liveRegion.innerHTML = message;
-      }
-    }], [{
-      key: 'observedAttributes',
-      get: function get() {
-        return ['progress', 'type', 'max', 'alignment', 'label'];
-      }
-    }]);
-
-    function ProgressBar() {
-      _classCallCheck(this, ProgressBar);
-
-      var _this = _possibleConstructorReturn(this, (ProgressBar.__proto__ || Object.getPrototypeOf(ProgressBar)).call(this));
-
-      _this.attachShadow({ mode: 'open' });
-
-      var componentClone = component.content.cloneNode(true);
-      var liveRegionClone = liveRegion.content.cloneNode(true);
-
-      _this.liveRegion = liveRegionClone.querySelector('#liveRegion');
-
-      _this.loadingBar = componentClone.querySelector('[role=progressbar]');
-      _this.wrapperElement = componentClone.querySelector('.pe-progress-bar');
-      _this.labelElement = componentClone.querySelector('#label');
-
-      _this.shadowRoot.appendChild(liveRegionClone);
-      _this.shadowRoot.appendChild(componentClone);
-      return _this;
-    }
-
-    _createClass(ProgressBar, [{
-      key: 'connectedCallback',
-      value: function connectedCallback() {
-        if (!this.hasAttribute('progress')) {
-          this.setAttribute('progress', '0');
-        }
-
-        this.progressBar = this.progress;
-        this.loaderType = this.type;
-        this.maxValue = this.max;
-        this.titleAlignment = this.alignment;
-      }
-    }, {
-      key: 'attributeChangedCallback',
-      value: function attributeChangedCallback(name, oldValue, newValue) {
-        if (this.type !== 'loading') return;
-
-        if (name === 'progress') {
-          this.progressBar = newValue;
-
-          if (oldValue === '0') {
-            this.alertMessage = 'Starting.';
-          }
-
-          if (this.progress % 20 === 0) {
-            this.alertMessage = this.progress + ' percent loaded.';
-          }
-
-          if (this.progress === 100) {
-            this.alertMessage = 'Finished loading.';
-            this.dispatchEvent(new Event('loaded', {
-              bubbles: true
-            }));
-          }
-        }
-      }
-    }]);
-
-    return ProgressBar;
-  }(HTMLElement);
-
-  customElements.define('pearson-progress-bar', ProgressBar);
-})(window, document);
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-(function (w, doc) {
-  'use strict';
-
-  var template = doc.createElement('template');
-
-  template.innerHTML = ' \n    <style>\n    :focus{-webkit-box-shadow:none;box-shadow:none;outline:2px solid #0b73da;outline-offset:4px}:host(.theme--dark) :focus{outline-color:#fff}*,:after,:before,:host{-webkit-box-sizing:border-box;box-sizing:border-box}:host{display:block;font-family:14px,18px,Open Sans,Calibri,Tahoma,sans-serif;background-color:#fff;color:#6a7070}:host(.theme--dark){color:#d9d9d9}.tabs-wrapper{position:relative;background-color:inherit}:host(.theme--dark) .tabs-wrapper{background-color:#005a70}.tabs,ul{list-style-type:none;padding:0;margin:0}.tab,li{display:inline-block}.tab-button{font-family:inherit;font-size:inherit;line-height:1.28571rem;color:inherit;cursor:pointer;display:block;margin:8px 16px;padding:8px 0;text-decoration:none;background:none;border:0;border-bottom:3px solid transparent}.tab-button::-moz-focus-inner{border:0}.tab-button:hover{color:#252525;border-bottom-color:#c7c7c7}.tab-button.active{color:#252525}:host(.theme--dark) .tab-button:hover{color:#fff;border-bottom-color:#d9d9d9}:host(.theme--dark) .tab-button.active{color:#fff}.tab-slider{height:3px;background-color:#19a6a4;position:absolute;padding:0;margin:0 16px;bottom:8px;-webkit-transition:all .5s ease-in-out;transition:all .5s ease-in-out}::slotted(.panels){padding:1em}\n    </style>\n    <div id="tabs-wrapper" class="tabs-wrapper">\n      <slot name="tabs"></slot>\n      <div id="slider" class="tab-slider"></div>\n    </div>\n    <slot name="panels"></slot>\n';
-
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-tabs');
-
-  var forEach = Array.prototype.forEach;
-  var indexOf = Array.prototype.indexOf;
-
-  var Tabs = function (_HTMLElement) {
-    _inherits(Tabs, _HTMLElement);
-
-    _createClass(Tabs, [{
-      key: 'activeIdx',
-      get: function get() {
-        return parseInt(this.getAttribute('activeIdx'), 10);
-      },
-      set: function set(idx) {
-        return this.setAttribute('activeIdx', idx);
-      }
-    }, {
-      key: 'activeTab',
-      get: function get() {
-        return this.tabs[this.activeIdx];
-      }
-    }, {
-      key: 'activePanel',
-      get: function get() {
-        return this.panels[this.activeIdx];
-      }
-    }], [{
-      key: 'observedAttributes',
-      get: function get() {
-        return ['activeidx', 'activeIdx'];
-      }
-    }]);
-
-    function Tabs() {
-      _classCallCheck(this, Tabs);
-
-      var _this = _possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this));
-
-      _this.attachShadow({ mode: 'open' });
-
-      var clone = template.content.cloneNode(true);
-
-      // These are both assigned in a slotChange
-      _this.tabList = null;
-      _this.tabs = null;
-      _this.panels = null;
-
-      _this.tabsWrapper = clone.querySelector('#tabs-wrapper');
-      _this.slider = clone.querySelector('#slider');
-
-      _this.shadowRoot.appendChild(clone);
-
-      _this.onTabSlotChange = _this.onTabSlotChange.bind(_this);
-      _this.onPanelSlotChange = _this.onPanelSlotChange.bind(_this);
-      _this.onShadowRootClick = _this.onShadowRootClick.bind(_this);
-      _this.onShadowRootKeydown = _this.onShadowRootKeydown.bind(_this);
-      return _this;
-    }
-
-    _createClass(Tabs, [{
-      key: 'attributeChangedCallback',
-      value: function attributeChangedCallback(name, oldValue, newValue) {
-        if (!this.tabs || !this.panels) return;
-
-        if (name === 'activeIdx' || name === 'activeidx') {
-          this.positionSlider();
-          this.setActiveTab();
-        }
-      }
-    }, {
-      key: 'connectedCallback',
-      value: function connectedCallback() {
-        var _shadowRoot$querySele = this.shadowRoot.querySelectorAll('slot'),
-            _shadowRoot$querySele2 = _slicedToArray(_shadowRoot$querySele, 2),
-            tabSlot = _shadowRoot$querySele2[0],
-            panelSlot = _shadowRoot$querySele2[1];
-
-        if (!this.hasAttribute('activeIdx')) {
-          this.setAttribute('activeIdx', '0');
-        }
-
-        this.shadowRoot.addEventListener('click', this.onShadowRootClick, true);
-        this.shadowRoot.addEventListener('keydown', this.onShadowRootKeydown, true);
-
-        tabSlot.addEventListener('slotchange', this.onTabSlotChange);
-        panelSlot.addEventListener('slotchange', this.onPanelSlotChange);
-      }
-    }, {
-      key: 'initTabs',
-      value: function initTabs() {
-        var _this2 = this;
-
-        this.tabs = new Array(this.tabList.children.length);
-
-        var upgradeTab = function upgradeTab(tab, idx) {
-          var textContent = tab.textContent;
-
-          var isActive = idx === _this2.activeIdx;
-
-          var classList = isActive ? 'tab-button active' : 'tab-button';
-          var ariaSelected = isActive ? 'aria-selected="true"' : '';
-          var tabIndex = isActive ? '' : 'tabindex="-1"';
-
-          tab.setAttribute('role', 'presentation');
-          tab.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="' + classList + '"\n            role="tab"\n            aria-controls="panel-' + idx + '"\n            ' + tabIndex + '\n            ' + ariaSelected + '\n          >\n          ' + textContent + '\n          </button>\n        ';
-
-          // Add tab element to this.tabs list
-          // so it can be accessed later.
-          _this2.tabs[idx] = tab.firstElementChild;
-        };
-
-        this.tabList.setAttribute('role', 'tablist');
-
-        forEach.call(this.tabList.children, upgradeTab);
-        this.tabsWrapper.insertBefore(this.tabList, this.slider);
-      }
-    }, {
-      key: 'setActiveTab',
-      value: function setActiveTab() {
-        var _this3 = this;
-
-        forEach.call(this.tabs, function (tab, idx) {
-          var panel = _this3.panels[idx];
-
-          if (idx !== _this3.activeIdx) {
-            tab.classList.remove('active');
-            tab.removeAttribute('aria-selected');
-            tab.setAttribute('tabindex', '-1');
-            panel.hidden = true;
-          } else {
-            tab.classList.add('active');
-            tab.setAttribute('aria-selected', 'true');
-            tab.removeAttribute('tabindex');
-            panel.hidden = false;
-          }
-        });
-
-        this.activeTab.focus();
-      }
-    }, {
-      key: 'initPanels',
-      value: function initPanels() {
-        var _this4 = this;
-
-        forEach.call(this.panels, function (panel, idx) {
-          panel.setAttribute('role', 'tabpanel');
-          panel.id = 'panel-' + idx;
-          panel.hidden = panel !== _this4.activePanel;
-        });
-      }
-    }, {
-      key: 'positionSlider',
-      value: function positionSlider() {
-        var activeTab = this.activeTab;
-
-        var _getBoundingClientRec = this.getBoundingClientRect(),
-            hostLeft = _getBoundingClientRec.left;
-
-        var _activeTab$getBoundin = activeTab.getBoundingClientRect(),
-            tabLeft = _activeTab$getBoundin.left,
-            tabWidth = _activeTab$getBoundin.width;
-
-        var tabMargin = parseInt(w.getComputedStyle(activeTab).getPropertyValue('margin-left').match(/\d+/)[0], 10);
-
-        this.slider.style.left = tabLeft - hostLeft - tabMargin + 'px';
-        this.slider.style.width = tabWidth + 'px';
-      }
-    }, {
-      key: 'onTabSlotChange',
-      value: function onTabSlotChange(e) {
-        var _this5 = this;
-
-        this.tabList = e.target.assignedNodes()[0];
-        if (!this.tabList) return;
-
-        this.initTabs();
-
-        // Slightly delay positioning the slider
-        // so that initTabs has time to finish
-        setTimeout(function () {
-          _this5.positionSlider();
-        }, 50);
-      }
-    }, {
-      key: 'onPanelSlotChange',
-      value: function onPanelSlotChange(e) {
-        this.panels = e.target.assignedNodes()[0].querySelectorAll('[data-panel]');
-
-        if (!this.panels) return;
-
-        this.initPanels();
-      }
-    }, {
-      key: 'onShadowRootClick',
-      value: function onShadowRootClick(e) {
-        if (!e.target.matches('button[id^="tab"]')) return;
-
-        this.activeIdx = indexOf.call(this.tabs, e.target);
-      }
-    }, {
-      key: 'onShadowRootKeydown',
-      value: function onShadowRootKeydown(e) {
-        if (!e.target.matches('button[id^="tab"]')) return;
-
-        var idxMap = {
-          ArrowLeft: this.activeIdx - 1,
-          ArrowRight: this.activeIdx + 1
-        };
-
-        var nextIdx = e.key in idxMap ? idxMap[e.key] : null;
-
-        if (this.tabs[nextIdx]) {
-          e.preventDefault();
-          this.activeIdx = nextIdx;
-        }
-      }
-    }]);
-
-    return Tabs;
-  }(HTMLElement);
-
-  customElements.define('pearson-tabs', Tabs);
-})(window, document);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/* global moment */
-(function (w, doc) {
-  'use strict';
-
-  var isIE11 = !!window.MSInputMethodContext && !!doc.documentMode;
-  var keys = {
-    UP: isIE11 ? 'Up' : 'ArrowUp',
-    DOWN: isIE11 ? 'Down' : 'ArrowDown',
-    ENTER: 'Enter',
-    ESC: isIE11 ? 'Esc' : 'Escape',
-    TAB: 'Tab'
-  };
-
-  var template = doc.createElement('template'),
-      timeItem = doc.createElement('template'),
-      checkIcon = '\n      <svg\n        class="gr-icon"\n        aria-hidden="true"\n        focusable="false"\n        style="width:18px;height:18px;"\n      >\n  \t<path d="M7.63703177,13.7249483 C7.2712246,14.0916839 6.67813399,14.0916839 6.31232681,13.7249483 C6.31087256,13.7235264 5.29821541,12.7082993 3.27435538,10.679267 C2.90854821,10.3125314 2.90854821,9.71793566 3.27435538,9.35120012 C3.64016255,8.98446458 4.23325316,8.98446458 4.59906034,9.35120012 L6.9290522,11.6871052 L13.3583348,4.3207061 C13.6989986,3.93038793 14.2907756,3.89083601 14.6801057,4.2323644 C15.0694358,4.57389279 15.1088876,5.16717165 14.7682238,5.55748981 L7.68563681,13.6724173 C7.67022431,13.6903888 7.65402263,13.7079144 7.63703177,13.7249483 Z"></path>\n      </svg>\n    ',
-      clockIcon = '\n      <svg\n        class="gr-icon"\n        aria-hidden="true"\n        focusable="false"\n        style="width:18px;height:18px;" \n      >\n\t<path d="M9,16.25 C13.0040644,16.25 16.25,13.0040644 16.25,9 C16.25,4.99593556 13.0040644,1.75 9,1.75 C4.99593556,1.75 1.75,4.99593556 1.75,9 C1.75,13.0040644 4.99593556,16.25 9,16.25 Z M9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C13.9705627,0 18,4.02943725 18,9 C18,13.9705627 13.9705627,18 9,18 Z"  fill-rule="nonzero"></path>\n\t<path d="M10,9.59115917 L11.7082195,11.2993787 C12.0972602,11.6884193 12.0972602,12.3191789 11.7082195,12.7082195 C11.3191789,13.0972602 10.6884193,13.0972602 10.2993787,12.7082195 L8.35734629,10.7661871 C8.13887576,10.5827482 8,10.3075922 8,10 L8,5 C8,4.44771525 8.44771525,4 9,4 C9.55228475,4 10,4.44771525 10,5 L10,9.59115917 Z" ></path>      </svg>\n    ',
-      warningIcon = '\n      <svg\n        aria-hidden="true"\n        focusable="false"\n        style="width:18px;height:18px;fill:currentColor" \n      >\n  \t<path d="M10.3203543,1.76322881 L17.7947154,14.7065602 C18.2165963,15.4371302 17.9673988,16.3719805 17.2381172,16.7946067 C17.0059424,16.9291544 16.742459,17 16.4742343,17 L1.52551217,17 C0.682995061,17 0,16.3157983 0,15.4717927 C0,15.2030941 0.0707206291,14.9391453 0.205031086,14.7065602 L7.67939217,1.76322881 C8.10127304,1.03265881 9.03447459,0.78302105 9.76375615,1.20564727 C9.99478499,1.33953088 10.1867068,1.5317918 10.3203543,1.76322881 Z M8.5,13 C8.22385763,13 8,13.2238576 8,13.5 L8,14.5 C8,14.7761424 8.22385763,15 8.5,15 L9.5,15 C9.77614237,15 10,14.7761424 10,14.5 L10,13.5 C10,13.2238576 9.77614237,13 9.5,13 L8.5,13 Z M8.5,7 C8.22385763,7 8,7.22385763 8,7.5 L8,11.5 C8,11.7761424 8.22385763,12 8.5,12 L9.5,12 C9.77614237,12 10,11.7761424 10,11.5 L10,7.5 C10,7.22385763 9.77614237,7 9.5,7 L8.5,7 Z"></path>\n    </svg>';
-
-  timeItem.innerHTML = '\n    <li\n      class="listbox-item"\n      role="option"\n      aria-selected="false"\n      data-time=""\n      data-idx=""\n    >\n\t\t\t\t' + checkIcon + '\n      <span class="time"></span>\n    </li>\n  ';
-
-  template.innerHTML = '\n<style>\ninput:focus{position:relative;outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #0b73da;box-shadow:0 0 0 2px #fff,0 0 0 4px #0b73da;z-index:1}input[disabled]{color:#c7c7c7;background-color:#e9e9e9;cursor:not-allowed}input[readonly]{border-color:transparent;background-color:transparent}ul{list-style-type:none;padding:0;margin:0}svg{vertical-align:top}:host,:host *,:host :after,:host :before{-webkit-box-sizing:border-box;box-sizing:border-box;font:14px/18px Open Sans,Calibri,Tahoma,sans-serif}:host{position:relative;display:inline-block;max-width:400px;color:#252525}.gr-icon{position:absolute;color:#6a7070;pointer-events:none}.timepicker{position:relative}.timepicker .gr-icon{right:14px;top:29px;z-index:2;position:absolute}.timepicker .gr-input{min-width:150px;margin-bottom:4px}.timepicker .gr-input[aria-invalid=true]~.error-msg{display:block}.error-msg:empty{display:none}.listbox-wrapper{position:absolute;width:100%;z-index:999;visibility:hidden}:host([open]) .listbox-wrapper{visibility:visible}.listbox{min-width:220px;width:100%;max-height:300px;border:1px solid #c7c7c7;border-radius:2px;overflow-y:auto;background-color:#fff;visibility:hidden}.listbox-item{cursor:pointer;position:relative;padding:4px 24px}.listbox-item.focused,.listbox-item:hover{background-color:#e9e9e9}.listbox-item.focused{border-radius:4px;-webkit-box-shadow:inset 0 0 0 2px #0b73da;box-shadow:inset 0 0 0 2px #0b73da}.listbox-item>*{pointer-events:none}.listbox-item .gr-icon{display:none;left:5px}.listbox-item.selected .gr-icon{display:block}.hidden{display:none}::-ms-clear{width:0;height:0}*{font-family:Open Sans,sans-serif}*,html{-webkit-box-sizing:border-box;box-sizing:border-box}html{font-size:14px}abbr{text-decoration:none}html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}svg{fill:currentColor}.gr-h1{font-size:24px;line-height:28px}.gr-h1,.gr-h2{font-weight:400;margin-top:0}.gr-h2{font-size:20px;line-height:26px}.gr-h3{font-size:18px;line-height:24px;font-weight:400;margin-top:0}.gr-meta{font-size:12px;line-height:12px;color:#6a7070}.gr-semi-bold{font-weight:600}.gr-font-large{font-size:16px;line-height:24px}.gr-font-normal{font-size:14px;line-height:20px}.gr-btn{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:16px;cursor:pointer;border-radius:22px;position:relative;margin:12px}.gr-btn:hover{color:#252525;border:1px solid #252525}.gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}.gr-btn.primary:hover{color:#fff;background-color:#035f79}.gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}.gr-btn.attention:hover{background-color:#f7aa00}.gr-btn.small{min-width:128px;padding:7px 20px;font-size:14px}.gr-btn.small:focus:after{padding:18px 21px}.gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:16px}.gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}.gr-btn:disabled{background-color:#e9e9e9!important;color:#6a7070!important;border:0!important;cursor:default!important}.gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}.gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}.gr-btn.no-border{border:0}.gr-btn.no-border:hover{border:0}.gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}.gr-input{display:block;margin:4px 0;padding:0 12px;height:36px;color:#252525;border:1px solid #c7c7c7;background:#fff;border-radius:4px;font-size:14px;width:100%;max-width:100%}.gr-input.error{border-color:#db0020}.gr-input[aria-invalid=true]{border-color:#db0020;margin-bottom:0}.gr-input[aria-invalid=true]:focus{-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020;box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020}.gr-input:focus{position:relative;outline:0;-webkit-box-shadow:0 0 0 2px #fff,0 0 0 4px #0b73da;box-shadow:0 0 0 2px #fff,0 0 0 4px #0b73da;z-index:1}.gr-input:disabled{color:#c7c7c7;background-color:#e9e9e9}.gr-input:-moz-read-only{border:0}.gr-input:read-only{border:0}.gr-label{font-size:12px;line-height:16px;color:#6a7070;display:block;margin-bottom:4px}.no-border{border:0}.icon-18{width:18px;height:18px}.icon-24{width:24px;height:24px}button:focus{outline:2px solid #1977d4;outline-offset:2px}.error-msg,.gr-meta.error{color:#db0020;padding-top:3px;font-size:12px;line-height:16px;margin-bottom:0}@-webkit-keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);visibility:visible}}@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:hidden}to{-webkit-transform:translateZ(0);transform:translateZ(0);visibility:visible}}@-webkit-keyframes fadeOutUp{0%{visibility:visible}to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes fadeOutUp{0%{visibility:visible}to{visibility:hidden;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@-webkit-keyframes fadeIn{0%{visibility:hidden;opacity:0}to{opacity:1;visibility:visible}}@keyframes fadeIn{0%{visibility:hidden;opacity:0}to{opacity:1;visibility:visible}}@-webkit-keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes fadeOut{0%{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}@media screen and (prefers-reduced-motion:reduce){.animated{-webkit-animation:unset!important;animation:unset!important}}.animateIn{-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s;visibility:visible}@media (max-width:480px){.animateIn{-webkit-animation-name:slideInUp;animation-name:slideInUp}}.animateOut{-webkit-animation-name:fadeOut;animation-name:fadeOut;-webkit-animation-duration:.2s;animation-duration:.2s;visibility:hidden}@media (max-width:480px){.animateOut{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}}\n</style>\n  <div class="timepicker">\n    <label\n      id="timepicker-label"\n      class="gr-label"\n      for="timepicker-input"\n    >\n      Select time (HH:MM AM/PM)\n    </label>\n    <input \n      type="text" \n      id="timepicker-input"\n      class="gr-input"\n      role="combobox"\n      aria-autocomplete="list"\n      aria-haspopup="listbox"\n      aria-expanded="false"\n      aria-owns="listbox"\n    >\n      ' + clockIcon + ' \n    <p \n      id="timepicker-error"\n      class="error-msg"\n      role="alert"\n      aria-live="assertive"\n    ></p>\n  </div>\n  <div class="listbox-wrapper" role="presentation">\n    <ul\n      id="listbox"\n      class="listbox animated"\n      role="listbox"\n      aria-labelledby="timepicker-label"\n    ></ul>\n  </div>\n';
-
-  function calculate(increments) {
-    var endTime = moment().add(24, 'h'),
-        timeStops = [],
-        startTime = moment().add(increments - moment().minute() % increments, 'm');
-    while (startTime < endTime) {
-      timeStops.push(new moment(startTime));
-      startTime.add(increments, 'm').format('LLL');
-    }
-    return timeStops;
-  }
-
-  var TIME_FORMATS = {
-    '12': /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/,
-    '24': /^([01]\d|2[0-3]):?([0-5]\d)$/
-  };
-
-  function buildTimeEl(time, index) {
-    var li = timeItem.content.cloneNode(true),
-        item = li.querySelector('li'),
-        timeEl = li.querySelector('.time');
-    item.setAttribute('data-time', time);
-    item.setAttribute('data-idx', index);
-    item.id = 'time-' + index;
-    timeEl.innerHTML = time;
-    return li;
-  }
-
-  function isVisible(el) {
-    var rect = el.getBoundingClientRect(),
-        parentRect = el.parentElement.getBoundingClientRect();
-
-    // evaluate if the element is out of bounds
-    // of its parent
-    return rect.top < parentRect.top + parentRect.height && rect.top + rect.height > parentRect.top && rect.bottom < parentRect.bottom && rect.top > parentRect.top;
-  }
-
-  var find = Array.prototype.find;
-
-  w.ShadyCSS && w.ShadyCSS.prepareTemplate(template, 'pearson-timepicker');
-
-  var Timepicker = function (_HTMLElement) {
-    _inherits(Timepicker, _HTMLElement);
-
-    _createClass(Timepicker, [{
-      key: 'open',
-      get: function get() {
-        return this.hasAttribute('open');
-      },
-      set: function set(value) {
-        var isOpen = Boolean(value);
-
-        if (isOpen) {
-          if (this.selectedItem) this.selectedItem.scrollIntoView(true);
-
-          this.setAttribute('open', '');
-        } else {
-          this.removeAttribute('open');
-        }
-      }
-    }, {
-      key: 'increments',
-      get: function get() {
-        return this.getAttribute('increments') || '15';
-      }
-    }, {
-      key: 'hours',
-      get: function get() {
-        return this.getAttribute('hours');
-      }
-    }, {
-      key: 'format',
-      get: function get() {
-        return this.hours === '12' ? 'h:mm A' : 'HH:mm';
-      }
-    }, {
-      key: 'pattern',
-      get: function get() {
-        return TIME_FORMATS[this.hours];
-      }
-
-      // TODO: Ensure validation only happens
-      // if format matches AND time exists in list
-
-    }, {
-      key: 'validity',
-      set: function set(isValid) {
-        var errorMsg = this.errorMsg,
-            input = this.input;
-
-        if (isValid) {
-          input.removeAttribute('aria-invalid');
-          input.removeAttribute('aria-describedby');
-          errorMsg.innerHTML = '';
-        } else {
-          input.setAttribute('aria-invalid', 'true');
-          input.setAttribute('aria-describedby', 'timepicker-error');
-          errorMsg.innerHTML = warningIcon + '\n        Enter a valid time.';
-        }
-      }
-      /**
-       * The currently active listbox item
-       * @type {HTMLElement}
-       */
-
-    }, {
-      key: 'activeItem',
-      get: function get() {
-        return this.activeIdx > -1 ? this.items[this.activeIdx] : null;
-      },
-      set: function set(nextItem) {
-        if (this.activeItem) {
-          this.activeItem.classList.remove('focused');
-          this.activeItem.setAttribute('aria-selected', 'false');
-        }
-
-        if (nextItem) {
-          this.input.setAttribute('aria-activedescendant', 'time-' + nextItem.dataset.idx);
-          nextItem.classList.add('focused');
-          nextItem.setAttribute('aria-selected', 'true');
-
-          this.activeIdx = Number(nextItem.dataset.idx);
-        }
-      }
-    }, {
-      key: 'selectedItem',
-      get: function get() {
-        return this.selectedIdx > -1 ? this.items[this.selectedIdx] : null;
-      },
-      set: function set(nextItem) {
-        if (this.selectedItem) {
-          this.selectedItem.classList.remove('selected');
-        }
-        if (nextItem) {
-          this.input.value = nextItem.dataset.time;
-          this.validity = true;
-          nextItem.classList.add('selected');
-
-          this.selectedIdx = Number(nextItem.dataset.idx);
-
-          if (this.activeItem !== nextItem) {
-            this.activeItem = nextItem;
-          }
-        }
-      }
-    }, {
-      key: 'selectedTime',
-      get: function get() {
-        return this.selectedItem ? this.selectedItem.dataset.time : null;
-      }
-    }], [{
-      key: 'observedAttributes',
-      get: function get() {
-        return ['open', 'readonly', 'disabled'];
-      }
-    }]);
-
-    function Timepicker() {
-      _classCallCheck(this, Timepicker);
-
-      var _this = _possibleConstructorReturn(this, (Timepicker.__proto__ || Object.getPrototypeOf(Timepicker)).call(this));
-
-      _this.attachShadow({ mode: 'open' });
-
-      var clone = template.content.cloneNode(true);
-
-      _this.label = clone.querySelector('#timepicker-label');
-      _this.input = clone.querySelector('#timepicker-input');
-      _this.errorMsg = clone.querySelector('#timepicker-error');
-      _this.listbox = clone.querySelector('#listbox');
-
-      _this.shadowRoot.appendChild(clone);
-
-      _this.activeIdx = -1;
-      _this.selectedIdx = -1;
-      _this.plainTextTimes = [];
-
-      _this.onInputKeydown = _this.onInputKeydown.bind(_this);
-      _this.onInputFocus = _this.onInputFocus.bind(_this);
-      _this.onInputBlur = _this.onInputBlur.bind(_this);
-      _this.onListboxClick = _this.onListboxClick.bind(_this);
-      _this.onDocumentClick = _this.onDocumentClick.bind(_this);
-      return _this;
-    }
-
-    _createClass(Timepicker, [{
-      key: 'attributeChangedCallback',
-      value: function attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'open') {
-          var isOpen = newValue !== null;
-          var activeDescendant = void 0,
-              classToAdd = void 0,
-              classToRemove = void 0;
-
-          if (isOpen) {
-            activeDescendant = this.activeIdx > -1 ? this.activeItem.id : '';
-            classToAdd = 'animateIn';
-            classToRemove = 'animateOut';
-          } else {
-            activeDescendant = '';
-            classToAdd = 'animateOut';
-            classToRemove = 'animateIn';
-          }
-
-          this.input.setAttribute('aria-expanded', isOpen);
-          this.input.setAttribute('aria-activedescendant', activeDescendant);
-
-          this.listbox.classList.remove(classToRemove);
-          this.listbox.classList.add(classToAdd);
-        }
-
-        if (name === 'readonly' || name === 'disabled') {
-          var isTruthy = newValue !== null;
-
-          if (isTruthy) {
-            this.input.setAttribute(name, name);
-          } else {
-            this.input.removeAttribute(name);
-          }
-        }
-      }
-    }, {
-      key: 'connectedCallback',
-      value: function connectedCallback() {
-        var _this2 = this;
-
-        var defaultValue = this.getAttribute('defaultValue');
-        var labelText = this.getAttribute('label') || '';
-
-        // Emsure that IDs are unique since IE does not properly encapsulate them.
-        var inputId = this.input.id + '-' + encodeURIComponent(labelText);
-
-        this.input.id = inputId;
-
-        this.label.setAttribute('for', inputId);
-        this.label.textContent = labelText + ' (' + (this.hours === '12' ? 'HH:MM AM/PM' : 'HH:MM') + ')';
-
-        // The pattern attribute only works with expressions
-        // that do not have slashes around them
-        if (this.pattern !== undefined) {
-          this.input.pattern = this.pattern.toString().slice(1, -1);
-        }
-
-        // TODO: repeat this every time listbox opens
-        // TODO: filter items in list
-        this.times = calculate(this.increments);
-        this.times.forEach(function (time, index) {
-          var text = time.format(_this2.format);
-          _this2.plainTextTimes[index] = text;
-          _this2.listbox.appendChild(buildTimeEl(text, index));
-        });
-
-        this.items = this.listbox.children;
-
-        // Set user-provided initial value if
-        // it passes validation
-        if (this.pattern !== undefined && this.pattern.test(defaultValue) && this.plainTextTimes.indexOf(defaultValue)) {
-          var idx = this.plainTextTimes.indexOf(defaultValue);
-          this.selectedItem = this.items[idx];
-        }
-
-        this.input.addEventListener('focus', this.onInputFocus);
-        this.input.addEventListener('keydown', this.onInputKeydown);
-        this.input.addEventListener('blur', this.onInputBlur);
-
-        this.listbox.addEventListener('click', this.onListboxClick, true);
-
-        doc.addEventListener('click', this.onDocumentClick, true);
-      }
-    }, {
-      key: 'disconnectedCallback',
-      value: function disconnectedCallback() {
-        doc.removeEventListener('click', this.onDocumentClick, true);
-      }
-    }, {
-      key: 'checkSelection',
-      value: function checkSelection() {
-        var _this3 = this;
-
-        var activeItem = this.activeItem;
-
-        if (this.activeIdx === -1 && this.input.value === '') {
-          return;
-        }
-
-        // if the string is different than the selectedItem, use it
-        if (this.input.value !== this.selectedTime || !this.activeItem) {
-          activeItem = find.call(this.items, function (i) {
-            return i.dataset.time.startsWith(_this3.input.value);
-          });
-        }
-
-        this.selectedItem = activeItem;
-
-        this.validity = this.input.checkValidity() && this.input.value === this.selectedTime;
-      }
-    }, {
-      key: 'onInputFocus',
-      value: function onInputFocus() {
-        this.open = true;
-      }
-    }, {
-      key: 'onInputKeydown',
-      value: function onInputKeydown(e) {
-        var items = this.items;
-        var key = e.key;
-        var isDirectionalKey = key === keys.UP || key === keys.DOWN;
-
-        var prevOpen = this.open;
-        var activeIdx = !prevOpen && this.selectedIdx > -1 ? this.selectedIdx : this.activeIdx;
-
-        if (key === keys.ESC) {
-          this.open = false;
-          return;
-        }
-
-        if (!prevOpen && isDirectionalKey) {
-          this.open = true;
-        }
-
-        switch (key) {
-          case keys.UP:
-            if (activeIdx <= 0) {
-              activeIdx = items.length - 1;
-            } else if (prevOpen) {
-              activeIdx--;
-            }
-            break;
-          case keys.DOWN:
-            if (activeIdx === -1 || activeIdx >= items.length - 1) {
-              activeIdx = 0;
-            } else if (prevOpen) {
-              activeIdx++;
-            }
-            break;
-          case keys.ENTER:
-            this.selectedItem = this.activeItem;
-            this.open = false;
-            return;
-          case keys.TAB:
-            this.open = false;
-            return;
-          default:
-            return;
-        }
-        e.preventDefault();
-
-        this.activeItem = this.items[activeIdx];
-
-        if (isDirectionalKey && !isVisible(this.activeItem)) {
-          this.activeItem.scrollIntoView(key === keys.UP);
-        }
-      }
-    }, {
-      key: 'onInputBlur',
-      value: function onInputBlur(e) {
-        this.checkSelection();
-      }
-    }, {
-      key: 'onListboxClick',
-      value: function onListboxClick(e) {
-        var target = e.target;
-
-        if (target && target.nodeName === 'LI') {
-          this.selectedItem = target;
-          this.open = false;
-        }
-      }
-    }, {
-      key: 'onDocumentClick',
-      value: function onDocumentClick(e) {
-        if (e.target === this) return;
-        this.open = false;
-      }
-    }]);
-
-    return Timepicker;
-  }(HTMLElement);
-
-  customElements.define('pearson-timepicker', Timepicker);
-})(window, document);
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-(function (w, doc) {
-  'use strict';
-
-  var SVG_CHECK_SM_18 = '\n    <svg\n      class="pe-icon--check-sm-18"\n      aria-hidden="true"\n      focusable="false"\n      aria-label="on"\n    >\n    <path\n      d="M7.35823097,13.99969 C7.08123097,13.99969 6.81423097,13.88469 6.62523097,13.67969 L4.26623097,11.13469 C3.89123097,10.72869 3.91523097,10.09669 4.32023097,9.72169 C4.72423097,9.34469 5.35623097,9.36869 5.73323097,9.77469 L7.25323097,11.41469 L12.182231,4.42369 C12.501231,3.97269 13.125231,3.86469 13.576231,4.18269 C14.027231,4.50069 14.135231,5.12469 13.817231,5.57569 L8.17523097,13.57569 C8.00223097,13.82269 7.72523097,13.97769 7.42423097,13.99769 C7.40223097,13.99869 7.38023097,13.99969 7.35823097,13.99969"\n    ></path>\n  </svg>\n';
-
-  var SVG_REMOVE_SM_18 = '\n    <svg\n      class="pe-icon--remove-sm-18"\n      aria-hidden="true"\n      focusable="false"\n      aria-label="off"\n    >\n    <path\n      d="M10.4066,9 L13.7086,5.698 C14.0976,5.31 14.0976,4.68 13.7086,4.291 C13.3196,3.903 12.6906,3.903 12.3016,4.291 L8.9996,7.593 L5.6976,4.291 C5.3096,3.903 4.6796,3.903 4.2916,4.291 C3.9026,4.68 3.9026,5.31 4.2916,5.698 L7.5936,9 L4.2916,12.302 C3.9026,12.69 3.9026,13.32 4.2916,13.709 C4.4856,13.903 4.7406,14 4.9946,14 C5.2496,14 5.5036,13.903 5.6976,13.709 L8.9996,10.407 L12.3016,13.709 C12.4966,13.903 12.7506,14 13.0056,14 C13.2596,14 13.5146,13.903 13.7086,13.709 C14.0976,13.32 14.0976,12.69 13.7086,12.302 L10.4066,9 Z"\n    ></path>\n  </svg>\n';
-
-  var template = doc.createElement('template');
-
-  template.innerHTML = '\n  <style>\n  *,:after,:before{-webkit-box-sizing:border-box;box-sizing:border-box}:host{font-size:24px;position:relative;display:block;width:2em;height:1em;padding:0;border:0;border-radius:22px;margin:4px 0;color:#fff;background-color:#a9a9a9;cursor:pointer;-webkit-transition:background .3s;transition:background .3s;overflow:visible;min-width:50px}:host([on]:not([on=false])){background:#047a9c}:host([disabled]:not([disabled=false])){color:#c7c7c7;background-color:#e9e9e9;cursor:not-allowed}:host:before{content:"";background:#fff;display:block;position:absolute;left:3px;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);width:.75em;height:.75em;-webkit-transition:left .3s;transition:left .3s;border-radius:100%}:host([on]:not([on=false])):before{left:27px}:host([disabled]:not([disabled=false])):before{background-color:#c7c7c7}:host(:focus){outline:0}:host(:focus):after{content:"";position:absolute;left:50%;top:50%;width:-webkit-calc(100% + 8px);width:calc(100% + 8px);height:-webkit-calc(100% + 8px);height:calc(100% + 8px);border:2px solid #1977d4;border-radius:22px;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);z-index:1}svg{width:.75em;height:.75em;position:absolute;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);fill:currentColor;pointer-events:none}svg[class*=check]{left:5px}svg[class*=remove]{right:5px}:host(:not([on])) svg[class*=check],:host([on]:not([on=false])) svg[class*=remove]{display:none}@media (prefers-reduced-motion:reduce){:host,:host:before{-webkit-transition:none!important;transition:none!important}}\n  </style>\n  ' + SVG_CHECK_SM_18 + '\n  ' + SVG_REMOVE_SM_18 + '\n  ';
-
-  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-toggle');
-
-  var Toggle = function (_HTMLElement) {
-    _inherits(Toggle, _HTMLElement);
-
-    _createClass(Toggle, [{
-      key: 'on',
-      get: function get() {
-        return this.hasAttribute('on') & this.getAttribute('on') !== 'false';
-      },
-      set: function set(value) {
-        var isOn = Boolean(value);
-        if (isOn) {
-          this.setAttribute('on', '');
-        } else {
-          this.removeAttribute('on');
-        }
-      }
-    }, {
-      key: 'disabled',
-      get: function get() {
-        return this.hasAttribute('disabled') && this.getAttribute('disabled') !== 'false';
-      },
-      set: function set(value) {
-        var isDisabled = Boolean(value);
-        if (isDisabled) {
-          this.setAttribute('disabled', '');
-        } else {
-          this.removeAttribute('disabled');
-        }
-      }
-    }, {
-      key: 'name',
-      get: function get() {
-        return this.getAttribute('name');
-      }
-    }, {
-      key: 'value',
-      get: function get() {
-        return this.getAttribute('value');
-      }
-    }], [{
-      key: 'observedAttributes',
-      get: function get() {
-        return ['on', 'disabled'];
-      }
-    }]);
-
-    function Toggle() {
-      _classCallCheck(this, Toggle);
-
-      var _this = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this));
-
-      _this.attachShadow({ mode: 'open' });
-
-      var clone = template.content.cloneNode(true);
-
-      _this.shadowRoot.appendChild(clone);
-
-      _this.onToggleClick = _this.onToggleClick.bind(_this);
-      _this.onToggleKeyDown = _this.onToggleKeyDown.bind(_this);
-
-      _this.onLabelClick = _this.onLabelClick.bind(_this);
-
-      _this.onDOMLoaded = _this.onDOMLoaded.bind(_this);
-      return _this;
-    }
-
-    _createClass(Toggle, [{
-      key: 'attributeChangedCallback',
-      value: function attributeChangedCallback(name, oldValue, newValue) {
-        var isTruthy = newValue !== 'false';
-        if (name === 'on') {
-          this.setAttribute('aria-checked', isTruthy);
-        }
-        if (name === 'disabled') {
-          this.setAttribute('aria-disabled', isTruthy);
-          if (isTruthy) {
-            this.removeAttribute('tabindex');
-            this.blur();
-          } else {
-            this.setAttribute('tabindex', '0');
-          }
-        }
-      }
-    }, {
-      key: 'connectedCallback',
-      value: function connectedCallback() {
-        // Add attributes required for a11y
-        if (!this.hasAttribute('tabindex') && !this.disabled) {
-          this.setAttribute('tabindex', 0);
-        }
-
-        if (!this.hasAttribute('role')) {
-          this.setAttribute('role', 'switch');
-        }
-
-        if (!this.hasAttribute('aria-checked')) {
-          this.setAttribute('aria-checked', 'false');
-        }
-
-        // Lazily upgrade properties to make sure
-        // observed attributes are handled properly
-        this.upgradeProperty('on');
-        this.upgradeProperty('disabled');
-
-        // Bind listeners to the toggle
-        this.addEventListener('click', this.onToggleClick);
-        this.addEventListener('keydown', this.onToggleKeyDown);
-
-        // If the consumer did not set an `aria-label`,
-        if (!this.hasAttribute('aria-label')) {
-          // We need to find an external one
-          doc.addEventListener('DOMContentLoaded', this.onDOMLoaded, true);
-        }
-      }
-    }, {
-      key: 'disconnectedCallback',
-      value: function disconnectedCallback() {
-        doc.removeEventListener('DOMContentLoaded', this.onDOMLoaded);
-
-        if (this.labelNode) {
-          this.labelNode.removeEventListener('click', this.onLabelClick);
-        }
-      }
-    }, {
-      key: 'onToggleClick',
-      value: function onToggleClick(e) {
-        e.stopPropagation();
-        this.toggleOn();
-      }
-    }, {
-      key: 'onToggleKeyDown',
-      value: function onToggleKeyDown(e) {
-        if (e.altKey) {
-          return;
-        }
-
-        switch (e.key) {
-          case 'Enter':
-          case ' ':
-            e.preventDefault();
-            this.click();
-            return;
-        }
-      }
-
-      // When this label is clicked, we want to
-      // click on this toggle and focus on it
-
-    }, {
-      key: 'onLabelClick',
-      value: function onLabelClick(e) {
-        e.preventDefault();
-
-        if (this.disabled) return;
-
-        this.click();
-        this.focus();
-      }
-    }, {
-      key: 'onDOMLoaded',
-      value: function onDOMLoaded() {
-        this.labelNode = this.findLabelNode();
-
-        // If the external label does not have an ID, we must
-        // ensure that it has one
-
-        if (this.id !== null && this.labelNode !== null) {
-          if (!this.labelNode.id) this.labelNode.id = this.id + 'label';
-        }
-
-        if (this.labelNode !== null) {
-          // This toggle must be labelled by the external label node
-          this.setAttribute('aria-labelledby', this.labelNode.id);
-          // We listen for the external label to be clicked
-          this.labelNode.addEventListener('click', this.onLabelClick);
-        }
-      }
-    }, {
-      key: 'upgradeProperty',
-      value: function upgradeProperty(prop) {
-        if (this.hasOwnProperty(prop)) {
-          var value = this[prop];
-          delete this[prop];
-          this[prop] = value;
-        }
-      }
-    }, {
-      key: 'toggleOn',
-      value: function toggleOn() {
-        if (this.disabled) return;
-
-        this.on = !this.on;
-
-        // The toggle should emit a change event
-        // for the benefit of consumers
-        this.dispatchEvent(new CustomEvent('change', {
-          detail: {
-            on: this.on
-          },
-          bubbles: true
-        }));
-      }
-
-      // Helper function for finding external label node
-
-    }, {
-      key: 'findLabelNode',
-      value: function findLabelNode() {
-        if (this.parentElement.tagName === 'LABEL') {
-          return this.parentElement;
-        }
-        var scope = this.getRootNode();
-        return scope.querySelector('label[for="' + this.id + '"]');
-      }
-    }]);
-
-    return Toggle;
-  }(HTMLElement);
-
-  customElements.define('pearson-toggle', Toggle);
-})(window, document);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-(function (w, doc) {
-  'use strict';
-
-  // Create a template element
-
   var template = doc.createElement('template'),
       numberTemplate = doc.createElement('template'),
       ellipsisTemplate = doc.createElement('template'),
@@ -5045,4 +4429,1065 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   }(HTMLElement);
 
   customElements.define('pearson-pagination', Pagination);
+})(window, document);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (w, doc) {
+  'use strict';
+
+  // Create a template element
+
+  var component = doc.createElement('template'),
+      liveRegion = doc.createElement('template');
+
+  //Styles must be copied from the css file
+  // and pasted between the style tags below
+  liveRegion.innerHTML = '\n        <div role="alert" aria-live="polite" class="loading-bar-liveregion" id="liveRegion">\n          <!-- insert loaded confirmation message here, visually hidden region -->\n        </div>\n  ';
+
+  component.innerHTML = ' \n    <style>\n@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");.loading-bar-liveregion{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px)}:host .pe-progress-bar{position:relative;padding-bottom:16px}:host .pe-progress-bar .fullbar{width:100%;text-align:center;margin:0;line-height:18px;font-size:14px;font-family:Open Sans,Calibri,Tahoma,sans-serif}:host .pe-progress-bar .fullbar:after{content:"";height:4px;width:100%;position:absolute;bottom:4px;left:0;background-color:#c7c7c7}:host .pe-progress-bar.left-aligned .fullbar{text-align:left}:host .pe-progress-bar.right-aligned .fullbar{text-align:right}:host .pe-progress-bar div[role=progressbar]{height:12px;width:0;position:absolute;left:0;bottom:0;background-color:#19a6a4;-webkit-transition:.2s;transition:.2s;-webkit-animation:shift .2s linear infinite;animation:shift .2s linear infinite}:host .pe-progress-bar.loading div[role=progressbar]{background-image:-webkit-linear-gradient(315deg,#19a6a4 33.33%,#daf0ed 0,#daf0ed 50%,#19a6a4 0,#19a6a4 83.33%,#daf0ed 0,#daf0ed);background-image:linear-gradient(135deg,#19a6a4 33.33%,#daf0ed 0,#daf0ed 50%,#19a6a4 0,#19a6a4 83.33%,#daf0ed 0,#daf0ed);background-size:18px 18px}@-webkit-keyframes shift{to{background-position:9px 9px}}@keyframes shift{to{background-position:9px 9px}}@media screen and (prefers-reduced-motion:reduce){:host .pe-progress-bar div[role=progressbar]{-webkit-animation:unset!important;animation:unset!important;-webkit-transition:unset!important;transition:unset!important}}\n    \n    </style>\n     <div class="pe-progress-bar">\n      <p class="fullbar" id="label">0%</p>\n      <div role="progressbar" aria-valuenow="0" aria-valuemax="100" aria-valuemin="0" id="progress"></div>\n  </div>\n';
+
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(component, 'pearson-progress-bar');
+
+  var ProgressBar = function (_HTMLElement) {
+    _inherits(ProgressBar, _HTMLElement);
+
+    _createClass(ProgressBar, [{
+      key: 'alignment',
+      get: function get() {
+        return this.getAttribute('alignment');
+      }
+    }, {
+      key: 'label',
+      get: function get() {
+        return this.getAttribute('label');
+      }
+    }, {
+      key: 'progress',
+      get: function get() {
+        return parseInt(this.getAttribute('progress'), 10);
+      },
+      set: function set(newValue) {
+        this.setAttribute('progress', newValue);
+      }
+    }, {
+      key: 'type',
+      get: function get() {
+        return this.getAttribute('type');
+      }
+    }, {
+      key: 'max',
+      get: function get() {
+        return parseInt(this.getAttribute('max'), 10);
+      }
+    }, {
+      key: 'titleAlignment',
+      set: function set(alignment) {
+        this.wrapperElement.classList.add(alignment);
+      }
+    }, {
+      key: 'progressBar',
+      set: function set(progress) {
+        this.loadingBar.setAttribute('aria-valuenow', progress);
+        this.loadingBar.setAttribute('style', 'width: ' + progress + '%;');
+        if (this.label === null && this.type !== 'static') {
+          this.labelElement.innerHTML = progress + '%';
+        } else {
+          this.labelElement.innerHTML = this.label;
+        }
+      }
+    }, {
+      key: 'loaderType',
+      set: function set(value) {
+        this.wrapperElement.classList.add(value);
+      }
+    }, {
+      key: 'maxValue',
+      set: function set(value) {
+        this.loadingBar.setAttribute('aria-valuemax', value);
+      }
+    }, {
+      key: 'alertMessage',
+      set: function set(message) {
+        this.liveRegion.innerHTML = message;
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['progress', 'type', 'max', 'alignment', 'label'];
+      }
+    }]);
+
+    function ProgressBar() {
+      _classCallCheck(this, ProgressBar);
+
+      var _this = _possibleConstructorReturn(this, (ProgressBar.__proto__ || Object.getPrototypeOf(ProgressBar)).call(this));
+
+      _this.attachShadow({ mode: 'open' });
+
+      var componentClone = component.content.cloneNode(true);
+      var liveRegionClone = liveRegion.content.cloneNode(true);
+
+      _this.liveRegion = liveRegionClone.querySelector('#liveRegion');
+
+      _this.loadingBar = componentClone.querySelector('[role=progressbar]');
+      _this.wrapperElement = componentClone.querySelector('.pe-progress-bar');
+      _this.labelElement = componentClone.querySelector('#label');
+
+      _this.shadowRoot.appendChild(liveRegionClone);
+      _this.shadowRoot.appendChild(componentClone);
+      return _this;
+    }
+
+    _createClass(ProgressBar, [{
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        if (!this.hasAttribute('progress')) {
+          this.setAttribute('progress', '0');
+        }
+
+        this.progressBar = this.progress;
+        this.loaderType = this.type;
+        this.maxValue = this.max;
+        this.titleAlignment = this.alignment;
+      }
+    }, {
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        if (this.type !== 'loading') return;
+
+        if (name === 'progress') {
+          this.progressBar = newValue;
+
+          if (oldValue === '0') {
+            this.alertMessage = 'Starting.';
+          }
+
+          if (this.progress % 20 === 0) {
+            this.alertMessage = this.progress + ' percent loaded.';
+          }
+
+          if (this.progress === 100) {
+            this.alertMessage = 'Finished loading.';
+            this.dispatchEvent(new Event('loaded', {
+              bubbles: true
+            }));
+          }
+        }
+      }
+    }]);
+
+    return ProgressBar;
+  }(HTMLElement);
+
+  customElements.define('pearson-progress-bar', ProgressBar);
+})(window, document);
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (w, doc) {
+  'use strict';
+
+  var template = doc.createElement('template');
+
+  template.innerHTML = ' \n    <style>\n    :focus{-webkit-box-shadow:none;box-shadow:none;outline:2px solid #0b73da;outline-offset:4px}:host(.theme--dark) :focus{outline-color:#fff}*,:after,:before,:host{-webkit-box-sizing:border-box;box-sizing:border-box}:host{display:block;font-family:14px,18px,Open Sans,Calibri,Tahoma,sans-serif;background-color:#fff;color:#6a7070}:host(.theme--dark){color:#d9d9d9}.tabs-wrapper{position:relative;background-color:inherit}:host(.theme--dark) .tabs-wrapper{background-color:#005a70}.tabs,ul{list-style-type:none;padding:0;margin:0}.tab,li{display:inline-block}.tab-button{font-family:inherit;font-size:inherit;line-height:1.28571rem;color:inherit;cursor:pointer;display:block;margin:8px 16px;padding:8px 0;text-decoration:none;background:none;border:0;border-bottom:3px solid transparent}.tab-button::-moz-focus-inner{border:0}.tab-button:hover{color:#252525;border-bottom-color:#c7c7c7}.tab-button.active{color:#252525}:host(.theme--dark) .tab-button:hover{color:#fff;border-bottom-color:#d9d9d9}:host(.theme--dark) .tab-button.active{color:#fff}.tab-slider{height:3px;background-color:#19a6a4;position:absolute;padding:0;margin:0 16px;bottom:8px;-webkit-transition:all .5s ease-in-out;transition:all .5s ease-in-out}::slotted(.panels){padding:1em}\n    </style>\n    <div id="tabs-wrapper" class="tabs-wrapper">\n      <slot name="tabs"></slot>\n      <div id="slider" class="tab-slider"></div>\n    </div>\n    <slot name="panels"></slot>\n';
+
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-tabs');
+
+  var forEach = Array.prototype.forEach;
+  var indexOf = Array.prototype.indexOf;
+
+  var Tabs = function (_HTMLElement) {
+    _inherits(Tabs, _HTMLElement);
+
+    _createClass(Tabs, [{
+      key: 'activeIdx',
+      get: function get() {
+        return parseInt(this.getAttribute('activeIdx'), 10);
+      },
+      set: function set(idx) {
+        return this.setAttribute('activeIdx', idx);
+      }
+    }, {
+      key: 'activeTab',
+      get: function get() {
+        return this.tabs[this.activeIdx];
+      }
+    }, {
+      key: 'activePanel',
+      get: function get() {
+        return this.panels[this.activeIdx];
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['activeidx', 'activeIdx'];
+      }
+    }]);
+
+    function Tabs() {
+      _classCallCheck(this, Tabs);
+
+      var _this = _possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this));
+
+      _this.attachShadow({ mode: 'open' });
+
+      var clone = template.content.cloneNode(true);
+
+      // These are both assigned in a slotChange
+      _this.tabList = null;
+      _this.tabs = null;
+      _this.panels = null;
+
+      _this.tabsWrapper = clone.querySelector('#tabs-wrapper');
+      _this.slider = clone.querySelector('#slider');
+
+      _this.shadowRoot.appendChild(clone);
+
+      _this.onTabSlotChange = _this.onTabSlotChange.bind(_this);
+      _this.onPanelSlotChange = _this.onPanelSlotChange.bind(_this);
+      _this.onShadowRootClick = _this.onShadowRootClick.bind(_this);
+      _this.onShadowRootKeydown = _this.onShadowRootKeydown.bind(_this);
+      return _this;
+    }
+
+    _createClass(Tabs, [{
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        if (!this.tabs || !this.panels) return;
+
+        if (name === 'activeIdx' || name === 'activeidx') {
+          this.positionSlider();
+          this.setActiveTab();
+        }
+      }
+    }, {
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        var _shadowRoot$querySele = this.shadowRoot.querySelectorAll('slot'),
+            _shadowRoot$querySele2 = _slicedToArray(_shadowRoot$querySele, 2),
+            tabSlot = _shadowRoot$querySele2[0],
+            panelSlot = _shadowRoot$querySele2[1];
+
+        if (!this.hasAttribute('activeIdx')) {
+          this.setAttribute('activeIdx', '0');
+        }
+
+        this.shadowRoot.addEventListener('click', this.onShadowRootClick, true);
+        this.shadowRoot.addEventListener('keydown', this.onShadowRootKeydown, true);
+
+        tabSlot.addEventListener('slotchange', this.onTabSlotChange);
+        panelSlot.addEventListener('slotchange', this.onPanelSlotChange);
+      }
+    }, {
+      key: 'initTabs',
+      value: function initTabs() {
+        var _this2 = this;
+
+        this.tabs = new Array(this.tabList.children.length);
+
+        var upgradeTab = function upgradeTab(tab, idx) {
+          var textContent = tab.textContent;
+
+          var isActive = idx === _this2.activeIdx;
+
+          var classList = isActive ? 'tab-button active' : 'tab-button';
+          var ariaSelected = isActive ? 'aria-selected="true"' : '';
+          var tabIndex = isActive ? '' : 'tabindex="-1"';
+
+          tab.setAttribute('role', 'presentation');
+          tab.innerHTML = '\n          <button\n            id="tab-' + idx + '-btn"\n            class="' + classList + '"\n            role="tab"\n            aria-controls="panel-' + idx + '"\n            ' + tabIndex + '\n            ' + ariaSelected + '\n          >\n          ' + textContent + '\n          </button>\n        ';
+
+          // Add tab element to this.tabs list
+          // so it can be accessed later.
+          _this2.tabs[idx] = tab.firstElementChild;
+        };
+
+        this.tabList.setAttribute('role', 'tablist');
+
+        forEach.call(this.tabList.children, upgradeTab);
+        this.tabsWrapper.insertBefore(this.tabList, this.slider);
+      }
+    }, {
+      key: 'setActiveTab',
+      value: function setActiveTab() {
+        var _this3 = this;
+
+        forEach.call(this.tabs, function (tab, idx) {
+          var panel = _this3.panels[idx];
+
+          if (idx !== _this3.activeIdx) {
+            tab.classList.remove('active');
+            tab.removeAttribute('aria-selected');
+            tab.setAttribute('tabindex', '-1');
+            panel.hidden = true;
+          } else {
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+            tab.removeAttribute('tabindex');
+            panel.hidden = false;
+          }
+        });
+
+        this.activeTab.focus();
+      }
+    }, {
+      key: 'initPanels',
+      value: function initPanels() {
+        var _this4 = this;
+
+        forEach.call(this.panels, function (panel, idx) {
+          panel.setAttribute('role', 'tabpanel');
+          panel.id = 'panel-' + idx;
+          panel.hidden = panel !== _this4.activePanel;
+        });
+      }
+    }, {
+      key: 'positionSlider',
+      value: function positionSlider() {
+        var activeTab = this.activeTab;
+
+        var _getBoundingClientRec = this.getBoundingClientRect(),
+            hostLeft = _getBoundingClientRec.left;
+
+        var _activeTab$getBoundin = activeTab.getBoundingClientRect(),
+            tabLeft = _activeTab$getBoundin.left,
+            tabWidth = _activeTab$getBoundin.width;
+
+        var tabMargin = parseInt(w.getComputedStyle(activeTab).getPropertyValue('margin-left').match(/\d+/)[0], 10);
+
+        this.slider.style.left = tabLeft - hostLeft - tabMargin + 'px';
+        this.slider.style.width = tabWidth + 'px';
+      }
+    }, {
+      key: 'onTabSlotChange',
+      value: function onTabSlotChange(e) {
+        var _this5 = this;
+
+        this.tabList = e.target.assignedNodes()[0];
+        if (!this.tabList) return;
+
+        this.initTabs();
+
+        // Slightly delay positioning the slider
+        // so that initTabs has time to finish
+        setTimeout(function () {
+          _this5.positionSlider();
+        }, 50);
+      }
+    }, {
+      key: 'onPanelSlotChange',
+      value: function onPanelSlotChange(e) {
+        this.panels = e.target.assignedNodes()[0].querySelectorAll('[data-panel]');
+
+        if (!this.panels) return;
+
+        this.initPanels();
+      }
+    }, {
+      key: 'onShadowRootClick',
+      value: function onShadowRootClick(e) {
+        if (!e.target.matches('button[id^="tab"]')) return;
+        this.activeIdx = indexOf.call(this.tabs, e.target);
+        this.dispatchEvent(new CustomEvent('tabChange', {
+          detail: {
+            on: this.on
+          },
+          bubbles: true
+        }));
+      }
+    }, {
+      key: 'onShadowRootKeydown',
+      value: function onShadowRootKeydown(e) {
+        if (!e.target.matches('button[id^="tab"]')) return;
+
+        var idxMap = {
+          ArrowLeft: this.activeIdx - 1,
+          ArrowRight: this.activeIdx + 1
+        };
+
+        var nextIdx = e.key in idxMap ? idxMap[e.key] : null;
+
+        if (this.tabs[nextIdx]) {
+          e.preventDefault();
+          this.activeIdx = nextIdx;
+        }
+        this.dispatchEvent(new CustomEvent('tabChange', {
+          detail: {
+            on: this.on
+          },
+          bubbles: true
+        }));
+      }
+    }]);
+
+    return Tabs;
+  }(HTMLElement);
+
+  customElements.define('pearson-tabs', Tabs);
+})(window, document);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/* global moment */
+(function (w, doc) {
+  'use strict';
+
+  var isIE11 = !!window.MSInputMethodContext && !!doc.documentMode;
+  var keys = {
+    UP: isIE11 ? 'Up' : 'ArrowUp',
+    DOWN: isIE11 ? 'Down' : 'ArrowDown',
+    ENTER: 'Enter',
+    ESC: isIE11 ? 'Esc' : 'Escape',
+    TAB: 'Tab'
+  };
+
+  var template = doc.createElement('template'),
+      timeItem = doc.createElement('template'),
+      checkIcon = '\n      <svg\n        class="gr-icon"\n        aria-hidden="true"\n        focusable="false"\n        style="width:18px;height:18px;"\n      >\n  \t<path d="M7.63703177,13.7249483 C7.2712246,14.0916839 6.67813399,14.0916839 6.31232681,13.7249483 C6.31087256,13.7235264 5.29821541,12.7082993 3.27435538,10.679267 C2.90854821,10.3125314 2.90854821,9.71793566 3.27435538,9.35120012 C3.64016255,8.98446458 4.23325316,8.98446458 4.59906034,9.35120012 L6.9290522,11.6871052 L13.3583348,4.3207061 C13.6989986,3.93038793 14.2907756,3.89083601 14.6801057,4.2323644 C15.0694358,4.57389279 15.1088876,5.16717165 14.7682238,5.55748981 L7.68563681,13.6724173 C7.67022431,13.6903888 7.65402263,13.7079144 7.63703177,13.7249483 Z"></path>\n      </svg>\n    ',
+      clockIcon = '\n      <svg\n        class="gr-icon"\n        aria-hidden="true"\n        focusable="false"\n        style="width:18px;height:18px;" \n      >\n\t<path d="M9,16.25 C13.0040644,16.25 16.25,13.0040644 16.25,9 C16.25,4.99593556 13.0040644,1.75 9,1.75 C4.99593556,1.75 1.75,4.99593556 1.75,9 C1.75,13.0040644 4.99593556,16.25 9,16.25 Z M9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C13.9705627,0 18,4.02943725 18,9 C18,13.9705627 13.9705627,18 9,18 Z"  fill-rule="nonzero"></path>\n\t<path d="M10,9.59115917 L11.7082195,11.2993787 C12.0972602,11.6884193 12.0972602,12.3191789 11.7082195,12.7082195 C11.3191789,13.0972602 10.6884193,13.0972602 10.2993787,12.7082195 L8.35734629,10.7661871 C8.13887576,10.5827482 8,10.3075922 8,10 L8,5 C8,4.44771525 8.44771525,4 9,4 C9.55228475,4 10,4.44771525 10,5 L10,9.59115917 Z" ></path>      </svg>\n    ',
+      warningIcon = '\n      <svg\n        aria-hidden="true"\n        focusable="false"\n        style="width:18px;height:18px;fill:currentColor" \n      >\n  \t<path d="M10.3203543,1.76322881 L17.7947154,14.7065602 C18.2165963,15.4371302 17.9673988,16.3719805 17.2381172,16.7946067 C17.0059424,16.9291544 16.742459,17 16.4742343,17 L1.52551217,17 C0.682995061,17 0,16.3157983 0,15.4717927 C0,15.2030941 0.0707206291,14.9391453 0.205031086,14.7065602 L7.67939217,1.76322881 C8.10127304,1.03265881 9.03447459,0.78302105 9.76375615,1.20564727 C9.99478499,1.33953088 10.1867068,1.5317918 10.3203543,1.76322881 Z M8.5,13 C8.22385763,13 8,13.2238576 8,13.5 L8,14.5 C8,14.7761424 8.22385763,15 8.5,15 L9.5,15 C9.77614237,15 10,14.7761424 10,14.5 L10,13.5 C10,13.2238576 9.77614237,13 9.5,13 L8.5,13 Z M8.5,7 C8.22385763,7 8,7.22385763 8,7.5 L8,11.5 C8,11.7761424 8.22385763,12 8.5,12 L9.5,12 C9.77614237,12 10,11.7761424 10,11.5 L10,7.5 C10,7.22385763 9.77614237,7 9.5,7 L8.5,7 Z"></path>\n    </svg>';
+
+  timeItem.innerHTML = '\n    <li\n      class="listbox-item"\n      role="option"\n      aria-selected="false"\n      data-time=""\n      data-idx=""\n    >\n\t\t\t\t' + checkIcon + '\n      <span class="time"></span>\n    </li>\n  ';
+
+  template.innerHTML = '\n<style>\n:host,:host *,:host *:after,:host *:before{box-sizing:border-box;font:14px/18px "Open Sans",Calibri,Tahoma,sans-serif}:host{position:relative;display:inline-block;max-width:400px;color:#252525}.pe-icon{position:absolute;color:#6a7070;pointer-events:none}*{font-family:"Open Sans"}html{box-sizing:border-box;font-size:14px}*{box-sizing:border-box}abbr{text-decoration:none}html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}svg{fill:currentColor}.gr-h1{font-size:24px;line-height:28px;font-weight:normal;margin-top:0}.gr-h2{font-size:20px;line-height:26px;font-weight:normal;margin-top:0}.gr-h3{font-size:18px;line-height:24px;font-weight:normal;margin-top:0}.gr-label{font-size:12px;line-height:16px;color:#6a7070;display:block;margin-bottom:4px}.gr-meta{font-size:12px;line-height:12px;color:#6a7070}.gr-semi-bold{font-weight:600}.gr-font-large{font-size:16px;line-height:24px}.gr-font-normal{font-size:14px;line-height:20px}.gr-btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid #6a7070;background:transparent;color:#6a7070;min-width:152px;padding:8px 24px;font-size:16px;cursor:pointer;border-radius:22px;position:relative;margin:12px}.gr-btn:hover{color:#252525;border:1px solid #252525}.gr-btn.primary{background-color:#047a9c;border:1px solid #047a9c;color:#fff}.gr-btn.primary:hover{color:#fff;background-color:#035f79}.gr-btn.attention{background-color:#ffb81c;border:1px solid #ffb81c;color:#252525}.gr-btn.attention:hover{background-color:#f7aa00}.gr-btn.small{min-width:128px;padding:7px 20px;font-size:14px}.gr-btn.small:focus:after{padding:18px 21px}.gr-btn.extra-large{min-width:152px;padding:10px 24px;font-size:16px}.gr-btn.extra-large:focus:after{padding:22px 21px;border-radius:24px}.gr-btn:disabled{background-color:#e9e9e9 !important;color:#6a7070 !important;border:0 !important;cursor:default !important}.gr-btn.icon-btn-24{min-width:auto;padding:5px 12px;border:0}.gr-btn.icon-btn-18{min-width:auto;padding:8px 12px;border:0}.gr-btn.no-border{border:0}.gr-btn.no-border:hover{border:0}.gr-btn.no-border:focus:after{border-radius:5px;min-width:auto;left:auto;top:auto;padding:16px}.gr-input{display:block;margin:4px 0;padding:0 12px;height:36px;color:#252525;border:1px solid #c7c7c7;background:#fff;border-radius:4px;font-size:14px;width:100%;max-width:100%}.gr-input.error{border-color:#db0020}.gr-input[aria-invalid=true]{border-color:#db0020;margin-bottom:0}.gr-input[aria-invalid=true]:focus{box-shadow:0 0 0 2px #fff,0 0 0 4px #db0020}.gr-input:focus{outline:0;box-shadow:0 0 0 2px #fff,0 0 0 4px #1977d4}.gr-input:disabled{color:#c7c7c7;background-color:#e9e9e9}.gr-input:read-only{border:0}.gr-label{font-size:12px;line-height:16px;color:#6a7070;display:block;margin-bottom:4px}.no-border{border:0}.icon-18{width:18px;height:18px}.icon-24{width:24px;height:24px}button:focus{outline:2px solid #1977d4;outline-offset:2px}input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7c7;border-radius:4px;margin-top:6px}input:focus{position:relative;outline:0;box-shadow:0 0 0 2px #fff,0 0 0 4px #0b73da;z-index:1}input[disabled]{color:#c7c7c7;background-color:#e9e9e9;cursor:not-allowed}input[readonly]{border-color:transparent;background-color:transparent}ul{list-style-type:none;padding:0;margin:0}svg{fill:currentColor;vertical-align:top}.timepicker{position:relative}.timepicker .gr-icon{right:14px;top:33px;z-index:2}.timepicker .gr-input{min-width:150px;margin-bottom:4px}.timepicker .gr-input[aria-invalid=true]~.error-msg{display:block}.error-msg:empty{display:none}.listbox-wrapper{position:absolute;width:100%;z-index:999;visibility:hidden}:host([open]) .listbox-wrapper{visibility:visible}.listbox{min-width:220px;width:100%;max-height:300px;border:1px solid #c7c7c7;border-radius:2px;overflow-y:auto;background-color:#fff;visibility:hidden}.listbox-item{cursor:pointer;position:relative;padding:4px 24px}.listbox-item:hover,.listbox-item.focused{background-color:#e9e9e9}.listbox-item.focused{border-radius:4px;box-shadow:inset 0 0 0 2px #0b73da}.listbox-item>*{pointer-events:none}.listbox-item .pe-icon{display:none;left:5px}.listbox-item.selected .pe-icon{display:block}.hidden{display:none}::-ms-clear{width:0;height:0}@keyframes slideInUp{from{transform:translate3d(0, 100%, 0);visibility:hidden}to{transform:translate3d(0, 0, 0);visibility:visible}}@keyframes fadeOutUp{from{visibility:visible}to{visibility:hidden;transform:translate3d(0, -100%, 0)}}@keyframes fadeIn{0%{visibility:hidden;opacity:0}100%{opacity:1;visibility:visible}}@keyframes fadeOut{0%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}.animated{animation-duration:1s;animation-fill-mode:forwards}@media screen and (prefers-reduced-motion: reduce){.animated{animation:unset !important}}.animateIn{animation-name:fadeIn;animation-duration:.5s;visibility:visible}@media(max-width: 480px){.animateIn{animation-name:slideInUp}}.animateOut{animation-name:fadeOut;animation-duration:.2s;visibility:hidden}@media(max-width: 480px){.animateOut{animation-name:fadeOutUp}}\n</style>\n  <div class="timepicker">\n    <label\n      id="timepicker-label"\n      class="gr-label"\n      for="timepicker-input"\n    >\n      Select time (HH:MM AM/PM)\n    </label>\n    <input \n      type="text" \n      id="timepicker-input"\n      class="gr-input"\n      role="combobox"\n      aria-autocomplete="list"\n      aria-haspopup="listbox"\n      aria-expanded="false"\n      aria-owns="listbox"\n    >\n      ' + clockIcon + ' \n    <p \n      id="timepicker-error"\n      class="error-msg"\n      role="alert"\n      aria-live="assertive"\n    ></p>\n  </div>\n  <div class="listbox-wrapper" role="presentation">\n    <ul\n      id="listbox"\n      class="listbox animated"\n      role="listbox"\n      aria-labelledby="timepicker-label"\n    ></ul>\n  </div>\n';
+
+  function calculate(increments) {
+    var endTime = moment().add(24, 'h'),
+        timeStops = [],
+        startTime = moment().add(increments - moment().minute() % increments, 'm');
+    while (startTime < endTime) {
+      timeStops.push(new moment(startTime));
+      startTime.add(increments, 'm').format('LLL');
+    }
+    return timeStops;
+  }
+
+  var TIME_FORMATS = {
+    '12': /^([0-1][0-2]|\d):[0-5][0-9]\s(PM|AM|am|pm)$/,
+    '24': /^([01]\d|2[0-3]):?([0-5]\d)$/
+  };
+
+  function buildTimeEl(time, index) {
+    var li = timeItem.content.cloneNode(true),
+        item = li.querySelector('li'),
+        timeEl = li.querySelector('.time');
+    item.setAttribute('data-time', time);
+    item.setAttribute('data-idx', index);
+    item.id = 'time-' + index;
+    timeEl.innerHTML = time;
+    return li;
+  }
+
+  function isVisible(el) {
+    var rect = el.getBoundingClientRect(),
+        parentRect = el.parentElement.getBoundingClientRect();
+
+    // evaluate if the element is out of bounds
+    // of its parent
+    return rect.top < parentRect.top + parentRect.height && rect.top + rect.height > parentRect.top && rect.bottom < parentRect.bottom && rect.top > parentRect.top;
+  }
+
+  var find = Array.prototype.find;
+
+  w.ShadyCSS && w.ShadyCSS.prepareTemplate(template, 'pearson-timepicker');
+
+  var Timepicker = function (_HTMLElement) {
+    _inherits(Timepicker, _HTMLElement);
+
+    _createClass(Timepicker, [{
+      key: 'open',
+      get: function get() {
+        return this.hasAttribute('open');
+      },
+      set: function set(value) {
+        var isOpen = Boolean(value);
+
+        if (isOpen) {
+          if (this.selectedItem) this.selectedItem.scrollIntoView(true);
+
+          this.setAttribute('open', '');
+        } else {
+          this.removeAttribute('open');
+        }
+      }
+    }, {
+      key: 'increments',
+      get: function get() {
+        return this.getAttribute('increments') || '15';
+      }
+    }, {
+      key: 'hours',
+      get: function get() {
+        return this.getAttribute('hours');
+      }
+    }, {
+      key: 'format',
+      get: function get() {
+        return this.hours === '12' ? 'h:mm A' : 'HH:mm';
+      }
+    }, {
+      key: 'pattern',
+      get: function get() {
+        return TIME_FORMATS[this.hours];
+      }
+
+      // TODO: Ensure validation only happens
+      // if format matches AND time exists in list
+
+    }, {
+      key: 'validity',
+      set: function set(isValid) {
+        var errorMsg = this.errorMsg,
+            input = this.input;
+
+        if (isValid) {
+          input.removeAttribute('aria-invalid');
+          input.removeAttribute('aria-describedby');
+          errorMsg.innerHTML = '';
+        } else {
+          input.setAttribute('aria-invalid', 'true');
+          input.setAttribute('aria-describedby', 'timepicker-error');
+          errorMsg.innerHTML = warningIcon + '\n        Enter a valid time.';
+        }
+      }
+      /**
+       * The currently active listbox item
+       * @type {HTMLElement}
+       */
+
+    }, {
+      key: 'activeItem',
+      get: function get() {
+        return this.activeIdx > -1 ? this.items[this.activeIdx] : null;
+      },
+      set: function set(nextItem) {
+        if (this.activeItem) {
+          this.activeItem.classList.remove('focused');
+          this.activeItem.setAttribute('aria-selected', 'false');
+        }
+
+        if (nextItem) {
+          this.input.setAttribute('aria-activedescendant', 'time-' + nextItem.dataset.idx);
+          nextItem.classList.add('focused');
+          nextItem.setAttribute('aria-selected', 'true');
+
+          this.activeIdx = Number(nextItem.dataset.idx);
+        }
+      }
+    }, {
+      key: 'selectedItem',
+      get: function get() {
+        return this.selectedIdx > -1 ? this.items[this.selectedIdx] : null;
+      },
+      set: function set(nextItem) {
+        if (this.selectedItem) {
+          this.selectedItem.classList.remove('selected');
+        }
+        if (nextItem) {
+          this.input.value = nextItem.dataset.time;
+          this.validity = true;
+          nextItem.classList.add('selected');
+
+          this.selectedIdx = Number(nextItem.dataset.idx);
+
+          if (this.activeItem !== nextItem) {
+            this.activeItem = nextItem;
+          }
+        }
+      }
+    }, {
+      key: 'selectedTime',
+      get: function get() {
+        return this.selectedItem ? this.selectedItem.dataset.time : null;
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['open', 'readonly', 'disabled'];
+      }
+    }]);
+
+    function Timepicker() {
+      _classCallCheck(this, Timepicker);
+
+      var _this = _possibleConstructorReturn(this, (Timepicker.__proto__ || Object.getPrototypeOf(Timepicker)).call(this));
+
+      _this.attachShadow({ mode: 'open' });
+
+      var clone = template.content.cloneNode(true);
+
+      _this.label = clone.querySelector('#timepicker-label');
+      _this.input = clone.querySelector('#timepicker-input');
+      _this.errorMsg = clone.querySelector('#timepicker-error');
+      _this.listbox = clone.querySelector('#listbox');
+
+      _this.shadowRoot.appendChild(clone);
+
+      _this.activeIdx = -1;
+      _this.selectedIdx = -1;
+      _this.plainTextTimes = [];
+
+      _this.onInputKeydown = _this.onInputKeydown.bind(_this);
+      _this.onInputFocus = _this.onInputFocus.bind(_this);
+      _this.onInputBlur = _this.onInputBlur.bind(_this);
+      _this.onListboxClick = _this.onListboxClick.bind(_this);
+      _this.onDocumentClick = _this.onDocumentClick.bind(_this);
+      return _this;
+    }
+
+    _createClass(Timepicker, [{
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'open') {
+          var isOpen = newValue !== null;
+          var activeDescendant = void 0,
+              classToAdd = void 0,
+              classToRemove = void 0;
+
+          if (isOpen) {
+            activeDescendant = this.activeIdx > -1 ? this.activeItem.id : '';
+            classToAdd = 'animateIn';
+            classToRemove = 'animateOut';
+          } else {
+            activeDescendant = '';
+            classToAdd = 'animateOut';
+            classToRemove = 'animateIn';
+          }
+
+          this.input.setAttribute('aria-expanded', isOpen);
+          this.input.setAttribute('aria-activedescendant', activeDescendant);
+
+          this.listbox.classList.remove(classToRemove);
+          this.listbox.classList.add(classToAdd);
+        }
+
+        if (name === 'readonly' || name === 'disabled') {
+          var isTruthy = newValue !== null;
+
+          if (isTruthy) {
+            this.input.setAttribute(name, name);
+          } else {
+            this.input.removeAttribute(name);
+          }
+        }
+      }
+    }, {
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        var _this2 = this;
+
+        var defaultValue = this.getAttribute('defaultValue');
+        var labelText = this.getAttribute('label') || '';
+
+        // Emsure that IDs are unique since IE does not properly encapsulate them.
+        var inputId = this.input.id + '-' + encodeURIComponent(labelText);
+
+        this.input.id = inputId;
+
+        this.label.setAttribute('for', inputId);
+        this.label.textContent = labelText + ' (' + (this.hours === '12' ? 'HH:MM AM/PM' : 'HH:MM') + ')';
+
+        // The pattern attribute only works with expressions
+        // that do not have slashes around them
+        if (this.pattern !== undefined) {
+          this.input.pattern = this.pattern.toString().slice(1, -1);
+        }
+
+        // TODO: repeat this every time listbox opens
+        // TODO: filter items in list
+        this.times = calculate(this.increments);
+        this.times.forEach(function (time, index) {
+          var text = time.format(_this2.format);
+          _this2.plainTextTimes[index] = text;
+          _this2.listbox.appendChild(buildTimeEl(text, index));
+        });
+
+        this.items = this.listbox.children;
+
+        // Set user-provided initial value if
+        // it passes validation
+        if (this.pattern !== undefined && this.pattern.test(defaultValue) && this.plainTextTimes.indexOf(defaultValue)) {
+          var idx = this.plainTextTimes.indexOf(defaultValue);
+          this.selectedItem = this.items[idx];
+        }
+
+        this.input.addEventListener('focus', this.onInputFocus);
+        this.input.addEventListener('keydown', this.onInputKeydown);
+        this.input.addEventListener('blur', this.onInputBlur);
+
+        this.listbox.addEventListener('click', this.onListboxClick, true);
+
+        doc.addEventListener('click', this.onDocumentClick, true);
+      }
+    }, {
+      key: 'disconnectedCallback',
+      value: function disconnectedCallback() {
+        doc.removeEventListener('click', this.onDocumentClick, true);
+      }
+    }, {
+      key: 'checkSelection',
+      value: function checkSelection() {
+        var _this3 = this;
+
+        var activeItem = this.activeItem;
+
+        if (this.activeIdx === -1 && this.input.value === '') {
+          return;
+        }
+
+        // if the string is different than the selectedItem, use it
+        if (this.input.value !== this.selectedTime || !this.activeItem) {
+          activeItem = find.call(this.items, function (i) {
+            return i.dataset.time.startsWith(_this3.input.value);
+          });
+        }
+
+        this.selectedItem = activeItem;
+
+        this.validity = this.input.checkValidity() && this.input.value === this.selectedTime;
+      }
+    }, {
+      key: 'onInputFocus',
+      value: function onInputFocus() {
+        this.open = true;
+      }
+    }, {
+      key: 'onInputKeydown',
+      value: function onInputKeydown(e) {
+        var items = this.items;
+        var key = e.key;
+        var isDirectionalKey = key === keys.UP || key === keys.DOWN;
+
+        var prevOpen = this.open;
+        var activeIdx = !prevOpen && this.selectedIdx > -1 ? this.selectedIdx : this.activeIdx;
+
+        if (key === keys.ESC) {
+          this.open = false;
+          return;
+        }
+
+        if (!prevOpen && isDirectionalKey) {
+          this.open = true;
+        }
+
+        switch (key) {
+          case keys.UP:
+            if (activeIdx <= 0) {
+              activeIdx = items.length - 1;
+            } else if (prevOpen) {
+              activeIdx--;
+            }
+            break;
+          case keys.DOWN:
+            if (activeIdx === -1 || activeIdx >= items.length - 1) {
+              activeIdx = 0;
+            } else if (prevOpen) {
+              activeIdx++;
+            }
+            break;
+          case keys.ENTER:
+            this.selectedItem = this.activeItem;
+            this.open = false;
+            return;
+          case keys.TAB:
+            this.open = false;
+            return;
+          default:
+            return;
+        }
+        e.preventDefault();
+
+        this.activeItem = this.items[activeIdx];
+
+        if (isDirectionalKey && !isVisible(this.activeItem)) {
+          this.activeItem.scrollIntoView(key === keys.UP);
+        }
+      }
+    }, {
+      key: 'onInputBlur',
+      value: function onInputBlur(e) {
+        this.checkSelection();
+      }
+    }, {
+      key: 'onListboxClick',
+      value: function onListboxClick(e) {
+        var target = e.target;
+
+        if (target && target.nodeName === 'LI') {
+          this.selectedItem = target;
+          this.open = false;
+        }
+      }
+    }, {
+      key: 'onDocumentClick',
+      value: function onDocumentClick(e) {
+        if (e.target === this) return;
+        this.open = false;
+      }
+    }]);
+
+    return Timepicker;
+  }(HTMLElement);
+
+  customElements.define('pearson-timepicker', Timepicker);
+})(window, document);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (w, doc) {
+  'use strict';
+
+  var SVG_CHECK_SM_18 = '\n    <svg\n      class="pe-icon--check-sm-18"\n      aria-hidden="true"\n      focusable="false"\n      aria-label="on"\n    >\n    <path\n      d="M7.35823097,13.99969 C7.08123097,13.99969 6.81423097,13.88469 6.62523097,13.67969 L4.26623097,11.13469 C3.89123097,10.72869 3.91523097,10.09669 4.32023097,9.72169 C4.72423097,9.34469 5.35623097,9.36869 5.73323097,9.77469 L7.25323097,11.41469 L12.182231,4.42369 C12.501231,3.97269 13.125231,3.86469 13.576231,4.18269 C14.027231,4.50069 14.135231,5.12469 13.817231,5.57569 L8.17523097,13.57569 C8.00223097,13.82269 7.72523097,13.97769 7.42423097,13.99769 C7.40223097,13.99869 7.38023097,13.99969 7.35823097,13.99969"\n    ></path>\n  </svg>\n';
+
+  var SVG_REMOVE_SM_18 = '\n    <svg\n      class="pe-icon--remove-sm-18"\n      aria-hidden="true"\n      focusable="false"\n      aria-label="off"\n    >\n    <path\n      d="M10.4066,9 L13.7086,5.698 C14.0976,5.31 14.0976,4.68 13.7086,4.291 C13.3196,3.903 12.6906,3.903 12.3016,4.291 L8.9996,7.593 L5.6976,4.291 C5.3096,3.903 4.6796,3.903 4.2916,4.291 C3.9026,4.68 3.9026,5.31 4.2916,5.698 L7.5936,9 L4.2916,12.302 C3.9026,12.69 3.9026,13.32 4.2916,13.709 C4.4856,13.903 4.7406,14 4.9946,14 C5.2496,14 5.5036,13.903 5.6976,13.709 L8.9996,10.407 L12.3016,13.709 C12.4966,13.903 12.7506,14 13.0056,14 C13.2596,14 13.5146,13.903 13.7086,13.709 C14.0976,13.32 14.0976,12.69 13.7086,12.302 L10.4066,9 Z"\n    ></path>\n  </svg>\n';
+
+  var template = doc.createElement('template');
+
+  template.innerHTML = '\n  <style>\n  *,:after,:before{-webkit-box-sizing:border-box;box-sizing:border-box}:host{font-size:24px;position:relative;display:block;width:2em;height:1em;padding:0;border:0;border-radius:22px;margin:4px 0;color:#fff;background-color:#a9a9a9;cursor:pointer;-webkit-transition:background .3s;transition:background .3s;overflow:visible;min-width:50px}:host([on]:not([on=false])){background:#047a9c}:host([disabled]:not([disabled=false])){color:#c7c7c7;background-color:#e9e9e9;cursor:not-allowed}:host:before{content:"";background:#fff;display:block;position:absolute;left:3px;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);width:.75em;height:.75em;-webkit-transition:left .3s;transition:left .3s;border-radius:100%}:host([on]:not([on=false])):before{left:27px}:host([disabled]:not([disabled=false])):before{background-color:#c7c7c7}:host(:focus){outline:0}:host(:focus):after{content:"";position:absolute;left:50%;top:50%;width:-webkit-calc(100% + 8px);width:calc(100% + 8px);height:-webkit-calc(100% + 8px);height:calc(100% + 8px);border:2px solid #1977d4;border-radius:22px;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);z-index:1}svg{width:.75em;height:.75em;position:absolute;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);fill:currentColor;pointer-events:none}svg[class*=check]{left:5px}svg[class*=remove]{right:5px}:host(:not([on])) svg[class*=check],:host([on]:not([on=false])) svg[class*=remove]{display:none}@media (prefers-reduced-motion:reduce){:host,:host:before{-webkit-transition:none!important;transition:none!important}}\n  </style>\n  ' + SVG_CHECK_SM_18 + '\n  ' + SVG_REMOVE_SM_18 + '\n  ';
+
+  if (w.ShadyCSS) w.ShadyCSS.prepareTemplate(template, 'pearson-toggle');
+
+  var Toggle = function (_HTMLElement) {
+    _inherits(Toggle, _HTMLElement);
+
+    _createClass(Toggle, [{
+      key: 'on',
+      get: function get() {
+        return this.hasAttribute('on') & this.getAttribute('on') !== 'false';
+      },
+      set: function set(value) {
+        var isOn = Boolean(value);
+        if (isOn) {
+          this.setAttribute('on', '');
+        } else {
+          this.removeAttribute('on');
+        }
+      }
+    }, {
+      key: 'disabled',
+      get: function get() {
+        return this.hasAttribute('disabled') && this.getAttribute('disabled') !== 'false';
+      },
+      set: function set(value) {
+        var isDisabled = Boolean(value);
+        if (isDisabled) {
+          this.setAttribute('disabled', '');
+        } else {
+          this.removeAttribute('disabled');
+        }
+      }
+    }, {
+      key: 'name',
+      get: function get() {
+        return this.getAttribute('name');
+      }
+    }, {
+      key: 'value',
+      get: function get() {
+        return this.getAttribute('value');
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['on', 'disabled'];
+      }
+    }]);
+
+    function Toggle() {
+      _classCallCheck(this, Toggle);
+
+      var _this = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this));
+
+      _this.attachShadow({ mode: 'open' });
+
+      var clone = template.content.cloneNode(true);
+
+      _this.shadowRoot.appendChild(clone);
+
+      _this.onToggleClick = _this.onToggleClick.bind(_this);
+      _this.onToggleKeyDown = _this.onToggleKeyDown.bind(_this);
+
+      _this.onLabelClick = _this.onLabelClick.bind(_this);
+
+      _this.onDOMLoaded = _this.onDOMLoaded.bind(_this);
+      return _this;
+    }
+
+    _createClass(Toggle, [{
+      key: 'attributeChangedCallback',
+      value: function attributeChangedCallback(name, oldValue, newValue) {
+        var isTruthy = newValue !== 'false';
+        if (name === 'on') {
+          this.setAttribute('aria-checked', isTruthy);
+        }
+        if (name === 'disabled') {
+          this.setAttribute('aria-disabled', isTruthy);
+          if (isTruthy) {
+            this.removeAttribute('tabindex');
+            this.blur();
+          } else {
+            this.setAttribute('tabindex', '0');
+          }
+        }
+      }
+    }, {
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        // Add attributes required for a11y
+        if (!this.hasAttribute('tabindex') && !this.disabled) {
+          this.setAttribute('tabindex', 0);
+        }
+
+        if (!this.hasAttribute('role')) {
+          this.setAttribute('role', 'switch');
+        }
+
+        if (!this.hasAttribute('aria-checked')) {
+          this.setAttribute('aria-checked', 'false');
+        }
+
+        // Lazily upgrade properties to make sure
+        // observed attributes are handled properly
+        this.upgradeProperty('on');
+        this.upgradeProperty('disabled');
+
+        // Bind listeners to the toggle
+        this.addEventListener('click', this.onToggleClick);
+        this.addEventListener('keydown', this.onToggleKeyDown);
+
+        // If the consumer did not set an `aria-label`,
+        if (!this.hasAttribute('aria-label')) {
+          // We need to find an external one
+          doc.addEventListener('DOMContentLoaded', this.onDOMLoaded, true);
+        }
+      }
+    }, {
+      key: 'disconnectedCallback',
+      value: function disconnectedCallback() {
+        doc.removeEventListener('DOMContentLoaded', this.onDOMLoaded);
+
+        if (this.labelNode) {
+          this.labelNode.removeEventListener('click', this.onLabelClick);
+        }
+      }
+    }, {
+      key: 'onToggleClick',
+      value: function onToggleClick(e) {
+        e.stopPropagation();
+        this.toggleOn();
+      }
+    }, {
+      key: 'onToggleKeyDown',
+      value: function onToggleKeyDown(e) {
+        if (e.altKey) {
+          return;
+        }
+
+        switch (e.key) {
+          case 'Enter':
+          case ' ':
+            e.preventDefault();
+            this.click();
+            return;
+        }
+      }
+
+      // When this label is clicked, we want to
+      // click on this toggle and focus on it
+
+    }, {
+      key: 'onLabelClick',
+      value: function onLabelClick(e) {
+        e.preventDefault();
+
+        if (this.disabled) return;
+
+        this.click();
+        this.focus();
+      }
+    }, {
+      key: 'onDOMLoaded',
+      value: function onDOMLoaded() {
+        this.labelNode = this.findLabelNode();
+
+        // If the external label does not have an ID, we must
+        // ensure that it has one
+
+        if (this.id !== null && this.labelNode !== null) {
+          if (!this.labelNode.id) this.labelNode.id = this.id + 'label';
+        }
+
+        if (this.labelNode !== null) {
+          // This toggle must be labelled by the external label node
+          this.setAttribute('aria-labelledby', this.labelNode.id);
+          // We listen for the external label to be clicked
+          this.labelNode.addEventListener('click', this.onLabelClick);
+        }
+      }
+    }, {
+      key: 'upgradeProperty',
+      value: function upgradeProperty(prop) {
+        if (this.hasOwnProperty(prop)) {
+          var value = this[prop];
+          delete this[prop];
+          this[prop] = value;
+        }
+      }
+    }, {
+      key: 'toggleOn',
+      value: function toggleOn() {
+        if (this.disabled) return;
+
+        this.on = !this.on;
+
+        // The toggle should emit a change event
+        // for the benefit of consumers
+        this.dispatchEvent(new CustomEvent('change', {
+          detail: {
+            on: this.on
+          },
+          bubbles: true
+        }));
+      }
+
+      // Helper function for finding external label node
+
+    }, {
+      key: 'findLabelNode',
+      value: function findLabelNode() {
+        if (this.parentElement.tagName === 'LABEL') {
+          return this.parentElement;
+        }
+        var scope = this.getRootNode();
+        return scope.querySelector('label[for="' + this.id + '"]');
+      }
+    }]);
+
+    return Toggle;
+  }(HTMLElement);
+
+  customElements.define('pearson-toggle', Toggle);
 })(window, document);
