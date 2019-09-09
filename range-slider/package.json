@@ -2,7 +2,7 @@
   "name": "@pearson-ux/range-slider",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Input range slider web component",
   "main": "index.html",
   "scripts": {
