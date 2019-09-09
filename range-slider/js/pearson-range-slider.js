@@ -179,11 +179,10 @@
 
       if (!this.hasInput) {
         this.input.addEventListener('input', () => {
-          this.Value = parseFloat(this.input.value,10).toFixed(2)
+          this.input.value =  parseFloat(this.input.value,10).toFixed(2);
+          this.Value = this.input.value;
         });
       }
-
-
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

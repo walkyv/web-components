@@ -174,7 +174,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         if (!this.hasInput) {
           this.input.addEventListener('input', function () {
-            _this2.Value = parseFloat(_this2.input.value, 10).toFixed(2);
+            _this2.input.value = parseFloat(_this2.input.value, 10).toFixed(2);
+            _this2.Value = _this2.input.value;
           });
         }
       }
