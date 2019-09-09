@@ -146,6 +146,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           input.addEventListener('change', function (event) {
             _this2.input.value = input.value;
             _this2.Value = input.value;
+            _this2.dispatchEvent(new CustomEvent('change', {
+              bubbles: true,
+              detail: {
+                value: input.value
+              }
+            }));
           });
 
           this.input.addEventListener('input', function () {
@@ -176,6 +182,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.input.addEventListener('input', function () {
             _this2.input.value = parseFloat(_this2.input.value, 10).toFixed(2);
             _this2.Value = _this2.input.value;
+            _this2.dispatchEvent(new CustomEvent('change', {
+              bubbles: true,
+              detail: {
+                value: _this2.input.value
+              }
+            }));
           });
         }
       }
