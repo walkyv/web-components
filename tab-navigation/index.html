@@ -81,7 +81,8 @@
       </div>
     </pearson-tabs>
   <script>
-    document.addEventListener('tabChange', event=> {
+    const tabs = document.querySelector('pearson-tabs');
+    tabs.addEventListener('tabChange', event=> {
       console.log(
         'tab changed'
       )
