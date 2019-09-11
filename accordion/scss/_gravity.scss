@@ -1,0 +1,13 @@
+/**
+ * Only import the modules you need!
+ * Delete styles that are not used in your component.
+ */
+@import '../node_modules/@pearson-ux/gravity-css/variables';
+@import '../node_modules/@pearson-ux/gravity-css/functions';
+@import '../node_modules/@pearson-ux/gravity-css/reset';
+@import '../node_modules/@pearson-ux/gravity-css/global';
+@import '../node_modules/@pearson-ux/gravity-css/animation';
+@import '../node_modules/@pearson-ux/gravity-css/helpers';
+@import '../node_modules/@pearson-ux/gravity-css/typography';
+
+@import '../node_modules/@pearson-ux/gravity-css/markup-kits/accordian';
