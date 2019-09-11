@@ -28,10 +28,10 @@
                <slot name="buttons"></slot>
             </span>
             <svg focusable="false" class="icon-18 expand" aria-hidden="true">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#expand-18"></use>
+                <path d="M9.62193909,12.7616134 C9.25409223,13.0918069 8.69027111,13.0789828 8.33764681,12.7231411 L3.27435567,7.61365203 C2.90854811,7.24450681 2.90854811,6.64600414 3.27435567,6.27685892 C3.64016324,5.90771369 4.23325448,5.90771369 4.59906205,6.27685892 L9,10.7179514 L13.400938,6.27685892 C13.7667455,5.90771369 14.3598368,5.90771369 14.7256443,6.27685892 C15.0914519,6.64600414 15.0914519,7.24450681 14.7256443,7.61365203 L9.66235319,12.7231411 C9.64896608,12.7366503 9.63548354,12.7494543 9.62191255,12.7615685 L9.62193909,12.7616134 Z" fill-rule="nonzero"></path>
             </svg>
             <svg focusable="false" class="icon-18 collapse" aria-hidden="true">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#collapse-18"></use>
+                <path d="M9.62193909,5.2383866 L9.62191255,5.23843148 C9.63548354,5.25054567 9.64896608,5.26334967 9.66235319,5.27685892 L14.7256443,10.386348 C15.0914519,10.7554932 15.0914519,11.3539959 14.7256443,11.7231411 C14.3598368,12.0922863 13.7667455,12.0922863 13.400938,11.7231411 L9,7.28204859 L4.59906205,11.7231411 C4.23325448,12.0922863 3.64016324,12.0922863 3.27435567,11.7231411 C2.90854811,11.3539959 2.90854811,10.7554932 3.27435567,10.386348 L8.33764681,5.27685892 C8.69027111,4.92101724 9.25409223,4.90819314 9.62193909,5.2383866 Z"></path>
             </svg>
           </span>
         </button>
@@ -39,7 +39,12 @@
     `,
 
     panelTemplate.innerHTML = `
-     <slot name="panels"></slot>
+			<div id="sect3" role="region" aria-labelledby="accordion1id3" class="accordion-panel animateIn">
+				<div>
+					  <slot name="panels"></slot>
+				</div>
+			</div>
+   
     `;
 
 
@@ -50,6 +55,7 @@
    */
 
   class Accordion extends HTMLElement {
+
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
@@ -64,11 +70,26 @@
       this.renderButtons = this.renderButtons.bind(this);
     }
 
-    renderButtons (text) {
+    renderButtons (text, index) {
       const buttonClone = buttonTemplate.content.cloneNode(true),
-        label = buttonClone.querySelector('.button-label');
+        label = buttonClone.querySelector('.button-label'),
+        button = label.parentNode.parentNode;
 
+      button.setAttribute('data-index', index);
+      button.setAttribute('aria-controls', 'panel'+index);
+      button.setAttribute('id', 'accordionId' + index)
       label.innerHTML = text;
+      button.addEventListener('click', event => {
+        const button = event.currentTarget,
+          isExpanded = button.getAttribute('aria-expanded');
+
+        if (isExpanded === 'false') {
+          button.setAttribute('aria-expanded', true)
+        } else {
+          button.setAttribute('aria-expanded', false)
+        }
+
+      })
       return buttonClone
     }
 
@@ -80,11 +101,10 @@
         const ul = buttonSlot.assignedNodes()[0],
           buttons = ul.querySelectorAll('li');
 
-          buttons.forEach(button => {
-            console.log(button)
-            this.target.appendChild(this.renderButtons(button.innerHTML));
+          buttons.forEach((button,index) => {
+            this.target.appendChild(this.renderButtons(button.innerHTML, index));
           });
-          
+
         nodeToRemove.remove();
         ul.remove();
       });
