@@ -73,15 +73,20 @@
       this.renderPanels = this.renderPanels.bind(this);
     }
 
-    renderButtons (text, index) {
+    renderButtons (text, index, number) {
       const buttonClone = buttonTemplate.content.cloneNode(true),
         label = buttonClone.querySelector('.button-label'),
-        button = label.parentNode.parentNode;
+        button = label.parentNode.parentNode,
+        length = number -1;
 
       button.setAttribute('data-index', index);
       button.setAttribute('aria-controls', 'panel'+index);
       button.setAttribute('id', 'accordionId' + index);
+
       label.innerHTML = text;
+      if (index === length) {
+       button.parentNode.style.border = 0;
+      }
 
       button.addEventListener('click', event => {
         const button = event.currentTarget,
@@ -90,9 +95,15 @@
         if (isExpanded === 'false') {
           button.setAttribute('aria-expanded', true);
           currentPanel.style.display = 'flex';
+          if (index === length) {
+            button.parentNode.style.borderBottom = '1px solid #c7c7c7';
+          }
         } else {
           button.setAttribute('aria-expanded', false);
           currentPanel.style.display = 'none';
+          if (index === length) {
+            button.parentNode.style.border = 0;
+          }
         }
       });
       return buttonClone
@@ -123,7 +134,7 @@
           buttons = ul.querySelectorAll('li');
 
           buttons.forEach((button,index) => {
-            this.target.appendChild(this.renderButtons(button.innerHTML, index, ));
+            this.target.appendChild(this.renderButtons(button.innerHTML, index, buttons.length));
             this.target.appendChild(this.renderPanels(panels, index, button));
           });
 

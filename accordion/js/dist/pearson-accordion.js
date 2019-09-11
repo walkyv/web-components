@@ -54,15 +54,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     _createClass(Accordion, [{
       key: 'renderButtons',
-      value: function renderButtons(text, index) {
+      value: function renderButtons(text, index, number) {
         var buttonClone = buttonTemplate.content.cloneNode(true),
             label = buttonClone.querySelector('.button-label'),
-            button = label.parentNode.parentNode;
+            button = label.parentNode.parentNode,
+            length = number - 1;
 
         button.setAttribute('data-index', index);
         button.setAttribute('aria-controls', 'panel' + index);
         button.setAttribute('id', 'accordionId' + index);
+
         label.innerHTML = text;
+        if (index === length) {
+          button.parentNode.style.border = 0;
+        }
 
         button.addEventListener('click', function (event) {
           var button = event.currentTarget,
@@ -71,9 +76,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           if (isExpanded === 'false') {
             button.setAttribute('aria-expanded', true);
             currentPanel.style.display = 'flex';
+            if (index === length) {
+              button.parentNode.style.borderBottom = '1px solid #c7c7c7';
+            }
           } else {
             button.setAttribute('aria-expanded', false);
             currentPanel.style.display = 'none';
+            if (index === length) {
+              button.parentNode.style.border = 0;
+            }
           }
         });
         return buttonClone;
@@ -108,7 +119,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               buttons = ul.querySelectorAll('li');
 
           buttons.forEach(function (button, index) {
-            _this2.target.appendChild(_this2.renderButtons(button.innerHTML, index));
+            _this2.target.appendChild(_this2.renderButtons(button.innerHTML, index, buttons.length));
             _this2.target.appendChild(_this2.renderPanels(panels, index, button));
           });
 
