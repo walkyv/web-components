@@ -34,6 +34,7 @@ function scripts(done) {
       './modal/js/dist/pearson-modal.js',
       './pagination/js/dist/pearson-pagination.js',
       './progress-bar/js/dist/progress-bar.js',
+      './range-slider/js/dist/pearson-range-slider.js',
       './tab-navigation/js/dist/pearson-tabs.js',
       './timepicker/js/dist/pearson-timepicker.js',
       './toggle/js/dist/pearson-toggle.js',
