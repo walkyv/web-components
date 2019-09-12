@@ -113,6 +113,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               allPanels.forEach(function (panel) {
                 panel.style.display = 'none';
               });
+
               button.setAttribute('aria-expanded', true);
               currentPanel.style.display = 'flex';
               if (index === length) {

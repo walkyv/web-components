@@ -124,7 +124,8 @@
             });
             allPanels.forEach(panel => {
               panel.style.display = 'none';
-            })
+            });
+
             button.setAttribute('aria-expanded', true);
             currentPanel.style.display = 'flex';
             if (index === length) {
