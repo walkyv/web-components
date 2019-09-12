@@ -87,6 +87,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
           }
         });
+
         return buttonClone;
       }
     }, {
@@ -99,7 +100,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         panel.setAttribute('id', 'panel' + index);
         panel.setAttribute('aria-labelledby', 'accordianId' + index);
         target.appendChild(panels[index]);
-        console.log(panels[index]);
         return panelClone;
       }
     }, {
@@ -107,26 +107,64 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this2 = this;
 
-        var buttonSlot = this.shadowRoot.querySelector('slot[name="buttons"]'),
-            panelSlot = this.shadowRoot.querySelector('slot[name="panels"]'),
-            buttonSlotToRemove = this.shadowRoot.querySelector('.accordion h3'),
-            panelSlotToRemove = this.shadowRoot.querySelector('.accordion > div');
+        var buttonSlot = this.shadowRoot.querySelector('slot[name="buttons"]');
 
         buttonSlot.addEventListener('slotchange', function (event) {
-          var ul = buttonSlot.assignedNodes()[0],
+          var panelSlot = _this2.shadowRoot.querySelector('slot[name="panels"]'),
+              panelSlotToRemove = _this2.shadowRoot.querySelector('.accordion > div'),
               panelContainer = panelSlot.assignedNodes()[0],
-              panels = panelContainer.querySelectorAll('.panel'),
-              buttons = ul.querySelectorAll('li');
+              buttonSlotToRemove = _this2.shadowRoot.querySelector('.accordion h3'),
+              triggers = _this2.shadowRoot.querySelectorAll('.accordion-trigger');
 
-          buttons.forEach(function (button, index) {
-            _this2.target.appendChild(_this2.renderButtons(button.innerHTML, index, buttons.length));
-            _this2.target.appendChild(_this2.renderPanels(panels, index, button));
+          if (panelContainer) {
+            var panels = panelContainer.querySelectorAll('.panel'),
+                ul = buttonSlot.assignedNodes()[0],
+                buttons = ul.querySelectorAll('li');
+
+            buttons.forEach(function (button, index) {
+              _this2.target.appendChild(_this2.renderButtons(button.innerHTML, index, buttons.length));
+              _this2.target.appendChild(_this2.renderPanels(panels, index, button));
+            });
+            panelSlotToRemove.remove();
+            panelContainer.remove();
+            ul.remove();
+            buttonSlotToRemove.remove();
+          }
+
+          triggers.forEach(function (trigger) {
+            trigger.addEventListener('keydown', function (event) {
+              var nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
+                  prevButton = parseInt(event.target.getAttribute('data-index')) - 1,
+                  firstTrigger = triggers[0],
+                  lastTrigger = triggers[triggers.length - 1];
+
+              if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                if (_this2.shadowRoot.activeElement === firstTrigger) {
+                  lastTrigger.focus();
+                } else {
+                  triggers[prevButton].focus();
+                }
+              }
+
+              if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                if (_this2.shadowRoot.activeElement === lastTrigger) {
+                  firstTrigger.focus();
+                } else {
+                  triggers[nextButton].focus();
+                }
+              }
+
+              if (event.key === 'Home') {
+                firstTrigger.focus();
+              }
+
+              if (event.key === 'End') {
+                lastTrigger.focus();
+              }
+            });
           });
-
-          buttonSlotToRemove.remove();
-          panelSlotToRemove.remove();
-          ul.remove();
-          panelContainer.remove();
         });
       }
     }]);
