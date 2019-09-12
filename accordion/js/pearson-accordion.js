@@ -54,6 +54,13 @@
    */
 
   class Accordion extends HTMLElement {
+    static get observedAttributes() {
+      return ['toggle'];
+    }
+
+    get toggle() {
+      return this.hasAttribute('toggle');
+    }
 
     constructor() {
       super();
@@ -92,17 +99,43 @@
         const button = event.currentTarget,
           isExpanded = button.getAttribute('aria-expanded'),
           currentPanel = event.currentTarget.parentNode.nextElementSibling;
-        if (isExpanded === 'false') {
-          button.setAttribute('aria-expanded', true);
-          currentPanel.style.display = 'flex';
-          if (index === length) {
-            button.parentNode.style.borderBottom = '1px solid #c7c7c7';
+
+        if (this.toggle) {
+          if (isExpanded === 'false') {
+            button.setAttribute('aria-expanded', true);
+            currentPanel.style.display = 'flex';
+            if (index === length) {
+              button.parentNode.style.borderBottom = '1px solid #c7c7c7';
+            }
+          } else {
+            button.setAttribute('aria-expanded', false);
+            currentPanel.style.display = 'none';
+            if (index === length) {
+              button.parentNode.style.border = 0;
+            }
           }
         } else {
-          button.setAttribute('aria-expanded', false);
-          currentPanel.style.display = 'none';
-          if (index === length) {
-            button.parentNode.style.border = 0;
+          const allButtons = this.shadowRoot.querySelectorAll('.accordion-trigger'),
+            allPanels = this.shadowRoot.querySelectorAll('.accordion-panel');
+
+          if (isExpanded === 'false') {
+            allButtons.forEach(button => {
+              button.setAttribute('aria-expanded', false);
+            });
+            allPanels.forEach(panel => {
+              panel.style.display = 'none';
+            })
+            button.setAttribute('aria-expanded', true);
+            currentPanel.style.display = 'flex';
+            if (index === length) {
+              button.parentNode.style.borderBottom = '1px solid #c7c7c7';
+            }
+          } else {
+            button.setAttribute('aria-expanded', false);
+            currentPanel.style.display = 'none';
+            if (index === length) {
+              button.parentNode.style.border = 0;
+            }
           }
         }
       });

@@ -31,6 +31,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var Accordion = function (_HTMLElement) {
     _inherits(Accordion, _HTMLElement);
 
+    _createClass(Accordion, [{
+      key: 'toggle',
+      get: function get() {
+        return this.hasAttribute('toggle');
+      }
+    }], [{
+      key: 'observedAttributes',
+      get: function get() {
+        return ['toggle'];
+      }
+    }]);
+
     function Accordion() {
       _classCallCheck(this, Accordion);
 
@@ -55,6 +67,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Accordion, [{
       key: 'renderButtons',
       value: function renderButtons(text, index, number) {
+        var _this2 = this;
+
         var buttonClone = buttonTemplate.content.cloneNode(true),
             label = buttonClone.querySelector('.button-label'),
             button = label.parentNode.parentNode,
@@ -73,17 +87,43 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           var button = event.currentTarget,
               isExpanded = button.getAttribute('aria-expanded'),
               currentPanel = event.currentTarget.parentNode.nextElementSibling;
-          if (isExpanded === 'false') {
-            button.setAttribute('aria-expanded', true);
-            currentPanel.style.display = 'flex';
-            if (index === length) {
-              button.parentNode.style.borderBottom = '1px solid #c7c7c7';
+
+          if (_this2.toggle) {
+            if (isExpanded === 'false') {
+              button.setAttribute('aria-expanded', true);
+              currentPanel.style.display = 'flex';
+              if (index === length) {
+                button.parentNode.style.borderBottom = '1px solid #c7c7c7';
+              }
+            } else {
+              button.setAttribute('aria-expanded', false);
+              currentPanel.style.display = 'none';
+              if (index === length) {
+                button.parentNode.style.border = 0;
+              }
             }
           } else {
-            button.setAttribute('aria-expanded', false);
-            currentPanel.style.display = 'none';
-            if (index === length) {
-              button.parentNode.style.border = 0;
+            var allButtons = _this2.shadowRoot.querySelectorAll('.accordion-trigger'),
+                allPanels = _this2.shadowRoot.querySelectorAll('.accordion-panel');
+
+            if (isExpanded === 'false') {
+              allButtons.forEach(function (button) {
+                button.setAttribute('aria-expanded', false);
+              });
+              allPanels.forEach(function (panel) {
+                panel.style.display = 'none';
+              });
+              button.setAttribute('aria-expanded', true);
+              currentPanel.style.display = 'flex';
+              if (index === length) {
+                button.parentNode.style.borderBottom = '1px solid #c7c7c7';
+              }
+            } else {
+              button.setAttribute('aria-expanded', false);
+              currentPanel.style.display = 'none';
+              if (index === length) {
+                button.parentNode.style.border = 0;
+              }
             }
           }
         });
@@ -105,16 +145,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var _this2 = this;
+        var _this3 = this;
 
         var buttonSlot = this.shadowRoot.querySelector('slot[name="buttons"]');
 
         buttonSlot.addEventListener('slotchange', function (event) {
-          var panelSlot = _this2.shadowRoot.querySelector('slot[name="panels"]'),
-              panelSlotToRemove = _this2.shadowRoot.querySelector('.accordion > div'),
+          var panelSlot = _this3.shadowRoot.querySelector('slot[name="panels"]'),
+              panelSlotToRemove = _this3.shadowRoot.querySelector('.accordion > div'),
               panelContainer = panelSlot.assignedNodes()[0],
-              buttonSlotToRemove = _this2.shadowRoot.querySelector('.accordion h3'),
-              triggers = _this2.shadowRoot.querySelectorAll('.accordion-trigger');
+              buttonSlotToRemove = _this3.shadowRoot.querySelector('.accordion h3'),
+              triggers = _this3.shadowRoot.querySelectorAll('.accordion-trigger');
 
           if (panelContainer) {
             var panels = panelContainer.querySelectorAll('.panel'),
@@ -122,8 +162,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 buttons = ul.querySelectorAll('li');
 
             buttons.forEach(function (button, index) {
-              _this2.target.appendChild(_this2.renderButtons(button.innerHTML, index, buttons.length));
-              _this2.target.appendChild(_this2.renderPanels(panels, index, button));
+              _this3.target.appendChild(_this3.renderButtons(button.innerHTML, index, buttons.length));
+              _this3.target.appendChild(_this3.renderPanels(panels, index, button));
             });
             panelSlotToRemove.remove();
             panelContainer.remove();
@@ -140,7 +180,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
               if (event.key === 'ArrowUp') {
                 event.preventDefault();
-                if (_this2.shadowRoot.activeElement === firstTrigger) {
+                if (_this3.shadowRoot.activeElement === firstTrigger) {
                   lastTrigger.focus();
                 } else {
                   triggers[prevButton].focus();
@@ -149,7 +189,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
               if (event.key === 'ArrowDown') {
                 event.preventDefault();
-                if (_this2.shadowRoot.activeElement === lastTrigger) {
+                if (_this3.shadowRoot.activeElement === lastTrigger) {
                   firstTrigger.focus();
                 } else {
                   triggers[nextButton].focus();
