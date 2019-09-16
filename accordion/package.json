@@ -23,7 +23,7 @@
   "homepage": "https://github.com/pearson-ux/web-components/blob/master/example/README.md",
   "dependencies": {
     "@pearson-components/elements-sdk": "git+https://github.com/Pearson-Higher-Ed/elements-sdk.git#unstable-2.0-GLP",
-    "@pearson-ux/gravity-css": "^2.8.1",
+    "@pearson-ux/gravity-css": "^2.8.2",
     "gulp-aws": "^0.1.0",
     "gulp-gzip": "^1.4.2",
     "gulp-tar": "^3.0.0"
