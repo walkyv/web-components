@@ -3,3 +3,7 @@
 .accordion button[aria-expanded="false"] + .accordion {
   display:none;
 }
+
+.accordion {
+  border-radius:0;
+}
