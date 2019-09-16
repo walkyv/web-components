@@ -1,10 +1,10 @@
 {
-  "name": "@pearson-ux/example",
-  "author": "Your Name | your.email@pearson.com",
+  "name": "@pearson-ux/accordion",
+  "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "version": "0.1.0",
-  "description": "Example web component",
-  "main": "index.html",
+  "description": "Accordion web component",
+  "main": "./js/dist/pearson-accordion.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/pearson-ux/web-components/blob/master/example/README.md",
   "dependencies": {
-    "@pearson-components/elements-sdk": "git+https://github.com/Pearson-Higher-Ed/elements-sdk.git#unstable-2.0-GLP",
     "@pearson-ux/gravity-css": "^2.8.2",
     "gulp-aws": "^0.1.0",
     "gulp-gzip": "^1.4.2",
