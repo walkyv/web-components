@@ -5,17 +5,13 @@ const autoprefixer = require('autoprefixer'),
   cssnano = require('cssnano'),
   gulp = require('gulp'),
   postcss = require('gulp-postcss'),
-  sass = require('gulp-sass'),
-  awspublish = require("gulp-awspublish"),
-  path   = require('path'),
-  rename = require('gulp-rename'),
-  NEW_S3_DIRECTORY = 'components';
+  sass = require('gulp-sass');
 
 // Make a collection of paths used by the various
 // build steps
 const paths = {
   html: './*.html',
-  scripts: ['./js/**/*.js', '!**/dist/*.js'],
+  scripts: ['./js/popper.js', './js/coachmark.js'],
   styles: './scss/**/*.scss',
   dist: './js/dist',
   ignore: './js/dist',
@@ -41,6 +37,7 @@ function scripts(done) {
       presets: [['env', { modules: false }]]
     })
   )
+  .pipe(concat('pearson-coachmark.js'))
   .pipe(gulp.dest(paths.dist));
   done();
 }
@@ -75,6 +72,7 @@ exports.serve = serve;
 exports.watch = watch;
 
 exports.default = gulp.series(build, serve, watch);
+
 
 gulp.task("publish", function() {
   var publisher = awspublish.create(
