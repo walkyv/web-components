@@ -2,7 +2,7 @@
   "name": "@pearson-ux/coachmark",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Coachmark web component",
   "main": "./js/dist/pearson-coachmark.js",
   "scripts": {

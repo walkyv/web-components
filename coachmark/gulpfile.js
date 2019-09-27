@@ -5,7 +5,12 @@ const autoprefixer = require('autoprefixer'),
   cssnano = require('cssnano'),
   gulp = require('gulp'),
   postcss = require('gulp-postcss'),
-  sass = require('gulp-sass');
+  sass = require('gulp-sass'),
+  awspublish = require("gulp-awspublish"),
+  path   = require('path'),
+  rename = require('gulp-rename'),
+  NEW_S3_DIRECTORY = 'components';
+require('dotenv').config();
 
 // Make a collection of paths used by the various
 // build steps
