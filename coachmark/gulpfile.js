@@ -70,6 +70,7 @@ const build = gulp.series(styles, scripts);
 exports.build = build;
 exports.serve = serve;
 exports.watch = watch;
+exports.scripts = scripts;
 
 exports.default = gulp.series(build, serve, watch);
 
