@@ -150,63 +150,65 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         var buttonSlot = this.shadowRoot.querySelector('slot[name="buttons"]');
 
-        buttonSlot.addEventListener('slotchange', function (event) {
-          var panelSlot = _this3.shadowRoot.querySelector('slot[name="panels"]'),
-              panelSlotToRemove = _this3.shadowRoot.querySelector('.accordion > div'),
-              panelContainer = panelSlot.assignedNodes()[0],
-              buttonSlotToRemove = _this3.shadowRoot.querySelector('.accordion h3'),
-              triggers = _this3.shadowRoot.querySelectorAll('.accordion-trigger');
+        if (buttonSlot !== null) {
+          buttonSlot.addEventListener('slotchange', function (event) {
+            var panelSlot = _this3.shadowRoot.querySelector('slot[name="panels"]'),
+                panelSlotToRemove = _this3.shadowRoot.querySelector('.accordion > div'),
+                panelContainer = panelSlot.assignedNodes()[0],
+                buttonSlotToRemove = _this3.shadowRoot.querySelector('.accordion h3'),
+                triggers = _this3.shadowRoot.querySelectorAll('.accordion-trigger');
 
-          if (panelContainer) {
-            var panels = panelContainer.querySelectorAll('.panel'),
-                ul = buttonSlot.assignedNodes()[0],
-                buttons = ul.querySelectorAll('li');
+            if (panelContainer) {
+              var panels = panelContainer.querySelectorAll('.panel'),
+                  ul = buttonSlot.assignedNodes()[0],
+                  buttons = ul.querySelectorAll('li');
 
-            buttons.forEach(function (button, index) {
-              _this3.target.appendChild(_this3.renderButtons(button.innerHTML, index, buttons.length));
-              _this3.target.appendChild(_this3.renderPanels(panels, index, button));
-            });
-            panelSlotToRemove.remove();
-            panelContainer.remove();
-            ul.remove();
-            buttonSlotToRemove.remove();
-          }
+              buttons.forEach(function (button, index) {
+                _this3.target.appendChild(_this3.renderButtons(button.innerHTML, index, buttons.length));
+                _this3.target.appendChild(_this3.renderPanels(panels, index, button));
+              });
+              panelSlotToRemove.remove();
+              panelContainer.remove();
+              ul.remove();
+              buttonSlotToRemove.remove();
+            }
 
-          triggers.forEach(function (trigger) {
-            trigger.addEventListener('keydown', function (event) {
-              var nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
-                  prevButton = parseInt(event.target.getAttribute('data-index')) - 1,
-                  firstTrigger = triggers[0],
-                  lastTrigger = triggers[triggers.length - 1];
+            triggers.forEach(function (trigger) {
+              trigger.addEventListener('keydown', function (event) {
+                var nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
+                    prevButton = parseInt(event.target.getAttribute('data-index')) - 1,
+                    firstTrigger = triggers[0],
+                    lastTrigger = triggers[triggers.length - 1];
 
-              if (event.key === 'ArrowUp') {
-                event.preventDefault();
-                if (_this3.shadowRoot.activeElement === firstTrigger) {
-                  lastTrigger.focus();
-                } else {
-                  triggers[prevButton].focus();
+                if (event.key === 'ArrowUp') {
+                  event.preventDefault();
+                  if (_this3.shadowRoot.activeElement === firstTrigger) {
+                    lastTrigger.focus();
+                  } else {
+                    triggers[prevButton].focus();
+                  }
                 }
-              }
 
-              if (event.key === 'ArrowDown') {
-                event.preventDefault();
-                if (_this3.shadowRoot.activeElement === lastTrigger) {
+                if (event.key === 'ArrowDown') {
+                  event.preventDefault();
+                  if (_this3.shadowRoot.activeElement === lastTrigger) {
+                    firstTrigger.focus();
+                  } else {
+                    triggers[nextButton].focus();
+                  }
+                }
+
+                if (event.key === 'Home') {
                   firstTrigger.focus();
-                } else {
-                  triggers[nextButton].focus();
                 }
-              }
 
-              if (event.key === 'Home') {
-                firstTrigger.focus();
-              }
-
-              if (event.key === 'End') {
-                lastTrigger.focus();
-              }
+                if (event.key === 'End') {
+                  lastTrigger.focus();
+                }
+              });
             });
           });
-        });
+        }
       }
     }]);
 
