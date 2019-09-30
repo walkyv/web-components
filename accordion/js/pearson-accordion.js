@@ -160,7 +160,7 @@
     connectedCallback() {
       const buttonSlot = this.shadowRoot.querySelector('slot[name="buttons"]');
 
-      if (buttonSlot) {
+      if (buttonSlot !== null) {
         buttonSlot.addEventListener('slotchange', event => {
           const panelSlot = this.shadowRoot.querySelector('slot[name="panels"]'),
             panelSlotToRemove = this.shadowRoot.querySelector('.accordion > div'),
