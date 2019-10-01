@@ -17,6 +17,7 @@
   padding: 0 1em 24px;
   font-family: 'Open Sans',Arial,Helvetica,sans-serif;
   font-size: 14px;
+  flex-wrap: wrap;
   @media (max-width: 979px) {
     flex-direction:column;
     ul {
