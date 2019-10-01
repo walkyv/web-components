@@ -2,7 +2,7 @@
   "name": "@pearson-ux/footer",
   "author": "Wei Fang | wei.fang@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Footer web component",
   "main": "./js/dist/pearson-footer.js",
   "scripts": {
