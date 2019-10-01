@@ -17,6 +17,15 @@
   padding: 0 1em 24px;
   font-family: 'Open Sans',Arial,Helvetica,sans-serif;
   font-size: 14px;
+  @media (max-width: 979px) {
+    flex-direction:column;
+    ul {
+      margin-bottom:12px;
+      li {
+        border:0;
+      }
+    }
+  }
 }
 
 :host([theme='dark']) a,
@@ -42,6 +51,7 @@ a:focus {
 
 ul {
   margin:0;
+  padding:0;
   list-style-type: none;
   display: flex;
   align-items: center;
@@ -54,9 +64,8 @@ li {
   margin-right:.65em;
   padding-right:.65em;
   border-right:1px solid #252525;
-  @media (max-width: 979px) {
-    margin-bottom: 12px;
-  }
+
+
 }
 
 li:last-child {

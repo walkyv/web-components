@@ -1,3 +1,7 @@
 @import "./_animation.scss";
 @import "./_drawer.scss";
 
+:host {
+  @import "./_main.scss";
+
+}
