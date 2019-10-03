@@ -1,6 +1,6 @@
 {
   "name": "pearson-web-components",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "description": "Pearson web component library",
   "main": "gulpfile.js",
   "scripts": {
