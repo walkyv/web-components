@@ -18,6 +18,10 @@
       text-transform: uppercase;
     }
 
+    .pe-textInput--basic.error {
+      border-color: $pe-color-strawberry-red;
+    }
+
     .pe-icon-wrapper {
       color: #6a7070;
       position: absolute;
@@ -25,7 +29,7 @@
       bottom: calc(50% - 9px);
     }
   }
-  .gr-label {
+  .pe-textLabelInput__label {
     &.error {
       color: $pe-color-strawberry-red;
     }
@@ -37,9 +41,10 @@
     margin-bottom:0;
     font-size: 12px;
     line-height: 18px;
+
   }
 
-  .gr-dropdown-container {
+  .pe-dropdown-container {
     width:220px;
     position:absolute;
     top:68px;
@@ -92,7 +97,7 @@
       }
 
       &.with-selection {
-        .gr-itemList-item {
+        .pe-itemList-item {
           padding: 4px 24px 4px 34px;
         }
       }
