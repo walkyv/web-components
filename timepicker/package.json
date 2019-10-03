@@ -1,9 +1,9 @@
 {
-  "name": "@pearson-ux/example",
-  "author": "Your Name | your.email@pearson.com",
+  "name": "@pearson-ux/timepicker",
+  "author": "Elias Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "version": "1.0.2",
-  "description": "Example web component",
+  "description": "Timepicker web component",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/pearson-ux/web-components.git"
   },
   "keywords": [
-    "example",
+    "Time Picker",
     "pearson-components",
     "web components"
   ],
