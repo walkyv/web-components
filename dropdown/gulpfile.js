@@ -70,6 +70,7 @@ function watch() {
 
 const build = gulp.series(styles, scripts);
 
+exports.styles = styles;
 exports.build = build;
 exports.serve = serve;
 exports.watch = watch;
