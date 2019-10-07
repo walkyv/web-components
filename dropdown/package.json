@@ -2,7 +2,7 @@
   "name": "@pearson-ux/dropdown",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Dropdown web component",
   "main": "./js/dist/pearson-dropdown.js",
   "scripts": {
