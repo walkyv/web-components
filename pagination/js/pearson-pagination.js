@@ -149,6 +149,7 @@
     }
 
     addListener(event) {
+      event.preventDefault();
       this.currentPage = event.currentTarget.getAttribute('data-page');
       this.dispatchEvent(
         new Event('newPage', {
@@ -258,6 +259,7 @@
         );
         pageBtns.forEach(button => {
           button.addEventListener('click', event => {
+            event.preventDefault();
             button.removeAttribute('disabled');
             if (button.tagName === 'BUTTON') {
               button.setAttribute(
