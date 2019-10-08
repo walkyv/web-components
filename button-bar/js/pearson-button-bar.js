@@ -43,7 +43,7 @@
   dropdownTemplate.innerHTML = `
   <li id="moreDropdown">
     <div class="gr-dropdown-container">
-      <button id="openMenu" class="gr-btn icon-btn-18" aria-haspopup="true" aria-expanded="false" >
+      <button id="openMenu" class="gr-btn icon-btn-18" aria-haspopup="true" aria-expanded="false" aria-label="more options">
         <svg focusable="false" class="icon-18" aria-hidden="true" style="margin:0;">
           <path d="M7.5,3.5 C7.5,2.67157288 8.17157288,2 9,2 C9.82842712,2 10.5,2.67157288 10.5,3.5 C10.5,4.32842712 9.82842712,5 9,5 C8.17157288,5 7.5,4.32842712 7.5,3.5 Z" ></path>
           <path d="M7.5,9 C7.5,8.17157288 8.17157288,7.5 9,7.5 C9.82842712,7.5 10.5,8.17157288 10.5,9 C10.5,9.82842712 9.82842712,10.5 9,10.5 C8.17157288,10.5 7.5,9.82842712 7.5,9 Z" ></path>
