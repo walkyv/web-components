@@ -4922,6 +4922,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _createClass(Pagination, [{
       key: 'addListener',
       value: function addListener(event) {
+        event.preventDefault();
         this.currentPage = event.currentTarget.getAttribute('data-page');
         this.dispatchEvent(new Event('newPage', {
           bubbles: true
@@ -5064,6 +5065,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           var pageBtns = this.shadowRoot.querySelectorAll('nav button, #pages > a');
           pageBtns.forEach(function (button) {
             button.addEventListener('click', function (event) {
+              event.preventDefault();
               button.removeAttribute('disabled');
               if (button.tagName === 'BUTTON') {
                 button.setAttribute('aria-label', 'Page ' + _this2.currentPage + ', Next Page');
