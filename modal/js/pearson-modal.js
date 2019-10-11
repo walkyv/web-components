@@ -163,6 +163,7 @@
       this.setAttribute('open', bool);
     }
 
+
     set footer(value) {
       const isfooterShown = Boolean(value);
       if (isfooterShown) {
@@ -255,6 +256,13 @@
       }
       if (this.footer) {
         this.renderfooter(this.modal);
+      }
+      if (name === 'titletext') {
+        const title = this.shadowRoot.querySelector('#dialogHeading');
+        if (title !== null) {
+          title.innerHTML = this.titleText;
+        }
+
       }
     }
 

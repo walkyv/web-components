@@ -4712,6 +4712,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (this.footer) {
           this.renderfooter(this.modal);
         }
+        if (name === 'titletext') {
+          var title = this.shadowRoot.querySelector('#dialogHeading');
+          if (title !== null) {
+            title.innerHTML = this.titleText;
+          }
+        }
       }
     }, {
       key: 'disconnectedCallback',
