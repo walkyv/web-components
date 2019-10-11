@@ -4705,7 +4705,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         if (name === 'footer' && !this.modal) return;
         if (!this.footer && this.modal !== undefined) {
           var actions = this.modal.querySelector('.actions');
-          actions.remove();
+          if (actions !== null && actions !== undefined) {
+            actions.remove();
+          }
         }
         if (this.footer) {
           this.renderfooter(this.modal);
