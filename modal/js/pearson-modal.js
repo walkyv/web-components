@@ -124,6 +124,7 @@
   class Modal extends HTMLElement {
     static get observedAttributes() {
       return [
+        'open',
         'footer',
         'elements',
         'triggerid',
@@ -131,7 +132,7 @@
         'successbtntext',
         'cancelbtntext',
         'hidecancel',
-        'hidesuccess'
+        'hidesuccess',
       ];
     }
     get hideCancel() {
@@ -157,6 +158,10 @@
     }
     get footer() {
       return this.hasAttribute('footer');
+    }
+
+    get open () {
+      return this.hasAttribute('open');
     }
 
     set openState(bool) {
@@ -248,21 +253,30 @@
 
     attributeChangedCallback(name) {
       if (name === 'footer' && !this.modal) return;
-      if (!this.footer && this.modal !== undefined) {
-        const actions = this.modal.querySelector('.actions');
-        if (actions !== null && actions !== undefined) {
-          actions.remove();
+
+      if (name === 'footer' && this.modal) {
+        if (!this.footer && this.modal !== undefined) {
+          const actions = this.modal.querySelector('.actions');
+          if (actions !== null && actions !== undefined) {
+            actions.remove();
+          }
+        }
+        if (this.footer) {
+          this.renderfooter(this.modal);
         }
       }
-      if (this.footer) {
-        this.renderfooter(this.modal);
-      }
+
       if (name === 'titletext') {
         const title = this.shadowRoot.querySelector('#dialogHeading');
         if (title !== null) {
           title.innerHTML = this.titleText;
         }
+      }
 
+      if (name === 'open') {
+        if (this.open === false) {
+          this.closeModal('cancel')
+        }
       }
     }
 
@@ -320,7 +334,8 @@
           new Event(eventName, { bubbles: true, composed: true })
         );
       }, 500);
-      this.openState = false;
+
+      this.removeAttribute('open');
     }
 
     maintainFocus() {
@@ -375,6 +390,7 @@
       if (parentNode) {
         const modalBody = parentNode.querySelector('#dialogDescription');
         modalBody.parentNode.insertBefore(actionsClone, modalBody.nextSibling);
+
       }
       if (this.cancelBtnText !== null) {
         cancelBtn.innerHTML = this.cancelBtnText;

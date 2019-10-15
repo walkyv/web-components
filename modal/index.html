@@ -32,15 +32,6 @@
 			<section class="container target">
 				<button id="trigger-modal">Open Modal</button>
 			</section>
-			<section class="container target">
-				<button id="trigger-modal-two">Open no cancel modal</button>
-			</section>
-			<section class="container target">
-				<button id="trigger-modal-three">Open no success modal</button>
-			</section>
-		<section class="container target">
-			<button id="trigger-modal-four">Open elements modal</button>
-		</section>
 		</main>
 
 		<!-- place modal before the end of the body and pass in the reference ID of the button that triggers the modal -->
@@ -54,6 +45,7 @@
 				style="display:none"
 		>
 			<div>
+				<button id="button">Close</button>
 				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In massa tellus, porta in venenatis eget, pulvinar in arcu. Ut eu cursus augue. Sed eget tempus sem, nec suscipit justo. Cras sit amet accumsan massa, non elementum erat. Quisque et ultricies risus. Mauris id feugiat metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras quis libero a urna eleifend placerat. Nunc varius lorem at commodo viverra. Vivamus lobortis diam et nibh tempor, vitae laoreet sapien auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
 				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In massa tellus, porta in venenatis eget, pulvinar in arcu. Ut eu cursus augue. Sed eget tempus sem, nec suscipit justo. Cras sit amet accumsan massa, non elementum erat. Quisque et ultricies risus. Mauris id feugiat metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras quis libero a urna eleifend placerat. Nunc varius lorem at commodo viverra. Vivamus lobortis diam et nibh tempor, vitae laoreet sapien auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
 				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In massa tellus, porta in venenatis eget, pulvinar in arcu. Ut eu cursus augue. Sed eget tempus sem, nec suscipit justo. Cras sit amet accumsan massa, non elementum erat. Quisque et ultricies risus. Mauris id feugiat metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras quis libero a urna eleifend placerat. Nunc varius lorem at commodo viverra. Vivamus lobortis diam et nibh tempor, vitae laoreet sapien auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
@@ -62,36 +54,13 @@
 
 			</div>
 		</pearson-modal>
-		<pearson-modal
-				triggerid="trigger-modal-two"
-				titletext="Basic Title"
-				successbtntext="Yep, love it."
-				hidecancel
-				footer
-				style="display:none"
+	<script>
+		const modal = document.querySelector('pearson-modal'),
+		  button = document.querySelector('#button');
 
-		>
-			<p style="margin-top:1000px">I like New York in June. How about you?</p>
-		</pearson-modal>
-		<pearson-modal
-				triggerid="trigger-modal-three"
-				titletext="Basic Title"
-				cancelbtntext="Leave me alone."
-				hidesuccess
-				footer
-				style="display:none"
-		>
-			<p>I like New York in June. How about you?</p>
-		</pearson-modal>
-
-	<pearson-modal
-			triggerid="trigger-modal-four"
-			titletext="Basic Title"
-			footer
-			style="display:none"
-			elements="v1"
-	>
-		<p>I use an older version of elements</p>
-	</pearson-modal>
+		button.addEventListener('click', event => {
+			 modal.removeAttribute('open')
+		})
+	</script>
 	</body>
 </html>
