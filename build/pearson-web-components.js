@@ -4611,6 +4611,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
       }
     }, {
+      key: 'open',
+      get: function get() {
+        return this.hasAttribute('open');
+      }
+    }, {
       key: 'openState',
       set: function set(bool) {
         this.setAttribute('open', bool);
@@ -4618,7 +4623,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['footer', 'elements', 'triggerid', 'titletext', 'successbtntext', 'cancelbtntext', 'hidecancel', 'hidesuccess'];
+        return ['open', 'footer', 'elements', 'triggerid', 'titletext', 'successbtntext', 'cancelbtntext', 'hidecancel', 'hidesuccess'];
       }
     }]);
 
@@ -4703,19 +4708,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       key: 'attributeChangedCallback',
       value: function attributeChangedCallback(name) {
         if (name === 'footer' && !this.modal) return;
-        if (!this.footer && this.modal !== undefined) {
-          var actions = this.modal.querySelector('.actions');
-          if (actions !== null && actions !== undefined) {
-            actions.remove();
+
+        if (name === 'footer' && this.modal) {
+          if (!this.footer && this.modal !== undefined) {
+            var actions = this.modal.querySelector('.actions');
+            if (actions !== null && actions !== undefined) {
+              actions.remove();
+            }
+          }
+          if (this.footer) {
+            this.renderfooter(this.modal);
           }
         }
-        if (this.footer) {
-          this.renderfooter(this.modal);
-        }
+
         if (name === 'titletext') {
           var title = this.shadowRoot.querySelector('#dialogHeading');
           if (title !== null) {
             title.innerHTML = this.titleText;
+          }
+        }
+
+        if (name === 'open') {
+          if (this.open === false) {
+            this.closeModal('cancel');
           }
         }
       }
@@ -4777,7 +4792,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         setTimeout(function () {
           _this3.dispatchEvent(new Event(eventName, { bubbles: true, composed: true }));
         }, 500);
-        this.openState = false;
+
+        this.removeAttribute('open');
       }
     }, {
       key: 'maintainFocus',
