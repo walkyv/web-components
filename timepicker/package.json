@@ -21,7 +21,9 @@
     "url": "https://github.com/pearson-ux/web-components/issues"
   },
   "homepage": "https://github.com/pearson-ux/web-components/blob/master/example/README.md",
-  "dependencies": {},
+  "dependencies": {
+    "@pearson-ux/gravity-css": "^2.10.2"
+  },
   "devDependencies": {
     "autoprefixer": "^9.4.3",
     "babel-core": "^6.26.3",
