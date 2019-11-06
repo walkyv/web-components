@@ -81,7 +81,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var isOpen = Boolean(value);
 
         if (isOpen) {
-          if (this.selectedItem) this.selectedItem.scrollIntoView(true);
+          if (this.selectedItem) this.selectedItem.scrollIntoView(false);
 
           this.setAttribute('open', '');
         } else {
@@ -156,6 +156,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         if (nextItem) {
           this.input.setAttribute('aria-activedescendant', 'time-' + nextItem.dataset.idx);
+
           nextItem.classList.add('focused');
           nextItem.setAttribute('aria-selected', 'true');
 
@@ -328,6 +329,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'onInputFocus',
       value: function onInputFocus() {
+        console.log('focused');
         this.open = true;
       }
     }, {

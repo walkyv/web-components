@@ -156,7 +156,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
       const isOpen = Boolean(value);
 
       if (isOpen) {
-        if (this.selectedItem) this.selectedItem.scrollIntoView(true);
+        if (this.selectedItem) this.selectedItem.scrollIntoView(false);
 
         this.setAttribute('open', '');
       } else {
@@ -223,6 +223,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
           'aria-activedescendant',
           'time-' + nextItem.dataset.idx
         );
+
         nextItem.classList.add('focused');
         nextItem.setAttribute('aria-selected', 'true');
 
@@ -311,6 +312,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
         }
       }
 
+
     }
 
     connectedCallback() {
@@ -376,6 +378,7 @@ input{display:block;width:100%;height:36px;padding:0 14px;border:1px solid #c7c7
     }
 
     onInputFocus() {
+      console.log('focused')
       this.open = true;
     }
 
