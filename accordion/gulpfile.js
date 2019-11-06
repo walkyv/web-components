@@ -73,3 +73,32 @@ exports.scripts = scripts;
 
 exports.default = gulp.series(build, serve, watch);
 
+gulp.task("publish", function() {
+  var publisher = awspublish.create(
+    {
+      region: "sfo2",
+      endpoint: "sfo2.digitaloceanspaces.com",
+      params: {
+        Bucket: "pearsonux"
+      },
+      accessKeyId: process.env.S3_KEY,
+      secretAccessKey: process.env.S3_SECRET
+    }
+  );
+
+  const headers = {
+    "Cache-Control": "max-age=315360000, no-transform, public"
+  };
+
+  return (
+    gulp
+    .src("./js/dist/*.js")
+    .pipe(rename(function(filePath) {
+      filePath.dirname = path.join(NEW_S3_DIRECTORY, filePath.dirname);
+    }))
+    .pipe(awspublish.gzip({ ext: ".gz" }))
+    .pipe(publisher.publish(headers))
+    .pipe(publisher.cache())
+    .pipe(awspublish.reporter())
+  );
+});
