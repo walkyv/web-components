@@ -2,7 +2,7 @@
   "name": "@pearson-ux/accordion",
   "author": "David O'Dey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Accordion web component",
   "main": "./js/dist/pearson-accordion.js",
   "scripts": {
