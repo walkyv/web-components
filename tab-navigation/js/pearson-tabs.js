@@ -21,9 +21,12 @@
 
   class Tabs extends HTMLElement {
     static get observedAttributes() {
-      return ['activeidx', 'activeIdx'];
+      return ['activeidx', 'activeIdx', 'theme'];
     }
 
+    get theme() {
+      return this.getAttribute('theme');
+    }
     get activeIdx() {
       return parseInt(this.getAttribute('activeIdx'), 10);
     }
@@ -73,6 +76,10 @@
 
     connectedCallback() {
       const [tabSlot, panelSlot] = this.shadowRoot.querySelectorAll('slot');
+
+      if (this.theme === 'dark') {
+        this.classList.add('theme--dark');
+      }
 
       if (!this.hasAttribute('activeIdx')) {
         this.setAttribute('activeIdx', '0');

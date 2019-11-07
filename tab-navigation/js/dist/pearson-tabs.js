@@ -24,6 +24,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     _inherits(Tabs, _HTMLElement);
 
     _createClass(Tabs, [{
+      key: 'theme',
+      get: function get() {
+        return this.getAttribute('theme');
+      }
+    }, {
       key: 'activeIdx',
       get: function get() {
         return parseInt(this.getAttribute('activeIdx'), 10);
@@ -44,7 +49,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }], [{
       key: 'observedAttributes',
       get: function get() {
-        return ['activeidx', 'activeIdx'];
+        return ['activeidx', 'activeIdx', 'theme'];
       }
     }]);
 
@@ -91,6 +96,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             _shadowRoot$querySele2 = _slicedToArray(_shadowRoot$querySele, 2),
             tabSlot = _shadowRoot$querySele2[0],
             panelSlot = _shadowRoot$querySele2[1];
+
+        if (this.theme === 'dark') {
+          this.classList.add('theme--dark');
+        }
 
         if (!this.hasAttribute('activeIdx')) {
           this.setAttribute('activeIdx', '0');
