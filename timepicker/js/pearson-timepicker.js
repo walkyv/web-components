@@ -156,10 +156,10 @@
 
     set open(value) {
       const isOpen = Boolean(value);
-
+      const box = this.shadowRoot.querySelector('#listbox').getBoundingClientRect();
+      console.log(box)
       if (isOpen) {
-        if (this.selectedItem) this.selectedItem.scrollIntoView(false);
-
+        if (this.selectedItem) this.selectedItem.scrollTop;
         this.setAttribute('open', '');
       } else {
         this.removeAttribute('open');
