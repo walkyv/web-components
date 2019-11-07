@@ -4,7 +4,7 @@
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "version": "1.0.1",
   "description": "Pearson Drawer Web Component",
-  "main": "./js/dist/pearson-drawer",
+  "main": "./js/dist/pearson-drawer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

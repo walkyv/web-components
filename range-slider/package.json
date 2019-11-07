@@ -4,7 +4,7 @@
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "version": "1.0.1",
   "description": "Input range slider web component",
-  "main": "index.html",
+  "main": "./js/dist/pearson-range-slider.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
