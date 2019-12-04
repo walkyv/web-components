@@ -1,5 +1,3 @@
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9,6 +7,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 (function (w, doc) {
+
   'use strict';
 
   var template = doc.createElement('template');
@@ -69,13 +68,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       _this.tabsWrapper = clone.querySelector('#tabs-wrapper');
       _this.slider = clone.querySelector('#slider');
-
-      _this.shadowRoot.appendChild(clone);
+      _this.slots = clone.querySelectorAll('slot');
+      _this.tabSlot = _this.slots[0];
+      _this.panelSlot = _this.slots[1];
 
       _this.onTabSlotChange = _this.onTabSlotChange.bind(_this);
       _this.onPanelSlotChange = _this.onPanelSlotChange.bind(_this);
       _this.onShadowRootClick = _this.onShadowRootClick.bind(_this);
       _this.onShadowRootKeydown = _this.onShadowRootKeydown.bind(_this);
+
+      _this.tabSlot.addEventListener('slotchange', _this.onTabSlotChange);
+      _this.panelSlot.addEventListener('slotchange', _this.onPanelSlotChange);
+
+      _this.shadowRoot.appendChild(clone);
       return _this;
     }
 
@@ -92,11 +97,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var _shadowRoot$querySele = this.shadowRoot.querySelectorAll('slot'),
-            _shadowRoot$querySele2 = _slicedToArray(_shadowRoot$querySele, 2),
-            tabSlot = _shadowRoot$querySele2[0],
-            panelSlot = _shadowRoot$querySele2[1];
-
         if (this.theme === 'dark') {
           this.classList.add('theme--dark');
         }
@@ -107,9 +107,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         this.shadowRoot.addEventListener('click', this.onShadowRootClick, true);
         this.shadowRoot.addEventListener('keydown', this.onShadowRootKeydown, true);
-
-        tabSlot.addEventListener('slotchange', this.onTabSlotChange);
-        panelSlot.addEventListener('slotchange', this.onPanelSlotChange);
       }
     }, {
       key: 'initTabs',

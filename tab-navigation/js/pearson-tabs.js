@@ -1,5 +1,8 @@
+
 (function(w, doc) {
+
   'use strict';
+
 
   const template = doc.createElement('template');
 
@@ -17,6 +20,7 @@
 
   const forEach = Array.prototype.forEach;
   const indexOf = Array.prototype.indexOf;
+
 
   class Tabs extends HTMLElement {
     static get observedAttributes() {
@@ -55,13 +59,21 @@
 
       this.tabsWrapper = clone.querySelector('#tabs-wrapper');
       this.slider = clone.querySelector('#slider');
+      this.slots = clone.querySelectorAll('slot');
+      this.tabSlot = this.slots[0];
+      this.panelSlot = this.slots[1];
 
-      this.shadowRoot.appendChild(clone);
+
 
       this.onTabSlotChange = this.onTabSlotChange.bind(this);
       this.onPanelSlotChange = this.onPanelSlotChange.bind(this);
       this.onShadowRootClick = this.onShadowRootClick.bind(this);
       this.onShadowRootKeydown = this.onShadowRootKeydown.bind(this);
+
+      this.tabSlot.addEventListener('slotchange', this.onTabSlotChange)
+      this.panelSlot.addEventListener('slotchange', this.onPanelSlotChange);
+
+      this.shadowRoot.appendChild(clone);
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -74,8 +86,6 @@
     }
 
     connectedCallback() {
-      const [tabSlot, panelSlot] = this.shadowRoot.querySelectorAll('slot');
-
       if (this.theme === 'dark') {
         this.classList.add('theme--dark');
       }
@@ -85,14 +95,8 @@
       }
 
       this.shadowRoot.addEventListener('click', this.onShadowRootClick, true);
-      this.shadowRoot.addEventListener(
-        'keydown',
-        this.onShadowRootKeydown,
-        true
-      );
+      this.shadowRoot.addEventListener('keydown', this.onShadowRootKeydown, true);
 
-      tabSlot.addEventListener('slotchange', this.onTabSlotChange);
-      panelSlot.addEventListener('slotchange', this.onPanelSlotChange);
     }
 
     initTabs() {
@@ -168,9 +172,9 @@
       } = activeTab.getBoundingClientRect();
       const tabMargin = parseInt(
         w
-          .getComputedStyle(activeTab)
-          .getPropertyValue('margin-left')
-          .match(/\d+/)[0],
+        .getComputedStyle(activeTab)
+        .getPropertyValue('margin-left')
+        .match(/\d+/)[0],
         10
       );
 
@@ -194,8 +198,8 @@
 
     onPanelSlotChange(e) {
       this.panels = e.target
-        .assignedNodes()[0]
-        .querySelectorAll('[data-panel]');
+      .assignedNodes()[0]
+      .querySelectorAll('[data-panel]');
 
       if (!this.panels) return;
 
