@@ -72,11 +72,74 @@
         panelClone = panelTemplate.content.cloneNode(true);
 
       this.target = clone.querySelector('#accordionGroup');
+      this.buttonSlot = buttonClone.querySelector('slot[name="buttons"]');
+      this.panelSlot = panelClone.querySelector('slot[name="panels"]');
+      this.panelSlotToRemove = clone.querySelector('.accordion > div')
+
+      if (this.buttonSlot !== null) {
+        this.buttonSlot.addEventListener('slotchange', event => {
+          const panelSlotToRemove = this.shadowRoot.querySelector('.accordion > div'),
+            panelContainer = this.panelSlot.assignedNodes()[0],
+            buttonSlotToRemove = this.shadowRoot.querySelector('.accordion h3'),
+            triggers = this.shadowRoot.querySelectorAll('.accordion-trigger');
+
+          if (panelContainer) {
+            const panels = panelContainer.querySelectorAll('.panel'),
+              ul = this.buttonSlot.assignedNodes()[0],
+              buttons = ul.querySelectorAll('li');
+
+            buttons.forEach((button,index) => {
+              this.target.appendChild(this.renderButtons(button.innerHTML, index, buttons.length));
+              this.target.appendChild(this.renderPanels(panels, index, button));
+            });
+            panelSlotToRemove.remove();
+            panelContainer.remove();
+            ul.remove();
+            buttonSlotToRemove.remove();
+          }
+
+          triggers.forEach(trigger => {
+            trigger.addEventListener('keydown', event => {
+              const nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
+                prevButton = parseInt(event.target.getAttribute('data-index')) - 1,
+                firstTrigger = triggers[0],
+                lastTrigger = triggers[triggers.length - 1];
+
+              if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                if (this.shadowRoot.activeElement === firstTrigger) {
+                  lastTrigger.focus();
+                } else {
+                  triggers[prevButton].focus();
+                }
+              }
+
+              if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                if (this.shadowRoot.activeElement === lastTrigger) {
+                  firstTrigger.focus();
+                } else {
+                  triggers[nextButton].focus();
+                }
+              }
+
+              if (event.key === 'Home') {
+                firstTrigger.focus();
+              }
+
+              if (event.key === 'End') {
+                lastTrigger.focus();
+              }
+
+            })
+          })
+        })
+      }
+
 
       this.shadowRoot.appendChild(clone);
       buttonClone.appendChild(panelClone);
       this.target.appendChild(buttonClone);
-
 
       this.renderButtons = this.renderButtons.bind(this);
       this.renderPanels = this.renderPanels.bind(this);
@@ -157,70 +220,6 @@
       return panelClone
     }
 
-    connectedCallback() {
-      const buttonSlot = this.shadowRoot.querySelector('slot[name="buttons"]');
-
-      if (buttonSlot !== null) {
-        buttonSlot.addEventListener('slotchange', event => {
-          const panelSlot = this.shadowRoot.querySelector('slot[name="panels"]'),
-            panelSlotToRemove = this.shadowRoot.querySelector('.accordion > div'),
-            panelContainer = panelSlot.assignedNodes()[0],
-            buttonSlotToRemove = this.shadowRoot.querySelector('.accordion h3'),
-            triggers = this.shadowRoot.querySelectorAll('.accordion-trigger');
-
-          if (panelContainer) {
-            const panels = panelContainer.querySelectorAll('.panel'),
-              ul = buttonSlot.assignedNodes()[0],
-              buttons = ul.querySelectorAll('li');
-
-            buttons.forEach((button,index) => {
-              this.target.appendChild(this.renderButtons(button.innerHTML, index, buttons.length));
-              this.target.appendChild(this.renderPanels(panels, index, button));
-            });
-            panelSlotToRemove.remove();
-            panelContainer.remove();
-            ul.remove();
-            buttonSlotToRemove.remove();
-          }
-
-          triggers.forEach(trigger => {
-            trigger.addEventListener('keydown', event => {
-              const nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
-                prevButton = parseInt(event.target.getAttribute('data-index')) - 1,
-                firstTrigger = triggers[0],
-                lastTrigger = triggers[triggers.length - 1];
-
-              if (event.key === 'ArrowUp') {
-                event.preventDefault();
-                if (this.shadowRoot.activeElement === firstTrigger) {
-                  lastTrigger.focus();
-                } else {
-                  triggers[prevButton].focus();
-                }
-              }
-
-              if (event.key === 'ArrowDown') {
-                event.preventDefault();
-                if (this.shadowRoot.activeElement === lastTrigger) {
-                  firstTrigger.focus();
-                } else {
-                  triggers[nextButton].focus();
-                }
-              }
-
-              if (event.key === 'Home') {
-                firstTrigger.focus();
-              }
-
-              if (event.key === 'End') {
-                lastTrigger.focus();
-              }
-
-            })
-          })
-        });
-      }
-    }
   }
   customElements.define('pearson-accordion', Accordion);
 })(window, document);
