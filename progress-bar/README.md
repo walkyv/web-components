@@ -46,12 +46,12 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
   />
 
   <!-- Polyfills -->
-  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-progress-bar.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-pearson-progress-bar.js"></script>
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?rum=0"></script>
 
   <!-- Web component script -->
-  <script src="/path-to-progress-bar/js/dist/pearson-progress-bar.js" />
+  <script src="/path-to-progress-bar/js/dist/pearson-pearson-progress-bar.js" />
 </head>
 ```
 

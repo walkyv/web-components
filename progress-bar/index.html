@@ -22,7 +22,7 @@
 		<!-- load the web component script -->
 		<!-- RENAME THIS FILE DURING DEVELOPMENT -->
 		<!-- e.g., 'pearson-alert' -->
-    <script src="js/dist/progress-bar.js"></script>
+    <script src="js/dist/pearson-progress-bar.js"></script>
     <style>
       .target {margin:4em; width:50%; border:1px solid gray; margin:2em auto; padding:1em;}
     </style>
@@ -40,21 +40,28 @@
 
 
   <script>
-    const loader = document.querySelector('#loading');
-    const startBtn = document.querySelector('button');
-    let progress = loader.getAttribute('progress');
-    let count = parseInt(progress);
+    document.addEventListener('DOMContentLoaded', function(event) {
+      //the event occurred
+      const loader = document.querySelector('#loading');
+      const startBtn = document.querySelector('button');
+      let progress = loader.getAttribute('progress');
+      let count = parseInt(progress);
+      console.log(progress)
 
-    startBtn.addEventListener('click', function (e) {
-      setInterval( function (event) {
-      if (count < 100) {
-        count++;
-        loader.progress = count;
-      } else {
-        return
-      }
-    },200)
+      startBtn.addEventListener('click', function (e) {
+        console.log(loader)
+        setInterval( function (event) {
+          if (count < 100) {
+            count++;
+            loader.progress = count;
+
+          } else {
+            return
+          }
+        },200)
+      })
     })
+
 
   </script>
   </body>
