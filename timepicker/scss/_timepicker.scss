@@ -132,11 +132,12 @@ svg {
   cursor: pointer;
   position: relative;
   padding: 4px 24px;
+
   svg {
     pointer-events: none;
   }
   span {
-    pointer-events: none;
+    pointer-events: none !important;
   }
 }
 

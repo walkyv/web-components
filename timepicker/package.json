@@ -2,7 +2,7 @@
   "name": "@pearson-ux/timepicker",
   "author": "Elias Mason | ej.mason@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Timepicker web component",
   "main": "index.html",
   "scripts": {
