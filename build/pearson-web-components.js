@@ -5587,7 +5587,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.topLabel.innerHTML = this.topText;
         this.rightLabel.innerHTML = this.rightText;
         var numberArr = [];
-
+        console.log(this.input);
         // build input
         if (this.hasInput) {
           var inputClone = inputTemplate.content.cloneNode(true),
@@ -5603,6 +5603,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.mainTarget.insertBefore(inputClone, this.referenceNode);
 
           input.addEventListener('change', function (event) {
+            console.log('change');
             _this2.input.value = input.value;
             _this2.Value = input.value;
             _this2.dispatchEvent(new CustomEvent('change', {
@@ -5613,7 +5614,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }));
           });
 
-          this.input.addEventListener('input', function () {
+          this.input.addEventListener('change', function () {
+            console.log('change');
             _this2.Value = parseFloat(_this2.input.value, 10).toFixed(2);
             input.value = parseFloat(_this2.input.value, 10).toFixed(2);
           });

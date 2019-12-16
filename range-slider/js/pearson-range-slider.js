@@ -132,7 +132,7 @@
       this.topLabel.innerHTML = this.topText;
       this.rightLabel.innerHTML = this.rightText;
       const numberArr = [];
-
+    console.log(this.input)
       // build input
       if (this.hasInput) {
       const inputClone = inputTemplate.content.cloneNode(true),
@@ -148,6 +148,7 @@
         this.mainTarget.insertBefore(inputClone, this.referenceNode);
 
         input.addEventListener('change', event => {
+          console.log('change')
           this.input.value = input.value;
           this.Value = input.value;
           this.dispatchEvent(
@@ -160,7 +161,8 @@
           );
         });
 
-        this.input.addEventListener('input', () => {
+        this.input.addEventListener('change', () => {
+          console.log('change')
           this.Value = parseFloat(this.input.value,10).toFixed(2)
           input.value = parseFloat(this.input.value,10).toFixed(2)
         });
