@@ -54,7 +54,7 @@ Import the web component onto the page, inbetween the `<head>` tags, like so:
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.2/moment-range.js"></script>
 
   <!-- Web component script -->
-  <script src="/path-to-datepicker/js/dist/pearson-datepicker.js" />
+  <script src="/path-to-datepicker/js/dist/pearson-pearson-datepicker.js" />
 </head>
 ```
 
