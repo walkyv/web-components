@@ -4,47 +4,50 @@ const concat = require('gulp-concat'),
   awspublish = require("gulp-awspublish"),
   path   = require('path'),
   rename = require('gulp-rename'),
-  NEW_S3_DIRECTORY = 'components';
+  NEW_S3_DIRECTORY = 'components',
+  gulp_remove_logging = require("gulp-remove-logging");
 require('dotenv').config();
 
 // Make a collection of paths used by the various
 // build steps
 const paths = {
-  wcscript: [
-    './alert/js/dist/pearson-alert.js'
+  src: [
+    './accordion/js/dist/pearson-accordion.js',
+    './alert/js/dist/pearson-alert.js',
+    './button-bar/js/dist/pearson-button-bar.js',
+    './card/js/dist/pearson-card.js',
+    './coachmark/js/dist/pearson-coachmark.js',
+    './datepicker/js/dist/pearson-datepicker.js',
+    './drawer/js/dist/pearson-drawer.js',
+    './dropdown/js/dist/pearson-dropdown.js',
+    './file-uploader/js/dist/pearson-file-upload.js',
+    './footer/js/dist/pearson-footer.js',
+    './header/js/dist/pearson-header.js',
+    './loader/js/dist/pearson-loader.js',
+    './modal/js/dist/pearson-modal.js',
+    './pagination/js/dist/pearson-pagination.js',
+    './progress-bar/js/dist/pearson-progress-bar.js',
+    './range-slider/js/dist/pearson-range-slider.js',
+    './tab-navigation/js/dist/pearson-tabs.js',
+    './timepicker/js/dist/pearson-timepicker.js',
+    './toggle/js/dist/pearson-toggle.js',
   ],
+  dest: './build/javascripts/',
   dist: './build/',
+  concat: './build/javascripts/*.js'
 };
 
 
 function scripts(done) {
   gulp
-    .src([
-      './accordion/js/dist/pearson-accordion.js',
-      './alert/js/dist/pearson-alert.js',
-      './button-bar/js/dist/pearson-button-bar.js',
-      './card/js/dist/pearson-card.js',
-      './coachmark/js/dist/pearson-coachmark.js',
-      './datepicker/js/dist/pearson-datepicker.js',
-      './drawer/js/dist/pearson-drawer.js',
-      './dropdown/js/dist/pearson-dropdown.js',
-      './file-uploader/js/dist/pearson-file-upload.js',
-      './footer/js/dist/pearson-footer.js',
-      './header/js/dist/pearson-header.js',
-      './loader/js/dist/pearson-loader.js',
-      './modal/js/dist/pearson-modal.js',
-      './pagination/js/dist/pearson-pagination.js',
-      './progress-bar/js/dist/pearson-progress-bar.js',
-      './range-slider/js/dist/pearson-range-slider.js',
-      './tab-navigation/js/dist/pearson-tabs.js',
-      './timepicker/js/dist/pearson-timepicker.js',
-      './toggle/js/dist/pearson-toggle.js',
-    ])
+    .src(paths.src)
     .pipe(concat('pearson-web-components.js'))
     .pipe(minify())
+  .pipe(gulp_remove_logging())
     .pipe(gulp.dest(paths.dist));
   done();
 }
+
 
 
 const build = gulp.series(scripts);

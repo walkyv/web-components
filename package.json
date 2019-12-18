@@ -26,6 +26,7 @@
     "gulp-awspublish": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-minify": "^3.1.0",
+    "gulp-remove-logging": "^1.2.0",
     "gulp-rename": "^1.4.0"
   }
 }
