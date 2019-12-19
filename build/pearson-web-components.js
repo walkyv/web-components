@@ -512,12 +512,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   }
 
   function accessibility(node) {
-    console.log(node);
+    
     var focusableElements = getFocusableChildren(node),
         firstFocusableElement = focusableElements[0];
 
     firstFocusableElement.focus();
-    console.log(firstFocusableElement);
+    
     focusableElements.forEach(function (el, index) {
       el.setAttribute('data-index', index);
       el.addEventListener('keydown', keyboardEvents, true);
@@ -538,7 +538,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         focusableElements = getFocusableChildren(event.target.parentNode.parentNode),
         firstFocusableElement = focusableElements[0],
         lastFocusableElement = focusableElements[focusableElements.length - 1];
-    console.log(event.key);
+    
     if (event.key === 'ArrowUp' || event.key === 'Up') {
       event.preventDefault();
 
@@ -602,7 +602,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         var buttons = slot.assignedNodes();
         var count = 0;
         buttons.forEach(function (button) {
-          console.log(button);
+          
           var buttonNode = button.querySelector('button'),
               text = button.getAttribute('data-text');
           button.removeAttribute('slot');
@@ -968,7 +968,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     });return e.indexOf(n);
   }function P(t, o, n) {
     var i = void 0 === n ? t : t.slice(0, N(t, 'name', n));return i.forEach(function (t) {
-      t['function'] && console.warn('`modifier.function` is deprecated, use `modifier.fn`!');var n = t['function'] || t.fn;t.enabled && e(n) && (o.offsets.popper = g(o.offsets.popper), o.offsets.reference = g(o.offsets.reference), o = n(o, t));
+      t['function'] && var n = t['function'] || t.fn;t.enabled && e(n) && (o.offsets.popper = g(o.offsets.popper), o.offsets.reference = g(o.offsets.reference), o = n(o, t));
     }), o;
   }function k() {
     if (!this.state.isDestroyed) {
@@ -1031,7 +1031,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         i = !!n && e.some(function (e) {
       return e.name === o && e.enabled && e.order < n.order;
     });if (!i) {
-      var r = '`' + t + '`';console.warn('`' + o + '`' + ' modifier is required by ' + r + ' modifier in order to work, be sure to include it before ' + r + '!');
+      var r = '`' + t + '`';
     }return i;
   }function z(e) {
     return 'end' === e ? 'start' : 'start' === e ? 'end' : e;
@@ -1057,7 +1057,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }),
         s = p.indexOf(C(p, function (e) {
       return -1 !== e.search(/,|\s/);
-    }));p[s] && -1 === p[s].indexOf(',') && console.warn('Offsets separated by white space(s) are deprecated, use a comma (,) instead.');var d = /\s*,\s*|\s+/,
+    }));p[s] && -1 === p[s].indexOf(',') && var d = /\s*,\s*|\s+/,
         a = -1 === s ? [p] : [p.slice(0, s).concat([p[s].split(d)[0]]), [p[s].split(d)[1]].concat(p.slice(s + 1))];return a = a.map(function (e, n) {
       var i = (1 === n ? !r : r) ? 'height' : 'width',
           p = !1;return e.reduce(function (e, t) {
@@ -1187,7 +1187,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         } }, arrow: { order: 500, enabled: !0, fn: function fn(e, o) {
           var n;if (!K(e.instance.modifiers, 'arrow', 'keepTogether')) return e;var i = o.element;if ('string' == typeof i) {
             if (i = e.instance.popper.querySelector(i), !i) return e;
-          } else if (!e.instance.popper.contains(i)) return console.warn('WARNING: `arrow.element` must be child of its popper element!'), e;var r = e.placement.split('-')[0],
+          } else if (!e.instance.popper.contains(i)) return , e;var r = e.placement.split('-')[0],
               p = e.offsets,
               s = p.popper,
               d = p.reference,
@@ -1247,7 +1247,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               i = e.offsets.popper,
               r = C(e.instance.modifiers, function (e) {
             return 'applyStyle' === e.name;
-          }).gpuAcceleration;void 0 !== r && console.warn('WARNING: `gpuAcceleration` option moved to `computeStyle` modifier and will not be supported in future versions of Popper.js!');var s,
+          }).gpuAcceleration;void 0 !== r && var s,
               d,
               a = void 0 === r ? t.gpuAcceleration : r,
               l = p(e.instance.popper),
@@ -1864,7 +1864,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.data.month = parseInt(input.value.substring(0, 2) - 1, 10);
           this.data.year = parseInt(input.value.substring(6, 10), 10);
           this.data.day = input.value.substring(3, 5);
-          console.log(this.data);
+          
           datepicker.classList.remove('error');
         }
       }
@@ -1956,7 +1956,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
 
         doc.body.addEventListener('click', function (event) {
-          console.log(event.target);
+          
         });
       }
     }, {
@@ -2537,7 +2537,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       var nextButton = parseInt(event.target.getAttribute('data-index')) + 1,
           prevButton = parseInt(event.target.getAttribute('data-index')) - 1;
-      console.log(event);
+      
       if (event.key === 'ArrowUp' || event.key === 'Up') {
         event.preventDefault();
         if (component.shadowRoot.activeElement === getFocusableElements(menu)[0]) {
@@ -2965,7 +2965,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
 
         this.attachBtn.addEventListener('click', function () {
-          console.log('click');
+          
           _this2.realUploadInput.click();
         });
 
@@ -3494,7 +3494,7 @@ function _inherits(subClass, superClass) {
                     this.renderFull();
                 }
                 this.addEventListener('xhrLoading', function (event) {
-                    console.log(event.detail);
+                    
                     _this3.minimizeDetail = event.detail;
                     response = event.detail.response;
                 });
@@ -3568,7 +3568,7 @@ function _inherits(subClass, superClass) {
                         } else if (btn.id === 'minimizeButton') {
                             _this4.minimized = true;
                         } else if (btn.id === 'successButton') {
-                            console.log('success');
+                            
                             _this4.closeModal(eventType);
                         }
                     });
@@ -4177,7 +4177,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             });
           } else {
             _this2.removeAttribute('open');
-            console.log(_this2.button);
+            
           }
         });
       }
@@ -4273,7 +4273,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             headerLink.setAttribute('tabindex', -1);
             main.setAttribute('tabindex', -1);
             this.button.setAttribute('aria-expanded', true);
-            console.log('open');
+            
             header.classList.add('open');
             header.setAttribute('aria-hidden', true);
             icon.remove();
@@ -4325,7 +4325,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             _headerLink.removeAttribute('tabindex', -1);
             _main.removeAttribute('tabindex', -1);
-            console.log(_main);
+            
             this.button.setAttribute('aria-expanded', false);
             mainContent.setAttribute('aria-hidden', false);
             _header.setAttribute('aria-hidden', false);
@@ -5601,7 +5601,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         this.topLabel.innerHTML = this.topText;
         this.rightLabel.innerHTML = this.rightText;
         var numberArr = [];
-        console.log(this.input);
+        
         // build input
         if (this.hasInput) {
           var inputClone = inputTemplate.content.cloneNode(true),
@@ -5617,7 +5617,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           this.mainTarget.insertBefore(inputClone, this.referenceNode);
 
           input.addEventListener('change', function (event) {
-            console.log('change');
+            
             _this2.input.value = input.value;
             _this2.Value = input.value;
             _this2.dispatchEvent(new CustomEvent('change', {
@@ -5629,7 +5629,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           });
 
           this.input.addEventListener('change', function () {
-            console.log('change');
+            
             _this2.Value = parseFloat(_this2.input.value, 10).toFixed(2);
             input.value = parseFloat(_this2.input.value, 10).toFixed(2);
           });
@@ -6267,7 +6267,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'onInputFocus',
       value: function onInputFocus() {
-        console.log('focused');
+        
         this.open = true;
       }
     }, {
