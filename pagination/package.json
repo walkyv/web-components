@@ -2,7 +2,7 @@
   "name": "@pearson-ux/pagination",
   "author": "David ODey | david.odey@pearson.com",
   "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Pagination web component",
   "main": "./js/dist/pearson-pagination.js",
   "scripts": {
