@@ -112,7 +112,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, {
       key: 'firstPage',
       get: function get() {
-        return parseInt(this.getAttribute('firstpage'));
+        return 1;
       }
     }, {
       key: 'lastPage',
