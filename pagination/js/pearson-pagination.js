@@ -129,7 +129,7 @@
       return this.hasAttribute('compact');
     }
     get firstPage() {
-      return parseInt(this.getAttribute('firstpage'));
+      return 1;
     }
 
     get lastPage() {
