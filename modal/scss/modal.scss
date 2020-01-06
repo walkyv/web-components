@@ -77,7 +77,7 @@ button.close[aria-label="Close Dialog"]{
 .pe-modal-container .modal-body{
   margin-bottom:28px;
   padding:0 40px;
-  overflow: scroll;
+  overflow: auto;
   height: calc(100% - 200px);
 
 }
