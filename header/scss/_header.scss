@@ -1,0 +1,148 @@
+// Styles for your component live here!
+// Rename this file to match the name of the component!
+@keyframes fadeInLight {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: .4;
+    visibility: visible;
+  }
+}
+
+.animateInLight {
+  animation-name: fadeInLight;
+  animation-duration: 4s;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translate3d(0, -15%, 0);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+.slideInDown {
+  animation: 0.3s ease-in-out 0s slideInDown;
+}
+
+#main {
+  position:relative
+}
+.actions button {
+  font-family: Open Sans, Arial, Helvetica, sans-serif;
+  font-weight:400 !important;
+  background:none;
+  border:0;
+}
+
+.gr-header.open button .avatar {
+  position: relative;
+  background: #fff;
+  color: #047a9c;
+}
+
+.header-menu {
+  font-family: Open Sans, Arial, Helvetica, sans-serif;
+  width: 360px;
+  z-index: 10000000;
+  background: white;
+  position: absolute;
+  right:0;
+  li {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid $border;
+    &:last-child {
+      border-bottom: 0;
+      margin:0;
+      padding:0;
+    }
+  }
+}
+
+.console-link:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px $focus;
+  border-radius:5px;
+}
+
+.gr-header .logo {
+  width: 49px;
+  height: 56px;
+}
+
+.gr-header .logo {
+  background-position:5px !important;
+}
+
+#loginToPearson {border: 1px solid #6a7070; padding:8px 24px !important}
+.transparent #loginToPearson {border: 1px solid white; padding:8px 24px !important}
+#loginToPearson:hover {
+  border:1px solid #252525;
+}
+.transparent #loginToPearson:hover {
+  border:1px solid #cdcdcd;
+}
+#loginToPearson:focus {  outline: 0;box-shadow: 0 0 0 2px white, 0 0 0 4px $focus}
+
+.gr-header .initials {
+  text-transform: uppercase;
+  font-weight:700;
+}
+
+.gr-btn:focus-visible {
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 2px #fff,0 0 0 4px #1977d4;
+  box-shadow: 0 0 0 2px #fff,0 0 0 4px #1977d4;
+}
+.gr-header .logo {
+  background-image:none !important;
+}
+.gr-header img {
+  height: 50px;
+  margin-top: 5px;
+}
+.gr-header .group {
+  display:flex;
+  align-items: center;
+}
+.gr-header .group a {
+  margin-right:16px;
+}
+.gr-btn.icon-btn-24 svg {
+  margin-right:4px;
+}
+.gr-btn:focus {
+  outline: 1px solid transparent !important;
+}
+.gr-header .avatar {
+  border:1px solid;
+}
+.gr-header.open button .avatar {
+  color:#252525;
+}
+
+.gr-header button:focus .avatar {
+  color:#252525;
+}
+.gr-header.light .avatar {
+  border:1px solid #252525;
+}
+.gr-header.light button .notification {
+  border:1px solid #252525;
+}
+.gr-header button .notification {
+  height:12px;
+  width:12px;
+  border: 1px solid white;
+  right:0;
+  bottom:0
+}

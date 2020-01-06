@@ -1,0 +1,76 @@
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 100%, 0);
+    visibility: hidden;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+}
+
+
+@keyframes fadeOutUp {
+  from {
+    visibility: visible;
+  }
+
+  to {
+    visibility: hidden;
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  @media screen and (prefers-reduced-motion: reduce) {
+    animation: unset !important;
+  }
+}
+
+.animateIn {
+  animation-name: fadeIn;
+  animation-duration: .5s;
+  visibility: visible;
+  @media(max-width:480px) {
+    animation-name: slideInUp;
+  }
+
+}
+
+.animateOut {
+  animation-name: fadeOut;
+  animation-duration: .2s;
+  visibility: hidden;
+  @media(max-width:480px) {
+    animation-name: fadeOutUp;
+  }
+}

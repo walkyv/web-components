@@ -1,0 +1,12 @@
+// Styles for your component live here!
+// Rename this file to match the name of the component!
+.accordion button[aria-expanded="false"] + .accordion {
+  display:none;
+}
+
+.accordion {
+  border-radius:0;
+  button:active {
+    color: #24292e;
+  }
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html class="" lang="EN">
+  <head>
+    <title>Pearson Web Component</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!-- load pearson and global styles -->
+    <link rel="stylesheet" href="https://unpkg.com/@pearson-ux/gravity-css/dist/gravity.css" />
+
+    <script type="text/javascript">
+      if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
+      } else {
+        document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+        document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+      }
+    </script>
+
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+    <script src="./js/dist/pearson-toggle.js"></script>
+
+    <!-- THESE IMPORTS ARE NECESSARY FOR PROPER RENDERING DURING DEVELOPMENT -->
+    <!-- DO NOT DELETE -->
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font: 14px/18px 'Open Sans', 'Calibri', 'Tahoma', sans-serif;
+			}
+
+			.pe-input-label {
+				font: 12px/16px 'Open Sans', 'Arial', 'Helvetica', sans-serif;
+				color: #6a7070;
+			}
+
+			.pe-input-description,
+			.pe-input-error {
+				display: block;
+				margin-top: 4px;
+			}
+
+      .example {
+        width: 50%;
+        border: 1px solid gray;
+        margin: 2em auto;
+        padding: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="main">
+      <div class="example">
+        <h6>Toggle unchecked by default</h6>
+        <label for="pe-toggle" class="pe-input-label">Text notifications</label>
+        <pearson-toggle id="pe-toggle" name="emailNotifs"></pearson-toggle>
+      </div>
+      <div class="example">
+        <h6>Toggle checked by default</h6>
+				<label for="checked-toggle" class="pe-input-label">Email notifications</label>
+        <pearson-toggle id="checked-toggle" name="textNotifs" on>
+        </pearson-toggle>
+      </div>
+      <div class="example">
+        <h6>Toggle wrapped by label</h6>
+        <label class="pe-input-label">
+          The wrapped one
+          <pearson-toggle id="wrapped-toggle" name="wrapped"></pearson-toggle>
+        </label>
+      </div>
+      <div class="example">
+        <h6>Toggle disabled default</h6>
+				<label for="pe-toggle__disabled" class="pe-input-label">The disabled one</label>
+        <pearson-toggle
+          id="pe-toggle__disabled"
+          name="disabledToggle"
+          on
+          disabled
+        >
+        </pearson-toggle>
+      </div>
+      <div class="example">
+        <div id="toggleMsg" style="margin-top: 30px; font-size: 20px;">
+          Click on a toggle to test it
+        </div>
+      </div>
+    </main>
+    <script>
+      const toggles = document.querySelectorAll('pearson-toggle');
+      const msg = document.querySelector('#toggleMsg');
+
+      function getAccessibleName(node) {
+        if (node.hasAttribute('aria-label')) {
+          return node.getAttribute('aria-label');
+        } else {
+          const externalLabel = node.parentElement.querySelector(
+            'label[for="' + node.id + '"]'
+          );
+          return externalLabel
+            ? externalLabel.textContent
+            : node.parentElement.textContent;
+        }
+      }
+
+      Array.prototype.forEach.call(toggles, function(toggle) {
+        toggle.addEventListener('change', function(e) {
+          const accessibleName = getAccessibleName(e.target);
+          msg.innerHTML =
+            'You switched <code>' +
+            accessibleName +
+            '</code> <b>' +
+            (toggle.on ? 'on' : 'off') +
+            '</b>';
+        });
+      });
+    </script>
+  </body>
+</html>

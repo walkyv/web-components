@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Pearson Timepicker</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://polyfill.io/v3/polyfill.min.js?features=String.prototype.startsWith%2CArray.prototype.find"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"></script>
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.2/moment-range.js"></script>
+    <script src="./js/dist/pearson-timepicker.js"></script>
+    <style>
+      pearson-timepicker {
+        display: block;
+        margin: 2em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <pearson-timepicker
+            label="When is the assignment due?"
+            hours="12"
+            increments="60"
+    ></pearson-timepicker>
+    <pearson-timepicker
+            label="Start time"
+            hours="24"
+            increments="30"
+    ></pearson-timepicker>
+
+  </body>
+</html>

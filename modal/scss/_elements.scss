@@ -1,0 +1,49 @@
+.gr-h2 {
+  font-size: 20px;
+  line-height: 1.5;
+  font-weight: normal;
+  margin-top: 0;
+}
+
+.gr-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #6A7070;
+  background: transparent;
+  color: #6A7070;
+  padding: 8px 24px;
+  font-size: 16px !important;
+  cursor: pointer;
+  border-radius: 22px;
+  position: relative;
+  margin: 12px;
+}
+
+.gr-btn:hover {
+  color: #252525;
+  border: 1px solid #252525; }
+
+.gr-btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px #1977D4; }
+
+.gr-btn.primary {
+  background-color: #047A9C;
+  border: 1px solid #047A9C;
+  color: white; }
+
+.gr-btn.primary:hover {
+  color: white;
+  background-color: #035f79; }
+
+.gr-btn.icon-btn-24 {
+  min-width: auto;
+  padding: 5px 12px;
+  border: 0; }
+
+.gr-btn.icon-btn-18 {
+  min-width: auto;
+  padding: 8px 12px;
+  border: 0; }
+

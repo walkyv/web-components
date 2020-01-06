@@ -1,0 +1,86 @@
+
+:focus {
+  box-shadow: none;
+  outline: 2px solid $pe-focus-color;
+  outline-offset: 4px;
+}
+
+.theme--dark:focus {
+  outline-color: white;
+}
+
+*,
+*::after,
+*::before,
+:host {
+  box-sizing: border-box;
+}
+
+:host {
+
+}
+
+
+
+.tabs-wrapper {
+  position: relative;
+  background-color: inherit;
+}
+
+
+
+ul,
+.tabs {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li,
+.tab {
+  display: inline-block;
+}
+
+.tab-button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.28571rem;
+  color: inherit;
+  cursor: pointer;
+  display: block;
+  margin: 8px 16px;
+  padding: 8px 0;
+  text-decoration: none;
+  background:none;
+  border:0;
+  border-bottom: 3px solid transparent;
+}
+
+.tab-button::-moz-focus-inner {
+  border: 0;
+}
+
+.tab-button:hover {
+  color: $pe-color-charcoal;
+  border-bottom-color: $pe-color-concrete;
+}
+
+.tab-button.active {
+  color: $pe-color-charcoal;
+}
+
+
+
+.tab-slider {
+  height:3px;
+  background-color: $pe-color-digital-marine-turquoise;
+  position:absolute;
+  padding:0;
+  margin: 0 16px;
+  bottom: 8px;
+  transition: all .5s ease-in-out;
+}
+
+::slotted(.panels) {
+  padding: 1em;
+}

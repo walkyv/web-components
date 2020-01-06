@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html class="" lang="EN">
+  <head>
+    <title>Pearson Web Component</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+	  <link rel="stylesheet" href="https://unpkg.com/@pearson-ux/gravity-css/dist/gravity.css" />
+
+	  <script type="text/javascript">
+        if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+          document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+          document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
+        } else {
+          document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+          document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+        }
+	  </script>
+
+	  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+    <!-- import web components -->
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      pearson-alert:not(:defined) {
+        display: none;
+      }
+
+      .output {
+        margin-top: 5rem;
+      }
+      .target {
+        margin: 4em;
+        width: 50%;
+        border: 1px solid gray;
+        margin: 2em auto;
+        padding: 1em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="target">
+      <button
+        id="trigger-0"
+        data-trigger="alert"
+        data-type="error"
+        data-level="global"
+        data-animated
+      >
+        Trigger global error alert
+      </button>
+		</div>
+		<div class="target">
+				<button
+					id="trigger-2"
+					data-trigger="alert"
+					data-type="success"
+					data-level="global"
+					data-animated
+					data-focus-on-open
+				>
+					Trigger global success alert
+				</button>
+			</div>
+
+    <div class="target">
+      <button
+        id="trigger-1"
+        data-trigger="alert"
+        data-type="success"
+        data-level="inline"
+        data-animated
+      >
+        Trigger inline success alert
+      </button>
+    </div>
+    <div
+      id="output"
+      class="target output"
+      aria-live="polite"
+      aria-atomic="true"
+		></div>
+    <script src="js/dist/pearson-alert.js"></script>
+    <script>
+      (function(w, doc) {
+        const forEach = Array.prototype.forEach;
+        const triggers = doc.querySelectorAll('button[data-trigger="alert"]');
+        const statusRegion = doc.querySelector('#output');
+
+        function generateAlert(opts) {
+          const alert = doc.createElement('pearson-alert');
+          for (let attrName in opts) {
+            alert.setAttribute(attrName, opts[attrName]);
+          }
+          return alert;
+        }
+
+        function triggerAlert(e) {
+          const returnNode = '#' + e.target.id;
+          const type = e.target.dataset.type;
+          const level = e.target.dataset.level;
+
+          const animated = e.target.dataset.animated !== undefined;
+
+          const opts = {
+            returnNode: returnNode,
+            type: type,
+            level: level
+          };
+
+          if (animated) {
+            opts.animated = true;
+          }
+
+          const alert = generateAlert(opts);
+
+          alert.innerHTML =
+            '   <h2 id="alertTitle" class="pe-label alert-title">  ' +
+            '     Heads up!' +
+						'   </h2>  ' +
+						'  <p id="alertDescription">Something happened! Mauris lorem libero, dignissim ac condimentum viverra, egestas ut leo. Integer sit amet dui enim. Mauris lorem libero, dignissim ac condimentum viverra, egestas ut leo. Integer sit amet dui enim.</p>  ' +
+            '  <a id="alertLink" href="#">Go here!</a>.  ';
+
+          if (level === 'inline') {
+            e.target.parentNode.insertBefore(alert, e.target.nextSibling);
+          } else {
+            doc.body.appendChild(alert);
+          }
+        }
+
+        function renderMessage(alertElem) {
+          statusRegion.innerHTML = 'Closed ' + alertElem.level + ' ' + alertElem.type + ' alert';
+        }
+
+        forEach.call(triggers, function(trigger) {
+          trigger.addEventListener('click', triggerAlert);
+        });
+
+        w.addEventListener('dismiss', function(e) {
+          renderMessage(e.target);
+        });
+      })(window, document);
+    </script>
+  </body>
+</html>

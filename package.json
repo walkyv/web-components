@@ -1,0 +1,31 @@
+{
+  "name": "pearson-web-components",
+  "version": "4.1.1",
+  "description": "Pearson web component library",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd build && gulp",
+    "release": "node ./npm_scripts/release.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pearson-ux/web-components.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pearson-ux/web-components/issues"
+  },
+  "homepage": "https://github.com/pearson-ux/web-components#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "colors": "^1.3.3",
+    "dotenv": "^8.1.0",
+    "gulp": "^4.0.2",
+    "gulp-awspublish": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-minify": "^3.1.0",
+    "gulp-rename": "^1.4.0"
+  }
+}

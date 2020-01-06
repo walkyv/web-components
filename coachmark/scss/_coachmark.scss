@@ -1,0 +1,133 @@
+.hidden {
+  display: none !important;
+}
+.coachmark-container {
+  display: flex;
+  position: absolute;
+  width: 280px;
+  z-index: 1000;
+}
+.coachmark {
+  position: relative;
+  background-color:#CAEFEE;
+  border-radius: 2px;
+  width: 280px;
+  box-shadow: 0 3px 7px 0 rgba(0, 0, 0, .25);
+  font-family: 'Open Sans', Calibri, Tahoma, sans-serif;
+}
+.coachmark.informational .content {
+  background-color: #FAEBC3;
+}
+.coachmark.generic .content {
+  background-color: white;
+}
+.coachmark.generic .coach-link {
+  color: #047a9c;
+}
+.coachmark.bottom-center:after {
+  border-bottom: 8px solid#CAEFEE;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  bottom: -8px;
+  content: "";
+  filter: drop-shadow(0 2px 5px #000);
+  height: 0;
+  left: calc(50% - 8px);
+  position: absolute;
+  transform: rotate(180deg);
+  width: 0;
+  z-index: 1;
+}
+.coachmark.top-right:after {
+  border-bottom: 8px solid#CAEFEE;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  content: "";
+  height: 0;
+  position: absolute;
+  right: 32px;
+  top: -8px;
+  width: 0;
+  z-index: -1;
+}
+.coachmark.bottom-left:after {
+  border-bottom: 8px solid#CAEFEE;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  bottom: -8px;
+  content: "";
+  filter: drop-shadow(0 2px 5px #000);
+  height: 0;
+  left: 32px;
+  position: absolute;
+  transform: rotate(180deg);
+  width: 0;
+  z-index: 1;
+}
+.coachmark .title-container .pe-label {
+  font-size:14px;
+  margin:0;
+  font-weight:600;
+}
+.coachmark .content {
+  display: flex;
+  flex-direction: column;
+  background:#CAEFEE;
+  border-radius: 2px;
+  color: #252525;
+  padding: 20px 24px;
+  position: relative;
+  z-index: 2;
+  font-size: 14px;
+}
+.coachmark .content p {
+  margin-top:0;
+  line-height: 1.5;
+}
+.coachmark .content .title-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 0.25em;
+}
+.coachmark .coach-link {
+  color: #252525;
+  display: flex;
+  align-self: flex-end;
+  margin-top: 1.75em;
+  font-size:14px;
+}
+.coachmark .coach-link:hover {
+  text-decoration: none;
+}
+.coachmark .coach-link:focus {
+  box-shadow: none;
+  outline: 2px solid #0b73da;
+  outline-offset: 4px;
+}
+.coachmark button {
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.coachmark button.dismiss:not(.coach-link) {
+  right: -18px;
+  position: relative;
+  top: -14px;
+  margin: 0;
+  min-width: auto;
+  padding: 8px 12px;
+  border: 0;
+}
+
+.gr-btn:focus:after {
+  min-width:auto !important;
+}
+
+.coachmark button.dismiss:not(.coach-link) svg {
+  width:18px;
+  height:18px;
+}
+

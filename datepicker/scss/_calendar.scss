@@ -1,0 +1,211 @@
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/variables";
+@import "../node_modules/@pearson-components/elements-sdk/src/styles/base/mixins";
+
+.gr-calendar-container {
+  box-sizing: content-box;
+  min-height: 284px;
+  color: $pe-color-charcoal;
+  padding: 16px 20px 20px;
+  z-index: 1;
+  border: 1px solid $pe-color-concrete;
+  background-color: $pe-color-white;
+  border-radius:5px;
+
+  @media all and (-ms-high-contrast:none) {
+    width: 320px;
+  }
+
+  fieldset {
+    margin:0;
+    border:0;
+    padding:0;
+
+    legend {
+      padding: 8px;
+      text-align: left;
+      margin-bottom: 8px;
+      width: -webkit-calc(100% - 84px);
+      width: calc(100% - 84px);
+      display: inline-block;
+      float: left;
+      font-size: 18px;
+    }
+  }
+  .actions {
+    display:inline-flex;
+    width:80px;
+
+    .gr-btn {
+      margin:0;
+      padding:0;
+      height: 40px;
+      width: 40px;
+      color: $pe-color-medium-gray;
+
+      &:hover {
+        color: $pe-color-charcoal;
+      }
+      &:focus {
+        color: $pe-color-charcoal;
+        outline: 2px solid #1977D4;
+        outline-offset: 2px;
+        //box-shadow: 0 0 0 0px white, 0 0 0 2px #1977D4;
+        //border-radius: 4px;
+
+      }
+
+
+
+    }
+  }
+
+  .weekdays div {
+    height: 40px;
+    color: $pe-color-medium-gray;
+    line-height: 40px;
+    font-size:12px;
+  }
+  .row {
+    display:grid;
+    grid-template-columns: repeat(7, 40px);
+    clear:both;
+  }
+
+  abbr {
+    text-decoration:none;
+  }
+
+  .cell {
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+
+    &.currentDate-box {
+      width: 36px;
+      height: 36px;
+      margin: 1px;
+      line-height: 36px;
+      border-radius: 0;
+      padding:0;
+      border: 1px solid $pe-color-concrete;
+      background:transparent;
+
+      .date-selector {
+        margin: 2px;
+      }
+
+    }
+
+    button {
+      background: none;
+      padding: 0;
+      border: 0;
+      position: relative;
+      cursor: pointer;
+      display: block;
+      height: 32px;
+      width: 32px;
+      margin: 4px;
+      line-height: 32px;
+      border-radius: 50%;
+      font-size: 14px;
+
+      &.selected {
+        font-weight: 600;
+        color: $pe-color-white;
+        background-color: $pe-color-medium-gray;
+      }
+
+      &:focus {
+        outline: 2px solid #1977D4;
+        outline-offset: 2px;
+      }
+
+    }
+  }
+  .date-selector {
+    height: 32px;
+    width: 32px;
+    margin: 4px;
+    line-height: 32px;
+    border-radius: 16px;
+
+  }
+  .date.past {
+    height: 40px;
+    line-height: 38px;
+  }
+  .past .date-selector {
+    color: $pe-color-concrete;
+    cursor: not-allowed;
+  }
+  .secondary-date {
+    border: 1px solid $pe-color-concrete;
+  }
+
+  &.inverse {
+    color: $pe-color-white;
+    background-color: $pe-color-ink-blue;
+    border: 1px solid $pe-color-ink-blue;
+
+    .title,
+    .actions button,
+    .weekdays div,
+    .cell,
+    .date-selector {
+      color: $pe-color-white;
+    }
+    .actions button:hover, .actions button:focus {
+      color: $pe-color-concrete;
+    }
+
+    .date .selected {
+      color: $pe-color-charcoal;
+      background-color: $pe-color-white;
+    }
+
+
+    .past .date-selector {
+      color: $pe-color-digital-pearson-blue;
+      cursor: not-allowed;
+    }
+
+  }
+}
+
+.gr-btn {
+  padding:0;
+  background-color: transparent;
+  border:0;
+  position:relative;
+}
+
+.date-selector {
+  background:none;
+  &:hover {
+    background-color:$pe-color-moonlight;
+    color: $pe-color-charcoal;
+    cursor: pointer;
+  }
+  &.selected {
+    background-color: $pe-color-medium-gray;
+    color:white;
+  }
+}
+.currentDate-box {
+  border:1px solid $pe-color-concrete;
+}
+
+
+@media all and (-ms-high-contrast:none) {
+ .dates > .row {
+   display:flex;
+ }
+}
+@media all and (-ms-high-contrast:none) {
+  .gr-calendar-container .row {
+    display:flex;
+  }
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html class="" lang="EN">
+	<head>
+		<title>Pearson Web Component</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<link rel="stylesheet" href="https://unpkg.com/@pearson-ux/gravity-css/dist/gravity.css" />
+
+		<script type="text/javascript">
+          if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
+          } else {
+            document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+            document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+          }
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.2/moment-range.js"></script>
+		<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+		<!-- import web components -->
+		<script src="js/dist/pearson-modal.js"></script>
+		<style>
+			.target {margin:4em; width:50%; border:1px solid gray; margin:2em auto; padding:1em;}
+		</style>
+	</head>
+	<body>
+	<!-- for accessibility, content before the modal must be wrapped with an element and provided an id of main -->
+	<main id="main">
+			<section class="container target">
+				<button id="trigger-modal">Open Modal</button>
+			</section>
+		</main>
+
+		<!-- place modal before the end of the body and pass in the reference ID of the button that triggers the modal -->
+		<!-- add in style="display:none" to prevent FOUC -->
+		<pearson-modal
+				triggerid="trigger-modal"
+				titletext="Basic Title"
+				successbtntext="Success"
+				cancelbtntext="Cancel"
+				footer
+				style="display:none"
+		>
+			<div>
+				<button id="button">Close</button>
+				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In massa tellus, porta in venenatis eget, pulvinar in arcu. Ut eu cursus augue. Sed eget tempus sem, nec suscipit justo. Cras sit amet accumsan massa, non elementum erat. Quisque et ultricies risus. Mauris id feugiat metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras quis libero a urna eleifend placerat. Nunc varius lorem at commodo viverra. Vivamus lobortis diam et nibh tempor, vitae laoreet sapien auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In massa tellus, porta in venenatis eget, pulvinar in arcu. Ut eu cursus augue. Sed eget tempus sem, nec suscipit justo. Cras sit amet accumsan massa, non elementum erat. Quisque et ultricies risus. Mauris id feugiat metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras quis libero a urna eleifend placerat. Nunc varius lorem at commodo viverra. Vivamus lobortis diam et nibh tempor, vitae laoreet sapien auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In massa tellus, porta in venenatis eget, pulvinar in arcu. Ut eu cursus augue. Sed eget tempus sem, nec suscipit justo. Cras sit amet accumsan massa, non elementum erat. Quisque et ultricies risus. Mauris id feugiat metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras quis libero a urna eleifend placerat. Nunc varius lorem at commodo viverra. Vivamus lobortis diam et nibh tempor, vitae laoreet sapien auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In massa tellus, porta in venenatis eget, pulvinar in arcu. Ut eu cursus augue. Sed eget tempus sem, nec suscipit justo. Cras sit amet accumsan massa, non elementum erat. Quisque et ultricies risus. Mauris id feugiat metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras quis libero a urna eleifend placerat. Nunc varius lorem at commodo viverra. Vivamus lobortis diam et nibh tempor, vitae laoreet sapien auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+
+
+			</div>
+		</pearson-modal>
+	<script>
+		const modal = document.querySelector('pearson-modal'),
+		  button = document.querySelector('#button');
+
+		button.addEventListener('click', event => {
+			 modal.removeAttribute('open')
+		})
+	</script>
+	</body>
+</html>

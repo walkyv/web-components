@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Pearson Web Component</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+      if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
+      } else {
+        document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+        document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.2/moment-range.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    <script type="text/javascript" src="./js/dist/pearson-dropdown.js"></script>
+
+    <style>
+      pearson-dropdown {
+        display:inline-flex;
+      }
+    </style>
+  </head>
+
+  <body>
+  <div>
+    <pearson-dropdown buttonText="Please Select" type="primary">
+      <li id="optionOne">first option</li>
+      <li id="optionTwo" class="divider">second option</li>
+      <li id="optionThree">third option</li>
+    </pearson-dropdown>
+  </div>
+
+
+
+  <script>
+      document.addEventListener('change', event => {
+        console.log('event fired', event.detail)
+      })
+  </script>
+  </body>
+</html>

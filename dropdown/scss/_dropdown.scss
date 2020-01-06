@@ -1,0 +1,30 @@
+.gr-dropdown-container .menu button:focus:after {
+  top:-2px;
+}
+.gr-btn, button {
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  font-weight:normal;
+  font-size:14px;
+  font-weight:normal !important;
+}
+.gr-btn.text {
+  border:0;
+}
+#expand-18 {
+  top:-2px;
+}
+pearson-dropdown:slotted {
+  display:none;
+}
+#expand-18 {position:relative; top: -2px;} #collapse-18 {position: relative; top: -2px;}.collapse-icon {display:none;}.primary svg {fill:white}
+
+.gr-dropdown-container .menu {
+  border-radius:4px;
+  width:220px;
+  max-height:300px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.16);
+  overflow:scroll;
+}
+.gr-dropdown-container .gr-btn svg {
+  margin-left:8px;
+}

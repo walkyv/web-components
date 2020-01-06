@@ -1,0 +1,97 @@
+ *,
+ *:after,
+ *:before {
+  box-sizing: border-box;
+  font-family: 'Open Sans', Calibri, Tahoma, sans-serif !important;
+}
+
+
+input[disabled] {
+  color: $pe-color-concrete;
+  background-color: $pe-color-moonlight;
+  cursor: not-allowed;
+}
+
+input[readonly] {
+  border-color: transparent;
+  background-color: transparent;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+svg {
+  fill: currentColor;
+  vertical-align: top;
+}
+
+.gr-icon {
+  position: absolute;
+  color: $pe-color-medium-gray;
+  pointer-events: none;
+}
+
+.gr-datepicker-container {
+  position:relative;
+  min-width:150px;
+  max-width:322px;
+  @media all and (-ms-high-contrast:none) {
+    max-width:362px;
+  }
+  .datepicker {
+    position:relative;
+    margin-bottom: 6px;
+
+    .gr-btn {
+      bottom: calc(50% - 17px);
+      color: #6a7070;
+      position: absolute;
+      right: 0;
+      margin:0;
+      border-radius:4px;
+
+      @media all and (-ms-high-contrast:none) {
+        bottom: -6px !important
+      }
+      &:focus {
+        outline: 0;
+        box-shadow: 0 0 0 0px white, 0 0 0 2px #1977D4; }
+    }
+    svg {
+      fill: #6A7070;
+    }
+  }
+  .gr-calendar-container {
+    //display:none;
+    position:absolute;
+  }
+
+  &.error {
+    .gr-label {
+      color: #db0020;
+    }
+    .gr-input {
+      border-color: #db0020;
+    }
+
+  }
+}
+
+#inputAriaId {
+  display:none;
+}
+.error #inputAriaId {
+  display:flex;
+  align-items:center;
+}
+
+.gr-meta.error, .error-msg {
+  color: #db0020;
+  padding-top: 3px;
+  font-size: 12px;
+  line-height: 16px;
+  margin-bottom:0;
+}

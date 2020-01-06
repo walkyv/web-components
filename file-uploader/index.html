@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Pearson Web Component</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width" />
+	<!-- load pearson and global styles -->
+	<link rel="stylesheet" href="https://unpkg.com/@pearson-ux/gravity-css@0.2.1/dist/gravity.css" />
+
+	<script type="text/javascript">
+      if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
+      } else {
+        document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+        document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+      }
+	</script>
+
+	<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+	<!-- load pearson and global styles -->
+	<!--<link rel="stylesheet" href="css/style.css" media="all" />-->
+
+<style>
+	html {
+		font-size:14px;
+	}
+	.target {margin:4em; width:50%; border:1px solid gray; margin:2em auto; padding:1em;}
+</style>
+</head>
+
+<body>
+<main id="main">
+	<section class="container target">
+		<button id="trigger-file" class="pe-btn pe-btn--btn_large">Attach files</button>
+	</section>
+</main>
+<pearson-uploader
+	apiUrl="https://pearson-file-upload.s3.amazonaws.com/"
+	triggerid="trigger-file"
+	maxByteFileSize="10000000"
+	maxNumberOfFiles="5"
+>
+</pearson-uploader>
+
+<!-- Import componnet modules -->
+<script src="./js/dist/pearson-file-upload.js"></script>
+
+<script>
+	const uploader = document.querySelector('pearson-uploader');
+	const modal = uploader.shadowRoot.querySelector('upload-modal');
+
+	modal.addEventListener('load', function(event) {
+	  console.log(event)
+	})
+	modal.addEventListener('success', function(event) {
+	  console.log('SUCCESS', event.detail)
+	})
+
+    modal.addEventListener('cancel', function() {
+      console.log('CANCEL')
+    })
+</script>
+</body>
+</html>

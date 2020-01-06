@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Pearson Web Component</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!-- THESE IMPORTS ARE NECESSARY FOR PROPER RENDERING DURING DEVELOPMENT -->
+    <link rel="stylesheet" href="https://unpkg.com/@pearson-ux/gravity-css/dist/gravity.css" />
+
+    <script type="text/javascript">
+      if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-loader.js"><\/script>');
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"><\/script>');
+      } else {
+        document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-loader.js"><\/script>');
+        document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/custom-elements-es5-adapter.js"><\/script>');
+      }
+    </script>
+
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+		<!-- load the web component script -->
+		<!-- RENAME THIS FILE DURING DEVELOPMENT -->
+		<!-- e.g., 'pearson-alert' -->
+    <script src="js/dist/pearson-progress-bar.js"></script>
+    <style>
+      .target {margin:4em; width:50%; border:1px solid gray; margin:2em auto; padding:1em;}
+    </style>
+  </head>
+  <body>
+
+  <div class="target">
+    <pearson-progress-bar type="static" progress="50" max="60" alignment="center" label="Question 2 of 4"></pearson-progress-bar>
+  </div>
+
+  <div class="target">
+    <pearson-progress-bar id="loading" type="loading" alignment="center"></pearson-progress-bar>
+    <button style="margin-top:1rem">Start progress bar</button>
+  </div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function(event) {
+      //the event occurred
+      const loader = document.querySelector('#loading');
+      const startBtn = document.querySelector('button');
+      let progress = loader.getAttribute('progress');
+      let count = parseInt(progress);
+      console.log(progress)
+
+      startBtn.addEventListener('click', function (e) {
+        console.log(loader)
+        setInterval( function (event) {
+          if (count < 100) {
+            count++;
+            loader.progress = count;
+
+          } else {
+            return
+          }
+        },200)
+      })
+    })
+
+
+  </script>
+  </body>
+</html>
